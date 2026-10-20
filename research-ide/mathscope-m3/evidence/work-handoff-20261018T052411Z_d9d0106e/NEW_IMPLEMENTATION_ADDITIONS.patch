@@ -1,0 +1,1199 @@
+--- /dev/null
++++ b/work/actual_evaluator/code/actual_angular_energy.py
+@@ -0,0 +1,221 @@
++"""Compile exact theta integrands of the recovered actual initialized field.
++
++This is a source-bound spectral frontend, not a whole-K numerical evaluator.
++No toy parameters, source overrides, private-seal reconstruction, or dropped
++equal-frequency/cross-label terms are used. Scalar source references remain
++bound to the pinned original graph, and missing numerical kernels fail closed.
++"""
++from __future__ import annotations
++import argparse, hashlib, json, sys
++from collections import Counter
++from fractions import Fraction as Q
++from functools import lru_cache
++from pathlib import Path
++
++BASE = 'analysis/base/PR30-primary67-continuation/'
++PACKET = BASE+'pressure-proof/angular-pde/ANGULAR_PDE_SOURCE_V3.json'
++HEADER = BASE+'pressure-proof/angular-pde/ANGULAR_ORIGINAL_HEADER.json'
++ANGULAR = BASE+'MathScopeCompute/research-ide/mathscope-m3/navier/evidence/global-forced-current-20261012/attempt382884203291/initialized-angular-construction.json'
++HELPER = 'analysis/base/PR30-recovery-handoff/MathScopeCompute/tools/n6-native-domain-frontier-20261015'
++SUPPLEMENTS = [BASE+'pressure-proof/'+p for p in [
++    'inputs/AUXILIARY_INVERSE0_SOURCE.json','inputs/PRIMARY_INDEXED_SOURCE.json',
++    'inverse1/AUXILIARY_INVERSE1_SOURCE.json',
++    'initialized-mean-independent/INDEPENDENT_SELECTED_SOURCE_BINDINGS.json']]+[
++    BASE+'MathScopeCompute/research-ide/mathscope-m3/evidence/n6-continuation-20261015/run-38694948443/COMPACT_JET_PDE_SOURCE.json']
++
++def sha(p): return hashlib.sha256(p.read_bytes()).hexdigest()
++def dump(p,x): p.write_text(json.dumps(x,indent=2,ensure_ascii=False)+'\n')
++def require(x,message):
++    if not x: raise ValueError(message)
++
++class Compile:
++    def __init__(self, nodes, definitions, children, native, native_definition):
++        self.n=nodes; self.reg=definitions; self.children=children
++        self.native=native; self.native_definition=native_definition
++        self.theta=622806; self.arena=[]; self.keys={}
++    def node(self,op,*args):
++        k=json.dumps([op,args],sort_keys=True,separators=(',',':'))
++        if k not in self.keys:
++            self.keys[k]=len(self.arena);self.arena.append({'op':op,'args':list(args)})
++        return self.keys[k]
++    def ref(self,i):
++        require(str(i) in self.n,'Absent input scalar root '+str(i))
++        return self.node('actual_source_ref',i)
++    def num(self,n):return self.node('integer',n)
++    def add(self,*a):return self.node('add',*a)
++    def mul(self,*a):return self.node('multiply',*a)
++    def neg(self,a):return self.mul(self.num(-1),a)
++    def square(self,a):return self.mul(a,a)
++    def sub(self,a,b):return self.add(a,self.neg(b))
++    @lru_cache(None)
++    def depends(self,i):
++        return i==self.theta or any(self.depends(j) for j in self.children(self.n[str(i)]))
++    @lru_cache(None)
++    def factor(self,i):
++        """Exact Laurent monomial expansion of rational/product/inverse only."""
++        n=self.n[str(i)];op=n['op'];a=n['args']
++        if op=='rational':return Q(int(a[0]),int(a[1])),()
++        if op=='multiply':
++            c=Q(1);f=Counter()
++            for j in a:
++                cj,fj=self.factor(j);c*=cj;f.update(dict(fj))
++            return c,tuple(sorted((k,v) for k,v in f.items() if v))
++        if op=='inverse':
++            c,f=self.factor(a[0]);return 1/c,tuple((k,-v) for k,v in f)
++        return Q(1),((i,1),)
++    def slope(self,i):
++        if i==self.theta:return Q(1),()
++        if not self.depends(i):return None
++        n=self.n[str(i)];a=n['args']
++        if n['op']=='add':
++            rows=[self.slope(j) for j in a if self.depends(j)]
++            require(len(rows)==1,'Multiple theta terms require polynomial merge')
++            return rows[0]
++        require(n['op']=='multiply','Non-affine actual theta dependence')
++        dep=[j for j in a if self.depends(j)]
++        require(len(dep)==1,'Nonlinear theta product')
++        c,f=self.slope(dep[0]);f=Counter(dict(f))
++        for j in a:
++            if j==dep[0]:continue
++            cj,fj=self.factor(j);c*=cj;f.update(dict(fj))
++        return c,tuple(sorted((k,v) for k,v in f.items() if v))
++    def angular_frequency(self,t):
++        c,f=self.slope(t['phase']);ck,fk=self.factor(t['k'])
++        f=Counter(dict(f));f.update(dict(fk));f={i:p for i,p in f.items() if p}
++        require(c*ck==1 and len(f)==1,'Actual k*phase derivative did not cancel exactly')
++        root,p=next(iter(f.items()));require(p==1,'Frequency is not one literal source root')
++        n=self.n[str(root)];require(n['op']=='smooth_piecewise','Unexpected exact integer selector')
++        x,left,right,before,middle,after=n['args']
++        require(self.factor(left)==(Q(-1,2),()) and self.factor(right)==(Q(1,2),()),'Changed integer zero guard')
++        require(before==after==x,'Changed integer selector exterior')
++        cx,fx=self.factor(x);require(cx==-1 and len(fx)==1 and fx[0][1]==1,'Expected negative ceiling')
++        require(self.n[str(fx[0][0])]['op']=='ceiling','Unproved integer frequency')
++        md=self.n[str(middle)];require(md['op']=='smooth_piecewise','Expected nonzero interior choice')
++        require(all(self.factor(j) in [(Q(-1),()),(Q(1),())] for j in md['args'][3:]),'Zero inside frequency guard')
++        return root
++    def conjugates(self,rows):
++        pos=next(r for r in rows if r['m']==1);neg=next(r for r in rows if r['m']==-1)
++        require(len(rows)==2,'Unexpected original angular modes')
++        for x,y in zip(pos['velocity'],neg['velocity']):
++            require(x['real']==y['real'],'Conjugate real component changed')
++            cr,fr=self.factor(x['imaginary']);cn,fn=self.factor(y['imaginary'])
++            require(fr==fn and cr==-cn,'Conjugate imaginary component changed')
++            require(not self.depends(x['real']) and not self.depends(x['imaginary']),'Theta-dependent coefficient')
++        return pos
++    def compile_template(self,t):
++        f=self.angular_frequency(t);p=self.conjugates(t['waveRows'])
++        require(len(t['previous'])==1 and t['previous'][0]['m']==0,'Changed actual mean')
++        mean=[self.ref(v['real']) for v in t['previous'][0]['velocity']]
++        require(all(v['imaginary']==0 for v in t['previous'][0]['velocity']),'Nonreal mean')
++        coeff=[(self.ref(v['real']),self.ref(v['imaginary'])) for v in p['velocity']]
++        wave_norm=self.add(*(self.add(self.square(r),self.square(i)) for r,i in coeff))
++        kinetic=self.add(*(self.square(v) for v in mean),self.mul(self.num(2),wave_norm))
++        nr=self.ref(f)
++        # Cylindrical connections retained: D_theta u=(du_r-u_theta,du_theta+u_r,du_z).
++        (rr,ri),(tr,ti),(zr,zi)=coeff
++        angular=[(self.sub(self.neg(self.mul(nr,ri)),tr),self.sub(self.mul(nr,rr),ti)),
++                 (self.sub(rr,self.mul(nr,ti)),self.add(ri,self.mul(nr,tr))),
++                 (self.neg(self.mul(nr,zi)),self.mul(nr,zr))]
++        theta_numerator=self.add(self.square(mean[0]),self.square(mean[1]),self.mul(self.num(2),
++            self.add(*(self.add(self.square(r),self.square(i)) for r,i in angular))))
++        radius_root=t['lift']['geometry']['R'];radius=self.ref(radius_root)
++        theta_gradient=self.mul(theta_numerator,self.node('inverse',self.square(radius)))
++        return {'template':t['key'],'frequency_source_root':f,'source_k_root':t['k'],
++            'source_phase_root':t['phase'],'source_coefficients':p['velocity'],
++            'kinetic_mean_theta_root':kinetic,'cylindrical_angular_derivative_numerator_mean_theta_root':theta_numerator,
++            'cylindrical_angular_gradient_mean_theta_root':theta_gradient,'source_radius_root':radius_root,
++            'angular_gradient_metric':'The derivative numerator is divided by the actual normalized radius R^2. Formula on R>0; a continuous axis limit is not evaluated here.',
++            'identity':'(2*pi)^-1 integral_0^(2*pi)|u|^2 dtheta = |actual mean|^2+2*sum_component |actual positive coefficient|^2',
++            'scope':'One actual fixed-label chart with its complete current mean; normalized source coordinates. The physical energy measure and scale still must be applied.',
++            'phase_materialized':False,'carrier_integer_materialized':False}
++
++    def closure(self,roots):
++        """Expand actual expression bodies, exposing exact unavailable boundaries."""
++        stack=[(r,None) for r in roots];seen=set();missing={};native_calls={};ops=Counter();unimplemented={}
++        while stack:
++            i,parent=stack.pop()
++            if i in seen:continue
++            seen.add(i)
++            if str(i) not in self.n:
++                missing[i]=parent;continue
++            node=self.n[str(i)];ops[node['op']]+=1
++            stack.extend((j,{'node':i,'edge':'argument'}) for j in self.children(node))
++            if node['op'] in self.native:
++                key,d=self.native_definition(node,self.reg)
++                native_calls[i]={'registry':key,'definition_sha256':hashlib.sha256(json.dumps(d,ensure_ascii=False,separators=(',',':')).encode()).hexdigest()}
++                if 'body' in d and type(d['body']) is int:
++                    stack.append((d['body'],{'node':i,'registry':key,'edge':'actual_native_body'}))
++                else:
++                    unimplemented[i]={'operation':node['op'],'registry':key,'definition_keys':sorted(d)}
++        return {'visited_nodes':len(seen),'present_nodes':len(seen)-len(missing),'operations':dict(sorted(ops.items())),
++            'missing_scalar_bodies':[{'root':i,'requested_by':v} for i,v in sorted(missing.items())],
++            'native_calls':len(native_calls),'non_expression_native_kernels':[
++                {'root':i,**v} for i,v in sorted(unimplemented.items())],
++            'scalar_numeric_evaluation_complete':False,
++            'reason':'Actual native body expansion was attempted against every recovered scalar record; missing original scalar records and non-expression native numerical kernels are explicit. No missing value is replaced by zero.'}
++
++def main():
++    ap=argparse.ArgumentParser();ap.add_argument('--root',type=Path,default=Path('.'));ap.add_argument('--output-dir',type=Path,required=True);args=ap.parse_args()
++    root=args.root.resolve();out=args.output_dir.resolve();out.mkdir(parents=True,exist_ok=True)
++    manifest=json.loads((root/'work/actual_evaluator/evidence/INPUT_MANIFEST.json').read_text())
++    for row in manifest['files']:require(sha(root/row['path'])==row['sha256'],'Changed pinned input '+row['path'])
++    sys.path.insert(0,str(root/HELPER));from native_domain_extract import argument_children,NATIVE,native_definition
++    p=json.loads((root/PACKET).read_text());h=json.loads((root/HEADER).read_text());a=json.loads((root/ANGULAR).read_text());reg={}
++    def registries(d):
++        for k,v in d.items():
++            if k=='base':registries(v)
++            elif isinstance(v,str):
++                try:reg[k]=json.loads(v)
++                except ValueError:pass
++    registries(h['definitions'])
++    require(p['sourceHeaderSHA256']==sha(root/HEADER) and p['constructionSHA256']==sha(root/ANGULAR),'Source packet join failed')
++    require(a['global']['velocity']==[3825006,3825007,3825008] and a['global']['pressure']==3825009,'Not accepted initial tuple')
++    supplement_log=[]
++    def merge(x,seen):
++        if isinstance(x,dict):
++            for k,v in x.items():
++                if k.isdigit() and isinstance(v,dict) and set(v)=={'op','args'}:
++                    require(k not in p['records'] or p['records'][k]==v,'Conflicting same-source scalar record '+k)
++                    seen.add(k);p['records'][k]=v
++                else:merge(v,seen)
++        elif isinstance(x,list):
++            for v in x:merge(v,seen)
++    supplements=json.loads((root/'work/actual_evaluator/evidence/SAME_HEADER_SCALAR_SUPPLEMENTS.json').read_text())
++    require(supplements['sourceHeaderSHA256']==sha(root/HEADER),'Supplement index header mismatch')
++    for row in supplements['supplements']:
++        path=row['path'];require(sha(root/path)==row['sha256'],'Changed supplementary scalar records')
++        data=json.loads((root/path).read_text());seen=set();before=len(p['records'])
++        require(data['sourceHeaderSHA256']==sha(root/HEADER),'Supplement from another graph')
++        merge(data,seen)
++        supplement_log.append({'path':path,'sha256':sha(root/path),'same_original_header':True,
++            'scalar_records_checked':len(seen),'new_scalar_records':len(p['records'])-before})
++    c=Compile(p['records'],reg,argument_children,NATIVE,native_definition)
++    rows=[c.compile_template(t) for t in a['templates']]
++    roots=sorted({v[part] for t in a['templates'] for r in t['waveRows'] for v in r['velocity'] for part in ('real','imaginary')}|set(a['reference']['normalizedMeanVelocity']))
++    closure=c.closure(roots)
++    controls={}
++    altered=json.loads(json.dumps(a['templates'][0]));altered['waveRows'][1]['velocity'][0]['imaginary']=altered['waveRows'][0]['velocity'][0]['imaginary']
++    try:c.compile_template(altered);controls['wrong_conjugate_rejected']=False
++    except ValueError:controls['wrong_conjugate_rejected']=True
++    altered=json.loads(json.dumps(a['templates'][0]));altered['k']=1
++    try:c.compile_template(altered);controls['wrong_carrier_rejected']=False
++    except ValueError:controls['wrong_carrier_rejected']=True
++    require(all(controls.values()),'Negative source controls failed')
++    result={'schema':'MathScope.ActualInitializedAngularEnergyFrontend/1','source_header_sha256':sha(root/HEADER),
++        'source_construction_sha256':sha(root/ANGULAR),'source_packet_sha256':sha(root/PACKET),
++        'same_graph_supplements':supplement_log,'combined_scalar_records':len(p['records']),
++        'actual_initial_tuple':{'velocity':a['global']['velocity'],'pressure':a['global']['pressure']},
++        'templates':rows,'expression_arena':c.arena,'literal_theta_integration':True,
++        'scope':'Actual initial finite-label kinetic/angular-gradient integrands only. No final localization/correction stages are substituted by this initial field.',
++        'cross_label_rule':'These ten templates must NOT be summed as independent global modes. The accepted 162 actual signed cover rows and their exact support joins must be applied. Equal-frequency surviving labels must be combined before squaring; cross terms cannot be discarded merely because template keys differ.',
++        'source_cover_all_cross_label_products_vanish':a['application']['sourceCover']['allCrossLabelProductsVanish'],
++        'numeric_coefficient_closure_attempt':closure,'negative_controls':controls,
++        'whole_K_energy_integrated':False,'independent_space_time_tables':None,
++        'four_axis_refinement_table':None,'actual_last_resolved_tau':None,
++        'final_field_evaluator_complete':False,'N706_closed':False,'N805_closed':False}
++    dump(out/'ACTUAL_ANGULAR_ENERGY_FRONTEND.json',result)
++    print(json.dumps({'templates':len(rows),'expression_nodes':len(c.arena),'closure_present_nodes':closure['present_nodes'],
++        'missing_native_body_records':len(closure['missing_scalar_bodies']),'native_kernel_frontiers':len(closure['non_expression_native_kernels']),
++        'negative_controls':controls,'N706_closed':False,'N805_closed':False}))
++
++if __name__=='__main__':main()
+--- /dev/null
++++ b/work/actual_evaluator/code/actual_picard_term_budget.py
+@@ -0,0 +1,78 @@
++"""Bind the actual Picard0 truncation condition and test literal term budget.
++No symbolic bound is mistaken for evaluating the actual solution series.
++"""
++from pathlib import Path
++from fractions import Fraction as Q
++from functools import lru_cache
++from collections import Counter
++import argparse,json,math
++from actual_angular_energy import HEADER,sha,require,dump
++
++SOURCE='analysis/base/PR30-recovery-handoff/angular-proof/inputs/ACTUAL_PICARD_ORIGINAL_NUMERIC_MAJORANT.json'
++PIN='36026f7c3804d54f779d214ead8ea434db32b3fc5cb468465d174748eda5a74b'
++
++def main():
++    ap=argparse.ArgumentParser();ap.add_argument('--root',type=Path,default=Path('.'));ap.add_argument('--output-dir',type=Path,required=True);ap.add_argument('--max-terms',type=int,default=1000000);a=ap.parse_args()
++    root=a.root.resolve();out=a.output_dir.resolve();out.mkdir(parents=True,exist_ok=True)
++    require(sha(root/SOURCE)==PIN,'Changed actual original Picard majorant input');s=json.loads((root/SOURCE).read_text())
++    require(s['sourceHeaderSHA256']==sha(root/HEADER),'Picard source graph mismatch')
++    require(s['actualSourceAndAnalyticInputsComposed'] and s['numericC1KCertifiedTailBoundsProvedHere'],'Missing actual original tail theorem')
++    n=s['originalConstantCone']
++    def mul(x,y):
++        c,f=x;d,g=y;terms=Counter(dict(f));terms.update(dict(g));return c*d,tuple(sorted((k,v) for k,v in terms.items() if v))
++    def power(x,p):
++        c,f=x;p=Q(p)
++        if p.denominator==1:c=c**p.numerator
++        else:
++            require(p.denominator==2 and c>0,'Unsupported nonpositive radical monomial')
++            u,v=math.isqrt(c.numerator),math.isqrt(c.denominator)
++            require(u*u==c.numerator and v*v==c.denominator,'Nonrational scalar radical')
++            c=Q(u,v)**p.numerator
++        return c,tuple((k,v*p) for k,v in f if v*p)
++    @lru_cache(None)
++    def at(i):
++        z=n[str(i)];op=z['op'];b=z['args']
++        if op=='rational':return Q(int(b[0]),int(b[1])),()
++        if op=='source_parameter':
++            if b[0]=='Lambda':return Q(1),(('Q',Q(64)),)
++            if b[0]=='Xa':return Q(4),(('Q',Q(-64)),)
++            return Q(1),((b[0],Q(1)),)
++        if op=='multiply':
++            value=(Q(1),())
++            for j in b:value=mul(value,at(j))
++            return value
++        if op=='inverse':return power(at(b[0]),-1)
++        if op=='integer_power':return power(at(b[0]),b[1])
++        if op=='sqrt_positive':return power(at(b[0]),Q(1,2))
++        if op=='exp':
++            require(at(b[0])==(Q(1,16),(('t1',Q(1)),)),'Different exponential in exact K condition')
++            return Q(1),(('exp(t1/16)',Q(1)),)
++        raise ValueError('Nonmonomial operation in exact K condition: '+op)
++    kroot=s['sourceConstants']['Kcondition']['root'];require(n[str(kroot)]['op']=='ceiling','Kcondition must be literal source ceiling')
++    value=at(n[str(kroot)]['args'][0]);expected=(Q(72*2**139),(('Q',Q(465)),('exp(t1/16)',Q(1)),('rho',Q(-5)),('t1',Q(-4))))
++    require(value==expected,'Incorrect actual Picard term-count normalization')
++    par=s['actualParameterASTConstraints']
++    require(par['Q']=={'quotient':[{'product':[{'integer':str(2**260)},{'ref':'K'}]},{'power':[{'ref':'sigmaStar'},2]}]},'Changed source Q')
++    require(par['Lambda']=={'power':[{'ref':'Q'},64]} and par['Xa']=={'quotient':[{'integer':4},{'ref':'Lambda'}]},'Changed source Lambda/Xa')
++    require(par['rho']=={'quotient':[{'power':[{'ref':'sigmaStar'},2]},{'integer':65536}]} and par['sigmaStar']=={'quotient':[{'ref':'j0'},{'integer':2000}]} and par['j0']=={'power':[{'ref':'h'},4]},'Changed source rho/sigma')
++    require(par['t1']=={'power':[{'ref':'CSelected'},-120]} and par['CSelected']=={'exp':{'ref':'logCSelected'}},'Changed source t1')
++    require(a.max_terms>0,'Positive term budget required');exponent=139+465*260+6;require(exponent==121045 and 72>2**6,'Lower-bound arithmetic')
++    record={'schema':'MathScope.ActualPicardLiteralSeriesTermBudget/1','source':SOURCE,'source_sha256':PIN,
++        'source_header_sha256':s['sourceHeaderSHA256'],'actual_Kcondition_root':kroot,
++        'notation':{'Q':'The fixed source_parameter Q at node24797 (Q_profile), greater than2^260.',
++            'band_Q':'The different shrinking band scale2^-ell at node622794 (Q_band), used in actual_scale_budget.py. These are not the same scalar.'},
++        'literal_source_argument_identity':'72*2^139*Q^465*exp(t1/16)/(t1^4*rho^5)',
++        'monomial_identity_recomputed_from_all_actual_scalar_ancestors':True,
++        'source_domain':'Actual Picard0 common collar, with original parameter expressions and original tail estimate.',
++        'strict_derivation':['Pstar=exp(2T)>1, K=Pstar^2>1; 0<h<1, j0=h^4, sigmaStar=j0/2000 in (0,1).',
++            'Q=2^260*K/sigmaStar^2>2^260; rho=sigmaStar^2/65536 in (0,1).',
++            'logCSelected=10log(1+Q^300)+Q^200>0, so t1=exp(-120logCSelected) in (0,1).',
++            'Therefore Kcondition >= its positive argument >72*2^(139+465*260)>2^121045.'],
++        'declared_max_literal_series_terms':a.max_terms,'literal_series_term_budget_exceeded':a.max_terms<=(1<<exponent),
++        'certified_tail':'For K>=the unchanged source Kcondition, the original tail is m!*(16/delta)^m*4^-K/3 on the prescribed derivative collar.',
++        'actual_partial_sum_evaluated':False,'actual_last_resolved_tau':None,
++        'scope':'Only the literal original sufficient-K Picard term-by-term route is excluded under this term budget. This does not lower-bound the best algorithm, prove optimal K, block positive norm bounds, or declare symbolic/accelerated solution methods impossible.'}
++    dump(out/'ACTUAL_PICARD_TERM_RESOURCE_BOUND.json',record)
++    print(json.dumps({'actual_Kcondition_source_identity':True,'literal_term_budget_exceeded':record['literal_series_term_budget_exceeded'],'strict_term_count_lower_bound':'2^121045'}))
++
++if __name__=='__main__':main()
+--- /dev/null
++++ b/work/actual_evaluator/code/actual_scale_budget.py
+@@ -0,0 +1,60 @@
++"""Exact original scale lower bounds and a bounded materialization decision.
++
++Only the explicit raw-integer/ordinary arithmetic route is declined. Symbolic
++or coefficient-domain integration remains possible and is investigated in
++actual_angular_energy.py. No relaxed h, finite tau, or model field is supplied.
++"""
++from pathlib import Path
++import argparse,hashlib,json
++from fractions import Fraction
++from actual_angular_energy import HEADER,PACKET,dump,require,sha
++
++def main():
++    ap=argparse.ArgumentParser();ap.add_argument('--root',type=Path,default=Path('.'));ap.add_argument('--output-dir',type=Path,required=True)
++    ap.add_argument('--max-materialized-integer-bits',type=int,default=1_000_000);a=ap.parse_args();root=a.root.resolve();out=a.output_dir.resolve();out.mkdir(parents=True,exist_ok=True)
++    manifest=json.loads((root/'work/actual_evaluator/evidence/INPUT_MANIFEST.json').read_text())
++    for row in manifest['files']:require(sha(root/row['path'])==row['sha256'],'Changed pinned input '+row['path'])
++    h=json.loads((root/HEADER).read_text());reg={}
++    def registries(d):
++        for k,v in d.items():
++            if k=='base':registries(v)
++            elif isinstance(v,str):
++                try:reg[k]=json.loads(v)
++                except ValueError:pass
++    registries(h['definitions']);par=reg['fixed']['source']['parametersExactExpressions']
++    require(par['Md']=={'integer':1048576},'Changed original Md')
++    require(par['T']=={'sum':[{'exp':{'ref':'Md'}},{'integer':10}]},'Changed original T')
++    require(par['h']=={'exp':{'product':[{'integer':-8002},{'ref':'T'}]}},'Changed original h')
++    packet=json.loads((root/PACKET).read_text());require(packet['sourceHeaderSHA256']==sha(root/HEADER),'Different original source header')
++    nodes=packet['records']
++    exact={622801:('ceiling',[622800]),622800:('inverse',[622799]),622799:('sqrt_positive',[622798]),
++           622798:('exp',[622797]),622797:('multiply',[9,622796]),622796:('log_positive',[622794]),
++           622794:('exp',[622793]),622793:('multiply',[20,622792]),622792:('multiply',[127,622791])}
++    for i,(op,args) in exact.items():require(nodes[str(i)]=={'op':op,'args':args},'Changed original k/epsilon/Q ancestry '+str(i))
++    require(nodes['127']=={'op':'log_positive','args':[24]},'Q is not 2^-ell')
++    require(nodes['9']=={'op':'source_parameter','args':['h']},'Wrong original h root')
++    require(nodes['20']=={'op':'rational','args':['-1','1']} and nodes['24']=={'op':'rational','args':['2','1']},'Changed Q base/sign')
++    require(nodes['622791']=={'op':'coordinate','args':['N6_global_frozen_integer_band_N1$30434']},'Wrong original ell coordinate')
++    threshold=root/'work/remaining_chain/source/source-localization-domain.mjs';text=threshold.read_text()
++    require('threshold.frequencyMinimum===G.pow(G.div(q(64),h),2)' in text and
++            'ellMinimum===G.ceiling(G.maximum(q(8),threshold.Sminimum,threshold.frequencyMinimum))' in text,'Original lower threshold missing')
++    # e>2 and T>1 suffice; no floating exponential or logarithm is evaluated.
++    require(8002>4096 and Fraction(64**2,2)==2048,'Incorrect exact inequality arithmetic')
++    require(a.max_materialized_integer_bits>0,'Positive operation budget required')
++    exceeds=a.max_materialized_integer_bits<=(1<<4107)
++    result={'schema':'MathScope.ActualRawCarrierMaterializationBudget/1','original_parameter_profile':reg['fixed']['source']['parameterExpressionSHA256'],
++        'source_header_sha256':sha(root/HEADER),'threshold_source_sha256':sha(threshold),
++        'original_h_expression':par['h'],'original_T_expression':par['T'],'original_Md_expression':par['Md'],
++        'actual_carrier_root':622801,'actual_epsilon_root':622798,'actual_Q_root':622794,
++        'exact_derivation':['T=exp(1048576)+10>1 and e>2 imply 0<h=exp(-8002*T)<2^-4096.',
++            'The unchanged threshold has ell>=ellMinimum>=frequencyMinimum=(64/h)^2.',
++            'Q=2^-ell, epsilon=Q^h, k=ceil(epsilon^-1/2), hence log2(k)>=h*ell/2>=2048/h>2^4107.',
++            'The ordinary binary integer expansion of k therefore requires more than 2^4107 bits.'],
++        'declared_max_materialized_integer_bits':a.max_materialized_integer_bits,'budget_exceeded':exceeds,
++        'supported_path_decision':'RAW_INTEGER_CARRIER_NOT_MATERIALIZED' if exceeds else 'LOWER_BOUND_ALONE_DOES_NOT_DECIDE_BUDGET',
++        'scope':'This rejects only materializing the original carrier in ordinary binary integer storage under the declared finite budget; it is not an impossibility theorem for symbolic phase, coefficient integration, or log representations.',
++        'phase_free_alternative':'actual_angular_energy.py performs literal theta integration for every recovered actual initialized template without materializing k or its phase.',
++        'positive_tau_evaluated':None,'actual_last_resolved_tau':None,'source_parameters_changed':False}
++    dump(out/'ACTUAL_SCALE_RESOURCE_BOUND.json',result);print(json.dumps({'budget_exceeded':exceeds,'actual_last_resolved_tau':None}))
++
++if __name__=='__main__':main()
+--- /dev/null
++++ b/work/actual_evaluator/code/collect_live_initial_scalar_closure.mjs
+@@ -0,0 +1,55 @@
++/** Optional read-only export from an ALREADY genuine executed forced object.
++ * No constructor, mutation, private seal restoration, or extra pipeline run.
++ * The caller decides whether its live resource budget permits the export.
++ */
++export function collectLiveInitialScalarClosure(forced,{maxNodes=100000,maxMilliseconds=5000}={}){
++  const initial=forced?.input,G=initial?.G;
++  if(!G||!Array.isArray(G.nodes)||!Array.isArray(initial?.templates)||!initial?.reference)
++    throw Error('Expected the genuine forced constructor result with its original initialized input.');
++  const start=performance.now(),captured=G.captureFunctionDefinitions(),registries={};
++  function unpack(d){for(const[k,v]of Object.entries(d)){if(k==='base')unpack(v);else if(typeof v==='string'){try{registries[k]=JSON.parse(v);}catch{}}}}
++  unpack(captured);const roots=new Set();
++  for(const t of initial.templates){roots.add(t.phase);roots.add(t.k);for(const r of t.waveRows)for(const v of r.velocity){roots.add(v.real);roots.add(v.imaginary);}}
++  for(const r of initial.reference.normalizedMeanVelocity)roots.add(r);
++  const stack=[...roots],seen=new Set(),records={},definitions={},nativeBoundaries=[];
++  const calls=new Set(['actual_expression_partial','m3_aux_expression_partial','m3_aux_indexed_partial','m3_aux_inverse_partial',
++    'm3_global_indexed_partial','m3_coupled_expression_partial','m3_coupled_indexed_partial','m3_coupled_inverse_partial','m3_forced_expression_partial']);
++  function definition(op,args){
++    const groups={actual_expression_partial:'expression',m3_aux_expression_partial:'expressionDefinitions',
++      m3_aux_indexed_partial:'fieldDefinitions',m3_aux_inverse_partial:'inverseDefinitions',m3_global_indexed_partial:'m3GlobalFields',
++      actual_monotone_root:'monotone',actual_quadratic_root:'quadratic',actual_background_even_profile:'picard',actual_background_picard:'picard'};
++    if(groups[op]){const group=groups[op],idx=op==='m3_aux_expression_partial'?-1-args[0]:args[0];return[group+':'+idx,registries[group]?.[idx]];}
++    const group={m3_coupled_expression_partial:0,m3_coupled_indexed_partial:1,m3_coupled_inverse_partial:2,m3_forced_pulse_partial:3,m3_forced_expression_partial:4}[op];
++    if(group!==undefined){const idx=op==='m3_forced_pulse_partial'?args[0]:Number(args[0].split(':').at(-1));return['definitions:'+group+':'+idx,registries.definitions?.[group]?.[idx]];}
++    if(op==='actual_natural_series')return['fixed',registries.fixed];
++    if(op==='actual_covariance_volterra'){const d=registries.m3GlobalPulses?.filter(d=>d.covariance===args[0]);return['covariance:'+args[0],d?.length===1?d[0]:undefined];}
++    return null;
++  }
++  while(stack.length&&seen.size<maxNodes&&performance.now()-start<maxMilliseconds){
++    const id=stack.pop();if(seen.has(id))continue;seen.add(id);
++    const node=G.nodes[id];if(!node)throw Error('Missing live original scalar '+id);records[id]=node;
++    const {op,args}=node;let children=[];
++    if(['rational','coordinate','source_parameter'].includes(op)){}
++    else if(['inverse','sqrt_positive','log_positive','exp','sine','cosine','ceiling','integer_power','source_step_derivative'].includes(op))children=args.slice(0,1);
++    else if(['add','multiply','maximum','smooth_piecewise','definite_integral'].includes(op))children=args;
++    else if(calls.has(op))children=args[1];
++    else if(op==='actual_natural_series')children=args.slice(1,3);
++    else if(op==='actual_quadratic_root')children=args.slice(2,3);
++    else if(op==='actual_monotone_root')children=args.slice(1);
++    else if(['actual_background_even_profile','actual_background_picard'].includes(op))children=args.slice(2,4);
++    else if(['actual_covariance_volterra','m3_global_pulse_jet'].includes(op))children=[args[2],...args[3]];
++    else if(op==='m3_forced_pulse_partial')children=[args[3],...args[4]];
++    else nativeBoundaries.push({id,op,reason:'unsupported operand grammar'});
++    stack.push(...children);
++    const found=definition(op,args);
++    if(found){const[key,d]=found;if(d){definitions[key]=d;if(Number.isSafeInteger(d.body))stack.push(d.body);else nativeBoundaries.push({id,op,registry:key,reason:'native numerical kernel retained'});}
++      else nativeBoundaries.push({id,op,registry:key,reason:'definition not exposed by captured registry'});}
++  }
++  return {schema:'MathScope.LiveActualInitialScalarClosure/1',source:initial.source,
++    originalNodeCount:G.nodes.length,actualInitialTuple:{velocity:initial.global.velocity,pressure:initial.global.pressure},
++    rootList:[...roots],templates:initial.templates.map(t=>({key:t.key,phase:t.phase,k:t.k,waveRows:t.waveRows})),
++    reference:initial.reference,records,definitions,nativeBoundaries,elapsedMilliseconds:performance.now()-start,
++    retainedScalarCount:seen.size,remainingScalarQueue:stack.length,completeScalarArgumentAndExpressionBodyClosure:stack.length===0,
++    fullNumericalNativeClosure:false,privateSealSerializedOrRestored:false,
++    scope:'Observed existing genuine graph only. Node numbers belong to this execution; older graph equality and numerical evaluator completion are not asserted.'};
++}
+--- /dev/null
++++ b/work/actual_evaluator/code/copy_repro_inputs.py
+@@ -0,0 +1,20 @@
++"""Copy the exact bounded replay inputs; never mutate their source paths."""
++from pathlib import Path
++import argparse,json,hashlib,shutil
++def main():
++    p=argparse.ArgumentParser();p.add_argument('--root',type=Path,default=Path('.'));p.add_argument('--destination',type=Path,required=True);a=p.parse_args()
++    root=a.root.resolve();destination=a.destination.resolve();manifest=json.loads((root/'work/actual_evaluator/evidence/INPUT_MANIFEST.json').read_text())
++    paths={r['path'] for r in manifest['files']}
++    paths.add('analysis/base/PR30-recovery-handoff/MathScopeCompute/tools/n6-native-domain-frontier-20261015/native_domain_extract.py')
++    own=root/'work/actual_evaluator'
++    paths.add('work/actual_evaluator/README.md')
++    for folder,glob in [('code','*.py'),('code','*.mjs'),('evidence','*.json'),('evidence','*.csv')]:
++        paths.update(str(p.relative_to(root)) for p in (own/folder).glob(glob))
++    paths.update(str(p.relative_to(root)) for p in (own/'core_source').rglob('*.mjs'))
++    rows=[]
++    for relative in sorted(paths):
++        src=root/relative;dst=destination/relative;dst.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(src,dst)
++        raw=dst.read_bytes();rows.append({'path':relative,'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest()})
++    result={'schema':'MathScope.ActualEvaluatorPortableReplayInputs/1','files':rows,'count':len(rows),'total_bytes':sum(x['bytes'] for x in rows)}
++    (destination/'ACTUAL_EVALUATOR_REPRO_MANIFEST.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps({'files':len(rows),'bytes':result['total_bytes']}))
++if __name__=='__main__':main()
+--- /dev/null
++++ b/work/actual_evaluator/code/run_actual_core_2x.mjs
+@@ -0,0 +1,16 @@
++import {readFile,writeFile,mkdir} from 'node:fs/promises';
++import path from 'node:path';
++import {pathToFileURL} from 'node:url';
++import {createHash} from 'node:crypto';
++const root=path.resolve(process.argv[2]??'.'),out=path.resolve(process.argv[3]??'work/actual_evaluator/evidence');
++const manifest=JSON.parse(await readFile(path.join(root,'work/actual_evaluator/evidence/CORE_SOURCE_MANIFEST.json')));
++for(const f of manifest.files){const actual=createHash('sha256').update(await readFile(path.join(root,'work/actual_evaluator/core_source',f.path))).digest('hex');if(actual!==f.sha256)throw Error('Changed original core module '+f.path);}
++const {evaluateSourceCoreRefinement}=await import(pathToFileURL(path.join(root,'work/actual_evaluator/core_source/research-ide/mathscope-m3/navier/source-core-refinement.mjs')).href);
++const request={gridLevels:[1,2],degrees:[32,64],precisionBits:[128,256],baseGrid:1,baseDegree:32,baseBits:128};
++const start=Date.now();let record;
++try{const result=await evaluateSourceCoreRefinement(request);record={schema:'MathScope.ActualCoreTwofoldExecution/1',request,elapsedMilliseconds:Date.now()-start,result,
++  actualFinalFieldEvaluated:false,actualLastResolvedTau:null,
++  scope:'Fresh actual original inner leading-profile evaluation only. Comparison polynomial degree is not actual nonlinear recurrence order. No Fourier axis, axial/pulse resolution, uniform spatial interpolation, localized final field, or whole-K energy is supplied.'};}
++catch(e){record={schema:'MathScope.ActualCoreTwofoldExecution/1',request,elapsedMilliseconds:Date.now()-start,errorCode:e.code??null,errorMessage:e.message,actualFinalFieldEvaluated:false,actualLastResolvedTau:null};}
++await mkdir(out,{recursive:true});await writeFile(path.join(out,'ACTUAL_CORE_TWO_FOLD_EXECUTION.json'),JSON.stringify(record,null,2)+'\n');
++console.log(JSON.stringify({elapsedMilliseconds:record.elapsedMilliseconds,uniqueCoreEvaluations:record.result?.execution.uniqueCoreEvaluations,errorCode:record.errorCode??null,actualLastResolvedTau:null}));
+--- /dev/null
++++ b/work/actual_evaluator/code/run_original_numeric_backend.mjs
+@@ -0,0 +1,27 @@
++import {readFile,writeFile,mkdir} from 'node:fs/promises';
++import path from 'node:path';
++import {pathToFileURL} from 'node:url';
++import {createHash} from 'node:crypto';
++const root=path.resolve(process.argv[2]??'.'),out=path.resolve(process.argv[3]??'work/actual_evaluator/evidence');
++const source='work/n602_continuation/source/research-ide/mathscope-m2/navier/actual-global-source-expressions.mjs';
++const {evaluateSourceProgramDiagnostic}=await import(pathToFileURL(path.join(root,source)).href);
++const headerPath='analysis/base/PR30-primary67-continuation/pressure-proof/angular-pde/ANGULAR_ORIGINAL_HEADER.json';
++const raw=await readFile(path.join(root,headerPath));const header=JSON.parse(raw);const regs={};
++function unpack(d){for(const[k,v]of Object.entries(d)){if(k==='base')unpack(v);else if(typeof v==='string'){try{regs[k]=JSON.parse(v);}catch{}}}}
++unpack(header.definitions);const parametersExactExpressions=regs.fixed.source.parametersExactExpressions;
++const attempts=[];
++for(const parameter of ['h','T','lambda']){
++  const program={schema:'MathScope.ActualSourceFunctionProgram/1',parametersExactExpressions,
++    nodes:[{op:'source_parameter',args:[parameter]}],roots:{parameter:0}};
++  let result;
++  try{result={returned:evaluateSourceProgramDiagnostic(program,0,{maxOperations:100000,quadratureCells:64})};}
++  catch(e){result={errorCode:e.code??null,message:e.message};}
++  attempts.push({parameter,parameterOverridesUsed:false,coordinateOverridesUsed:false,...result});
++}
++await mkdir(out,{recursive:true});const record={schema:'MathScope.OriginalActualNumericBackendAttempt/1',
++  source,sourceSHA256:createHash('sha256').update(await readFile(path.join(root,source))).digest('hex'),
++  headerSHA256:createHash('sha256').update(raw).digest('hex'),attempts,
++  fieldNumericallyEvaluated:false,actualLastResolvedTau:null,
++  scope:'Execution of the recovered original diagnostic arithmetic on unchanged source parameters. It is binary64, not a certified interval engine. Failure is recorded without fallback parameter substitution.'};
++await writeFile(path.join(out,'ORIGINAL_NUMERIC_BACKEND_ATTEMPT.json'),JSON.stringify(record,null,2)+'\n');
++console.log(JSON.stringify({attempts:attempts.map(({parameter,errorCode})=>({parameter,errorCode})),actualLastResolvedTau:null}));
+--- /dev/null
++++ b/work/actual_evaluator_sources/constructive_kernels.py
+@@ -0,0 +1,174 @@
++#!/usr/bin/env python3
++"""Exact elementary bounds for the original source's boundary kernels.
++
++This module bounds actual elementary functions used in the source. It does
++not authenticate a full coefficient, choose a replacement h, or certify an
++all-space field. All arithmetic decisions below use integers/Fraction.
++"""
++from fractions import Fraction as Q
++from math import comb
++import json
++from pathlib import Path
++
++
++def boundary_derivative_polynomial(a, r, order):
++    """D_t^n exp(-a/t^r) = P_n(1/t) exp(-a/t^r), t>0."""
++    a = Q(a)
++    if a <= 0 or r not in (1, 2) or type(order) is not int or order < 0:
++        raise ValueError("positive rational a, r in {1,2}, integer order>=0 required")
++    p = {0: Q(1)}
++    for _ in range(order):
++        out = {}
++        for k, c in p.items():
++            if k:
++                out[k + 1] = out.get(k + 1, Q(0)) - k * c
++            out[k + r + 1] = out.get(k + r + 1, Q(0)) + a * r * c
++        p = {k: c for k, c in sorted(out.items()) if c}
++    return p
++
++
++def monomial_exponential_envelope(a, r, k):
++    """Rational upper bound on sup_{u>=0} u^k exp(-a*u^r)."""
++    a = Q(a)
++    if a <= 0 or r not in (1, 2) or type(k) is not int or k < 0:
++        raise ValueError("invalid envelope inputs")
++    if k == 0:
++        return Q(1)
++    # The exact maximum is (k/(a*r*e))^(k/r). Drop e^-k/r,
++    # then enlarge both the base and its exponent to rational quantities.
++    return max(Q(1), Q(k, r) / a) ** ((k + r - 1) // r)
++
++
++def boundary_jet_bound(a, r, order, pole=0):
++    """Bounds t^-pole |D_t^order exp(-a/t^r)| globally on t>0."""
++    if type(pole) is not int or pole < 0:
++        raise ValueError("nonnegative integer boundary pole required")
++    p = boundary_derivative_polynomial(a, r, order)
++    return sum((abs(c) * monomial_exponential_envelope(a, r, k + pole)
++                for k, c in p.items()), Q(0))
++
++
++def mean_seed_jet_bound(order):
++    """Original seed exp(-1/[t(1-t)]) on (0,1), flat outside."""
++    if type(order) is not int or order < 0:
++        raise ValueError("nonnegative integer derivative order required")
++    b = [boundary_jet_bound(1, 1, n) for n in range(order + 1)]
++    return sum((Q(comb(order, n)) * b[n] * b[order - n]
++                for n in range(order + 1)), Q(0))
++
++
++def inverse_jet_bounds(derivative_bounds, positive_lower):
++    """Scalar Leibniz recurrence, requiring a proved positive lower bound."""
++    f, lower = [Q(x) for x in derivative_bounds], Q(positive_lower)
++    if not f or any(x < 0 for x in f) or lower <= 0:
++        raise ValueError("nonnegative finite jet bounds and positive lower required")
++    out = [1 / lower]
++    for n in range(1, len(f)):
++        out.append(sum((Q(comb(n, j)) * f[j] * out[n-j]
++                        for j in range(1, n+1)), Q(0)) / lower)
++    return out
++
++
++def source_step_jet_bound(order, r=1):
++    """Bounds e^(-1/t^r)/(e^(-1/t^r)+e^(-1/(1-t)^r)).
++
++    At least one of t,1-t is >=1/2. Its exponential is >=e^(-2^r)
++    >3^(-2^r). This certifies the denominator before the recurrence.
++    """
++    if type(order) is not int or order < 0 or r not in (1, 2):
++        raise ValueError("nonnegative integer derivative order and r in {1,2} required")
++    f = [boundary_jet_bound(1, r, n) for n in range(order+1)]
++    inv = inverse_jet_bounds([2*x for x in f], Q(1, 3**(2**r)))
++    return sum((Q(comb(order, n))*f[n]*inv[order-n]
++                for n in range(order+1)), Q(0))
++
++
++def anchored_ftc_upper(lengths, face_derivative_bounds):
++    """A rational majorant of the source rectangularSourceFTC expression.
++
++    face_derivative_bounds[mask] must bound that source's anchored mixed
++    derivative on its face. This function cannot supply those hypotheses.
++    sqrt(1+B^2)<=1+B avoids approximate square roots.
++    """
++    lengths = [Q(x) for x in lengths]
++    if not 1 <= len(lengths) <= 3 or any(x < 0 for x in lengths):
++        raise ValueError("one to three nonnegative box lengths required")
++    if len(face_derivative_bounds) != 2**len(lengths):
++        raise ValueError("every anchored face, including the anchor, required")
++    out = Q(0)
++    for mask, raw in enumerate(face_derivative_bounds):
++        b = Q(raw)
++        if b < 0:
++            raise ValueError("negative face norm")
++        term = 1+b
++        for j, width in enumerate(lengths):
++            if mask & (1 << j):
++                term *= width
++        out += term
++    return out
++
++
++def sufficient_log_threshold(C, P, gamma, stage, previous=0, log_q0_inverse=0):
++    """Original sufficient rule; input source majorant is still required."""
++    C, gamma, previous, log_q0_inverse = map(Q, (C, gamma, previous, log_q0_inverse))
++    if C <= 0 or gamma <= 0 or type(P) is not int or P < 0 or type(stage) is not int or stage < 1:
++        raise ValueError("positive C,gamma and nonnegative P required")
++    L = max(Q(1), previous+1, log_q0_inverse+1,
++            (2*P/gamma)**2, 2*(C+stage)/gamma)
++    return {"L": L, "polynomial_check": gamma*gamma*L >= 4*P*P,
++            "coefficient_check": gamma*L/2 >= C+stage,
++            "growth_check": L >= previous+1,
++            "domain_check": L >= log_q0_inverse+1}
++
++
++def audit():
++    # Exact algebra regression, not numerical samples of the function.
++    assert boundary_derivative_polynomial(1, 1, 1) == {2: Q(1)}
++    assert boundary_derivative_polynomial(1, 1, 2) == {3: Q(-2), 4: Q(1)}
++    assert boundary_derivative_polynomial(1, 2, 2) == {4: Q(-6), 6: Q(4)}
++    assert mean_seed_jet_bound(0) == 1
++    assert inverse_jet_bounds([2, 3, 5], 1) == [Q(1), Q(3), Q(23)]
++    assert anchored_ftc_upper([2,3], [0,0,0,0]) == 12
++    rejected = []
++    for label, fn in [
++        ("zero_gaussian_parameter", lambda: boundary_jet_bound(0,2,1)),
++        ("zero_denominator_floor", lambda: inverse_jet_bounds([1],0)),
++        ("omitted_FTC_face", lambda: anchored_ftc_upper([1,1],[1,1,1])),
++        ("zero_decay_gain", lambda: sufficient_log_threshold(1,2,0,1)),
++        ("negative_seed_order", lambda: mean_seed_jet_bound(-1)),
++        ("negative_step_order", lambda: source_step_jet_bound(-1)),
++        ("noninteger_stage", lambda: sufficient_log_threshold(1,2,Q(1,20),1.5))]:
++        try: fn()
++        except ValueError: rejected.append(label)
++        else: raise AssertionError(label)
++    # This is a generic exact arithmetic fixture, never an actual h value.
++    threshold = sufficient_log_threshold(5,3,Q(1,20),2,100,200)
++    assert all(v for k,v in threshold.items() if k.endswith("check"))
++    return {
++        "schema": "MathScope.ConstructiveElementarySourceKernels/1",
++        "arithmetic": "exact rational; no sampled supremum or floating decision",
++        "actual_kernel": "flat exp(-a/t^r), r=1,2; original mean bump and source steps",
++        "mean_mass_lower": "1/14580",
++        "mass_lower_proof": "Original mass>=exp(-16/3)/20>exp(-6)/20>1/(20*3^6), since e<3.",
++        "mean_seed_jet_upper": [str(mean_seed_jet_bound(n)) for n in range(7)],
++        "normalized_mean_seed_jet_upper": [str(14580*mean_seed_jet_bound(n)) for n in range(7)],
++        "source_step_jet_upper_r1": [str(source_step_jet_bound(n,1)) for n in range(5)],
++        "source_step_jet_upper_r2": [str(source_step_jet_bound(n,2)) for n in range(5)],
++        "gaussian_a1_r2_pole3_jet_upper": [str(boundary_jet_bound(1,2,n,3)) for n in range(7)],
++        "negative_controls_rejected": rejected,
++        "generic_schedule_fixture": {k: str(v) if isinstance(v,Q) else v for k,v in threshold.items()},
++        "scope": {
++            "elementary_bounds_derived": True,
++            "all_recursive_source_coefficients_bounded": False,
++            "original_h_numerically_substituted": False,
++            "actual_final_field_evaluated": False,
++            "N706_or_N805_closed": False
++        }
++    }
++
++
++if __name__ == "__main__":
++    result = audit()
++    destination = Path(__file__).with_name("ELEMENTARY_KERNEL_AUDIT.json")
++    destination.write_text(json.dumps(result, indent=2)+"\n")
++    print(json.dumps({"status":"PASS", "artifact":str(destination), "scope":result["scope"]}))
+--- /dev/null
++++ b/work/actual_evaluator_sources/verify_picard_bound_route.py
+@@ -0,0 +1,103 @@
++#!/usr/bin/env python3
++"""Check the authenticated first-Picard constant cone and term-count bound."""
++from pathlib import Path
++from collections import Counter
++import argparse, hashlib, json
++
++p=argparse.ArgumentParser()
++p.add_argument('--root',type=Path,default=Path(__file__).resolve().parents[2])
++root=p.parse_args().root.resolve()
++relative='analysis/base/PR30-recovery-handoff/angular-proof/inputs/ACTUAL_PICARD_ORIGINAL_NUMERIC_MAJORANT.json'
++raw=(root/relative).read_bytes()
++expected='36026f7c3804d54f779d214ead8ea434db32b3fc5cb468465d174748eda5a74b'
++assert hashlib.sha256(raw).hexdigest()==expected
++src=json.loads(raw)
++assert src['sameOriginalConstants']=={
++    'B':'4096*Lambda^2*Q^3/t1', 'C1':'262144*B^2/delta^2',
++    'loss':'delta/8', 'aSquared':'(4/Lambda)*exp(t1/16)',
++    'solutionNorm':'exp(9*C1^2*aSquared/(2*loss))',
++    'Kcondition':'ceil(72*C1^2*aSquared/loss)'}
++cone={int(k):v for k,v in src['originalConstantCone'].items()}
++def closure(start):
++    found={}
++    def visit(i):
++        if i in found:return
++        n=cone[i];found[i]=n
++        if n['op'] in ('source_parameter','rational'):return
++        children=n['args'][:1] if n['op']=='integer_power' else n['args']
++        for child in children:visit(child)
++    visit(start)
++    return found
++norms={name:closure(i) for name,i in [('commonCollar',24848),('naturalY5',24855)]}
++allowed={'rational','source_parameter','multiply','inverse','integer_power','exp'}
++assert all(n['op'] in allowed for nodes in norms.values() for n in nodes.values())
++params=src['actualParameterASTConstraints']
++seen=set()
++def parameter_dependencies(v):
++    if isinstance(v,dict):
++        if 'ref' in v:
++            name=v['ref']
++            assert name in params
++            if name not in seen:
++                seen.add(name);parameter_dependencies(params[name])
++        else:
++            for x in v.values():parameter_dependencies(x)
++    elif isinstance(v,list):
++        for x in v:parameter_dependencies(x)
++for nodes in norms.values():
++    for n in nodes.values():
++        if n['op']=='source_parameter':parameter_dependencies({'ref':n['args'][0]})
++# Monomial exponents include an independent factor E=exp(t1/16)>1.
++def mul(*terms):
++    result=Counter()
++    for term in terms:
++        for k,v in term.items():result[k]+=v
++    return dict(result)
++def power(term,n):return {k:n*v for k,v in term.items()}
++B={'two':12,'Lambda':2,'Q':3,'t1':-1}
++C1=mul({'two':18},power(B,2),{'delta':-2})
++assert C1=={'two':42,'Lambda':4,'Q':6,'t1':-2,'delta':-2}
++# Retain the leading integer72 separately.
++argument=mul(power(C1,2),{'two':2,'Lambda':-1,'E':1},{'two':3,'delta':-1})
++assert argument=={'two':89,'Lambda':7,'Q':12,'t1':-4,'delta':-5,'E':1}
++eliminated=dict(argument)
++lam=eliminated.pop('Lambda');delta=eliminated.pop('delta')
++eliminated=mul(eliminated,{'Q':64*lam},{'rho':delta,'two':-10*delta,'Q':-delta})
++assert eliminated=={'two':139,'Q':465,'t1':-4,'E':1,'rho':-5}
++weak_power=139+465*260+6
++assert weak_power==121045 and 72>2**6
++result={
++ 'schema':'MathScope.ActualPicardPositiveBoundRoute/1',
++ 'source':{'path':relative,'bytes':len(raw),'sha256':expected,
++           'sourceHeaderSHA256':src['sourceHeaderSHA256']},
++ 'actual_norm_roots':{name:{'root':24848 if name=='commonCollar' else 24855,
++    'nodeCount':len(nodes),'operations':dict(Counter(n['op'] for n in nodes.values())),
++    'nodes':{str(k):v for k,v in sorted(nodes.items())}}
++    for name,nodes in norms.items()},
++ 'parameterAST':{k:params[k] for k in sorted(seen)},
++ 'native_function_or_integral_in_norm_cones':False,
++ 'common_collar_original_tail':src['provedOriginalTail'],
++ 'all_fixed_derivative_tail':src['universalSourceScopedQuantifiers']['allFixedM'],
++ 'term_count_algebra':{'C1_exponents':C1,'argument_before_substitution':argument,
++   'argument_after_substitution':eliminated,'leading_integer':72,
++   'exact_formula':'72*2^139*Q^465*exp(t1/16)/(t1^4*rho^5)',
++   'premises':['Q>2^260','0<t1<1','0<rho<1'],
++   'premise_source':'actualParameterASTConstraints: K=Pstar^2>1, sigmaStar=h^4/2000<1, Q=2^260*K/sigmaStar^2; CSelected>1; rho=sigmaStar^2/65536.',
++   'strict_lower_bound':'Kcondition > 2^121045',
++   'integer_monomial_checks_pass':True},
++ 'effectivity':{
++   'norm_upper_expression_closed':True,
++   'source_solution_changed':False,
++   'larger_certified_integer_K_allowed':True,
++   'source_minimal_ceiling_need_not_be_evaluated_for_larger_K':True,
++   'numeric_norm_interval_computed':False,
++   'actual_Picard_partial_sum_evaluated':False,
++   'symbolic_K_is_not_a_partial_sum_value':True,
++   'term_count_bound_is_not_general_noncomputability':True,
++   'actual_endpoint_energy_upper_not_yet_assembled':True},
++ 'scope':'Authenticated actual Picard0 common collar. NaturalY5 is a separate auxiliary/natural domain; do not transfer its K to the collar or conversely. No full M3 current norm certificate.'}
++out=root/'work/actual_evaluator_sources/PICARD_BOUND_ROUTE.json'
++out.write_text(json.dumps(result,indent=2)+'\n')
++print(json.dumps({'pass':True,'source_sha256':expected,
++ 'norm_cone_sizes':{k:len(v) for k,v in norms.items()},
++ 'literal_term_count_lower_bound':'2^121045','numeric_field_evaluated':False}))
+--- /dev/null
++++ b/work/actual_evaluator_sources/verify_source_research.py
+@@ -0,0 +1,33 @@
++#!/usr/bin/env python3
++"""Portable pin check and exact kernel replay; never an N7/N8 acceptance flag."""
++import argparse
++import hashlib
++import json
++from pathlib import Path
++from constructive_kernels import audit
++
++parser = argparse.ArgumentParser()
++parser.add_argument('--root', type=Path, default=Path(__file__).resolve().parents[2])
++args = parser.parse_args()
++root = args.root.resolve()
++here = root/'work/actual_evaluator_sources'
++pins = json.loads((here/'SOURCE_PINS.json').read_text())
++checks=[]
++for row in pins['sources']:
++    path=(root/row['path']).resolve()
++    if not path.is_relative_to(root):
++        raise ValueError('source path escaped root')
++    data=path.read_bytes()
++    ok=len(data)==row['bytes'] and hashlib.sha256(data).hexdigest()==row['sha256']
++    checks.append({'path':row['path'],'pass':ok})
++if not all(r['pass'] for r in checks):
++    raise AssertionError('source changed')
++expected=json.loads((here/'ELEMENTARY_KERNEL_AUDIT.json').read_text())
++if audit()!=expected:
++    raise AssertionError('elementary kernel audit does not replay')
++result={'schema':'MathScope.ActualEvaluatorSourceResearchReplay/1',
++        'source_pin_checks':checks,'kernel_replay_exact':True,
++        'scope':expected['scope'],'N706_or_N805_closed':False}
++(here/'RESEARCH_REPLAY.json').write_text(json.dumps(result,indent=2)+'\n')
++print(json.dumps({'pass':True,'pinned_sources':len(checks),'kernel_replay_exact':True,
++                  'N706_or_N805_closed':False}))
+--- /dev/null
++++ b/work/n602_continuation/source/research-ide/mathscope-m3/navier/source-continuation-kernels.mjs
+@@ -0,0 +1,64 @@
++/** Additive algebra helpers for the separately sealed finite successor.
++ * completeSourceField is copied exactly from the pinned forced constructor
++ * except its export and recipe label. decomposedUpdate is the independently
++ * reviewed full tensor product rule. These helpers issue no source authority.
++ */
++import {guardGlobalLocalBody} from './source-global-current.mjs';
++import {exactRealCylindricalPDE,originalCylindricalDifferentialOperators} from './source-harmonic-assembly.mjs';
++export function completeSourceField(source,templates,name,bodyAt,{kind,angular=true}={}){
++  const G=source.G,pressure=source.mean.temporal.pressure,current=pressure.current,band=current.band,{R,Z,T,theta,ell,Xrep,etaRep,sRep}=band.coordinates,
++    {A,D}=band.constants,{r0,Ls}=band.geometry,{levelDifference}=source.coordinates,
++    parameters=angular?source.coordinates.localParameters:source.coordinates.localParameters.filter(x=>x!==theta),
++    fieldParameters=angular?[...pressure.cover.parameters,theta]:pressure.cover.parameters,
++    directions=angular?[...pressure.cover.directions,theta]:pressure.cover.directions,
++    ratio=source.reference.ratio,power=(x,a)=>G.exp(G.mul(a,G.log(x))),
++    exponent=kind==='velocity'?A:kind==='residual'?G.add(G.mul(G.q(2),A),G.q(1,2)):G.mul(G.q(2),A),
++    choose=values=>{let out=G.zero;for(let j=4;j>=0;j--)out=G.choose(levelDifference,G.q(2*j-1,2),G.q(2*j+1,2),out,values[j],out);return out;},
++    systems=[0,1].map(signIndex=>{
++      const selected=templates.filter(t=>t.signIndex===signIndex).sort((a,b)=>a.levelDifference-b.levelDifference),
++        guardedLifts=selected.map(t=>G.choose(t.lift.xi,G.neg(r0),r0,G.zero,G.choose(t.lift.v,G.zero,Ls,G.zero,bodyAt(t),G.zero),G.zero)),
++        own=guardGlobalLocalBody(G,current.geometry,current.local.slowCutoff,choose(guardedLifts),{auxiliary:false}),
++        fixed=G.simultaneousSubstitute(own.body,[Xrep,etaRep,sRep],[current.representative.roots.X,current.representative.roots.eta,current.representative.roots.s]),
++        ownSystem=G.defineExpressionFunction({name:name+'_own_'+signIndex,parameters,body:fixed}),
++        referenceValues=[G.mul(G.sqrt(ratio),R),G.mul(power(ratio,D),Z),G.mul(ratio,T),...parameters.slice(3)],
++        referenceBody=G.mul(power(ratio,exponent),G.expressionValue(ownSystem,referenceValues)),
++        system=G.defineExpressionFunction({name:name+'_reference_'+signIndex,parameters,body:referenceBody});
++      return {system,ownSystem,ownBody:fixed,referenceBody,referenceValues,guards:own,allScaleFactorsInsideDifferentiatedBody:true};
++    }),rows=[];
++  for(const row of pressure.cover.rows){const b=pressure.cover.bands[row.relativeBand+1];for(const sign of row.signs){
++    const values=[R,Z,T,row.label.ell,...row.label.grid,ell,...pressure.geometry.Y,...sign.rectangle.center,...sign.rectangle.copy,...(angular?[theta]:[]),b.delta],
++      derivativeMaps=[...[0,1,2,8,9].map(parameter=>[{parameter,coefficient:G.one}]),...(angular?[[{parameter:14,coefficient:G.one}]]:[])];
++    rows.push({localSystem:systems[sign.sourceLocalRow].system,values,derivativeMaps,coefficient:G.one,guards:row.guards,
++      label:{key:row.key,ell:row.label.ell,grid:row.label.grid,sign:sign.sign,fixedDifference:b.delta,countBoxOnce:true}});
++  }}
++  const field=G.definePeriodicIndexedField({name,parameters:fieldParameters,directions,rows,sourceRecipe:{actualFiniteSuccessorSubstep:true,
++    all81Boxes:true,bothSigns:true,everyFixedDifferenceRetained:true,originalNearestCopyAndLabelsFrozen:true,
++    allScaleAndChainFactorsInsideActualLocalBody:true,physicalScale:kind,sourceCover:pressure.cover.proof}});
++  return {field,root:G.periodicIndexedValue(field,fieldParameters),systems,parameters:fieldParameters,directions,contributions:rows.length,
++    originalSourceLabelsAndCopiesFrozenBeforeDerivative:true};
++}
++
++export function decomposedUpdate(G,geometry,oldVelocity,oldPressure,velocity,pressure,oldFlat){
++  const D=originalCylindricalDifferentialOperators(G,geometry),{R,epsilon}=D;
++  const increment=velocity.map((x,j)=>G.sub(x,oldVelocity[j]));
++  const pressureIncrement=G.sub(pressure,oldPressure);
++  const tensorDiv=(a,b)=>{
++    const tensor=a.map(x=>b.map(y=>G.mul(x,y)));
++    const value=tensor.map(row=>G.add(D.Dr(row[0]),G.div(row[0],R),D.angular(row[1]),D.Dz(row[2])));
++    value[0]=G.sub(value[0],G.div(tensor[1][1],R));
++    value[1]=G.add(value[1],G.div(tensor[0][1],R));
++    return value;
++  };
++  const r2=G.pow(R,2),lap=[
++    G.sub(G.sub(D.lap(increment[0]),G.div(increment[0],r2)),G.div(G.mul(G.q(2),D.thetaDerivative(increment[1])),r2)),
++    G.add(G.sub(D.lap(increment[1]),G.div(increment[1],r2)),G.div(G.mul(G.q(2),D.thetaDerivative(increment[0])),r2)),
++    D.lap(increment[2])];
++  const gradient=[D.Dr(pressureIncrement),D.angular(pressureIncrement),D.Dz(pressureIncrement)];
++  const linear=increment.map((x,j)=>G.add(D.time(x),G.neg(G.mul(epsilon,lap[j])),gradient[j]));
++  const left=tensorDiv(oldVelocity,increment),right=tensorDiv(increment,oldVelocity),quadratic=tensorDiv(increment,increment);
++  const old=exactRealCylindricalPDE(G,{geometry,velocity:oldVelocity,pressure:oldPressure});
++  const oldRegular=old.conservativeResidual.map((x,j)=>G.sub(x,oldFlat[j]));
++  const residual=oldRegular.map((x,j)=>G.add(x,oldFlat[j],linear[j],left[j],right[j],quadratic[j]));
++  return {increment,pressureIncrement,oldResidual:old.conservativeResidual,oldRegular,
++    oldFlatResidual:oldFlat,linear,orderedCrossTerms:[left,right],newQuadraticRemainder:quadratic,residual};
++}
+--- /dev/null
++++ b/work/n602_continuation/source/research-ide/mathscope-m3/navier/source-finite-cycle-continuation.mjs
+@@ -0,0 +1,312 @@
++/** One honest finite continuation of the privately constructed forced current.
++ * No serialized object, caller-selected target, or initial-only seal is accepted.
++ * The original modules and earlier successful pretemporal run are unchanged.
++ */
++import {assertGlobalForcedCurrent,exactAngularWaveCovariance} from './source-global-forced-current.mjs';
++import {originalHomogeneousPrimaryPressure} from './source-global-angular.mjs';
++import {exactSignedCovarianceInverse} from '../../mathscope-m2/navier/actual-physical-residual-algebra.mjs';
++import {exactCylindricalHarmonicCurl} from '../../mathscope-m2/navier/actual-full-curl.mjs';
++import {exactHarmonicComplexAlgebra,reconstructAngularHarmonics,exactRealCylindricalPDE,originalCylindricalDifferentialOperators} from './source-harmonic-assembly.mjs';
++import {reconstructUpdatedFullMeanPressure,exactNormalizedHaar,exactWholeRadialIntegral} from './source-updated-mean-pressure.mjs';
++import {globalGraphEqual,shareGlobalScalar} from './source-global-current.mjs';
++import {createQuadraticSourceVerifier} from './source-quadratic-identity.mjs';
++import {finiteAuxiliaryInverse} from './source-auxiliary-fourier.mjs';
++import {checkActualFiniteAuxiliaryIdentity} from './source-global-temporal.mjs';
++import {realizeOriginalTemporalPotential} from './source-temporal-potential.mjs';
++import {assertGlobalMomentCurrent,exactFiveMomentCoefficients} from './source-global-moment.mjs';
++import {exactFullMeanMomentRemainders,originalFullMeanOperators} from './source-full-mean-equations.mjs';
++import {completeSourceField,decomposedUpdate} from './source-continuation-kernels.mjs';
++import {canonicalStringify} from '../../mathscope-m0/contracts.mjs';
++
++const seals=new WeakMap(),names=['rr','rtheta','rz','thetatheta','thetaz','zz'],meanNames=['beta','v','gamma'];
++const need=(ok,message)=>{if(!ok)throw Object.assign(new Error(message),{code:'INVALID_SOURCE_CONSTRUCTION'});};
++const progress=(context,stage,G,extra={})=>{context.checkCancelled?.();context.onProgress?.({stage,nodeCount:G.nodes.length,...extra});};
++const cross=(G,a,b)=>[G.sub(G.mul(a[1],b[2]),G.mul(a[2],b[1])),G.sub(G.mul(a[2],b[0]),G.mul(a[0],b[2])),G.sub(G.mul(a[0],b[1]),G.mul(a[1],b[0]))];
++const record=s=>({schema:s.schema,stage:s.stage,meanVelocity:s.meanVelocity,covariance:s.covariance,
++  waveVelocity:s.waveVelocity,angularPressure:s.angularPressure,
++  templates:s.templates.map(t=>({key:t.key,lift:t.lift,phase:t.phase,k:t.k,waveRows:t.waveRows})),
++  global:s.global,pressure:s.latestMean.pressure,mean:s.latestMean.mean,sourceBinding:s.sourceBinding,
++  correction:s.correction,ledger:s.ledger,checks:s.checks,scope:s.scope});
++function seal(s,parent,firstStart){
++  const start=firstStart??seals.get(parent)?.count;
++  need(Number.isSafeInteger(start),'A new finite seal must retain its actual owned node prefix.');
++  seals.set(s,{parent,G:s.G,forced:s.forced,source:s.source,current:s.current,pressure:s.pressure,geometry:s.geometry,
++    start,count:s.G.nodes.length,delta:canonicalStringify(s.G.nodes.slice(start)),
++    record:canonicalStringify(record(s)),definitions:s.G.captureFunctionDefinitions()});return s;
++}
++export function assertFiniteCurrent(s){
++  const z=seals.get(s);need(z&&z.G===s.G&&z.forced===s.forced&&z.source===s.source&&z.current===s.current&&
++    z.pressure===s.pressure&&z.geometry===s.geometry&&z.delta===canonicalStringify(s.G.nodes.slice(z.start,z.count))&&
++    z.record===canonicalStringify(record(s))&&s.G.functionDefinitionsUnchanged(z.definitions),
++    'Use the unchanged live finite current constructed by this module.');
++  if(z.parent.stage)assertFiniteCurrent(z.parent);else assertGlobalForcedCurrent(z.parent);
++  return true;
++}
++
++/** The only factory entrance. Every operand is taken from the original
++ * private forced constructor; no schema tag or receipt grants authority.
++ */
++export function currentFromForced(forced,context={}){
++  assertGlobalForcedCurrent(forced);
++  const G=forced.G,start=G.nodes.length,source=forced.input,pressure=source.mean.temporal.pressure,current=pressure.current;
++  need(forced.templates.length===10&&forced.assembly.signedSourceContributions===162&&
++    forced.checks.every(x=>x.pass)&&source.mean.conservation.allCorrectionsRemainDivergenceFree,
++    'The actual forced stage, original support, or mean conservation premise is incomplete.');
++  need(forced.mean.completeBetaVGamma===source.mean.stages.moments.velocity,
++    'The post-forced nonzero mean must be the exact unchanged initialized mean.');
++  const geometry=forced.global.geometry;
++  const {band}=current,{R}=geometry,D=originalCylindricalDifferentialOperators(G,geometry),stress=pressure.residual.fullOriginalStress;
++  const backgroundVelocity=[band.fields.b,G.mul(R,band.fields.F),band.fields.G];
++  const backgroundPDE=exactRealCylindricalPDE(G,{geometry,velocity:backgroundVelocity,pressure:band.fields.pressure});
++  const stressDivergence=[G.zero,G.add(D.Dr(stress[0]),G.div(G.mul(G.q(2),stress[0]),R)),
++    G.add(D.Dr(stress[1]),G.div(stress[1],R))];
++  const oldFlat=backgroundPDE.conservativeResidual.map((x,j)=>G.add(x,stressDivergence[j]));
++  const initialPotential=source.mean.temporal.potential,{N}=originalFullMeanOperators(G,geometry);
++  const inheritedFax=G.mul(geometry.ci,N(G.sub(initialPotential.velocity.gamma,initialPotential.gammaDesired)));
++  const decomposition=decomposedUpdate(G,geometry,source.global.velocity,source.global.pressure,
++    forced.global.velocity,forced.global.pressure,oldFlat);
++  const verify=createQuadraticSourceVerifier(G,{maxTerms:180000,maxProducts:3000000});
++  const comparison=forced.global.direct.conservativeResidual.map((x,j)=>({component:j,direct:x,
++    decomposed:decomposition.residual[j],...verify(G.sub(x,decomposition.residual[j]))}));
++  need(comparison.every(x=>x.pass),'The actual forced whole-field comparison failed.');
++  const s={schema:'MathScope.N602.LiveFiniteCurrent/1',stage:'post-forced',G,forced,source,pressure,current,geometry,
++    templates:forced.templates,meanVelocity:forced.mean.completeBetaVGamma,covariance:forced.mean.fullCurrentCovariance,
++    waveVelocity:forced.assembly.velocityFields.map(f=>f.root),angularPressure:forced.assembly.angularPressureField.root,
++    latestMean:forced.mean,global:{velocity:forced.global.velocity,pressure:forced.global.pressure,
++      direct:forced.global.direct,decomposition,comparison},
++    sourceBinding:{originalForcedPrivateSealRequired:true,allOriginalModes:forced.templates.map(t=>({key:t.key,modes:t.waveRows.map(r=>r.m)})),
++      actualNonzeroMeanPreserved:true,callerRootsAccepted:false,serializedCloneAccepted:false},
++    correction:null,ledger:{oldFlatResidual:oldFlat,oldFlatDerivation:{backgroundPDE:backgroundPDE.conservativeResidual,stressDivergence},
++      inheritedActualMeanResidual:source.global.referenceMeanResidual.conservativeResidual,
++      pressureA0:[{stage:'initial-temporal',root:source.mean.stages.temporal.pressure.cutoffRemainder},
++        {stage:'initial-fresh-five',root:source.mean.stages.moments.pressure.cutoffRemainder},
++        {stage:'post-forced',root:forced.mean.pressure.cutoffRemainder}],
++      temporalFax:[{stage:'initial-temporal',root:inheritedFax,actualGamma:initialPotential.velocity.gamma,
++        gammaDesired:initialPotential.gammaDesired}],
++      inheritedPulseCutoffTerms:source.initial.local.map(t=>({sign:t.sign,sourceFullCurl:t.sourceFullCurl,
++        originalWaveRows:t.waveRows,actualCompleteResidual:t.update.direct,
++        preservation:t.pulseEndpointRemaindersKept})),
++      forcedCutoffRemainders:{actualSource:forced.templates.map(t=>({key:t.key,increment:t.increment,
++        actualCompleteUpdate:t.update.direct})),automaticallyDeclaredGaussianFlat:false},
++      interpretation:'pressureA0 entries are historical stage-specific pressure remainders, never a cumulative sum. The unchanged background flat force is the tensor-decomposition reference; the entire inherited mean residual including its actual Fax and latest A0 remains in oldResidual and is not replaced by the background term.'},
++    checks:comparison,scope:{oneFiniteCanonicalCycleOnly:true,allOrderClassBoundCertified:false,originalN602Complete:false}};
++  progress(context,'finite-current-factory-authenticated-actual-postforced',G);
++  return seal(s,forced,start);
++}
++
++/** Original Sigma for a general actual mean: subtract the actual weighted
++ * whole radial moment, not a formula specialized to zero mean velocity.
++ * Normalized rho proves the weighted source has zero integral. Its link
++ * to epsilon*dZ(Jtheta,Jz+cRho*P) is kept as a separate conservation identity.
++ */
++export function actualCurrentSigma(state){
++  assertFiniteCurrent(state);const {G,geometry,latestMean,pressure}=state,{R,Y,innerRadius,outerRadius}=geometry;
++  const rho=pressure.pressure.rho,chi=pressure.pressure.chi;
++  const rows=[latestMean.mean.Etheta,latestMean.mean.Ez].map((body,j)=>{
++    const e=2-j,E=shareGlobalScalar(G,exactNormalizedHaar(G,body,Y),'SuccessorHaarE_'+j);
++    const moment=shareGlobalScalar(G,exactWholeRadialIntegral(G,G.mul(G.pow(R,e),E),geometry,'SuccessorWeightedE_'+j),'SuccessorMomentE_'+j);
++    const normalizedSource=G.sub(E,G.mul(G.div(rho,G.pow(R,e)),moment));
++    const r=G.fresh('SuccessorSigmaRadial_'+j),weighted=G.mul(G.pow(R,e),normalizedSource),integrand=G.substitute(weighted,R,r);
++    const partial=G.integral(integrand,r,innerRadius,R),whole=G.integral(integrand,r,innerRadius,outerRadius);
++    const rawValue=G.neg(G.div(G.sub(partial,G.mul(chi,whole)),G.pow(R,e)));
++    const derivative=G.add(G.derivative(rawValue,R),G.div(G.mul(G.q(e),rawValue),R));
++    const cutoffRemainder=G.div(G.mul(G.derivative(chi,R),whole),G.pow(R,e));
++    const check=globalGraphEqual(G,derivative,G.add(G.neg(normalizedSource),cutoffRemainder));
++    const value=shareGlobalScalar(G,rawValue,'SuccessorSigma_'+j);
++    need(check.pass&&Y.every(y=>!G.freeCoordinates(value).has(y)),'Actual current Sigma FTC or Haar independence failed.');
++    return {e,actualResidual:body,E,moment,normalizedSource,weighted,partial,whole,rawValue,value,cutoffRemainder,check};
++  });
++  return {rows,Sigma:rows.map(r=>r.value),sourceAuthenticated:true,
++    normalizationSource:{rho,chi,innerRadius,outerRadius},
++    weightedZeroMomentProof:'For M=integral r^e*Haar(E), integral r^e*(Haar(E)-rho*r^-e*M)=M-M*integral(rho)=0, using the unchanged original positive normalized rho.',
++    currentMomentConservation:state.source.mean.conservation,
++    compactFTCSourceRemainderNotNumericallyDiscarded:true,initialZeroMeanFormulaReused:false};
++}
++
++function nextCurrent(previous,{stage,meanVelocity,covariance,templates,waveVelocity,angularPressure,correction},context){
++  assertFiniteCurrent(previous);const {G,geometry,current,pressure}=previous,{band}=current,{R}=geometry;
++  const background={b:band.fields.b,V:G.mul(R,band.fields.F),G:band.fields.G};
++  const latestMean=reconstructUpdatedFullMeanPressure(G,{geometry:pressure.geometry,background,velocity:meanVelocity,covariance,
++    stress:pressure.residual.fullOriginalStress,rho:pressure.pressure.rho,chi:pressure.pressure.chi,tag:'FiniteCycle_'+stage});
++  if(stage==='fresh-five'){
++    const old=previous.latestMean.mean.raw,next=latestMean.mean.raw,n=correction.nonlinear,increment=correction.increment;
++    const expansionChecks=[
++      {id:'fresh-five-actual-radial-full-nonlinear-expansion',...globalGraphEqual(G,G.sub(G.sub(next.gr,old.gr),n.linear.PIntegrand),n.Rg)},
++      {id:'fresh-five-actual-angular-flux-full-nonlinear-expansion',...globalGraphEqual(G,G.sub(G.sub(next.fluxTheta,old.fluxTheta),n.linear.JthetaIntegrand),n.JthetaIntegrand)},
++      {id:'fresh-five-actual-axial-flux-full-nonlinear-expansion',...globalGraphEqual(G,G.sub(next.fluxZ,old.fluxZ),
++        G.add(G.mul(G.q(2),R,background.G,increment.gamma),n.JzVelocityIntegrand))}];
++    need(expansionChecks.every(c=>c.pass),'The actual old/new fresh-five nonlinear defect comparison failed.');
++    correction={...correction,expansionChecks,actualNewDefects:Object.fromEntries(['P','Jtheta','Jz'].map(k=>[k,latestMean.mean[k]])),
++      defectRemainderDerivation:'Integrate the three checked actual difference identities with normalized Haar. The fixed five-profile identities cancel exactly the actual pre-five P/J; all nonlinear remainder integrals are retained as the new defects, without declaring them zero.'};
++  }
++  const velocity=[background.b,background.V,background.G].map((x,j)=>G.add(x,meanVelocity[meanNames[j]],waveVelocity[j]));
++  const fullPressure=G.add(band.fields.pressure,latestMean.pressure.value,angularPressure);
++  const direct=exactRealCylindricalPDE(G,{geometry,velocity,pressure:fullPressure});
++  const decomposition=decomposedUpdate(G,geometry,previous.global.velocity,previous.global.pressure,velocity,fullPressure,previous.ledger.oldFlatResidual);
++  const verify=createQuadraticSourceVerifier(G,{maxTerms:180000,maxProducts:3000000});
++  const comparison=direct.conservativeResidual.map((x,j)=>({component:j,direct:x,decomposed:decomposition.residual[j],
++    ...verify(G.sub(x,decomposition.residual[j]))}));
++  need(comparison.every(x=>x.pass),'The '+stage+' actual all3 direct/decomposed comparison failed.');
++  const stalePressure=exactRealCylindricalPDE(G,{geometry,velocity,pressure:previous.global.pressure});
++  const negativeControls={
++    stalePressure:stalePressure.conservativeResidual.map((x,j)=>verify(G.sub(x,decomposition.residual[j]))),
++    omittedQuadratic:direct.conservativeResidual.map((x,j)=>verify(G.sub(x,G.sub(decomposition.residual[j],decomposition.newQuadraticRemainder[j])))),
++    omittedBackgroundFlat:direct.conservativeResidual.map((x,j)=>verify(G.sub(x,G.sub(decomposition.residual[j],previous.ledger.oldFlatResidual[j]))))};
++  const controlSummary=Object.fromEntries(Object.entries(negativeControls).map(([name,checks])=>[name,{checks,
++    rejectedAsAnExactIdentity:checks.some(c=>!c.pass),
++    interpretation:'A passing omission may be an actually zero component; no nonzero value is invented to force rejection.'}]));
++  const s={...previous,stage,meanVelocity,covariance,templates,waveVelocity,angularPressure,latestMean,correction,
++    global:{velocity,pressure:fullPressure,direct,decomposition,comparison,negativeControls:controlSummary},
++    sourceBinding:{...previous.sourceBinding,previousStage:previous.stage,sameActualPreviousCurrent:true,
++      newMeanIsOldMeanPlusActualIncrement:stage!=='signed'||meanVelocity===previous.meanVelocity,
++      fullUpdatedCovarianceBound:latestMean.mean.fullAngularCovariance===covariance},
++    ledger:{...previous.ledger,pressureA0:[...previous.ledger.pressureA0,{stage,root:latestMean.pressure.cutoffRemainder}],
++      temporalFax:[...previous.ledger.temporalFax,...(correction?.Fax!==undefined?[{stage,root:correction.Fax}]:[])]},checks:[...latestMean.checks,...comparison]};
++  progress(context,'finite-cycle-'+stage+'-latest-pressure-and-actual-all3-comparison',G,
++    {comparison,negativeControls:Object.fromEntries(Object.entries(controlSummary).map(([k,v])=>[k,v.rejectedAsAnExactIdentity]))});
++  return seal(s,previous);
++}
++
++export function attachPostForcedSigned(previous,context={}){
++  assertFiniteCurrent(previous);need(previous.stage==='post-forced','The finite signed update requires this actual post-forced current.');
++  const {G,source,current,geometry}=previous,{band}=current,{R,Z,Xrep,etaRep,sRep,theta,v}=band.coordinates;
++  const {epsilon,k}=band.geometry,xi=band.cutoffs.xi;
++  const target=actualCurrentSigma(previous),inverse=exactSignedCovarianceInverse(G,{H:band.target.H,
++    amplitudes:band.target.squareRootWeights,epsilon,target:target.Sigma});
++  const atRepresentative=body=>G.simultaneousSubstitute(body,[Xrep,etaRep,sRep],
++    [current.representative.roots.X,current.representative.roots.eta,current.representative.roots.s]);
++  const C=exactHarmonicComplexAlgebra(G),increments=band.families.map((family,index)=>{
++    const deltaA=inverse.deltaAmplitude[index],old=current.local.rows[index];
++    need(inverse.a[index]===old.originalFixedPositiveA&&inverse.H.every((row,j)=>row[index]===band.target.H[j][index]),
++      'The signed correction must retain the exact original positive amplitude and H column.');
++    need(!G.freeCoordinates(deltaA).has(v)&&!G.freeCoordinates(deltaA).has(xi),
++      'Actual signed amplitude must be independent of the fast homogeneous pulse variables.');
++    const weighted=family.t.map(x=>G.mul(current.local.slowCutoff.body,G.sqrt(epsilon),deltaA,band.cutoffs.chi,band.cutoffs.psi,x));
++    const amplitudeScalingChecks=weighted.map((x,j)=>globalGraphEqual(G,x,
++      G.mul(G.div(deltaA,old.originalFixedPositiveA),old.weightedAmplitude[j]),
++      [current.local.slowCutoff.body,G.sqrt(epsilon),deltaA,old.originalFixedPositiveA,band.cutoffs.chi,band.cutoffs.psi,...family.t]));
++    need(amplitudeScalingChecks.every(c=>c.pass),'The new homogeneous signed amplitude is not the exact fast-constant multiple of the original tangential source.');
++    const raw=cross(G,family.frame.n,weighted).map(x=>G.div(x,G.mul(k,family.frame.nSquared)));
++    const potential=raw.map((x,j)=>G.share(x,current.local.parameters,'FiniteSignedPotential_'+index+'_'+j));
++    const curl=exactCylindricalHarmonicCurl(G,{R,Z,xi,epsilon,radialFast:current.geometry.radialFast,k,normal:family.frame.n,potential});
++    const primaryPressure=originalHomogeneousPrimaryPressure(G,{normal:family.frame.n,nPrime:family.frame.nPrime,
++      K:family.frame.principalK,k,amplitude:weighted});
++    need(curl.divergence.checks.every(x=>x.pass)&&primaryPressure.identity.pass,'The actual signed full curl or homogeneous pressure failed.');
++    return {deltaA,weighted,potential,curl,primaryPressure,amplitudeScalingChecks,
++      originalTangentialSource:old.weightedAmplitude,fixedOriginalPositiveA:old.originalFixedPositiveA,
++      homogeneousLinearScaling:'deltaA/a is independent of xi and v; the same original tangential Volterra solution and homogeneous pressure are scaled before the full curl.'};
++  });
++  const templates=previous.templates.map(old=>{
++    const inc=increments[old.signIndex],map=body=>G.simultaneousSubstitute(atRepresentative(body),[xi,v],[old.lift.xi,old.lift.v]);
++    const positive={m:1,velocity:inc.curl.leading.map((x,j)=>C.value(G.mul(G.q(1,2),map(x)),G.mul(G.q(1,2),map(inc.curl.remainder[j])))),
++      pressure:C.value(G.mul(G.q(1,2),map(inc.primaryPressure.value.real)),G.mul(G.q(1,2),map(inc.primaryPressure.value.imaginary)))};
++    const increment=[positive,{m:-1,velocity:positive.velocity.map(C.conjugate),pressure:C.conjugate(positive.pressure)}];
++    const waveRows=old.waveRows.map(row=>{
++      const add=increment.find(r=>r.m===row.m);return add?{m:row.m,velocity:row.velocity.map((x,j)=>C.add(x,add.velocity[j])),pressure:C.add(row.pressure,add.pressure)}:row;
++    });
++    need(waveRows.some(r=>r.m===2)&&waveRows.some(r=>r.m===-2),'The actual forced second harmonics must survive the signed update.');
++    const covariance=exactAngularWaveCovariance(G,{rows:waveRows,theta});
++    const reconstruction=reconstructAngularHarmonics(G,{geometry:old.lift.geometry,phase:old.phase,k,rows:waveRows});
++    return {...old,signedIncrement:increment,waveRows,covariance,reconstruction};
++  });
++  const covarianceFields=Object.fromEntries(names.map(n=>[n,completeSourceField(source,templates,'FiniteSignedCov_'+n,t=>t.covariance.values[n],{kind:'covariance',angular:false})]));
++  const velocityFields=[0,1,2].map(j=>completeSourceField(source,templates,'FiniteSignedVelocity_'+j,t=>t.reconstruction.velocity[j],{kind:'velocity'}));
++  const pressureField=completeSourceField(source,templates,'FiniteSignedAngularPressure',t=>t.reconstruction.pressure,{kind:'pressure'});
++  need([...Object.values(covarianceFields),...velocityFields,pressureField].every(f=>f.contributions===162),'Every signed field must retain the original full162 contribution set.');
++  return nextCurrent(previous,{stage:'signed',meanVelocity:previous.meanVelocity,
++    covariance:Object.fromEntries(names.map(n=>[n,covarianceFields[n].root])),templates,
++    waveVelocity:velocityFields.map(f=>f.root),angularPressure:pressureField.root,
++    correction:{target,inverse,increments,full162Fields:{covarianceFields,velocityFields,pressureField},
++      covarianceComputedBeforeAuxiliaryHaar:true,oldForcedHigherHarmonicsRetained:true}},context);
++}
++
++export function attachPostSignedTemporal(previous,context={}){
++  assertFiniteCurrent(previous);need(previous.stage==='signed','Temporal correction must use the actual newly signed pressure.');
++  const {G,geometry,current,latestMean}=previous,{R,Z,T,Y}=geometry;
++  const parameters=[R,Z,T,current.band.coordinates.ell,...Y],directions=[R,Z,T,...Y],inverses={};
++  const smoothnessChecks=[
++    {id:'same-live-forced-current-and-unchanged-original-support',pass:assertGlobalForcedCurrent(previous.forced)&&
++      previous.pressure.cover.proof.exactSourceAuthority&&previous.pressure.cover.proof.allCrossLabelProductsVanish},
++    {id:'all-original-fixed-lift-forced-Volterra-bodies-retained',pass:previous.forced.templates.length===10&&
++      previous.forced.templates.every(t=>t.forced.length===2&&t.forced.every(f=>f.checks.every(c=>c.pass)))},
++    {id:'all-signed-full-curls-and-original-homogeneous-pressure',pass:previous.correction.increments.every(i=>
++      i.curl.divergence.checks.every(c=>c.pass)&&i.primaryPressure.identity.pass)},
++    {id:'actual-full-pressure-from-the-current-all162-full-Y-covariance',pass:latestMean.checks.every(c=>c.pass)&&
++      latestMean.mean.fullAngularCovariance===previous.covariance&&
++      Object.values(previous.correction.full162Fields.covarianceFields).every(f=>f.contributions===162)}];
++  need(smoothnessChecks.every(c=>c.pass),'A source-specific smooth periodicity premise was lost.');
++  const smoothPeriodicity={checks:smoothnessChecks,actualSourceBodies:{theta:latestMean.mean.Etheta,z:latestMean.mean.Ez},
++    sourceSpecificProof:[
++      'The unchanged initialized mean is built by exact Fourier inverses with its own source tails, radial potentials and fixed smooth compact profiles. Its exact source smoothness and original torus periodicity are retained by the private source chain.',
++      'Each of the 20 original forced positive modes is the finite-interval zero-data Volterra solution with the retained original smooth coefficients and complete smooth current forcing. Parameter differentiation gives the full downward-closed variational equations; their local ordered-integral convergence proves every finite derivative exists.',
++      'The original flat transverse and longitudinal cutoff factors, fixed integer torus maps and all162 support guards retain smooth periodic joins; every conjugate negative route and the unchanged mean remains present.',
++      'The actual signed Sigma takes normalized Haar means and complete radial integrals of this same smooth current. Original positive fixed H and a yield smooth slow amplitudes; the full curl, homogeneous pressure and original fixed-lift assembly preserve the same periodic source class.',
++      'All six actual full-Y covariances are finite products. The translated full pressure integral, every displayed finite derivative, sum and product preserve smooth periodicity. Consequently the two actual E roots above have their needed C4/C5 source derivatives; the computed Fourier tails bind those roots, not an abstract replacement.'
++    ],allFiniteDerivativeExistenceDischargedAnalytically:true,uniformAllOrderNumericalClassBoundClaimed:false};
++  for(const [name,body]of [['theta',latestMean.mean.Etheta],['z',latestMean.mean.Ez]]){
++    const system=G.defineAuxiliaryInverse({name:'FinitePostSignedTemporal_'+name,body,Y,parameters,directions});
++    const exact=G.auxiliaryInverseValue(system,parameters),finite=finiteAuxiliaryInverse(G,{body,Y,cutoff:1,derivativeOrders:[0,1]});
++    const identity=checkActualFiniteAuxiliaryIdentity(G,finite);
++    need(identity.pass&&finite.tails.every(t=>t.tailTendsToZero&&!t.omittedModesSetToZero),'The actual temporal Fourier identity/tail failed.');
++    inverses[name]={system,body,exact,finite,identity,exactZeroMode:G.zero,finiteSumReplacesExactLimit:false};
++    progress(context,'finite-temporal-actual-source-inverse-and-C1-tail',G,{component:name});
++  }
++  const potential=realizeOriginalTemporalPotential(G,{geometry:{...geometry,chi:previous.pressure.pressure.chi},
++    inverseTheta:inverses.theta.exact,inverseZ:inverses.z.exact,tag:'FinitePostSignedTemporal'});
++  const meanVelocity=Object.fromEntries(meanNames.map(n=>[n,G.add(previous.meanVelocity[n],potential.velocity[n])]));
++  const {N}=originalFullMeanOperators(G,geometry),Fax=G.mul(geometry.ci,N(G.sub(potential.velocity.gamma,potential.gammaDesired)));
++  return nextCurrent(previous,{stage:'temporal',meanVelocity,covariance:previous.covariance,templates:previous.templates,
++    waveVelocity:previous.waveVelocity,angularPressure:previous.angularPressure,
++    correction:{inverses,potential,Fax,smoothPeriodicity,actualOldMean:previous.meanVelocity,actualIncrement:potential.velocity,
++      gammaDesiredNotSubstitutedForActualGamma:true,sourceAllOrderSmoothnessPremiseStillRequired:false,
++      everyNewRequestedDerivativeTailMaterialized:false}},context);
++}
++
++export function attachPostTemporalFreshFive(previous,context={}){
++  assertFiniteCurrent(previous);need(previous.stage==='temporal','Fresh five must use the pressure after the actual temporal increment.');
++  const {G,geometry,current}=previous,template=previous.source.mean.template;
++  assertGlobalMomentCurrent(template);need(template.current===current,'The fixed original profiles must come from the exact same current.');
++  const b=template.bumps,{R,Z,Y,epsilon}=geometry,{band}=current,{A}=band.constants,s=band.chart.s,q=(n,d=1)=>G.q(n,d),power=(x,a)=>G.exp(G.mul(a,G.log(x)));
++  const actualInputDefects=Object.fromEntries(['P','Jtheta','Jz'].map(n=>[n,previous.latestMean.mean[n]]));
++  const targets={P:G.mul(power(s,G.mul(q(2),A)),actualInputDefects.P),
++    Jtheta:G.mul(power(s,G.sub(G.mul(q(2),A),q(3,2))),actualInputDefects.Jtheta),
++    Jz:G.mul(power(s,G.sub(G.mul(q(2),A),G.one)),actualInputDefects.Jz)};
++  const coefficients=exactFiveMomentCoefficients(G,{angularNodes:b.powers.slice(0,3).map(p=>G.exp(G.mul(b.d,p))),
++    angularFactors:b.coefficients.angularMatrix.map(row=>row[0]),angularTargets:[G.zero,G.neg(targets.P),G.neg(targets.Jz)],
++    axialNode:G.exp(b.d),axialRatio:G.exp(G.mul(q(-2),b.d,b.lambda)),axialFactors:b.coefficients.axialMatrix.map(row=>row[0]),axialTarget:G.neg(targets.Jtheta)});
++  need(canonicalStringify(coefficients.angularMatrix)===canonicalStringify(b.coefficients.angularMatrix)&&
++    canonicalStringify(coefficients.axialMatrix)===canonicalStringify(b.coefficients.axialMatrix),'The fixed original five matrix changed.');
++  const deltaV=shareGlobalScalar(G,G.add(...coefficients.angular.map((c,j)=>G.mul(c,b.copies[j].inQ))),'FiniteFreshFive_v');
++  const gammaDesired=shareGlobalScalar(G,G.add(...coefficients.axial.map((c,j)=>G.mul(c,b.copies[j].inQ))),'FiniteFreshFive_gamma');
++  const r=G.fresh('FiniteFreshFiveRadial'),integrand=G.substitute(G.mul(R,gammaDesired),R,r);
++  const primitive=G.integral(integrand,r,geometry.innerRadius,R),whole=G.integral(integrand,r,geometry.innerRadius,geometry.outerRadius);
++  const psi=G.div(primitive,R),rawBeta=G.neg(G.mul(epsilon,G.derivative(psi,Z))),beta=shareGlobalScalar(G,rawBeta,'FiniteFreshFive_beta');
++  const increment={beta,v:deltaV,gamma:gammaDesired},meanVelocity=Object.fromEntries(meanNames.map(n=>[n,G.add(previous.meanVelocity[n],increment[n])]));
++  const {De,Dz}=originalFullMeanOperators(G,geometry),checks=[globalGraphEqual(G,De(psi,1),gammaDesired,[R,primitive,gammaDesired]),
++    globalGraphEqual(G,G.add(De(rawBeta,1),Dz(gammaDesired)),G.zero)];
++  need(checks.every(x=>x.pass)&&Object.values(increment).every(x=>Y.every(y=>!G.freeCoordinates(x).has(y))),
++    'The actual fresh-five potential, divergence, or zero auxiliary dependence failed.');
++  const nonlinear=exactFullMeanMomentRemainders(G,{geometry,background:previous.latestMean.mean.background,
++    previous:previous.meanVelocity,increment});
++  const compactPsi=G.div(G.sub(primitive,G.mul(previous.pressure.pressure.chi,whole)),R);
++  const wholeHaar=body=>exactWholeRadialIntegral(G,exactNormalizedHaar(G,body,Y),geometry,'FiniteFreshFiveRemainder');
++  const remainderDefects={P:wholeHaar(nonlinear.Rg),Jtheta:wholeHaar(nonlinear.JthetaIntegrand),
++    Jz:G.sub(wholeHaar(nonlinear.JzVelocityIntegrand),G.mul(q(1,2),wholeHaar(G.mul(G.pow(R,2),nonlinear.Rg))))};
++  const next=nextCurrent(previous,{stage:'fresh-five',meanVelocity,covariance:previous.covariance,templates:previous.templates,
++    waveVelocity:previous.waveVelocity,angularPressure:previous.angularPressure,
++    correction:{actualInputDefects,targets,coefficients,increment,actualOldMean:previous.meanVelocity,
++      primitive,whole,psi,compactPsi,rawBeta,checks,nonlinear,remainderDefects,nonlinearRemaindersDeclaredZero:false,
++      exactConservationDerivation:'Initial actual weighted moments are zero; forced/signed nonzero angular modes do not change them. The temporal inverse and its actual meridional realization have zero normalized Haar mean. The fresh five homogeneous rows are exactly zero by the same original fixed profile change of variables, preserving both moments.',
++      compactPotentialDerivation:'The unchanged original profile change of variables identifies whole with the normalized axial homogeneous row coefficients.axialValues[0]=0. Thus compactPsi=psi; the raw whole root is retained.',
++      fixedProfileOnlyReused:true,oldTargetsReused:false}},context);
++  return next;
++}
++
++export function attachCanonicalFiniteCycle(forced,context={}){
++  const postForced=currentFromForced(forced,context),signed=attachPostForcedSigned(postForced,context),
++    temporal=attachPostSignedTemporal(signed,context),five=attachPostTemporalFreshFive(temporal,context);
++  return {schema:'MathScope.N602.ActualCanonicalFiniteCycle/1',stages:{postForced,signed,temporal,five},
++    allMandatoryFiniteStagesConstructed:true,allActualComparisonsPassed:[postForced,signed,temporal,five].every(s=>s.global.comparison.every(c=>c.pass)),
++    literalInfiniteExecutionRequired:false,allOrderClassBoundsCertified:false,originalN602Complete:false,
++    reviewRequired:'Runtime success authenticates this finite cycle; independent source, chart, support and denominator review remains separate.'};
++}

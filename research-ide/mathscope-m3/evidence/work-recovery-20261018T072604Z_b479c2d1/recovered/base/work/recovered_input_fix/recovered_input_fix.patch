@@ -1,0 +1,310 @@
+--- v5/workspace/wave_source_connection.py
++++ recovered_input_fix/workspace/wave_source_connection.py
+@@ -251,6 +251,17 @@
+             "scope": "Actual finite native definition and nonzero-mode filtering only; no G_wave/F_pulse decomposition or all-band bound follows"}
+ 
+ 
++def _can_close_wave_obligation(validation_passed, gf_evidence, thm_evidence):
++    """Keep input authentication separate from the existing theorem gate."""
++    return bool(
++        validation_passed
++        and gf_evidence is not None
++        and gf_evidence.get("unconditional_complete") is True
++        and thm_evidence is not None
++        and thm_evidence.get("unconditional_complete") is True
++    )
++
++
+ def audit_wave_source(acceptance_root: Path, producer_root: Path | None = None,
+                       reference_root: Path | None = None) -> dict:
+     here = Path(__file__).resolve().parent
+@@ -286,7 +297,8 @@
+                 verified.append(expected)
+             else:
+                 missing.append(expected["path"])
+-        _need(len(verified) >= 7, "Expected at least the 7 recovered original producer files")
++        _need(len(verified) == len(reference["producers"]) == 11,
++              "Expected all 11 authenticated original producer files in the recovered-input copy")
+         return {
+             "verified_files": verified,
+             "verified_count": len(verified),
+@@ -476,13 +488,8 @@
+             result["applied_connections"].append({"name":name,"scope":"The checked limited identity/arithmetic only; conditional premises remain explicit","evidence":evidence})
+ 
+     result["validation_passed"] = bool(result["source_checks"]) and all(check["passed"] for check in result["source_checks"])
+-    unconditionally_closed = (
+-        result["validation_passed"]
+-        and gf_evidence is not None
+-        and gf_evidence.get("unconditional_complete") is True
+-        and thm_evidence is not None
+-        and thm_evidence.get("unconditional_complete") is True
+-    )
++    unconditionally_closed = _can_close_wave_obligation(
++        result["validation_passed"], gf_evidence, thm_evidence)
+     if unconditionally_closed:
+         result["remaining_obligations"] = []
+         result["items"]["N6-01"] = {
+@@ -554,4 +561,4 @@
+         "new_M3_completions": res["items"]["N6-01"]["new_M3_completions"],
+         "validation_passed": res["validation_passed"],
+         "remaining_obligations_count": len(res["remaining_obligations"]),
+-    }, ensure_ascii=False))+    }, ensure_ascii=False))
+--- v5/workspace/test_wave_source_connection.py
++++ recovered_input_fix/workspace/test_wave_source_connection.py
+@@ -8,6 +8,7 @@
+ import importlib.util
+ import json
+ from pathlib import Path
++import shutil
+ import tempfile
+ import unittest
+ import zipfile
+@@ -154,17 +155,20 @@
+         checks = {row["name"]:row for row in result["source_checks"]}
+         self.assertTrue(checks["reference_identity"]["passed"])
+         self.assertTrue(checks["available_producer_definitions"]["passed"])
+-        self.assertEqual(checks["available_producer_definitions"]["evidence"]["verified_count"], 7)
+-        # 4 of 11 producer .mjs files are unbundled in the standalone review package, so full producer_definitions is False:
+-        self.assertFalse(checks["producer_definitions"]["passed"])
++        self.assertEqual(checks["available_producer_definitions"]["evidence"]["verified_count"], 11)
++        self.assertEqual(checks["available_producer_definitions"]["evidence"]["missing_unbundled_files"], [])
++        self.assertTrue(checks["producer_definitions"]["passed"])
+         self.assertFalse(checks["sealed_saved_inputs"]["passed"])
+ 
+     def test_actual_input_binding_remains_blocked_under_conditional_evidence(self):
+         result = wave.audit_wave_source(HERE/"payload/acceptance")
+         checks = {row["name"]: row for row in result["source_checks"]}
+-        # All 7 recovered producer files and all 4 general_fixed_order_source_continuation recipe files pass:
++        # All 11 authenticated producers and all 4 continuation recipe files pass.
+         self.assertTrue(checks["reference_identity"]["passed"])
+         self.assertTrue(checks["available_producer_definitions"]["passed"])
++        self.assertEqual(checks["available_producer_definitions"]["evidence"]["verified_count"], 11)
++        self.assertEqual(checks["available_producer_definitions"]["evidence"]["missing_unbundled_files"], [])
++        self.assertTrue(checks["producer_definitions"]["passed"])
+         self.assertTrue(checks["sealed_saved_inputs"]["passed"])
+         self.assertTrue(checks["general_fixed_order_source_continuation"]["passed"])
+         self.assertTrue(checks["actual_call_graph_and_no_self_premise"]["passed"])
+@@ -174,7 +178,12 @@
+         self.assertTrue(checks["recovered_parent_native_162_and_nonzero_projection"]["passed"])
+         self.assertTrue(checks["gf_conditional_artifact_audit"]["passed"])
+         self.assertTrue(checks["all_fixed_order_theorem_audit"]["passed"])
+-        # Because 4 producer .mjs files and TARGET_SOURCE_NODES.ndjson (33,792 bytes) are unbundled, validation_passed is False:
++        # The distinct original TARGET_SOURCE_NODES.ndjson remains absent.
++        self.assertFalse((HERE/"wave_reference/source_recovery/TARGET_SOURCE_NODES.ndjson").exists())
++        self.assertFalse(checks["actual_native_162_and_nonzero_projection"]["passed"])
++        self.assertEqual(checks["actual_native_162_and_nonzero_projection"]["evidence"]["type"], "FileNotFoundError")
++        self.assertEqual([row["name"] for row in result["source_checks"] if not row["passed"]],
++                         ["actual_native_162_and_nonzero_projection"])
+         self.assertFalse(result["validation_passed"])
+         # And N6-01 is BLOCKED (56/64 preserved):
+         self.assertEqual(result["items"]["N6-01"]["status"], "BLOCKED")
+@@ -194,64 +203,69 @@
+         self.assertFalse(thm_ev["unconditional_complete"])
+         self.assertEqual(len(thm_ev["premises_not_eliminated"]), 4)
+ 
+-    def test_complete_fixture_with_conditional_evidence_remains_blocked(self):
+-        """Regression test for the 57/64 -> 56/64 audit correction:
+-        even in a complete fixture where all 11 producer files and TARGET_SOURCE_NODES.ndjson
+-        pass hash checks so validation_passed is True, N6-01 MUST remain BLOCKED because
+-        CURRENT_WAVE_APPLICATION.json has unconditional_global_wave_certificate=false
+-        and 4 undischarged premises."""
++    def test_authenticated_producers_keep_target_and_parent_slice_distinct(self):
++        """Recovered original bytes do not replace the missing target or its pin."""
++        recovery = HERE/"wave_reference/source_recovery"
++        self.assertFalse((recovery/"TARGET_SOURCE_NODES.ndjson").exists())
++        raw_parent = (recovery/"RECOVERED_PARENT_SOURCE_NODES.ndjson").read_bytes()
++        self.assertEqual(len(raw_parent), 17557)
++        self.assertEqual(len(raw_parent.splitlines()), 285)
++        self.assertEqual(wave._sha(raw_parent), wave.RECOVERED_PARENT_NODES_SHA256)
++        self.assertEqual(wave.NODES_SHA256,
++                         "a7665627f0998be8a20a62894b0a64da1e3be3b0f36da9da0c49aad185dabd28")
++        self.assertNotEqual(wave._sha(raw_parent), wave.NODES_SHA256)
++        reference = HERE/"wave_reference/WAVE_SOURCE_REFERENCE.json"
++        self.assertEqual(wave._sha(reference.read_bytes()), wave.REFERENCE_SHA256)
++        producers = json.loads(reference.read_text(encoding="utf-8"))["producers"]
++        self.assertEqual(len(producers), 11)
++        for producer in producers:
++            with self.subTest(producer=producer["path"]):
++                body = (HERE/"payload/producers"/producer["path"]).read_bytes()
++                self.assertEqual(len(body), producer["bytes"])
++                self.assertEqual(wave._sha(body), producer["sha256"])
++
++    def test_input_success_cannot_discharge_actual_conditional_premises(self):
++        """Exercise the theorem gate independently without forging target bytes."""
++        result = wave.audit_wave_source(HERE/"payload/acceptance")
++        checks = {row["name"]: row for row in result["source_checks"]}
++        gf = checks["gf_conditional_artifact_audit"]["evidence"]
++        theorem = checks["all_fixed_order_theorem_audit"]["evidence"]
++        self.assertEqual(len(gf["premises_not_eliminated"]), 4)
++        self.assertEqual(len(theorem["premises_not_eliminated"]), 4)
++        self.assertFalse(wave._can_close_wave_obligation(True, gf, theorem))
++        self.assertFalse(wave._can_close_wave_obligation(False, gf, theorem))
++
++    def test_removed_new_producer_is_rejected_without_promotion(self):
+         with tempfile.TemporaryDirectory() as tmp:
+-            root = Path(tmp)
+-            acc = root / "payload/acceptance/inputs"
+-            acc.mkdir(parents=True)
+-            (acc / "MathScope_M3_WaveNorm_Continuation.zip").write_bytes(
+-                (HERE / "payload/acceptance/inputs/MathScope_M3_WaveNorm_Continuation.zip").read_bytes()
+-            )
+-            ref_dir = root / "wave_reference"
+-            rec_dir = ref_dir / "source_recovery"
+-            raw_dir = rec_dir / "raw"
+-            raw_dir.mkdir(parents=True)
+-            for rel in (
+-                "WAVE_SOURCE_REFERENCE.json",
+-                "source_recovery/NATIVE_DEFINITIONS.json",
+-                "source_recovery/RECOVERED_PARENT_SOURCE_NODES.ndjson",
+-                "source_recovery/raw/CURRENT_WAVE_APPLICATION.json",
+-                "source_recovery/raw/GAUSSIAN_TAIL_CONNECTION.json",
+-            ):
+-                (ref_dir / rel).write_bytes((HERE / "wave_reference" / rel).read_bytes())
+-
+-            rec_ndjson_bytes = (rec_dir / "RECOVERED_PARENT_SOURCE_NODES.ndjson").read_bytes()
+-            (rec_dir / "TARGET_SOURCE_NODES.ndjson").write_bytes(rec_ndjson_bytes)
+-
+-            ref_data = json.loads((ref_dir / "WAVE_SOURCE_REFERENCE.json").read_text(encoding="utf-8"))
+-            prod_root = root / "payload/producers"
+-            for prod in ref_data["producers"]:
+-                pfile = prod_root / prod["path"]
+-                pfile.parent.mkdir(parents=True, exist_ok=True)
+-                src_p = HERE / "payload/producers" / prod["path"]
+-                if src_p.is_file():
+-                    pfile.write_bytes(src_p.read_bytes())
+-                else:
+-                    dummy = ("// unit-test fixture placeholder for " + prod["path"]).encode("utf-8")
+-                    pfile.write_bytes(dummy)
+-                    prod["bytes"] = len(dummy)
+-                    prod["sha256"] = wave._sha(dummy)
+-            ref_bytes = json.dumps(ref_data).encode("utf-8")
+-            (ref_dir / "WAVE_SOURCE_REFERENCE.json").write_bytes(ref_bytes)
+-
+-            orig_ref_sha, orig_nodes_sha = wave.REFERENCE_SHA256, wave.NODES_SHA256
+-            try:
+-                wave.REFERENCE_SHA256 = wave._sha(ref_bytes)
+-                wave.NODES_SHA256 = wave._sha(rec_ndjson_bytes)
+-                res = wave.audit_wave_source(root / "payload/acceptance", prod_root, ref_dir)
+-            finally:
+-                wave.REFERENCE_SHA256, wave.NODES_SHA256 = orig_ref_sha, orig_nodes_sha
+-
+-            self.assertTrue(res["validation_passed"], res["source_checks"])
+-            self.assertEqual(res["items"]["N6-01"]["status"], "BLOCKED")
+-            self.assertFalse(res["items"]["N6-01"]["mathematical_complete"])
+-            self.assertEqual(res["items"]["N6-01"]["new_M3_completions"], 0)
+-            self.assertEqual(len(res["remaining_obligations"]), 2)
++            producer_root = Path(tmp)/"producers"
++            shutil.copytree(HERE/"payload/producers", producer_root)
++            removed = producer_root/"research-ide/mathscope-m3/navier/source-common-y-class-majorants.mjs"
++            removed.unlink()
++            result = wave.audit_wave_source(HERE/"payload/acceptance", producer_root)
++        checks = {row["name"]: row for row in result["source_checks"]}
++        self.assertFalse(checks["available_producer_definitions"]["passed"])
++        self.assertIn("all 11 authenticated", checks["available_producer_definitions"]["evidence"]["error"])
++        self.assertFalse(checks["producer_definitions"]["passed"])
++        self.assertFalse(result["validation_passed"])
++        self.assertFalse(result["items"]["N6-01"]["mathematical_complete"])
++        self.assertEqual(result["items"]["N6-01"]["new_M3_completions"], 0)
++
++    def test_modified_new_producer_is_rejected_without_promotion(self):
++        with tempfile.TemporaryDirectory() as tmp:
++            producer_root = Path(tmp)/"producers"
++            shutil.copytree(HERE/"payload/producers", producer_root)
++            changed = producer_root/"research-ide/mathscope-m3/navier/source-radial-class-majorants.mjs"
++            body = bytearray(changed.read_bytes())
++            body[0] ^= 1
++            changed.write_bytes(body)
++            result = wave.audit_wave_source(HERE/"payload/acceptance", producer_root)
++        checks = {row["name"]: row for row in result["source_checks"]}
++        self.assertFalse(checks["available_producer_definitions"]["passed"])
++        self.assertIn("Producer bytes changed", checks["available_producer_definitions"]["evidence"]["error"])
++        self.assertFalse(checks["producer_definitions"]["passed"])
++        self.assertFalse(result["validation_passed"])
++        self.assertFalse(result["items"]["N6-01"]["mathematical_complete"])
++        self.assertEqual(result["items"]["N6-01"]["new_M3_completions"], 0)
+ 
+ 
+ if __name__ == "__main__":
+--- v5/workspace/PRODUCER_RECOVERY_STATUS.json
++++ recovered_input_fix/workspace/PRODUCER_RECOVERY_STATUS.json
+@@ -1,14 +1,34 @@
+ {
+-  "schema": "MathScope.ProducerRecoveryStatus/1",
++  "schema": "MathScope.ProducerRecoveryStatus/2",
+   "total_referenced_in_wave_source_reference": 11,
+-  "recovered_exact_sha256_count": 7,
+-  "missing_unbundled_count": 4,
++  "recovered_exact_sha256_count": 11,
++  "missing_unbundled_count": 0,
+   "all_4_norm_family_continuation_recipe_files_recovered": true,
+   "recovered_producers": [
+     {
+       "bytes": 27252,
+       "path": "research-ide/mathscope-m3/navier/source-primary-class-majorants.mjs",
+       "sha256": "40b3f1220b7ad1b9b05a11ae1378c864351e77e8efe7134ae1b78921fbab47ea"
++    },
++    {
++      "bytes": 16223,
++      "path": "research-ide/mathscope-m3/navier/source-common-y-class-majorants.mjs",
++      "sha256": "9badb503543f8bc83f5db0e7a373a9a8434ae63104f201601c8e1df66e493da6"
++    },
++    {
++      "bytes": 18745,
++      "path": "research-ide/mathscope-m3/navier/source-background-class-majorants.mjs",
++      "sha256": "4b7fb0dc54da5efb1462e2299b0061f312d93fa28768e8795f55fe55eba86b3d"
++    },
++    {
++      "bytes": 19413,
++      "path": "research-ide/mathscope-m3/navier/source-fourier-class-majorants.mjs",
++      "sha256": "ecda6bc5bb3d0f61bb5e7cbf418579d83e42f13ac188b748b8fb90c7e2485daa"
++    },
++    {
++      "bytes": 36367,
++      "path": "research-ide/mathscope-m3/navier/source-radial-class-majorants.mjs",
++      "sha256": "5f0fc6b8856bbe451f5949c37bd44473cac049b3c7dd714000be9405e8b6cd48"
+     },
+     {
+       "bytes": 12670,
+@@ -41,26 +61,20 @@
+       "sha256": "babe4aceb97d0bdee4084e5f06009e6724128935fffde1647c11e3aab022df60"
+     }
+   ],
+-  "missing_producers": [
+-    {
+-      "bytes": 16223,
+-      "path": "research-ide/mathscope-m3/navier/source-common-y-class-majorants.mjs",
+-      "sha256": "9badb503543f8bc83f5db0e7a373a9a8434ae63104f201601c8e1df66e493da6"
+-    },
+-    {
+-      "bytes": 18745,
+-      "path": "research-ide/mathscope-m3/navier/source-background-class-majorants.mjs",
+-      "sha256": "4b7fb0dc54da5efb1462e2299b0061f312d93fa28768e8795f55fe55eba86b3d"
+-    },
+-    {
+-      "bytes": 19413,
+-      "path": "research-ide/mathscope-m3/navier/source-fourier-class-majorants.mjs",
+-      "sha256": "ecda6bc5bb3d0f61bb5e7cbf418579d83e42f13ac188b748b8fb90c7e2485daa"
+-    },
+-    {
+-      "bytes": 36367,
+-      "path": "research-ide/mathscope-m3/navier/source-radial-class-majorants.mjs",
+-      "sha256": "5f0fc6b8856bbe451f5949c37bd44473cac049b3c7dd714000be9405e8b6cd48"
+-    }
+-  ]
++  "missing_producers": [],
++  "scope": "Recovered-input working copy only. Original v5 and its historical receipt remain unchanged.",
++  "newly_recovered_producer_paths": [
++    "research-ide/mathscope-m3/navier/source-common-y-class-majorants.mjs",
++    "research-ide/mathscope-m3/navier/source-background-class-majorants.mjs",
++    "research-ide/mathscope-m3/navier/source-fourier-class-majorants.mjs",
++    "research-ide/mathscope-m3/navier/source-radial-class-majorants.mjs"
++  ],
++  "unbundled_original_target_source_nodes": {
++    "path": "wave_reference/source_recovery/TARGET_SOURCE_NODES.ndjson",
++    "present": false,
++    "expected_bytes": 33792,
++    "expected_sha256": "a7665627f0998be8a20a62894b0a64da1e3be3b0f36da9da0c49aad185dabd28",
++    "replaced_with_parent_slice": false
++  },
++  "mathematical_completion_claimed": false
+ }

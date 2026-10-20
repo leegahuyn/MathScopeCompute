@@ -1,0 +1,77 @@
+{
+  "runs": [
+    {
+      "name": "source_capsule",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/scratch/00fe7982b3e1/m3_native_work/prepare_native_source.py",
+        "--recovery-root",
+        "/workspace/scratch/00fe7982b3e1/MathScopeCompute/research-ide/mathscope-m3/evidence/work-recovery-20261018T072604Z_b479c2d1",
+        "--output",
+        "/workspace/scratch/00fe7982b3e1/m3_native_work/evidence/SOURCE_CAPSULE.json"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.41154468600143446,
+      "stdout": "{\"source_capsule\": \"/workspace/scratch/00fe7982b3e1/m3_native_work/evidence/SOURCE_CAPSULE.json\", \"records\": 19, \"source_calls\": [622820, 623935], \"new_M3_closures\": 0}\n",
+      "stderr": ""
+    },
+    {
+      "name": "native_validation",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/scratch/00fe7982b3e1/m3_native_work/verify_slow_inverse.py",
+        "--source-capsule",
+        "/workspace/scratch/00fe7982b3e1/m3_native_work/evidence/SOURCE_CAPSULE.json",
+        "--output-dir",
+        "/workspace/scratch/00fe7982b3e1/m3_native_work/evidence"
+      ],
+      "exit_code": 1,
+      "elapsed_seconds": 0.04560618499817792,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/workspace/scratch/00fe7982b3e1/m3_native_work/verify_slow_inverse.py\", line 17, in <module>\n    import sympy as sp\nModuleNotFoundError: No module named 'sympy'\n"
+    },
+    {
+      "name": "native_validation_attempt2",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/scratch/00fe7982b3e1/m3_native_work/verify_slow_inverse.py",
+        "--source-capsule",
+        "/workspace/scratch/00fe7982b3e1/m3_native_work/evidence/SOURCE_CAPSULE.json",
+        "--output-dir",
+        "/workspace/scratch/00fe7982b3e1/m3_native_work/evidence"
+      ],
+      "environment": {
+        "PYTHONPATH": "/workspace/scratch/00fe7982b3e1/tmp/mathscope_python_deps"
+      },
+      "exit_code": 0,
+      "elapsed_seconds": 0.5272340180017636,
+      "stdout": "{\"status\": \"PASS\", \"native_boxes\": 19, \"independent_endpoint_certificates\": 22, \"implicit_jet_identities\": 5, \"negative_controls\": 10, \"precision_comparison_bits\": [32, 64, 128], \"h_replaced_by_zero\": false, \"actual_caller_coordinates_evaluated\": false, \"new_M3_closures\": 0, \"actual_global_last_resolved_tau\": null, \"elapsed_seconds\": 0.23222340900247218, \"output\": \"/workspace/scratch/00fe7982b3e1/m3_native_work/evidence/ACTUAL_SLOW_INVERSE_VALIDATION.json\"}\n",
+      "stderr": ""
+    },
+    {
+      "name": "native_validation_attempt3_identity_hardening",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/scratch/00fe7982b3e1/m3_native_work/verify_slow_inverse.py",
+        "--source-capsule",
+        "/workspace/scratch/00fe7982b3e1/m3_native_work/evidence/SOURCE_CAPSULE.json",
+        "--output-dir",
+        "/workspace/scratch/00fe7982b3e1/m3_native_work/evidence"
+      ],
+      "environment": {
+        "PYTHONPATH": "/workspace/scratch/00fe7982b3e1/tmp/mathscope_python_deps",
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "exit_code": 0,
+      "elapsed_seconds": 0.455401167000673,
+      "stdout": "{\"status\": \"PASS\", \"native_boxes\": 19, \"independent_endpoint_certificates\": 22, \"implicit_jet_identities\": 5, \"negative_controls\": 16, \"precision_comparison_bits\": [32, 64, 128], \"h_replaced_by_zero\": false, \"actual_caller_coordinates_evaluated\": false, \"new_M3_closures\": 0, \"actual_global_last_resolved_tau\": null, \"elapsed_seconds\": 0.19758462400204735, \"output\": \"/workspace/scratch/00fe7982b3e1/m3_native_work/evidence/ACTUAL_SLOW_INVERSE_VALIDATION.json\"}\n",
+      "stderr": ""
+    }
+  ],
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "new_M3_closures": 0,
+  "review_dependencies": {
+    "sympy": "1.14.0",
+    "mpmath": "1.3.0"
+  }
+}

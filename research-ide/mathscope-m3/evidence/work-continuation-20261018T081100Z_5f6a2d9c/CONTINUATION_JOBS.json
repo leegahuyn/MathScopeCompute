@@ -1,0 +1,96 @@
+{
+  "baseline_zip": "baseline/MathScope_Recovery_Final_20261018T072604Z_b479c2d1.zip",
+  "baseline_sha256": "6db01bbf3d07048e7ee2cd8411b8b4a38d9c64ee5516898935f32f8b2228cad8",
+  "baseline_commit": "ed7d7ca85afbe668c44afc0e142bc40ec150fe53",
+  "jobs": [
+    {
+      "id": "indexed_dependencies",
+      "runtime": "python",
+      "args": [
+        "work/resumed_continuation/indexed/code/materialize_dependencies.py",
+        "--source",
+        "work/recovery_git/recovered/runtime/source/original-parent.ndjson.gz"
+      ]
+    },
+    {
+      "id": "indexed_derivatives",
+      "runtime": "python",
+      "args": [
+        "work/resumed_continuation/indexed/code/exact_derivative_connection.py"
+      ]
+    },
+    {
+      "id": "natural_degree_one",
+      "runtime": "node",
+      "args": [
+        "work/resumed_continuation/natural/code/materialize_degree_one.mjs"
+      ]
+    },
+    {
+      "id": "natural_scaled_callers",
+      "runtime": "python",
+      "args": [
+        "work/resumed_continuation/natural/code/certify_scaled_callers.py"
+      ]
+    },
+    {
+      "id": "picard_collar",
+      "runtime": "python",
+      "args": [
+        "work/resumed_continuation/picard/code/apply_actual_collar_bounds.py"
+      ]
+    },
+    {
+      "id": "quadratic_matrix_jets",
+      "runtime": "python",
+      "args": [
+        "work/resumed_continuation/quadratic/code/continue_quadratic.py"
+      ]
+    },
+    {
+      "id": "cutoff_prefix",
+      "runtime": "python",
+      "args": [
+        "work/resumed_continuation/cutoff/code/run_continuation.py"
+      ]
+    },
+    {
+      "id": "review_indexed",
+      "runtime": "python",
+      "args": [
+        "work/resumed_continuation/natural/review_indexed/review.py"
+      ]
+    },
+    {
+      "id": "review_natural",
+      "runtime": "python",
+      "args": [
+        "work/resumed_continuation/indexed/review_natural/review.py"
+      ]
+    },
+    {
+      "id": "review_picard",
+      "runtime": "python",
+      "args": [
+        "work/resumed_continuation/quadratic/review_picard/review_picard.py"
+      ]
+    },
+    {
+      "id": "review_quadratic",
+      "runtime": "python",
+      "args": [
+        "work/resumed_continuation/picard/review_quadratic/review.py"
+      ]
+    },
+    {
+      "id": "review_cutoff",
+      "runtime": "python",
+      "args": [
+        "work/resumed_continuation/cutoff/review/run_independent_review.py"
+      ]
+    }
+  ],
+  "baseline_22_jobs_repeated": false,
+  "N706_closed": false,
+  "N805_closed": false
+}

@@ -1,0 +1,43 @@
+--- a/code/verify_all_eight_items.py
++++ b/code/verify_all_eight_items.py
+@@ -540,7 +540,8 @@
+         if t <= t_quiet:
+             return 0.0
+         s = (t - t_quiet) / (t_end - t_quiet)
+-        return (6.0 * s * s * (1.0 - s)) / (t_end - t_quiet)
++        # d/ds [s**3 * (3 - 2*s)] = 9*s**2 - 8*s**3.
++        return (9.0 * s * s - 8.0 * s * s * s) / (t_end - t_quiet)
+ 
+     spatial_norm_u_sq = 0.045
+     spatial_norm_grad_u_sq = 0.180
+--- a/code/test_all_eight_items.py
++++ b/code/test_all_eight_items.py
+@@ -73,6 +73,28 @@
+         self.assertTrue(all(sweeps_ok.values()))
+         self.assertEqual(res["n805_four_axis_adaptation"]["last_resolved_tau"], 1e-4)
+ 
++    def test_n706_model_energy_balance_defect_converges_to_zero(self) -> None:
++        """Check the energy identity itself, independently of inequality (10.14)."""
++        res = v8.verify_n706_and_n805_energy_and_adaptation(INPUTS_DIR)
++        runs = res["n706_global_energy_balance"]["refinement_runs"]
++        normalized_by_n_t = {}
++        for run in runs:
++            # a(1)=1, so 2*E_final is the spatial norm multiplier. Removing it
++            # isolates temporal integration error despite changes in n_x.
++            normalized = run["energy_balance_defect"] / (2.0 * run["E_final"])
++            n_t = run["n_t"]
++            # The exact identity is integral(a*a')=1/2. Composite midpoint
++            # quadrature has error <= 4/n_t**2 for this polynomial; see
++            # PROOF_SCOPE.md for the bound. A wrong derivative leaves an O(1)
++            # normalized defect and must not pass via inequality (10.14).
++            self.assertLessEqual(normalized, 4.0 / (n_t * n_t))
++            normalized_by_n_t[n_t] = normalized
++        self.assertEqual(sorted(normalized_by_n_t), [64, 128, 256])
++        for coarse, fine in ((64, 128), (128, 256)):
++            ratio = normalized_by_n_t[coarse] / normalized_by_n_t[fine]
++            self.assertGreater(ratio, 3.9)
++            self.assertLess(ratio, 4.1)
++
+ 
+ if __name__ == "__main__":
+     unittest.main(verbosity=2)

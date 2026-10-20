@@ -1,0 +1,568 @@
+{
+  "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf",
+  "sha256": "f4758ab0c6f4038ab30cd9d3d945a471a467f9ffb4d36a0e172f95320720f0ac",
+  "page_count": 99,
+  "criterion_count": 80,
+  "criteria": [
+    {
+      "id": "I3-01",
+      "title": "정의와 연구가설의 파일 분리",
+      "text": "Defs, Finite, Analytic, Comparison, Conditional, Open 모듈을 나누고 Open은 axiom-free theorem import 경로에 넣\n지 않는다. 합격: unconditional target의 dependency closure에 사용자 공리가 있으면 해당 등급의 build가 실패한다.",
+      "page": 20,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "I3-02",
+      "title": "유한 대수 정리부터 형식화",
+      "text": "delta identities의 허용 정밀도, d²=0, semilinear chain map, 유한 소수 구간 인증, Lie bracket, lattice holonomy를 작은\n정리로 나눈다. 합격: 자체 fixture와 일부러 잘못된 certificate가 각각 수락·거부된다. 숫자 예시와 전칭 정리의 범위가 구분\n된다.",
+      "page": 20,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "I3-03",
+      "title": "해석적 가정의 구체화",
+      "text": "완비성, uniform convergence, 미분과 극한의 교환, semigroup bounds, spectral measure, stability constants의 정확\n한 진술을 저장한다. 합격: 무한 합의 미분이나 continuum limit를 쓰는 lemma마다 필요한 norm·정의역·양화 범위가 표시\n된다.",
+      "page": 20,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "I3-04",
+      "title": "외부 비교 정리의 adapter",
+      "text": "프리즘 비교·trace formula·BSD의 알려진 경우·NS 원문 정리를 인용 레벨과 실제 Lean import 레벨로 구분한다. 합격: 문헌\n링크만 연결된 결과는 THEOREM REFERENCE이며, 정확한 exported Lean theorem을 import한 경우에만 kernel 결과와\n연결된다.",
+      "page": 20,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "I3-05",
+      "title": "소스 생성과 재검사",
+      "text": "사용자가 G· Δ·p·정밀도·계수식·가정을 바꾸면 새로운 ProofJob을 만들고, 이전 검사 결과는 hash 불일치로 분리한다. 합격:\n기본 시나리오 소스를 한 글자 바꾸는 negative test에서 과거 PASS가 재사용되지 않는다.",
+      "page": 20,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "I3-06",
+      "title": "커널·공리·빌드 감사",
+      "text": "Lean/mathlib commit, compile exit, warnings, sorry 여부, #print axioms, target theorem type, 소요 시간을 기록한다.\n합격: 0=1을 rfl로 제출하는 통제 사례가 실패한다. kernel PASS가 UI에서 사용자 공리 의존성을 가리지 않는다.",
+      "page": 20,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "I3-07",
+      "title": "연구 관문의 완료 조건",
+      "text": "RH global bridge, 전칭 BSD, 일반 G continuum quantum construction은 RESEARCH OPEN으로 관리한다. 알려진\nprism 비교의 구현은 MODEL DEVELOPMENT로, 새로운 비교정리가 필요한 경우는 RESEARCH OPEN으로 구분한다. 합\n격: 가정 자체를 결론으로 다시 쓰는 순환 증명과 대수적 이름만 붙인 의미 인터페이스가 연구 관문을 닫지 못한다.",
+      "page": 20,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "I3-08",
+      "title": "교육용 설명과 전문가 감사 동기화",
+      "text": "학생에게는 문장과 예제를, 연구자에게는 동일 claim의 정확한 Lean type·가정·출처·반례 조건을 보여준다. 합격: 두 모드가\n같은 claim ID를 사용하고, 쉬운 설명에서 양화사·조건·근사 범위가 빠지지 않는다.",
+      "page": 20,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "P7-01",
+      "title": "전역 정규화와 모든 국소 인자를 완성한다",
+      "text": "ζ의 completed ξ와 E의 Λ_E=N_E^{s/2}(2 π)^{-s}Γ(s)L(E,s)를 각각 명세한다. minimum model/Tate reduction, root\nnumber, bad factors의 certificate를 묶는다. 합격: good-only product는 L^S라고 표시한다. ζ↔ξ 또는 L↔ Λ의 영점·극\n점·trivial zero 차이가 자동 변환 기록에 남는다.",
+      "page": 34,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "P7-02",
+      "title": "해석적 연장 backend와 Euler-product 영역을 분리한다",
+      "text": "유한 Euler product는 ζ에서 Re(s)>1, E good-factor product에서 Re(s)>3/2의 탐색으로 제한한다. critical strip 계산은\ncertified analytic continuation과 complex balls를 사용한다. 합격: s=1/2+it에서 finite Euler product를 ζ의 인증값으로\n반환하면 실패한다. 반올림·series truncation·tail error를 각각 포함한 ball을 내보낸다.",
+      "page": 34,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "P7-03",
+      "title": "영점 고립·개수·중복도를 인증한다",
+      "text": "N(T)는 0<Imρ≤T인 strip 전체 영점의 중복도 포함 개수로 정의한다. Hardy Z의 실수 영점 고립으로 Re ρ=1/2를 인증하고 독\n립 zero counter와 비교한다. T=20,30의 endpoint exclusion도 확인한다. 합격: N(20)=1, N(30)=3을 count certificate\n로 재확인한다. 임계선에서 찾은 영점 수와 전체 strip의 count가 다르면 RH_VERIFIED_TO_T를 주지 않는다.",
+      "page": 34,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "P7-04",
+      "title": "명시적 공식의 유한 잘림 오차를 계산한다",
+      "text": "우선 x를 half-integer로 제한한 ψ(x)와 symmetric zero sum을 제공한다. 숫자 오차 밴드는 선택한 truncated/smoothed\nformula의 명시 상수·가정·tail bound가 있을 때만 인증한다. 합격: x=10.5의 prime side=log2520. ψ 또는 ψ₀ endpoint\nconvention을 기록한다. 이름만 있는 O(·)나 수치 residual을 rigorous tail bound로 쓰면 실패한다.",
+      "page": 34,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "P7-05",
+      "title": "global operator 후보를 반증 가능한 입력으로 만든다",
+      "text": "사용자가 operator/domain, spectrum-zero 대응, regularized determinant, trace formula, duality/positivity 가설을 등\n록하게 한다. truncation별 spectrum·극점·중복도·정규화·functional-equation residual을 비교한다. 합격: 누락 영점, 잘못\n된 trivial-zero factor, determinant의 상수/선형 exponential normalization 차이, multiplicity 불일치는 counterexample\n후보로 저장한다. 유한 통과가 전체 operator의 존재나 RH 증명이 되지 않는다.",
+      "page": 34,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "P7-06",
+      "title": "analytic rank를 증명 범위별로 계산한다",
+      "text": "root-number 대칭으로 강제되는 vanishing과 exact modular-symbol vanishing, 도함수의 rigorous nonzero ball을 구분\n한다. completed Λ의 Taylor parity를 사용한다. 합격: w=−1이면 Λ(1)=0의 정확한 이유를 기록하고 0∉ Λ′(1)의 인증구간\n이 있어야 rank=1. 0을 포함하는 작은 interval은 vanishing 증명이 아니다.",
+      "page": 34,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "P7-07",
+      "title": "arithmetic rank와 leading BSD data를 독립 인증한다",
+      "text": "독 립 유 리 점 ·height/ regulator 로 lower bound, descent/ Selmer certificate 로 upper bound 를 얻 는 다. tor-\nsion·saturation·Tamagawa·period·Sha 의 known/ conditional/ unknown 을 각 각 저 장 한 다. 합 격: rank interval\n[r_min,r_max]가 한 점일 때만 해당 곡선 rank 확정. Sage L_ratio() 등의 숨은 Manin-constant 가정이 충족되지 않으면 조\n건부로 표시한다.",
+      "page": 34,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "P7-08",
+      "title": "RH·BSD 연구 결과를 제한된 범위로 내보낸다",
+      "text": "finite-height zero certificate, 특정 curve의 rank equality, refined leading-term 검증, universal conjecture를 별도 결\n과 타입으로 제공한다. coefficient/prime/zero completeness의 빠진 항을 자동 목록화한다. 합격: 한 E에서 두 rank가 같\n다고 universal BSD를 표시하지 않는다. finite-field RH theorem을 classical RH axiom으로 복사하는 요청은 거부한다. 연\n구가설은 Lean 가정 목록과 함께 내보낸다.",
+      "page": 34,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "P8-01",
+      "title": "객체 정체성과 증거 등급을 직교화한다",
+      "text": "CW_TOY, DERIVED_MODEL, PRISMATIC_VIA_COMPARISON, NATIVE_PRISMATIC을 object kind로 둔다. exact/\nball/approximate와 Lean-checked/external-theorem/hypothesis를 별도로 관리한다. 합격: PRISMATIC_VIA_COMP\nARISON이어도 Lean dependency가 외부면 FORMAL_COMPLETE가 아니다. 숫자 grade 값을 크게 바꾸어 theorem 상태\n로 승격시키는 schema fixture가 실패한다.",
+      "page": 36,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "P8-02",
+      "title": "3D 구조의 좌표 계약을 고정한다",
+      "text": "degree-basis-valuation, Hodge/Newton polygons, prime-degree-Frobenius weight, refinement tower를 각 view로\n제공한다. 클릭하면 chain basis·matrix column·map·source theorem을 보이게 한다. 합격: view matrix·camera·LOD 변\n경은 수학 결과를 바꾸지 않는다. 3D projection을 원래 공간과의 동형·차원 축소 증명으로 저장할 수 없다.",
+      "page": 36,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "P8-03",
+      "title": "비교 diagram의 조건을 클릭해서 검사한다",
+      "text": "노드는 계수환과 base를, 화살표는 tensor/twist/completion/inversion/fixed-point 또는 quasi-isomorphism을 명세한\n다. 잘못된 base-change 순서는 composability 검사로 막는다. 합격: bounded/smooth/proper/perfect 등 각 edge의 필\n요한 가정이 표시된다. 조건을 제거한 replay에서는 edge가 유효하지 않다는 이유를 반환한다.",
+      "page": 36,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "P8-04",
+      "title": "Lean은 작은 인증 정리부터 쌓는다",
+      "text": "정수 d², unit contraction, chain equivalence, point counts, trace recurrence, bounded residue reconstruction, finite\nEuler identity를 우선 구현 후보로 둔다. 고급 비교정리의 현재 라이브러리 범위를 별도 조사한다. 합격: 각 후보에는\ntheorem statement·입력 타입·핵심 lemma·certificate 소비 방식·추가 axiom이 명시된다. 컴파일되지 않은 코드를 형식화\n완료라고 표시하지 않는다.",
+      "page": 36,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "P8-05",
+      "title": "조건부 corollary의 의존성을 숨기지 않는다",
+      "text": "새 operator/trace/duality 가정은 고유 ID와 정확한 수학 명제를 갖는다. theorem의 실제 의존 axiom을 출력하고 그 axiom\n을 지운 상태의 재검증을 지원한다. 합격: Lean #print axioms와 입력 assumption ledger가 일치한다. target conjecture\n자체를 가정하고 얻은 corollary는 CONDITIONAL_ON_TARGET으로 명확히 분류한다.",
+      "page": 36,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "P8-06",
+      "title": "반증용 mutation과 재현 bundle을 만든다",
+      "text": "bad prime 하나, Frobenius coefficient 하나, truncation bound 하나, zero box 하나, rank upper certificate 하나를 제\n거·변조하여 관문을 다시 실행한다. 합격: 변조된 입력은 해당 단계에서 실패하고 후속 theorem badge가 취소된다. session\n저장은 입력 해시·정밀도·비교 근거를 보존하며 재계산 결과와 일치한다.",
+      "page": 36,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "P8-07",
+      "title": "새 연구를 위한 구체적인 탐색 도구를 제공한다",
+      "text": "global operator 후보의 finite compression, determinant normalization quotient, trace moment matching, func-\ntional equation·duality consistency, zero multiplicity coverage를 자동 비교한다. 반례는 재현 가능한 최소 입력으로 줄\n인다. 합격: 후보 A와 B가 같은 그림을 내어도 다른 characteristic polynomial·trace·rank이면 구별된다. 미증명 bridge는\n각각 RESEARCH OPEN이며 실패/통과한 유한 테스트를 나란히 표시한다.",
+      "page": 36,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "P8-08",
+      "title": "마일스톤 review packet으로 승인 기준을 고정한다",
+      "text": "P1-P3 기본 계산, P4 실제 zeta 연결, P5-P6 고급 base, P7 분석 인증, P8 통합을 각각 독립 review packet으로 작성한다.\n지원범위·fixture 결과·미완료 증명·새 연구 질문을 담는다. 합격: 출시 준비와 수학적 난제 해결을 다른 체크박스로 둔다. 이\n번 산출물은 설계도이며 구현·컴파일·배포가 완료되었다는 상태를 생성하지 않는다.",
+      "page": 36,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "Y5-01",
+      "title": "Δ 모드와 변경 효과 선언",
+      "text": "declared lower bound / units-rescaling / explicit effective model / empirical ensemble estimate의 4모드를 둔다. 합\n격: 가정 모드에서는 A와 샘플 hash가 유지되고 axiom revision만 바뀐다. Δ≤0·단위 없음·다른 모드 자료 혼합은 거부한다.",
+      "page": 46,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "Y5-02",
+      "title": "실제로 변하는 유효 4D 장족",
+      "text": "자연단위에서 ℓ Δ=1/Δ, ρΔ=κℓΔ를 모델 규칙으로 지정한다. A Δ=ιA_BPST(ρΔ)+εℓΔ⁻¹Σcφ((x−x₀)/ℓΔ)Ta를 생성한다. 합\n격: Δ₁≠Δ₂이면 고정 관측 좌표의 A/F·길이 척도·투영이 규칙대로 변한다. ε≠0의 장은 off-shell일 수 있으며 ρΔ=κ/Δ는 양자\nYM 정리가 아니다.",
+      "page": 46,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "Y5-03",
+      "title": "명시적인 유효 스펙트럼 연결",
+      "text": "Ej(Δ)=Δ+εj, εj≥0 및 wj≥0의 유한 모형으로 C Δ(t)=Σwj exp( −Ej t)를 만든다. ε₀=0,w₀>0이면 이 모형의 최저 에너지는\nΔ다. 합격: CΔ(t)≤exp(−Δt)Σwj를 정확한 가정 아래 검증한다. Y5-02 장과 이 스펙트럼의 연결은 model assumption ID를\n가져야 한다.",
+      "page": 46,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "Y5-04",
+      "title": "단위 변환과 실제 dilation 구별",
+      "text": "Δphysical=(ℏc/at)(atΔ)의 단위를 고정한다. A λ(x)=λA(λx)의 고전 scaling과 단순 표시 단위 변경을 구별한다. 합격: 4D 고\n전 작용의 scaling 불변과 ρ→ρ/λ를 확인한다. quantum gap scaling은 H λ=λUHU⁻¹ 등 별도 가정 없이는 유도하지 않는다.",
+      "page": 46,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "Y5-05",
+      "title": "Δ 타깃에 대한 양자 격자 앙상블족",
+      "text": "PΔ(U)∝exp[−Sβ(Δ),G(U)]의 생성 규칙을 지정한다. β·a·L·T를 바꾸는 calibration table와 독립 scale-setting으로 타깃을\n찾는다. 합격: 모든 Δ 결과는 실제 새 chain 또는 검증된 재가중 경로에 연결된다. 타깃 Δ와 추정 mchannel±오차를 나란히\n표시하고 동일성을 미리 강제하지 않는다.",
+      "page": 46,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "Y5-06",
+      "title": "상관함수와 유효질량 추정",
+      "text": "전체 진공 공간을 제거한 gauge-invariant 관측 벡터의 C(t)를 측정한다. 유일한 진공이면 평균 제거를 사용하며, 주기 시간\n에는 finite-T/cosh와 operator channel을 명시한다. 합격: C(t)≤0 또는 cosh 역함수의 불가능 입력을 abs/clip으로 숨기지\n않는다. 양의 스펙트럼 가정에서 gapglobal≤Echannel≤meff 방향을 표시한다.",
+      "page": 46,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "Y5-07",
+      "title": "전달 연산자·GEVP·인증 경계",
+      "text": "양의 self-adjoint T에서 En −E0=−at⁻¹log(λn/λ0)를 사용한다. GEVP는 관측량 기저와 excited-state 오염을 함께 기록한\n다. 합격: 수치 eigenvalue는 추정이다. 전체 진공 공간을 제외한 최대 λexc/λ₀≤r<1과 전체 비진공 공간의 제어가 있을 때만\n해당 모델 gap 하한 −log(r)/at를 인증한다.",
+      "page": 46,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "Y5-08",
+      "title": "한계 순서와 불확실성 비교",
+      "text": "통계·operator overlap·T·L·a·표현 cutoff 오차를 구분한다. 일정 물리량 조건에서 a→0,L→∞,T→∞를 비교한다. 합격: 한\noperator channel의 양의 질량이나 유한 격자의 양의 gap을 continuum의 양의 하한으로 표시하지 않는다. 외삽 그래프에\n는 사용한 가정·fit window·데이터를 공개한다.",
+      "page": 46,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "Y6-01",
+      "title": "원본·표현·근거를 연결",
+      "text": "Original에는 A/F 또는 links/ensemble, Representation에는 slice·marginal·LOD, Evidence에는 source·오차·proof를 보\n관한다. 합격: 3D selection은 원본 4D 좌표·configuration·관측 연산자로 이동한다. 화면 mesh나 색상으로 원본의 새 물리\n상태를 생성하지 않는다.",
+      "page": 48,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "Y6-02",
+      "title": "x ₄=c 절단",
+      "text": "q(y,c), energy density, 선택된 invariant observable을 3D에 표시하고 c를 연속/격자 index로 조절한다. 합격: 기존 SU(2)\nBPST slice의 해석식을 회귀검사한다. interpolated slice는 보간 방식과 오차를 표시하고 실제 격자면과 구별한다.",
+      "page": 48,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "Y6-03",
+      "title": "x ₄ 방향 적분·평균 구별",
+      "text": "marginal at Σn q(y,n at), 평균 (1/Nt) Σn q, 한 표본과 ensemble 평균을 서로 다른 연산자로 둔다. 합격: marginal의 단위\n가 q×length로 바뀐다. BPST 무한 방향 해석식과 finite window tail을 확인하고 at 누락·합/평균 혼동을 잡는다.",
+      "page": 48,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "Y6-04",
+      "title": "안전한 게이지 불변 기본 화면",
+      "text": "plaquette energy·Wilson character·정규화된 density·correlation을 기본 채널로 둔다. A/F 성분은 gauge를 고정한 진단\n모드에 둔다. 합격: gauge transformation 전후 기본 채널은 같고 성분 채널에는 gauge ID가 보인다. gauge-dependent\narrow의 형태에서 질량 간극을 추론하지 않는다.",
+      "page": 48,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "Y6-05",
+      "title": "Flow와 투영된 loop의 의미 보존",
+      "text": "gradient flow time을 독립 매개변수로 둔다. 4D loop를 3D에 그릴 때 원래 경로와 x ₄ 이동을 함께 보관한다. 합격: flowed\ndensity를 원본 density로 덮어쓰지 않는다. 원래 loop holonomy와 projected path에서 다시 계산한 holonomy를 동일시\n하지 않는다.",
+      "page": 48,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "Y6-06",
+      "title": "Δ별 상태 비교",
+      "text": "같은 좌표 범위·단위·color scale로 Δ₁,Δ₂의 field family와 상관함수를 비교한다. 독립 정규화는 선택적으로 표시한다. 합격:\n색상 auto-normalization으로 가려지는 밀도 크기 차이를 확인할 수 있다. assumed/effective/estimated 상태가 모든 비교\n패널에 나타난다.",
+      "page": 48,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "Y6-07",
+      "title": "그림에서 Lean 명제로 연결",
+      "text": "관측을 선택하면 정확한 observable·domain·projection·claim type을 내보낸다. proof 후보는 fibre 조건과 reconstruction\ncertificate를 요구한다. 합격: 같은 3D 투영을 가진 다른 4D source를 반례 fixture로 제공한다. projection 그림의 동일성\n만으로 4D 성질·spectral gap을 복원하는 명제를 거부한다.",
+      "page": 48,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "Y6-08",
+      "title": "세션 재현·접근성·stale 확인",
+      "text": "수치 테이블·키보드·색각 독립 표식과 원본 데이터를 제공한다. scene/model/proof revision을 분리하여 저장한다. 합격: 재\n열기 시 같은 source·관측·가정을 복원한다. G· Δ 모형·경계·proof source 변경은 관련 결과를 stale로 만들고 단순 카메라 이\n동은 만들지 않는다.",
+      "page": 48,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "Y7-01",
+      "title": "기존 검증 범위를 고정",
+      "text": "Core와 Mathlib scaffold의 실제 source hash·toolchain·axiom audit를 유지한다. 기존 선언형 quantum model을 full\nQFT로 오인하지 않는다. 합격: 기존 Core 10개의 axiom-free 보조정리와 사용자 axiom 의존 corollary를 분리한다.\nMathlib 표준 axiom과 사용자 YM axiom도 별도 표시한다.",
+      "page": 50,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "Y7-02",
+      "title": "유한 대수 인증서를 Lean에 연결",
+      "text": "Y1 bracket table·Y2 embedding·Y3 path/Wilson 항등식의 정확 데이터를 import하고 kernel에서 검사한다. 합격: 생성\n기의 성공 로그 대신 Lean certificate와 source hash가 필요하다. 잘못된 Jacobi·경로 순서·embedding index fixture가 실\n제 거부된다.",
+      "page": 50,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "Y7-03",
+      "title": "유한 spectral certificate",
+      "text": "유한 양의 가중치·spectral sum·전달행렬 enclosure를 각각 formalize한다. 숫자 고유값 출력과 enclosing proof를 구분한\n다. 합격: 계수 sign·at>0·r<1·비진공 subspace 조건을 빠뜨리면 해당 하한 정리를 사용할 수 없다. certificate의 모델 cutoff\n를 결론에 남긴다.",
+      "page": 50,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "Y7-04",
+      "title": "사용자 존재·간극 axiom의 출처 저장",
+      "text": "고정된 모델 의미·G·단위· Δ·quantifier를 갖는 가정을 등록한다. user/paper/heuristic 출처와 source revision, 의존 정리를\n기록한다. 합격: 상충하는 spectrum/Δ 가정을 감지하면 중단한다. 임의 Prop P 모두를 참으로 선언하는 식의 광범위 axiom\n은 금지하고 YM 의미 술어를 고정한다.",
+      "page": 50,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "Y7-05",
+      "title": "투영 뒤 corollary의 정확한 계약",
+      "text": "projection observation이 fibre-constant인지, reconstruction이 어느 집합에서 성립하는지, spectrum 전달은 어떤 포함\n가정인지 요구한다. 합격: 그림을 다시 Lean 형태로 적었다는 사실만으로 새 정리를 승인하지 않는다. conditional theorem\n에는 필요한 reconstruction/transfer 가정과 사용자 axiom 목록이 남는다.",
+      "page": 50,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "Y7-06",
+      "title": "OS/transfer 재구성 의무 분리",
+      "text": "Schwinger functions/observable algebra, regularity, Euclidean symmetry, reflection positivity, clustering·vacuum\n조건과 재구성 정리 적용을 독립 작업으로 둔다. 합격: 특정 lattice 외부 정리의 가정이 매핑되어도 continuum 재구성 완료\n로 체크하지 않는다. gauge-invariant observable의 재구성 문제를 gauge potential positivity와 구별한다.",
+      "page": 50,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "Y7-07",
+      "title": "새 continuum YM 구성의 연구 목표",
+      "text": "일정 물리량 조건의 continuum·무한 부피 극한, 비자명성, 필요한 QFT axioms, uniform positive gap을 서로 다른 proof\nobligation으로 둔다. 합격: 각 극한의 존재·모형 식별·uniform bound 근거 없이는 OPEN CONTINUUM을 유지한다. 격자\nsimulation·유효모형·사용자 존재 axiom으로 Clay 완료 상태를 만들지 않는다.",
+      "page": 50,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "Y7-08",
+      "title": "최종 회귀검사와 증거 bundle",
+      "text": "핀된 Lean/mathlib, no-sorry 검사, axiom audit, negative control, 소스·데이터 hash, 예측된 failure cases를 묶는다. 합\n격: 변경된 소스는 새 kernel 결과가 나올 때까지 unverified다. 보고서에는 유한 결과·조건부 결과·추정·열린 의무가 각각의\n범위와 함께 표시된다.",
+      "page": 50,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "N6-01",
+      "title": "초기 finite state 구성",
+      "text": "primary curls 뒤 temporal mean update와 다섯 moment correction을 수행하여 j=0 상태를 만든다. 합격: Proposition9.5\n의 B0=0.7,C0*=1.2와 (9.9),(9.10) 명세를 충족한다. 명세의 상수 없이 경험적 power slope만으로 인증하지 않는다.",
+      "page": 62,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "N6-02",
+      "title": "전체 residual 재계산",
+      "text": "R(u+δu,p+δp)=R(u,p)+Lu(δu,δp)+div(δu⊗δu)를 사용하며 매 substep 후 최신 압력을 복원한다. 합격: 독립 직접 PDE\n평가와 decomposed residual이 오차 예산 내 일치한다. 기존 flat tail와 새 quadratic remainder를 장부에서 누락하지 않\n는다.",
+      "page": 62,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "N6-03",
+      "title": "비영 angular harmonics 보정",
+      "text": "현재 source의 모든 nonzero harmonics를 (7.13) inverse로 풀고 source-supported potentials에 cutoff 후 curl한다.\n합격: same-label 곱에서 m+m′ 신규 주파수가 생성된다. 단계별 최대 harmonic을 기록하고 조용한 truncation 대신\ndiscarded-mode bound를 제공한다.",
+      "page": 62,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "N6-04",
+      "title": "Signed covariance increment",
+      "text": "고정 positive a±에 대해 δa=(Hcov^−1(Σ/ε))/(2a)를 사용한다. 새 Σ는 signed일 수 있다. 합격: B(W0,LΣ)=Σ와 (7.41)의\n세 remainder를 모두 검사한다. 앞 단계 a±를 새 residual에 맞춰 몰래 재선택하지 않는다.",
+      "page": 62,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "N6-05",
+      "title": "Zero auxiliary mean Fourier inverse",
+      "text": "(8.19)의 1/(2 πi vt·k) multiplier로 (8.20)을 풀고 axial increment는 (8.14)의 potential로 실현한다. 합격: zero mode가\n0이고 Nφ=F가 맞는다. |vt·k|^ −1≤C(1+|k|) 및 4개 추가 도함수를 포함한 Fourier tail를 기록한다.",
+      "page": 62,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "N6-06",
+      "title": "다섯 radial equations와 압력",
+      "text": "(8.25)로 두 보존 모멘트와 P,J θ,Jz를 보정하고 (8.12)로 pressure를 다시 계산한다. 합격: 두 보존 적분은 0으로 유지되고 새\n결함은 (8.26),(8.27)의 nonlinear remainder와 일치한다. λ의 작은 값에 따른 condition number를 통제한다.",
+      "page": 62,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "N6-07",
+      "title": "고정 도메인과 차수 향상",
+      "text": "σj=1/5+j/10, gj=hj/10 및 (9.17),(9.18)의 Km,ℓm,log powers를 추적한다. 합격: 모든 finite stage가 같은 q<qbig 도메\n인을 사용한다. 단 한 번의 step에서 샘플 잔차가 늘면 정밀도/범위/상수부터 조사하고 차수 theorem과 혼동하지 않는다.",
+      "page": 62,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "N6-08",
+      "title": "최종 local 합성",
+      "text": "(9.21)에서 Aj,Bj,pj에 shrinking cutoff를 적용하고 curl하여 local field를 만든다. finite residual의 flat terms를 무조건 합\n산하지 않는다. 합격: Lemma5.4의 tail 비교로 (9.20)을 연결한다. 평가 구간의 active indices와 생략 tail의 bound를 저장\n하고 없으면 finite-stage approximation으로 제한한다.",
+      "page": 62,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "N7-01",
+      "title": "시간·공간 cutoff 선택",
+      "text": "q≤C0(τ+|z|^(1/D))로 support를 q<q*/2 안에 놓고 c= χxχt를 선택한다. χx는 r²,z에 smooth하게 둔다. 합격: u=p=0인\n초기 시간구간과 고정 compact K가 존재한다. t가 1에 가까울 때 원점 근방에서 cutoff가 정확히 1이어야 한다.",
+      "page": 64,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "N7-02",
+      "title": "Localization 교차항 보존",
+      "text": "(10.4)의 curl(cA), 특히 ∇c×A를 포함하고 f를 전체 PDE residual로 정의한다. 합격: 직접 계산된 f와 cutoff 전 residual+모\n든 commutator 전개의 일치 여부를 검사한다. ∇·u=0은 구조적으로 유지한다.",
+      "page": 64,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "N7-03",
+      "title": "Force의 발산과 압력 계약",
+      "text": "원문 p118에 따라 f는 divergence-free일 필요가 없다. −Δp=∂i∂j(uiuj)−div f를 검사한다. 합격: div f≠0을 실패로 처리하\n지 않는다. 임의 Leray projection으로 f를 바꿔 compact support/pressure 조건을 훼손하지 않는다.",
+      "page": 64,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "N7-04",
+      "title": "Terminal force jets",
+      "text": "Fj(x)=lim(t↑1)∂t^j f(x,t), ∂x^ αFj(0)=0을 (10.6)-(10.10)에 맞춰 구축한다. 합격: 유한 jet order M의 수치 근사와 ∀order\nsmooth-extension 정리의 의존성을 분리한다. 몇 개 finite differences가 작다는 이유로 C∞ force라 표시하지 않는다.",
+      "page": 64,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "N7-05",
+      "title": "t>1 force extension",
+      "text": "(10.11)의 Σχ0(bjσ)σ^jFj/j!, σ=t−1≥0를 사용하며 (10.12)의 differentiated tail constraints로 bj를 선택한다. 합격:\nforce는 t≤2에서 compact support를 갖고 모든 인증된 jets가 접합된다. 이는 velocity를 t=1 이후 smooth하게 연장하는\n알고리즘이 아니다.",
+      "page": 64,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "N7-06",
+      "title": "전역 에너지 balance",
+      "text": "d(∥u∥²₂/2)/dt+ν∥∇u∥²₂=⟨f,u⟩를 전체 K에서 적분한다. core만의 에너지와 구분한다. 합격: 정규화 energy defect가\n독립 space/time refinement에서 감소한다. ν=1에서 (10.13)의 ∥u(t)∥² ₂+2∫∥∇u∥²₂≤(∫∥f∥₂)² 상계와 모순 없어야\n한다.",
+      "page": 64,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "N7-07",
+      "title": "실제 blowup 경로와 오차",
+      "text": "xτ=(√(2Xinτ),0,0), η=0에서 τ^A u θ=e0+O(τ^(2h)), e0>0를 측정한다. 합격: e0의 양의 하한과 remainder의 explicit\nbound가 있어야 해석적 성장 certificate로 연결한다. 유한 값 plot의 증가만으로 τ→0의 무한대를 증명하지 않는다.",
+      "page": 64,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "N7-08",
+      "title": "비교 정리·주기화· ν 확인",
+      "text": "Lemma10.5의 동일 force/data 비교, (10.22)의 ν rescaling, Corollary10.6의 지지 축소 후 disjoint translate를 검토한다.\n합격: C/D 결론에 필요한 energy·periodic pressure·same forcing가 모두 남는다. periodization을 arbitrary overlapping\ncopies의 합으로 대체하면 nonlinear cross terms 때문에 실패다.",
+      "page": 64,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "N8-01",
+      "title": "Divergence-free Fourier 기저",
+      "text": "2π 주기 영역에서 k· ûk=0, û−k=conj(ûk), Pk=I −kkᵀ/|k|²를 사용한다. k=0은 별도 mean equation이다. 합격: 제약이 초\n기·각 accepted step에서 유지되고 pressure 회복에 div f가 포함된다. 이 branch의 periodic domain을 whole-space 논문\n해와 혼동하지 않는다.",
+      "page": 66,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "N8-02",
+      "title": "비선형 convolution과 dealiasing",
+      "text": "모든 p+q=k 상호작용을 계산한다. quadratic product는 3/2 padding 또는 그와 동등한 정확한 retained-mode convolu-\ntion을 사용한다. 합격: 작은 random solenoidal fixture에서 direct convolution과 FFT product가 정규화 10^ −11 이내\n일치한다. high-mode aliasing negative control이 검출된다.",
+      "page": 66,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "N8-03",
+      "title": "시간 적응과 에너지 안정성",
+      "text": "diffusion integrating factor/IMEX 등으로 stiff linear term을 처리하고 advection CFL·embedded local error·energy\ndefect로 step을 승인한다. 합격: Taylor-Green의 amplitude/energy를 시간 반분에서 설계 차수로 수렴시킨다. dt를 줄여\n도 사라지지 않는 energy defect는 spatial/aliasing 오류로 조사한다.",
+      "page": 66,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "N8-04",
+      "title": "τ 기반 near-terminal sampling",
+      "text": "s=−logτ를 주 변수로 쓰고 τ>0만 평가한다. normalized coordinates와 velocity를 계산한 뒤 physical scaling을 적용한다.\n합격: τ=10^−2,10^−4,10^−8,10^−12 예시와 더 작은 값의 precision mode가 재현된다. 표시 t가 1로 반올림돼도 내\n부 τ>0 계약은 유지한다.",
+      "page": 66,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "N8-05",
+      "title": "공간·급수·정밀도 적응",
+      "text": "core radius, axial length, pulse wavelength, active cutoff orders를 함께 해결한다. 각 refinement 축을 독립 증가시킨\n다. 합격: 2배 grid, Fourier cutoff, coefficient order, arithmetic precision 비교표와 별도 tail bound를 저장한다. 예산\n초과 시 last-resolved τ와 원인을 표시한다.",
+      "page": 66,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "N8-06",
+      "title": "시각화·물리량 연결",
+      "text": "fixed physical bounds와 normalized view를 제공하고 instantaneous streamlines/particle paths, 속도/각속도, core/\nglobal energy를 구분한다. 합격: 모든 scene은 실제 run hash·샘플 위치·단위·색 범위·vector scale를 갖는다. 자동 확대나\nvector 정규화가 core 수축·성장을 숨기지 않는다.",
+      "page": 66,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "N8-07",
+      "title": "Claim-test-proof 연결",
+      "text": "각 관 측 량 에 원 문 reference, numerical test, analytic certificate, Lean theorem 을 별 도 링 크 한 다. 합 격: arbitrary\nsampled array를 axiom으로 놓고 PDE 해라고 결론 내리지 않는다. certified approximation 표시는 해당 구간의 error\nenclosure와 조건을 요구한다.",
+      "page": 66,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "N8-08",
+      "title": "재현 패키지와 최종 체크",
+      "text": "판본·commit·상수·기저·domain·time schedule·quadrature·truncations·precision·tails·residual·energy·camera·build\nlogs를 묶는다. 합격: 다른 환경에서 fixture와 selected run이 같은 허용오차로 재현된다. 이번 문서 작성 턴의 상태는 설계\n완료이며 구현·사이트 변경·배포 완료로 표시하지 않는다.",
+      "page": 66,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "R1-01",
+      "title": "기준 예제 전 구간 재현",
+      "text": "점·P1·좋은 소수의 E, SU2/SU3/G2 지원 예제, heat exterior/axis profile/기준 PDE를 clean worker에서 실행한다. 합격:\n명시된 작은 fixture에서 입력 hash·출력 불변량·오차 범위가 acceptance manifest와 일치한다.",
+      "page": 68,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "R1-02",
+      "title": "정밀도와 해상도 수렴 표",
+      "text": "p-adic M, series order J, spatial K, lattice a/L, sample count를 하나씩 바꾸고 관측의 변화와 예측 오차를 기록한다. 합격:\n인증된 수치 경계 위반은 실패다. 앙상블 통계는 사전 유의수준·autocorrelation·독립 반복 기준으로 판정하며 신뢰구간은 결\n정론적 보장과 구별한다. 수렴표만으로 무한 극한 정리를 발급하지 않는다.",
+      "page": 68,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "R1-03",
+      "title": "출처에서 그림까지 추적",
+      "text": "모든 핵심 그림의 점 또는 패치를 선택하면 원식, 논문 위치, job, 오차, theorem/assumption ID를 열 수 있게 한다. 합격:\nNS의 원문 식과 생성 계수, prism 비교사상, Δ state generator 각각 하나를 end-to-end로 추적한다.",
+      "page": 68,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "R1-04",
+      "title": "세션·가정 변경 회귀",
+      "text": "p·G·Δ·τ·cutoff·계수체 변경 후 정확한 downstream node만 STALE이 되는지 검사한다. 합격: 계산 중 입력 변경, 취소, 재\n개, 내보내기/가져오기 후 다른 입력의 증거가 연결되지 않는다.",
+      "page": 68,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "R1-05",
+      "title": "화면·접근성·성능 검수",
+      "text": "데스크톱과 모바일 한 종류 이상, 키보드, WebGL/CPU fallback, 긴 한국어·수식, 색 범위와 샘플 선택을 확인한다. 합격: 클\n리핑·빈 3D·오류 overlay가 없고, 문서에 정한 표본 예산에서 조작 지연과 메모리 상한을 만족한다.",
+      "page": 68,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "R1-06",
+      "title": "증거 경계 공격 테스트",
+      "text": "조작된 PASS, 잘못된 소스 hash, 원문과 다른 theorem type, 조작된 prime certificate, 잘못된 force/cutoff를 주입한다.\n합격: 각 사례가 기대하는 이유로 거부되고 기존 유효 관측은 보존된다. 로그는 사용자가 원인을 이해할 수 있다.",
+      "page": 68,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "R1-07",
+      "title": "연구·교육 시나리오 완료",
+      "text": "학생용 계수체 실험, 연구용 Frobenius/local-factor 감사, Δ 상태족 비교, NS 근사/잔차 비교의 네 walkthrough를 수행한\n다. 합격: 설명만 보고 다른 사람이 같은 입력과 결과를 재현할 수 있다. 결과의 의미와 미해결 가정을 직접 확인한다.",
+      "page": 68,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    },
+    {
+      "id": "R1-08",
+      "title": "범위별 릴리스 판정",
+      "text": "지원 대상을 명시한 기능만 배포 후보로 묶고, 기존 전체 RELEASE HOLD와 구분해 모듈별 상태를 보고한다. 합격: 패치·테스\n트·되돌리기 자료가 준비되고 실제 게시 후 화면을 확인한 시점에만 배포 완료를 기록한다.",
+      "page": 68,
+      "source": "MathScope_Research_IDE_Blueprint_v1_KO(1)(20261012-005314).pdf"
+    }
+  ]
+}

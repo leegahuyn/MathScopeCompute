@@ -1,0 +1,214 @@
+{
+  "schema": "MathScope.ActualSlowInverseSourceCapsule/1",
+  "implementation_kind": "NEW native evaluator source capsule; not recovered lost implementation",
+  "source_inputs": {
+    "header": {
+      "path": "recovered/base/analysis/base/PR30-primary67-continuation/pressure-proof/angular-pde/ANGULAR_ORIGINAL_HEADER.json",
+      "sha256": "f1201808a2d71f56687b51164a383c9dd9a82f006c2151219bc0df9aa1daeec1",
+      "bytes": 8182845
+    },
+    "closure": {
+      "path": "work/prune_recovery/scalar/evidence/RAW_INITIALIZED_SCALAR_CLOSURE.json",
+      "sha256": "2cbb5c74eb58ef82f948a19bad00a299c38b802cb8e668e94da8e34a37f77e91",
+      "bytes": 6717570
+    },
+    "profile": {
+      "path": "recovered/base/work/n602_continuation/source/research-ide/mathscope-m2/navier/source-profile-data.mjs",
+      "sha256": "df33560d2b9369ba32cf9f50877e355824ed1e7fdb84ef6b145d941c80db8e4a",
+      "bytes": 8996
+    }
+  },
+  "definition": {
+    "name": "ActualCommonBandSlowInverse",
+    "variable": 622810,
+    "parameters": [
+      622803,
+      622804
+    ],
+    "body": 622819,
+    "left": 19,
+    "right": 24,
+    "derivativeLower": 19,
+    "derivativeUpper": 1,
+    "endpointProof": "The same original image Z=s^D*eta,T=s*(1-eta^2),s in[1/2,2],eta in[-1,1] and positive h<1/16.",
+    "numericOracle": false
+  },
+  "definition_sha256": "a7b26202a039c4a338e0210e99ea2329c40323d6d6615d3a2519fc097d12dfa0",
+  "records": {
+    "9": {
+      "op": "source_parameter",
+      "args": [
+        "h"
+      ]
+    },
+    "19": {
+      "op": "rational",
+      "args": [
+        "1",
+        "2"
+      ]
+    },
+    "20": {
+      "op": "rational",
+      "args": [
+        "-1",
+        "1"
+      ]
+    },
+    "24": {
+      "op": "rational",
+      "args": [
+        "2",
+        "1"
+      ]
+    },
+    "25": {
+      "op": "multiply",
+      "args": [
+        9,
+        24
+      ]
+    },
+    "622803": {
+      "op": "coordinate",
+      "args": [
+        "m3_global_band_slow_Z$30436"
+      ]
+    },
+    "622804": {
+      "op": "coordinate",
+      "args": [
+        "m3_global_band_slow_T$30437"
+      ]
+    },
+    "622810": {
+      "op": "coordinate",
+      "args": [
+        "m3_global_band_implicit_s$30443"
+      ]
+    },
+    "622811": {
+      "op": "integer_power",
+      "args": [
+        622803,
+        2
+      ]
+    },
+    "622812": {
+      "op": "log_positive",
+      "args": [
+        622810
+      ]
+    },
+    "622813": {
+      "op": "multiply",
+      "args": [
+        25,
+        622812
+      ]
+    },
+    "622814": {
+      "op": "exp",
+      "args": [
+        622813
+      ]
+    },
+    "622815": {
+      "op": "multiply",
+      "args": [
+        622811,
+        622814
+      ]
+    },
+    "622816": {
+      "op": "multiply",
+      "args": [
+        20,
+        622815
+      ]
+    },
+    "622817": {
+      "op": "add",
+      "args": [
+        622810,
+        622816
+      ]
+    },
+    "622818": {
+      "op": "multiply",
+      "args": [
+        20,
+        622804
+      ]
+    },
+    "622819": {
+      "op": "add",
+      "args": [
+        622817,
+        622818
+      ]
+    },
+    "622820": {
+      "op": "actual_monotone_root",
+      "args": [
+        2,
+        622803,
+        622804
+      ]
+    },
+    "623935": {
+      "op": "actual_monotone_root",
+      "args": [
+        2,
+        623921,
+        623934
+      ]
+    }
+  },
+  "parameter_expressions": {
+    "Md": {
+      "integer": 1048576
+    },
+    "T": {
+      "sum": [
+        {
+          "exp": {
+            "ref": "Md"
+          }
+        },
+        {
+          "integer": 10
+        }
+      ]
+    },
+    "h": {
+      "integer": 0
+    }
+  },
+  "parameter_expression_family_sha256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+  "paper": {
+    "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+    "pdf_pages": [
+      7,
+      24,
+      62,
+      63
+    ],
+    "equations": [
+      "3.2",
+      "4.1",
+      "6.1"
+    ]
+  },
+  "call_nodes": [
+    622820,
+    623935
+  ],
+  "original_expression": "s - Z^2*exp(2*h*log(s)) - T",
+  "h_expression": "exp(-8002*(exp(1048576)+10))",
+  "h_strictly_positive": true,
+  "h_replaced_by_zero": false,
+  "original_source_changed": false,
+  "new_M3_closures": 0,
+  "capsule_payload_sha256": "c54115d283a1f50b3d32aa7cba5a12120bd11832dc9091718de3a86aaba1deda"
+}

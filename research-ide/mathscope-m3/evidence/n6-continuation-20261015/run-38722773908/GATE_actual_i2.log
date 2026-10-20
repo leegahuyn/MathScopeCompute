@@ -1,0 +1,159 @@
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+... Skipped lines
+
+  [
+    'add',
+    [
+      'multiply',
+      [
+...
+      ],
++     [
++       'source_step_derivative',
++       [
++         'multiply',
++         [
++           'inverse',
++           [
++             'source_parameter',
++             [
++               'Tf'
++             ]
++           ]
++         ],
++         [
++           'source_parameter',
++           [
++             'Tf'
++           ]
++         ]
++       ],
++       0
++     ]
+    ],
+    [
+      'multiply',
+      [
+        'rational',
+
+    at same (file:///home/runner/work/MathScopeCompute/MathScopeCompute/tools/n6-native-domain-frontier-20261015/actual_i2_native_probe.mjs:48:26)
+    at file:///home/runner/work/MathScopeCompute/MathScopeCompute/tools/n6-native-domain-frontier-20261015/actual_i2_native_probe.mjs:63:208 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: [
+    'add',
+    [
+      'multiply',
+      [
+        'add',
+        [ 'rational', [ '1', '2' ] ],
+        [ 'source_parameter', [ 'lambda' ] ]
+      ],
+      [ 'inverse', [ 'source_parameter', [ 'lambda' ] ] ],
+      [ 'rational', [ '-13', '1' ] ]
+    ],
+    [
+      'multiply',
+      [
+        'add',
+        [ 'rational', [ '1', '2' ] ],
+        [ 'source_parameter', [ 'lambda' ] ]
+      ],
+      [ 'rational', [ '-1', '1' ] ],
+      [ 'source_parameter', [ 'Tf' ] ]
+    ],
+    [
+      'multiply',
+      [
+        'add',
+        [ 'rational', [ '1', '2' ] ],
+        [ 'source_parameter', [ 'lambda' ] ]
+      ],
+      [ 'rational', [ '-60', '1' ] ],
+      [ 'source_parameter', [ 'BOuter' ] ]
+    ],
+    [
+      'multiply',
+      [ 'log_positive', [ 'rational', [ '2', '1' ] ] ],
+      [ 'rational', [ '-1', '1' ] ],
+      [
+        'source_step_derivative',
+        [
+          'multiply',
+          [ 'inverse', [Array] ],
+          [ 'source_parameter', [Array] ]
+        ],
+        0
+      ]
+    ],
+    [
+      'multiply',
+      [ 'rational', [ '-1', '2' ] ],
+      [ 'source_parameter', [ 'lambda' ] ]
+    ],
+    [
+      'multiply',
+      [ 'rational', [ '-1', '2' ] ],
+      [ 'source_parameter', [ 'T' ] ]
+    ],
+    [ 'rational', [ '-7', '10' ] ]
+  ],
+  expected: [
+    'add',
+    [
+      'multiply',
+      [
+        'add',
+        [ 'rational', [ '1', '2' ] ],
+        [ 'source_parameter', [ 'lambda' ] ]
+      ],
+      [ 'inverse', [ 'source_parameter', [ 'lambda' ] ] ],
+      [ 'rational', [ '-13', '1' ] ]
+    ],
+    [
+      'multiply',
+      [
+        'add',
+        [ 'rational', [ '1', '2' ] ],
+        [ 'source_parameter', [ 'lambda' ] ]
+      ],
+      [ 'rational', [ '-1', '1' ] ],
+      [ 'source_parameter', [ 'Tf' ] ]
+    ],
+    [
+      'multiply',
+      [
+        'add',
+        [ 'rational', [ '1', '2' ] ],
+        [ 'source_parameter', [ 'lambda' ] ]
+      ],
+      [ 'rational', [ '-60', '1' ] ],
+      [ 'source_parameter', [ 'BOuter' ] ]
+    ],
+    [
+      'multiply',
+      [ 'log_positive', [ 'rational', [ '2', '1' ] ] ],
+      [ 'rational', [ '-1', '1' ] ]
+    ],
+    [
+      'multiply',
+      [ 'rational', [ '-1', '2' ] ],
+      [ 'source_parameter', [ 'lambda' ] ]
+    ],
+    [
+      'multiply',
+      [ 'rational', [ '-1', '2' ] ],
+      [ 'source_parameter', [ 'T' ] ]
+    ],
+    [ 'rational', [ '-7', '10' ] ]
+  ],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v22.23.3

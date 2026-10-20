@@ -1,0 +1,50 @@
+[
+  {
+    "name": "n601_joint_application",
+    "args": [
+      "{ROOT}/work/theorem_connection/code/verify_n601_joint_application.py",
+      "--root",
+      "{ROOT}",
+      "--out",
+      "{OUT}/N601_JOINT_SOURCE_APPLICATION.json"
+    ]
+  },
+  {
+    "name": "remaining_chain_application",
+    "args": ["{ROOT}/work/remaining_chain/code/verify_remaining_chain.py", "--root", "{ROOT}", "--output-dir", "{OUT}/remaining_chain"]
+  },
+  {
+    "name": "final_ledger_integrity",
+    "args": ["{ROOT}/verify_final_ledger.py", "--root", "{ROOT}", "--out", "{OUT}/FINAL_LEDGER_INTEGRITY.json"]
+  },
+  {
+    "name": "actual_angular_energy",
+    "args": ["{ROOT}/work/actual_evaluator/code/actual_angular_energy.py", "--root", "{ROOT}", "--output-dir", "{OUT}/actual_evaluator"]
+  },
+  {
+    "name": "actual_scale_budget",
+    "args": ["{ROOT}/work/actual_evaluator/code/actual_scale_budget.py", "--root", "{ROOT}", "--output-dir", "{OUT}/actual_evaluator"]
+  },
+  {
+    "name": "actual_picard_budget",
+    "args": ["{ROOT}/work/actual_evaluator/code/actual_picard_term_budget.py", "--root", "{ROOT}", "--output-dir", "{OUT}/actual_evaluator"]
+  },
+  {
+    "name": "original_numeric_backend",
+    "runtime": "node",
+    "args": ["{ROOT}/work/actual_evaluator/code/run_original_numeric_backend.mjs", "{ROOT}", "{OUT}/actual_evaluator"]
+  },
+  {
+    "name": "actual_core_twofold",
+    "runtime": "node",
+    "args": ["{ROOT}/work/actual_evaluator/code/run_actual_core_2x.mjs", "{ROOT}", "{OUT}/actual_evaluator"]
+  },
+  {
+    "name": "partial_numeric_output_acceptance",
+    "args": ["{ROOT}/verify_partial_numeric_outputs.py", "--directory", "{OUT}/actual_evaluator"]
+  },
+  {
+    "name": "constructive_source_replay",
+    "args": ["{ROOT}/replay_constructive_sources.py", "--root", "{ROOT}", "--out", "{OUT}/constructive_replay"]
+  }
+]

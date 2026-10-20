@@ -1,0 +1,90 @@
+name: N6 guarded domain and native block verification
+on:
+  push:
+    branches: [mathscope-m3-n6-cloud-20261014]
+    paths: ['tools/n6-domain-transport-20261015/verify_domain_transport.py', 'tools/n6-domain-transport-20261015/test_domain_transport.py', '.github/workflows/m3-n6-domain-transport.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: n6-domain-transport-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+          sparse-checkout: tools/n6-domain-transport-20261015
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12.10'
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24.19.0'
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          github-token: ${{ github.token }}
+          run-id: 38673138045
+          name: n6-domain-full-source-38673138045
+          path: ${{ runner.temp }}/domain-source
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          github-token: ${{ github.token }}
+          run-id: 38523108728
+          name: n6-finish-prepare-38523108728
+          path: ${{ runner.temp }}/domain-prepare
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          github-token: ${{ github.token }}
+          run-id: 38529033425
+          name: n6-final-summary-38529033425
+          path: ${{ runner.temp }}/domain-prior
+      - name: Authenticate full original stream and verify every indexed and native row
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/domain-evidence"
+          python tools/n6-domain-transport-20261015/verify_domain_transport.py --source "$RUNNER_TEMP/domain-source" --prepared "$RUNNER_TEMP/domain-prepare/prepared" --prior "$RUNNER_TEMP/domain-prior" --out "$RUNNER_TEMP/domain-evidence" 2>&1 | tee "$RUNNER_TEMP/domain-evidence/audit.log"
+      - name: Run independent regressions and source mutation controls
+        working-directory: tools/n6-domain-transport-20261015
+        env:
+          N6_SOURCE: ${{ runner.temp }}/domain-source
+          N6_PREPARED: ${{ runner.temp }}/domain-prepare/prepared
+          N6_PRIOR: ${{ runner.temp }}/domain-prior
+          N6_EVIDENCE: ${{ runner.temp }}/domain-evidence
+        run: |
+          python - <<'PY'
+          import json,os,pathlib,platform,sys,unittest
+          import test_domain_transport
+          out=pathlib.Path(os.environ['N6_EVIDENCE'])
+          suite=unittest.defaultTestLoader.loadTestsFromModule(test_domain_transport)
+          with (out/'tests.log').open('w') as stream:
+              result=unittest.TextTestRunner(stream=stream,verbosity=2).run(suite)
+          record={'schema':'MathScope.N6.CloudDomainTests/1','run':os.environ['GITHUB_RUN_ID'],'commit':os.environ['GITHUB_SHA'],'python':platform.python_version(),'tests':result.testsRun,'failures':len(result.failures),'errors':len(result.errors),'passed':result.testsRun-len(result.failures)-len(result.errors),'successful':result.wasSuccessful(),'originalFrontierChanged':False,'wholeOriginalCallGraphClaimed':False}
+          (out/'TESTS.json').write_text(json.dumps(record,indent=2)+'\n')
+          print((out/'tests.log').read_text());print(json.dumps(record))
+          sys.exit(0 if result.wasSuccessful() else 1)
+          PY
+      - name: Record code and result hashes
+        if: always()
+        working-directory: tools/n6-domain-transport-20261015
+        run: |
+          python - <<'PY'
+          import hashlib,json,os,pathlib
+          out=pathlib.Path(os.environ['RUNNER_TEMP'])/'domain-evidence';out.mkdir(exist_ok=True)
+          files={str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in [*pathlib.Path('.').glob('*.py'),*out.glob('*.json'),*out.glob('*.log')]}
+          (out/'FILE_HASHES.json').write_text(json.dumps(files,indent=2)+'\n')
+          PY
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: n6-domain-verification-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/domain-evidence/*.json
+            ${{ runner.temp }}/domain-evidence/*.log
+          retention-days: 90
+          if-no-files-found: error

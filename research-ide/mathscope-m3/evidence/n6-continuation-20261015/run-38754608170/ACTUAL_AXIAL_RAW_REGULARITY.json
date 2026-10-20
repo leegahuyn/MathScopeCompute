@@ -1,0 +1,241 @@
+{
+  "schema": "MathScope.N6.ActualAxialRawResidualRegularity/1",
+  "sourceHeaderSHA256": "f1201808a2d71f56687b51164a383c9dd9a82f006c2151219bc0df9aa1daeec1",
+  "fixedDefinitionSHA256": "c8041bf166aa318a5dab4a0ccb53d1503609feadbaec4361fe4587bb5945bc1b",
+  "sourcePaperSHA256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+  "inputSHA256": {
+    "binding": "88b541f3a16412e27e1673225f03c71a50969da86d4b7915e452273ab9fa4c92",
+    "leading": "685860369681a234e9d8a9a273a165f920f52b53d0d1b6834b285a2522639b5a",
+    "orderone": "39b2a91ef619826cfa78512fa05c19ff819623f80aa6483c7ff5231121735edf",
+    "orderone-binding": "2e370eaa8422a1ba1e29757caeea9ba1269fb145e5c98ae4e9c71e3c9455e5ce",
+    "diagnostics": "b6a1e0987650e1326c578d9004cdda8efa05d2375864966fc399ae514804b4c1"
+  },
+  "actualRawResidual": {
+    "root": 117045,
+    "terms": [
+      87480,
+      87481,
+      87488,
+      87489,
+      87490,
+      117027,
+      117030,
+      117031
+    ],
+    "termRoles": [
+      "time U1",
+      "X v0 U1_X",
+      "U0 Z_(c+lambda1) U1",
+      "X v1 U0_X",
+      "U1 Z_c U0",
+      "Z_(-2A+lambda1) Pi1",
+      "-2(X U1_XX+U1_X)",
+      "-Z_(c-D) Z_c U0"
+    ],
+    "coordinates": [
+      4756,
+      2
+    ],
+    "actualOperands": {
+      "U0": 9236,
+      "v0": 18778,
+      "U1": 29289,
+      "v1": 29440,
+      "Pi1": 50558
+    }
+  },
+  "parameterSourceProof": {
+    "parameterExpressionsChecked": [
+      "BRefUpper",
+      "CSelected",
+      "K",
+      "Lambda",
+      "Md",
+      "Pstar",
+      "Q",
+      "T",
+      "Xa",
+      "h",
+      "j0",
+      "logCSelected",
+      "logP",
+      "rho",
+      "sigmaStar",
+      "t1"
+    ],
+    "LambdaPositive": true,
+    "Xa": "4/Lambda",
+    "QStrictLower": "2^260",
+    "t1StrictUpper": "1/1329227995784915872903807060280344576",
+    "fourExpTwoT1StrictUpper": "2658455991569831745807614120560689152/664613997892457936451903530140172287",
+    "naturalDomainUpper": "41/10",
+    "argument": "T>10, 0<h<1, 0<sigmaStar<1, K>1 imply Q>2^260. logCSelected>Q^200>1; CSelected>e>2, so 0<t1<2^-120. e^x<=1/(1-x) on 0<=x<1 gives 4e^(2t1)<41/10."
+  },
+  "actualCoefficientSourceNodes": {
+    "1": {
+      "op": "rational",
+      "args": [
+        "1",
+        "1"
+      ]
+    },
+    "2": {
+      "op": "coordinate",
+      "args": [
+        "eta"
+      ]
+    },
+    "9": {
+      "op": "source_parameter",
+      "args": [
+        "h"
+      ]
+    },
+    "15": {
+      "op": "integer_power",
+      "args": [
+        2,
+        2
+      ]
+    },
+    "19": {
+      "op": "rational",
+      "args": [
+        "1",
+        "2"
+      ]
+    },
+    "20": {
+      "op": "rational",
+      "args": [
+        "-1",
+        "1"
+      ]
+    },
+    "21": {
+      "op": "multiply",
+      "args": [
+        9,
+        20
+      ]
+    },
+    "22": {
+      "op": "add",
+      "args": [
+        19,
+        21
+      ]
+    },
+    "23": {
+      "op": "add",
+      "args": [
+        9,
+        19
+      ]
+    },
+    "24": {
+      "op": "rational",
+      "args": [
+        "2",
+        "1"
+      ]
+    },
+    "25": {
+      "op": "multiply",
+      "args": [
+        9,
+        24
+      ]
+    },
+    "26": {
+      "op": "multiply",
+      "args": [
+        15,
+        25
+      ]
+    },
+    "27": {
+      "op": "multiply",
+      "args": [
+        20,
+        26
+      ]
+    },
+    "28": {
+      "op": "add",
+      "args": [
+        1,
+        27
+      ]
+    },
+    "29": {
+      "op": "multiply",
+      "args": [
+        15,
+        20
+      ]
+    },
+    "30": {
+      "op": "add",
+      "args": [
+        1,
+        29
+      ]
+    }
+  },
+  "denominatorProof": {
+    "literal": "L=1-2*h*eta^2",
+    "h": "exp(-8002*T)",
+    "strictBounds": "T=exp(1048576)+10>10; 0<h<1/16; |eta|<=1 imply L>7/8",
+    "argument": "exp(8002*T)>1+8002*T>16, so h<1/16. The same fixed source supplies A=1/2+h, D=1/2-h and d=1-eta^2.",
+    "finiteRealSourceConstants": true,
+    "numericalEvaluationUsed": false
+  },
+  "ordinaryOperatorDefinitions": {
+    "T_a": "(-a*f+D*eta*f_eta+X*f_X)/L",
+    "Z_a": "(2*eta*(a*f-X*f_X)+d*f_eta)/L",
+    "nu": "lambda1=2*h",
+    "c": "-A"
+  },
+  "regularityArgument": [
+    "The authenticated completed-leading theorem gives the same U0 and v0 jointly smooth for X>0, |eta|<1, with every fixed mixed jet continuous at inward eta endpoints.",
+    "The authenticated completed order-one theorem gives the same U1,v1,Pi1 and their fixed mixed jets on that domain, including their original profile joins.",
+    "Each T_a and Z_a is a finite sum of derivatives multiplied by polynomial coefficients and 1/L. L>7/8 makes that inverse and every fixed derivative smooth on a neighborhood of the closed eta interval.",
+    "The eight retained raw terms use only finite compositions, products, and these operators; therefore the raw residual is jointly C-infinity on the physical interior and has all fixed continuous inward eta jets.",
+    "Every fixed mixed raw derivative is continuous on [alpha,beta] times [-1,1], for arbitrary finite 0<alpha<=beta. Compactness gives a finite bound; no numerical bound is asserted."
+  ],
+  "provedRawResidualConclusions": {
+    "sameOriginalEightTermResidualCInfinity": true,
+    "allFixedMixedJetsContinuousAtInwardEtaEndpoints": true,
+    "allFixedPartialsFiniteOnEveryFiniteClosedPositiveRadialBox": true,
+    "requestedRawOrdinaryPartials": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    "appliesBeforeSupportedDensityWrapper": true
+  },
+  "regularityOfActualDensityProved": false,
+  "supportedDensityOrdinaryDerivativesProved": false,
+  "actualInnerCollarRestrictionProved": false,
+  "boundedPiecewiseIntegrabilityProved": false,
+  "forwardBackwardPrimitiveEqualityProved": false,
+  "actualTzPrimitiveGluingProved": false,
+  "actualTotalAxialMomentZeroProved": false,
+  "numericalNormHonestyProved": false,
+  "remainingContracts": [
+    "Source-bound equality of the global and inner profiles on an open collar through Xminus, including the genuine mass average and all required jets.",
+    "Supported density joins and its classical ordinary derivatives at Xminus and Xplus.",
+    "Actual total axial mass/pressure-flux cancellation, integral differentiation, and forward/backward primitive equality and gluing.",
+    "Actual Cartesian guard domains, finite integrals on their real boxes, numerical norm bounds, and original obligation acceptance gates."
+  ],
+  "wholeGOnJProved": false,
+  "newOriginalGuardsDischarged": 0,
+  "newOriginalJetsDischarged": 0,
+  "newOriginalPDETermsDischarged": 0
+}

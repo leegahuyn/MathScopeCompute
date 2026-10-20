@@ -1,0 +1,42 @@
+{
+  "schema": "MathScope.N6.SourceSlowImplicitAllOrders/1",
+  "status": "PROVED_UNIFORM_ALL_ORDER_LEAF_BOUND_ON_ORIGINAL_SOURCE_IMAGE",
+  "sourceNode": 622820,
+  "sourceNodeSHA256": "88b66f8de09a55e88dd7853709c8e1d6b222a06c37bc6bceeb37fa15bd9985ea",
+  "definitionSHA256": "e53efe521098aa99b855aa457a26f35edec45e6f74224d650afce71b80fec958",
+  "sourceParentSHA256": "7c36afa44610b9786362dc228766c3d895491bb116103eca58a79d80a6b7609f",
+  "actualEquation": "s-Z^2*exp(2*h*Log(s))-T=0",
+  "premises": [
+    "0<h<1/64",
+    "1/2<=s0<=2",
+    "-1<=eta0<=1",
+    "Z0=s0^(1/2-h)*eta0",
+    "T0=s0*(1-eta0^2)"
+  ],
+  "uniformComplexParameterPolydiscRadius": "1/1024",
+  "sourceRootDiskRadius": "1/16",
+  "exactRationalChecks": {
+    "ZSquaredUpper": "2101249/1048576",
+    "sModulusLower": "7/16",
+    "sModulusUpper": "33/16",
+    "contractionUpper": "3/7",
+    "centerDefectUpper": "11/1024",
+    "imageRadiusUpper": "269/7168",
+    "strictInvarianceMargin": "179/7168"
+  },
+  "proof": [
+    "At every original source-image point F(s0;Z0,T0)=0 and |Z0|^2<=2. For |Z-Z0|,|T-T0|<1/1024, |Z|^2<=2+4/1024+1/1024^2<3.",
+    "On the closed complex s-disk |s-s0|<=1/16, Re(s)>=7/16>0 and |s|<3. Principal Log is holomorphic there. Since 0<2h<1/32 and 3<2^32, |exp(2h Log(s))|=|s|^(2h)<2.",
+    "The map Psi(s)=T+Z^2 exp(2h Log(s)) has |Psi'(s)|<=(1/32)*3*2/(7/16)=3/7. Its center displacement is at most 11/1024. The recomputed strict invariant-disk inequality gives |Psi(s)-s0|<1/16.",
+    "Complex Banach iteration converges uniformly on smaller parameter polydiscs to the unique holomorphic fixed point in this disk. At real source-image parameters it equals the original unique monotone source root. This argument is uniform over all s0,eta0,h in the stated ranges.",
+    "The root has modulus less than 3 throughout each parameter polydisc. Two-variable Cauchy estimates give |partial_Z^a partial_T^b s(Z0,T0)|<=3*a!*b!*1024^(a+b) for every pair of nonnegative integers a,b. No finite order sampling or source derivative helper is used."
+  ],
+  "allOrderDerivativeBound": "forall integers a,b>=0: |partial_Z^a partial_T^b s| <= 3*a!*b!*1024^(a+b)",
+  "derivativeRecurrence": "Differentiate F(s(Z,T),Z,T)=0; at each total order n isolate F_s*D^alpha(s) and retain all lower-order Leibniz/Faa-di-Bruno terms; F_s never vanishes on the contraction disk.",
+  "allOrderBoundVerifiedByAnalyticProof": true,
+  "globalOriginalPDEArgumentsInsideImageProved": false,
+  "originalWholeFieldWMSNormProved": false,
+  "actualPicardCommonEtaStripOrCoefficientNormProved": false,
+  "globalGuardCountDischarged": 0,
+  "samplePointsUsedAsProof": false
+}

@@ -1,0 +1,102 @@
+{
+  "schema": "MathScope.N6.ActualOrderOnePrimitiveCalculus/1",
+  "omegaPrefixDerivativeDefect": "P_X-Omega0/(2X)=v0*[L*(v0+X*v0_X)+d*U0_eta-2*A*eta*U0-2*eta*X*U0_X]/(2*L)",
+  "leadingContinuityFromActualMass": "M0_X=U0 and v0=(2eta U0-2D eta M0/X-d M0_eta/X)/L imply the bracket is identically zero.",
+  "exactChecks": {
+    "fullOmegaPrefixDerivativeDefect": "0",
+    "continuityFromGenuineMass": "0",
+    "evenPicardMassJacobian": "0",
+    "picardPressureJacobian": "0"
+  },
+  "strictNegativeControls": {
+    "omittedUvEtaHistoryRejected": true,
+    "missingPressureRadialJacobianRejected": true,
+    "wrongContinuityAxialSignRejected": true,
+    "omittedAxisConstantAtActualEtaZeroRejected": true
+  },
+  "continuousIposNonsingularity": {
+    "allPositiveLambda": true,
+    "UPointDeterminant": "x1*x2*(w_lambda(x2)-w_lambda(x1))>0; w_lambda_prime(x)=x^(-1-2lambda)>0",
+    "EPointDeterminant": "Factor x_j^(-2-2lambda)>0; t_j=x_j^2 makes rows [t^(2+lambda),1,t]. The strictly positive second divided difference times the Vandermonde has one fixed nonzero sign.",
+    "exactStrictConvexity": "t**lambda*(lambda + 1)*(lambda + 2)",
+    "actualSupports": [
+      [
+        "6143/4096",
+        "6145/4096"
+      ],
+      [
+        "8191/4096",
+        "8193/4096"
+      ],
+      [
+        "10239/4096",
+        "10241/4096"
+      ],
+      [
+        "12287/4096",
+        "12289/4096"
+      ],
+      [
+        "14335/4096",
+        "14337/4096"
+      ]
+    ],
+    "continuousIntegralStep": "Multilinearity writes det of the actual matrix as the integral of these point determinants against the product of the three or two positive unit-mass bump measures. Ordered disjoint supports preserve strict sign.",
+    "coefficientSizeBoundNeeded": false
+  },
+  "paperBinding": {
+    "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+    "pages": {
+      "26": [
+        "4.7"
+      ],
+      "46": [
+        "5.2",
+        "5.5",
+        "5.6"
+      ],
+      "47": [
+        "Lemma 5.1"
+      ],
+      "51": [
+        "5.15"
+      ],
+      "52": [
+        "5.16",
+        "Lemma 5.2 Step 3"
+      ]
+    }
+  },
+  "proof": "ACTUAL_ORDER_ONE_PRIMITIVES_KO.md",
+  "actualSourceBindingsComposed": true,
+  "actualAllOrderGlobalRegularityComposed": true,
+  "wholeGOnJProved": false,
+  "newOriginalGuardsDischarged": 0,
+  "newOriginalJetsDischarged": 0,
+  "newOriginalPDETermsDischarged": 0,
+  "inputSHA256": {
+    "binding": "2e370eaa8422a1ba1e29757caeea9ba1269fb145e5c98ae4e9c71e3c9455e5ce",
+    "picard": "3468b8208e8e3efdfec61663b4ab14f70dfe965601011d79d056fe028213dd9b",
+    "leading": "12bc6e52ed889c651969b9c8059de460207bb867d2d4458863d5dbe39ff40ac6"
+  },
+  "sourceHeaderSHA256": "f1201808a2d71f56687b51164a383c9dd9a82f006c2151219bc0df9aa1daeec1",
+  "conditionalActualPrimitiveConclusions": {
+    "genuineOmega0ZeroAxisPrimitive": true,
+    "allSixOrderOneBodiesRetained": true,
+    "allFiveActualMomentEquations": true,
+    "allActualPi1PrimitiveConstantsBound": true
+  },
+  "actualContinuousIposMatricesProvedNonsingular": true,
+  "actualIposFactorsPositive": true,
+  "remainingAnalyticPremises": [],
+  "conclusionWithThosePremises": "The original six order-one profiles are C∞ for X>=0, eta in [-1,1] with inward endpoint jets. Pi1 is the genuine integral of the literal compiled F0F1 pressure density minus Omega0/(2X), and all original zero branches glue to every order.",
+  "separateUnprovedIdentification": "The literal local/core and reserved-power F0pos factors still require identification with the complete physical leading F0 on their supports.",
+  "provedActualOrderOneConclusions": {
+    "allSixOriginalProfilesCInfinity": true,
+    "axisAndEtaEndpointOneSidedJets": true,
+    "genuineLiteralPressurePrimitive": true,
+    "allOriginalPi1JoinConstantsAndAllFixedMixedJets": true,
+    "actualContinuousMomentSolvesForArbitraryFiniteDebts": true
+  },
+  "independentSourceGlobalPressureIdentificationProved": false
+}

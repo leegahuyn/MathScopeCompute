@@ -1,0 +1,1 @@
+This directory is the complete recovery payload except two large files transported without byte changes. Run `python RESTORE_GIT_TRANSPORT.py` first, then the README replay command. FINAL_FILE_INDEX.json covers the reconstructed payload, while GIT_TRANSPORT.json pins transport inputs. The ZIP already contains both original files. Original repository assets remain unchanged.

@@ -1,0 +1,370 @@
+{
+  "schema": "MathScope.ActualStagePressureResidualConnection/1",
+  "source_manifest": {
+    "forced": {
+      "path": "recovered/github-pr30/source-global-forced-current.mjs",
+      "sha256": "b41f298702238cf6170c16f31362e9429ebc659ca2a999d8d85cf2159ae01be3",
+      "bytes": 33806
+    },
+    "signed": {
+      "path": "recovered/github-pr30/source-global-signed.mjs",
+      "sha256": "4078e65989da153d57a36672645bad13ac0b4f2894c5c77b88208fc1fc25ceb1",
+      "bytes": 29583
+    },
+    "harmonic": {
+      "path": "analysis/base/PR30-primary67-continuation/MathScopeCompute/research-ide/mathscope-m3/navier/source-harmonic-assembly.mjs",
+      "sha256": "339c8cb4e5853ba4afe68f3b37933784241baaef3fcf655d5d88aa9f13708d20",
+      "bytes": 16915
+    },
+    "mean": {
+      "path": "analysis/base/PR30-primary67-continuation/MathScopeCompute/research-ide/mathscope-m3/navier/source-global-initial-mean.mjs",
+      "sha256": "513779930558d044076318f39396060465b6518184b952482a0d973ac16bd411",
+      "bytes": 12706
+    },
+    "pressure": {
+      "path": "analysis/base/PR30-primary67-continuation/MathScopeCompute/research-ide/mathscope-m3/navier/source-updated-mean-pressure.mjs",
+      "sha256": "6ea6cb85cddd54b0421203e8fc37d24bdfcb8d3c6e62f78c5dada3dab8bd0c07",
+      "bytes": 6217
+    },
+    "family": {
+      "path": "analysis/base/PR30-primary67-continuation/MathScopeCompute/research-ide/mathscope-m3/navier/evidence/saved-initialized-norm-family-20261012/attempt1/saved-initialized-norm-family.json",
+      "sha256": "d98a245f1fc563ba44c48d21c59a43d6787fc3895d922472bb3f3ab6e04d9a6d",
+      "bytes": 5286543
+    },
+    "initialized": {
+      "path": "analysis/base/PR30-primary67-continuation/MathScopeCompute/research-ide/mathscope-m3/navier/evidence/global-forced-current-20261012/attempt382884203291/initialized-angular-construction.json",
+      "sha256": "ba60de00a1e41f9c448da3aabcbf791bc4649b5fcfd99cff7a71865463db8b14",
+      "bytes": 1733741
+    },
+    "full3_comparison": {
+      "path": "analysis/base/PR30-primary67-continuation/pressure-proof/cartesian-universal-closure/E_ACTUAL_CARTESIAN_RESIDUAL_SOURCE_APPLICATION.json",
+      "sha256": "54a12be51a60dd8c5c8aea834994928c70d7840a72e4505e666eb71aff31d7e4",
+      "bytes": 82805
+    }
+  },
+  "source_dataflow_checks": [
+    {
+      "file": "forced",
+      "literal": "assertGlobalInitializedAngular(source);",
+      "line": 153,
+      "pass": true
+    },
+    {
+      "file": "forced",
+      "literal": "exponent=kind==='velocity'?A:kind==='residual'?G.add(G.mul(G.q(2),A),G.q(1,2)):G.mul(G.q(2),A)",
+      "line": 114,
+      "pass": true
+    },
+    {
+      "file": "forced",
+      "literal": "referenceValues=[G.mul(G.sqrt(ratio),R),G.mul(power(ratio,D),Z),G.mul(ratio,T),...parameters.slice(3)]",
+      "line": 122,
+      "pass": true
+    },
+    {
+      "file": "forced",
+      "literal": "referenceBody=G.mul(power(ratio,exponent),G.expressionValue(ownSystem,referenceValues))",
+      "line": 123,
+      "pass": true
+    },
+    {
+      "file": "forced",
+      "literal": "newLocalMeanPressure=G.mul(power(source.reference.ratio,G.neg(G.mul(G.q(2),band.constants.A)))",
+      "line": 229,
+      "pass": true
+    },
+    {
+      "file": "forced",
+      "literal": "latestMean=reconstructUpdatedFullMeanPressure(G,{geometry:pressure.geometry,background,",
+      "line": 223,
+      "pass": true
+    },
+    {
+      "file": "forced",
+      "literal": "velocity:source.mean.stages.moments.velocity,covariance,stress:pressure.residual.fullOriginalStress,",
+      "line": 224,
+      "pass": true
+    },
+    {
+      "file": "forced",
+      "literal": "pressureDifference=G.sub(latestMean.pressure.value,source.mean.stages.moments.pressure.value)",
+      "line": 226,
+      "pass": true
+    },
+    {
+      "file": "forced",
+      "literal": "pressure:C.value(localPressureDifference)",
+      "line": 244,
+      "pass": true
+    },
+    {
+      "file": "forced",
+      "literal": "previous:newMean,increment:t.waveRows,oldFlatResidual:t.oldFlatResidual",
+      "line": 249,
+      "pass": true
+    },
+    {
+      "file": "forced",
+      "literal": "fullPressure=G.add(band.fields.pressure,latestMean.pressure.value,angularPressureField.root)",
+      "line": 284,
+      "pass": true
+    },
+    {
+      "file": "forced",
+      "literal": "direct=exactRealCylindricalPDE(G,{geometry,velocity,pressure:fullPressure})",
+      "line": 285,
+      "pass": true
+    },
+    {
+      "file": "forced",
+      "literal": "assembledResidual=meanDirect.conservativeResidual.map((x,j)=>G.add(x,residualFields[j].root))",
+      "line": 287,
+      "pass": true
+    },
+    {
+      "file": "forced",
+      "literal": "t.update.newQuadraticRemainderRetained&&t.update.oldFlatResidualRetained",
+      "line": 292,
+      "pass": true
+    },
+    {
+      "file": "forced",
+      "literal": "f.contributions===162",
+      "line": 290,
+      "pass": true
+    },
+    {
+      "file": "mean",
+      "literal": "afterTemporal=reconstructUpdatedFullMeanPressure(G,{...input,velocity:temporal.potential.velocity",
+      "line": 32,
+      "pass": true
+    },
+    {
+      "file": "mean",
+      "literal": "actualInputDefects={P:afterTemporal.mean.P,Jtheta:afterTemporal.mean.Jtheta,Jz:afterTemporal.mean.Jz}",
+      "line": 34,
+      "pass": true
+    },
+    {
+      "file": "mean",
+      "literal": "afterMoments=reconstructUpdatedFullMeanPressure(G,{...input,velocity:updated",
+      "line": 57,
+      "pass": true
+    },
+    {
+      "file": "mean",
+      "literal": "allCorrectionsRemainDivergenceFree:true",
+      "line": 105,
+      "pass": true
+    },
+    {
+      "file": "harmonic",
+      "literal": "oldRegular=kernel.result.conservative.map((M,j)=>S.sub(M,flat[j]))",
+      "line": 181,
+      "pass": true
+    },
+    {
+      "file": "harmonic",
+      "literal": "decomposed=oldRegular.map((M,j)=>S.add(M,flat[j],linearized[j],quadratic[j]))",
+      "line": 183,
+      "pass": true
+    },
+    {
+      "file": "signed",
+      "literal": "W=registered.after.roots,mean=buildGlobalMeanState(G,band,W",
+      "line": 225,
+      "pass": true
+    },
+    {
+      "file": "signed",
+      "literal": "updated:{fullAuxiliaryMean:W,mean}",
+      "line": 245,
+      "pass": true
+    },
+    {
+      "file": "signed",
+      "literal": "fullAuxiliaryPressureConstructed:false",
+      "line": 248,
+      "pass": true
+    }
+  ],
+  "independent_algebra": {
+    "ring": "exact rational polynomials in arbitrary commuting field jets and rho=1/r; d_r rho=-rho^2",
+    "identity": "R(u+w,p+pi)=(R(u,p)-F)+F+L(w,pi)+div(u tensor w+w tensor u)+div(w tensor w)",
+    "components": [
+      "radial",
+      "angular",
+      "axial"
+    ],
+    "exact_defect_monomial_counts": [
+      0,
+      0,
+      0
+    ],
+    "difference_enclosures": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ],
+    "full_cylindrical_vector_laplacian_and_basis_connections": true,
+    "incompressibility_not_required_for_conservative_identity": true,
+    "negative_controls": {
+      "omit_latest_pressure_increment": {
+        "nonzero_component_monomial_counts": [
+          1,
+          1,
+          1
+        ],
+        "rejected": true
+      },
+      "omit_new_quadratic_remainder": {
+        "nonzero_component_monomial_counts": [
+          7,
+          6,
+          6
+        ],
+        "rejected": true
+      },
+      "omit_old_flat_residual": {
+        "nonzero_component_monomial_counts": [
+          1,
+          1,
+          1
+        ],
+        "rejected": true
+      }
+    },
+    "scope": "Universal differential identity; actual construction and pressure binding remain independent obligations."
+  },
+  "stages": [
+    {
+      "id": "initialized-temporal",
+      "operation": "temporal-8.20 then full-pressure-8.12",
+      "actual_velocity_roots": {
+        "beta": 1706773,
+        "v": 1706624,
+        "gamma": 1706782
+      },
+      "latest_mean_pressure_root": 3614634,
+      "fresh_defect_roots": {
+        "P": 3614334,
+        "Jtheta": 3614376,
+        "Jz": 3614420
+      },
+      "proof_application": "The universal conservative identity applies to the literal temporal velocity increment and complete refreshed pressure. Latest pressure includes T0, A0 and full covariance; no discarded zero mode.",
+      "independent_frozen_whole3_stage_comparison": "not supplied separately; endpoint comparison follows after the five step",
+      "status": "SOURCE_BOUND_OPERATOR_IDENTITY_WITH_FULL_PRESSURE"
+    },
+    {
+      "id": "initialized-five",
+      "operation": "five-8.25 on fresh P/J then full-pressure-8.12",
+      "actual_velocity_roots": {
+        "beta": 3614790,
+        "v": 3614791,
+        "gamma": 3614792
+      },
+      "latest_mean_pressure_root": 3615361,
+      "proof_application": "Same universal identity, actual fresh targets, complete five increments and complete pressure difference; retained nonlinear defect remainder is not set to zero.",
+      "status": "SOURCE_BOUND_OPERATOR_IDENTITY_WITH_FULL_PRESSURE"
+    },
+    {
+      "id": "initialized-full3",
+      "actual_velocity_roots": [
+        3825006,
+        3825007,
+        3825008
+      ],
+      "latest_full_pressure_root": 3825009,
+      "direct_roots": [
+        3825257,
+        3825259,
+        3825261
+      ],
+      "assembled_roots": [
+        3825348,
+        3825349,
+        3825350
+      ],
+      "comparison": [
+        {
+          "component": 0,
+          "directRoot": 3825257,
+          "decomposedRoot": 3825348,
+          "actualWholeComponentProof": "radial-axial",
+          "differenceEnclosure": [
+            0,
+            0
+          ]
+        },
+        {
+          "component": 1,
+          "directRoot": 3825259,
+          "decomposedRoot": 3825349,
+          "actualWholeComponentProof": "angular",
+          "differenceEnclosure": [
+            0,
+            0
+          ]
+        },
+        {
+          "component": 2,
+          "directRoot": 3825261,
+          "decomposedRoot": 3825350,
+          "actualWholeComponentProof": "radial-axial",
+          "differenceEnclosure": [
+            0,
+            0
+          ]
+        }
+      ],
+      "status": "INHERITED_EXACT_INDEPENDENT_WHOLE3_SOURCE_COMPARISON"
+    },
+    {
+      "id": "implemented-forced-angular",
+      "operation": "all20 positive systems, conjugate routes, full covariance, refreshed pressure, all162 fields",
+      "actual_input_source": {
+        "paperSHA256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+        "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+        "sourcePrefixCount": 3677213,
+        "actualTemporalBeforeMomentSequence": true,
+        "wholeOriginalMeanSourceAcceptedOnlyThroughPrivateSeal": true,
+        "originalM2Modified": false,
+        "callerSourceOrCutoffAccepted": false,
+        "allOriginalPrimaryPressureTermsRetained": true
+      },
+      "source_constructor": "source-global-forced-current.mjs",
+      "full_pressure_expression": "background pressure + latestMean.pressure.value + all angular pressure",
+      "direct_expression": "exactRealCylindricalPDE(complete velocity, fullPressure)",
+      "assembled_expression": "meanDirect.conservativeResidual + actual all162 waveResidual fields",
+      "proof_application": "Universal update identity applies to each retained complete old state and increment including the new mean pressure difference. Exact finite Fourier reconstruction commutes with the same cylindrical differential operator. The unchanged fixed-label physical normalization and support-disjoint assembly transport all three components. This is an operator theorem on the actual constructor expressions, not a flag or a numerical sample.",
+      "symbolic_source_application": "APPLIES_TO_COMPLETE_CONSTRUCTOR_OUTPUT",
+      "frozen_output_graph_replayed_this_run": false,
+      "snapshot_recovery": "11 forced-stage checkpoints were not found in searched recovered archives; this is a replay-provenance issue, not an extra mathematical hypothesis",
+      "post_forced_class_bounds": "not inferred from finite residual identity",
+      "status": "SOURCE_BOUND_COMPLETE_CONSTRUCTOR_OPERATOR_APPLICATION"
+    },
+    {
+      "id": "implemented-signed-covariance",
+      "operation": "fixed-primary signed update",
+      "mean_pressure_available": true,
+      "complete_auxiliary_pressure_available": false,
+      "obstruction": "Local full covariance is integrated over both auxiliary coordinates before registerGlobalMeanFields; updated.fullAuxiliaryMean and buildGlobalMeanState do not determine its discarded nonzero auxiliary modes. No full-pressure/direct/assembled output is constructed for this update.",
+      "smallest_next_implementation": "Retain pre-Haar local after covariance; assemble it on the unchanged full162 cover, reconstruct gr -> Haar P -> full shifted pm and A0, add complete updated angular pressure and velocity, then bind both whole3 residual paths. Do not transplant a private seal or replace fullY covariance by its mean.",
+      "status": "OPEN_ACTUAL_FULL_AUXILIARY_PRESSURE_CONSTRUCTION"
+    }
+  ],
+  "N6_02": "OPEN_SIGNED_FULL_PRESSURE_STAGE_UNRESOLVED",
+  "original_1260_reexecuted": false,
+  "originals_modified": false,
+  "all_finite_correction_cycle_certified": false,
+  "scoped_connection_checks_passed": true
+}

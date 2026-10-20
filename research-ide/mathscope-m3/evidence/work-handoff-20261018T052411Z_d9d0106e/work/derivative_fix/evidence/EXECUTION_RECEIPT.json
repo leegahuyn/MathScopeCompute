@@ -1,0 +1,147 @@
+{
+  "schema": "mathscope.derivative-model-audit/1",
+  "scope": "VERIFIER_MODEL_REPAIR_ONLY_NOT_ACTUAL_GLOBAL_FIELD_PROOF",
+  "baseline_reproduces_archived_v5_results_exactly": true,
+  "input_and_reference_hashes_match_source_manifest": true,
+  "old_formula_negative_control_failed_on_energy_assertion": true,
+  "commands": [
+    {
+      "name": "baseline_tests",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-B",
+        "reference/test_all_eight_items.py"
+      ],
+      "cwd": "/workspace/scratch/11bf626d6c2d/work/derivative_fix",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "expected_exit_observed": true,
+      "stdout": "logs/baseline_tests.stdout.log",
+      "stderr": "logs/baseline_tests.stderr.log"
+    },
+    {
+      "name": "baseline_evaluator",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-B",
+        "reference/verify_all_eight_items.py",
+        "--root",
+        ".",
+        "--out",
+        "evidence/BASELINE_VERIFICATION_RESULTS.json"
+      ],
+      "cwd": "/workspace/scratch/11bf626d6c2d/work/derivative_fix",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "expected_exit_observed": true,
+      "stdout": "logs/baseline_evaluator.stdout.log",
+      "stderr": "logs/baseline_evaluator.stderr.log"
+    },
+    {
+      "name": "old_formula_negative_control",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-B",
+        "code/run_derivative_audit.py",
+        "--negative-control"
+      ],
+      "cwd": "/workspace/scratch/11bf626d6c2d/work/derivative_fix",
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "expected_exit_observed": true,
+      "stdout": "logs/old_formula_negative_control.stdout.log",
+      "stderr": "logs/old_formula_negative_control.stderr.log"
+    },
+    {
+      "name": "corrected_tests",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-B",
+        "code/test_all_eight_items.py"
+      ],
+      "cwd": "/workspace/scratch/11bf626d6c2d/work/derivative_fix",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "expected_exit_observed": true,
+      "stdout": "logs/corrected_tests.stdout.log",
+      "stderr": "logs/corrected_tests.stderr.log"
+    },
+    {
+      "name": "corrected_evaluator",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-B",
+        "code/verify_all_eight_items.py",
+        "--root",
+        ".",
+        "--out",
+        "evidence/CORRECTED_VERIFICATION_RESULTS.json"
+      ],
+      "cwd": "/workspace/scratch/11bf626d6c2d/work/derivative_fix",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "expected_exit_observed": true,
+      "stdout": "logs/corrected_evaluator.stdout.log",
+      "stderr": "logs/corrected_evaluator.stderr.log"
+    }
+  ],
+  "energy_comparison": [
+    {
+      "n_t": 64,
+      "n_x": 32,
+      "old_energy_balance_defect": 0.01285414270094136,
+      "corrected_energy_balance_defect": 4.068987062053053e-06,
+      "corrected_normalized_defect": 9.04086912516575e-05,
+      "midpoint_normalized_error_bound": 0.0009765625
+    },
+    {
+      "n_t": 128,
+      "n_x": 32,
+      "old_energy_balance_defect": 0.012857805345755556,
+      "corrected_energy_balance_defect": 1.0173629589188549e-06,
+      "corrected_normalized_defect": 2.2604754510415842e-05,
+      "midpoint_normalized_error_bound": 0.000244140625
+    },
+    {
+      "n_t": 128,
+      "n_x": 64,
+      "old_energy_balance_defect": 0.012856392951964217,
+      "corrected_energy_balance_defect": 1.0172512044520632e-06,
+      "corrected_normalized_defect": 2.2604754510322844e-05,
+      "midpoint_normalized_error_bound": 0.000244140625
+    },
+    {
+      "n_t": 256,
+      "n_x": 128,
+      "old_energy_balance_defect": 0.012856955389226377,
+      "corrected_energy_balance_defect": 2.5431306450995894e-07,
+      "corrected_normalized_defect": 5.651349693902904e-06,
+      "midpoint_normalized_error_bound": 6.103515625e-05
+    }
+  ],
+  "file_sha256": {
+    "code/run_derivative_audit.py": "79e6143941dcbd77bf572e18b4f2ff74a42cf21d27cf4c2af6d7939e8d3d805c",
+    "code/test_all_eight_items.py": "6c9d0bd3d7e403ae838c8b88902d5b4d060875ec382259741d7ad55db1755033",
+    "code/verify_all_eight_items.py": "697126e67d0a387e9fbecd295ef5ea3bb690907c90dce62f4a5275144c62e793",
+    "reference/EIGHT_ITEMS_VERIFICATION_RESULTS.json": "a9a84de573ccfb1f48ea52b727dfaec8eb30967cb87cd7ca44dbb151995be97c",
+    "reference/test_all_eight_items.py": "845c5b226d3f4813cd3f123b6a21c5054d4fbdda403f0900757c825d97a08104",
+    "reference/verify_all_eight_items.py": "56857dc32fb86bd252d04b6d8b7201d46caf507fe540191bc8d0d7d350b0b0ff",
+    "inputs/ACTUAL_STAGE_ATTACHMENT_GAPS.json": "5429e8e189fa4d7ac8ccf088cee319472d254f87ce1e5b41f6b44a7ba316a719",
+    "inputs/CURRENT_WAVE_APPLICATION.json": "caabcf049178f04936d9a0c36c866600ca134377947bb3b643c53c226726517f",
+    "inputs/GAUSSIAN_TAIL_CONNECTION.json": "6a7bbf2800790caceda249eb80415d6bf32d08bf2c23ef58c112d52cc1217b2b",
+    "inputs/INDEPENDENT_ALGEBRA.json": "08887436af998ca6f84638b4d4eb446501f527b0bcc8bb2720c1871a68a39f35",
+    "inputs/INDEPENDENT_N602_DOCUMENT_AND_STAGE_SCOPE_AUDIT.json": "0b60dd56bd6d51abb078eb7572702b4515bdc39e649d0289b0e307e315327e74",
+    "inputs/NATIVE_DEFINITIONS.json": "117dce1b82120f4f2f030a4c61ec62412acd373a86a898784b2a955e5226d1da",
+    "inputs/RECOVERED_PARENT_SOURCE_NODES.ndjson": "0d902ef124f089e8b378c2138b78b64cfbe469f8ff8064a5872ed024f00779de",
+    "inputs/SAVED_RECEIPT_CONSUMPTION.json": "f10f2736a11c7bc38c333381f6cd6d0036038f3214ab67f179ec2409df2d1200",
+    "inputs/STAGE_CYCLE_AND_TAIL_SCHEDULE.json": "c58f7cfbae70c21d5863706bdba36c21ce127caeb2feeeb3fbbc9e6788dc99cc",
+    "inputs/TERMINAL_AND_ENERGY_INTEGRATION.json": "da95b78362dacdccdda4b88250111d64d9b71c380bdafa9b819fa54efbe89ce7",
+    "inputs/actual_source_nodes.json": "ed08e02e0cfa32784308c1fde35a00bead4adc051c1a34b82d668da04d73732e",
+    "inputs/energy_refinement_connection.json": "4ab98384247d12062ed422331b8005b97260a2cb8243f0f6364fc78697bc6252",
+    "inputs/stage_tail_connection.json": "170ada6f12cfe6b1601e1e699c32ae3f7c43b728e59b38c431339fc9952d1a3e",
+    "inputs/terminal_source_application.json": "cc4e23d1d4604e0f52cf2599fd2fa51daead5287756ccf196b4e500831a6eeda"
+  },
+  "original_m3_completed_count_changed": false,
+  "actual_global_field_energy_certified": false,
+  "scoped_audit_passed": true
+}

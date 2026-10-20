@@ -1,0 +1,323 @@
+{
+  "schema": "MathScope.WebReadOnlyIntakeReview/1",
+  "date_utc": "2026-10-18",
+  "project_id": 29770,
+  "target": "https://project29770.websitepublisher.ai/v0.3.1.html",
+  "status": "READ_ONLY_INTAKE_COMPLETE_RUNTIME_UNVERIFIED",
+  "current_page": {
+    "platform_version": 117,
+    "platform_version_hash": "d7474dd6",
+    "content_bytes": 29006502,
+    "content_sha256": "600703e1bf0d40d901c4cae1cb40e48822935b11b430bf8ce1fc601eea9200b1",
+    "source_path": "source/v0.3.1.html",
+    "retrieval": "credential-free public HTTPS GET following authenticated read-only API transport failures"
+  },
+  "limits": {
+    "plan": "Free",
+    "pages_used": 5,
+    "pages_limit": 5,
+    "assets_used": 37,
+    "assets_limit": 25,
+    "entities_used": 0,
+    "entities_limit": 0
+  },
+  "authorization": {
+    "site_mutations": 0,
+    "publishes": 0,
+    "new_pages": 0,
+    "new_assets": 0,
+    "paid_changes": 0,
+    "original_producers_run": false,
+    "browser_or_playwright_used": false,
+    "local_source_sent_to_external_service": false
+  },
+  "m3_gate": {
+    "session_prerequisite_accepted": 61,
+    "total": 64,
+    "source": "root task instruction; not independently reassessed by this intake",
+    "whole_m3_complete": false,
+    "m4_final_acceptance": "UNCONFIRMED",
+    "site_write_allowed_in_this_task": false
+  },
+  "libraries": {
+    "three_version": "0.180.0",
+    "three_url": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js",
+    "addons_url": "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/",
+    "new_library_needed": false,
+    "runtime_load_verified": false
+  },
+  "preservation_targets": [
+    {
+      "id": "legacy_three_scenes",
+      "paths": [
+        "source/js/mathscope-app.js"
+      ],
+      "entrypoints": [
+        "makeSafeRenderer",
+        "registerScene",
+        "releaseScene",
+        "createLabHost"
+      ],
+      "preserve": [
+        "routes",
+        "camera",
+        "sample selection",
+        "keyboard",
+        "fallback",
+        "dispose"
+      ]
+    },
+    {
+      "id": "source_bound_scene",
+      "paths": [
+        "source/inline/script-18.js"
+      ],
+      "entrypoints": [
+        "MathScopeM2Visualization",
+        "SourceBoundScene",
+        "WebGLMarks",
+        "renderingAudit"
+      ],
+      "preserve": [
+        "retained exact table",
+        "sourcePath",
+        "CPU/WebGL distinction",
+        "6000 marks cap",
+        "DPR 1.5"
+      ]
+    },
+    {
+      "id": "m3_extended",
+      "paths": [
+        "source/inline/script-30.js"
+      ],
+      "entrypoints": [
+        "MathScopeM3ViewContract",
+        "MathScopeM3ExtendedWorkspace",
+        "SourceForcedCurrent"
+      ],
+      "preserve": [
+        "source-only modes",
+        "actual record digest",
+        "bounded Worker",
+        "stale",
+        "import replay",
+        "source artifacts",
+        "all existing N6-N8/Y5-Y7 routes"
+      ]
+    },
+    {
+      "id": "m4_panel",
+      "paths": [
+        "source/inline/script-33.js",
+        "source/data/ms-m4-data.json"
+      ],
+      "preserve": [
+        "original criteria",
+        "blueprint hash",
+        "historical receipts",
+        "quarantined import"
+      ]
+    },
+    {
+      "id": "r1_lab",
+      "paths": [
+        "source/inline/script-35.js",
+        "source/data/ms-r1-data.json"
+      ],
+      "preserve": [
+        "fresh Worker",
+        "cancel",
+        "resume",
+        "replay",
+        "point inspector",
+        "source/environment/input/result hashes"
+      ]
+    },
+    {
+      "id": "evidence_foundation",
+      "paths": [
+        "source/inline/script-04.js"
+      ],
+      "preserve": [
+        "guarded grade promotion",
+        "stale dependencies",
+        "verifier authority separation"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "WEB-01",
+      "severity": "integration_blocker",
+      "claim": "Historical 56/64 and 57/64 labels must not stand in for the current 61/64 assessment.",
+      "evidence": [
+        "source/inline/script-38.js",
+        "source/inline/script-33.js",
+        "source/data/ms-m4-data.json"
+      ],
+      "literal_counts_in_target": {
+        "56/64": 21,
+        "57/64": 2,
+        "61/64": 0,
+        "64/64": 4
+      },
+      "literal_counts_are_acceptance_evidence": false
+    },
+    {
+      "id": "WEB-02",
+      "severity": "integration_blocker",
+      "claim": "Integrated panel defaults to original_rows null and only accepts a fixed 57-complete/1260-row UI_DATA; needs explicit versioned successor schema, not removal of hash checks.",
+      "evidence": [
+        "source/inline/script-38.js"
+      ],
+      "expected_import_sha256": "14f5d2edbaed921c97dcfd42a3a5be3485be83b671cbdffafe5101197718cf10"
+    },
+    {
+      "id": "WEB-03",
+      "severity": "evidence_link_gap",
+      "claim": "Some integrated evidence paths are package-relative strings; standalone audit has no anchors and redacted hashes. Link availability and GitHub artifact identity remain unverified.",
+      "evidence": [
+        "source/inline/script-38.js",
+        "source/m3-picard-audit.html"
+      ]
+    },
+    {
+      "id": "WEB-04",
+      "severity": "runtime_risk",
+      "claim": "29 MB monolithic HTML; keep actual field evaluation in bounded Workers. Static targetFps 30 is not a measured performance result; loop uses maxInteractiveFps 60.",
+      "evidence": [
+        "source/v0.3.1.html",
+        "source/js/mathscope-app.js:322-363"
+      ]
+    },
+    {
+      "id": "WEB-05",
+      "severity": "adjacent_robustness",
+      "claim": "Stage6 external-theorem bridge fails open when optional promotion guard is absent; do not replicate. No observed runtime mispromotion.",
+      "evidence": [
+        "source/js/mathscope-stage6.js:115-116"
+      ]
+    },
+    {
+      "id": "WEB-06",
+      "severity": "non_evidence_ui_pass",
+      "claim": "B3 uses truthy safeText function as PASS condition; static UI PASS count is not M3/M4 acceptance evidence.",
+      "evidence": [
+        "source/js/mathscope-app.js:2305"
+      ]
+    },
+    {
+      "id": "WEB-07",
+      "severity": "acceptance_gap",
+      "claim": "Source includes keyboard/table/fallback support, but desktop/mobile/render/focus/worker interactions have not been observed in a browser.",
+      "evidence": [
+        "source/inline/script-30.js:124-180",
+        "source/js/mathscope-app.js:318-365"
+      ]
+    }
+  ],
+  "blueprint": {
+    "sha256": "f4758ab0c6f4038ab30cd9d3d945a471a467f9ffb4d36a0e172f95320720f0ac",
+    "local_sources": [
+      "../m4_criteria/concept_blueprint.txt",
+      "../m4_criteria/historical_m3_m4_resume_20261013.md"
+    ],
+    "m4_criteria": [
+      "I3-01",
+      "I3-02",
+      "I3-03",
+      "I3-04",
+      "I3-05",
+      "I3-06",
+      "I3-07",
+      "I3-08",
+      "R1-01",
+      "R1-02",
+      "R1-03",
+      "R1-04",
+      "R1-05",
+      "R1-06",
+      "R1-07",
+      "R1-08"
+    ]
+  },
+  "integration_contract": {
+    "source_required": [
+      "claimId",
+      "objectRevision",
+      "representationRevision",
+      "inputHash",
+      "sourceHash",
+      "environmentHash",
+      "resultHash",
+      "originalPointId",
+      "sourcePath",
+      "coordinates",
+      "time",
+      "coordinateSystem",
+      "units",
+      "fieldName",
+      "componentsOrIntervals",
+      "order",
+      "activeIndices",
+      "precision",
+      "errorAndTail",
+      "artifactSHA256",
+      "publicArtifactURL",
+      "assumptions",
+      "scope"
+    ],
+    "display_only_changes": [
+      "camera",
+      "color",
+      "selection",
+      "LOD"
+    ],
+    "authority_rule": "Rendering and finite numeric output cannot promote evidence. Exact source table and observed receipt remain authoritative.",
+    "missing_values": "Preserve missing or UNAVAILABLE; never convert formula node IDs or exponent bars into numerical field samples.",
+    "source_only_views": "Retain equations/tables and hidden spatial panel unless actual source-bound spatial samples are present."
+  },
+  "release_sequence": [
+    "Freeze current assessment receipt and explicit successor schema locally; preserve historical snapshots.",
+    "Build adapter against existing M3 ViewContract/SourceBoundScene; preserve all routes and existing functionality.",
+    "Run required I3/R1 source, replay, stale, tamper, independent refinement gates on the actual candidate.",
+    "Only after root gate: re-read latest version hash and patch existing page; no new pages/assets or paid changes.",
+    "Observe published UI in permitted browser and record hashes, public evidence links, rollback and PR30 artifacts."
+  ],
+  "runtime_checks_remaining": [
+    "desktop/mobile",
+    "keyboard/focus",
+    "long Korean/math overflow",
+    "CPU/WebGL fallback",
+    "reduced motion",
+    "context loss",
+    "actual point provenance",
+    "cancel/resume/replay",
+    "stale propagation",
+    "public artifact links",
+    "post-publish readback",
+    "external-user walkthrough"
+  ],
+  "secret_scan": {
+    "files": 8,
+    "patterns_matched": 0,
+    "report": "PUBLIC_SOURCE_SECRET_SCAN.json",
+    "comprehensive_privacy_certification": false
+  },
+  "files": {
+    "human_review": "WEB_INTAKE_REVIEW.md",
+    "source_manifest": "SOURCE_MANIFEST.json",
+    "api_intake": "API_INTAKE.json",
+    "page_structure": "PAGE_STRUCTURE.json",
+    "readback": "PUBLIC_PAGE_READBACK.json"
+  },
+  "not_certified": [
+    "whole mathematical theorem",
+    "current 61 criteria acceptance",
+    "remote GitHub artifact identity",
+    "browser runtime performance",
+    "M4 completion",
+    "publication"
+  ]
+}

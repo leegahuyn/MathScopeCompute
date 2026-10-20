@@ -1,0 +1,25 @@
+MATHSCOPE  /  DESIGN BLUEPRINT
+04 / ARCHITECTURE
+원본에서 증거까지 이어지는 전체 구조
+공통 중간 표현을 중심으로 렌더링 경로와 검증 경로를 연결한다.
+설계 제안 v0.1  ·  2026.10.06
+05
+WORKSPACE / 프로젝트 · 객체 버전 · 환경 잠금 · 변경 이력
+Object Registry + Typed Math IR
+정의·가정·차원·기저체·좌표계·식별자
+Representation Engine
+관측 사상 → 표본/복합체 → 표현 산출물
+왜곡 진단 · 오차 · 원본 대응 정보
+Claim + Formalization
+명제 · 가정 · 자연어/Lean 의미 대응
+형식화 템플릿 · 검증 요청
+Interactive Viewer
+3D / 불변량 / 관계 그래프
+선택 이벤트 · Create Claim · 비교 보기
+Verification Workers
+Lean 서버 · 수치 검사 · 선택적 CAS
+취소 · 시간 제한 · 작업 격리
+CLAIM LEDGER + ARTIFACT STORE
+증거 종류 · 가정 · 적용 범위 · 로그 · hash · 의존성 · 재검증 상태
+연결 규칙 | 모든 작업은 objectRevision, representationRevision, claimRevision을 포함한다. 완료가 늦게 도착한 이
+전 작업은 기록만 보존하고 현재 화면의 성공 상태를 덮어쓰지 않는다.

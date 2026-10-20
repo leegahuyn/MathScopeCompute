@@ -1,0 +1,13 @@
+# Independent partial numerical route review
+
+Accept the angular frontend and carrier storage lower bound in their stated partial scopes. N7-06 and N8-05 remain open.
+
+For a real field with one nonzero integer angular carrier n, write u=m+c exp(i n theta)+conjugate(c) exp(-i n theta). Exact angular orthogonality yields mean_theta |u|^2=|m|^2+2|c|^2. The source compiler cancels the literal k and inverse-k factors and verifies the retained source frequency is a nonzero integer selector, so it does not need to materialize the enormous integer or phase. All ten actual initialized templates retain the conjugate pair and original complete mean.
+
+The cylindrical angular contribution to the Cartesian gradient is R^-2 times the squared norm of (partial_theta u_r-u_theta, partial_theta u_theta+u_r, partial_theta u_z). The complex coefficient is (-n Im(c_r)-c_theta.real, n Re(c_r)-c_theta.imaginary) in the radial slot, with the corresponding theta and axial connections. The reviewed signs and factor two are correct. The first draft omitted the R^-2 metric factor while naming the expression a gradient; that was corrected. All ten emitted gradient roots now explicitly multiply their angular derivative numerator by inverse of the square of the actual R root. This is valid for R>0; no axis limit is numerically evaluated.
+
+The ten templates are not ten independent global modes to sum directly: the accepted 162 cover rows, support joins, physical scales and measure still need application. The compiler correctly disclaims a whole-K integral and final localized field. Its closure attempt identifies 700 absent scalar records and 138 native numerical kernel frontiers, rather than substituting zero. Independent replay exited zero and reproduced the author's angular artifact byte for byte, including both source negative controls.
+
+For the original parameters, h<2^-4096 and ell>=(64/h)^2 imply log2(k)>=h*ell/2>=2048/h>2^4107. Thus the ordinary binary integer expansion of k requires more than 2^4107 bits. This rules out only that expansion within a smaller declared finite budget; it does not rule out symbolic or coefficient integration. The exact budget=2^4107 edge was initially missed by the bit_length condition and was corrected to a direct integer comparison. An independent regression at that boundary exited zero and correctly declared the budget exceeded. Original header/packet manifest joins and the literal -1, 2 and ell roots are now checked.
+
+Only these new lightweight compiler/resource modules were replayed. No previous pretemporal, derivative, original numerical core or heavy source producer was rerun. All review outputs are in this directory.

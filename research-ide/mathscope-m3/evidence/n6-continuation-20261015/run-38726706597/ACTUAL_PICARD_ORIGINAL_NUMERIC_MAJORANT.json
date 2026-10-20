@@ -1,0 +1,546 @@
+{
+  "schema": "MathScope.N6.ActualPicardOriginalNumericMajorant/1",
+  "exactRationalLedger": {
+    "B26LogFDerivativeOverLambdaQ": "8/5",
+    "B26LogFSecondDerivativeOverLambdaSquaredQSquared": "72/25",
+    "B26FxxOverLambdaSquaredQcubedOverT1": "138",
+    "B26UxxOverLambdaQOverT1": "41/25",
+    "vOverBDelta": "28",
+    "vEtaOverBDeltaSquared": "112",
+    "omegaOverB2DeltaSquared": "3024",
+    "firstZOverBDelta": "36",
+    "firstZXOverBDelta": "44",
+    "secondZOverBDeltaSquared": "2080",
+    "forcingOverB2DeltaSquared": "40960",
+    "A0row4OverBDelta": "250",
+    "A0row5OverBDelta": "210",
+    "A1row4OverBDelta": "68",
+    "A1row5OverBDelta": "56"
+  },
+  "strictNegativeControls": {
+    "changedKconstantToOneRejected": true,
+    "original72ConditionPasses": true,
+    "omittedActualRadialFactorRejected": true,
+    "replacingStep32ByUncheckedNineNotUsed": true
+  },
+  "sameOriginalConstants": {
+    "B": "4096*Lambda^2*Q^3/t1",
+    "C1": "262144*B^2/delta^2",
+    "loss": "delta/8",
+    "aSquared": "(4/Lambda)*exp(t1/16)",
+    "solutionNorm": "exp(9*C1^2*aSquared/(2*loss))",
+    "Kcondition": "ceil(72*C1^2*aSquared/loss)"
+  },
+  "provedValueSeriesMajorant": "sum_(k>=0)||T^k G f|| <= (1+A)*exp(A^2/loss) <= exp(2*A^2/loss) <= original exp(9*A^2/(2*loss)), A=C1*a>=1",
+  "provedOriginalTail": "For K>=ceil(72*A^2/loss), sum_(k>=K)||T^k Gf||<=4^(-K)/3.",
+  "etaCauchyTail": "Each fixed m derivative has original factor m!*(16/delta)^m; the literal source Kprecision guarantees the original target 2^(-bits).",
+  "proof": "ACTUAL_PICARD_ORIGINAL_NUMERIC_MAJORANT_KO.md",
+  "actualSourceAndAnalyticInputsComposed": true,
+  "numericC1KCertifiedTailBoundsProvedHere": true,
+  "actualBnormThresholdApplicationProved": false,
+  "wholeGOnJProved": false,
+  "newOriginalGuardsDischarged": 0,
+  "newOriginalJetsDischarged": 0,
+  "newOriginalPDETermsDischarged": 0,
+  "sourceHeaderSHA256": "f1201808a2d71f56687b51164a383c9dd9a82f006c2151219bc0df9aa1daeec1",
+  "originalPicardSHA256": "c3ee2bdec0b3f1bdd63a679bc1d6fbaeff72fc961e68b24b8a39efd4d6229b60",
+  "sourceConstants": {
+    "sourceBound": {
+      "root": 24818,
+      "exactSourceExpressionChecked": true
+    },
+    "sourceStrip": {
+      "root": 26745,
+      "exactSourceExpressionChecked": true
+    },
+    "solutionStrip": {
+      "root": 24807,
+      "exactSourceExpressionChecked": true
+    },
+    "loss": {
+      "root": 24807,
+      "exactSourceExpressionChecked": true
+    },
+    "Kcondition": {
+      "root": 24825,
+      "exactSourceExpressionChecked": true
+    },
+    "Kprecision": {
+      "root": 24834,
+      "exactSourceExpressionChecked": true
+    },
+    "K": {
+      "root": 24835,
+      "exactSourceExpressionChecked": true
+    },
+    "error": {
+      "root": 24842,
+      "exactSourceExpressionChecked": true
+    }
+  },
+  "actualEtaOrder": 2,
+  "actualBits": 128,
+  "inputSHA256": {
+    "stage3": "388a8c7adec5a221a789123bf06a2e087032ba7ce49cdd34d832132361a6a36f",
+    "header": "f1201808a2d71f56687b51164a383c9dd9a82f006c2151219bc0df9aa1daeec1",
+    "compact": "b02852b7a93e551f23f362d668031b65e85caa3c982ef083e683afe01f108761",
+    "natural": "4b94c652630c250f883622601d1d9d4998c412927fe3bc4352ba5e8c70e2fe3d",
+    "picard": "90e461f9a5ae8d5f62e71b797450b8e41ea9c37b58b6d3f43a31c0cb026d01e6",
+    "repair": "0b01fa59f035c3340bfa24404320694401a971459dcc231e8b8a7a6a38f26e27"
+  },
+  "originalConstantCone": {
+    "24818": {
+      "op": "multiply",
+      "args": [
+        24815,
+        24817
+      ]
+    },
+    "24815": {
+      "op": "multiply",
+      "args": [
+        24813,
+        24814
+      ]
+    },
+    "24813": {
+      "op": "rational",
+      "args": [
+        "262144",
+        "1"
+      ]
+    },
+    "24814": {
+      "op": "integer_power",
+      "args": [
+        24812,
+        2
+      ]
+    },
+    "24812": {
+      "op": "multiply",
+      "args": [
+        3687,
+        24811
+      ]
+    },
+    "3687": {
+      "op": "inverse",
+      "args": [
+        3612
+      ]
+    },
+    "3612": {
+      "op": "source_parameter",
+      "args": [
+        "t1"
+      ]
+    },
+    "24811": {
+      "op": "multiply",
+      "args": [
+        24809,
+        24810
+      ]
+    },
+    "24809": {
+      "op": "integer_power",
+      "args": [
+        24797,
+        3
+      ]
+    },
+    "24797": {
+      "op": "source_parameter",
+      "args": [
+        "Q"
+      ]
+    },
+    "24810": {
+      "op": "multiply",
+      "args": [
+        4816,
+        24808
+      ]
+    },
+    "4816": {
+      "op": "rational",
+      "args": [
+        "4096",
+        "1"
+      ]
+    },
+    "24808": {
+      "op": "integer_power",
+      "args": [
+        3454,
+        2
+      ]
+    },
+    "3454": {
+      "op": "source_parameter",
+      "args": [
+        "Lambda"
+      ]
+    },
+    "24817": {
+      "op": "inverse",
+      "args": [
+        24816
+      ]
+    },
+    "24816": {
+      "op": "integer_power",
+      "args": [
+        24801,
+        2
+      ]
+    },
+    "24801": {
+      "op": "multiply",
+      "args": [
+        24798,
+        24800
+      ]
+    },
+    "24798": {
+      "op": "source_parameter",
+      "args": [
+        "rho"
+      ]
+    },
+    "24800": {
+      "op": "inverse",
+      "args": [
+        24799
+      ]
+    },
+    "24799": {
+      "op": "multiply",
+      "args": [
+        3308,
+        24797
+      ]
+    },
+    "3308": {
+      "op": "rational",
+      "args": [
+        "1024",
+        "1"
+      ]
+    },
+    "26745": {
+      "op": "multiply",
+      "args": [
+        847,
+        24801
+      ]
+    },
+    "847": {
+      "op": "rational",
+      "args": [
+        "1",
+        "4"
+      ]
+    },
+    "24807": {
+      "op": "multiply",
+      "args": [
+        7306,
+        24801
+      ]
+    },
+    "7306": {
+      "op": "rational",
+      "args": [
+        "1",
+        "8"
+      ]
+    },
+    "24825": {
+      "op": "ceiling",
+      "args": [
+        24824
+      ]
+    },
+    "24824": {
+      "op": "multiply",
+      "args": [
+        24822,
+        24823
+      ]
+    },
+    "24822": {
+      "op": "multiply",
+      "args": [
+        24820,
+        24821
+      ]
+    },
+    "24820": {
+      "op": "multiply",
+      "args": [
+        24805,
+        24819
+      ]
+    },
+    "24805": {
+      "op": "multiply",
+      "args": [
+        3617,
+        24804
+      ]
+    },
+    "3617": {
+      "op": "source_parameter",
+      "args": [
+        "Xa"
+      ]
+    },
+    "24804": {
+      "op": "exp",
+      "args": [
+        24803
+      ]
+    },
+    "24803": {
+      "op": "multiply",
+      "args": [
+        3612,
+        24802
+      ]
+    },
+    "24802": {
+      "op": "rational",
+      "args": [
+        "1",
+        "16"
+      ]
+    },
+    "24819": {
+      "op": "integer_power",
+      "args": [
+        24818,
+        2
+      ]
+    },
+    "24821": {
+      "op": "rational",
+      "args": [
+        "72",
+        "1"
+      ]
+    },
+    "24823": {
+      "op": "inverse",
+      "args": [
+        24807
+      ]
+    },
+    "24834": {
+      "op": "ceiling",
+      "args": [
+        24833
+      ]
+    },
+    "24833": {
+      "op": "multiply",
+      "args": [
+        19,
+        24832
+      ]
+    },
+    "19": {
+      "op": "rational",
+      "args": [
+        "1",
+        "2"
+      ]
+    },
+    "24832": {
+      "op": "add",
+      "args": [
+        24830,
+        24831
+      ]
+    },
+    "24830": {
+      "op": "rational",
+      "args": [
+        "140",
+        "1"
+      ]
+    },
+    "24831": {
+      "op": "multiply",
+      "args": [
+        474,
+        24826
+      ]
+    },
+    "474": {
+      "op": "rational",
+      "args": [
+        "4",
+        "1"
+      ]
+    },
+    "24826": {
+      "op": "inverse",
+      "args": [
+        24801
+      ]
+    },
+    "24835": {
+      "op": "maximum",
+      "args": [
+        1,
+        24825,
+        24834
+      ]
+    },
+    "1": {
+      "op": "rational",
+      "args": [
+        "1",
+        "1"
+      ]
+    },
+    "24842": {
+      "op": "multiply",
+      "args": [
+        24829,
+        24841
+      ]
+    },
+    "24829": {
+      "op": "multiply",
+      "args": [
+        24,
+        24828
+      ]
+    },
+    "24": {
+      "op": "rational",
+      "args": [
+        "2",
+        "1"
+      ]
+    },
+    "24828": {
+      "op": "integer_power",
+      "args": [
+        24827,
+        2
+      ]
+    },
+    "24827": {
+      "op": "multiply",
+      "args": [
+        591,
+        24826
+      ]
+    },
+    "591": {
+      "op": "rational",
+      "args": [
+        "16",
+        "1"
+      ]
+    },
+    "24841": {
+      "op": "multiply",
+      "args": [
+        24836,
+        24840
+      ]
+    },
+    "24836": {
+      "op": "rational",
+      "args": [
+        "1",
+        "3"
+      ]
+    },
+    "24840": {
+      "op": "exp",
+      "args": [
+        24839
+      ]
+    },
+    "24839": {
+      "op": "multiply",
+      "args": [
+        20,
+        24838
+      ]
+    },
+    "20": {
+      "op": "rational",
+      "args": [
+        "-1",
+        "1"
+      ]
+    },
+    "24838": {
+      "op": "multiply",
+      "args": [
+        24835,
+        24837
+      ]
+    },
+    "24837": {
+      "op": "log_positive",
+      "args": [
+        474
+      ]
+    },
+    "24806": {
+      "op": "sqrt_positive",
+      "args": [
+        24805
+      ]
+    },
+    "24848": {
+      "op": "exp",
+      "args": [
+        24847
+      ]
+    },
+    "24847": {
+      "op": "multiply",
+      "args": [
+        24844,
+        24846
+      ]
+    },
+    "24844": {
+      "op": "multiply",
+      "args": [
+        8835,
+        24820
+      ]
+    },
+    "8835": {
+      "op": "rational",
+      "args": [
+        "9",
+        "1"
+      ]
+    },
+    "24846": {
+      "op": "inverse",
+      "args": [
+        24845
+      ]
+    },
+    "24845": {
+      "op": "multiply",
+      "args": [
+        24,
+        24807
+      ]
+    }
+  },
+  "sourceScope": "Only actual Picard0 common collar and original requested eta tail. No arbitrary/global leading jet or Bnorm bound is promoted."
+}

@@ -6,11 +6,17 @@ on:
     paths:
       - 'research-ide/mathscope-m4/release-lab/**'
       - 'research-ide/mathscope-m4/web/release-lab.*'
+      - 'research-ide/mathscope-m4/web/build-web-patch.mjs'
+      - 'research-ide/mathscope-m4/web/test-browser.mjs'
+      - 'research-ide/mathscope-m4/web/verify-live-panel.mjs'
       - '.github/workflows/m4-release-lab.yml'
   pull_request:
     paths:
       - 'research-ide/mathscope-m4/release-lab/**'
       - 'research-ide/mathscope-m4/web/release-lab.*'
+      - 'research-ide/mathscope-m4/web/build-web-patch.mjs'
+      - 'research-ide/mathscope-m4/web/test-browser.mjs'
+      - 'research-ide/mathscope-m4/web/verify-live-panel.mjs'
       - '.github/workflows/m4-release-lab.yml'
 permissions:
   contents: read
@@ -32,3 +38,34 @@ jobs:
         with:
           name: mathscope-r1-fresh-${{ github.run_id }}
           path: ${{ runner.temp }}/r1-fresh
+
+  live-browser-acceptance:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Install pinned Playwright
+        run: npm install --no-save --no-package-lock playwright@1.56.1
+      - name: Install Chromium and runner dependencies
+        run: npx playwright install --with-deps chromium
+      - name: Build the standalone evidence-panel fixture
+        run: node research-ide/mathscope-m4/web/build-web-patch.mjs
+      - name: Test standalone desktop/mobile interactions, latency, memory, keyboard and touch
+        run: node research-ide/mathscope-m4/web/test-browser.mjs
+      - name: Inspect the actual live WebsitePublisher page in Chromium
+        run: node research-ide/mathscope-m4/web/verify-live-panel.mjs
+      - name: Preserve browser receipts and desktop/mobile screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: m4-live-browser-acceptance-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            research-ide/mathscope-m4/web/evidence/browser-qa-*.json
+            research-ide/mathscope-m4/web/evidence/browser-qa-receipt.json
+            research-ide/mathscope-m4/web/evidence/browser-run-*/
+            research-ide/mathscope-m4/web/evidence/live-*/
+          if-no-files-found: warn
+          retention-days: 30

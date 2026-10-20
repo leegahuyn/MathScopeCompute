@@ -1,0 +1,19 @@
+MathScope receipt and source intake audit
+Scope: historical receipt review and independent file hashing only; no launcher or MathScope source executed.
+
+1. The recovered RUN_OUTPUT.txt records Python 3.12.10 on Windows 11; this audit reads that supplied historical execution evidence and does not independently establish the historical execution environment.
+2. RUN_RECEIPT.json, decoded RUN_OUTPUT.txt and EXIT_CODE.txt consistently record success, exit 0, 94 manifest files and exactly four execution steps: two CLIs and two unit suites labeled 25 and 6 tests.
+3. All 94 files in the supplied manifest have independently matching sizes and SHA256 in the unmodified v5 extraction. The manifest excludes itself; there are 95 package files including it.
+4. The Windows receipt does not include the 68-test patched suite or 32-test WaveNorm suite. Those results are present in archived packaged logs and the final report, outside the receipt scope.
+5. The inherited suite source directories tested conditionally by REPRODUCE_ALL.py are absent from this v5 extraction, so that launcher skips them.
+6. The launcher input-dependency gate checks an exact historical state: 285 recovered-node lines with fixed SHA256, exactly 7 verified producers, exactly 4 missing producers, and TARGET_SOURCE_NODES.ndjson absent.
+7. The unmodified package satisfies those byte and presence conditions. Four missing producers plus TARGET_SOURCE_NODES.ndjson account for the reported five unbundled missing files.
+8. The Step 1 semantic gate explicitly expects BLOCKED, mathematical_complete=false, new_M3_completions=0 and validation_passed=false. Launcher PASS therefore does not establish mathematical completion.
+9. Recovered new inputs would require separate evidence handling: placing them in this historical snapshot could make its exact-count/absence baseline gate fail. No source file or launcher has been modified or executed in this audit.
+10. The receipt contains a historical aggregate phrased as 1,260/1,268. This audit does not adopt that aggregate: initial 1260 and M3 original 64 remain separate counting units; M3 baseline remains 56/64 pending original-criteria verification.
+
+Missing producer files in unmodified v5:
+- research-ide/mathscope-m3/navier/source-common-y-class-majorants.mjs
+- research-ide/mathscope-m3/navier/source-background-class-majorants.mjs
+- research-ide/mathscope-m3/navier/source-fourier-class-majorants.mjs
+- research-ide/mathscope-m3/navier/source-radial-class-majorants.mjs

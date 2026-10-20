@@ -1,0 +1,43 @@
+{
+  "schema": "MathScope.N6.ActualNaturalB26ConservationIdentity/1",
+  "sourceFiles": [
+    {
+      "path": "research-ide/mathscope-m2/navier/actual-continuation-exact-core.mjs",
+      "sha256": "d657bc94665ccc6b373fe951d76998f60b52869c2e7e19d5713f8ba0ccb96815"
+    },
+    {
+      "path": "research-ide/mathscope-m2/navier/actual-continuation-exact-pregluing.mjs",
+      "sha256": "7fd65f8e2519e4bab3fe017e6349ae98d700592548bc0e5a28aee431080ff2c3"
+    }
+  ],
+  "exactChecks": {
+    "derivativeAngularConservationEquals2XTimesAngularODE": true,
+    "derivativeAxialConservationEqualsAxialODE": true,
+    "angularODEEqualsOriginalPhiRecurrence": true,
+    "axialODEEqualsOriginalURecurrence": true,
+    "HsZetaPlusLChiZeroWithoutDivisionByHs": true,
+    "actualP1RetainsSourceXFactor": true
+  },
+  "identities": {
+    "sourceP1": "-2X*F_X/F",
+    "sourceNs": "-2*U_X",
+    "FJoinLogDifference": "Integral_0^y (kappa(s)-1)*d_s log(Fnatural(Xa exp(s))) ds",
+    "UJoinDifference": "Integral_0^y (kappa(s)-1)*d_s Unatural(Xa exp(s)) ds"
+  },
+  "analyticJustification": [
+    "Actual natural Banach-limit normal convergence for every fixed derivative order on Y<20.",
+    "Actual g>0 and Phi>1/4 on 0<=Y<=4.1 allow the logarithmic quotient.",
+    "FTC for all five actual core moments; conservation constants vanish at X=0.",
+    "kappa-1 and all derivatives vanish at y=0, beta=1 and blend=0 on the fixed common collar."
+  ],
+  "negativeControls": {
+    "omittedXInSourceP1Rejected": true,
+    "changedZetaSignRejected": true
+  },
+  "nativeInterfaceBindingsProvidedByOtherChecker": true,
+  "proof": "ACTUAL_NATURAL_B26_JOIN_KO.md",
+  "newOriginalGuardsDischarged": 0,
+  "newOriginalJetsDischarged": 0,
+  "newOriginalPDETermsDischarged": 0,
+  "newLeanExecution": false
+}

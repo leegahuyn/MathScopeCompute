@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/workspace/scratch/11bf626d6c2d/work/theorem_connection/code/verify_n601_joint_application.py", line 185, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/workspace/scratch/11bf626d6c2d/work/theorem_connection/code/verify_n601_joint_application.py", line 182, in main
+    result=run(a.root.resolve());out.parent.mkdir(parents=True,exist_ok=True);out.write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n')
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/11bf626d6c2d/work/theorem_connection/code/verify_n601_joint_application.py", line 111, in run
+    assert transport['result']=='PASS' and all(x['pass'] for x in transport['checks']), 'Transport verification not passed'
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/11bf626d6c2d/work/theorem_connection/code/verify_n601_joint_application.py", line 111, in <genexpr>
+    assert transport['result']=='PASS' and all(x['pass'] for x in transport['checks']), 'Transport verification not passed'
+                                               ~^^^^^^^^
+KeyError: 'pass'

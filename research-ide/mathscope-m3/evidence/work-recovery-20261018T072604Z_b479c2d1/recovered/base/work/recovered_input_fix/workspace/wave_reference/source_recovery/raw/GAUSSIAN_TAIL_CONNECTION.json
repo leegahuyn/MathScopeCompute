@@ -1,0 +1,94 @@
+{
+  "schema": "MathScope.GaussianCutoffSourceBound/1",
+  "source": {
+    "paperSHA256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+    "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+    "sourcePages": [
+      77,
+      78,
+      79,
+      84,
+      85,
+      86,
+      87,
+      88,
+      106,
+      107
+    ],
+    "sourceEquations": [
+      "7.12",
+      "7.16",
+      "7.19",
+      "7.20",
+      "7.27",
+      "7.37",
+      "9.11"
+    ],
+    "ownM3CurrentSeal": true,
+    "oldM2PhysicalBandSealUsed": false,
+    "allConstantsFromSamePrivateFamily": true
+  },
+  "band_graph": {
+    "sha256": "66c5285b9eefc1adf8ac7a4aa9f69b6df422c906be968a93354dfae3109a219e",
+    "nodeCount": 623858,
+    "newNodeCount": 1077,
+    "canonicalBytes": 889522,
+    "originalPrefixGraphSHA256": "bff6b64458f52426e996a7b5a1dee44b4ae1f7fb226d54654889c79679e4e219",
+    "sourceDeltaRetainsEveryNewBody": true
+  },
+  "source_P": [
+    623389,
+    623722
+  ],
+  "logP": [
+    623388,
+    623721
+  ],
+  "gaussian_lower": {
+    "namespace": "current",
+    "node": 617317
+  },
+  "length_ratio_lower": {
+    "namespace": "current",
+    "node": 300173
+  },
+  "c_source_expression": {
+    "op": "multiply",
+    "args": [
+      {
+        "source_node": 617317
+      },
+      {
+        "source_node": 300173
+      },
+      {
+        "rational": [
+          "1",
+          "25"
+        ]
+      }
+    ]
+  },
+  "cutoff_region": "|v-Ls/2|>=Ls/5",
+  "bound": "P(v)<=exp(-gaussianLower*(v-Ls/2)^2/Ls)<=exp(-c*Sstar)",
+  "sign": "positive psi_prime*t in L(psi*t,psi*pi), not zero",
+  "homogeneous_source": true,
+  "forced_source_f_zero": "only original homogeneous ±1 pulses; no forced inverse run",
+  "physical_derivative_contract": {
+    "input": "C*Q^(-M)*Sstar^P*exp(-c*Sstar), c>0, M>=0, integer P>=0",
+    "Q": "2^(-ell)",
+    "Sstar": "ell^2",
+    "q_over_Q": [
+      "1/2",
+      "2"
+    ],
+    "output": "<= C_N*q^N for every fixed N>=0",
+    "C_N": "C*2^N*(2P/c)^P*exp((M+N)^2/(2c)); (2P/c)^P=1 if P=0",
+    "proof": "Split -c*ell^2 into two halves. Complete square with log2<1 for linear term; maximize x^P exp(-cx/2) and discard exp(-P)<=1.",
+    "derivative_C_M_P": "source derivatives and normalization determine these per derivative; not numerically materialized here"
+  },
+  "absorbed_into_W_or_deleted": false,
+  "final_resolvable_tau_computed": false,
+  "new_source_parameter_choice": false,
+  "grade": "SOURCE_BOUND_REFERENCE_FLATNESS_APPLICATION; not a numeric near-T error budget"
+}

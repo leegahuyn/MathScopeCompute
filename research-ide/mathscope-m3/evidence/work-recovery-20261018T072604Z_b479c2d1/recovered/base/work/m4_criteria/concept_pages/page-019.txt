@@ -1,0 +1,42 @@
+MATHSCOPE  /  DESIGN BLUEPRINT
+18 / TECHNOLOGY
+첫 버전은 로컬 실행을 우선한다
+버전 번호를 고정 추천하기보다 착수 시 호환성 검증 후 전체 도구 환경을 잠근다. [T1-T4, L1-L5]
+설계 제안 v0.1  ·  2026.10.06
+19
+영역
+권장 출발점
+선택 이유·교체 조건
+UI / 3D
+TypeScript + React
+Three.js / WebGL 2
+3D 장면·카메라와 UI 상태 분리. WebGPU는
+후속 실험.
+Desktop shell
+Electron
+renderer + isolated main process
+Lean 프로세스 연결을 한 언어로 시작.
+contextIsolation·sandbox·좁은 IPC.
+수치 계산
+TypeScript typed arrays + Worker
+후속 NumPy / SciPy 서비스
+MVP 해석적 프리셋은 배포가 간단한 경로.
+무거운 계산부터 서비스 분리.
+Lean / editor
+Lean 4 + mathlib + Lake
+Monaco + LSP adapter
+공식 Lean 확장과 맞는 bridge 검증. 기존
+Infoview 재사용은 별도 통합 조사.
+저장 / 재현
+JSON manifest + SQLite index
+binary artifacts + SHA-256
+정의·설정은 Git 친화적으로, 대용량 표본·로
+그는 별도 저장.
+검증 / 배포
+단위·통합 테스트 + Playwright
+잠긴 환경의 clean build
+수학 사례·상태 전이·설치 경로 검증. 지원 OS
+별 실행 격리 확인.
+대안 선택의 기준
+Tauri는 패키지 크기·메모리가 우선일 때 별도 검토한다. 웹 배포는 로컬 Lean bridge 또는 서버 실행이 필요하다.
+첫 버전에서 원격 협업·GPU 서버 비용을 필수 조건으로 만들지 않는다.

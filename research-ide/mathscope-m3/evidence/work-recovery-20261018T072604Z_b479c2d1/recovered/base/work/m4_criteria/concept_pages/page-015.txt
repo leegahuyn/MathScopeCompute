@@ -1,0 +1,30 @@
+MATHSCOPE  /  DESIGN BLUEPRINT
+14 / LEAN BRIDGE
+Lean은 명제와 증거의 검증 경로를 맡는다
+형식화한 명제가 그림의 설명과 같은 의미인지 따로 확인해야 한다. [L1-L5]
+설계 제안 v0.1  ·  2026.10.06
+15
+Editor
+Lean 소스 / 목표 / 진단
+Bridge
+문서 버전 / LSP / 작업 ID
+Lean process
+elaboration / kernel / build
+대화형 응답과 최종 검증의 두 경로
+편집 중에는 LSP로 파일 변경·진단·목표 정보를 전달하고 Lean의 확장 RPC는 필요할 때만 사용한다. 빠른 피드
+백은 작업 중 상태다. Ledger에 검증 결과를 등록할 때는 고정된 revision과 환경에서 별도 build를 실행해 로
+그와 소스 hash를 저장한다.
+검사
+PROVED로 표시하기 전에 확인할 것
+명제 대응
+정의·가정·범위·결론의 자연어/Lean 대응. 수동 검토 또는 검토된 템플릿 ID.
+증명 완결성
+전이적 공리 의존성을 조사. sorryAx 의존은 항상 미완성으로 분류한다. 추가 공리·native 경
+로는 공개된 신뢰 정책으로 처리한다.
+환경 재현
+lean-toolchain, lake-manifest.json, 소스·의존성 hash, 명령·로그·검증 대상 declaration.
+프로세스 격리
+프로젝트별 실행 환경, 시간·메모리 제한, 취소와 오래된 응답 차단. 임의 Lean 코드와
+tactic 실행을 신뢰하지 않음.
+실시간 = 비동기 진단 갱신. 증명 완료 시간을 보장하지 않는다. running / timeout / failed / stale을 구분하며, Lean 정리의
+검증이 렌더러·GPU 결과의 검증을 뜻하지 않는다.

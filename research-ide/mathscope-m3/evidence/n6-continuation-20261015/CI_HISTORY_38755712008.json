@@ -1,0 +1,15 @@
+{
+  "schema": "MathScope.N6.CIFailureHistory/1",
+  "run": 38755712008,
+  "commit": "089f095960d7d3e526daaec3eb11523062621215",
+  "job": 116493482382,
+  "failedStep": "Validate preserved source and English metadata",
+  "exactCause": "The newly appended English edition inventory mistakenly included run-38754608170/RAW_RESULTS.zip, but the unchanged verifier explicitly excludes *.zip. The artifact bytes and 46-gate proof run are valid; only edition membership was wrong.",
+  "correction": "Remove only that newly erroneous ZIP inventory row; keep the tracked ZIP, its verified archive receipt and every older inventory entry. Add this raw failure log and history to the corrected edition inventory. Independently compare the complete edition inventory against canonical staged Git blob bytes before committing.",
+  "sourceVerifierUnchanged": true,
+  "sourceProducersAndAcceptanceGatesUnchanged": true,
+  "proofRun": 38754608170,
+  "proofCode": "03249313ce62ebc49e00162b1bc0eb69ffa468f0",
+  "scopedProofGatesSuccessful": 46,
+  "originalRowsDischargedByCorrection": 0
+}

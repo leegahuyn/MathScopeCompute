@@ -1,0 +1,234 @@
+{
+  "schema": "MathScope.NextResumeScalarToFrameAssessment/1",
+  "created_utc": "2026-10-18T21:35:28.113377+00:00",
+  "actor": "Current ChatGPT task; historical model filenames are not a model instruction",
+  "source_baseline_commit": "333d6095d4a2d2d69ceec9b25c44e1d3381e36d2",
+  "local_checkout_head": "333d6095d4a2d2d69ceec9b25c44e1d3381e36d2",
+  "remote_state_checked_by_this_unit": false,
+  "new_unit": "research-ide/mathscope-m3/logradius-recovery-20261019/",
+  "new_runtime_sha256": "bfb9896adbe915a2eb37c3a829d4368d4d7fbf9b28bfd3bdb798b6405241c173",
+  "input_manifest_sha256": "c42dd7c8c6cbd442597f30ea6cc58022ba280c8ea36021ad1eb93b90c653f368",
+  "validation_sha256": "026f570ce8d95d439b5c1e3ecf6aaa0259c17cd36537875e72416156a86df2c3",
+  "reused": {
+    "original_A13_integrals": [
+      239,
+      257,
+      275
+    ],
+    "nested_primitives": [
+      229,
+      249
+    ],
+    "integral_bounds": [
+      "[1/4,3]",
+      "[1/4,3/2]",
+      "[h/256,54h/256]"
+    ],
+    "factor_54_unchanged": true,
+    "positive_h_unchanged": true,
+    "original_A13_audit_and_consumer_reused": true,
+    "existing_traced_evaluator_reused": true,
+    "historical_700_or_3407_producers_rerun": false
+  },
+  "new_connection": {
+    "arithmetic_trace_record_count": 57,
+    "connection_record_count_including_Xb_interpretation": 60,
+    "additional_arithmetic_records_vs_prior77": [
+      6,
+      7,
+      13,
+      56,
+      76,
+      83,
+      84,
+      98,
+      101,
+      102,
+      103,
+      114,
+      139,
+      147,
+      148,
+      158,
+      179,
+      199,
+      218,
+      294,
+      319
+    ],
+    "additional_interpretation_records": [
+      12,
+      28825,
+      28826
+    ],
+    "output_roots": {
+      "Qb": 259,
+      "ratio": 277,
+      "logRatio": 278,
+      "inverseOneMinusH": 279,
+      "terminalWait": 280,
+      "logRadiusOverXR": 319
+    },
+    "all_six_closed_outputs_positive_finite": true,
+    "exact_source_map_comparison": true,
+    "current_indexed_or_physical_frame_authenticated": false
+  },
+  "original_closed_parameters": {
+    "T": "exp(1048576)+10",
+    "lambda": "exp(-1000*T)",
+    "h": "exp(-8002*T)",
+    "BOuter": "1000*T",
+    "Tf": "128",
+    "domain": "T>128;0<h<lambda<1/16",
+    "source_parameter_T_is_not_slow_coordinate_T": true
+  },
+  "source_identities": {
+    "Qb259": "exp(-(1-h)/2)*(exp(-(1-lambda)/2)*((lambda-h)/(1-lambda)+I239)+(1-h)*L+I257)",
+    "L": "-4*log(h)=32008*T",
+    "ratio277": "Qb259/Qp275",
+    "log278": "log(ratio277)",
+    "wait280": "log278/(1-h)",
+    "logradius319": "13*exp(1000*T)+122009*T+135+wait280",
+    "Xb28826": "XR*exp(node319)"
+  },
+  "scoped_analytic_consequences_reused_or_connected": {
+    "Qb": "L/4<Qb<L+137/30",
+    "Qp": "0<Qp<=54*h/256<27/2048<1",
+    "ratio": "Qb/Qp>1",
+    "wait": "0<wait<infinity",
+    "normalized": "Qp=h*K;K in[1/256,27/128];wait=(8002*T+log(Qb)-log(K))/(1-h)"
+  },
+  "error_limit": {
+    "inherited_log_K_bound_width": "log(54)",
+    "additional_numeric_inflation_included": true,
+    "higher_arithmetic_bits_alone_shrink_fixed_A13_bounds": false,
+    "observed_coordinate_for319": "log^2(node319); node319 itself is log(Xb/XR)",
+    "new_acceptance_threshold": null,
+    "original_integral_relative_accuracy_proved": false,
+    "whole_Xb_relative_accuracy_proved": false
+  },
+  "next_small_scalar_step": {
+    "source_XR": {
+      "product": [
+        {
+          "integer": 110
+        },
+        {
+          "power": [
+            {
+              "product": [
+                {
+                  "ref": "CSelected"
+                },
+                {
+                  "ref": "Pstar"
+                }
+              ]
+            },
+            10
+          ]
+        }
+      ]
+    },
+    "complete_named_dependency_closure": [
+      "Md",
+      "T",
+      "logP",
+      "Pstar",
+      "K",
+      "h",
+      "j0",
+      "sigmaStar",
+      "Q",
+      "BRefUpper",
+      "logCSelected",
+      "CSelected",
+      "XR"
+    ],
+    "original_operator_counts": {
+      "product": 6,
+      "integer": 9,
+      "power": 6,
+      "ref": 15,
+      "exp": 4,
+      "sum": 3,
+      "log": 1,
+      "quotient": 2
+    },
+    "unknown_references": [],
+    "numeric_evaluation_performed_here": false,
+    "status": "EXPLICIT_CLOSED_ARITHMETIC_GRAPH_EXISTS; evaluate XR and28825/28826 with full propagated intervals in a separate scoped continuation if requested"
+  },
+  "next_actual_frame_blockers": [
+    {
+      "name": "external frame and original ell membership",
+      "ids": [
+        622802,
+        622803,
+        622804,
+        622791
+      ],
+      "missing": "Actual global point/coordinate values and source-authenticated ell>=ell0 plus coefficient-window membership; the formal records exist."
+    },
+    {
+      "name": "actual fixed mesh integers",
+      "ids": [
+        623855,
+        623856,
+        623857,
+        632236,
+        632240,
+        632244
+      ],
+      "missing": "Certify original ceilings of ell_label^6 times the transported coordinates in the same source frame, including a policy that leaves intersected integer boundaries open."
+    },
+    {
+      "name": "active same-box representative",
+      "ids": [
+        623914,
+        623921,
+        623934,
+        623935
+      ],
+      "missing": "Nonempty active radial/mesh intersection and separated negativeWidth sign before original representative slow-inverse arguments are evaluated."
+    },
+    {
+      "name": "native final-field and original acceptance",
+      "ids": [
+        "N7-06",
+        "N8-05"
+      ],
+      "missing": "Whole-K source-native field/derivative/pressure-force-energy connection, original independent energy refinements and four numerical axes with their separate tail bounds."
+    }
+  ],
+  "validation": {
+    "checks_passed": 35,
+    "negative_controls_passed": 25,
+    "command": "node research-ide/mathscope-m3/logradius-recovery-20261019/verify_logradius.mjs --output-dir NEW_RESULT_DIRECTORY",
+    "exit_code": 0,
+    "independent_recurrence_bits": 512,
+    "M3_acceptance_comparison": false
+  },
+  "status": {
+    "M3_inherited": "62/64",
+    "N7_06": "OPEN",
+    "N8_05": "OPEN",
+    "actual_global_last_resolved_tau": null,
+    "new_M3_closures": 0,
+    "M4_original16": "Not verified by this unit"
+  },
+  "no_frozen_caller_or_radial_files_edited": true,
+  "original_constants_unchanged": {
+    "B0": "0.7",
+    "C0_star": "1.2",
+    "source_locations": "Original paper PDF106-107; blueprint PDF62; linked in the frozen caller evidence"
+  },
+  "independent_review": {
+    "status": "PASS_WITH_ORIGINAL_SCOPE_OPEN",
+    "sha256": "88c0f68027257b40313f950dd6449d0128dd3a3a253fe30aede784ad7f9b6db6",
+    "checks_passed": 9,
+    "negative_controls_passed": 5,
+    "source_records_directly_checked": 60,
+    "material_findings": []
+  }
+}

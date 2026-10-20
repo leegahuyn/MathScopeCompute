@@ -1,0 +1,361 @@
+{
+  "schema": "MathScope.M4.FreshObservationTrace/1",
+  "fixtureId": "delta",
+  "execution": {
+    "id": "delta",
+    "engine": "M1",
+    "claimId": "R1-03/Y5-01",
+    "startedAt": "2026-10-18T18:51:41.114Z",
+    "finishedAt": "2026-10-18T18:51:41.258Z",
+    "pass": true,
+    "commandScope": "FRESH_ISOLATED_INSTALLED_BROWSER_WORKER_VS_CURRENT_LOCAL_MODULE",
+    "workersStarted": 1,
+    "request": {
+      "kind": "gauge.family",
+      "input": {
+        "group": {
+          "family": "G2",
+          "parameter": 2,
+          "globalForm": "ADJOINT",
+          "representation": "REAL_7"
+        },
+        "field": {
+          "kind": "BPST_PLUS_PERTURBATION",
+          "embedding": "canonical-su2",
+          "rho": 1,
+          "center": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "gaugeConvention": "D=d+A",
+          "coupling": {
+            "g": 1,
+            "normalization": "BASIC_FORM"
+          },
+          "domain": {
+            "kind": "R4_WINDOW",
+            "bounds": [
+              [
+                -4,
+                4
+              ],
+              [
+                -4,
+                4
+              ],
+              [
+                -4,
+                4
+              ],
+              [
+                -4,
+                4
+              ]
+            ],
+            "boundary": "OPEN_RESTRICTION"
+          },
+          "units": {
+            "length": "ell0",
+            "hbarC": 1
+          },
+          "perturbation": {
+            "kind": "GAUSSIAN_POLYNOMIAL",
+            "amplitude": 0.2,
+            "length": 1.2,
+            "seed": "mathscope-m1-gauge-2026",
+            "modes": [
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                1,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                1
+              ],
+              [
+                1,
+                1,
+                0,
+                0
+              ]
+            ]
+          }
+        },
+        "family": {
+          "mode": "CLASSICAL_SCALE",
+          "delta": 1,
+          "referenceDelta": 1,
+          "energyUnits": "hbar*c/ell0",
+          "assumptionId": "declared-gap-lower-bound"
+        },
+        "observation": {
+          "kind": "SLICE",
+          "quantity": "actionDensity",
+          "samplesPerAxis": 3,
+          "bounds": [
+            [
+              -2,
+              2
+            ],
+            [
+              -2,
+              2
+            ],
+            [
+              -2,
+              2
+            ]
+          ],
+          "slice": 0
+        },
+        "verify": {
+          "field": true,
+          "densityQuadrature": false
+        },
+        "compareDeltas": [
+          1,
+          2
+        ],
+        "probe": [
+          0.2,
+          -0.3,
+          0.4,
+          0.1
+        ]
+      },
+      "precision": {
+        "mode": "FLOAT64",
+        "tolerance": 1e-9
+      },
+      "budget": {
+        "maxSamples": 2200,
+        "maxEvaluations": 12000,
+        "maxMatrixDimension": 8
+      }
+    },
+    "requestDigest": "8d938ce663f2c87e31e2ca890593ff7c13f6ea796bedda3a5e657cdb737edcd3",
+    "inputHash": "7eae5879956878b3a73b569c62b83fd09c6c40d2115ea6924b8bce33ef6814ef",
+    "local": {
+      "status": "COMPLETED",
+      "resultHash": "ecbfb3616b59db6e7a2f44c90287f60f34c64abbe7a44843f92673df998a845e",
+      "mathematicalHash": "ecbfb3616b59db6e7a2f44c90287f60f34c64abbe7a44843f92673df998a845e"
+    },
+    "worker": {
+      "status": "COMPLETED",
+      "resultHash": "ecbfb3616b59db6e7a2f44c90287f60f34c64abbe7a44843f92673df998a845e",
+      "mathematicalHash": "ecbfb3616b59db6e7a2f44c90287f60f34c64abbe7a44843f92673df998a845e",
+      "workerSHA256": "0526fb1030c328e940c39672e86dfb9d24f09f4622794269c1e0eadbb92cc0ca"
+    },
+    "mathematicalHashMatch": true,
+    "invariant": {
+      "pass": true,
+      "checks": [
+        {
+          "id": "terminal-completed",
+          "pass": true,
+          "observed": "COMPLETED"
+        },
+        {
+          "id": "delta-target-count",
+          "pass": true,
+          "observed": [
+            1,
+            2
+          ]
+        },
+        {
+          "id": "same-declared-generator",
+          "pass": true
+        }
+      ]
+    },
+    "observation": {
+      "points": 27,
+      "samplesPerAxis": 3,
+      "physicalFieldHash": "c7dd991efb2dedd2160c8ad73c4555f4375080b3370a3cc868455f6fb1599e17",
+      "targets": [
+        {
+          "delta": 1,
+          "hash": "c7dd991efb2dedd2160c8ad73c4555f4375080b3370a3cc868455f6fb1599e17",
+          "rho": 1
+        },
+        {
+          "delta": 2,
+          "hash": "49a69c82483d95a0e20dc74c5cc1761de7c08c5395aac6141588cb49ae53f19d",
+          "rho": 0.5
+        }
+      ]
+    },
+    "source": {
+      "repoPath": "research-ide/mathscope-m1/gauge/family.mjs",
+      "page": 46,
+      "equation": "CLASSICAL_SCALE generator",
+      "url": "https://github.com/leegahuyn/MathScopeCompute/blob/mathscope-m3-m4-20261014/research-ide/mathscope-m1/gauge/family.mjs",
+      "pageDocument": "99-page Research IDE blueprint"
+    },
+    "memory": {
+      "parentRSSBefore": 152297472,
+      "parentRSSAfter": 156958720,
+      "scope": "Process snapshots including threads; not a peak process-tree bound"
+    },
+    "fullSourceSolution": false,
+    "formalKernelExecuted": false
+  },
+  "record": {
+    "schema": "MathScope.M4.InspectableObservation/1",
+    "claimId": "R1-03/Y5-01",
+    "jobId": "fresh-fixture:2026-10-18T18:51:41.114Z:delta",
+    "inputHash": "7eae5879956878b3a73b569c62b83fd09c6c40d2115ea6924b8bce33ef6814ef",
+    "result": {
+      "points": 27,
+      "samplesPerAxis": 3,
+      "physicalFieldHash": "c7dd991efb2dedd2160c8ad73c4555f4375080b3370a3cc868455f6fb1599e17",
+      "targets": [
+        {
+          "delta": 1,
+          "hash": "c7dd991efb2dedd2160c8ad73c4555f4375080b3370a3cc868455f6fb1599e17",
+          "rho": 1
+        },
+        {
+          "delta": 2,
+          "hash": "49a69c82483d95a0e20dc74c5cc1761de7c08c5395aac6141588cb49ae53f19d",
+          "rho": 0.5
+        }
+      ]
+    },
+    "resultHash": "0ae92ba716fc7db48a2f88a414c9c11e1635184da7ebd549dcecbb6fff412342",
+    "source": {
+      "path": "research-ide/mathscope-m1/gauge/family.mjs",
+      "commit": "333d6095d4a2d2d69ceec9b25c44e1d3381e36d2",
+      "sha256": "e1008deb11424bde74025446ed1dbde90e04b6bcee198a965a7e121521bd423c"
+    },
+    "document": {
+      "sha256": "f4758ab0c6f4038ab30cd9d3d945a471a467f9ffb4d36a0e172f95320720f0ac",
+      "page": 46
+    },
+    "formula": "ρΔ=ρref Δref/Δ; each Δ recomputes the declared classical field",
+    "assumptionIds": [],
+    "scope": "Fresh delta fixture; source catalogue limitations apply. This is not the actual whole-K native field or a new kernel theorem.",
+    "originalCoordinates": null,
+    "error": null,
+    "kernelPass": false,
+    "originalCriterionAccepted": false
+  },
+  "inspection": {
+    "schema": "MathScope.M4.ObservationInspection/1",
+    "status": "SOURCE_AND_RESULT_BYTES_MATCH",
+    "student": {
+      "assumptionIds": [],
+      "claimId": "R1-03/Y5-01",
+      "display": null,
+      "document": {
+        "page": 46,
+        "sha256": "f4758ab0c6f4038ab30cd9d3d945a471a467f9ffb4d36a0e172f95320720f0ac"
+      },
+      "error": null,
+      "formula": "ρΔ=ρref Δref/Δ; each Δ recomputes the declared classical field",
+      "inputHash": "7eae5879956878b3a73b569c62b83fd09c6c40d2115ea6924b8bce33ef6814ef",
+      "jobId": "fresh-fixture:2026-10-18T18:51:41.114Z:delta",
+      "originalCoordinates": null,
+      "originalValue": {
+        "physicalFieldHash": "c7dd991efb2dedd2160c8ad73c4555f4375080b3370a3cc868455f6fb1599e17",
+        "points": 27,
+        "samplesPerAxis": 3,
+        "targets": [
+          {
+            "delta": 1,
+            "hash": "c7dd991efb2dedd2160c8ad73c4555f4375080b3370a3cc868455f6fb1599e17",
+            "rho": 1
+          },
+          {
+            "delta": 2,
+            "hash": "49a69c82483d95a0e20dc74c5cc1761de7c08c5395aac6141588cb49ae53f19d",
+            "rho": 0.5
+          }
+        ]
+      },
+      "resultHash": "0ae92ba716fc7db48a2f88a414c9c11e1635184da7ebd549dcecbb6fff412342",
+      "scope": "Fresh delta fixture; source catalogue limitations apply. This is not the actual whole-K native field or a new kernel theorem.",
+      "selectionPath": [],
+      "source": {
+        "commit": "333d6095d4a2d2d69ceec9b25c44e1d3381e36d2",
+        "path": "research-ide/mathscope-m1/gauge/family.mjs",
+        "sha256": "e1008deb11424bde74025446ed1dbde90e04b6bcee198a965a7e121521bd423c",
+        "url": "https://github.com/leegahuyn/MathScopeCompute/blob/333d6095d4a2d2d69ceec9b25c44e1d3381e36d2/research-ide/mathscope-m1/gauge/family.mjs"
+      },
+      "explanation": "Fresh delta fixture; source catalogue limitations apply. This is not the actual whole-K native field or a new kernel theorem."
+    },
+    "expert": {
+      "assumptionIds": [],
+      "claimId": "R1-03/Y5-01",
+      "display": null,
+      "document": {
+        "page": 46,
+        "sha256": "f4758ab0c6f4038ab30cd9d3d945a471a467f9ffb4d36a0e172f95320720f0ac"
+      },
+      "error": null,
+      "formula": "ρΔ=ρref Δref/Δ; each Δ recomputes the declared classical field",
+      "inputHash": "7eae5879956878b3a73b569c62b83fd09c6c40d2115ea6924b8bce33ef6814ef",
+      "jobId": "fresh-fixture:2026-10-18T18:51:41.114Z:delta",
+      "originalCoordinates": null,
+      "originalValue": {
+        "physicalFieldHash": "c7dd991efb2dedd2160c8ad73c4555f4375080b3370a3cc868455f6fb1599e17",
+        "points": 27,
+        "samplesPerAxis": 3,
+        "targets": [
+          {
+            "delta": 1,
+            "hash": "c7dd991efb2dedd2160c8ad73c4555f4375080b3370a3cc868455f6fb1599e17",
+            "rho": 1
+          },
+          {
+            "delta": 2,
+            "hash": "49a69c82483d95a0e20dc74c5cc1761de7c08c5395aac6141588cb49ae53f19d",
+            "rho": 0.5
+          }
+        ]
+      },
+      "resultHash": "0ae92ba716fc7db48a2f88a414c9c11e1635184da7ebd549dcecbb6fff412342",
+      "scope": "Fresh delta fixture; source catalogue limitations apply. This is not the actual whole-K native field or a new kernel theorem.",
+      "selectionPath": [],
+      "source": {
+        "commit": "333d6095d4a2d2d69ceec9b25c44e1d3381e36d2",
+        "path": "research-ide/mathscope-m1/gauge/family.mjs",
+        "sha256": "e1008deb11424bde74025446ed1dbde90e04b6bcee198a965a7e121521bd423c",
+        "url": "https://github.com/leegahuyn/MathScopeCompute/blob/333d6095d4a2d2d69ceec9b25c44e1d3381e36d2/research-ide/mathscope-m1/gauge/family.mjs"
+      },
+      "theoremType": null
+    },
+    "currentKernelExecuted": false,
+    "grantsProof": false,
+    "originalCriterionAccepted": false,
+    "limitation": "Stored observation byte binding only; no fresh numerical execution, whole-field certificate, theorem import, or browser interaction is asserted."
+  },
+  "currentKernelExecuted": false,
+  "currentBrowserInspected": false,
+  "originalM4CriterionAccepted": false
+}

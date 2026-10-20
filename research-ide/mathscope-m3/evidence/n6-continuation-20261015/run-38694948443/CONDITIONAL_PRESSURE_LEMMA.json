@@ -1,0 +1,136 @@
+{
+  "schema": "MathScope.N6.ConditionalAnisotropicPressureLemma/1",
+  "sourceCompleteGr": {
+    "registry": "expressionDefinitions:21",
+    "body": 3614891,
+    "parameters": [
+      622791,
+      622802,
+      622803,
+      622804,
+      635044,
+      635045
+    ]
+  },
+  "sourceP": {
+    "registry": "expressionDefinitions:23",
+    "body": 3615054,
+    "parameters": [
+      622791,
+      622803,
+      622804
+    ],
+    "definition": "integral_[L,U] integral_[0,1]^2 g(rho,Z,T,y) dy drho"
+  },
+  "sourcePressureScalar": 257,
+  "movingIntegral": 249,
+  "wholeIntegral": 254,
+  "integrand": 248,
+  "phaseSource": 635059,
+  "phaseDirection": [
+    1,
+    623066
+  ],
+  "phaseCapture": {
+    "root": 635059,
+    "forbiddenCoordinates": [
+      622803,
+      622804,
+      635044,
+      635045,
+      3615151
+    ],
+    "sourceNodes": 46,
+    "sourceNodeIdSetSHA256": "393aae3446921c578eb8098978de96180035b9b2f7ee6cda6d9b7b0fc3cfff8f",
+    "registryDefinitions": [],
+    "definitions": 0,
+    "operations": {
+      "add": 6,
+      "ceiling": 1,
+      "coordinate": 2,
+      "exp": 3,
+      "inverse": 1,
+      "log_positive": 5,
+      "multiply": 19,
+      "rational": 6,
+      "source_parameter": 1,
+      "sqrt_positive": 2
+    },
+    "highestReadNode": 635059,
+    "forbiddenCaptureAbsent": true,
+    "analysis": "Conservative transitive dependency superset, including defining operands and encoded native definitions.",
+    "allReachedFunctionsDefinedOrSmooth": false
+  },
+  "directionCapture": {
+    "root": 623066,
+    "forbiddenCoordinates": [
+      622802,
+      622803,
+      622804,
+      635044,
+      635045,
+      3615151
+    ],
+    "sourceNodes": 6,
+    "sourceNodeIdSetSHA256": "7f093a3aa1ff24ccdab3f48f0e02dc015d22b39d5b25f8ece817ad565770a2cd",
+    "registryDefinitions": [],
+    "definitions": 0,
+    "operations": {
+      "add": 1,
+      "multiply": 1,
+      "rational": 3,
+      "sqrt_positive": 1
+    },
+    "highestReadNode": 623066,
+    "forbiddenCaptureAbsent": true,
+    "analysis": "Conservative transitive dependency superset, including defining operands and encoded native definitions.",
+    "allReachedFunctionsDefinedOrSmooth": false
+  },
+  "completeGrHasNoThetaCapture": true,
+  "thetaCaptureAuditNodes": 136186,
+  "thetaCaptureAuditIdSetSHA256": "5d9e85d4b92e19947dc68a0f17b994ee8f95664440c962fbd0cb01b6cf49419a",
+  "targetOriginalGuardIDs": [
+    "N6-C-027-63f80a58ae49",
+    "N6-C-061-7c6b29f97e7b",
+    "N6-C-062-3c4d5da17da7",
+    "N6-C-069-6e0185939db1",
+    "N6-C-070-510d45d4c0f9",
+    "N6-C-077-f3b2dfc78168",
+    "N6-C-078-fd3dba14f415",
+    "N6-C-085-50cb36529b46",
+    "N6-C-086-ae4c9ffba0c2",
+    "N6-C-093-4f22f9bb7ed2"
+  ],
+  "sufficientRegularity": [
+    "For each fixed admissible band and local (R,Z,T,Y), complete_gr and its partial derivatives in Z,Y0,Y1 are jointly continuous on a compact radial/slow/phase neighborhood containing both the shifted and unit-square averaging arguments.",
+    "The original normalized bump and its Z derivative are continuous on the same compact radial/slow neighborhood (established primitive lemma).",
+    "The actual phase is continuously differentiable for R>0 at fixed N (established primitive expression)."
+  ],
+  "notRequiredForTheseTenGuards": [
+    "A uniform constant over ALL bands",
+    "An explicit giant numerical norm",
+    "A radial derivative of complete_gr",
+    "All derivative orders of complete_gr",
+    "A T derivative of complete_gr"
+  ],
+  "compactDerivativeBounds": {
+    "P": "length(J)*M0",
+    "P_Z": "length(J)*MZ",
+    "H_R": "max|Psi_prime|*(M_Y0+abs(v1)*M_Y1)",
+    "H_Y0": "M_Y0",
+    "H_Y1": "M_Y1",
+    "H_theta": "0",
+    "H_Z": "M_Z+B_Z*length(J)*M0+B0*length(J)*M_Z"
+  },
+  "transportOperator": "D=partial_R+Psi_prime(R)*(partial_Y0+v1*partial_Y1)",
+  "conditionalIdentities": [
+    "D H(R,rho,Z,T,Y)=0",
+    "D integral_L^R H drho = H(R,R,Z,T,Y)",
+    "D integral_L^U H drho = 0",
+    "D p_correction = complete_gr(R,Z,T,Y)-normalized_bump(R,Z,T)*P(Z,T)-chi_prime(R)*integral_L^U H drho"
+  ],
+  "cutoffRemainderRetained": true,
+  "actualCompleteGrRegularityProved": false,
+  "allTenOriginalGuardsDischarged": false,
+  "conditionalLemmaIsNotOriginalPdeProof": true
+}

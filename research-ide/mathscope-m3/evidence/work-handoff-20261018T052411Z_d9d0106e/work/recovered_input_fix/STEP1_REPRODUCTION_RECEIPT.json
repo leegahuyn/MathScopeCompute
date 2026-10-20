@@ -1,0 +1,67 @@
+{
+  "schema": "MathScope.RecoveredInputStep1RunReceipt/1",
+  "created_utc": "2026-10-18T01:48:44.371191+00:00",
+  "scope": "Modified separate Step1 workspace only; no original Windows launcher rerun, no Step2/inherited suites, no initial1260 rerun, no original M3 obligations independently certified.",
+  "runtime": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "platform": "Linux-6.18.55-x86_64-with-glibc2.39"
+  },
+  "steps": [
+    {
+      "name": "step1_recovered_cli",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "wave_source_connection.py",
+        "--root",
+        "/workspace/scratch/11bf626d6c2d/work/recovered_input_fix/workspace",
+        "--out",
+        "/workspace/scratch/11bf626d6c2d/work/recovered_input_fix/RECOVERED_STEP1_AUDIT.json"
+      ],
+      "cwd": "/workspace/scratch/11bf626d6c2d/work/recovered_input_fix/workspace",
+      "exit_code": 0,
+      "stdout_log": "/workspace/scratch/11bf626d6c2d/work/recovered_input_fix/logs/step1_recovered_cli.stdout.log",
+      "stderr_log": "/workspace/scratch/11bf626d6c2d/work/recovered_input_fix/logs/step1_recovered_cli.stderr.log",
+      "tests_run": null
+    },
+    {
+      "name": "step1_recovered_unit_tests",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-m",
+        "unittest",
+        "-v",
+        "test_wave_source_connection.py"
+      ],
+      "cwd": "/workspace/scratch/11bf626d6c2d/work/recovered_input_fix/workspace",
+      "exit_code": 0,
+      "stdout_log": "/workspace/scratch/11bf626d6c2d/work/recovered_input_fix/logs/step1_recovered_unit_tests.stdout.log",
+      "stderr_log": "/workspace/scratch/11bf626d6c2d/work/recovered_input_fix/logs/step1_recovered_unit_tests.stderr.log",
+      "tests_run": 28
+    }
+  ],
+  "test_and_cli_execution_passed": true,
+  "producer_authentication": {
+    "verified_count": 11,
+    "missing": [],
+    "all_producer_definitions_passed": true
+  },
+  "recovered_parent_projection_passed": true,
+  "original_target_input_present": false,
+  "source_validation_passed": false,
+  "failed_source_checks": [
+    "actual_native_162_and_nonzero_projection"
+  ],
+  "N6_01": {
+    "status": "BLOCKED",
+    "mathematical_complete": false,
+    "original_B0": "7/10",
+    "original_C0_star": "6/5",
+    "new_M3_completions": 0,
+    "scope": "Checked saved source inputs, exact rational exponent margins, finite 162-row projection, and general theorem location; N6-01 remains BLOCKED because CURRENT_WAVE_APPLICATION.json has unconditional_global_wave_certificate=false and 4 undischarged premises in premises_not_eliminated"
+  },
+  "remaining_obligations_count": 2,
+  "conditional_premises_count": 4,
+  "trusted_pins_changed": false,
+  "original_launcher_rerun": false,
+  "archived_mjs_producers_executed": false
+}

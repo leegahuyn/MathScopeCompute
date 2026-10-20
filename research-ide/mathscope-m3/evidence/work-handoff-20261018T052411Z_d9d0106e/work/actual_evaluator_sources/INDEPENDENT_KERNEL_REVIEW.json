@@ -1,0 +1,305 @@
+{
+  "schema": "MathScope.IndependentConstructiveKernelReview/1",
+  "reviewer": "/root/theorem_sources/angular_transport",
+  "status": "PASS_FOR_ELEMENTARY_BOUNDS_WITH_EXPLICIT_PREMISES",
+  "reviewed_inputs": [
+    {
+      "path": "work/actual_evaluator_sources/constructive_kernels.py",
+      "bytes": 7983,
+      "sha256": "ddafeb6a71b1d0579af7f766527fe789502222de31caee4a1d1b1b0adcf87dc7"
+    },
+    {
+      "path": "work/actual_evaluator_sources/CONSTRUCTIVE_ROUTE.md",
+      "bytes": 16689,
+      "sha256": "daf1adec4e83c6bfa4a5dd238e9ac247b3db8efaaacc536c674ae8271ea0fa7f"
+    },
+    {
+      "path": "work/actual_evaluator_sources/ELEMENTARY_KERNEL_AUDIT.json",
+      "bytes": 1660,
+      "sha256": "0f53a28e7f6c98e0cb933f9701b08407e3d05a63284f51ee855be97e287e6719"
+    },
+    {
+      "path": "work/actual_evaluator_sources/SOURCE_PINS.json",
+      "bytes": 7675,
+      "sha256": "669fa63b4e87ae2bea870903ef3d6acd621ed2ce17989bd6c79ad71867a4f1a6"
+    }
+  ],
+  "proof_checks": [
+    {
+      "id": "K1",
+      "status": "PASS_UNDER_STATED_PREMISES",
+      "claim": "Boundary derivative recurrence",
+      "implementation": "constructive_kernels.py:14-27",
+      "reason": "With u=1/t, du/dt=-u^2 and (exp(-a/t^r))prime=a*r*u^(r+1)*exp(-a/t^r). Product rule gives the recurrence for every n>=0.",
+      "premises": [
+        "a>0 rational",
+        "r=1 or 2 integer",
+        "n>=0 integer",
+        "t>0"
+      ]
+    },
+    {
+      "id": "K2",
+      "status": "PASS_UNDER_STATED_PREMISES",
+      "claim": "Rational monomial envelope and finite pole jets",
+      "implementation": "constructive_kernels.py:30-48",
+      "reason": "For k>0 the unique maximum has u^r=k/(a*r); exact value (k/(a*r*e))^(k/r). Drop e^(-k/r), enlarge base to max(1,k/(a*r)), then exponent to ceil(k/r). Triangle inequality sums absolute polynomial coefficients.",
+      "premises": [
+        "k,pole nonnegative integers",
+        "a>0 rational",
+        "r=1 or 2 integer"
+      ]
+    },
+    {
+      "id": "K3",
+      "status": "PASS_UNDER_STATED_PREMISES",
+      "claim": "Mean seed derivatives and original mass>1/14580",
+      "implementation": "constructive_kernels.py:51-57 and audit mass proof",
+      "source": "work/remaining_chain/source/source-global-class.mjs:235-255",
+      "reason": "1/[t(1-t)]=1/t+1/(1-t), so absolute full Leibniz sums apply. Original mass=(1/10) integral_0^1 seed. On [1/4,3/4], seed>=exp(-16/3), so mass>=exp(-16/3)/20>exp(-6)/20>1/(20*3^6)=1/14580 because e<3.",
+      "premises": [
+        "the original (1/10) mass normalization",
+        "flat zero extension of the seed",
+        "apply physical affine radius and derivative scale factors separately"
+      ]
+    },
+    {
+      "id": "K4",
+      "status": "PASS_UNDER_STATED_PREMISES",
+      "claim": "Source-step denominator floor and reciprocal jets",
+      "implementation": "constructive_kernels.py:60-83",
+      "reason": "On [0,1] at least one of t and 1-t is >=1/2, giving denominator>=exp(-2^r)>3^(-2^r). For h=1/f, differentiate f*h=1 and bound h^(n) by lower^-1 sum_{j=1}^n binom(n,j) F_j H_(n-j). Full numerator Leibniz sum then bounds the ratio.",
+      "premises": [
+        "t in [0,1] with flat endpoint extension",
+        "r=1 or 2 integer",
+        "F_j bounds absolute derivatives",
+        "actual source step must be matched before use as a source certificate"
+      ],
+      "source_binding_limit": "This independently proves the displayed elementary ratio. It does not authenticate every imported cutoff producer or its coordinate scale."
+    },
+    {
+      "id": "K5",
+      "status": "PASS_UNDER_STATED_PREMISES",
+      "claim": "Full anchored FTC majorant",
+      "implementation": "constructive_kernels.py:86-108",
+      "source": "analysis/base/PR30-primary67-continuation/MathScopeCompute/research-ide/mathscope-m2/navier/actual-background-physical-seminorms.mjs:21-54",
+      "reason": "The source retains every subset mask including empty anchor. On each face sqrt(1+|D_S f|^2)<=1+B_S, so its exact face integral is <= product_{j in S}(upper_j-lower_j)*(1+B_S). The code includes all 2^d masks and sums these terms.",
+      "premises": [
+        "continuous required mixed derivatives on the actual rectangle",
+        "ordered endpoints",
+        "d in {1,2,3}",
+        "B_S bounds absolute D_S f on that anchored face",
+        "correct mask/coordinate ordering",
+        "source identity supplied separately"
+      ]
+    },
+    {
+      "id": "K6",
+      "status": "PASS_UNDER_STATED_PREMISES",
+      "claim": "Sufficient logarithmic threshold",
+      "implementation": "constructive_kernels.py:111-121",
+      "reason": "For x>=L>=1, P log(1+x)<=P sqrt(x)<=gamma*x/2, and log C<=C. Thus log[C(1+x)^P exp(-gamma*x)]<=C-gamma*x/2<=-j<=-j log2.",
+      "premises": [
+        "C,gamma positive rationals",
+        "P nonnegative integer",
+        "j positive integer",
+        "actual source majorant C and P supplied",
+        "new selector identified separately from frozen exact-sup selector"
+      ]
+    }
+  ],
+  "execution": {
+    "module_audit_exact_replay": true,
+    "negative_controls_rejected": [
+      "zero_gaussian_parameter",
+      "zero_denominator_floor",
+      "omitted_FTC_face",
+      "zero_decay_gain",
+      "negative_seed_order",
+      "negative_step_order",
+      "noninteger_stage"
+    ],
+    "independent_Bell_partition_identities": 54,
+    "Bell_orders": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "Bell_parameters_a": [
+      "1/3",
+      "1",
+      "5/2"
+    ],
+    "Bell_parameters_r": [
+      1,
+      2
+    ],
+    "source_pin_count": 32,
+    "source_pin_checks": [
+      {
+        "path": "analysis/base/PR30-primary67-continuation/MathScopeCompute/research-ide/mathscope-m2/navier/source-profile.mjs",
+        "pass": true
+      },
+      {
+        "path": "analysis/base/PR30-primary67-continuation/MathScopeCompute/research-ide/mathscope-m2/navier/actual-background-physical-seminorms.mjs",
+        "pass": true
+      },
+      {
+        "path": "analysis/base/PR30-primary67-continuation/MathScopeCompute/research-ide/mathscope-m2/navier/actual-common-admissible-family.mjs",
+        "pass": true
+      },
+      {
+        "path": "analysis/base/PR30-primary67-continuation/MathScopeCompute/research-ide/mathscope-m2/navier/actual-common-target-weighted-norms.mjs",
+        "pass": true
+      },
+      {
+        "path": "analysis/base/PR30-primary67-continuation/MathScopeCompute/research-ide/mathscope-m2/navier/actual-compact-all-band-background-norms.mjs",
+        "pass": true
+      },
+      {
+        "path": "analysis/base/PR30-primary67-continuation/MathScopeCompute/research-ide/mathscope-m2/navier/actual-continuation-exact-functions.mjs",
+        "pass": true
+      },
+      {
+        "path": "analysis/base/PR30-primary67-continuation/MathScopeCompute/research-ide/mathscope-m2/navier/actual-global-source-expressions.mjs",
+        "pass": true
+      },
+      {
+        "path": "work/remaining_chain/source/source-global-class.mjs",
+        "pass": true
+      },
+      {
+        "path": "work/remaining_chain/source/source-global-band.mjs",
+        "pass": true
+      },
+      {
+        "path": "work/remaining_chain/source/source-initialized-lazy-norm-program.mjs",
+        "pass": true
+      },
+      {
+        "path": "work/remaining_chain/source/source-saved-initialized-norm-family.mjs",
+        "pass": true
+      },
+      {
+        "path": "work/remaining_chain/source/source-primary-class-majorants.mjs",
+        "pass": true
+      },
+      {
+        "path": "work/remaining_chain/source/source-common-y-class-majorants.mjs",
+        "pass": true
+      },
+      {
+        "path": "work/remaining_chain/source/source-background-class-majorants.mjs",
+        "pass": true
+      },
+      {
+        "path": "work/remaining_chain/source/source-radial-class-majorants.mjs",
+        "pass": true
+      },
+      {
+        "path": "work/remaining_chain/source/source-fourier-class-majorants.mjs",
+        "pass": true
+      },
+      {
+        "path": "work/remaining_chain/source/source-fixed-mean-majorants.mjs",
+        "pass": true
+      },
+      {
+        "path": "work/remaining_chain/source/source-global-pressure-class-majorants.mjs",
+        "pass": true
+      },
+      {
+        "path": "work/remaining_chain/source/source-global-initial-residual-class.mjs",
+        "pass": true
+      },
+      {
+        "path": "work/remaining_chain/source/source-global-temporal-class-majorants.mjs",
+        "pass": true
+      },
+      {
+        "path": "work/remaining_chain/source/source-global-fresh-mean-class-majorants.mjs",
+        "pass": true
+      },
+      {
+        "path": "work/remaining_chain/source/source-forced-class-majorants.mjs",
+        "pass": true
+      },
+      {
+        "path": "work/remaining_chain/source/source-iteration-decay.mjs",
+        "pass": true
+      },
+      {
+        "path": "work/remaining_chain/source/shrinking-cutoff-summation.mjs",
+        "pass": true
+      },
+      {
+        "path": "work/remaining_chain/source/source-near-terminal-evidence.mjs",
+        "pass": true
+      },
+      {
+        "path": "work/remaining_chain/code/source_recursive_family.py",
+        "pass": true
+      },
+      {
+        "path": "work/remaining_chain/source/source-core-refinement.mjs",
+        "pass": true
+      },
+      {
+        "path": "work/actual_evaluator_sources/original_actual-core-evaluator.mjs",
+        "pass": true
+      },
+      {
+        "path": "analysis/base/PR30-primary67-continuation/MathScopeCompute/research-ide/mathscope-m2/navier/actual-residual-order-induction-source.mjs",
+        "pass": true
+      },
+      {
+        "path": "analysis/base/PR30-primary67-continuation/MathScopeCompute/research-ide/mathscope-m2/navier/actual-residual-order-induction-norms.mjs",
+        "pass": true
+      },
+      {
+        "path": "analysis/base/PR30-primary67-continuation/MathScopeCompute/research-ide/mathscope-m2/navier/actual-leading-all-order-jets.mjs",
+        "pass": true
+      },
+      {
+        "path": "analysis/base/PR30-primary67-continuation/MathScopeCompute/research-ide/mathscope-m2/navier/actual-residual-order-induction-kernels.mjs",
+        "pass": true
+      }
+    ],
+    "original_producers_executed": false,
+    "reviewed_files_modified_by_reviewer": false
+  },
+  "issues_resolved_during_review": [
+    {
+      "id": "NEGATIVE_MEAN_ORDER",
+      "previous_behavior": "mean_seed_jet_bound(-1) returned zero",
+      "current_behavior": "ValueError",
+      "resolved": true
+    },
+    {
+      "id": "NONINTEGER_STAGE",
+      "previous_behavior": "stage=1.5 allowed floating threshold",
+      "current_behavior": "ValueError",
+      "resolved": true
+    },
+    {
+      "id": "NEGATIVE_STEP_ORDER",
+      "current_behavior": "explicit ValueError before derivative enumeration",
+      "resolved": true
+    }
+  ],
+  "remaining_limitations": [
+    "FTC body/face bounds are hypotheses, not computed source coefficients.",
+    "Normalized seed excludes actual physical radius and affine chain factors.",
+    "Step-ratio mathematics does not by itself authenticate every imported cutoff or chart.",
+    "CONSTRUCTIVE_ROUTE sections on implicit inverses, Volterra, torus tails and full evaluator scale were not independently audited in this narrow review.",
+    "No complete updated-current coefficient norm family, original h substitution, whole-field evaluation, N7-06 closure or N8-05 closure."
+  ],
+  "whole_coefficient_norms_certified": false,
+  "N706_or_N805_closed": false
+}

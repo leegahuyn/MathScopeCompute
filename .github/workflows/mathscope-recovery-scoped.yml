@@ -1,0 +1,60 @@
+# Action versions follow the repository's existing M4 workflow convention.
+name: MathScope current recovery scoped checks
+on:
+  workflow_dispatch:
+  push:
+    branches: [mathscope-m3-n6-cloud-20261014]
+    paths:
+      - 'research-ide/mathscope-m3/recovery-20261019/**'
+      - 'research-ide/mathscope-m3/caller-recovery-20261019/**'
+      - 'research-ide/mathscope-m3/radial-recovery-20261019/**'
+      - 'research-ide/mathscope-m3/logradius-recovery-20261019/**'
+      - 'research-ide/mathscope-m4/recovery-20261019/**'
+      - 'research-ide/mathscope-m4/recovery-ui-20261019/**'
+      - '.github/workflows/mathscope-recovery-scoped.yml'
+permissions:
+  contents: read
+concurrency:
+  group: mathscope-recovery-scoped-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  scoped:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Install pinned small reference dependencies
+        run: python -m pip install -r research-ide/requirements-reference.txt
+      - name: Current cutoff, native scalar and new M4 contracts
+        run: python -B research-ide/mathscope-m4/recovery-20261019/run_all_scoped.py --output-dir "$RUNNER_TEMP/mathscope-scoped"
+      - name: Actual caller source bindings and exact band transport
+        run: |
+          python -B research-ide/mathscope-m3/caller-recovery-20261019/build_caller_dossier.py > "$RUNNER_TEMP/mathscope-scoped/caller-source.log" 2>&1
+          python -B research-ide/mathscope-m3/caller-recovery-20261019/verify_band_caller.py > "$RUNNER_TEMP/mathscope-scoped/caller-validation.log" 2>&1
+          mkdir -p "$RUNNER_TEMP/mathscope-scoped/caller"
+          cp research-ide/mathscope-m3/caller-recovery-20261019/evidence/{CALLER_SOURCE_CAPSULE,BAND_CALLER_VALIDATION,SUMMARY}.json "$RUNNER_TEMP/mathscope-scoped/caller/"
+      - name: Original A13 source binding and positive scaled reciprocal
+        run: node research-ide/mathscope-m3/radial-recovery-20261019/verify_binding.mjs --output-dir "$RUNNER_TEMP/mathscope-scoped/radial" > "$RUNNER_TEMP/mathscope-scoped/radial-validation.log" 2>&1
+      - name: Original log-radius source and interval connection
+        run: node research-ide/mathscope-m3/logradius-recovery-20261019/verify_logradius.mjs --output-dir "$RUNNER_TEMP/mathscope-scoped/logradius" > "$RUNNER_TEMP/mathscope-scoped/logradius-validation.log" 2>&1
+      - name: Evidence UI contracts and data decoding
+        run: node --test-reporter=tap research-ide/mathscope-m4/recovery-ui-20261019/tests/recovery-model.test.mjs > "$RUNNER_TEMP/mathscope-scoped/ui-contracts.tap" 2>&1
+      - name: Evidence UI runtime syntax
+        run: |
+          node --check research-ide/mathscope-m4/recovery-ui-20261019/generated/runtime.js > "$RUNNER_TEMP/mathscope-scoped/ui-syntax.log" 2>&1
+          node --check research-ide/mathscope-m4/recovery-ui-20261019/generated/followup-2/runtime.js > "$RUNNER_TEMP/mathscope-scoped/ui-followup-syntax.log" 2>&1
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mathscope-scoped-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/mathscope-scoped
+          if-no-files-found: error
+          retention-days: 14

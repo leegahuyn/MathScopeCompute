@@ -1,0 +1,78 @@
+{
+  "schema": "MathScope.N6.ActualC1NativeRegularityProof/1",
+  "sourceRows": [
+    {
+      "path": "research-ide/mathscope-m2/navier/actual-continuation-exact-loop.mjs",
+      "sha256": "07ee5caa8ce45a9d8a910cab7243ae3e351965a8602a38030917f69114d8902d",
+      "sourceBytesUnchanged": true
+    },
+    {
+      "path": "research-ide/mathscope-m2/navier/actual-continuation-exact-functions.mjs",
+      "sha256": "326b94ad5d9dc0b4bfda83a53edb7da06ed4ca30506e1ff952f77a0e59676311",
+      "sourceBytesUnchanged": true
+    }
+  ],
+  "actualParameterExpressionsCompared": [
+    "sourceEnvelopeS",
+    "loopD0",
+    "loopMuMax",
+    "loopDelta",
+    "radialFrequencyN"
+  ],
+  "actualNativeDefinitions": [
+    {
+      "name": "ActualC1VarianceRoot",
+      "body": 7450,
+      "variable": 7394,
+      "parameters": [
+        4756,
+        2
+      ]
+    },
+    {
+      "name": "ActualC1CircleInverseLift",
+      "body": 7539,
+      "variable": 7472,
+      "parameters": [
+        4756,
+        2,
+        7471
+      ]
+    }
+  ],
+  "independentExactChecks": {
+    "Q0": "1/2",
+    "QSecondCoefficient": "-3/32",
+    "VmuAtZero": "0",
+    "WmuAtZero": "d0/sqrt(2)",
+    "literalCircleMassUsingVarianceEquation": "1",
+    "S12BracketAbsorption": true
+  },
+  "negativeControls": {
+    "falseVmuZeroStrictlyPositiveRejected": true,
+    "wrongRemovableQZeroValueRejected": true,
+    "unchangedVsNormalizationRejected": true
+  },
+  "originalProducerBindingExecuted": true,
+  "actualScalarASTCheck": {
+    "sourceScalarNodeCount": 64,
+    "sourceScalarSHA256": "f25a9eafa1208ee1bc6afa6d233969be431e7b83c2a2ec48a48fecd7b317c5b1",
+    "actualMeanRatioAndSecondDerivativeIndependentlyCompared": true
+  },
+  "independentlyProvedNativeTheorems": [
+    "The literal W(mu,p)=d0*mu*sqrt(Q(mu*p)) has a unique C-infinity global inverse in mu, including mu=p=0.",
+    "Under a^-1<=S, vs<=S, abs(p2)<=S, the original S^12 root bracket and original derivative m/M bounds are valid.",
+    "The exact original circle density has mass one, a smooth global lifted inverse, and period-one zero-mean A/B.",
+    "For C-infinity positive background and stated endpoint collars, actual finite-N C12 fields are C-infinity on every compact positive radial interval."
+  ],
+  "remainingActualApplicationPremises": [
+    "Actual completed pre-C12 E,U,moments C-infinity on full loop rectangle neighborhood.",
+    "Actual E>0, a>0 and a^-1<=S, vs<=S, abs(p2)<=S on full loop rectangle.",
+    "Actual vs-2>=S^-1 on both endpoint collars."
+  ],
+  "proof": "ACTUAL_LOOP_REGULARITY_KO.md",
+  "newOriginalGuardsDischarged": 0,
+  "newOriginalJetsDischarged": 0,
+  "newOriginalPDETermsDischarged": 0,
+  "newLeanExecution": false
+}

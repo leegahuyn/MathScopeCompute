@@ -1,0 +1,45 @@
+MATHSCOPE  /  DESIGN BLUEPRINT
+05 / MODULES
+모듈별 책임과 구현 경계
+하나의 거대한 수학 엔진 대신 입력·표현·증거 계약을 갖는 어댑터로 확장한다.
+설계 제안 v0.1  ·  2026.10.06
+06
+모듈
+입출력 / 핵심 기능
+v0.1 경계
+Object Registry
+정의와 가정 → 버전이 있는 ObjectSpec. 차원·domain·
+정칙성 조건 검증.
+S², T², S³의 검토된 프리셋과 제
+한된 매개화
+Representation
+Engine
+ObjectSpec + ObservationSpec → SampleSet /
+GeometryBuffer. projection·slice·provenance.
+정사영·해석적 단면, 유효 범위
+안의 연속 회전
+Numeric Audit
+원본 표본 + 표현 → 왜곡·충돌 후보·오차 요약. 유한
+표본 범위 명시.
+주변 Euclidean 거리, 투영 잔차,
+ 표본 검증
+Viewer + Inspector
+산출물 → 3D 화면. 선택한 점의 원좌표·관측값
+·preimage 후보 조회.
+회전·확대·원좌표 색상·단면 슬라
+이더
+Lean Bridge
+ClaimRevision → source file / build / diagnostics /
+goals. 결과와 환경 연결.
+기본 편집기, 미해결 목표, 검토
+된 예제 정리
+Ledger + Store
+Claim ↔ Evidence ↔ 의존 대상. 상태 계산·과거 기록·
+재검증.
+로컬 저장·파일 export·hash 검
+사
+Extension SDK
+capabilities / input schema / execute / provenance
+계약.
+인터페이스만 설계, 외부 플러그
+인 실행은 후속

@@ -1,0 +1,46 @@
+import {readFileSync,writeFileSync} from 'node:fs';
+import {createHash} from 'node:crypto';
+import {pathToFileURL,fileURLToPath} from 'node:url';
+import {dirname,resolve} from 'node:path';
+const REPO='/workspace/scratch/00fe7982b3e1/MathScopeCompute';
+const UNIT=REPO+'/research-ide/mathscope-m3/radial-recovery-20261019';
+const OUT=dirname(fileURLToPath(import.meta.url));
+const expected='f200cfe0fee23c11e903142a1ae739a722dd56d1585fe7dd111393c0c1dff93a';
+const sha=b=>createHash('sha256').update(b).digest('hex');
+const moduleBytes=readFileSync(UNIT+'/bind_original_a13.mjs');
+if(sha(moduleBytes)!==expected)throw Error('Reviewed module changed');
+const manifestBytes=readFileSync(UNIT+'/SOURCE_BOUND_INPUTS.json');
+const m=await import(pathToFileURL(UNIT+'/bind_original_a13.mjs'));
+const manifest=m.decodeBoundInputManifest(manifestBytes);
+const codePins=manifest.original_code_files.map(row=>{
+ const b=readFileSync(resolve(REPO,row.path));
+ const gitBlob=createHash('sha1').update(Buffer.concat([Buffer.from(`blob ${b.length}\0`),b])).digest('hex');
+ return {path:row.path,bytes:b.length,sha256:sha(b),gitBlob,match:b.length===row.bytes&&sha(b)===row.sha256&&gitBlob===row.baseline_git_blob};
+});
+if(codePins.some(x=>!x.match))throw Error('Code pin mismatch');
+const checks=[];
+const record=(name,pass,data={})=>checks.push({name,pass,...data});
+const reject=async(name,run)=>{try{await run();record(name,false,{rejected:false});}catch(e){record(name,true,{rejected:true,code:e.code??null,message:e.message});}};
+record('all13_original_code_sha256_and_git_blob_pins',codePins.length===13&&codePins.every(x=>x.match));
+await reject('changed_manifest_raw_bytes_rejected',()=>m.decodeBoundInputManifest(Buffer.concat([Buffer.from([239,187,191]),manifestBytes])));
+await reject('replacement_h_argument_rejected',()=>m.bindRecoveredOriginalA13({h:0}));
+const report=await m.bindRecoveredOriginalA13();
+const projected=m.projectBoundRecoveredOriginalA13(report);
+record('auth_scope_and_inherited_bounds_are_separate',projected.sourceAuthenticated===true&&projected.inheritedSourceAudit.sourceAuthenticated===false&&projected.inheritedSourceAudit.parentGraphAuthenticationRequired===true&&projected.sourceRecordCount===77);
+record('exact_shared_h_normalization_matches_inherited54',JSON.stringify(projected.normalized.K.closedRationalBounds)===JSON.stringify(['1/256','27/128'])&&JSON.stringify(projected.normalized.inverseK.closedRationalBounds)===JSON.stringify(['128/27','256'])&&projected.normalized.normalizationUsesExactSharedH===true);
+record('normal_result_no_global_acceptance_promotion',projected.scope.hReplacedByZero===false&&projected.scope.wholeKNativeFieldCompleted===false&&projected.scope.N7_06_closed===false&&projected.scope.N8_05_closed===false&&projected.scope.actual_global_last_resolved_tau===null);
+await reject('deserialized_report_cannot_issue_private_authority',()=>m.assertBoundRecoveredOriginalA13(JSON.parse(JSON.stringify(projected))));
+const originalScope=structuredClone(report.scope);let getterAccesses=0;
+Object.defineProperty(report,'scope',{enumerable:true,configurable:true,get(){getterAccesses++;return getterAccesses===1?originalScope:{...originalScope,wholeKNativeFieldCompleted:true,N7_06_closed:true};}});
+let attack;
+try{
+ const forged=m.projectBoundRecoveredOriginalA13(report);
+ attack={projectReturned:true,getterAccesses,pass:forged.pass,sourceAuthenticated:forged.sourceAuthenticated,scope:forged.scope};
+ record('projection_must_not_accept_getter_changed_scope',forged.scope.wholeKNativeFieldCompleted===false&&forged.scope.N7_06_closed===false,attack);
+}catch(e){attack={rejected:true,getterAccesses,code:e.code??null,message:e.message};record('projection_must_not_accept_getter_changed_scope',true,attack);}
+const stable=sha(readFileSync(UNIT+'/bind_original_a13.mjs'))===expected;
+record('reviewed_module_bytes_stable',stable);
+const receipt={schema:'MathScope.IndependentRadialBindingReview/1',observedAt:new Date().toISOString(),reviewer:'/root/remote_state',status:checks.every(x=>x.pass)?'PASS':'DEFECT_REPRODUCED',module:{path:UNIT+'/bind_original_a13.mjs',bytes:moduleBytes.length,sha256:expected},inputManifest:{path:UNIT+'/SOURCE_BOUND_INPUTS.json',bytes:manifestBytes.length,sha256:sha(manifestBytes)},codePins,checks,checkCount:checks.length,passed:checks.filter(x=>x.pass).length,failed:checks.filter(x=>!x.pass).length,concreteFinding:{id:'RADIAL-PROJECTION-01',status:attack.projectReturned&&attack.scope.N7_06_closed?'REPRODUCED':'NOT_REPRODUCED',description:'projectBoundRecoveredOriginalA13 validates canonical(report), then structuredClone reads mutable accessor values again. A scope getter supplies the original scope to validation and forged completion flags to cloning; the projected object retains pass/sourceAuthenticated true.',fixDirection:'Build projections from the sealed owner serialized snapshot, and preferably issue deeply frozen report trees; preserve private audit checks. Never trust a second read of caller-mutable properties after validation.',mathScope:'Source integral identity,positive h,and factor54 normalized bounds remain correct; the defect concerns trusted projection output.'},scope:{newQuadratureRun:false,broadHistoricalTestsRun:false,wholeKFieldEvaluated:false,N7_06_closed:false,N8_05_closed:false,newM3Closures:0,actualGlobalLastResolvedTau:null},repoFilesWritten:false};
+writeFileSync(OUT+'/RADIAL_BINDING_REVIEW.json',JSON.stringify(receipt,null,2)+'\n');
+writeFileSync(OUT+'/NORMAL_BOUND_PROJECTION.json',JSON.stringify(projected,null,2)+'\n');
+console.log(JSON.stringify({status:receipt.status,checks:receipt.checkCount,passed:receipt.passed,failed:receipt.failed,moduleSha256:expected,receipt:OUT+'/RADIAL_BINDING_REVIEW.json'}));

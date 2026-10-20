@@ -1,0 +1,65 @@
+FINITE TIME BLOWUP FOR NAVIER–STOKES 107
+exponent 1 −κ s. The exact mean balances (8.3) give gr, pm, Eθ, Ez ∈ M1−κs and defects in
+S1−κs before any mean update.
+For the auxiliary means, the primary covariance of Proposition 7.5, assembled by (7.35),
+cancels the order-zero auxiliary radial–tangential stress tensor exactly, including derivatives
+of the slow partition because the squared partition functions sum to one. To display this
+cancellation, write Σ(0)
+a for that leading tensor and Σa for the full tensor in (8.3). Before the
+mean velocities are added, those equations read
+⟨Eθ⟩Y = (∂ R +2/R)
+(︁
+⟨Wrθ ⟩Y −Σ (0)
+θ
+)︁
+−(∂ R +2/R)(Σ θ −Σ (0)
+θ ) +ε∂ Z⟨Wzθ ⟩Y,
+⟨Ez⟩Y = (∂ R +1/R)
+(︁
+⟨Wrz⟩Y −Σ (0)
+z
+)︁
+−(∂ R +1/R)(Σ z −Σ (0)
+z ) +ε∂ Z⟨Wzz +p m⟩Y.
+(9.11)
+The first differences contain at least one curl correction. The tensor cross interaction between
+the curl correction and a primary transverse amplitude belongs toM 3/2−κs before applying
+the divergence. Axial fluxes, the axial pressure term, and the higher-order auxiliary stress
+tensor have residual exponent at least 2−κ s. Thus⟨E θ⟩Y,⟨E z⟩Y ∈M 1.49.
+Set H0 = 1 −κ s and apply the temporal update (8.20). The tangential increment isM H0
+and its induced radial velocity component isM H0+1. The pressure change has exponent
+H0, since 2V∆v/R appears in ∆gr. Its contribution to each tangential residual includes an
+axial derivative and therefore has the corresponding additional gain. Beyond the cancelled
+fast-time term, slow-time differentiation supplies one additional power of ε, radial linear
+fluxes contain b=O(ε) in every fixed-order amplitude derivative on the shell or the induced
+radial velocity increment, axial fluxes gain one, and viscosity gains 1 − 2κs. Radial quadratic
+mean fluxes also contain a radial mean. All these residual changes have exponent at least
+H0 + 1 − 2κs. Mean interaction with w∈ W1/2 has wave exponent at least H0. Defects remain
+inS H0 after pressure is recomputed.
+Now use the five-equation correction map (8.25) at order H0 and recompute pressure. Its
+slow increments have no fast-time term. The preceding tangential and wave estimates still
+hold. In the defect changes, the term 2 V∆v/R and its two contributions to the weighted
+flux moments are the linear contributions to ∆P, ∆Jθ, ∆Jz canceled by this system. Every
+other term contains slow-time differentiation of the induced radial velocity, a radial flux with
+b or another radial mean, an axial derivative, radial viscosity, or an additional tangential
+mean in v2, γv, γ2. These have gain greater than 0.8 above H0. Hence the remaining defects
+have exponent greater than 1.8 −κ s, and both tangential means retain exponent 1.49. These
+estimates imply (9.8) withB 0 =0.7 andC ∗
+0 =1.2.
+The primary curl correction has exponent 1 −κ s > 0.68. All mean increments and pressure
+changes have exponent H0 > 0.9, with radial exponent H0 + 1 > 1.9. This proves (9.9).
+The prescribed temporal increments have zero auxiliary mean. The first two homogeneous
+equations of the correction system enforce (9.10), and the mean-field reconstruction preserves
+the prescribed auxiliary mean exactly.□
+The initialization provides the bounds at stage zero. We now repeat the four corrections
+and compare every new error with the bounds required at the next stage. The total corrections
+in (9.9) remain available when estimating interactions with the new increments.
+Proposition 9.6.Let (u[j], p[j] ) be a state at stage j as in Definition 9.4. There is a state(u[j+1] , p[j+1] ),
+constructed with the same base, primary amplitudes, supports, and inverse operators, whose residual
+orders are
+Bj+1 =B j + 1
+10,C ∗
+j+1 =C ∗
+j + 1
+10.
+It is obtained by the following ordered corrections:

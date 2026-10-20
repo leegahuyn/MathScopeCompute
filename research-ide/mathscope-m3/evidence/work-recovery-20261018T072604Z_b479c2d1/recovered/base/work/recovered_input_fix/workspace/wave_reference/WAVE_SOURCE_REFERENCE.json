@@ -1,0 +1,401 @@
+{
+  "expected_calls": [
+    {
+      "actualProducerImported": true,
+      "callerCallableSupplied": false,
+      "dependencies": [],
+      "derivativeBodiesMaterialized": false,
+      "id": 0,
+      "producer": "target",
+      "request": {
+        "derivativeOrder": 15
+      },
+      "role": "same-private-family-leaf"
+    },
+    {
+      "actualProducerImported": true,
+      "callerCallableSupplied": false,
+      "dependencies": [
+        0
+      ],
+      "derivativeBodiesMaterialized": false,
+      "id": 1,
+      "producer": "primary",
+      "request": {
+        "order": 14
+      },
+      "role": "source-derived-class"
+    },
+    {
+      "actualProducerImported": true,
+      "callerCallableSupplied": false,
+      "dependencies": [
+        1
+      ],
+      "derivativeBodiesMaterialized": false,
+      "id": 2,
+      "producer": "commonY",
+      "request": {},
+      "role": "source-derived-class"
+    },
+    {
+      "actualProducerImported": true,
+      "callerCallableSupplied": false,
+      "dependencies": [
+        1
+      ],
+      "derivativeBodiesMaterialized": false,
+      "id": 3,
+      "producer": "background",
+      "request": {
+        "order": 13
+      },
+      "role": "source-derived-class"
+    },
+    {
+      "actualProducerImported": true,
+      "callerCallableSupplied": false,
+      "dependencies": [],
+      "derivativeBodiesMaterialized": false,
+      "id": 4,
+      "producer": "radial",
+      "request": {
+        "ibpOrder": 1,
+        "order": 13,
+        "pole": 96
+      },
+      "role": "original-fixed-FTC-operator-leaf"
+    },
+    {
+      "actualProducerImported": true,
+      "callerCallableSupplied": false,
+      "dependencies": [],
+      "derivativeBodiesMaterialized": false,
+      "id": 5,
+      "producer": "fourier",
+      "request": {
+        "inversePower": 1,
+        "order": 8
+      },
+      "role": "original-fixed-FTC-operator-leaf"
+    },
+    {
+      "actualProducerImported": true,
+      "callerCallableSupplied": false,
+      "dependencies": [],
+      "derivativeBodiesMaterialized": false,
+      "id": 6,
+      "producer": "radial",
+      "request": {
+        "ibpOrder": 1,
+        "order": 5,
+        "pole": 192
+      },
+      "role": "original-fixed-FTC-operator-leaf"
+    },
+    {
+      "actualProducerImported": true,
+      "callerCallableSupplied": false,
+      "dependencies": [],
+      "derivativeBodiesMaterialized": false,
+      "id": 7,
+      "producer": "five",
+      "request": {
+        "order": 4
+      },
+      "role": "original-fixed-FTC-operator-leaf"
+    },
+    {
+      "actualProducerImported": true,
+      "callerCallableSupplied": false,
+      "dependencies": [
+        2,
+        4
+      ],
+      "derivativeBodiesMaterialized": false,
+      "id": 8,
+      "producer": "pressure",
+      "request": {
+        "ibpOrder": 0,
+        "order": 13
+      },
+      "role": "source-derived-class"
+    },
+    {
+      "actualProducerImported": true,
+      "callerCallableSupplied": false,
+      "dependencies": [
+        8,
+        3
+      ],
+      "derivativeBodiesMaterialized": false,
+      "id": 9,
+      "producer": "initialResidual",
+      "request": {
+        "order": 12
+      },
+      "role": "source-derived-class"
+    },
+    {
+      "actualProducerImported": true,
+      "callerCallableSupplied": false,
+      "dependencies": [
+        9,
+        5,
+        4
+      ],
+      "derivativeBodiesMaterialized": false,
+      "id": 10,
+      "producer": "temporal",
+      "request": {
+        "ibpOrder": 0,
+        "order": 7
+      },
+      "role": "source-derived-class"
+    },
+    {
+      "actualProducerImported": true,
+      "callerCallableSupplied": false,
+      "dependencies": [
+        10,
+        6
+      ],
+      "derivativeBodiesMaterialized": false,
+      "id": 11,
+      "producer": "fresh",
+      "request": {
+        "order": 5
+      },
+      "role": "source-derived-class"
+    },
+    {
+      "actualProducerImported": true,
+      "callerCallableSupplied": false,
+      "dependencies": [
+        11,
+        7
+      ],
+      "derivativeBodiesMaterialized": false,
+      "id": 12,
+      "producer": "initialized",
+      "request": {
+        "order": 2
+      },
+      "role": "source-derived-class"
+    }
+  ],
+  "expected_leaf_counts": {
+    "background": 56,
+    "commonY": 15,
+    "five": 25,
+    "fourier": 9,
+    "primary": 1,
+    "radial": 202
+  },
+  "members": [
+    {
+      "bytes": 698359,
+      "member": "MathScope_M3_WaveNorm_Continuation/evidence/WAVE_NORM_PROGRAM.json",
+      "path": "evidence/WAVE_NORM_PROGRAM.json",
+      "sha256": "ccea8c78c6b167635f7cfc14a922c721a18e345e972e3e9c2e5a5862eedfdc44"
+    },
+    {
+      "bytes": 478622,
+      "member": "MathScope_M3_WaveNorm_Continuation/evidence/CURRENT_WAVE_APPLICATION.json",
+      "path": "evidence/CURRENT_WAVE_APPLICATION.json",
+      "sha256": "caabcf049178f04936d9a0c36c866600ca134377947bb3b643c53c226726517f"
+    },
+    {
+      "bytes": 58274,
+      "member": "MathScope_M3_WaveNorm_Continuation/evidence/SOURCE_BINDINGS.json",
+      "path": "evidence/SOURCE_BINDINGS.json",
+      "sha256": "499998dee634177b670c115830a0694e70b1e51771c31a843c837e00b126d375"
+    },
+    {
+      "bytes": 2540,
+      "member": "MathScope_M3_WaveNorm_Continuation/evidence/GAUSSIAN_TAIL_CONNECTION.json",
+      "path": "evidence/GAUSSIAN_TAIL_CONNECTION.json",
+      "sha256": "6a7bbf2800790caceda249eb80415d6bf32d08bf2c23ef58c112d52cc1217b2b"
+    },
+    {
+      "bytes": 8377,
+      "member": "MathScope_M3_WaveNorm_Continuation/inherited/evidence/CURRENT_DEFECT_APPLICATION.json",
+      "path": "inherited/evidence/CURRENT_DEFECT_APPLICATION.json",
+      "sha256": "9cdf96f6a4982dbbb307ec357f9a567ad3db425c2eaa848b0b6dce0f709ab0f1"
+    },
+    {
+      "bytes": 19143,
+      "member": "MathScope_M3_WaveNorm_Continuation/inherited/inherited/evidence/FAST_CUTOFF_MEAN_REPORT.json",
+      "path": "inherited/inherited/evidence/FAST_CUTOFF_MEAN_REPORT.json",
+      "sha256": "65212143557d35420eeffec6d256cbe92f236a55d70dcfb5f5ddf4f1b1dafef6"
+    },
+    {
+      "bytes": 5286543,
+      "member": "MathScope_M3_WaveNorm_Continuation/inherited/inherited/inherited/sources/normFamily.json",
+      "path": "inherited/inherited/inherited/sources/normFamily.json",
+      "sha256": "d98a245f1fc563ba44c48d21c59a43d6787fc3895d922472bb3f3ab6e04d9a6d"
+    },
+    {
+      "bytes": 8483361,
+      "member": "MathScope_M3_WaveNorm_Continuation/inherited/inherited/inherited/sources/primaryClass.json",
+      "path": "inherited/inherited/inherited/sources/primaryClass.json",
+      "sha256": "84fbcd228accdff56b13b8a01065cbf6efae9f07cf88421780122a45247f1a25"
+    },
+    {
+      "bytes": 6790190,
+      "member": "MathScope_M3_WaveNorm_Continuation/inherited/inherited/inherited/sources/haar.json",
+      "path": "inherited/inherited/inherited/sources/haar.json",
+      "sha256": "9bac19d10f7ad82143630936642cee57de35d0ede2d45bf7c354c92b307188ec"
+    },
+    {
+      "bytes": 7669505,
+      "member": "MathScope_M3_WaveNorm_Continuation/inherited/inherited/inherited/sources/cutoff.json",
+      "path": "inherited/inherited/inherited/sources/cutoff.json",
+      "sha256": "aaa32363f00da5feb40a384aa8d82db83e7cdcd786a31d61d500bffabbefc9ee"
+    },
+    {
+      "bytes": 96224,
+      "member": "MathScope_M3_WaveNorm_Continuation/inherited/inherited/inherited/sources/domain.json",
+      "path": "inherited/inherited/inherited/sources/domain.json",
+      "sha256": "1c9a843092e7fcee0d571818fee891c1fc63d13276c3c18fc615788186d3633a"
+    },
+    {
+      "bytes": 25070,
+      "member": "MathScope_M3_WaveNorm_Continuation/inherited/inherited/inherited/sources/typedSpec.json",
+      "path": "inherited/inherited/inherited/sources/typedSpec.json",
+      "sha256": "90f9efbef98f8e7c4e89da39898ef64508513d8d20aa83b236e1398d3389d51a"
+    },
+    {
+      "bytes": 1733741,
+      "member": "MathScope_M3_WaveNorm_Continuation/inherited/inherited/inherited/sources/initialized.json",
+      "path": "inherited/inherited/inherited/sources/initialized.json",
+      "sha256": "ba60de00a1e41f9c448da3aabcbf791bc4649b5fcfd99cff7a71865463db8b14"
+    },
+    {
+      "bytes": 25445,
+      "member": "MathScope_M3_WaveNorm_Continuation/code/wave_bridge.py",
+      "path": "code/wave_bridge.py",
+      "sha256": "524b0efa080fa8cf405fdc0f12ada592659b7cb615c74f081dc8b5ebcf6c0ccb"
+    }
+  ],
+  "non_completion_reason": "An exact grouped G/F source decomposition and complete all-fixed-order theorem application to these residual roots must be established; source hashes and receipt booleans alone do not supply it.",
+  "producers": [
+    {
+      "bytes": 27252,
+      "path": "research-ide/mathscope-m3/navier/source-primary-class-majorants.mjs",
+      "sha256": "40b3f1220b7ad1b9b05a11ae1378c864351e77e8efe7134ae1b78921fbab47ea"
+    },
+    {
+      "bytes": 16223,
+      "path": "research-ide/mathscope-m3/navier/source-common-y-class-majorants.mjs",
+      "sha256": "9badb503543f8bc83f5db0e7a373a9a8434ae63104f201601c8e1df66e493da6"
+    },
+    {
+      "bytes": 18745,
+      "path": "research-ide/mathscope-m3/navier/source-background-class-majorants.mjs",
+      "sha256": "4b7fb0dc54da5efb1462e2299b0061f312d93fa28768e8795f55fe55eba86b3d"
+    },
+    {
+      "bytes": 19413,
+      "path": "research-ide/mathscope-m3/navier/source-fourier-class-majorants.mjs",
+      "sha256": "ecda6bc5bb3d0f61bb5e7cbf418579d83e42f13ac188b748b8fb90c7e2485daa"
+    },
+    {
+      "bytes": 36367,
+      "path": "research-ide/mathscope-m3/navier/source-radial-class-majorants.mjs",
+      "sha256": "5f0fc6b8856bbe451f5949c37bd44473cac049b3c7dd714000be9405e8b6cd48"
+    },
+    {
+      "bytes": 12670,
+      "path": "research-ide/mathscope-m3/navier/source-saved-initialized-norm-family.mjs",
+      "sha256": "857a1641e1b5da964ed4893d6108cc06191cf8f8c92c9a16b285af9f0aaf8fc4"
+    },
+    {
+      "bytes": 30845,
+      "path": "research-ide/mathscope-m3/navier/source-initialized-lazy-norm-program.mjs",
+      "sha256": "269deb686610ea0e81c74b88b9365f76b950c9e5de5839efb747faddf9f34ab9"
+    },
+    {
+      "bytes": 27270,
+      "path": "research-ide/mathscope-m2/navier/actual-common-admissible-family.mjs",
+      "sha256": "7fd3ec07b567af86f84df7a1b789a5a57366186d4e8c26c2a4a35dc5948c5b75"
+    },
+    {
+      "bytes": 18985,
+      "path": "research-ide/mathscope-m2/navier/actual-common-target-weighted-norms.mjs",
+      "sha256": "6fca53620e45a839868d094a1425ee0071ec4ca21c16bff77476d8be2f32e38a"
+    },
+    {
+      "bytes": 7350,
+      "path": "research-ide/mathscope-m2/navier/actual-residual-order-induction-expressions.mjs",
+      "sha256": "dfa10931c2eee87344dff4c95ecbeaf84d21c5ea5891d6452ea1f5fd4a4d9501"
+    },
+    {
+      "bytes": 23815,
+      "path": "research-ide/mathscope-m3/navier/source-global-band.mjs",
+      "sha256": "babe4aceb97d0bdee4084e5f06009e6724128935fffde1647c11e3aab022df60"
+    }
+  ],
+  "required_continuation_induction_ids": [
+    "same-coefficients",
+    "same-selector",
+    "same-physical-window",
+    "same-q-big",
+    "finite-source-jets",
+    "finite-source-only-norms",
+    "closed-operator-composition"
+  ],
+  "schema": "MathScope.WaveSourceConnectionReference/1",
+  "scope": "Integrity pins and inspected source facts only; new arithmetic/transport checks must supply conclusions. No mathematical completion authority.",
+  "source_identity": {
+    "originalMeanCertificateSHA256": "22c878e7ace454c61f00c9ee4952738f7f9fa7b1c269eca538ca224dd8fcb96b",
+    "paperSHA256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+    "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+    "sourceNodePrefixSHA256": "99dcc6ff6aaa92d4449d6ad5aae5a8ff2037f3e1644ac3ad0fdd2994ca020745"
+  },
+  "theorem_source_locations": {
+    "background": [
+      30,
+      52,
+      88,
+      186
+    ],
+    "commonY": [
+      112,
+      160
+    ],
+    "continuation": [
+      29,
+      50,
+      111,
+      122
+    ],
+    "family": [
+      38,
+      63,
+      145,
+      172
+    ],
+    "fourier": [
+      54,
+      65,
+      82,
+      118,
+      154,
+      158
+    ],
+    "primary": [
+      123,
+      241
+    ],
+    "radial": [
+      174,
+      247,
+      287,
+      291,
+      320,
+      361
+    ]
+  },
+  "wave_archive_sha256": "7b4e78757d8c42ef84ff2272165df22de5bc2902d2ad767773cb82748ac0a630"
+}

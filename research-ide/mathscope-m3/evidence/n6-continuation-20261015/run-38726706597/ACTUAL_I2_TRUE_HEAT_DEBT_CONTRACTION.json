@@ -1,0 +1,166 @@
+{
+  "schema": "MathScope.N6.ActualI2TrueHeatDebtContraction/1",
+  "proof": "ACTUAL_I2_TRUE_HEAT_DEBT_CONTRACTION_KO.md",
+  "profileSHA256": "df33560d2b9369ba32cf9f50877e355824ed1e7fdb84ef6b145d941c80db8e4a",
+  "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+  "independentExactBounds": {
+    "terminalWaitStrictlyPositive": true,
+    "actualTailBounds": {
+      "XK": "XK>=X0I2>1",
+      "Ecl": "<=2*eK*(X/XK)^(-1/2-h)",
+      "scaleComparison": "eK*sqrt(XK)<=e_*sqrt(X0I2)",
+      "K": "e_*/(1+eta^2)>=e_*/2"
+    },
+    "actualHeatBound": "0<=1-H(2*(1-eta^2)/X)<=4h/X for physical eta in[-1,1]",
+    "fullActualHeatDebts": {
+      "I": "<=16*eK*sqrt(XK)",
+      "S": "<=16*h*eK^2",
+      "Cp": "<=16*h*eK^2/XK"
+    },
+    "actualNormalizedHeatDebtUpper": "64/X0I2",
+    "actualPreconditionedRhsUpper": "2^36/(lambda*X0I2)<2^-58987<2^-720",
+    "originalRootRadius": "1/1000000",
+    "imageUpper": "230344386280611654799899571593522271174128492457058131614758685317726084130380178960334883128519211886075950624436269830308263222041308144077235977260296389627038289/1346594790796383617853693410017312938380886989522732508031559911185595431500052690461098633287062643514107640027181623734532974656047053788960720581286881497588537259808881817137065922018386615621451072444360032256000000000000",
+    "actualLipschitzUpper": "1/2923003274661805836407369665432566039311865085952000000",
+    "imageStrictlyInsideOriginalBox": true,
+    "contractionStrictlyBelowQuarter": true,
+    "strictNegativeControls": [
+      {
+        "name": "unbounded replacement normalized incoming debt",
+        "rejected": true
+      },
+      {
+        "name": "uncontrolled infinite tail debt",
+        "rejected": true
+      }
+    ]
+  },
+  "actualSourceProofInputsComposed": true,
+  "physicalEtaDomain": "[-1,1]",
+  "originalHeatArgument": "Z=2*(1-eta^2)/X>=0",
+  "negativeZExtensionAsserted": false,
+  "openNeighborhoodBeyondEtaEndpointsAsserted": false,
+  "originalI2RadiusAssumedAsExistenceEvidence": false,
+  "actualHeatDebtValueReplacedByUpperBoundOrZero": false,
+  "newOriginalGuardsDischarged": 0,
+  "newOriginalJetsDischarged": 0,
+  "newOriginalPDETermsDischarged": 0,
+  "inputSHA256": {
+    "binding": "b4751b9bbba372a485e9e16110fee1c0d1f9df4cde8af5fc76dcc88b588bd4a8",
+    "i1": "7647f625b52ae2da3a367473ce02b3ed29f80c8fc55375858c4acfaadcba6f44",
+    "i1-binding": "702b52860b706c4d158c2e5a2450b8371af1140a4a71bd7321657bae47754eef",
+    "heat": "7fa4955c67bca4f82f30c396c598a9ca9d66f5ef9dee7ce46abfaf7f6e829037"
+  },
+  "sourceHeaderSHA256": "f1201808a2d71f56687b51164a383c9dd9a82f006c2151219bc0df9aa1daeec1",
+  "actualOriginalQuadraticDefinition": {
+    "name": "ActualSameN3C2I2Heat",
+    "linear": [
+      [
+        8894,
+        8946,
+        8996
+      ],
+      [
+        8906,
+        8958,
+        9008
+      ],
+      [
+        8918,
+        8969,
+        9019
+      ]
+    ],
+    "quadraticDiagonal": [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        8926,
+        8977,
+        9027
+      ],
+      [
+        8936,
+        8987,
+        9037
+      ]
+    ],
+    "rhs": [
+      71708,
+      71712,
+      71716
+    ],
+    "scale": 8,
+    "preconditioner": [
+      [
+        71687,
+        71689,
+        71690
+      ],
+      [
+        71692,
+        71693,
+        71695
+      ],
+      [
+        71696,
+        71698,
+        71699
+      ]
+    ],
+    "rootRadius": 4991,
+    "lipschitzUpper": 847,
+    "proof": {
+      "schema": "MathScope.ActualHeatI2ContractionProof/1",
+      "source": "HEAT_COMPENSATION_PROOF_EN.md H5-H14, same accepted source I2, h and lambda.",
+      "sourceInput": "The three actual improper heat moment integrals, not their upper bounds.",
+      "normalizedDebtC2Upper": "2^15/X0I2",
+      "exactContinuousEInverseUpper": "2^30",
+      "preconditionedQuadraticUpper": "2^36",
+      "incomingMaximumRawC2Upper": "2^46/(lambda*X0I2)",
+      "reduction": "XR>=2^40 and X0I2=XR*exp(60001*T-18), lambda=exp(-1000*T), T>=128 imply incoming <2^6*exp(-59001*T+18)<2^-7552104<2^-441.",
+      "checkedDyadicDecay": "7552104",
+      "radius": "1/1000000",
+      "norm": "maximum raw eta derivative order 0,1,2; square/difference bounds have factors 4 and 8",
+      "imageUpper": "237142198758023568227473377297792835283496928595231875152809132048206089746729553/1386334847060407429789207092071541851718218537687908287585239790307310653902812811519987203052069789048695605480701785914487078912000000000000",
+      "lipschitzUpper": "1/2923003274661805836407369665432566039311865085952000000",
+      "convenientLipschitzUpper": "1/4",
+      "selectedRoot": "iteration from the zero vector",
+      "finiteIterateDeclaredRoot": false,
+      "actualHeatDebtNumericallyEnclosed": false,
+      "checks": {
+        "continuousEInverse": true,
+        "heatH9ActualC2DebtBound": true,
+        "sourceHeatDebtBelowIncomingAllowance": true,
+        "rootBoxInvariant": true,
+        "lipschitzBelowQuarter": true,
+        "lambdaPositive": true
+      }
+    },
+    "actualOperandSource": "Complete H5-H9 heat integrals over X>=Xtail*exp(1/5), including the infinite tail and eta dependence.",
+    "preconditionerIsExactContinuousInverse": true,
+    "continuousMatrixReplacedByPreconditioner": false
+  },
+  "sameActualI2Root": {
+    "existsUniqueInOriginalBox": true,
+    "iterationFromZeroConvergesToSameRoot": true,
+    "isCInfinityForAbsEtaStrictlyLessThanOne": true,
+    "hasContinuousOneSidedEtaJetsAtBothEndpointsAtEveryFixedOrder": true,
+    "actualRootValueAtEtaEndpoints": [
+      0,
+      0,
+      0
+    ],
+    "endpointValueReason": "Actual H(0)=1 makes all three actual heat debts exactly0; invertible A and box uniqueness select the actual zero root.",
+    "higherEtaDerivativesAssumedSmall": false,
+    "openNeighborhoodOutsidePhysicalEtaDomainClaimed": false
+  },
+  "remainingWholeScope": [
+    "Completed actual field/Volterra/indexed/PDE source application on their precise physical domains.",
+    "Any Guard requirement for an open eta/time extension beyond the original one-sided heat domain.",
+    "Whole original g on every J and all original Guard/Jet/PDE closure gates."
+  ]
+}

@@ -1,0 +1,104 @@
+name: M3 N6 exact factored PDE re-verification
+'on':
+  push:
+    branches:
+    - mathscope-m3-n6-cloud-20261014
+    paths:
+    - research-ide/mathscope-m3/n6-algebra-20261014/**
+    - research-ide/mathscope-m3/n6-root-relation-20261014/**
+    - research-ide/mathscope-m3/n6-clock-bridge-20261014/**
+  workflow_dispatch: {}
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: n6-algebra-${{ github.ref }}
+  cancel-in-progress: false
+env:
+  PYTHONUTF8: '1'
+  PYTHONDONTWRITEBYTECODE: '1'
+  NODE_OPTIONS: --max-old-space-size=2048
+jobs:
+  calculate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        component:
+        - 0
+        - 1
+        - 2
+    steps:
+    - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      with:
+        persist-credentials: false
+    - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+      with:
+        python-version: 3.12.10
+    - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+      with:
+        node-version: 24.19.0
+    - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+      with:
+        github-token: ${{ github.token }}
+        run-id: '38523108728'
+        name: n6-finish-prepare-38523108728
+        path: ${{ runner.temp }}/prepared
+    - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+      with:
+        github-token: ${{ github.token }}
+        run-id: '38523108728'
+        name: n6-finish-pde-${{ matrix.component }}-38523108728
+        path: ${{ runner.temp }}/prior
+    - if: ${{ matrix.component == 0 }}
+      uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+      with:
+        github-token: ${{ github.token }}
+        run-id: '38523108728'
+        name: n6-finish-guard-0-38523108728
+        path: ${{ runner.temp }}/prior-guard
+    - name: Reverify original source circuits while keeping exact denominator factors
+      env:
+        N6_COMPONENT: ${{ matrix.component }}
+      run: python -B research-ide/mathscope-m3/n6-algebra-20261014/run_job.py --component "$N6_COMPONENT" --prior "$RUNNER_TEMP/prior" --prepared "$RUNNER_TEMP/prepared/prepared"
+        --guard-audit "$RUNNER_TEMP/prior-guard" --output "$RUNNER_TEMP/result"
+    - if: always()
+      uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+      with:
+        name: n6-algebra-${{ matrix.component }}-${{ github.run_id }}
+        path: ${{ runner.temp }}/result/
+        retention-days: 90
+        if-no-files-found: error
+  preserve:
+    if: always()
+    needs:
+    - calculate
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      actions: read
+    steps:
+    - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      with:
+        persist-credentials: false
+    - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+      with:
+        python-version: 3.12.10
+    - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+      with:
+        pattern: n6-algebra-*-${{ github.run_id }}
+        path: ${{ runner.temp }}/results
+    - name: Persist exact numerator outcomes and all resource stops
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: python -B research-ide/mathscope-m3/n6-algebra-20261014/preserve.py --results "$RUNNER_TEMP/results" --output "$RUNNER_TEMP/summary"
+    - if: always()
+      uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+      with:
+        name: n6-algebra-summary-${{ github.run_id }}
+        path: ${{ runner.temp }}/summary/
+        retention-days: 90
+        if-no-files-found: error

@@ -1,0 +1,247 @@
+{
+  "schema": "MathScope.PaperLeanTransportBoundary/1",
+  "officialRepository": "openai/NavierStokesAndEuler",
+  "commit": "f9e8bc5b38b6e212696e8a30e3e91517af887bbd",
+  "sameActualPaperSHA256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+  "sameCurrentFixedSourcePaperAndLeanCommitFields": true,
+  "officialLocalFileAudits": [
+    {
+      "path": "NavierStokes/ActualInitialization.lean",
+      "bytes": 83267,
+      "sha256": "90c3c2e2b815a1cea3d0462312369579d5de0f0dbc9a674e2942cd6d47c01415",
+      "gitBlobSHA": "63b82b5a14989e2d94037ae18b1ef10f63cc9546",
+      "localBytesMatchDownloadedIndex": true,
+      "commitPermalink": "https://github.com/openai/NavierStokesAndEuler/blob/f9e8bc5b38b6e212696e8a30e3e91517af887bbd/NavierStokes/ActualInitialization.lean"
+    },
+    {
+      "path": "NavierStokes/ActualWaveRegularity.lean",
+      "bytes": 44866,
+      "sha256": "f3c7693e3a50b63e1496187f574b74ab7ccacce995cc0583b3489c3b60a83b1b",
+      "gitBlobSHA": "d2f7e66cda6147fa8d81bfe810b075422ec908d4",
+      "localBytesMatchDownloadedIndex": true,
+      "commitPermalink": "https://github.com/openai/NavierStokesAndEuler/blob/f9e8bc5b38b6e212696e8a30e3e91517af887bbd/NavierStokes/ActualWaveRegularity.lean"
+    },
+    {
+      "path": "NavierStokes/ActualPrimaryCovariance.lean",
+      "bytes": 73494,
+      "sha256": "9acd63d2870909d9754fb88b320df86c92dc113522cfc6b5b0f1908c66b069fb",
+      "gitBlobSHA": "804861495e7117a801d9c0d4a00a4a44aee10384",
+      "localBytesMatchDownloadedIndex": true,
+      "commitPermalink": "https://github.com/openai/NavierStokesAndEuler/blob/f9e8bc5b38b6e212696e8a30e3e91517af887bbd/NavierStokes/ActualPrimaryCovariance.lean"
+    },
+    {
+      "path": "NavierStokes/CorrectionInitialization.lean",
+      "bytes": 311211,
+      "sha256": "de409e3e0ce7bba9ee567fa7e51143c7b5219c47622fe44ad7a04d48287e143b",
+      "gitBlobSHA": "be7ff93484a443187832d7462fa1653710a67a78",
+      "localBytesMatchDownloadedIndex": true,
+      "commitPermalink": "https://github.com/openai/NavierStokesAndEuler/blob/f9e8bc5b38b6e212696e8a30e3e91517af887bbd/NavierStokes/CorrectionInitialization.lean"
+    },
+    {
+      "path": "NavierStokes/ResidualRegularity.lean",
+      "bytes": 13427,
+      "sha256": "919da797b7627ec6fa38d77c4b4a6c9adda3541ef4fbbd110cc2cf522bc0ad52",
+      "gitBlobSHA": "a1f06300405b1d5398c4acfcff00d845a235fc9b",
+      "localBytesMatchDownloadedIndex": true,
+      "commitPermalink": "https://github.com/openai/NavierStokesAndEuler/blob/f9e8bc5b38b6e212696e8a30e3e91517af887bbd/NavierStokes/ResidualRegularity.lean"
+    }
+  ],
+  "relevantDeclarations": [
+    {
+      "file": "ResidualRegularity.lean",
+      "declaration": "contDiffOn_residual",
+      "line": 85,
+      "hypotheses": [
+        "IsOpen s",
+        "ContDiffOn real infinity u s",
+        "ContDiffOn real infinity p s"
+      ],
+      "conclusion": "The ordinary actual NS residual of these same u,p is C-infinity on s.",
+      "currentGate": "PDE derivative closure after actual serialized velocity/pressure semantics and smoothness are established."
+    },
+    {
+      "file": "ResidualRegularity.lean",
+      "declaration": "contDiffOn_residual_interior",
+      "line": 99,
+      "hypotheses": [
+        "u,p C-infinity relative to preSingularDomain"
+      ],
+      "conclusion": "Residual smoothness on open times(0,1), not across the time boundary.",
+      "currentGate": "No negative-time/terminal extension may be inferred for current heat or g21."
+    },
+    {
+      "file": "ActualWaveRegularity.lean",
+      "declaration": "NativeData",
+      "line": 47,
+      "hypotheses": [
+        "Open actual domainOmega",
+        "Actual raw localized geometry/smoothness",
+        "cutoff_support in locally finite cells",
+        "patch cover or genuine amplitude zero germ"
+      ],
+      "conclusion": "Provides native inputs for the smooth common complete curl and normal coefficient theorems.",
+      "currentGate": "Actual Volterra/frame/covariance and all-label native source domain obligations."
+    },
+    {
+      "file": "ActualWaveRegularity.lean",
+      "declaration": "literal_native_regular",
+      "line": 869,
+      "hypotheses": [
+        "OpenOmega and smooth radial coordinate",
+        "positive ordered edges and edge weights",
+        "NativeJets for the same literal function",
+        "nonnegative amplitude/growth bounds",
+        "window lies in native domain",
+        "actual exterior zero values"
+      ],
+      "conclusion": "Same actual coefficient C-infinity onOmega and every edge tensor zero.",
+      "currentGate": "Flat sqrt/cutoff edges require actual native derivatives and domains; finite array jets or numerical zeros do not suffice."
+    },
+    {
+      "file": "ActualPrimaryCovariance.lean",
+      "declaration": "nativePoint_time",
+      "line": 134,
+      "hypotheses": [
+        "Strict positive source slow time0<x.2.1.1"
+      ],
+      "conclusion": "Every native band representation retains positive physical slow time.",
+      "currentGate": "Supports the conditional physical eta-domain route; not arbitrary negativeT."
+    },
+    {
+      "file": "ActualPrimaryCovariance.lean",
+      "declaration": "nativePoint_inner",
+      "line": 145,
+      "hypotheses": [
+        "Strict positive source slow time0<x.2.1.1"
+      ],
+      "conclusion": "The same normalized inner coordinate is preserved by the actual native chart transition.",
+      "currentGate": "Relabel/eta transport must match this transition and its premise."
+    },
+    {
+      "file": "ActualPrimaryCovariance.lean",
+      "declaration": "mean_tangentCovariance_jets",
+      "line": 621,
+      "hypotheses": [
+        "Bandn beyond(choiceB N0).prepared.N",
+        "Point in the actual native strip"
+      ],
+      "conclusion": "For every derivative orderm, actual mean tangent covariance jets equal the leading stress jets.",
+      "currentGate": "All-band/all-order covariance transport needs same labels, partition, profile and threshold; point count or a different representative choice is insufficient."
+    },
+    {
+      "file": "CorrectionInitialization.lean",
+      "declaration": "average_derivative_on",
+      "line": 2258,
+      "hypotheses": [
+        "Open slow carrierV",
+        "Actualf jointly C-infinity on full slowDomainV",
+        "Actualf periodic on every auxiliary fiber"
+      ],
+      "conclusion": "Derivative of actual torus average equals average of the actual derivative.",
+      "currentGate": "Current Haar/pressure10 Guard route needs actual compact fiber continuity/smoothness, rather than native metadata."
+    },
+    {
+      "file": "CorrectionInitialization.lean",
+      "declaration": "zeroMean_gr_smooth",
+      "line": 2102,
+      "hypotheses": [
+        "Positive ordered containing annulus",
+        "Actual local differential operators",
+        "Actual mean zero",
+        "Every actual covariance component jointly C-infinity",
+        "Actual covariance supported in the moving gauge"
+      ],
+      "conclusion": "Same actual radial sourcegr jointly C-infinity on the full valid slow domain.",
+      "currentGate": "Closest source theorem pattern for the current complete_gr hypothesis; actual serialized source equality is still required."
+    },
+    {
+      "file": "CorrectionInitialization.lean",
+      "declaration": "zeroMean_pressure_regular",
+      "line": 3033,
+      "hypotheses": [
+        "Positive gauge radius/exponent",
+        "Same qLength gauge",
+        "Local operators",
+        "Actual mean zero",
+        "All covariance components smooth and supported in actual moving gauge"
+      ],
+      "conclusion": "Same reconstructed actual pressure is jointly C-infinity and has the stated support.",
+      "currentGate": "Pressure compactJ/primitive guards; no smaller chart or formal pressure substitution."
+    },
+    {
+      "file": "CorrectionInitialization.lean",
+      "declaration": "PrimaryMeanData",
+      "line": 3412,
+      "hypotheses": [
+        "Actual base/operator bounds",
+        "Same gauge and local operators",
+        "Full actual covariance smoothness, periodicity, support and weighted classes",
+        "Actual virtual stresses smoothness, periodicity, support and classes",
+        "Actual mean zero"
+      ],
+      "conclusion": "Primitive input record used to derive temporal/rank bounds; pressure or correction output bounds are not assumptions hidden in this record.",
+      "currentGate": "230Jet/1020PDE and universalN6-01/N6-02 transport must supply the quantitative fields separately."
+    },
+    {
+      "file": "CorrectionInitialization.lean",
+      "declaration": "initializedBands_mean_defects",
+      "line": 3717,
+      "hypotheses": [
+        "PrimaryMeanData",
+        "Index gap/common scale/actual fast coefficient",
+        "Actual covariance matches virtual stress class",
+        "RankGeometry and normalized parameters",
+        "Nonzero rankB and interior rank radii",
+        "Actual slow base and continuous/zero-mean excluded source"
+      ],
+      "conclusion": "Cumulative, mean and debt bounds at sigma1/5 plus exact zero masses for the same initialized bands.",
+      "currentGate": "Matches the blueprint four-stage initial-state route; qualitative regularity alone does not instantiate these quantitative premises."
+    },
+    {
+      "file": "CorrectionInitialization.lean",
+      "declaration": "choice",
+      "line": 3929,
+      "hypotheses": [
+        "Classical choice of an existing same-profile prepared geometry and covariance bounds"
+      ],
+      "conclusion": "An official primary family with its own selected preparedN, constants and labels.",
+      "currentGate": "Neither this choice nor officialprofile is definitionally identified with the current explicit serialized constants/representatives."
+    },
+    {
+      "file": "ActualInitialization.lean",
+      "declaration": "initial_invariant",
+      "line": 1427,
+      "hypotheses": [
+        "The official actual primary choice, profile, geometry and imported constructors"
+      ],
+      "conclusion": "Packages representation, uniform wave/pressure bounds, covariance, full residual, mean/debt/primitives, zero masses, smoothness, periodicity and support.",
+      "currentGate": "Strong transport target; same paper/commit is not an equivalence proof for g21."
+    },
+    {
+      "file": "ActualInitialization.lean",
+      "declaration": "initial_fullResidual",
+      "line": 1491,
+      "hypotheses": [
+        "Point in the official strip.domain",
+        "The same official initialized state"
+      ],
+      "conclusion": "Full differentiated PDE equals grouped nonzero harmonics plus good mean residual plus all stored excluded errors.",
+      "currentGate": "Do not delete nonlinear, mean, Gaussian or flat remainder terms when comparing current1020 PDE obligations."
+    }
+  ],
+  "semanticTransportStillRequired": [
+    "Actual MathScope profile/selected constants equal or refine official source constructors.",
+    "Every serialized primitive/native opcode denotes the same mathematical operation/function with domains and binder semantics.",
+    "Actual labels, representatives, chart maps, periods, gauges, cutoffs and residual decompositions coincide.",
+    "All derivative, integral, infinite-series and native-root exchanges have the necessary actual hypotheses.",
+    "Every original Guard/Jet/PDE ID and universal domain/quantifier is mapped to the corresponding transported theorem."
+  ],
+  "officialSourceTextInspected": true,
+  "upstreamLeanBuildReexecuted": false,
+  "printAxiomsAuditExecuted": false,
+  "wholeImportClosureInspected": false,
+  "equivalenceToCurrentMathScopeSerializedG21Proved": false,
+  "newOriginalGuardsDischarged": 0,
+  "newOriginalJetsDischarged": 0,
+  "newOriginalPDETermsDischarged": 0
+}
