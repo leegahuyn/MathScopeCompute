@@ -16,6 +16,7 @@ concurrency:
 
 jobs:
   refresh-reviewed-manifest:
+    if: github.event.head_commit.message == 'Trigger one-time reviewed English manifest refresh'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
