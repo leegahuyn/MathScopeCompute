@@ -12,7 +12,7 @@ const read = (relative) => JSON.parse(fs.readFileSync(path.join(root, relative),
 const sha256 = (relative) => crypto.createHash('sha256').update(fs.readFileSync(path.join(root, relative))).digest('hex');
 const gitBlobSha = (relative) => {
   const bytes = fs.readFileSync(path.join(root, relative));
-  return crypto.createHash('sha1').update(Buffer.concat([Buffer.from('blob ' + bytes.length + '\\0'), bytes])).digest('hex');
+  return crypto.createHash('sha1').update(Buffer.concat([Buffer.from('blob ' + bytes.length + '\0'), bytes])).digest('hex');
 };
 const checks = [];
 const check = (name, pass, detail) => checks.push({ name, pass: Boolean(pass), detail });
