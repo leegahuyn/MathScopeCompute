@@ -82,6 +82,7 @@ jobs:
         id: publication
         continue-on-error: true
         run: |
+          mkdir -p "$RUNNER_TEMP/mathscope-publisher-sync"
           python research-ide/mathscope-m4/acceptance-review-20261019/sync_m3_m4_and_v031.py --check --report "$RUNNER_TEMP/mathscope-publisher-sync/STAGING.json"
           node research-ide/mathscope-m4/acceptance-review-20261019/verify_m4_modules.mjs > "$RUNNER_TEMP/mathscope-publisher-sync/M4_MODULES.json"
 
