@@ -140,7 +140,9 @@ try{
     // Inspect the currently published M3 ledger panel, keeping its open gates visible.
     const currentM3Launcher=page.locator('#ms3ip-open');
     await currentM3Launcher.waitFor({state:'attached',timeout:60000});
-    await currentM3Launcher.click();
+    await page.keyboard.press('Escape');
+    await currentM3Dialog.waitFor({state:'hidden',timeout:10000});
+    assert.equal(await currentM3Launcher.evaluate(node=>document.activeElement===node),true);
     const currentM3Dialog=page.locator('#ms3ip');
     await currentM3Dialog.waitFor({state:'visible',timeout:30000});
     assert.match(await page.locator('#ms3ip-m3-count').innerText(),/62\s*\/\s*64/);
