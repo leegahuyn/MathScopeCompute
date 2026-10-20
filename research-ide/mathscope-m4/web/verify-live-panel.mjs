@@ -52,7 +52,11 @@ try{
     page.on('console',msg=>{if(['error','warning'].includes(msg.type()))issues.push({type:msg.type(),text:msg.text()});});
     page.on('pageerror',error=>issues.push({type:'pageerror',text:error.message}));
     const response=await page.goto(url,{waitUntil:'domcontentloaded',timeout:60000});
-    assert.equal(response.status(),200);assert.equal(page.url(),url);assert.ok((await page.title()).startsWith('MathScope'));
+    assert.equal(response.status(),200);
+    const requestedURL=new URL(url),actualURL=new URL(page.url());
+    assert.equal(actualURL.origin,requestedURL.origin,'Live browser stayed on the WebsitePublisher origin');
+    assert.equal(actualURL.pathname,requestedURL.pathname,'Live browser stayed on the same published page despite query-string canonicalization');
+    assert.ok((await page.title()).startsWith('MathScope'));
     assert.ok(documentRequestId,'Actual document request must be captured');
     let bodyTimeout;
     try{await Promise.race([documentFinished,new Promise((_,reject)=>{bodyTimeout=setTimeout(()=>reject(new Error('Document response capture timed out')),60000);})]);}
