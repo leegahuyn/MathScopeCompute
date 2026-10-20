@@ -119,7 +119,7 @@ def main() -> int:
         # through the observation manifest below; never replace it with the status page.
         "public/v0.3.1-publisher-observation.json",
         "public/v0.3.1-sync-status.html",
-        "public/websitepublisher-v118-followup-bundle.json",
+        "public/websitepublisher-v119-followup-bundle.json",
         f"{M3}/evidence/FINITE_VS_CONTINUUM_N706_N805_RECEIPT.json",
         "research-ide/mathscope-m4/acceptance-review-20261019/evidence/followup-20261020/M4_FOLLOWUP_VERIFICATION_RECEIPT.json",
         "research-ide/mathscope-m4/acceptance-review-20261019/sync_m3_m4_and_v031.py",
@@ -153,14 +153,28 @@ def main() -> int:
               "live runtime M4 panel must point to the current original 16-row matrix without promoting acceptance")
         check("live_ide_source_not_replaced_by_stub",
               observation.get("page", {}).get("fullPageSourceMirroredInGit") is False
-              and observation.get("publication", {}).get("fullPageChangedThisTurn") is False,
-              "full live IDE page remains external; the tracked status page is not a substitute")
+              and observation.get("publication", {}).get("targetedPagePatchOnly") is True
+              and observation.get("publication", {}).get("fullPageReplaced") is False,
+              "full live IDE HTML is not mirrored/replaced; only its owned M4 dialog header CSS was patched")
+        browser = observation.get("publication", {}).get("targetedPatch", {}).get("verification", {})
+        check("live_browser_css_patch_verified",
+              observation.get("page", {}).get("version") == 119
+              and observation.get("page", {}).get("versionHash") == "f9c0e80a"
+              and browser.get("workflowRunId") == 39452358376
+              and browser.get("desktop", {}).get("passed") is True
+              and browser.get("desktop", {}).get("dialogScrollWidth") == browser.get("desktop", {}).get("dialogClientWidth")
+              and browser.get("mobile", {}).get("passed") is True
+              and browser.get("mobile", {}).get("dialogScrollWidth") == browser.get("mobile", {}).get("dialogClientWidth")
+              and browser.get("r105Status") == "OPEN"
+              and browser.get("r108Status") == "OPEN",
+              "current v119 readback and Chromium overflow fix are verified; incomplete R1-05/R1-08 remain OPEN")
     else:
         check("publisher_observation_matches_checkpoint", False, "public/v0.3.1-publisher-observation.json is missing")
         check("publisher_m4_overlay_source_pinned", False, "publisher observation is missing")
         check("live_ide_source_not_replaced_by_stub", False, "publisher observation is missing")
+    browser = observation.get("publication", {}).get("targetedPatch", {}).get("verification", {}) if observation_path.is_file() else {}
     blockers.append({"kind": "website_partial_sync",
-                     "detail": f"live page v{publisher['page']['version']}/{publisher['page']['versionHash']} unchanged; runtime v{publisher['runtimeFragment']['version']}/{publisher['runtimeFragment']['versionHash']} updated; browser/mobile inspection unconfirmed"})
+                     "detail": f"live page v{publisher['page']['version']}/{publisher['page']['versionHash']}; targeted header CSS patch and Chromium desktop/mobile-size clipping checks verified; runtime v{publisher['runtimeFragment']['version']}/{publisher['runtimeFragment']['versionHash']}; physical mobile, full 3D fallback/performance budget and original release acceptance remain unconfirmed"})
     blockers.append({"kind": "full_ide_source_not_mirrored",
                      "detail": "The live IDE page is approximately 26.3 million characters and remains managed by WebsitePublisher; the separate status page must not replace it."})
     blockers.append({"kind": "m3_continuum_open", "items": ["N7-06", "N8-05"], "actual_last_resolved_tau": None})
