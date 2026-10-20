@@ -1,6 +1,6 @@
 {
   "schema": "MathScope.M3M4SyncCheckpoint/1",
-  "checkpointCreatedAt": "2026-10-20T21:08:00+09:00",
+  "checkpointCreatedAt": "2026-10-20T22:10:00+09:00",
   "purpose": "Preserve verified remote state before continuing implementation; do not promote any mathematical or M4 acceptance count without source-bound execution receipts.",
   "baseline": {
     "repository": "leegahuyn/MathScopeCompute",
@@ -192,7 +192,7 @@
     "repository": "leegahuyn/MathScopeCompute",
     "pullRequest": 30,
     "branch": "mathscope-m3-n6-cloud-20261014",
-    "headCommitAtObservation": "b508a27d76b22cabb94f30b4afc9775b79503ac8",
+    "headCommitAtObservation": "009860d0fb87ad76d78a0910ca1a1089d30be27c",
     "pullRequestState": "OPEN",
     "draft": true,
     "merged": false,
@@ -207,7 +207,8 @@
         "N8-05"
       ],
       "actualLastResolvedTau": null,
-      "overallRelease": "HOLD"
+      "overallRelease": "HOLD",
+      "githubBlobSha": "4634076ded72d588c862fb8002bb1cf4e634b940"
     },
     "cutoff": {
       "receiptPath": "research-ide/mathscope-m3/recovery-20261019/evidence/OUTER_CUTOFF_RUN.json",
@@ -228,7 +229,8 @@
       "actualNonzeroFieldEvaluated": false,
       "N706Closed": false,
       "N805Closed": false,
-      "actualLastResolvedTau": null
+      "actualLastResolvedTau": null,
+      "githubBlobSha": "8c7fd1633292aedfd769d82aa181bcd55b82c0f6"
     },
     "native": {
       "validationPath": "research-ide/mathscope-m3/recovery-20261019/native/evidence/ACTUAL_SLOW_INVERSE_VALIDATION.json",
@@ -244,6 +246,7 @@
       "blobSha": "a046586e421155f72914eb1ffbec48519b4bd2bb",
       "originalCriteriaTotal": 16,
       "statusCounts": {
+        "ACCEPTED": 0,
         "PARTIAL": 14,
         "OPEN": 2
       },
@@ -254,7 +257,7 @@
       "finalAcceptance": "UNCONFIRMED",
       "acceptedCurrentRelease": null,
       "currentBrowserInspection": false,
-      "githubSaved": false,
+      "githubSaved": true,
       "sitePublished": false,
       "overallRelease": "HOLD",
       "softwareTests": {
@@ -359,7 +362,30 @@
       "CHECKPOINT.json",
       "public/CHECKPOINT.json"
     ],
-    "interpretation": "This is a repository/deployment synchronization checkpoint only. It does not certify mathematical closure, original M4 acceptance, browser end-to-end execution, or release readiness."
+    "interpretation": "This is a repository/deployment synchronization checkpoint only. It does not certify mathematical closure, original M4 acceptance, browser end-to-end execution, or release readiness.",
+    "synchronization": {
+      "finiteReceiptPath": "research-ide/mathscope-m3/recovery-20261019/evidence/FINITE_VS_CONTINUUM_N706_N805_RECEIPT.json",
+      "m4ReceiptPath": "research-ide/mathscope-m4/acceptance-review-20261019/evidence/followup-20261020/M4_FOLLOWUP_VERIFICATION_RECEIPT.json",
+      "scopedExecutionReceiptPath": "research-ide/mathscope-m4/acceptance-review-20261019/evidence/followup-20261020/SCOPED_CI_EXECUTION.json",
+      "stagingBundlePath": "public/websitepublisher-v118-followup-bundle.json",
+      "separateStatusPagePath": "public/v0.3.1-sync-status.html",
+      "publisherRuntime": {
+        "version": 7,
+        "versionHash": "6cbddbbd"
+      },
+      "publisherPage": {
+        "version": 118,
+        "versionHash": "9a0eebc5"
+      },
+      "note": "Repository state records were synced. Production page itself was not modified; runtime fragment was patched only to clarify current evidence and historical 5/16."
+    },
+    "ci": {
+      "auditedMergeCommit": "0c0859d2c981511539f2ec89b0c642b98d7d99f1",
+      "scopedTestsPass": true,
+      "readinessAuditAtLastRead": "pending",
+      "researchIdeWorkflowAtLastRead": "FAIL: verify_english_release.py source manifest mismatch",
+      "primaryCiAtLastRead": "prior checkpoint commit success only"
+    }
   },
   "checkpointUpdatedDate": "2026-10-20"
 }
