@@ -23,9 +23,7 @@ assert.deepEqual(JSON.parse(serialized),model);assert.deepEqual(JSON.parse(deliv
 assert.equal(/<(?:\/?script|!--)/i.test(deliveredSerialized),false,'Unsafe publisher inline-data serialization');
 assert.equal(sha(fragment),build.fragmentSha256,'Build receipt must bind the exact panel fragment');
 assert.equal(sha(JSON.stringify(model)),build.modelSha256,'Build receipt must bind the exact panel model');
-const deliveredFragment=fragment.slice(0,dataStart)+deliveredSerialized+fragment.slice(dataEnd),
-  hasPinnedHistoricalCandidate=Boolean(build.baselineCheck?.insertionAnchor && build.baselineCheck?.candidateSha256);
-const expectedEncodedSHA256=null,expectedDeliveredSHA256=null;
+
 let browser;
 try{
   browser=await chromium.launch({headless:true,args:['--enable-unsafe-swiftshader'],...(option('--browser-executable',null)?{executablePath:option('--browser-executable')}: {})});
@@ -156,7 +154,7 @@ try{
     await context.close();
   }
   const receipt={schema:'MathScope.M4.ActualPublicPanelVerification/1',startedAt,finishedAt:new Date().toISOString(),browserVersion:browser.version(),
-    expectedDocumentSHA256:expectedEncodedSHA256,expectedPublisherSerializedSHA256:expectedDeliveredSHA256,sourceVerifierSHA256:verifierSHA256,sourceModelSHA256:sha(await readFile(resolve(own,'panel-model.json'))),
+    candidateByteComparison:null,sourceVerifierSHA256:verifierSHA256,sourceModelSHA256:sha(await readFile(resolve(own,'panel-model.json'))),
     passed:true,livePageReadbackConfirmed:true,candidatePatchPublicationStatus:'NOT_VERIFIED_BY_THIS_LIVE_INTERACTION_TEST',publicationConfirmed:false,mathematicalCriteriaPromoted:false,
     mathematicalScope:'This receipt observes the actual currently served page and panel interaction only; it does not certify M3 mathematical closure or M4 final acceptance.',
     livePageVersionObserved:null,
