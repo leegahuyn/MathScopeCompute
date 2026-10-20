@@ -37,9 +37,9 @@ if(hasPinnedHistoricalCandidate){
 }
 let browser;
 try{
-  browser=await chromium.launch({headless:true,...(option('--browser-executable',null)?{executablePath:option('--browser-executable')}: {})});
+  browser=await chromium.launch({headless:true,args:['--enable-unsafe-swiftshader'],...(option('--browser-executable',null)?{executablePath:option('--browser-executable')}: {})});
   for(const [name,viewport]of [['desktop',{width:1440,height:1050}],['mobile',{width:390,height:844}]]){
-    const context=await browser.newContext({viewport,isMobile:name==='mobile',hasTouch:name==='mobile',reducedMotion:'reduce'}),page=await context.newPage(),issues=[];
+    const context=await browser.newContext({viewport,isMobile:name==='mobile',hasTouch:name==='mobile',reducedMotion:'reduce'}),page=await context.newPage(),issues=[],environmentWarnings=[];
     // The 28 MB document exceeds Chromium's default inspector body cache.
     // This read-only CDP session captures the actual navigation response with
     // a bounded cache; no request is intercepted or replaced.
@@ -49,7 +49,15 @@ try{
     const documentFinished=new Promise(resolve=>{finishDocument=resolve;});
     network.on('Network.responseReceived',event=>{if(event.type==='Document'&&event.response.url===url&&!documentRequestId)documentRequestId=event.requestId;});
     network.on('Network.loadingFinished',event=>{if(event.requestId===documentRequestId)finishDocument();});
-    page.on('console',msg=>{if(['error','warning'].includes(msg.type()))issues.push({type:msg.type(),text:msg.text()});});
+    const knownBrowserEnvironmentWarning = text =>
+      /Automatic fallback to software WebGL has been deprecated/.test(text) ||
+      /GL Driver Message \\(OpenGL, Performance, GL_CLOSE_PATH_NV, High\\): GPU stall due to ReadPixels/.test(text);
+    page.on('console',msg=>{
+      if(!['error','warning'].includes(msg.type()))return;
+      const item={type:msg.type(),text:msg.text()};
+      if(msg.type()==='warning'&&knownBrowserEnvironmentWarning(msg.text()))environmentWarnings.push(item);
+      else issues.push(item);
+    });
     page.on('pageerror',error=>issues.push({type:'pageerror',text:error.message}));
     const response=await page.goto(url,{waitUntil:'domcontentloaded',timeout:60000});
     assert.equal(response.status(),200);
@@ -146,7 +154,7 @@ try{
       allOriginalBytesPreserved:hasPinnedHistoricalCandidate?true:null,modelSemanticEquality:true,inspectorCacheBudgetBytes:{total:134217728,resource:67108864},criteriaSelected:24,keyboard:true,actualExportDownload:true,forgedPassQuarantined:true,wrongSourceRejected:true,
       currentRuntimeM4MatrixVerified:true,currentRuntimeM4MatrixBlobSha:'a046586e421155f72914eb1ffbec48519b4bd2bb',r105Status:'OPEN',r108Status:'OPEN',
       currentM3PanelVerified:true,currentM3Count:'62/64',openM3Criteria:['N7-06','N8-05'],actualGlobalTau:null,
-      originalCountsPreserved:true,dialogClippingAbsent:true,focusReturned:true,consoleIssues:issues,screenshot:name+'.png',screenshotSHA256:sha(await readFile(resolve(out,name+'.png')))});
+      originalCountsPreserved:true,dialogClippingAbsent:true,focusReturned:true,consoleIssues:issues,environmentWarnings,webglFallbackMode:'Chromium --enable-unsafe-swiftshader (CI-only software fallback opt-in)',screenshot:name+'.png',screenshotSHA256:sha(await readFile(resolve(out,name+'.png')))});
     await context.close();
   }
   const receipt={schema:'MathScope.M4.ActualPublicPanelVerification/1',startedAt,finishedAt:new Date().toISOString(),browserVersion:browser.version(),
