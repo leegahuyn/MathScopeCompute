@@ -106,10 +106,6 @@ try{
     await page.locator('[data-criterion="N6-01"]').click();
     await page.locator('#ms-m4-dialog').evaluate(node=>{node.scrollTop=0;});
     await page.screenshot({path:resolve(out,name+'.png'),fullPage:false});
-    await page.keyboard.press('Escape');
-    await page.waitForFunction(()=>document.getElementById('ms-m4-launcher').getAttribute('aria-expanded')==='false');
-    assert.equal(await page.locator('#ms-m4-launcher').evaluate(node=>document.activeElement===node),true);
-
     // The v118 runtime overlay is distinct from the historical embedded M4 panel.
     // Verify its current GitHub-backed matrix rather than inferring acceptance from the old snapshot.
     // The runtime keeps a source template in the DOM; scope all assertions to the
@@ -135,6 +131,11 @@ try{
     const r108Detail=await currentM4Panel.locator('#ms4c-criterion-detail').innerText();
     assert.match(r108Detail,/"status": "OPEN"/);
     assert.match(r108Detail,/a046586e421155f72914eb1ffbec48519b4bd2bb/);
+
+    // The current overlay is hosted inside the M4 modal; close it only after the overlay check.
+    await page.keyboard.press('Escape');
+    await page.waitForFunction(()=>document.getElementById('ms-m4-launcher').getAttribute('aria-expanded')==='false');
+    assert.equal(await page.locator('#ms-m4-launcher').evaluate(node=>document.activeElement===node),true);
 
     // Inspect the currently published M3 ledger panel, keeping its open gates visible.
     const currentM3Launcher=page.locator('#ms3ip-open');
