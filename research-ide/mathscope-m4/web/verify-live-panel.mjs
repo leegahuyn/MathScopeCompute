@@ -100,8 +100,17 @@ try{
     assert.equal(await page.locator('#ms-m4-dialog').getAttribute('data-m4-final-acceptance'),'UNCONFIRMED');
     await page.locator('[data-import]').setInputFiles({name:'wrong-source.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify({...exported,blueprintSha256:'0'.repeat(64)}))});
     await page.waitForFunction(()=>document.querySelector('#ms-m4-dialog').dataset.lastImportError==='IMPORT_REJECTED');
-    const overflow=await page.locator('#ms-m4-dialog').evaluate(node=>({scrollWidth:node.scrollWidth,clientWidth:node.clientWidth}));
-    assert.ok(overflow.scrollWidth<=overflow.clientWidth+1);
+    const overflow=await page.locator('#ms-m4-dialog').evaluate(node=>{
+      const rootRect=node.getBoundingClientRect();
+      const descendants=[...node.querySelectorAll('*')].map(el=>{
+        const rect=el.getBoundingClientRect();
+        return {tag:el.tagName.toLowerCase(),id:el.id||'',className:typeof el.className==='string'?el.className:(el.className?.baseVal||''),
+          scrollWidth:el.scrollWidth,clientWidth:el.clientWidth,left:Math.round(rect.left),right:Math.round(rect.right)};
+      }).filter(el=>el.scrollWidth>el.clientWidth+1||el.right>rootRect.right+1||el.left<rootRect.left-1).slice(0,20);
+      return {scrollWidth:node.scrollWidth,clientWidth:node.clientWidth,rootLeft:Math.round(rootRect.left),rootRight:Math.round(rootRect.right),descendants};
+    });
+    console.log('M4_DIALOG_OVERFLOW_'+name,JSON.stringify(overflow));
+    assert.ok(overflow.scrollWidth<=overflow.clientWidth+1,JSON.stringify(overflow));
     assert.equal(await page.locator('vite-error-overlay,nextjs-portal [data-nextjs-dialog-overlay]').count(),0);
     await page.locator('[data-criterion="N6-01"]').click();
     await page.locator('#ms-m4-dialog').evaluate(node=>{node.scrollTop=0;});
