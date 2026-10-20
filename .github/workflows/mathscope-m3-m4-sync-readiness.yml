@@ -65,12 +65,16 @@ jobs:
         env:
           BRANCH_NAME: ${{ github.event.pull_request.head.ref || github.ref_name }}
         run: |
-          git rm research-ide/mathscope-m4/recovery-20261020/REFRESH_ENGLISH_MANIFEST_ONCE
-          git rm .github/workflows/refresh-english-release-manifest.yml
+          git rm --ignore-unmatch -f -- research-ide/mathscope-m4/recovery-20261020/REFRESH_ENGLISH_MANIFEST_ONCE .github/workflows/refresh-english-release-manifest.yml
+          mkdir -p "$RUNNER_TEMP/mathscope-final-sync"
+          python3 research-ide/mathscope-m4/acceptance-review-20261019/sync_m3_m4_and_v031.py --write --report "$RUNNER_TEMP/mathscope-final-sync/STAGING.json"
+          node research-ide/mathscope-m4/acceptance-review-20261019/verify_m4_modules.mjs > "$RUNNER_TEMP/mathscope-final-sync/M4_MODULES.json"
+          python3 research-ide/mathscope-m4/recovery-20261020/verify_sync_readiness.py --report "$RUNNER_TEMP/mathscope-final-sync/READINESS.json"
           python3 research-ide/tools/verify_english_release.py --write-manifest
           python3 research-ide/tools/verify_english_release.py
           git diff --check
-          git add research-ide/SOURCE_TRANSLATION_MANIFEST.json
+          git add public/websitepublisher-v118-followup-bundle.json public/v0.3.1-sync-status.html research-ide/SOURCE_TRANSLATION_MANIFEST.json
+          git add -u
           git diff --cached --stat
           git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "Refresh English release artifact manifest after source validation"
           git push origin "HEAD:${BRANCH_NAME}"
