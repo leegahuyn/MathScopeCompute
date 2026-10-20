@@ -101,11 +101,51 @@ try{
     await page.keyboard.press('Escape');
     await page.waitForFunction(()=>document.getElementById('ms-m4-launcher').getAttribute('aria-expanded')==='false');
     assert.equal(await page.locator('#ms-m4-launcher').evaluate(node=>document.activeElement===node),true);
+
+    // The v118 runtime overlay is distinct from the historical embedded M4 panel.
+    // Verify its current GitHub-backed matrix rather than inferring acceptance from the old snapshot.
+    const currentM4Summary=page.locator('#ms4c-acceptance-summary');
+    await currentM4Summary.waitFor({state:'attached',timeout:60000});
+    await currentM4Summary.click();
+    const currentM4SummaryText=await currentM4Summary.innerText();
+    assert.match(currentM4SummaryText,/ACCEPTED 0 \/ 16/);
+    assert.match(currentM4SummaryText,/PARTIAL 14/);
+    assert.match(currentM4SummaryText,/OPEN 2 \(R1-05, R1-08\)/);
+    assert.match(currentM4SummaryText,/finalAcceptance=UNCONFIRMED/);
+    assert.match(currentM4SummaryText,/HOLD/);
+    assert.match(currentM4SummaryText,/a046586e421155f72914eb1ffbec48519b4bd2bb/);
+    const currentM4Selector=page.locator('#ms4c-criterion');
+    assert.equal(await currentM4Selector.locator('option').count(),16);
+    await currentM4Selector.selectOption('R1-05');
+    const r105Detail=await page.locator('#ms4c-criterion-detail').innerText();
+    assert.match(r105Detail,/"status": "OPEN"/);
+    assert.match(r105Detail,/cbf3523079cf3217fc1fcfd04f811610039ca900|a046586e421155f72914eb1ffbec48519b4bd2bb/);
+    await currentM4Selector.selectOption('R1-08');
+    const r108Detail=await page.locator('#ms4c-criterion-detail').innerText();
+    assert.match(r108Detail,/"status": "OPEN"/);
+    assert.match(r108Detail,/a046586e421155f72914eb1ffbec48519b4bd2bb/);
+
+    // Inspect the currently published M3 ledger panel, keeping its open gates visible.
+    const currentM3Launcher=page.locator('#ms3ip-open');
+    await currentM3Launcher.waitFor({state:'attached',timeout:60000});
+    await currentM3Launcher.click();
+    const currentM3Dialog=page.locator('#ms3ip');
+    await currentM3Dialog.waitFor({state:'visible',timeout:30000});
+    assert.match(await page.locator('#ms3ip-m3-count').innerText(),/62\s*\/\s*64/);
+    assert.match(await page.locator('#ms3ip-tau').innerText(),/null/);
+    const currentM3Text=await currentM3Dialog.innerText();
+    assert.match(currentM3Text,/N7-06/);
+    assert.match(currentM3Text,/N8-05/);
+    assert.match(currentM3Text,/OPEN/);
+    await currentM3Launcher.click();
+
     assert.deepEqual(issues,[],'Public page console health');
     results.push({name,viewport,url:page.url(),httpStatus:response.status(),documentSHA256:actualSHA256,documentBytes:raw.length,
       publicDocumentIntercepted:false,documentHashSource:'ACTUAL_CHROMIUM_NAVIGATION_RESPONSE',serializedProfile,
       historicalBaselineByteComparison:hasPinnedHistoricalCandidate?'PASS':'NOT_RUN_CURRENT_LIVE_SOURCE_IS_NOT_THE_V102_BUILD_INPUT',
       allOriginalBytesPreserved:hasPinnedHistoricalCandidate?true:null,modelSemanticEquality:true,inspectorCacheBudgetBytes:{total:134217728,resource:67108864},criteriaSelected:24,keyboard:true,actualExportDownload:true,forgedPassQuarantined:true,wrongSourceRejected:true,
+      currentRuntimeM4MatrixVerified:true,currentRuntimeM4MatrixBlobSha:'a046586e421155f72914eb1ffbec48519b4bd2bb',r105Status:'OPEN',r108Status:'OPEN',
+      currentM3PanelVerified:true,currentM3Count:'62/64',openM3Criteria:['N7-06','N8-05'],actualGlobalTau:null,
       originalCountsPreserved:true,dialogClippingAbsent:true,focusReturned:true,consoleIssues:issues,screenshot:name+'.png',screenshotSHA256:sha(await readFile(resolve(out,name+'.png')))});
     await context.close();
   }
