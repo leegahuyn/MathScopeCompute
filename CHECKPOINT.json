@@ -1,6 +1,6 @@
 {
   "schema": "MathScope.M3M4SyncCheckpoint/1",
-  "checkpointCreatedAt": "2026-10-20T22:10:00+09:00",
+  "checkpointCreatedAt": "2026-10-20T22:16:00+09:00",
   "purpose": "Preserve verified remote state before continuing implementation; do not promote any mathematical or M4 acceptance count without source-bound execution receipts.",
   "baseline": {
     "repository": "leegahuyn/MathScopeCompute",
@@ -192,7 +192,7 @@
     "repository": "leegahuyn/MathScopeCompute",
     "pullRequest": 30,
     "branch": "mathscope-m3-n6-cloud-20261014",
-    "headCommitAtObservation": "009860d0fb87ad76d78a0910ca1a1089d30be27c",
+    "headCommitAtObservation": "1d6c91454ab1d68f0fa992d19a18322bd4c10422",
     "pullRequestState": "OPEN",
     "draft": true,
     "merged": false,
@@ -380,11 +380,40 @@
       "note": "Repository state records were synced. Production page itself was not modified; runtime fragment was patched only to clarify current evidence and historical 5/16."
     },
     "ci": {
-      "auditedMergeCommit": "0c0859d2c981511539f2ec89b0c642b98d7d99f1",
-      "scopedTestsPass": true,
-      "readinessAuditAtLastRead": "pending",
-      "researchIdeWorkflowAtLastRead": "FAIL: verify_english_release.py source manifest mismatch",
-      "primaryCiAtLastRead": "prior checkpoint commit success only"
+      "lastCheckedCommit": "1d6c91454ab1d68f0fa992d19a18322bd4c10422",
+      "runs": [
+        {
+          "id": 39427555664,
+          "name": "M3 gauge and fluid execution workspaces",
+          "status": "queued",
+          "conclusion": null
+        },
+        {
+          "id": 39427555533,
+          "name": "MathScopeCompute CI",
+          "status": "in_progress",
+          "conclusion": null
+        },
+        {
+          "id": 39427555693,
+          "name": "MathScope M3-M4 Sync Readiness Audit",
+          "status": "queued",
+          "conclusion": null
+        },
+        {
+          "id": 39427555631,
+          "name": "MathScope research IDE checks",
+          "status": "in_progress",
+          "conclusion": null
+        },
+        {
+          "id": 39427555489,
+          "name": "M3 P7 continuation verification",
+          "status": "in_progress",
+          "conclusion": null
+        }
+      ],
+      "interpretation": "At checkpoint refresh, MathScope M3-M4 Sync Readiness Audit is queued, primary MathScopeCompute CI is in progress, and remaining workflows are queued. No final successful CI claim."
     }
   },
   "checkpointUpdatedDate": "2026-10-20"
