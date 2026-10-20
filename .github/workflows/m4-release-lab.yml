@@ -45,6 +45,8 @@ jobs:
         run: npm install --no-save --no-package-lock playwright@1.56.1
       - name: Install Chromium and runner dependencies
         run: npx playwright install --with-deps chromium
+      - name: Build the standalone evidence-panel fixture
+        run: node research-ide/mathscope-m4/web/build-web-patch.mjs
       - name: Test standalone desktop/mobile interactions, latency, memory, keyboard and touch
         run: node research-ide/mathscope-m4/web/test-browser.mjs
       - name: Inspect the actual live WebsitePublisher page in Chromium
