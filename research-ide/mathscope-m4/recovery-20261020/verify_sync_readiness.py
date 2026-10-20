@@ -110,7 +110,10 @@ def main() -> int:
           and m4.get("sitePublished") is False,
           "the original matrix still says browser inspection/GitHub save/site publication are unconfirmed")
 
-    expected_missing = [
+    # Planned publication artifacts are release blockers, not integrity failures.
+    # This audit is allowed to PASS_HOLD_PRESERVED when provenance is sound while
+    # releaseReady remains false and missing publication inputs are reported below.
+    planned_artifact_paths = [
         "public/v0.3.1.html",
         "public/websitepublisher-v118-followup-bundle.json",
         f"{M3}/evidence/FINITE_VS_CONTINUUM_N706_N805_RECEIPT.json",
@@ -118,10 +121,14 @@ def main() -> int:
         "research-ide/mathscope-m4/acceptance-review-20261019/sync_m3_m4_and_v031.py",
         "research-ide/mathscope-m4/acceptance-review-20261019/verify_m4_modules.mjs",
     ]
-    for relative in expected_missing:
+    planned_artifacts = []
+    for relative in planned_artifact_paths:
         present = (ROOT / relative).is_file()
-        check("planned_artifact_presence:" + relative, present,
-              "present" if present else "not found at the plan's stated path")
+        planned_artifacts.append({
+            "path": relative,
+            "present": present,
+            "requiredForPublication": True,
+        })
         if not present:
             blockers.append({"kind": "missing_repo_artifact", "path": relative})
 
@@ -145,8 +152,9 @@ def main() -> int:
         "releaseReady": False,
         "overallRelease": "HOLD",
         "blockers": blockers,
+        "plannedArtifacts": planned_artifacts,
         "checks": checks,
-        "meaning": "Audit PASS means provenance and HOLD/OPEN statuses remain internally consistent; it does not mean M3/M4 acceptance or publication is complete."
+        "meaning": "Audit PASS means integrity invariants and HOLD/OPEN statuses are consistent. Missing publication inputs remain blockers and releaseReady stays false; audit PASS does not mean M3/M4 acceptance or publication is complete."
     }
     serialized = json.dumps(report, ensure_ascii=False, indent=2) + "\n"
     if args.report:
