@@ -112,8 +112,11 @@ try{
 
     // The v118 runtime overlay is distinct from the historical embedded M4 panel.
     // Verify its current GitHub-backed matrix rather than inferring acceptance from the old snapshot.
-    const currentM4Summary=page.locator('#ms4c-acceptance-summary');
-    await currentM4Summary.waitFor({state:'attached',timeout:60000});
+    // The runtime keeps a source template in the DOM; scope all assertions to the
+    // visible cloned section so a hidden <template> cannot accidentally satisfy QA.
+    const currentM4Panel=page.locator('#ms4c:visible');
+    await currentM4Panel.waitFor({state:'visible',timeout:60000});
+    const currentM4Summary=currentM4Panel.locator('#ms4c-acceptance-summary');
     await currentM4Summary.click();
     const currentM4SummaryText=await currentM4Summary.innerText();
     assert.match(currentM4SummaryText,/ACCEPTED 0 \/ 16/);
@@ -122,14 +125,14 @@ try{
     assert.match(currentM4SummaryText,/finalAcceptance=UNCONFIRMED/);
     assert.match(currentM4SummaryText,/HOLD/);
     assert.match(currentM4SummaryText,/a046586e421155f72914eb1ffbec48519b4bd2bb/);
-    const currentM4Selector=page.locator('#ms4c-criterion');
+    const currentM4Selector=currentM4Panel.locator('#ms4c-criterion');
     assert.equal(await currentM4Selector.locator('option').count(),16);
     await currentM4Selector.selectOption('R1-05');
-    const r105Detail=await page.locator('#ms4c-criterion-detail').innerText();
+    const r105Detail=await currentM4Panel.locator('#ms4c-criterion-detail').innerText();
     assert.match(r105Detail,/"status": "OPEN"/);
     assert.match(r105Detail,/cbf3523079cf3217fc1fcfd04f811610039ca900|a046586e421155f72914eb1ffbec48519b4bd2bb/);
     await currentM4Selector.selectOption('R1-08');
-    const r108Detail=await page.locator('#ms4c-criterion-detail').innerText();
+    const r108Detail=await currentM4Panel.locator('#ms4c-criterion-detail').innerText();
     assert.match(r108Detail,/"status": "OPEN"/);
     assert.match(r108Detail,/a046586e421155f72914eb1ffbec48519b4bd2bb/);
 
