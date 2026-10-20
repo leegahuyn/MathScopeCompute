@@ -114,7 +114,11 @@ def main() -> int:
     # This audit is allowed to PASS_HOLD_PRESERVED when provenance is sound while
     # releaseReady remains false and missing publication inputs are reported below.
     planned_artifact_paths = [
-        "public/v0.3.1.html",
+        # The complete ~26.3M-character IDE page is a live WebsitePublisher source,
+        # intentionally not duplicated as a Git placeholder. Verify its read-back
+        # through the observation manifest below; never replace it with the status page.
+        "public/v0.3.1-publisher-observation.json",
+        "public/v0.3.1-sync-status.html",
         "public/websitepublisher-v118-followup-bundle.json",
         f"{M3}/evidence/FINITE_VS_CONTINUUM_N706_N805_RECEIPT.json",
         "research-ide/mathscope-m4/acceptance-review-20261019/evidence/followup-20261020/M4_FOLLOWUP_VERIFICATION_RECEIPT.json",
@@ -133,8 +137,32 @@ def main() -> int:
             blockers.append({"kind": "missing_repo_artifact", "path": relative})
 
     publisher = checkpoint["websitePublisherObserved"]
-    blockers.append({"kind": "website_not_synchronized",
-                     "detail": f"page v{publisher['page']['version']}/{publisher['page']['versionHash']}; runtime v{publisher['runtimeFragment']['version']}/{publisher['runtimeFragment']['versionHash']}"})
+    observation_path = ROOT / "public/v0.3.1-publisher-observation.json"
+    if observation_path.is_file():
+        observation = json.loads(observation_path.read_text(encoding="utf-8"))
+        check("publisher_observation_matches_checkpoint",
+              observation.get("page", {}).get("version") == publisher["page"]["version"]
+              and observation.get("page", {}).get("versionHash") == publisher["page"]["versionHash"]
+              and observation.get("fragments", {}).get("runtime", {}).get("version") == publisher["runtimeFragment"]["version"]
+              and observation.get("fragments", {}).get("runtime", {}).get("versionHash") == publisher["runtimeFragment"]["versionHash"],
+              "current live page/runtime versions must match the checkpoint read-back")
+        check("publisher_m4_overlay_source_pinned",
+              observation.get("currentM4Panel", {}).get("sourceMatrixGitBlobSha") == git_blob_sha(m4_path)
+              and observation.get("currentM4Panel", {}).get("statusCounts") == {"ACCEPTED": 0, "PARTIAL": 14, "OPEN": 2}
+              and observation.get("currentM4Panel", {}).get("overallRelease") == "HOLD",
+              "live runtime M4 panel must point to the current original 16-row matrix without promoting acceptance")
+        check("live_ide_source_not_replaced_by_stub",
+              observation.get("page", {}).get("fullPageSourceMirroredInGit") is False
+              and observation.get("publication", {}).get("fullPageChangedThisTurn") is False,
+              "full live IDE page remains external; the tracked status page is not a substitute")
+    else:
+        check("publisher_observation_matches_checkpoint", False, "public/v0.3.1-publisher-observation.json is missing")
+        check("publisher_m4_overlay_source_pinned", False, "publisher observation is missing")
+        check("live_ide_source_not_replaced_by_stub", False, "publisher observation is missing")
+    blockers.append({"kind": "website_partial_sync",
+                     "detail": f"live page v{publisher['page']['version']}/{publisher['page']['versionHash']} unchanged; runtime v{publisher['runtimeFragment']['version']}/{publisher['runtimeFragment']['versionHash']} updated; browser/mobile inspection unconfirmed"})
+    blockers.append({"kind": "full_ide_source_not_mirrored",
+                     "detail": "The live IDE page is approximately 26.3 million characters and remains managed by WebsitePublisher; the separate status page must not replace it."})
     blockers.append({"kind": "m3_continuum_open", "items": ["N7-06", "N8-05"], "actual_last_resolved_tau": None})
     blockers.append({"kind": "m4_acceptance_open", "counts": dict(counts), "overallRelease": "HOLD"})
 
