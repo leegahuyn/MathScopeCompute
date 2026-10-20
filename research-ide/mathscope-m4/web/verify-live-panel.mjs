@@ -51,7 +51,7 @@ try{
     network.on('Network.loadingFinished',event=>{if(event.requestId===documentRequestId)finishDocument();});
     const knownBrowserEnvironmentWarning = text =>
       /Automatic fallback to software WebGL has been deprecated/.test(text) ||
-      /GL Driver Message \\(OpenGL, Performance, GL_CLOSE_PATH_NV, High\\): GPU stall due to ReadPixels/.test(text);
+      /GL Driver Message \(OpenGL, Performance, GL_CLOSE_PATH_NV, High\): GPU stall due to ReadPixels/.test(text);
     page.on('console',msg=>{
       if(!['error','warning'].includes(msg.type()))return;
       const item={type:msg.type(),text:msg.text()};
