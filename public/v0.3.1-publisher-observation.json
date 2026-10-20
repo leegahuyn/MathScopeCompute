@@ -1,19 +1,20 @@
 {
   "schema": "MathScope.WebsitePublisherObservation/1",
-  "observedAt": "2026-10-20T13:50:17Z",
+  "observedAt": "2026-10-20T15:54:43Z",
   "repository": "leegahuyn/MathScopeCompute",
   "pullRequest": 30,
   "branch": "mathscope-m3-n6-cloud-20261014",
-  "sourceHeadAtObservation": "1b0add8b9728ff811bc8dda664879a70a2d59f70",
+  "sourceHeadAtObservation": "2f7c6ba6ad1fed4e010ee9ce83c4f58137984093",
   "projectId": 29770,
   "page": {
     "slug": "v0.3.1.html",
-    "version": 118,
-    "versionHash": "9a0eebc5",
-    "updatedAt": "2026-10-18T21:02:53.000000Z",
-    "sourceLengthCharacters": 26281402,
+    "version": 119,
+    "versionHash": "f9c0e80a",
+    "updatedAt": "2026-10-20T15:52:43.000000Z",
+    "sourceLengthCharacters": 26281543,
     "fullPageSourceMirroredInGit": false,
-    "reason": "The live IDE page contains ~26.3 million characters of embedded application/worker bundles. Do not replace it with a status-page stub; the canonical page remains managed in WebsitePublisher."
+    "reason": "The live IDE page contains about 26.3 million characters of application/worker bundles. Only the existing M4 dialog header CSS was patched in place; the full page is still managed in WebsitePublisher and is not mirrored as a Git stub.",
+    "storedSizeBytes": 28985708
   },
   "fragments": {
     "runtime": {
@@ -128,11 +129,83 @@
     "actualNonzeroFieldEvaluated": false
   },
   "publication": {
-    "fullPageChangedThisTurn": false,
+    "fullPageChangedThisTurn": true,
     "runtimeFragmentChangedThisTurn": true,
     "runtimeChangeReadBackVerified": true,
-    "status": "PARTIAL_RUNTIME_UPDATED_FULL_PAGE_UNCHANGED",
+    "status": "TARGETED_MOBILE_CSS_PATCH_LIVE_BROWSER_RECHECKED_PARTIAL_ACCEPTANCE",
     "overallRelease": "HOLD",
-    "note": "Runtime M4 panel now displays the current GitHub matrix overlay; historical embedded payload is explicitly preserved and labelled as a historical snapshot. No physical mobile/browser end-to-end inspection is claimed."
+    "note": "A targeted CSS patch was applied to the live page and re-read as v119/f9c0e80a. Chromium desktop 1440x1050 and mobile-size 390x844 both passed the dialog overflow assertion after the patch, along with criterion selection, keyboard, export/import quarantine, source-rejection, source-matrix overlay and M3 open-frontier checks. This is not physical-device inspection and does not satisfy every R1-05 requirement (full 3D/fallback and budget review), nor does it close R1-05/R1-08 or any M3 mathematical criterion.",
+    "fullPageReplaced": false,
+    "targetedPagePatchOnly": true,
+    "targetedPatch": {
+      "summary": "Wrap the historical embedded M4 evidence-dialog header on narrow mobile widths.",
+      "pageVersionBefore": 118,
+      "pageVersionHashBefore": "9a0eebc5",
+      "pageVersionAfter": 119,
+      "pageVersionHashAfter": "f9c0e80a",
+      "patchCount": 2,
+      "readBackVerified": true,
+      "previousFinding": {
+        "viewport": "390x844",
+        "dialogScrollWidth": 468,
+        "dialogClientWidth": 376,
+        "closeButtonRight": 475
+      },
+      "verification": {
+        "workflowRunId": 39452358376,
+        "jobId": 118730218116,
+        "headCommit": "2f7c6ba6ad1fed4e010ee9ce83c4f58137984093",
+        "artifactId": 12279656164,
+        "artifactZipSha256": "2484d309bbe3a5dbc225a9898915e5e2befbb514c0fd1e3309c01858f69ffa8d",
+        "browserVersion": "141.0.7390.37",
+        "liveDocumentSha256": "b68a256a85322f801d90f4b405b32da052afdcc5055e3bbaa062bdd458980f49",
+        "liveDocumentBytes": 30112549,
+        "desktop": {
+          "viewport": "1440x1050",
+          "dialogScrollWidth": 1178,
+          "dialogClientWidth": 1178,
+          "passed": true,
+          "consoleIssues": 0
+        },
+        "mobile": {
+          "viewport": "390x844",
+          "dialogScrollWidth": 376,
+          "dialogClientWidth": 376,
+          "passed": true,
+          "consoleIssues": 0
+        },
+        "checks": {
+          "httpStatus": 200,
+          "original24CriterionPanelSelections": 24,
+          "keyboardSelection": true,
+          "actualJsonDownload": true,
+          "forgedPassQuarantined": true,
+          "wrongSourceRejected": true,
+          "currentRuntimeM4MatrixVerified": true,
+          "m4StatusCounts": {
+            "ACCEPTED": 0,
+            "PARTIAL": 14,
+            "OPEN": 2
+          },
+          "r105Status": "OPEN",
+          "r108Status": "OPEN",
+          "currentM3PanelVerified": true,
+          "m3Count": "62/64",
+          "openM3Criteria": [
+            "N7-06",
+            "N8-05"
+          ],
+          "actualGlobalTau": null,
+          "dialogClippingAbsent": true,
+          "focusReturned": true
+        },
+        "desktopEnvironmentWarnings": [
+          "Chromium software-WebGL/driver GPU-stall warning (CI environment); no console errors."
+        ],
+        "physicalMobileInspection": false
+      }
+    },
+    "currentBrowserInspection": true,
+    "physicalMobileInspection": false
   }
 }
