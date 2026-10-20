@@ -22,7 +22,7 @@ M3_DIR = "research-ide/mathscope-m3/recovery-20261019"
 M4_DIR = "research-ide/mathscope-m4/recovery-20261019"
 M4_REVIEW = "research-ide/mathscope-m4/acceptance-review-20261019"
 OBSERVATION = "public/v0.3.1-publisher-observation.json"
-BUNDLE = "public/websitepublisher-v118-followup-bundle.json"
+BUNDLE = "public/websitepublisher-v119-followup-bundle.json"
 STATUS_PAGE = "public/v0.3.1-sync-status.html"
 
 
@@ -70,7 +70,7 @@ def build_outputs():
     require(m4_receipt.get("matrixBlobSha") == m4_blob, "M4 follow-up receipt is not pinned to the current matrix.")
     require(m4_receipt.get("originalCriteriaStatusCounts") == {"ACCEPTED": 0, "PARTIAL": 14, "OPEN": 2}, "M4 receipt counts do not match the original matrix.")
     require(observation.get("projectId") == 29770 and observation.get("page", {}).get("slug") == "v0.3.1.html", "Unexpected WebsitePublisher observation.")
-    require(observation["page"].get("version") == 118 and observation["page"].get("versionHash") == "9a0eebc5", "Live page observation changed; refresh observation after a read-back.")
+    require(observation["page"].get("version") == 119 and observation["page"].get("versionHash") == "f9c0e80a", "Live page observation changed; refresh observation after a read-back.")
     require(observation["fragments"]["runtime"].get("version") == 8 and observation["fragments"]["runtime"].get("versionHash") == "abfa2a92", "Live runtime fragment observation changed; refresh after read-back.")
     require(observation["fragments"]["layout"].get("version") == 2 and observation["fragments"]["layout"].get("versionHash") == "460012fd", "Live layout fragment observation changed; refresh after read-back.")
     current_m4 = observation["currentM4Panel"]
@@ -126,14 +126,19 @@ def build_outputs():
             "reason": "The live IDE source is approximately 26.3 million characters with embedded app/worker bundles. It remains managed in WebsitePublisher; do not substitute the status page for it."
         },
         "publication": {
-            "status": "PARTIAL_RUNTIME_UPDATED_FULL_PAGE_UNCHANGED",
+            "status": "TARGETED_PAGE_CSS_PATCH_LIVE_BROWSER_RECHECKED_PARTIAL_ACCEPTANCE",
             "runtimeFragmentUpdated": True,
-            "fullPageChanged": False,
-            "currentBrowserInspection": False,
+            "fullPageChanged": True,
+            "targetedPagePatchOnly": True,
+            "fullPageReplaced": False,
+            "currentBrowserInspection": True,
             "physicalMobileInspection": False,
+            "originalR105StillOpen": True,
+            "originalR108StillOpen": True,
             "overallRelease": "HOLD"
         },
-        "limitation": "This bundle records verified live version/hash metadata and staged evidence. It is not a complete IDE HTML source archive, browser acceptance, physical mobile inspection, or mathematical proof."
+        "browserVerification": observation.get("publication", {}).get("targetedPatch", {}).get("verification"),
+        "limitation": "The current live page was patched and re-read; Chromium desk/mobile-sized interaction and clipping checks passed. This does not cover physical mobile, all 3D/WebGL/CPU fallback and performance/memory acceptance, M3 mathematical closure, or M4 final acceptance."
     }
     bundle_text = json.dumps(bundle, ensure_ascii=False, indent=2) + "\n"
 
@@ -144,14 +149,15 @@ def build_outputs():
 <h1>MathScope M3/M4 동기화 상태</h1>
 <p>이 문서는 동기화 상태를 설명하는 별도 정적 보고서입니다. 운영 중인 <code>v0.3.1.html</code>의 대체본이 아닙니다.</p>
 <table><tr><th>영역</th><th>현재 관찰</th></tr>
-<tr><td>WebsitePublisher 본 페이지</td><td><a href="https://project29770.websitepublisher.ai/v0.3.1.html">v{observation["page"]["version"]} · {observation["page"]["versionHash"]}</a>; 이번 작업에서 본 페이지 본문은 변경하지 않음</td></tr>
+<tr><td>WebsitePublisher 본 페이지</td><td><a href="https://project29770.websitepublisher.ai/v0.3.1.html">v{observation["page"]["version"]} · {observation["page"]["versionHash"]}</a>; 기존 본문 전체를 교체하지 않고 M4 모바일 헤더 CSS만 부분 패치함</td></tr>
 <tr><td>운영 런타임 fragment</td><td>v{observation["fragments"]["runtime"]["version"]} · {observation["fragments"]["runtime"]["versionHash"]}; M4 UI는 현재 GitHub 원장 0 ACCEPTED / 14 PARTIAL / 2 OPEN을 표시하고, 저장된 과거 payload를 과거 스냅샷으로 분리</td></tr>
 <tr><td>M3</td><td>62/64 inherited; N7-06과 N8-05 OPEN; actual_last_resolved_tau=null; 새로 닫힌 원래 기준 0</td></tr>
 <tr><td>M4</td><td>원래 16항목: 0 ACCEPTED, 14 PARTIAL, 2 OPEN (R1-05, R1-08); finalAcceptance=UNCONFIRMED; acceptedCurrentRelease=null</td></tr>
 <tr><td>제한된 소프트웨어 검사</td><td>저장된 증거에 cutoff 9/9, native 입력 상자 19, M4 의미 계약 10/10, 증거 열람 6/6으로 기록. 이는 원래 수학적 인수나 브라우저/모바일 인수가 아님</td></tr>
+<tr><td>현재 라이브 브라우저 검사</td><td>Chromium 141: 데스크톱 1440×1050, 모바일 크기 390×844에서 dialog overflow 해소 확인(1178/1178, 376/376), 24개 기준 선택·키보드·내보내기/가짜 합격 격리·현재 M3/M4 상태 표시 확인. 실제 기기 검수는 아님; R1-05/R1-08 OPEN 유지</td></tr>
 <tr><td>전체 페이지 소스</td><td>운영 페이지는 약 {observation["page"]["sourceLengthCharacters"]:,} 문자이며 앱/worker 번들을 내장함. Git에 거대한 중복본을 추가하거나 이 상태 페이지로 대체하지 않고 WebsitePublisher에서 관리</td></tr>
 </table>
-<p class="note">일부 런타임은 갱신되었지만 본 페이지는 v{observation["page"]["version"]} 그대로입니다. 실제 브라우저 종단 간 검수와 물리 모바일 검수는 확인되지 않았습니다.</p>
+<p class="note">운영 페이지는 v{observation["page"]["version"]}/{observation["page"]["versionHash"]}입니다. 새 Chromium 검사에서 헤더 overflow 수정은 확인됐지만 물리 모바일·전체 3D fallback/예산 검수는 남아 R1-05와 R1-08은 OPEN, 전체 릴리스는 HOLD입니다.</p>
 <p class="hold">전체 릴리스: HOLD</p>
 <p>유한 cutoff 성공은 실제 비영 장의 전체 K 에너지 balance를 증명하지 않으며, M4 소프트웨어 검사 통과는 원래 16개 인수 항목의 수락을 뜻하지 않습니다.</p>
 <p>검증 근거: <a href="https://github.com/leegahuyn/MathScopeCompute/blob/mathscope-m3-n6-cloud-20261014/CHECKPOINT.json">CHECKPOINT</a> · <a href="https://github.com/leegahuyn/MathScopeCompute/blob/mathscope-m3-n6-cloud-20261014/{M3_DIR}/M3_CURRENT_ORIGINAL_LEDGER.json">M3 원장</a> · <a href="https://github.com/leegahuyn/MathScopeCompute/blob/mathscope-m3-n6-cloud-20261014/{M4_DIR}/M4_ORIGINAL_ACCEPTANCE_MATRIX.json">M4 원래 16개 행렬</a>.</p></body></html>
@@ -162,7 +168,7 @@ def build_outputs():
         "sourcePins": {"m3LedgerGitBlobSha": m3_blob, "m4MatrixGitBlobSha": m4_blob},
         "m3": {"inheritedCompleted": 62, "total": 64, "open": ["N7-06", "N8-05"], "actualLastResolvedTau": None},
         "m4": {"statusCounts": {"ACCEPTED": 0, "PARTIAL": 14, "OPEN": 2}, "overallRelease": "HOLD"},
-        "publisher": {"pageVersion": 118, "pageVersionHash": "9a0eebc5", "runtimeVersion": 8, "runtimeVersionHash": "abfa2a92"},
+        "publisher": {"pageVersion": 119, "pageVersionHash": "f9c0e80a", "runtimeVersion": 8, "runtimeVersionHash": "abfa2a92"},
         "fullPageSourceMirroredInGit": False,
         "writes": [BUNDLE, STATUS_PAGE],
         "note": "Staging artifact generation only; this script does not publish to WebsitePublisher."
