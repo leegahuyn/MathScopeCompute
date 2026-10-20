@@ -14,7 +14,7 @@ on:
       - "research-ide/mathscope-m4/acceptance-review-20261019/**"
       - "public/v0.3.1-publisher-observation.json"
       - "public/v0.3.1-sync-status.html"
-      - "public/websitepublisher-v118-followup-bundle.json"
+      - "public/websitepublisher-v119-followup-bundle.json"
   pull_request:
     branches:
       - mathscope-m3-n6-independent-20261014
@@ -28,7 +28,7 @@ on:
       - "research-ide/mathscope-m4/acceptance-review-20261019/**"
       - "public/v0.3.1-publisher-observation.json"
       - "public/v0.3.1-sync-status.html"
-      - "public/websitepublisher-v118-followup-bundle.json"
+      - "public/websitepublisher-v119-followup-bundle.json"
   workflow_dispatch:
 
 permissions:
@@ -73,7 +73,7 @@ jobs:
           python3 research-ide/tools/verify_english_release.py --write-manifest
           python3 research-ide/tools/verify_english_release.py
           git diff --check
-          git add public/websitepublisher-v118-followup-bundle.json public/v0.3.1-sync-status.html research-ide/SOURCE_TRANSLATION_MANIFEST.json
+          git add public/websitepublisher-v119-followup-bundle.json public/v0.3.1-sync-status.html research-ide/SOURCE_TRANSLATION_MANIFEST.json
           git add -u
           git diff --cached --stat
           git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "Refresh English release artifact manifest after source validation"
