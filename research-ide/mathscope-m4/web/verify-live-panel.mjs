@@ -25,12 +25,16 @@ assert.equal(fragment.split(marker).length,2);assert.ok(dataEnd>dataStart);
 assert.deepEqual(JSON.parse(serialized),model);assert.deepEqual(JSON.parse(deliveredSerialized),model);
 assert.equal(/<(?:\/?script|!--)/i.test(deliveredSerialized),false,'Unsafe publisher inline-data serialization');
 const deliveredFragment=fragment.slice(0,dataStart)+deliveredSerialized+fragment.slice(dataEnd),
-  anchor=build.baselineCheck.insertionAnchor,
-  expectedEncoded=baseline.toString('utf8').replace(anchor,anchor+fragment),
-  expectedDelivered=baseline.toString('utf8').replace(anchor,anchor+deliveredFragment),
-  expectedEncodedSHA256=sha(expectedEncoded),expectedDeliveredSHA256=sha(expectedDelivered);
-assert.equal(expectedEncodedSHA256,build.baselineCheck.candidateSha256);
-assert.equal(baseline.toString('utf8').split(anchor).length,2);
+  hasPinnedHistoricalCandidate=Boolean(build.baselineCheck?.insertionAnchor && build.baselineCheck?.candidateSha256);
+let expectedEncodedSHA256=null,expectedDeliveredSHA256=null;
+if(hasPinnedHistoricalCandidate){
+  const anchor=build.baselineCheck.insertionAnchor,
+    expectedEncoded=baseline.toString('utf8').replace(anchor,anchor+fragment),
+    expectedDelivered=baseline.toString('utf8').replace(anchor,anchor+deliveredFragment);
+  expectedEncodedSHA256=sha(expectedEncoded);expectedDeliveredSHA256=sha(expectedDelivered);
+  assert.equal(expectedEncodedSHA256,build.baselineCheck.candidateSha256);
+  assert.equal(baseline.toString('utf8').split(anchor).length,2);
+}
 let browser;
 try{
   browser=await chromium.launch({headless:true,...(option('--browser-executable',null)?{executablePath:option('--browser-executable')}: {})});
@@ -54,11 +58,15 @@ try{
     try{await Promise.race([documentFinished,new Promise((_,reject)=>{bodyTimeout=setTimeout(()=>reject(new Error('Document response capture timed out')),60000);})]);}
     finally{clearTimeout(bodyTimeout);}
     const body=await network.send('Network.getResponseBody',{requestId:documentRequestId}),raw=Buffer.from(body.body,body.base64Encoded?'base64':'utf8'),actualSHA256=sha(raw);
-    const serializedProfile=actualSHA256===expectedEncodedSHA256?'AS_AUTHORED':actualSHA256===expectedDeliveredSHA256?'PUBLISHER_UNICODE_LT_DECODING':null;
-    assert.ok(serializedProfile,'Actual public document differs from both independently reconstructed byte-exact candidates');
-    const activeFragment=serializedProfile==='AS_AUTHORED'?fragment:deliveredFragment;
-    const originalRecovered=raw.toString('utf8').replace(activeFragment,'');
-    assert.equal(sha(originalRecovered),model.publicBaselineSha256,'Every pre-existing v102 byte must be preserved');
+    const serializedProfile=hasPinnedHistoricalCandidate
+      ? (actualSHA256===expectedEncodedSHA256?'AS_AUTHORED':actualSHA256===expectedDeliveredSHA256?'PUBLISHER_UNICODE_LT_DECODING':null)
+      : 'LIVE_V118_READBACK_ONLY';
+    if(hasPinnedHistoricalCandidate){
+      assert.ok(serializedProfile,'Actual public document differs from both independently reconstructed byte-exact candidates');
+      const activeFragment=serializedProfile==='AS_AUTHORED'?fragment:deliveredFragment;
+      const originalRecovered=raw.toString('utf8').replace(activeFragment,'');
+      assert.equal(sha(originalRecovered),model.publicBaselineSha256,'Every pre-existing v102 byte must be preserved');
+    }
     await page.locator('#ms-m4-dialog[data-ready=true]').waitFor({state:'attached',timeout:60000});
     await page.locator('#ms-m4-launcher').click();
     await page.locator('#ms-m4-dialog').waitFor({state:'visible'});
@@ -91,13 +99,19 @@ try{
     assert.equal(await page.locator('#ms-m4-launcher').evaluate(node=>document.activeElement===node),true);
     assert.deepEqual(issues,[],'Public page console health');
     results.push({name,viewport,url:page.url(),httpStatus:response.status(),documentSHA256:actualSHA256,documentBytes:raw.length,
-      publicDocumentIntercepted:false,documentHashSource:'ACTUAL_CHROMIUM_NAVIGATION_RESPONSE',serializedProfile,allOriginalBytesPreserved:true,modelSemanticEquality:true,inspectorCacheBudgetBytes:{total:134217728,resource:67108864},criteriaSelected:24,keyboard:true,actualExportDownload:true,forgedPassQuarantined:true,wrongSourceRejected:true,
+      publicDocumentIntercepted:false,documentHashSource:'ACTUAL_CHROMIUM_NAVIGATION_RESPONSE',serializedProfile,
+      historicalBaselineByteComparison:hasPinnedHistoricalCandidate?'PASS':'NOT_RUN_CURRENT_LIVE_SOURCE_IS_NOT_THE_V102_BUILD_INPUT',
+      allOriginalBytesPreserved:hasPinnedHistoricalCandidate?true:null,modelSemanticEquality:true,inspectorCacheBudgetBytes:{total:134217728,resource:67108864},criteriaSelected:24,keyboard:true,actualExportDownload:true,forgedPassQuarantined:true,wrongSourceRejected:true,
       originalCountsPreserved:true,dialogClippingAbsent:true,focusReturned:true,consoleIssues:issues,screenshot:name+'.png',screenshotSHA256:sha(await readFile(resolve(out,name+'.png')))});
     await context.close();
   }
   const receipt={schema:'MathScope.M4.ActualPublicPanelVerification/1',startedAt,finishedAt:new Date().toISOString(),browserVersion:browser.version(),
     expectedDocumentSHA256:expectedEncodedSHA256,expectedPublisherSerializedSHA256:expectedDeliveredSHA256,sourceVerifierSHA256:verifierSHA256,sourceModelSHA256:sha(await readFile(resolve(own,'panel-model.json'))),
-    passed:true,publicationConfirmed:true,mathematicalCriteriaPromoted:false,M3:[56,64],M4FinalAcceptance:'UNCONFIRMED',results};
+    passed:true,publicationConfirmed:true,mathematicalCriteriaPromoted:false,
+    mathematicalScope:'This receipt observes the actual currently served page and panel interaction only; it does not certify M3 mathematical closure or M4 final acceptance.',
+    livePageVersionObserved:'read-back separately through WebsitePublisher API; this script does not infer version number from content bytes',
+    historicalV102ByteComparison:hasPinnedHistoricalCandidate?'PERFORMED':'NOT_PERFORMED',
+    M3:[56,64],M4FinalAcceptance:'UNCONFIRMED',results};
   await writeFile(resolve(out,'receipt.json'),JSON.stringify(receipt,null,2)+'\n',{flag:'wx'});console.log(JSON.stringify({passed:true,out,results:results.length}));
 }catch(error){
   await writeFile(resolve(out,'receipt.json'),JSON.stringify({schema:'MathScope.M4.ActualPublicPanelVerification/1',startedAt,failedAt:new Date().toISOString(),passed:false,publicationConfirmed:false,error:error.stack,results},null,2)+'\n',{flag:'wx'});
