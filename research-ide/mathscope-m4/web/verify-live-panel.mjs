@@ -3,7 +3,6 @@ import {createRequire} from 'node:module';
 import {createHash} from 'node:crypto';
 import {dirname,resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
-import {gunzipSync} from 'node:zlib';
 import assert from 'node:assert/strict';
 
 const own=dirname(fileURLToPath(import.meta.url)),args=process.argv.slice(2),
@@ -16,25 +15,17 @@ const own=dirname(fileURLToPath(import.meta.url)),args=process.argv.slice(2),
   runId=startedAt.replace(/[^0-9]/g,''),out=resolve(own,'evidence','live-'+runId),results=[];
 await mkdir(out,{recursive:false});
 const verifierSHA256=sha(await readFile(fileURLToPath(import.meta.url))),
-  baseline=gunzipSync(await readFile(resolve(own,'../../mathscope-m3/evidence/all64-20261012/release56/candidate-v031-attempt2.html.gz'))),
   fragment=await readFile(resolve(own,'patch-fragment.html'),'utf8'),
   marker='<script type="application/json" id="ms-m4-data">',dataStart=fragment.indexOf(marker)+marker.length,dataEnd=fragment.indexOf('</script>',dataStart),
   serialized=fragment.slice(dataStart,dataEnd),deliveredSerialized=serialized.replaceAll('\\u003c','<');
-assert.equal(sha(baseline),model.publicBaselineSha256);
 assert.equal(fragment.split(marker).length,2);assert.ok(dataEnd>dataStart);
 assert.deepEqual(JSON.parse(serialized),model);assert.deepEqual(JSON.parse(deliveredSerialized),model);
 assert.equal(/<(?:\/?script|!--)/i.test(deliveredSerialized),false,'Unsafe publisher inline-data serialization');
+assert.equal(sha(fragment),build.fragmentSha256,'Build receipt must bind the exact panel fragment');
+assert.equal(sha(JSON.stringify(model)),build.modelSha256,'Build receipt must bind the exact panel model');
 const deliveredFragment=fragment.slice(0,dataStart)+deliveredSerialized+fragment.slice(dataEnd),
   hasPinnedHistoricalCandidate=Boolean(build.baselineCheck?.insertionAnchor && build.baselineCheck?.candidateSha256);
-let expectedEncodedSHA256=null,expectedDeliveredSHA256=null;
-if(hasPinnedHistoricalCandidate){
-  const anchor=build.baselineCheck.insertionAnchor,
-    expectedEncoded=baseline.toString('utf8').replace(anchor,anchor+fragment),
-    expectedDelivered=baseline.toString('utf8').replace(anchor,anchor+deliveredFragment);
-  expectedEncodedSHA256=sha(expectedEncoded);expectedDeliveredSHA256=sha(expectedDelivered);
-  assert.equal(expectedEncodedSHA256,build.baselineCheck.candidateSha256);
-  assert.equal(baseline.toString('utf8').split(anchor).length,2);
-}
+const expectedEncodedSHA256=null,expectedDeliveredSHA256=null;
 let browser;
 try{
   browser=await chromium.launch({headless:true,args:['--enable-unsafe-swiftshader'],...(option('--browser-executable',null)?{executablePath:option('--browser-executable')}: {})});
@@ -70,15 +61,7 @@ try{
     try{await Promise.race([documentFinished,new Promise((_,reject)=>{bodyTimeout=setTimeout(()=>reject(new Error('Document response capture timed out')),60000);})]);}
     finally{clearTimeout(bodyTimeout);}
     const body=await network.send('Network.getResponseBody',{requestId:documentRequestId}),raw=Buffer.from(body.body,body.base64Encoded?'base64':'utf8'),actualSHA256=sha(raw);
-    const serializedProfile=hasPinnedHistoricalCandidate
-      ? (actualSHA256===expectedEncodedSHA256?'AS_AUTHORED':actualSHA256===expectedDeliveredSHA256?'PUBLISHER_UNICODE_LT_DECODING':null)
-      : 'LIVE_V118_READBACK_ONLY';
-    if(hasPinnedHistoricalCandidate){
-      assert.ok(serializedProfile,'Actual public document differs from both independently reconstructed byte-exact candidates');
-      const activeFragment=serializedProfile==='AS_AUTHORED'?fragment:deliveredFragment;
-      const originalRecovered=raw.toString('utf8').replace(activeFragment,'');
-      assert.equal(sha(originalRecovered),model.publicBaselineSha256,'Every pre-existing v102 byte must be preserved');
-    }
+    const serializedProfile='LIVE_DOCUMENT_READBACK_ONLY';
     await page.locator('#ms-m4-dialog[data-ready=true]').waitFor({state:'attached',timeout:60000});
     await page.locator('#ms-m4-launcher').click();
     await page.locator('#ms-m4-dialog').waitFor({state:'visible'});
@@ -165,8 +148,8 @@ try{
     assert.deepEqual(issues,[],'Public page console health');
     results.push({name,viewport,url:page.url(),httpStatus:response.status(),documentSHA256:actualSHA256,documentBytes:raw.length,
       publicDocumentIntercepted:false,documentHashSource:'ACTUAL_CHROMIUM_NAVIGATION_RESPONSE',serializedProfile,
-      historicalBaselineByteComparison:hasPinnedHistoricalCandidate?'PASS':'NOT_RUN_CURRENT_LIVE_SOURCE_IS_NOT_THE_V102_BUILD_INPUT',
-      allOriginalBytesPreserved:hasPinnedHistoricalCandidate?true:null,modelSemanticEquality:true,inspectorCacheBudgetBytes:{total:134217728,resource:67108864},criteriaSelected:24,keyboard:true,actualExportDownload:true,forgedPassQuarantined:true,wrongSourceRejected:true,
+      historicalBaselineByteComparison:'NOT_RUN_LEGACY_V102_IS_NOT_THE_LIVE_BASELINE',
+      allOriginalBytesPreserved:null,modelSemanticEquality:true,inspectorCacheBudgetBytes:{total:134217728,resource:67108864},criteriaSelected:24,keyboard:true,actualExportDownload:true,forgedPassQuarantined:true,wrongSourceRejected:true,
       currentRuntimeM4MatrixVerified:true,currentRuntimeM4MatrixBlobSha:'a046586e421155f72914eb1ffbec48519b4bd2bb',r105Status:'OPEN',r108Status:'OPEN',
       currentM3PanelVerified:true,currentM3Count:'62/64',openM3Criteria:['N7-06','N8-05'],actualGlobalTau:null,
       originalCountsPreserved:true,dialogClippingAbsent:true,focusReturned:true,consoleIssues:issues,environmentWarnings,webglFallbackMode:'Chromium --enable-unsafe-swiftshader (CI-only software fallback opt-in)',screenshot:name+'.png',screenshotSHA256:sha(await readFile(resolve(out,name+'.png')))});
@@ -174,13 +157,13 @@ try{
   }
   const receipt={schema:'MathScope.M4.ActualPublicPanelVerification/1',startedAt,finishedAt:new Date().toISOString(),browserVersion:browser.version(),
     expectedDocumentSHA256:expectedEncodedSHA256,expectedPublisherSerializedSHA256:expectedDeliveredSHA256,sourceVerifierSHA256:verifierSHA256,sourceModelSHA256:sha(await readFile(resolve(own,'panel-model.json'))),
-    passed:true,publicationConfirmed:true,mathematicalCriteriaPromoted:false,
+    passed:true,livePageReadbackConfirmed:true,candidatePatchPublicationStatus:'NOT_VERIFIED_BY_THIS_LIVE_INTERACTION_TEST',publicationConfirmed:false,mathematicalCriteriaPromoted:false,
     mathematicalScope:'This receipt observes the actual currently served page and panel interaction only; it does not certify M3 mathematical closure or M4 final acceptance.',
-    livePageVersionObserved:'read-back separately through WebsitePublisher API; this script does not infer version number from content bytes',
-    historicalV102ByteComparison:hasPinnedHistoricalCandidate?'PERFORMED':'NOT_PERFORMED',
+    livePageVersionObserved:null,
+    historicalV102ByteComparison:'NOT_PERFORMED_LEGACY_V102_IS_NOT_THE_LIVE_BASELINE',
     M3:[56,64],M4FinalAcceptance:'UNCONFIRMED',results};
   await writeFile(resolve(out,'receipt.json'),JSON.stringify(receipt,null,2)+'\n',{flag:'wx'});console.log(JSON.stringify({passed:true,out,results:results.length}));
 }catch(error){
-  await writeFile(resolve(out,'receipt.json'),JSON.stringify({schema:'MathScope.M4.ActualPublicPanelVerification/1',startedAt,failedAt:new Date().toISOString(),passed:false,publicationConfirmed:false,error:error.stack,results},null,2)+'\n',{flag:'wx'});
+  await writeFile(resolve(out,'receipt.json'),JSON.stringify({schema:'MathScope.M4.ActualPublicPanelVerification/1',startedAt,failedAt:new Date().toISOString(),passed:false,livePageReadbackConfirmed:false,candidatePatchPublicationStatus:'NOT_VERIFIED_BY_THIS_LIVE_INTERACTION_TEST',publicationConfirmed:false,error:error.stack,results},null,2)+'\n',{flag:'wx'});
   throw error;
 }finally{if(browser)await browser.close();}
