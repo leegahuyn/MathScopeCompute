@@ -10,6 +10,7 @@ from pathlib import Path
 import gzip,hashlib,json,sys
 from prove_original_n3_Q_rho_signs import original_n3_Q_rho_strict_positivity
 from pinned_n3_parameter_intervals import pinned_profile
+from prove_original_n3_t1_natural_domain import source_t1_strict_upper_bound
 SOURCE_SHA='a6d99fd02036780f9c994268651f6d99d3d6f8702d5476a219c212156e0ca269'
 DEFS_SHA='bc0587085298da014c10a61a15e09f436c7f62cce1879eeb44c63dbfeadabb6e'
 PINNED_PR='a9b3a5b317525f6d0a71e2e356b054c9d25d2e60'
@@ -18,6 +19,16 @@ class MissingSourceDomainCertificate(ValueError):pass
 def _op(node,op,value=None):
     return isinstance(node,dict) and node.get('op')==op and (
       value is None or node.get('args')==[value])
+
+def _exp_domain_certificate(exp_argument_node):
+    if _op(exp_argument_node,'source_parameter','t1'):
+        proof=source_t1_strict_upper_bound()
+        return {'exponent_bound_proved':True,
+          'Y_upper5_proved':True,
+          'source_t1_upper':'1/8',
+          'source_Y_strict_upper_bound':proof['four_exp_t1_strict_upper_bound'],
+          'actual_original_analytic_coefficient_norm_proved':False}
+    return {'exponent_bound_proved':False,'Y_upper5_proved':False}
 
 def classify_original_Y(source_nodes,Y_id):
     """Pure pattern proof. Never certify exp exponent sign or a global bound."""
@@ -46,7 +57,7 @@ def classify_original_Y(source_nodes,Y_id):
             'symbolically_exact_Y':'4*exp(source_exponent)',
             'sufficient_domain_obligation':'source_exponent <= 0',
             'sharp_domain_obligation':'source_exponent <= log(5/4)',
-            'Y_upper5_proved':False,'Y_rewrite_proved':True,'exponent_bound_proved':False}
+            'Y_rewrite_proved':True,**_exp_domain_certificate(node(node(b)['args'][0]))}
     # Pinned N3 defines Lambda>0 and Xa=4/Lambda, hence Lambda*Xa=4.
     if _op(node(a),'source_parameter','Lambda') and node(b).get('op')=='multiply':
         x,ep=node(b)['args']
@@ -56,7 +67,7 @@ def classify_original_Y(source_nodes,Y_id):
                 'symbolically_exact_Y':'4*exp(source_exponent)',
                 'sufficient_domain_obligation':'source_exponent <= 0',
                 'sharp_domain_obligation':'source_exponent <= log(5/4)',
-                'Y_upper5_proved':False,'Y_rewrite_proved':True,'exponent_bound_proved':False}
+                'Y_rewrite_proved':True,**_exp_domain_certificate(node(node(ep)['args'][0]))}
     return {'shape':'ARITHMETIC_UNCERTIFIED',
             'Y_upper5_proved':False,'Y_rewrite_proved':False}
 
@@ -105,6 +116,8 @@ def authenticate_and_classify(archive_dir,receipt_file):
         row=grouped.setdefault(label,{'pairs':0,'source_calls':0})
         row['pairs']+=1;row['source_calls']+=q['source_call_nodes']
         q['source_Y_algebraic_classification']=classification
+    algebraic_Y_bound_calls=sum(q['source_call_nodes'] for q in pairs
+       if q['source_Y_algebraic_classification'].get('Y_upper5_proved'))
     if sum(x['source_calls'] for x in grouped.values())!=523:
         raise MissingSourceDomainCertificate('Incomplete source call partition')
     return {'schema':'MathScope.M3.Original56NaturalArgumentConditionalDomainAudit/1',
@@ -113,6 +126,8 @@ def authenticate_and_classify(archive_dir,receipt_file):
       'unique_Y_eta_pairs':56,'classification':grouped,
       'source_original_Q_rho_and_Lambda_positive_proved':True,
       'source_Lambda_Xa_exactly_four_proved':True,
+      'original_source_Y_interval_0_to_5_algebraically_certified_calls':algebraic_Y_bound_calls,
+      'actual_Y_bound_is_not_common_eta_domain_or_coefficient_norm_proof':True,
       'source_exponent_sign_and_domain_proved':False,
       'shared_eta_complex_domain_proved':False,
       'coefficient_Brho_norm_le_Q_proved':False,
