@@ -107,8 +107,29 @@ try{
  receipt.temporal_finite_tails_retained=true;save();
  receipt.real_original_temporal_seal_issued=false;
  receipt.real_original_five_map_seal_issued=false;
- receipt.stage='TEMPORAL_INVERSE_FIVEMAP_AND_FINAL67_JETS_OPEN';
- receipt.stop_reason='Actual forced and Signed162 source AST produced; exact zero-mean inverse, next FiveMap, tails and final jets require separate proof.';
+ const {attachActualPostSignedTemporalInverse,assertActualPostSignedTemporalInverse}=
+   await import('../post-signed-20261023/source-signed-actual-temporal-inverse.mjs');
+ const actualTemporal=await stage('post_signed_original_exact_temporal_AST_and_fresh_mean_PJ',()=>{
+   const x=attachActualPostSignedTemporalInverse(frontier,context);
+   if(assertActualPostSignedTemporalInverse(x)!==true)
+     throw Error('Post-signed exact Temporal source AST seal failed');
+   return x;
+ });
+ receipt.post_signed_exact_inverse_AST_private_source_checked=true;
+ receipt.post_signed_exact_inverse_roots=Object.values(actualTemporal.inverses).map(x=>x.exact);
+ receipt.post_signed_updated_mean_PJ=['P','Jtheta','Jz'].map(x=>actualTemporal.postTemporal.updatedMeanPressure.mean[x]);save();
+ const {attachActualPostSignedFiveMap,assertActualPostSignedFiveMap}=
+   await import('../post-signed-20261023/source-signed-actual-five-map.mjs');
+ const actualFive=await stage('post_signed_original_five_equation_AST_and_fresh_PJ',()=>{
+   const x=attachActualPostSignedFiveMap(actualTemporal,context);
+   if(assertActualPostSignedFiveMap(x)!==true)
+     throw Error('Post-signed FiveMap source AST seal failed');
+   return x;
+ });
+ receipt.post_signed_five_map_mean_source_AST_checked=true;
+ receipt.post_signed_five_map_fresh_PJ=['P','Jtheta','Jz'].map(x=>actualFive.postFiveMean.updatedMeanPressure.mean[x]);save();
+ receipt.stage='FULL_3D_POST_FIVE_PDE_INFINITE_STAGE_SELECTORS_AND_FINAL67_NUMERIC_OPEN';
+ receipt.stop_reason='New post-signed Fourier limit AST and five-map mean updates do not certify whole-source all-order bounds, 3D PDE after FiveMap, infinite corrections, final selectors or numerical 67 final-field jets.';
  receipt.status='PARTIAL_SOURCE_AUTHENTICATED';save();
 }catch(e){receipt.error={code:e.code??e.name??'ERROR',message:String(e.message??e).slice(0,1000)};
  receipt.status='BLOCKED';receipt.failed_at_stage=receipt.stage;save();console.error(JSON.stringify(receipt.error));process.exitCode=2;}
