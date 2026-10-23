@@ -1,0 +1,82 @@
+name: Original Signed moving-frame tangency source proof and resumed 67-jet pipeline
+on:
+  push:
+    branches: [mathscope-m3m4-evidence-gates-20261023]
+    paths:
+      - '.github/workflows/mathscope-original-signed-tangency-20261023.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  real-checkout-factorized-tangency:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Apply the unchanged original PR30 29-file source-bound patch
+        run: |
+          set -euo pipefail
+          echo 'd23a2ac3b56412f176c3f86a7303a623fe07931453aff0e55ddf1730e34ee312  research-ide/mathscope-m3/staged-patches-20261023/PR30_Cumulative_Signed162_Cor85_TemporalFrontier.patch' | sha256sum -c
+          git apply --check research-ide/mathscope-m3/staged-patches-20261023/PR30_Cumulative_Signed162_Cor85_TemporalFrontier.patch
+          git apply research-ide/mathscope-m3/staged-patches-20261023/PR30_Cumulative_Signed162_Cor85_TemporalFrontier.patch
+          git apply --check research-ide/mathscope-m3/pin-test-hotfix-20261023/PR30_RealCheckout_PinTest_EnvPortable.patch
+          git apply research-ide/mathscope-m3/pin-test-hotfix-20261023/PR30_RealCheckout_PinTest_EnvPortable.patch
+          echo '15eea2c0f984c5b3bb58dd372d9b01660e44a85526c1f329b41b41855b4c27e2  research-ide/mathscope-m3/navier/generic-signed-source-kernel.mjs' | sha256sum -c
+      - name: Install source-bound factored tangency without modifying PR30 branch
+        run: |
+          set -euo pipefail
+          cp research-ide/mathscope-m3/tangency-proof-20261023/generic-signed-source-kernel.fixed.mjs research-ide/mathscope-m3/navier/generic-signed-source-kernel.mjs
+          cp research-ide/mathscope-m3/tangency-proof-20261023/signed-source-frame-tangency.mjs research-ide/mathscope-m3/navier/signed-source-frame-tangency.mjs
+          cp research-ide/mathscope-m3/tangency-proof-20261023/signed-source-frame-tangency.test.mjs research-ide/mathscope-m3/tests/signed-source-frame-tangency.test.mjs
+          node --check research-ide/mathscope-m3/navier/generic-signed-source-kernel.mjs
+          node --check research-ide/mathscope-m3/navier/signed-source-frame-tangency.mjs
+          node --input-type=module -e "import {verifyPR30OriginalSourceFiles} from './research-ide/mathscope-m3/navier/source-signed-162-pr30-pins.mjs'; const x=await verifyPR30OriginalSourceFiles(); if(x.verifiedFiles.length!==29)process.exit(2); console.log('AUTHENTIC_29_BLOB_PINS_PASS')"
+      - name: Execute native complete Signed, Current and frame source tests with strict failure propagation
+        run: |
+          set -euo pipefail
+          node --test --test-concurrency=1 research-ide/mathscope-m3/tests/*.test.mjs 2>&1 | tee "$RUNNER_TEMP/signed-frame-source-regression.tap"
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: signed-frame-source-regression
+          path: ${{ runner.temp }}/signed-frame-source-regression.tap
+          if-no-files-found: warn
+          retention-days: 30
+  original-fully-authenticated-signed:
+    needs: real-checkout-factorized-tangency
+    runs-on: ubuntu-24.04
+    timeout-minutes: 62
+    env:
+      NODE_OPTIONS: --max-old-space-size=5200
+      M3_MAX_MINUTES: '54'
+      M3_MAX_RSS_GB: '6'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Restore source-pinned corrected Signed mathematical kernel
+        run: |
+          set -euo pipefail
+          echo 'd23a2ac3b56412f176c3f86a7303a623fe07931453aff0e55ddf1730e34ee312  research-ide/mathscope-m3/staged-patches-20261023/PR30_Cumulative_Signed162_Cor85_TemporalFrontier.patch' | sha256sum -c
+          git apply research-ide/mathscope-m3/staged-patches-20261023/PR30_Cumulative_Signed162_Cor85_TemporalFrontier.patch
+          echo '15eea2c0f984c5b3bb58dd372d9b01660e44a85526c1f329b41b41855b4c27e2  research-ide/mathscope-m3/navier/generic-signed-source-kernel.mjs' | sha256sum -c
+          cp research-ide/mathscope-m3/tangency-proof-20261023/generic-signed-source-kernel.fixed.mjs research-ide/mathscope-m3/navier/generic-signed-source-kernel.mjs
+          cp research-ide/mathscope-m3/tangency-proof-20261023/signed-source-frame-tangency.mjs research-ide/mathscope-m3/navier/signed-source-frame-tangency.mjs
+      - name: Rebuild authentic original graph through Forced, Cor8.5, Signed162 and centered Temporal
+        run: |
+          timeout -s TERM 3360s node --expose-gc research-ide/mathscope-m3/extended-signed-run-20261023/run_real_original_signed162.mjs "$RUNNER_TEMP/m3-original-signed-fixed-tangency.json"
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: original-signed-fixed-tangency-real-source-receipt
+          path: ${{ runner.temp }}/m3-original-signed-fixed-tangency.json
+          if-no-files-found: warn
+          retention-days: 30
