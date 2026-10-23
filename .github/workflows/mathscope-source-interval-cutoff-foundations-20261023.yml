@@ -1,0 +1,44 @@
+name: MathScope exact finite cutoff and interval foundations (not global proof)
+on:
+  push:
+    branches: [mathscope-m3m4-evidence-gates-20261023]
+    paths:
+      - 'research-ide/mathscope-m3/post-signed-20261023/verify_cutoff_before_curl_finite.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/rigorous_rational_intervals.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/test_rigorous_rational_intervals.py'
+      - '.github/workflows/mathscope-source-interval-cutoff-foundations-20261023.yml'
+  workflow_dispatch:
+jobs:
+  exact-finite-foundations:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Set up independent exact symbolic algebra
+        run: python -m pip install 'sympy==1.13.3'
+      - name: Check exact rational intervals and unsafe input rejections
+        run: |
+          cd research-ide/mathscope-m3/closure-evidence-20261023
+          python -m unittest -v test_rigorous_rational_intervals
+      - name: Prove generic cutoff/curl algebra and verify negative control
+        run: |
+          python research-ide/mathscope-m3/post-signed-20261023/verify_cutoff_before_curl_finite.py > cutoff-finite-receipt.json
+          python - <<'PY'
+          import json
+          c=json.load(open('cutoff-finite-receipt.json'))
+          assert c['curl_product_rule_defects']==['0']*3
+          assert c['divergence_of_curl']=='0'
+          assert c['axis_regular_angular_b_divergence']=='0'
+          assert c['missing_grad_chi_cross_A_rejected'] is True
+          assert c['actual_original_cutoff_field_bound'] is False
+          assert c['common_domain_proved'] is False
+          assert c['infinite_series_converged'] is False
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: exact-finite-cutoff-not-original-proof
+          path: cutoff-finite-receipt.json
+          retention-days: 30
