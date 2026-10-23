@@ -129,8 +129,20 @@ try{
  });
  receipt.post_signed_five_map_mean_source_AST_checked=true;
  receipt.post_signed_five_map_fresh_PJ=['P','Jtheta','Jz'].map(x=>actualFive.postFiveMean.updatedMeanPressure.mean[x]);save();
- receipt.stage='FULL_3D_POST_FIVE_PDE_INFINITE_STAGE_SELECTORS_AND_FINAL67_NUMERIC_OPEN';
- receipt.stop_reason='New post-signed Fourier limit AST and five-map mean updates do not certify whole-source all-order bounds, 3D PDE after FiveMap, infinite corrections, final selectors or numerical 67 final-field jets.';
+ const {attachActualPostFiveFull3DPDE,assertActualPostFiveFull3DPDE}=
+   await import('../post-signed-20261023/source-postfive-full-3d-residual.mjs');
+ const actualFull3D=await stage('post_five_actual_full_physical_three_dimensional_PDE_AST',()=>{
+   const x=attachActualPostFiveFull3DPDE(actualFive,context);
+   if(assertActualPostFiveFull3DPDE(x)!==true)
+     throw Error('Actual post-FiveMap complete 3D physical PDE AST authentication failed');
+   return x;
+ });
+ receipt.post_five_full_three_dimensional_PDE_AST_checked=true;
+ receipt.post_five_full_three_dimensional_PDE_residual_roots=[...actualFull3D.residual.conservative];
+ receipt.post_five_full_three_dimensional_PDE_residual_proved_zero=false;
+ receipt.actual_final67_jets_evaluated=0;save();
+ receipt.stage='FOUR_STAGE_ITERATION_ALL_ORDER_ESTIMATES_AND_FINAL67_NUMERIC_OPEN';
+ receipt.stop_reason='First authentic Signed->Temporal->FiveMap->whole 3D PDE AST is constructed, but its residual has not been proved zero, infinite A-D corrections, analytic class bounds, scale selectors and the final 67 original numeric intervals remain OPEN.';
  receipt.status='PARTIAL_SOURCE_AUTHENTICATED';save();
 }catch(e){receipt.error={code:e.code??e.name??'ERROR',message:String(e.message??e).slice(0,1000)};
  receipt.status='BLOCKED';receipt.failed_at_stage=receipt.stage;
