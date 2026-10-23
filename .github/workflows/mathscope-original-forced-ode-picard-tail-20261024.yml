@@ -1,0 +1,24 @@
+name: MathScope source zero-data forced 3x3 ODE conditional Picard tail
+on:
+  push:
+    branches: [mathscope-m3m4-evidence-gates-20261023]
+    paths:
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/conditional_forced_ode_picard_tail.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/test_conditional_forced_ode_picard_tail.py'
+      - '.github/workflows/mathscope-original-forced-ode-picard-tail-20261024.yml'
+  workflow_dispatch:
+jobs:
+  rational-source-forced-ode-tail:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Exact rational Picard tail and strict source coefficient fail-close tests
+        run: |
+          cd research-ide/mathscope-m3/closure-evidence-20261023
+          python -m unittest -v test_conditional_forced_ode_picard_tail
