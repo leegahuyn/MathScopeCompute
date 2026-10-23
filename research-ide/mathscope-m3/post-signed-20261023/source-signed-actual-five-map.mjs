@@ -4,6 +4,7 @@
  * remainders. This is not the last iteration, W/M/S bounds or 67 numeric jets.
  */
 import {assertActualPostSignedTemporalInverse} from './source-signed-actual-temporal-inverse.mjs';
+import {resolveOriginalPostSignedSourceShape} from './original-post-signed-source-shape.mjs';
 import {assertGlobalMomentCurrent,exactFiveMomentCoefficients} from '../navier/source-global-moment.mjs';
 import {exactFullMeanMomentRemainders,originalFullMeanOperators} from '../navier/source-full-mean-equations.mjs';
 import {reconstructUpdatedFullMeanPressure} from '../navier/source-updated-mean-pressure.mjs';
@@ -23,11 +24,10 @@ export function attachActualPostSignedFiveMap(temporal,context={}){
   if(assertActualPostSignedTemporalInverse(temporal)!==true)
     fail('MISSING_NEW_POST_SIGNED_TEMPORAL','Require actual Signed successor and new exact temporal AST.');
   const signed=temporal.frontier.signed,G=temporal.G,
-    initializedMean=signed.input.input.mean,template=initializedMean.template,
-    pressure=initializedMean.temporal.pressure,band=pressure.current.band,
-    b=template.bumps,geometry=pressure.geometry,{R,Z,T,Y,epsilon}=geometry,
+    {originalPressure:pressure,band,bump:b,updated}=resolveOriginalPostSignedSourceShape(signed),
+    geometry=pressure.geometry,{R,Z,T,Y,epsilon}=geometry,
     source=temporal.postTemporal.updatedMeanPressure,previous=temporal.postTemporal.velocity,
-    covariance=signed.constructed.updated.updatedCovariance,
+    covariance=updated.updatedCovariance,
     stress=pressure.residual.fullOriginalStress,
     background={b:band.fields.b,V:G.mul(R,band.fields.F),G:band.fields.G},
     q=(n,d=1)=>G.q(n,d),power=(x,a)=>G.exp(G.mul(a,G.log(x)));
