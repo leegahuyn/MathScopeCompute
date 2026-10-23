@@ -134,7 +134,8 @@ test('repeated native derivative calls reuse one defining-body expansion',async(
     dir,definitionGraph:owner,roots:[10],scope:'FIRST_FIVEMAP_TOY',
     sourceCommit:'toy',pr30Commit:'toy'});
   const r=await auditNativeDefinitionBodyClosure(dir);
-  assert.equal(r.source_unique_native_definition_keys,3);
+  assert.equal(r.source_unique_native_definition_keys_in_whole_graph,4);
+  assert.equal(r.source_unique_reachable_native_definition_keys,3);
   assert.equal(r.reached_native_body_calls_with_source_definitions,4);
   assert.equal(r.semantic_body_reachable_unique_nodes,9);
   assert.equal(r.reached_native_calls_with_unresolved_definitions,0);
