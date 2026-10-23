@@ -1,0 +1,23 @@
+name: MathScope source graph replay export preflight (not final jets)
+on:
+  push:
+    branches: [mathscope-m3m4-evidence-gates-20261023]
+    paths:
+      - 'research-ide/mathscope-m3/post-signed-20261023/export_original_source_graph*.mjs'
+      - '.github/workflows/mathscope-original-graph-replay-export-20261023.yml'
+  workflow_dispatch:
+jobs:
+  full-graph-export-format-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Full-node JSONL export syntax and exact source archive negative controls
+        run: |
+          node --check research-ide/mathscope-m3/post-signed-20261023/export_original_source_graph.mjs
+          node --test research-ide/mathscope-m3/post-signed-20261023/export_original_source_graph.test.mjs
