@@ -1,0 +1,51 @@
+name: M3 original N6 A-D stage losses and analytic tail eight-item evidence (no promotion)
+on:
+  push:
+    branches: [mathscope-m3m4-evidence-gates-20261023]
+    paths:
+      - '.github/workflows/mathscope-original-eight-math-derivative-audit-20261023.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  original_analytic_eight_items:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Replay preserved source-pinned eight-item derivative/tail/energy model audit
+        run: |
+          set -euo pipefail
+          python -B research-ide/mathscope-m3/evidence/work-recovery-20261018T072604Z_b479c2d1/recovered/base/work/derivative_fix/code/run_derivative_audit.py \
+            2>&1 | tee "$RUNNER_TEMP/original-eight-item-audit.log"
+      - name: Verify scope is model/finite bounds only, not the real original global field
+        run: |
+          python - <<'PY'
+          import json,pathlib
+          src=pathlib.Path('research-ide/mathscope-m3/evidence/work-recovery-20261018T072604Z_b479c2d1/recovered/base/work/derivative_fix')
+          r=json.loads((src/'evidence/EXECUTION_RECEIPT.json').read_text())
+          assert r['scoped_audit_passed'] is True
+          assert r['input_and_reference_hashes_match_source_manifest'] is True
+          assert r['old_formula_negative_control_failed_on_energy_assertion'] is True
+          assert r['actual_global_field_energy_certified'] is False
+          assert r['original_m3_completed_count_changed'] is False
+          assert r['scope']=='VERIFIER_MODEL_REPAIR_ONLY_NOT_ACTUAL_GLOBAL_FIELD_PROOF'
+          print('ORIGINAL_ANALYTIC_EIGHT_ITEM_MODEL_SOURCE_PROVENANCE_PASS')
+          print('ORIGINAL_GLOBAL_ANALYTIC_AND_ENERGY_FIELD_STILL_UNPROVED')
+          PY
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mathscope-original-eight-item-derivative-tail-model-no-promotion
+          path: |
+            ${{ runner.temp }}/original-eight-item-audit.log
+            research-ide/mathscope-m3/evidence/work-recovery-20261018T072604Z_b479c2d1/recovered/base/work/derivative_fix/evidence/EXECUTION_RECEIPT.json
+            research-ide/mathscope-m3/evidence/work-recovery-20261018T072604Z_b479c2d1/recovered/base/work/derivative_fix/evidence/BASELINE_VERIFICATION_RESULTS.json
+            research-ide/mathscope-m3/evidence/work-recovery-20261018T072604Z_b479c2d1/recovered/base/work/derivative_fix/evidence/CORRECTED_VERIFICATION_RESULTS.json
+          if-no-files-found: warn
+          retention-days: 30
