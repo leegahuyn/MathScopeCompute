@@ -5,6 +5,8 @@ on:
     paths:
       - 'research-ide/mathscope-m3/closure-evidence-20261023/prove_original_n3_Q_rho_signs.py'
       - 'research-ide/mathscope-m3/closure-evidence-20261023/test_prove_original_n3_Q_rho_signs.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/audit_original_56_Y_eta_domain.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/test_audit_original_56_Y_eta_domain.py'
       - '.github/workflows/mathscope-real-natural56-Q-rho-source-gate-20261024.yml'
   workflow_dispatch:
 jobs:
@@ -21,7 +23,7 @@ jobs:
       - name: Verify immutable exact N3 profile positivity and reject all unauthenticated analytic norm promotion
         run: |
           cd research-ide/mathscope-m3/closure-evidence-20261023
-          python -m unittest -v test_prove_original_n3_Q_rho_signs test_pinned_n3_parameter_intervals
+          python -m unittest -v test_prove_original_n3_Q_rho_signs test_pinned_n3_parameter_intervals test_audit_original_56_Y_eta_domain
           python - <<'PY'
           import json
           from prove_original_n3_Q_rho_signs import original_n3_Q_rho_strict_positivity
