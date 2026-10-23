@@ -37,7 +37,8 @@ def conditional_scaled_tail(k,m,N,Y):
     n=N+1
     ratio=Y/F(20)*F(N+2+m,N+2-k)
     if ratio>=1:raise MissingSourceNaturalAnalyticPremise('Natural series ratio requires larger N')
-    first=F(factorial(m)*factorial(n+m),factorial(m)*factorial(n))*F(factorial(n),factorial(n-k))
+    # binomial(n+m,m) has exactly ONE m! in its denominator.
+    first=F(factorial(n+m),factorial(m)*factorial(n))*F(factorial(n),factorial(n-k))
     first*=F(factorial(m),(m+1)**2*20**n*(n+1)**2)*Y**(n-k)
     return ratio,first/(1-ratio)
 
