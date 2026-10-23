@@ -1,0 +1,41 @@
+name: M3 Signed real 81-cover source shape independent fix
+on:
+  push:
+    branches: [mathscope-m3m4-evidence-gates-20261023]
+    paths:
+      - '.github/workflows/mathscope-signed-real-81cover-fix-20261023.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  real-cover-contract:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 13
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Apply source-pinned PR30 signed fix and exact real source flat-join rule
+        run: |
+          set -euo pipefail
+          git apply research-ide/mathscope-m3/staged-patches-20261023/PR30_Cumulative_Signed162_Cor85_TemporalFrontier.patch
+          git apply research-ide/mathscope-m3/pin-test-hotfix-20261023/PR30_RealCheckout_PinTest_EnvPortable.patch
+          git apply --check research-ide/mathscope-m3/temporal-finite-20261023/PR30_Audit_Real81Cover_String_Flatness.patch
+          git apply research-ide/mathscope-m3/temporal-finite-20261023/PR30_Audit_Real81Cover_String_Flatness.patch
+          cp research-ide/mathscope-m3/tangency-proof-20261023/generic-signed-source-kernel.fixed.mjs research-ide/mathscope-m3/navier/generic-signed-source-kernel.mjs
+          cp research-ide/mathscope-m3/tangency-proof-20261023/signed-source-frame-tangency.mjs research-ide/mathscope-m3/navier/signed-source-frame-tangency.mjs
+          node --check research-ide/mathscope-m3/navier/source-signed-162-successor-audit.mjs
+      - name: Check true original string flatness and preserve the synthetic compatibility tests
+        run: |
+          set -euo pipefail
+          node --test --test-reporter=tap --test-concurrency=1             research-ide/mathscope-m3/temporal-finite-20261023/source-signed-real-cover-structure.test.mjs             research-ide/mathscope-m3/tests/original-signed-162-successor-audit.test.mjs             2>&1 | tee "$RUNNER_TEMP/81-cover-real-structure.tap"
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: original-81-cover-structure-and-mutation-tests
+          path: ${{ runner.temp }}/81-cover-real-structure.tap
+          if-no-files-found: warn
+          retention-days: 30
