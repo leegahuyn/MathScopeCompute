@@ -84,6 +84,16 @@ function sourceFieldRoots(field,r){
   for(const item of (row.derivativeMaps??[]).flat())out.push(item.coefficient);
   for(const guard of row.guards??[])out.push(...guard);
   for(const d of row.derivativeScales??[])out.push(d);
+  // Label geometry is a source expression, not a derivative-order scalar.
+  // Keep only declared root-valued label fields; numeric signs, chart
+  // counters and string keys are metadata and must NOT be treated as DAG ids.
+  const label=row.label??{};
+  if(label.Q!==undefined)out.push(label.Q);
+  if(label.ell!==undefined)out.push(label.ell);
+  if(label.grid!==undefined){
+    if(!Array.isArray(label.grid))bad('Retained chart grid source roots malformed');
+    out.push(...label.grid);
+  }
  }
  return rooted(out);
 }
@@ -115,6 +125,12 @@ function originalInverse(id,r){
 function forcedPulseRoots(def){
  if(!def||!Array.isArray(def.matrix)||!Array.isArray(def.forcing)||!Number.isSafeInteger(def.length))bad('forced ODE matrix/forcing body missing');
  return rooted(def.variable,def.parameters,def.length,def.matrix,def.forcing.flatMap(x=>[x.real,x.imaginary]));
+}
+function covarianceSystemRoots(c){
+ if(!c||!Array.isArray(c.matrix)||c.matrix.length!==2||
+    c.matrix.some(row=>!Array.isArray(row)||row.length!==2))
+    bad('Native original covariance system lacks 2x2 matrix');
+ return rooted(c.variable,c.parameters,c.matrix,c.normUpper,c.length,c.initial);
 }
 function sourcePulseRoots(def){
  if(!def||!Array.isArray(def.matrix)||!Number.isSafeInteger(def.length))
@@ -149,7 +165,13 @@ export function nativeSemanticDefinitionEdges(node,r){
  }
  if(op==='m3_global_pulse_jet'){
   const def=at(r.globals.pulses,args[0],'global.pulse');
-  return {kind:'global_ODE',bodyRoots:sourcePulseRoots(def),resolved:true,
+  if(def.covariance!==undefined&&!r.covariance)
+    return {kind:'global_ODE',bodyRoots:[],resolved:false,
+      blocker:'Global pulse source covariance system not captured: '+def.covariance};
+  const covariance=def.covariance===undefined?[]:
+    covarianceSystemRoots(at(r.covariance,def.covariance,'global.pulse.covariance'));
+  return {kind:'global_ODE',bodyRoots:rooted(sourcePulseRoots(def),covariance,
+    def.directions??[],def.initial??[],def.left??0),resolved:true,
     odeVariationalBoundsVerified:false};
  }
  if(op==='m3_global_indexed_partial'){
@@ -187,7 +209,7 @@ export function nativeSemanticDefinitionEdges(node,r){
     blocker:'Missing separately captured actual covarianceSystems source registry'};
   const d=at(r.covariance,args[0],'actual.covariance.volterra');
   return {kind:'source_covariance_volterra',resolved:true,
-    bodyRoots:rooted(d.variable,d.parameters,d.matrix,d.normUpper,d.length,d.initial),
+    bodyRoots:covarianceSystemRoots(d),
     matrixCoefficientBoundsAndTailVerified:false};
  }
  return null;
