@@ -20,6 +20,7 @@ const indexed=(id,prefix,rows)=>{
  */
 export function recoverEmbeddedOriginalCovariance(pulses){
  if(!Array.isArray(pulses))bad('Missing global source pulse definitions');
+ if(pulses.length===0)return null;
  const byCovariance=[];
  for(const pulse of pulses){
    const id=pulse?.covariance;
