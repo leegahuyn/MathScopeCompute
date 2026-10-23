@@ -7,7 +7,7 @@ import {assertActualPostSignedTemporalInverse} from './source-signed-actual-temp
 import {resolveOriginalPostSignedSourceShape} from './original-post-signed-source-shape.mjs';
 import {assertGlobalMomentCurrent,exactFiveMomentCoefficients} from '../navier/source-global-moment.mjs';
 import {exactFullMeanMomentRemainders,originalFullMeanOperators} from '../navier/source-full-mean-equations.mjs';
-import {reconstructUpdatedFullMeanPressure} from '../navier/source-updated-mean-pressure.mjs';
+import {reconstructUpdatedFullMeanPressure,exactNormalizedHaar,exactWholeRadialIntegral} from '../navier/source-updated-mean-pressure.mjs';
 import {globalGraphEqual,shareGlobalScalar} from '../navier/source-global-current.mjs';
 import {canonicalStringify,sha256} from '../../mathscope-m0/contracts.mjs';
 
@@ -16,7 +16,8 @@ names=['beta','v','gamma'];
 const record=x=>({schema:x.schema,source:x.source,targets:x.targets,
   coefficients:x.coefficients,increment:x.increment,
   potential:x.potential,postFiveMean:x.postFiveMean,
-  nonlinear:x.nonlinear,checks:x.checks,scope:x.scope});
+  nonlinear:x.nonlinear,remainderDefects:x.remainderDefects,
+  expansionChecks:x.expansionChecks,checks:x.checks,scope:x.scope});
 export function attachActualPostSignedFiveMap(temporal,context={}){
   if(!context||typeof context!=='object'||Array.isArray(context)||
      Object.keys(context).some(k=>!['onProgress','checkCancelled'].includes(k)))
@@ -70,7 +71,35 @@ export function attachActualPostSignedFiveMap(temporal,context={}){
       rho:pressure.pressure.rho,chi:pressure.pressure.chi,
       tag:'PostSignedAfterFiveMomentsFreshPAndJ'}),
     nonlinear=exactFullMeanMomentRemainders(G,{geometry,background,previous,increment}),
+    oldEquations=source.mean.raw,newEquations=afterFive.mean.raw,
+    wholeHaar=body=>exactWholeRadialIntegral(G,exactNormalizedHaar(G,body,Y),geometry,'PostSignedFiveRemainder'),
+    remainderDefects={
+      P:wholeHaar(nonlinear.Rg),
+      Jtheta:wholeHaar(nonlinear.JthetaIntegrand),
+      Jz:G.sub(wholeHaar(nonlinear.JzVelocityIntegrand),
+        G.mul(q(1,2),wholeHaar(G.mul(G.pow(R,2),nonlinear.Rg))))},
+    expansionChecks=[
+      {id:'post-signed-five-full-radial-flux-change-8.26',
+        ...globalGraphEqual(G,G.sub(G.sub(newEquations.gr,oldEquations.gr),
+          nonlinear.linear.PIntegrand),nonlinear.Rg)},
+      {id:'post-signed-five-full-angular-flux-change-8.27',
+        ...globalGraphEqual(G,G.sub(G.sub(newEquations.fluxTheta,oldEquations.fluxTheta),
+          nonlinear.linear.JthetaIntegrand),nonlinear.JthetaIntegrand)},
+      {id:'post-signed-five-full-axial-flux-change-8.27',
+        ...globalGraphEqual(G,G.sub(newEquations.fluxZ,oldEquations.fluxZ),
+          G.add(G.mul(q(2),R,background.G,increment.gamma),
+            nonlinear.JzVelocityIntegrand))}],
+    exactFiveRows=[
+      {name:'angular-conservation',value:coefficients.angularValues[0],target:G.zero},
+      {name:'axial-conservation',value:coefficients.axialValues[0],target:G.zero},
+      {name:'radial-pressure-defect',value:coefficients.angularValues[1],target:G.neg(targets.P)},
+      {name:'angular-axial-defect',value:coefficients.axialValues[1],target:G.neg(targets.Jtheta)},
+      {name:'axial-pressure-defect',value:coefficients.angularValues[2],target:G.neg(targets.Jz)}],
     checks=[
+      ...expansionChecks,
+      ...exactFiveRows.map(row=>({
+        id:'post-signed-original-five-row-'+row.name,
+        ...globalGraphEqual(G,row.value,row.target)})),
       ...coefficients.checks,
       ...afterFive.checks,
       {id:'same-five-row-original-positive-profile-matrix',pass:
@@ -104,10 +133,12 @@ export function attachActualPostSignedFiveMap(temporal,context={}){
     potential:{psi,compactPsi,primitive,whole,rawDeltaBeta,realizedGamma,gammaDesired,
       divergence,wholeIntegralAnalyticCancellationRequired:true},
     postFiveMean:{velocity:updated,updatedMeanPressure:afterFive},
-    nonlinear,checks,
+    nonlinear,remainderDefects,expansionChecks,exactFiveRows,checks,
     scope:{fullOriginalFiveMomentAlgebraConstructed:true,
       exactFiveMomentTargetsFromCurrentPostSignedTemporalPAndJ:true,
       originalFullMeanPressureAfterFiveASTConstructed:true,
+      exactOriginalFiveMomentRowsAndNonlinearRemaindersSymbolicallyChecked:true,
+      exactWholeRadialHaarRemainderRootsConstructed:true,
       wholeSourceSignedTemporalAnalyticClassCertificate:false,
       fullThreeDimensionalSignedTemporalFivePDERefreshed:false,
       cycleAtoDIndependentlyAccepted:false,
