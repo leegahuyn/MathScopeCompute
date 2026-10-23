@@ -162,6 +162,21 @@ try{
  receipt.post_five_direct_vs_split_proved_zero=false;
  receipt.progress.push({stage:receipt.stage,nodeCount:G.nodes.length,scope:'AST_ONLY_PROOF_OPEN'});
  receipt.actual_final67_jets_evaluated=0;save();
+ if(process.env.M3_EXPORT_SOURCE_GRAPH==='1'){
+   const {exportOriginalSourceGraph}=await import('../post-signed-20261023/export_original_source_graph.mjs');
+   receipt.stage='SOURCE_GRAPH_REPLAY_EXPORT_FIRST_FIVEMAP_NOT_FINAL_67';save();bound();
+   const snapshot=await exportOriginalSourceGraph(G,{
+     dir:process.env.M3_SOURCE_GRAPH_EXPORT_DIR,
+     roots:[...actualFull3D.velocity.fullPhysicalVelocity,actualFull3D.pressure.fullPhysicalPressure,
+       actualFull3D.residual.divergence,...actualFull3D.residual.conservative,
+       ...directSplit.roots.defects],
+     scope:'ORIGINAL_FIRST_POST_SIGNED_FIVEMAP_3D_DIRECT_SPLIT_NOT_FINAL_A_b_p',
+     sourceCommit:process.env.GITHUB_SHA??'UNKNOWN_LOCAL_RUN',
+     pr30Commit:receipt.expected_base_commit});
+   receipt.first_fivemap_graph_replay_manifest=snapshot;
+   receipt.first_fivemap_graph_exported=true;
+   receipt.final_67_original_numeric_producer_available=false;save();
+ }
  receipt.stage='FOUR_STAGE_ITERATION_ALL_ORDER_ESTIMATES_AND_FINAL67_NUMERIC_OPEN';
  receipt.stop_reason='Signed->Temporal->FiveMap->whole 3D PDE and direct/split ASTs constructed, but their identity and the forced PDE remain OPEN, infinite A-D corrections, analytic class bounds, scale selectors and the final 67 original numeric intervals remain OPEN.';
  receipt.status='PARTIAL_SOURCE_AUTHENTICATED';save();
