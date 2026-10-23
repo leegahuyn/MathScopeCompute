@@ -8,7 +8,7 @@ import {loadOriginalExtendedNativeRegistry,nativeSemanticDefinitionEdges} from '
 import {auditNativeDefinitionBodyClosure} from './audit_original_native_semantic_closure.mjs';
 
 const raw={
-  expression:'[]',expressionCount:0,
+  expression:'[]',expressionCount:0,quadraticCount:0,monotoneCount:0,picardCount:0,
   m3GlobalFields:'[]',m3GlobalFieldCount:0,
   m3GlobalPulses:'[]',m3GlobalPulseCount:0,
   quadratic:'[]',monotone:'[]',picard:'[]'
