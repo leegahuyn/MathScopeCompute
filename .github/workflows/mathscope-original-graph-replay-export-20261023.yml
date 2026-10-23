@@ -7,6 +7,7 @@ on:
       - 'research-ide/mathscope-m3/post-signed-20261023/audit_original_source_graph_replay*.mjs'
       - 'research-ide/mathscope-m3/extended-signed-run-20261023/run_real_original_signed162.mjs'
       - 'research-ide/mathscope-m3/post-signed-20261023/audit_original_root_native_closure*.mjs'
+      - 'research-ide/mathscope-m3/post-signed-20261023/exact_original_node_children*.mjs'
       - '.github/workflows/mathscope-original-graph-replay-export-20261023.yml'
   workflow_dispatch:
 jobs:
@@ -25,5 +26,6 @@ jobs:
           node --check research-ide/mathscope-m3/post-signed-20261023/export_original_source_graph.mjs
           node --check research-ide/mathscope-m3/post-signed-20261023/audit_original_source_graph_replay.mjs
           node --check research-ide/mathscope-m3/post-signed-20261023/audit_original_root_native_closure.mjs
+          node --check research-ide/mathscope-m3/post-signed-20261023/exact_original_node_children.mjs
           node --check research-ide/mathscope-m3/extended-signed-run-20261023/run_real_original_signed162.mjs
-          node --test research-ide/mathscope-m3/post-signed-20261023/export_original_source_graph.test.mjs research-ide/mathscope-m3/post-signed-20261023/audit_original_source_graph_replay.test.mjs research-ide/mathscope-m3/post-signed-20261023/audit_original_root_native_closure.test.mjs
+          node --test research-ide/mathscope-m3/post-signed-20261023/export_original_source_graph.test.mjs research-ide/mathscope-m3/post-signed-20261023/audit_original_source_graph_replay.test.mjs research-ide/mathscope-m3/post-signed-20261023/audit_original_root_native_closure.test.mjs research-ide/mathscope-m3/post-signed-20261023/exact_original_node_children.test.mjs
