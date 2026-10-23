@@ -59,6 +59,7 @@ export async function produceFirstFiveMapNativeOperatorReceipt(dir,{requireOrigi
       unresolved_native_semantic_blockers:semantic.unresolved_native_semantic_blockers,
       structural_body_reachability_complete:semantic.native_definition_reachability_complete,
       actual_native_function_ODE_Fourier_values_proved:false,
+      natural_source_input_pairs:semantic.original_reachable_natural_series_source_profile,
       counts_by_physical_root:semantic.original_root_semantic_body_usage
    }:null,
 
