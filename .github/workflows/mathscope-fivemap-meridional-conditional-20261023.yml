@@ -1,0 +1,35 @@
+name: MathScope FiveMap conditional FTC and fast torus scope
+on:
+  push:
+    branches: [mathscope-m3m4-evidence-gates-20261023]
+    paths:
+      - 'research-ide/mathscope-m3/post-signed-20261023/verify_fivemap_meridional_conditional_ftc.py'
+      - '.github/workflows/mathscope-fivemap-meridional-conditional-20261023.yml'
+  workflow_dispatch:
+jobs:
+  conditional-symbolic-solenoidality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install independent symbolic arithmetic
+        run: python -m pip install 'sympy==1.13.3'
+      - name: Verify conditional FTC and reject Y-dependent unshifted primitive
+        run: |
+          python research-ide/mathscope-m3/post-signed-20261023/verify_fivemap_meridional_conditional_ftc.py > fivemap-meridional-conditional.json
+          python - <<'PY'
+          import json
+          r=json.load(open('fivemap-meridional-conditional.json'))
+          assert r['torus_dependence_mutation']=='REJECTED'
+          assert r['actual_original_full_field_divergence_proved'] is False
+          assert r['actual_source_Cinfty_and_cutoff_convergence_proved'] is False
+          assert r['release']=='HOLD'
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fivemap-conditional-ftc-not-original-global-proof
+          path: fivemap-meridional-conditional.json
+          retention-days: 30
