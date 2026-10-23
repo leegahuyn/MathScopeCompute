@@ -1,0 +1,25 @@
+name: MathScope original SourceExpressions native numeric backlog
+on:
+  push:
+    branches: [mathscope-m3m4-evidence-gates-20261023]
+    paths:
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/classify_original_source_numeric_kernels.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/test_classify_original_source_numeric_kernels.py'
+      - '.github/workflows/mathscope-source-native-interval-kernel-backlog.yml'
+  workflow_dispatch:
+jobs:
+  native-operator-inventory-controls:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify original-source operation counts and fail closed on unimplemented PDE interval semantics
+        run: |
+          cd research-ide/mathscope-m3/closure-evidence-20261023
+          python -m py_compile classify_original_source_numeric_kernels.py
+          python -m unittest -v test_classify_original_source_numeric_kernels
