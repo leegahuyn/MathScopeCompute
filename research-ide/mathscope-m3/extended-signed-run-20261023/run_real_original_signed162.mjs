@@ -139,6 +139,13 @@ try{
  });
  receipt.post_five_full_three_dimensional_PDE_AST_checked=true;
  receipt.post_five_full_three_dimensional_PDE_residual_roots=[...actualFull3D.residual.conservative];
+ // Only the first post-Signed FiveMap snapshot; do not confuse these roots
+ // with a final all-cycle gauge A,b,p family or a numerical interval evaluator.
+ receipt.post_five_full_three_dimensional_velocity_roots=[...actualFull3D.velocity.fullPhysicalVelocity];
+ receipt.post_five_full_three_dimensional_pressure_root=actualFull3D.pressure.fullPhysicalPressure;
+ receipt.post_five_full_three_dimensional_divergence_root=actualFull3D.residual.divergence;
+ receipt.actual_final_emitted_gauge_A_b_p_roots=null;
+ receipt.actual_final67_source_numerical_interval_inventory=null;
  receipt.post_five_full_three_dimensional_PDE_residual_proved_zero=false;
  // Independently polarized AST uses the SAME privately sealed original graph;
  // constructing defects never certifies their vanishing or the forcing theorem.
