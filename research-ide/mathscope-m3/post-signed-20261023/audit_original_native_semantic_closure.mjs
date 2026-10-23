@@ -35,7 +35,7 @@ export async function auditNativeDefinitionBodyClosure(dir,{maxNodes=5000000,max
     halt('Original source node and root budgets exceeded');
  const starts=new Uint32Array(count+1),edges=[],
    opIds=new Uint16Array(count),opNames=[],opIndex=new Map();
- const bodyByNode=new Map(),missingByNode=new Map();
+ const bodyByNode=new Map(),missingByNode=new Map(),cachedNativeDefinitions=new Map();
  let n=0,header=false,bodyEdges=0;
  const lines=readline.createInterface({input:createReadStream(path.join(dir,'original-source-nodes.jsonl.gz')).pipe(createGunzip()),crlfDelay:Infinity});
  for await(const line of lines){
@@ -55,7 +55,11 @@ export async function auditNativeDefinitionBodyClosure(dir,{maxNodes=5000000,max
    }
    opIds[n]=opIndex.get(item.op);
    if(item.op.startsWith('m3_')||item.op.startsWith('actual_')){
-     const def=nativeSemanticDefinitionEdges(item,registry);
+     const cacheKey=item.op+':'+JSON.stringify(item.args[0]);
+     const newlySeen=!cachedNativeDefinitions.has(cacheKey);
+     const def=newlySeen?nativeSemanticDefinitionEdges(item,registry):
+       cachedNativeDefinitions.get(cacheKey);
+     if(newlySeen)cachedNativeDefinitions.set(cacheKey,def);
      if(!def||def.resolved!==true){
        missingByNode.set(n,{op:item.op,system:item.args[0],
          reason:def?.blocker??'No source-owned semantic defining-body implementation'});
@@ -64,8 +68,8 @@ export async function auditNativeDefinitionBodyClosure(dir,{maxNodes=5000000,max
          if(!Number.isSafeInteger(root)||root<0||root>=count)
            halt('Native definition contains invalid source root '+root);
        }
-       bodyEdges+=def.bodyRoots.length;
-       if(bodyEdges>maxBodyEdges)halt('Native definition body edge budget exhausted');
+       if(newlySeen)bodyEdges+=def.bodyRoots.length;
+       if(bodyEdges>maxBodyEdges)halt('Unique native definition body edge budget exhausted');
        bodyByNode.set(n,{kind:def.kind,roots:def.bodyRoots});
      }
    }
@@ -122,6 +126,8 @@ export async function auditNativeDefinitionBodyClosure(dir,{maxNodes=5000000,max
    semantic_body_reachable_unique_nodes:reachable,
    syntactic_and_native_body_union_operations:format(union),
    source_native_body_extra_edges_constructed:bodyEdges,
+   source_unique_native_definition_keys:cachedNativeDefinitions.size,
+   native_source_body_expansion_cache_enabled:true,
    reached_native_body_calls_with_source_definitions:expandedNativeCalls,
    reached_native_calls_with_unresolved_definitions:unresolvedCalls,
    reached_native_body_categories:byKind,
