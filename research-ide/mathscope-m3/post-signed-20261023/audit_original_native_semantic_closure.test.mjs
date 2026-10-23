@@ -206,3 +206,37 @@ test('forged implicit subsystem count fails source registry integrity',()=>{
  state.base.base.picardCount=1;
  assert.throws(()=>loadOriginalExtendedNativeRegistry(state),{code:'NATIVE_REGISTRY_SEMANTIC_GAP'});
 });
+
+test('original global pulse must inherit registered covariance source roots, not just its matrix',()=>{
+ const state=structuredClone(captured);
+ const raw=state.base.base;
+ raw.m3GlobalPulseCount=1;
+ raw.m3GlobalPulses=JSON.stringify([{covariance:0,variable:1,parameters:[1],
+   length:2,matrix:[[0,2],[2,0]],initial:[0,0],left:0,directions:[1]}]);
+ const call={op:'m3_global_pulse_jet',args:[0,0,1,[1],[0]]};
+ const missing=loadOriginalExtendedNativeRegistry(state);
+ const denied=nativeSemanticDefinitionEdges(call,missing);
+ assert.equal(denied.resolved,false);
+ assert.match(denied.blocker,/covariance/);
+ const sys=[{variable:1,parameters:[1],matrix:[[2,2],[2,2]],
+    normUpper:2,length:1,initial:[0,0]}];
+ const ready=loadOriginalExtendedNativeRegistry(state,{runtimeCovarianceSystems:sys});
+ const yes=nativeSemanticDefinitionEdges(call,ready);
+ assert.equal(yes.resolved,true);
+ assert.equal(yes.kind,'global_ODE');
+ assert.deepEqual(yes.bodyRoots,[1,2,0]);
+ assert.equal(yes.odeVariationalBoundsVerified,false);
+});
+test('global indexed field retains actual physical chart label Q ell grid source roots',()=>{
+ const state=structuredClone(captured);
+ state.base.base.m3GlobalFieldCount=1;
+ state.base.base.m3GlobalFields=JSON.stringify([{parameters:[1],directions:[1],
+   rows:[{localBody:2,coefficient:0,values:[1],
+    guards:[],derivativeMaps:[],localParameters:[1],
+    label:{Q:6,ell:7,grid:[8,9],signs:[1,-1],key:'metadata'}}]}]);
+ const r=loadOriginalExtendedNativeRegistry(state);
+ const call={op:'m3_global_indexed_partial',args:[0,[1],[0]]};
+ const semantic=nativeSemanticDefinitionEdges(call,r);
+ assert.equal(semantic.kind,'global_indexed');
+ assert.deepEqual(semantic.bodyRoots,[1,2,0,6,7,8,9]);
+});
