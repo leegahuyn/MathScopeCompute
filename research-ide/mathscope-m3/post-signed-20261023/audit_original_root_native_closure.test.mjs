@@ -49,9 +49,26 @@ test('source unknown native operation has no numerical promotion',async()=>{
      captureFunctionDefinitions:()=>({source:'toy only'})};
    await exportOriginalSourceGraph(g,{dir,roots:[1],scope:'FIRST_FIVEMAP_TOY',
      sourceCommit:'toy',pr30Commit:'toy'});
+   await assert.rejects(()=>auditRootReachableNativeOperations(dir),
+     {code:'UNRECOGNIZED_SOURCE_NODE_SHAPE'});
+ }finally{await fs.rm(dir,{recursive:true,force:true})}
+});
+
+test('native system, component and derivative metadata never appear as reachable nodes',async()=>{
+ const dir=await fs.mkdtemp(path.join(os.tmpdir(),'mathscope-native-shapes-'));
+ try{
+   const g={nodes:[
+     {op:'rational',args:['1','1']},
+     {op:'coordinate',args:['X']},
+     {op:'coordinate',args:['eta']},
+     {op:'actual_natural_series',args:['average',1,2,0,0]},
+     {op:'actual_pulse_jet_volterra',args:[0,0,1,[2]]}],
+     captureFunctionDefinitions:()=>({source:'toy only'})};
+   await exportOriginalSourceGraph(g,{dir,roots:[3,4],
+     scope:'FIRST_FIVEMAP_TOY',sourceCommit:'toy',pr30Commit:'toy'});
    const r=await auditRootReachableNativeOperations(dir);
-   assert.equal(r.reachable_native_operator_kinds_without_validated_generic_interval_value[0].op,
-     'm3_unknown_native');
-   assert.equal(r.opaque_native_definition_dependencies[0].op,'m3_unknown_native');
+   assert.equal(r.reachable_nodes,4);
+   assert.equal(r.unreachable_nodes,1);
+   assert.equal(r.reachable_native_operator_kinds_without_validated_generic_interval_value.length,2);
  }finally{await fs.rm(dir,{recursive:true,force:true})}
 });
