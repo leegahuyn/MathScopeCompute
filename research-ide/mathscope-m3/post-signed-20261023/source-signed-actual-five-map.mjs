@@ -34,7 +34,7 @@ export function attachActualPostSignedFiveMap(temporal,context={}){
   assertGlobalMomentCurrent(template);
   if(!b?.sourceRestriction?.positiveAAndFiveMuFromSource||
      !b?.sourceRestriction?.originalPositiveLambdaRetained||
-     b?.copies?.length!==5||b?.coefficients?.angularMatrix?.length!==3||
+     b?.copies?.length!==3||b?.coefficients?.angularMatrix?.length!==3||
      b?.coefficients?.axialMatrix?.length!==2||source.checks.some(x=>x.pass!==true)||
      source.mean.fullAngularCovariance!==covariance)
     fail('UNVERIFIED_SOURCE_FIVEMAP','Original five positive smooth bumps and the fresh post-temporal mean must be used.');
@@ -53,7 +53,7 @@ export function attachActualPostSignedFiveMap(temporal,context={}){
     deltaV=shareGlobalScalar(G,G.add(...coefficients.angular.map((c,j)=>
       G.mul(c,b.copies[j].inQ))),'PostSignedFiveBump_v'),
     gammaDesired=shareGlobalScalar(G,G.add(...coefficients.axial.map((c,j)=>
-      G.mul(c,b.copies[j+3].inQ))),'PostSignedFiveBump_gamma'),
+      G.mul(c,b.copies[j].inQ))),'PostSignedFiveBump_gamma'),
     r=G.fresh('PostSignedFiveBumpRadialVar'),
     integrand=G.substitute(G.mul(R,gammaDesired),R,r),
     primitive=G.integral(integrand,r,geometry.innerRadius,R),
