@@ -4,6 +4,7 @@ on:
     branches: [mathscope-m3m4-evidence-gates-20261023]
     paths:
       - 'research-ide/mathscope-m3/post-signed-20261023/verify_fivemap_meridional_conditional_ftc.py'
+      - 'research-ide/mathscope-m3/post-signed-20261023/fivemap_radial_primitive_bound.py'
       - '.github/workflows/mathscope-fivemap-meridional-conditional-20261023.yml'
   workflow_dispatch:
 jobs:
@@ -28,6 +29,8 @@ jobs:
           assert r['actual_source_Cinfty_and_cutoff_convergence_proved'] is False
           assert r['release']=='HOLD'
           PY
+      - name: Validate explicit positive-annulus rational derivative bounds
+        run: python research-ide/mathscope-m3/post-signed-20261023/fivemap_radial_primitive_bound.py
       - uses: actions/upload-artifact@v4
         with:
           name: fivemap-conditional-ftc-not-original-global-proof
