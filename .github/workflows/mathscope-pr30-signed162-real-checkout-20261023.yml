@@ -31,6 +31,14 @@ jobs:
           git apply --check research-ide/mathscope-m3/staged-patches-20261023/PR30_Cumulative_Signed162_Cor85_TemporalFrontier.patch
           git apply research-ide/mathscope-m3/staged-patches-20261023/PR30_Cumulative_Signed162_Cor85_TemporalFrontier.patch
           git status --short | tee "$RUNNER_TEMP/mathscope-real-patch-status.txt"
+      - name: Apply independently audited real-checkout source-pin portability correction
+        run: |
+          echo '5f225deef9418ce3b50d8791ed40524e4202873148c953c36fa66f19d74f7f92  research-ide/mathscope-m3/pin-test-hotfix-20261023/PR30_RealCheckout_PinTest_EnvPortable.patch' | sha256sum --check
+          git apply --check research-ide/mathscope-m3/pin-test-hotfix-20261023/PR30_RealCheckout_PinTest_EnvPortable.patch
+          git apply research-ide/mathscope-m3/pin-test-hotfix-20261023/PR30_RealCheckout_PinTest_EnvPortable.patch
+      - name: Verify 29 authentic original Git blob pins in this full checkout
+        run: |
+          node --input-type=module -e "import {verifyPR30OriginalSourceFiles} from './research-ide/mathscope-m3/navier/source-signed-162-pr30-pins.mjs'; let x=await verifyPR30OriginalSourceFiles(); if(x.verifiedFiles.length!==29)process.exit(2); console.log('ORIGINAL_PR30_29_BLOB_PINS_PASS')"
       - name: Validate source imports and syntax of all generated .mjs
         run: |
           for p in research-ide/mathscope-m3/navier/{generic*,original*,source-signed*,source-pr30*,run-pr30*,actual-67*}.mjs; do
@@ -38,6 +46,7 @@ jobs:
           done
       - name: Execute full source-bound signed/current/temporal regression in real PR30 repository
         run: |
+          set -o pipefail
           node --test --test-concurrency=1 research-ide/mathscope-m3/tests/*.test.mjs 2>&1 | tee "$RUNNER_TEMP/mathscope-signed162-real-checkout.tap"
       - if: always()
         uses: actions/upload-artifact@v4
