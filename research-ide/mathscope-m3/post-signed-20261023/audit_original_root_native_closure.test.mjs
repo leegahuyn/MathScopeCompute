@@ -87,3 +87,26 @@ test('single reverse pass reports separate root native closures accurately',asyn
  assert.equal(add.operation_counts.some(x=>x.op==='exp'),false);
  assert.equal(r.operator_counts.find(x=>x.op==='exp').n,1);
 });
+
+test('system ID census distinguishes actual repeated source call nodes from unique registry ID',async()=>{
+ const dir=await fs.mkdtemp(path.join(os.tmpdir(),'ms-system-id-census-'));
+ try{
+  const x={nodes:[
+   {op:'rational',args:['1','1']},
+   {op:'coordinate',args:['X']},
+   {op:'m3_aux_expression_partial',args:[-13,[1],[0]]},
+   {op:'m3_aux_expression_partial',args:[-13,[1],[1]]},
+   {op:'add',args:[2,3]}],
+    captureFunctionDefinitions:()=>({raw:true})};
+  await exportOriginalSourceGraph(x,{dir,roots:[4,2],
+   scope:'FIRST_FIVEMAP_TOY',sourceCommit:'synthetic',pr30Commit:'synthetic'});
+  const result=await auditRootReachableNativeOperations(dir);
+  assert.equal(result.distinct_native_source_system_IDs_reached,1);
+  assert.deepEqual(result.direct_reachable_source_system_ID_usage,
+    [{source_id:'m3_aux_expression_partial::-13',call_nodes:2}]);
+  assert.equal(result.original_source_per_root_native_usage[0].native_original_source_system_IDs[0].call_nodes,2);
+  assert.equal(result.original_source_per_root_native_usage[1].native_original_source_system_IDs[0].call_nodes,1);
+  assert.equal(result.native_function_body_expansion_included_in_ID_counts,false);
+  assert.equal(result.actual_final_67_numeric_intervals_certified,0);
+ }finally{await fs.rm(dir,{recursive:true,force:true})}
+});
