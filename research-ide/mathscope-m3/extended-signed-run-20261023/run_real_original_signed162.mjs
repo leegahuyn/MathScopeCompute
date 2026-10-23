@@ -41,7 +41,7 @@ function bound(){
 const context={checkCancelled:bound,onProgress:(row)=>{
     bound();const now=Date.now();
     if(now-lastProgress>15000){lastProgress=now;
-       receipt.progress.push({at_ms:now-START,stage:row?.stage,nodeCount:row?.nodeCount});
+       receipt.progress.push({at_ms:now-START,stage:row?.stage??receipt.stage,substage:row?.step??row?.component??null,nodeCount:row?.nodeCount??G?.nodes?.length??null,delta:row?.delta??null});
        if(receipt.progress.length>100)receipt.progress.shift();save();}
 }};
 async function stage(name,callback){
@@ -132,7 +132,9 @@ try{
  receipt.stop_reason='New post-signed Fourier limit AST and five-map mean updates do not certify whole-source all-order bounds, 3D PDE after FiveMap, infinite corrections, final selectors or numerical 67 final-field jets.';
  receipt.status='PARTIAL_SOURCE_AUTHENTICATED';save();
 }catch(e){receipt.error={code:e.code??e.name??'ERROR',message:String(e.message??e).slice(0,1000)};
- receipt.status='BLOCKED';receipt.failed_at_stage=receipt.stage;save();console.error(JSON.stringify(receipt.error));process.exitCode=2;}
+ receipt.status='BLOCKED';receipt.failed_at_stage=receipt.stage;
+ receipt.failed_graph_node_count=G?.nodes?.length??null;
+ receipt.last_progress=receipt.progress.slice(-8);save();console.error(JSON.stringify(receipt.error));process.exitCode=2;}
 finally{receipt.finished_utc=new Date().toISOString();receipt.runtime_elapsed_ms=Date.now()-START;save();
  console.log(JSON.stringify({status:receipt.status,authenticated:receipt.successfully_authenticated,
  source_stress:receipt.real_original_latest_cor85_stress_seal_issued,release:'HOLD'}));}
