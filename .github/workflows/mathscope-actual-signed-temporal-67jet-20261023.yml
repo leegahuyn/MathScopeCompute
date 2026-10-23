@@ -1,0 +1,63 @@
+name: Signed162 private seal and actual Temporal to original 67-jet numeric gate
+on:
+  push:
+    branches: [mathscope-m3m4-evidence-gates-20261023]
+    paths:
+      - '.github/workflows/mathscope-actual-signed-temporal-67jet-20261023.yml'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/verify_67jet_after_actual_signed.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/test_67jet_after_actual_signed.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  signed_temporal_true_67_numeric_gate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Download source-authentic completed Signed162 and post-Signed Temporal AST
+        uses: actions/download-artifact@v4
+        with:
+          github-token: ${{ github.token }}
+          run-id: 39933504384
+          name: authentic-signed162-real-native-field-and-post-five-checkpoint
+          path: ${{ runner.temp }}/native-signed-evidence
+      - name: Verify all source pins and 12 independent final-67 forgery controls
+        env:
+          ACTUAL_SIGNED_CI_RECEIPT: ${{ runner.temp }}/native-signed-evidence/m3-original-signed-temporal-five-after-native-field-fix.json
+        run: |
+          set -euo pipefail
+          python -B -m unittest discover \
+            -s research-ide/mathscope-m3/closure-evidence-20261023 \
+            -p 'test_67jet_after_actual_signed.py' -v 2>&1 | tee "$RUNNER_TEMP/actual-signed-67-jet-tests.log"
+      - name: Generate 67-field original source-linked readiness records and provenance
+        run: |
+          set -euo pipefail
+          python -B research-ide/mathscope-m3/closure-evidence-20261023/verify_67jet_after_actual_signed.py \
+            --receipt "$RUNNER_TEMP/native-signed-evidence/m3-original-signed-temporal-five-after-native-field-fix.json" \
+            --output "$RUNNER_TEMP/actual-signed-temporal-67jet-readiness.json"
+      - name: Reject false completed 67 actual numeric jets
+        run: |
+          set +e
+          python -B research-ide/mathscope-m3/closure-evidence-20261023/verify_67jet_after_actual_signed.py \
+            --receipt "$RUNNER_TEMP/native-signed-evidence/m3-original-signed-temporal-five-after-native-field-fix.json" \
+            --output "$RUNNER_TEMP/actual-signed-temporal-67jet-negative-control.json" --require-67
+          code=$?
+          if [ "$code" -ne 2 ]; then echo "INCORRECT_NUMERIC_COMPLETION_ACCEPTED: exit code $code"; exit 1; fi
+          echo "ORIGINAL_FINAL67_NUMERIC_EVIDENCE_MISSING_FAIL_CLOSED"
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: authentic-67-jet-readiness-after-Signed162-and-Temporal
+          path: |
+            ${{ runner.temp }}/actual-signed-67-jet-tests.log
+            ${{ runner.temp }}/actual-signed-temporal-67jet-readiness.json
+            ${{ runner.temp }}/actual-signed-temporal-67jet-negative-control.json
+          if-no-files-found: warn
+          retention-days: 30
