@@ -142,3 +142,36 @@ test('repeated native derivative calls reuse one defining-body expansion',async(
   assert.equal(r.native_source_body_expansion_cache_enabled,true);
  }finally{await fs.rm(dir,{recursive:true,force:true})}
 });
+
+test('source runtime covariance 2x2 matrix and normUpper resolve actual Volterra native body',async()=>{
+ const dir=await fs.mkdtemp(path.join(os.tmpdir(),'ms-native-original-covariance-'));
+ try{
+  const G={...graph,covarianceSystems:[{
+   variable:1,parameters:[1],matrix:[[0,2],[2,0]],
+   normUpper:0,length:1,initial:[0,1]}]};
+  const owner={nodes:G.nodes,captureFunctionDefinitions:()=>captured};
+  await exportOriginalSourceGraph(G,{dir,definitionGraph:owner,roots:[8],
+    scope:'FIRST_FIVEMAP_TOY',sourceCommit:'toy',pr30Commit:'toy'});
+  const r=await auditNativeDefinitionBodyClosure(dir);
+  assert.equal(r.actual_covariance_runtime_source_registry_SHA_verified,true);
+  assert.equal(r.actual_covariance_runtime_source_system_count,1);
+  assert.equal(r.reached_native_calls_with_unresolved_definitions,0);
+  assert.equal(r.reached_native_body_categories.source_covariance_volterra,1);
+  assert.equal(r.native_definition_reachability_complete,true);
+  assert.equal(r.actual_final_67_jet_intervals_certified,0);
+ }finally{await fs.rm(dir,{recursive:true,force:true})}
+});
+test('tampering original covariance source matrix fails independent SHA validation',async()=>{
+ const dir=await fs.mkdtemp(path.join(os.tmpdir(),'ms-native-cov-tamper-'));
+ try{
+  const G={...graph,covarianceSystems:[{
+   variable:1,parameters:[1],matrix:[[0,2],[2,0]],
+   normUpper:0,length:1,initial:[0,1]}]};
+  await exportOriginalSourceGraph(G,{dir,
+    definitionGraph:{nodes:G.nodes,captureFunctionDefinitions:()=>captured},
+    roots:[8],scope:'FIRST_FIVEMAP_TOY',sourceCommit:'toy',pr30Commit:'toy'});
+  await fs.writeFile(path.join(dir,'original-source-covariance-systems.json'),'[]\n');
+  await assert.rejects(()=>auditNativeDefinitionBodyClosure(dir),
+    {code:'UNTRUSTED_SOURCE_REPLAY'});
+ }finally{await fs.rm(dir,{recursive:true,force:true})}
+});
