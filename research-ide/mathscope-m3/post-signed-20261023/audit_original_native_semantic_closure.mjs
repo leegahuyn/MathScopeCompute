@@ -28,7 +28,9 @@ export async function auditNativeDefinitionBodyClosure(dir,{maxNodes=5000000,max
     !integrity.extended_coupled_registry_sha256_verified)
     halt('SHA-valid base-only registry cannot support native body reachability');
  const defs=JSON.parse(await fs.readFile(path.join(dir,'original-source-functions.json'),'utf8'));
- const registry=loadOriginalExtendedNativeRegistry(defs);
+ const runtimeCovariance=integrity.covariance_runtime_registry_sha256_verified?
+     JSON.parse(await fs.readFile(path.join(dir,'original-source-covariance-systems.json'),'utf8')):null;
+ const registry=loadOriginalExtendedNativeRegistry(defs,{runtimeCovarianceSystems:runtimeCovariance});
  const count=manifest.node_count;
  if(!Number.isSafeInteger(count)||count<1||count>maxNodes||
     manifest.original_root_ids.length<1||manifest.original_root_ids.length>16)
@@ -129,6 +131,8 @@ export async function auditNativeDefinitionBodyClosure(dir,{maxNodes=5000000,max
    original_pr30_commit:manifest.original_pr30_commit,
    source_node_count:count,root_count:roots.length,
    native_registry_counts:registry.counts,
+   actual_covariance_runtime_source_registry_SHA_verified:integrity.covariance_runtime_registry_sha256_verified,
+   actual_covariance_runtime_source_system_count:integrity.covariance_runtime_registry_system_count,
    semantic_body_reachable_unique_nodes:reachable,
    syntactic_and_native_body_union_operations:format(union),
    source_native_body_extra_edges_constructed:bodyEdges,
