@@ -1,0 +1,56 @@
+name: M3 actual 67 final-field jet readiness original-source certification gate
+on:
+  push:
+    branches: [mathscope-m3m4-evidence-gates-20261023]
+    paths:
+      - '.github/workflows/mathscope-real-67jet-source-gate-20261023.yml'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/verify_real_67jet_readiness.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/test_real_67jet_readiness.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  original-source-67jet-gate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Download 29-minute authenticated original Forced and Cor85 execution receipt
+        uses: actions/download-artifact@v4
+        with:
+          github-token: ${{ github.token }}
+          run-id: 39899886766
+          name: mathscope-authentic-pr30-forced-cor85-signed162-evidence
+          path: ${{ runner.temp }}/source-original
+      - name: Run 15 source identity and falsification tests
+        env:
+          REAL_RECEIPT_FILE: ${{ runner.temp }}/source-original/m3-real-signed162-attempt.json
+        run: |
+          set -o pipefail
+          python -B -m unittest discover -s research-ide/mathscope-m3/closure-evidence-20261023 -p 'test_real_67jet_readiness.py' -v 2>&1 | tee "$RUNNER_TEMP/67jet-source-tests.log"
+      - name: Generate source-locked 67 target records and exact 13 representative cutoff jet certificates
+        run: |
+          python -B research-ide/mathscope-m3/closure-evidence-20261023/verify_real_67jet_readiness.py             --actual-receipt "$RUNNER_TEMP/source-original/m3-real-signed162-attempt.json"             --output "$RUNNER_TEMP/real-original-67jet-readiness.json"
+      - name: Final numeric claim MUST reject nonexistent original field values
+        run: |
+          set +e
+          python -B research-ide/mathscope-m3/closure-evidence-20261023/verify_real_67jet_readiness.py             --actual-receipt "$RUNNER_TEMP/source-original/m3-real-signed162-attempt.json"             --output "$RUNNER_TEMP/real-original-67jet-final-negative-control.json" --require-final
+          code=$?
+          if [ "$code" -ne 2 ]; then echo "FAIL: absent original final field jets incorrectly accepted (exit $code)"; exit 1; fi
+          echo "FAIL_CLOSED_NUMERIC_GATE_CONFIRMED: exit code $code"
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mathscope-original-67jet-readiness-and-fail-closed-numeric-gate
+          path: |
+            ${{ runner.temp }}/67jet-source-tests.log
+            ${{ runner.temp }}/real-original-67jet-readiness.json
+            ${{ runner.temp }}/real-original-67jet-final-negative-control.json
+          if-no-files-found: warn
+          retention-days: 30
