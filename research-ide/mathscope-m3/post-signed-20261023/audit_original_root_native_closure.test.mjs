@@ -39,6 +39,8 @@ test('reachable source exponential is not silently certified as original',async(
  assert.equal(r.operator_counts.find(x=>x.op==='exp').evidence,
    'BOUNDED_ARGUMENT_INTERVAL_KERNEL_ONLY');
  assert.equal(r.actual_final_all_cycle_A_b_p_present,false);
+ assert.equal(r.syntactic_root_closure_only,true);
+ assert.equal(r.native_definition_semantic_dependencies_traversed,false);
 });
 test('source unknown native operation has no numerical promotion',async()=>{
  const dir=await fs.mkdtemp(path.join(os.tmpdir(),'mathscope-native-closure-'));
@@ -50,5 +52,6 @@ test('source unknown native operation has no numerical promotion',async()=>{
    const r=await auditRootReachableNativeOperations(dir);
    assert.equal(r.reachable_native_operator_kinds_without_validated_generic_interval_value[0].op,
      'm3_unknown_native');
+   assert.equal(r.opaque_native_definition_dependencies[0].op,'m3_unknown_native');
  }finally{await fs.rm(dir,{recursive:true,force:true})}
 });
