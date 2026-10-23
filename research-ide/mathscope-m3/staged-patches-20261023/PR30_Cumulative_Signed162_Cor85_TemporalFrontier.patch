@@ -1,0 +1,2626 @@
+diff --git a/research-ide/mathscope-m3/GENERIC_CURRENT_STATE_20261023_KO.md b/research-ide/mathscope-m3/GENERIC_CURRENT_STATE_20261023_KO.md
+new file mode 100644
+index 0000000..62f2911
+--- /dev/null
++++ b/research-ide/mathscope-m3/GENERIC_CURRENT_STATE_20261023_KO.md
+@@ -0,0 +1,56 @@
++# MathScope M3 범용 `CurrentState` — 검증 가능한 1차 구현 (2026-10-23)
++
++## 본 작업의 범위와 중요한 판정
++
++이 패키지는 **초기장 전용 source API를 우회하지 않고** 후속 장에 필요한 실행 계약을 추가한다. PR #30 HEAD `a9b3a5b317525f6d0a71e2e356b054c9d25d2e60`에서 확인한 실제 함수 이름과 반환 구조를 바탕으로 작성했다.
++
++**구현한 것:** 다섯 필드(A0,A1,A2,b,p)를 포함하는 `CurrentState` 데이터 계약, 고정 원본 커버별 모든 ±m 모드 보존, Forced→fresh pressure/PDE→Signed→fresh pressure/PDE→Temporal→fresh pressure/PDE→FiveMap→fresh pressure/PDE 전이 스케줄러, 원본 G.nodes 접두부 변경 방지(스트리밍 SHA-256), source metadata 검증, 원본 67개 제트의 정확한 다중지표 검사, 67개 **기호 그래프 루트**를 생산하는 소비 인터페이스, 실제 private-seal로 인증된 초기 상태와 기존 `attachGlobalForcedCurrent`를 연결하는 PR30 전용 어댑터, 원래 `reconstructUpdatedFullMeanPressure` 및 `exactRealCylindricalPDE`에 연결되는 범용 pressure/PDE refresh 소스 어댑터.
++
++**아직 구현하지 않은 것:** 원본 보정장 Signed/Temporal/FiveMap의 완전한 일반화된 원본 생산자, 원본 4.3M 노드 이상 라이브 스냅샷 재생과 `[4311535..4311541]` 원본 ID 보장, 실제 source coefficient supremum/selector, 원본 최종 67개 제트 값·셀 구간, whole-K 에너지 N7-06, N8-05 수렴 인증. 완료 항목으로 승격시키지 않는다.
++
++## 원본 소스와의 경계
++
++- 원본 초기 상태: `source-initialized-angular.mjs`의 `assertGlobalInitializedAngular` 개인 소스 인증을 **직접 호출**한다. 가짜 `schema`만으로는 통과하지 못한다.
++- 기존 Forced 한 단계: `source-global-forced-current.mjs`의 `attachGlobalForcedCurrent`, `assertGlobalForcedCurrent`를 재사용한다. 이미 구현된 Forced 계산을 재작성하지 않는다. 이 경로는 실제 원본의 개인 인증이 있어야 실행된다.
++- 원본 pressure/PDE: `source-updated-mean-pressure.mjs`의 `reconstructUpdatedFullMeanPressure`, `source-harmonic-assembly.mjs`의 `exactRealCylindricalPDE`를 사용한다. 모든 현재 공분산 성분, $\beta,v,\gamma$, 원래 응력, 전체 압력, 최신 P/J를 한 소스 G에 둔다.
++- 이후 일반화 단계는 아직 원본 구현·인증되지 않았으며, `MISSING_GENERALIZED_OPERATOR`로 종료한다. 기존 Signed 함수의 private seal을 복제하거나 우회하는 변칙은 금지한다.
++- 67제트 생성 API는 원본 실수 셀 구간 계산기가 아니다. 유효한 5개 기호 루트를 전달받았을 때 `G.derivative` 호출을 생성하는 **기호식 단계**다. 단순한 그래프 식별자는 수치 enclosure가 아니다.
++
++## 실행
++
++저장소 루트에서 다음과 같이 통합한다(복제본 또는 작업 브랜치에서 실행할 것).
++
++```sh
++node --test research-ide/mathscope-m3/tests/generic-current-state.test.mjs \
++  research-ide/mathscope-m3/tests/original-adapter-boundary.test.mjs \
++  research-ide/mathscope-m3/tests/original-pressure-refresh.test.mjs
++```
++
++원본의 **실제** `GlobalActualInitializedAngular`를 반환하는 이미 검증된 실행 팩토리가 있다면, 그것만 다음 명령의 `--factory`로 지정한다. 비공개 원본 인증을 임의 생성하지 말 것.
++
++```sh
++node research-ide/mathscope-m3/navier/run-private-source-bridge.mjs \
++  --factory /path/to/already_existing_original_initial_factory.mjs \
++  --source-commit a9b3a5b317525f6d0a71e2e356b054c9d25d2e60 \
++  --output /tmp/mathscope_currentstate_original_receipt.json
++```
++
++팩토리가 없으면 의도적으로 종료코드 2 / `MISSING_PRIVATE_SOURCE_FACTORY`다. `run-private-source-bridge.mjs`의 소스는 이 파일들을 저장한 폴더와 동일한 위치에 있어야 import가 해결된다. 기존 원본 생성은 매우 큰 그래프이므로 충분한 메모리/시간과 별도 실행 환경이 필요하다.
++
++## 테스트의 정확한 의미
++
++- `node:test` 테스트 16개는 합성 그래프와 교체된 모의 원본 모듈 대상으로 수행했다. 구조 불변성과 오류 거부 동작 검증이며 **원본 NS 객체의 실제 구성 실행 증거가 아니다**.
++- 원본 PR30 파일은 커넥터로 현재 export와 매개변수 경로를 읽어 설계에 반영했다. 원격 HEAD에서 새 코드를 import / CI 실행했다는 주장은 하지 않는다.
++- 이전 67+13 제트 결합 Python 계산기 21개 테스트를 별도 재실행하여 모두 성공했다. 원본 소스 미연결 입력은 종료코드 2 (`ORIGINAL_LIVE_PRODUCER_NOT_CONNECTED`)를 유지한다.
++- 원본 상태는 M3 기존 62/64 승계, N7-06 / N8-05 OPEN, actualLastResolvedTau=null; 이번 실행 새 원본 완료 항목 0이다.
++
++## 정확한 미해결 후속 실행 작업
++
++1. `source-global-signed.mjs`의 초기장 전용 seal을 우회하지 않고 갱신된 Forced `CurrentState`를 입력으로 받는 **새로운 Signed 실제 producer**를 구현한다. 전체 current covariance, 현재 H, positive a, Sigma 및 두 실제 모멘트와 압력을 계산해야 한다.
++2. 각 Signed/Temporal/Five 단계에서 전체 상태와 최신 잔차를 입력하는 실제 `G` AST root 생산 구현을 추가한다. 사용자 제공 fixture/toggle를 증거로 쓰지 않는다. 각 단계 후 `makeOriginalFullPressureRefresher`를 호출해 갱신된 P,Jθ,Jz와 pressure/PDE를 새로 계산한다.
++3. 후속장 실제 원본 gauge를 가진 `A0/A1/A2`, 축대칭 b 및 p, 전체 원본 cutoff selector에 대한 소스 인증과 최종 합성을 결속한다. 생성된 root IDs는 동일한 parent graph의 엄격한 접두부 및 parameter/function SHA를 확인해야 한다. 이전 다른 실행의 4311535 등을 재현했다고 단정하지 않는다.
++4. 67개 `G.derivative`의 실제 값에 대해 전체 셀 유리구간, 독립 정밀도와 tail 인증을 더한다. 그때만 기존 67+13 계산기에 결합한다. 이후 N7-06 및 N8-05는 각각 별도 원문 합격 기준으로 확인한다.
++
++## 저장 제약
++
++현재 ZIP과 독립 패치는 기존 파일을 덮어쓰지 않는다. 원본 GitHub PR 및 운영 웹사이트 배포에 영향을 주지 않는 별도 산출물이다. 신규 파일을 PR에 반영할 때는 현재 HEAD/매니페스트를 재확인하고, 실행·수학적 범위 명시를 유지해야 한다.
+diff --git a/research-ide/mathscope-m3/navier/actual-67-jet-contract.mjs b/research-ide/mathscope-m3/navier/actual-67-jet-contract.mjs
+new file mode 100644
+index 0000000..0ec6820
+--- /dev/null
++++ b/research-ide/mathscope-m3/navier/actual-67-jet-contract.mjs
+@@ -0,0 +1,76 @@
++/** Exact original energy-operator 67 jet inventory from PR30 evidence.
++ * Distinct multi-indices per A component. The values are not asserted here.
++ */
++export const ORIGINAL_JET_KEYS=Object.freeze(
++[
++  "A0@0,0,0,0",
++  "A0@0,0,0,1",
++  "A0@0,0,1,0",
++  "A0@0,0,1,1",
++  "A0@0,0,2,0",
++  "A0@0,0,3,0",
++  "A0@0,1,0,0",
++  "A0@0,1,0,1",
++  "A0@0,1,1,0",
++  "A0@0,1,2,0",
++  "A0@0,2,0,0",
++  "A0@0,2,1,0",
++  "A0@0,3,0,0",
++  "A0@1,0,0,0",
++  "A0@1,0,1,0",
++  "A0@1,1,0,0",
++  "A0@2,0,0,0",
++  "A0@2,0,1,0",
++  "A0@2,1,0,0",
++  "A1@0,0,0,0",
++  "A1@0,0,0,1",
++  "A1@0,0,1,0",
++  "A1@0,0,1,1",
++  "A1@0,0,2,0",
++  "A1@0,0,3,0",
++  "A1@0,1,0,0",
++  "A1@0,1,1,0",
++  "A1@0,2,0,0",
++  "A1@0,2,1,0",
++  "A1@1,0,0,0",
++  "A1@1,0,0,1",
++  "A1@1,0,1,0",
++  "A1@1,0,2,0",
++  "A1@1,1,0,0",
++  "A1@1,2,0,0",
++  "A1@2,0,0,0",
++  "A1@2,0,1,0",
++  "A1@3,0,0,0",
++  "A2@0,0,0,0",
++  "A2@0,0,0,1",
++  "A2@0,0,1,0",
++  "A2@0,0,2,0",
++  "A2@0,1,0,0",
++  "A2@0,1,0,1",
++  "A2@0,1,1,0",
++  "A2@0,1,2,0",
++  "A2@0,2,0,0",
++  "A2@0,3,0,0",
++  "A2@1,0,0,0",
++  "A2@1,0,0,1",
++  "A2@1,0,1,0",
++  "A2@1,0,2,0",
++  "A2@1,1,0,0",
++  "A2@1,2,0,0",
++  "A2@2,0,0,0",
++  "A2@2,1,0,0",
++  "A2@3,0,0,0",
++  "b@0,0,0",
++  "b@0,0,1",
++  "b@0,1,0",
++  "b@0,2,0",
++  "b@1,0,0",
++  "b@2,0,0",
++  "p@0,0,0,0",
++  "p@0,0,1,0",
++  "p@0,1,0,0",
++  "p@1,0,0,0"
++]);
++export function originalJetOrders(){return ORIGINAL_JET_KEYS.map(name=>{
++  const [field,order]=name.split('@');return {field,orders:order.split(',').map(Number)};
++});}
+diff --git a/research-ide/mathscope-m3/navier/generic-current-state.mjs b/research-ide/mathscope-m3/navier/generic-current-state.mjs
+new file mode 100644
+index 0000000..3e52707
+--- /dev/null
++++ b/research-ide/mathscope-m3/navier/generic-current-state.mjs
+@@ -0,0 +1,202 @@
++/** MathScope M3 / generic CurrentState transition kernel.
++ * This file deliberately does NOT assert original analytic or numeric source
++ * authority: real source states require the separate private-seal adapter.
++ * Existing G.nodes and function definitions are never replaced or faked.
++ */
++import {createHash} from 'node:crypto';
++import {ORIGINAL_JET_KEYS} from './actual-67-jet-contract.mjs';
++
++export const PHASES = Object.freeze(['forced','signed','temporal','five']);
++export const FIVE_FIELDS = Object.freeze(['A0','A1','A2','b','p']);
++const SCHEMA='MathScope.N6.GenericCurrentState/1';
++const fail=(code,message)=>{const e=new Error(message);e.code=code;throw e;};
++const canonical=x=>typeof x==='bigint'?'{"$bigint":'+JSON.stringify(x.toString())+'}':
++  x===null||typeof x!=='object'?JSON.stringify(x):
++  Array.isArray(x)?'['+x.map(canonical).join(',')+']':
++  '{'+Object.keys(x).sort().map(k=>JSON.stringify(k)+':'+canonical(x[k])).join(',')+'}';
++const digest=x=>createHash('sha256').update(canonical(x)).digest('hex');
++const seals=new WeakMap();
++const own=(x,k)=>Object.prototype.hasOwnProperty.call(x,k);
++const hex64=x=>typeof x==='string'&&/^[a-f0-9]{64}$/i.test(x);
++const root=(G,id,name)=>{if(!Number.isSafeInteger(id)||id<0||!G.nodes[id])fail('INVALID_ACTUAL_GRAPH_ROOT',`${name}: integer root absent from this exact graph (${id}).`);return id;};
++const roots=(G,ids,name,length)=>{if(!Array.isArray(ids)||ids.length!==length)fail('INVALID_ROOT_VECTOR',`${name} requires ${length} existing graph roots.`);return ids.map((x,i)=>root(G,x,`${name}[${i}]`));};
++const tuple=(G,obj,name)=>{
++  if(!obj||typeof obj!=='object')fail('INCOMPLETE_FULL_CURRENT',`${name} is required.`);
++  return Object.fromEntries(['beta','v','gamma'].map(k=>[k,root(G,obj[k],`${name}.${k}`)]));
++};
++const DEFECTS=['P','Jtheta','Jz'];
++const COVARIANCE=['rr','rtheta','rz','thetatheta','thetaz','zz'];
++const covariance=(G,obj)=>{
++  if(!obj||typeof obj!=='object')fail('MISSING_FULL_COVARIANCE','All six current auxiliary covariance components are required.');
++  return Object.fromEntries(COVARIANCE.map(k=>[k,root(G,obj[k],`covariance.${k}`)]));
++};
++const defects=(G,obj)=>{
++  if(!obj||typeof obj!=='object')fail('MISSING_FRESH_DEFECTS','P, Jtheta and Jz must all be recomputed from the latest current.');
++  return Object.fromEntries(DEFECTS.map(k=>[k,root(G,obj[k],`defects.${k}`)]));
++};
++const scope={sourceFieldEnclosureComputed:false,originalSelectorEvaluated:false,analyticAllOrderSourceBoundsProved:false,
++  originalM3AcceptanceClosed:false,originalFinalJetCount:0};
++const modeInventory=(current,previous=null)=>{
++  if(!Array.isArray(current)||!current.length)fail('MISSING_MODE_INVENTORY','Every live cover-label harmonic inventory is required.');
++  const keys=new Set(),result=[];
++  for(const item of current){
++    const {label,modes}=item||{};
++    if(typeof label!=='string'||!label||keys.has(label)||!Array.isArray(modes)||!modes.length)
++      fail('INVALID_COVER_LABEL','Use each actual fixed-label mode group exactly once.');
++    keys.add(label);const s=new Set(modes);
++    if(s.size!==modes.length||[...s].some(m=>!Number.isSafeInteger(m)||m===0||!s.has(-m)))
++      fail('INCOMPLETE_CONJUGATE_MODES',`Each ${label} mode must have its negative conjugate.`);
++    const ordered=[...s].sort((a,b)=>a-b);
++    result.push({label,modes:ordered});
++  }
++  result.sort((a,b)=>a.label.localeCompare(b.label));
++  if(previous){
++    if(result.length!==previous.length)fail('DROPPED_OR_INSERTED_COVER_LABEL','Fixed source cover labels may not be omitted or inserted.');
++    for(const p of previous){const n=result.find(x=>x.label===p.label);
++      if(!n)fail('DROPPED_OR_INSERTED_COVER_LABEL',`Missing fixed cover ${p.label}.`);
++      if(p.modes.some(m=>!n.modes.includes(m)))fail('DROPPED_PRIOR_HARMONIC',`The ${p.label} full current discarded a preceding harmonic.`);
++    }
++  }
++  return result;
++};
++function validateFields(G,x,requirePotential=false){
++  if(!x||typeof x!=='object')fail('INCOMPLETE_FULL_CURRENT','Full current root set is required.');
++  const y={velocity:roots(G,x.velocity,'velocity',3),pressure:root(G,x.pressure,'pressure'),
++    residual:roots(G,x.residual,'residual',3),meanVelocity:tuple(G,x.meanVelocity,'meanVelocity'),
++    meanPressure:root(G,x.meanPressure,'meanPressure'),angularPressure:root(G,x.angularPressure,'angularPressure'),
++    covariance:covariance(G,x.covariance),defects:defects(G,x.defects)};
++  if(x.potential!==undefined&&x.potential!==null){const a=x.potential;
++    y.potential={A:roots(G,a.A,'A',3),b:root(G,a.b,'b'),p:root(G,a.p,'p')};
++  }else{y.potential=null;if(requirePotential)fail('MISSING_ORIGINAL_POTENTIAL','Original vector potential, swirl and pressure are not attached.');}
++  return y;
++}
++function digestNodePrefix(G,count){
++  // Stream each complete AST node directly into SHA-256: memory is O(1)
++  // in graph length, including multi-million-node original source graphs.
++  const h=createHash('sha256');
++  for(let index=0;index<count;index++){
++    if(!G.nodes[index])fail('GRAPH_NODE_HOLE',`Absent node at ${index}.`);
++    h.update(String(index));h.update('\0');
++    h.update(canonical(G.nodes[index]));h.update('\n');
++  }
++  return h.digest('hex');
++}
++function graphSeal(G){
++  if(!Array.isArray(G?.nodes))fail('MISSING_SOURCE_GRAPH','CurrentState requires the actual shared G.nodes array.');
++  return {count:G.nodes.length, graphSHA256:digestNodePrefix(G,G.nodes.length),
++    definitions:typeof G.captureFunctionDefinitions==='function'?G.captureFunctionDefinitions():null};
++}
++function checkGraphSeal(G,seal){
++  if(G.nodes.length<seal.count||digestNodePrefix(G,seal.count)!==seal.graphSHA256)
++    fail('MUTATED_SOURCE_GRAPH','Original graph node prefix was modified or truncated.');
++  if(seal.definitions!==null&&(!G.functionDefinitionsUnchanged||!G.functionDefinitionsUnchanged(seal.definitions)))
++    fail('MUTATED_SOURCE_FUNCTION_DEFINITIONS','Original function-definition registry changed.');
++}
++function stamp(G,mode,fields,modes,source,history,stage,phase){
++  const state={schema:SCHEMA,G,mode,fields,modes,source,history,stage,phase,scope:{...scope}};
++  const snapshot=graphSeal(G),body={mode,fields,modes,source,history,stage,phase};
++  seals.set(state,{graph:G,snapshot,bodySHA256:digest(body)});return state;
++}
++export function assertCurrentState(state){
++  const seal=seals.get(state);
++  if(!seal||seal.graph!==state.G||seal.bodySHA256!==digest({mode:state.mode,fields:state.fields,modes:state.modes,
++     source:state.source,history:state.history,stage:state.stage,phase:state.phase}))
++    fail('INVALID_CURRENT_STATE_SEAL','Only an unchanged state returned by this exact producer may be used.');
++  checkGraphSeal(state.G,seal.snapshot);return true;
++}
++function sourceMetadata(data){
++  if(!data||!hex64(data.parameterExpressionSHA256)||!hex64(data.paperSHA256)||
++      typeof data.sourceCommit!=='string'||!data.sourceCommit)
++    fail('INCOMPLETE_SOURCE_PROVENANCE','Source commit, original PDF and parameter-expression SHA256 are mandatory.');
++  return Object.freeze({sourceCommit:data.sourceCommit,paperSHA256:data.paperSHA256,
++    parameterExpressionSHA256:data.parameterExpressionSHA256,
++    originalSourceAuthenticated:false,reason:'The generic adapter cannot recreate original private source seals.'});
++}
++export function createGenericCurrentSeed({G,source,fields,modes}={}){
++  const md=sourceMetadata(source),f=validateFields(G,fields),inventory=modeInventory(modes);
++  return stamp(G,'GENERIC_EXECUTABLE_FIXTURE_OR_UNVERIFIED_INPUT',f,inventory,md,[],0,'seed');
++}
++const digestFields=fields=>digest({velocity:fields.velocity,meanVelocity:fields.meanVelocity,
++  angularPressure:fields.angularPressure,covariance:fields.covariance,potential:fields.potential});
++export function expectedRefreshBinding(fields,phase,stage){return digest({phase,stage,producedFullCurrent:digestFields(fields)});}
++export function advanceCurrentPhase(state,kind,{produce,refresh}={}){
++  assertCurrentState(state);
++  if(typeof produce!=='function'||typeof refresh!=='function')fail('MISSING_ACTUAL_PHASE_PRODUCER','Both full-current phase and fresh pressure/residual producer are required.');
++  const index=PHASES.indexOf(kind),expected=PHASES.indexOf(state.phase)+1;
++  if(index<0||index!==expected)fail('BAD_PHASE_ORDER',`Expected ${PHASES[expected]??'new cycle'}, got ${kind}.`);
++  const G=state.G,oldLength=G.nodes.length;
++  const input={G,previous:state.fields,modeInventory:state.modes,stage:state.stage+1,phase:kind,
++    source:state.source};
++  const update=produce(input);
++  if(update?.completeCurrent!==true||!update?.fields)fail('NOT_A_COMPLETE_CURRENT','The phase must return all previous and new contributions as one full current.');
++  if(update?.stage!==state.stage+1||update?.phase!==kind)
++    fail('WRONG_PHASE_PROVENANCE','A stale or wrong-stage update was supplied.');
++  // Pressure/residual of the preceding state cannot be silently reused.
++  const raw=update.fields;
++  const staged=validateFields(G,{...raw,pressure:state.fields.pressure,residual:state.fields.residual,
++    meanPressure:state.fields.meanPressure,defects:state.fields.defects});
++  const inv=modeInventory(update.modes,state.modes);
++  const requestedBinding=expectedRefreshBinding(staged,kind,state.stage+1);
++  const fresh=refresh({G,stage:state.stage+1,phase:kind,fullCurrent:staged,
++    requiredBinding:requestedBinding,previous:state.fields,source:state.source});
++  if(fresh?.binding!==requestedBinding||fresh?.entireUpdatedCurrent!==true)
++    fail('STALE_OR_UNBOUND_PRESSURE_REFRESH','P, Jtheta, Jz, p and PDE residual must use this exact updated full current.');
++  const merged=validateFields(G,{...staged,pressure:fresh.pressure,residual:fresh.residual,
++    meanPressure:fresh.meanPressure,defects:fresh.defects});
++  if(G.nodes.length<oldLength)fail('GRAPH_TRUNCATION','The source graph was truncated during the correction step.');
++  // Source producers may APPEND graph nodes, never rewrite old expressions or
++  // the original function registry while producing a correction.
++  checkGraphSeal(G,seals.get(state).snapshot);
++  const history=state.history.concat([{
++    phase:kind,stage:state.stage+1,binding:requestedBinding,pressureRoot:merged.pressure,
++    defects:merged.defects,oldNodeCount:oldLength,newNodeCount:G.nodes.length,
++    modalInventory:inv.map(x=>({label:x.label,modeCount:x.modes.length})),
++    scope:'actual AST roots if supplied, never numerical cell enclosures or full source proof'}]);
++  if(kind==='five'){
++    return stamp(G,state.mode,merged,inv,state.source,history,state.stage+1,'seed');
++  }
++  return stamp(G,state.mode,merged,inv,state.source,history,state.stage,kind);
++}
++export function runOneCurrentCycle(seed,handlers){
++  let state=seed;
++  for(const phase of PHASES){const h=handlers?.[phase];
++    if(!h)fail('MISSING_GENERALIZED_OPERATOR',`No actual ${phase} successor handler: the original initial-only implementation cannot be reused by spoofing its seal.`);
++    state=advanceCurrentPhase(state,phase,h);
++  }
++  return state;
++}
++export function buildSymbolicJetRequests(state,orders,coords){
++  assertCurrentState(state);const G=state.G;
++  if(!state.fields.potential)fail('MISSING_ORIGINAL_POTENTIAL','The complete source A0/A1/A2/b/p roots have not been built.');
++  const expected=new Set(['A0','A1','A2','b','p']);
++  if(!Array.isArray(orders)||orders.length!==67||orders.some(x=>!expected.has(x.field)||!Array.isArray(x.orders)))
++    fail('INVALID_JET_REQUEST','Use the 67 exact original derivative requests.');
++  const names=new Set(orders.map(entry=>`${entry.field}@${entry.orders.join(',')}`));
++  if(names.size!==67||ORIGINAL_JET_KEYS.some(k=>!names.has(k)))
++    fail('INCORRECT_ORIGINAL_JET_SET','67 requests must match the EXACT original A0/A1/A2/b/p derivative inventory.');
++  const used=new Set(),items=[];
++  for(const entry of orders){
++    const n=entry.field==='b'?3:4;
++    if(entry.orders.length!==n||entry.orders.some(o=>!Number.isInteger(o)||o<0))fail('INVALID_JET_ORDER','Invalid derivative multi-index.');
++    const key=entry.field+':'+entry.orders.join(',');if(used.has(key))fail('DUPLICATE_JET','A duplicated original derivative was requested.');used.add(key);
++    const coordinateIDs=entry.field==='b'?[coords.s,coords.z,coords.tau]:[coords.x,coords.y,coords.z,coords.tau];
++    if(!coordinateIDs.every(id=>Number.isSafeInteger(id)&&G.nodes[id]?.op==='coordinate'))fail('INVALID_COORDINATE_GRAPH','Original graph coordinates are required.');
++    let node=entry.field==='A0'?state.fields.potential.A[0]:entry.field==='A1'?state.fields.potential.A[1]:
++      entry.field==='A2'?state.fields.potential.A[2]:state.fields.potential[entry.field];
++    for(let i=0;i<n;i++)for(let j=0;j<entry.orders[i];j++){
++      if(typeof G.derivative!=='function')fail('MISSING_DERIVATIVE_PRODUCER','Original graph derivative function missing.');
++      node=root(G,G.derivative(node,coordinateIDs[i]),'derivative '+key);
++    }
++    items.push({field:entry.field,orders:entry.orders,expressionRoot:node});
++  }
++  return {schema:'MathScope.N6.GenericSymbolicJetRoots/1',source:state.source,stage:state.stage,
++    items,total:items.length,numericalFieldEnclosures:false,sourcePrivateSealsVerified:false,
++    finalOriginalFieldCertified:false,originalN706Closed:false,originalN805Closed:false,
++    warning:'Expression-root construction does not establish a valid original final field, bounds or any numeric interval.'};
++}
++export function currentStateReport(state){
++  assertCurrentState(state);return {schema:SCHEMA,stage:state.stage,phase:state.phase,
++    graphNodes:state.G.nodes.length,history:state.history,modeInventory:state.modes,
++    source:{...state.source},fieldRootsPresent:Boolean(state.fields.potential),
++    numericalSourceFieldsCertified:false,originalFamilyCompletion:false};
++}
+diff --git a/research-ide/mathscope-m3/navier/generic-signed-162-indexed.mjs b/research-ide/mathscope-m3/navier/generic-signed-162-indexed.mjs
+new file mode 100644
+index 0000000..769b147
+--- /dev/null
++++ b/research-ide/mathscope-m3/navier/generic-signed-162-indexed.mjs
+@@ -0,0 +1,249 @@
++/** A source-contract, fail-closed 81-label x two-sign Signed field assembler.
++ *
++ * This generic kernel DOES NOT certify a private original source instance.
++ * The only original entry point is original-signed-162-bridge.mjs, which
++ * calls the repository's private Forced seal, generates the Signed source
++ * candidate, and immediately consumes it. In particular the 162 indexed
++ * rows are AST nodes, NOT evaluated numerical samples or a complete M3 proof.
++ */
++export const SIGNED_162_SCHEMA = 'MathScope.N6.GenericSigned162IndexedCandidate/1';
++const names=['rr','rtheta','rz','thetatheta','thetaz','zz'];
++const err=(code,message)=>{throw Object.assign(new Error(message),{code});};
++const root=(G,id,label)=>{if(!Number.isSafeInteger(id)||id<0||!G.nodes?.[id])err('MISSING_ACTUAL_SOURCE_ROOT',label);return id;};
++const vec=(G,ids,n,label)=>{
++  if(!Array.isArray(ids)||ids.length!==n)err('INCOMPLETE_SOURCE_VECTOR',label);
++  ids.forEach((id,j)=>root(G,id,`${label}[${j}]`));return ids;
++};
++const uniqueBy=(rows,selector)=>new Set(rows.map(selector)).size===rows.length;
++const useFunctions=(s)=>{
++  const list=['assertForced','assertInitialized','complex','reconstruct','covariance','guard','refreshMean','physicalPDE'];
++  if(!s||list.some(k=>typeof s[k]!=='function'))err('MISSING_ORIGINAL_SERVICES','Original graph methods must be supplied through a repository bridge.');
++};
++function checkTemplateInventory(forced){
++  const ts=forced?.templates;
++  if(!Array.isArray(ts)||ts.length!==10||!uniqueBy(ts,x=>x.key))err('INCOMPLETE_SIGN_DIFFERENCE_TEMPLATES','Ten unique original sign/difference templates required.');
++  for(let signIndex=0;signIndex<2;signIndex++){
++    const members=ts.filter(t=>t.signIndex===signIndex).sort((a,b)=>a.levelDifference-b.levelDifference);
++    if(members.length!==5||members.some((t,j)=>t.levelDifference!==j||t.key!==`${j}:${t.sign}`||!t.lift))
++      err('MISSING_COVERING_DIFFERENCE','Preserve all five ORIGINAL fixed difference branches per sign.');
++  }
++  return ts;
++}
++function checkOriginalCover(forced){
++  const templates=checkTemplateInventory(forced);
++  const signForIndex=new Map([0,1].map(j=>[j,templates.find(t=>t.signIndex===j).sign]));
++  const pressure=forced?.input?.mean?.temporal?.pressure,cover=pressure?.cover;
++  if(!cover||!Array.isArray(cover.rows)||cover.rows.length!==81||!uniqueBy(cover.rows,r=>r.key)||
++     !Array.isArray(cover.bands)||!cover.proof?.allCrossLabelProductsVanish||!cover.proof?.localFinitenessAndFlatJoins||
++     !cover.proof?.exactSourceAuthority)
++    err('UNVERIFIED_OR_INCOMPLETE_ORIGINAL_COVER','The original 81-box common cover and flat-join proof are required.');
++  const rows=[];
++  for(const r of cover.rows){
++    if(!r.label||!Array.isArray(r.label.grid)||r.label.grid.length!==3||!Array.isArray(r.guards)||
++      !Array.isArray(r.signs)||r.signs.length!==2||!uniqueBy(r.signs,s=>s.sourceLocalRow)||
++      !r.signs.every(s=>[0,1].includes(s.sourceLocalRow)&&s.sign===signForIndex.get(s.sourceLocalRow)&&
++        Array.isArray(s.rectangle?.center)&&s.rectangle.center.length===2&&
++        Array.isArray(s.rectangle?.copy)&&s.rectangle.copy.length===2))
++      err('BAD_ORIGINAL_COVER_ROW','Each original label needs exactly two complete signed source rows and guards.');
++    const b=cover.bands[r.relativeBand+1];
++    if(!b||b.delta===undefined)err('MISSING_ORIGINAL_BAND_DIFFERENCE','The source palette difference was discarded.');
++    for(const s of r.signs)rows.push({label:r.label.key,signIndex:s.sourceLocalRow,fixedDifference:b.delta});
++  }
++  if(rows.length!==162||!uniqueBy(rows,r=>`${r.label}:${r.signIndex}`))err('DUPLICATE_OR_MISSING_SIGNED_ROW','Every original label/sign pair must occur once.');
++  return {pressure,cover,verifiedIndex:rows};
++}
++function localMap(G,forced,t,body){
++  const orig=forced.input.mean.temporal.pressure.current,
++    {Xrep,etaRep,sRep,v}=orig.band.coordinates,
++    at=orig.representative?.roots;
++  if(!at)err('MISSING_FIXED_ORIGINAL_REPRESENTATIVE','Use the original frozen representative.');
++  [Xrep,etaRep,sRep,v,orig.band.cutoffs.xi,t.lift.xi,t.lift.v,at.X,at.eta,at.s].forEach(x=>root(G,x,'original reference or local lift'));
++  return G.simultaneousSubstitute(
++    G.simultaneousSubstitute(body,[Xrep,etaRep,sRep],[at.X,at.eta,at.s]),
++    [orig.band.cutoffs.xi,v],[t.lift.xi,t.lift.v]);
++}
++function complexPositive(G,C,candidate,forced,t){
++  const row=candidate.signed.rows[t.signIndex],half=G.q(1,2),
++    lift=id=>localMap(G,forced,t,id),
++    velocity=[0,1,2].map(j=>C.value(G.mul(half,lift(row.curl.leading[j])),G.mul(half,lift(row.curl.remainder[j])))),
++    pressure=C.value(G.mul(half,lift(row.homogeneousSignedAngularPressure.real)),
++      G.mul(half,lift(row.homogeneousSignedAngularPressure.imaginary)));
++  return [{m:1,velocity,pressure},{m:-1,velocity:velocity.map(z=>C.conjugate(z)),pressure:C.conjugate(pressure)}];
++}
++function sumModes(C,oldRows,newRows){
++  const map=new Map();
++  for(const row of [...oldRows,...newRows]){
++    if(!Number.isSafeInteger(row.m)||row.m===0||row.velocity?.length!==3||!row.velocity.every(C.check)||!C.check(row.pressure))
++      err('INVALID_CURRENT_HARMONIC','A full conjugate pressure/velocity mode was lost.');
++    const prior=map.get(row.m);
++    map.set(row.m,prior?{m:row.m,velocity:prior.velocity.map((z,j)=>C.add(z,row.velocity[j])),pressure:C.add(prior.pressure,row.pressure)}:row);
++  }
++  const out=[...map.values()].sort((a,b)=>a.m-b.m),k=new Set(out.map(x=>x.m));
++  if(out.length!==k.size||out.some(x=>!k.has(-x.m)))err('DROPPED_CONJUGATE_MODE','All previous modes and their conjugates must survive Signed.');
++  if(oldRows.some(x=>!k.has(x.m)))err('DROPPED_PREVIOUS_MODE','A preceding Forced harmonic was discarded.');
++  return out;
++}
++function buildIndexed(source,templates,fieldName,bodyAt,kind,services){
++  const {forced,G,pressure,cover}=source;
++  const current=pressure.current,band=current.band,
++    {R,Z,T,theta,ell,Xrep,etaRep,sRep}=band.coordinates,
++    {A,D}=band.constants,{r0,Ls}=band.geometry,
++    level=forced.input.coordinates.levelDifference,
++    angular=kind==='velocity'||kind==='angularPressure',
++    params=angular?forced.input.coordinates.localParameters:
++      forced.input.coordinates.localParameters.filter(id=>id!==theta),
++    fieldParams=angular?[...cover.parameters,theta]:cover.parameters,
++    directions=angular?[...cover.directions,theta]:cover.directions,
++    ratio=forced.input.reference.ratio,
++    power=(x,a)=>G.exp(G.mul(a,G.log(x))),
++    exponent=kind==='velocity'?A:G.mul(G.q(2),A),
++    choose=values=>{
++      let out=G.zero;
++      for(let j=4;j>=0;j--)out=G.choose(level,G.q(2*j-1,2),G.q(2*j+1,2),out,values[j],out);
++      return out;
++    },
++    systems=[];
++  if(!Array.isArray(params)||!Array.isArray(fieldParams)||!Array.isArray(directions)||!Number.isSafeInteger(level))
++    err('MISSING_ORIGINAL_COVER_PARAMETERS','Source-defined local, periodic and direction parameters are required.');
++  for(let signIndex=0;signIndex<2;signIndex++){
++    const perSign=templates.filter(t=>t.signIndex===signIndex).sort((a,b)=>a.levelDifference-b.levelDifference);
++    if(perSign.length!==5||perSign.some((t,j)=>t.levelDifference!==j))err('DROPPED_DIFFERENCE_IN_SYSTEM','Every fixed difference must be represented in each sign system.');
++    const pieces=perSign.map(t=>G.choose(t.lift.xi,G.neg(r0),r0,G.zero,
++      G.choose(t.lift.v,G.zero,Ls,G.zero,bodyAt(t),G.zero),G.zero)),
++      local=services.guard(G,current.geometry,current.local.slowCutoff,choose(pieces),{auxiliary:false});
++    if(!local||local.body===undefined)err('SOURCE_GUARD_MISSING','Guard-before-inverse local body is mandatory.');
++    const fixed=G.simultaneousSubstitute(local.body,[Xrep,etaRep,sRep],
++      [current.representative.roots.X,current.representative.roots.eta,current.representative.roots.s]),
++      own=G.defineExpressionFunction({name:fieldName+'_own_'+signIndex,parameters:params,body:fixed}),
++      values=[G.mul(G.sqrt(ratio),R),G.mul(power(ratio,D),Z),G.mul(ratio,T),...params.slice(3)],
++      reference=G.mul(power(ratio,exponent),G.expressionValue(own,values)),
++      system=G.defineExpressionFunction({name:fieldName+'_reference_'+signIndex,parameters:params,body:reference});
++    systems.push({system,own,local,fixed,reference,values,signIndex,retainedDifferences:[0,1,2,3,4]});
++  }
++  const rows=[];
++  for(const r of cover.rows){
++    const b=cover.bands[r.relativeBand+1];
++    for(const sign of r.signs){
++      const values=[R,Z,T,r.label.ell,...r.label.grid,ell,...pressure.geometry.Y,
++        ...sign.rectangle.center,...sign.rectangle.copy,...(angular?[theta]:[]),b.delta],
++        derivativeMaps=[...[0,1,2,8,9].map(parameter=>[{parameter,coefficient:G.one}]),
++          ...(angular?[[{parameter:14,coefficient:G.one}]]:[])];
++      rows.push({localSystem:systems[sign.sourceLocalRow].system,values,derivativeMaps,
++        coefficient:G.one,guards:r.guards,
++        label:{key:r.key,ell:r.label.ell,grid:r.label.grid,sign:sign.sign,
++          fixedDifference:b.delta,countBoxOnce:true}});
++    }
++  }
++  if(rows.length!==162||rows.some(row=>row.values.length!==(angular?16:15)||
++      row.derivativeMaps.length!==(angular?6:5)||!Array.isArray(row.guards)||!row.guards.length))
++    err('INCOMPLETE_ORIGINAL_INDEXED_ROWS','Source chart, Y torus, all rectangular copies, and original guards must be retained.');
++  const field=G.definePeriodicIndexedField({name:fieldName,parameters:fieldParams,directions,rows,
++    sourceRecipe:{signedAfterForcedCandidate:true,originalSourceFullNumericalEvaluation:false,
++      sameOriginal81Boxes:true,bothSigns:true,allFiveFiniteCoverDifferences:true,
++      originalFixedRepresentativeAndCopyBeforeDerivative:true,
++      originalSourceDisjointness:cover.proof.allCrossLabelProductsVanish,
++      originalFlatJoinPremise:cover.proof.localFinitenessAndFlatJoins,
++      originalAngularPressureIncluded:kind==='angularPressure',
++      originalPhysicalExponent:kind==='velocity'?'A':'2A',
++      fullCommonTorus:true,remainingMathematicalObligations:true}});
++  const records=G.periodicIndexedSystem(field);
++  if(!records||records.rows?.length!==162)err('PERIODIC_INDEXED_REGISTRY_INCOMPLETE','The actual periodic field registry did not retain all 162 source contributions.');
++  return {field,root:G.periodicIndexedValue(field,fieldParams),systems,
++    contributionCount:rows.length,perSign:{0:81,1:81},
++    angular,kind,retainedFiveDifferences:systems.every(s=>s.retainedDifferences.length===5)};
++}
++/** Builds indexed source ASTs and, optionally, a fresh mean/PDE graph.
++ * The result intentionally has NO original private successor seal.
++ * External callers must not present it as the final original field.
++ */
++export function assembleSigned162Candidate(candidate,services,options={}){
++  useFunctions(services);
++  if(!candidate||candidate.schema!=='MathScope.N6.GenericSignedAfterForcedCandidate/1'||
++     options===null||Object.keys(options).some(k=>!['maxAdditionalNodes','onProgress','refreshAfterAssembly'].includes(k)))
++    err('INVALID_SIGNED_SOURCE_CANDIDATE','Use the unchanged original Signed source candidate.');
++  const forced=candidate.originalForced,G=forced?.G;
++  if(services.assertForced(forced)!==true||services.assertInitialized(forced.input)!==true)
++    err('INVALID_ORIGINAL_PRIVATE_FORCED','Forced and initial private original seals must be validated.');
++  if(candidate.sourceGraph!==G||candidate.signed.rows.length!==2||
++    candidate.signed.rows.some((row,j)=>row.signIndex!==j))
++    err('MISMATCHED_SIGNED_SOURCE_GRAPH','Exactly two original sign candidates from the same graph are required.');
++  const {pressure,cover}=checkOriginalCover(forced),src={forced,G,pressure,cover},
++    inputTemplates=checkTemplateInventory(forced),start=G.nodes.length,
++    max=options.maxAdditionalNodes??1500000;
++  if(!Number.isSafeInteger(max)||max<1||max>10000000)err('INVALID_SIGNED_BUDGET','Bounded AST expansion required.');
++  const budget=tag=>{
++    if(G.nodes.length-start>max)err('SIGNED_162_RESOURCE_LIMIT',`Graph growth exceeded budget at ${tag}.`);
++    options.onProgress?.({step:tag,nodeCount:G.nodes.length,delta:G.nodes.length-start});
++  };
++  const C=services.complex(G),templates=[];
++  for(const old of inputTemplates){
++    const signedRows=complexPositive(G,C,candidate,forced,old),waveRows=sumModes(C,old.waveRows,signedRows);
++    const before=old.covariance;
++    if(!before||!names.every(k=>Number.isSafeInteger(before.values?.[k])))
++      err('MISSING_PREVIOUS_FORCED_COVARIANCE','The same complete previous full wave covariance is required.');
++    const after=services.covariance(G,{rows:waveRows,theta:pressure.current.band.coordinates.theta}),
++      deltaCovariance=Object.fromEntries(names.map(k=>[k,G.sub(after.values[k],before.values[k])])),
++      real=services.reconstruct(G,{geometry:old.lift.geometry,phase:old.phase,k:old.k,rows:signedRows});
++    vec(G,real?.velocity,3,'signed delta physical velocity');root(G,real?.pressure,'signed delta angular pressure');
++    if(!Array.isArray(after?.checks)||!after.checks.every(x=>x.pass===true))
++      err('SIGNED_COVARIANCE_IDENTITY_FAILED','Every nonzero generated angular mode and pair must be retained.');
++    templates.push({...old,signedRows,waveRows,
++      signedIncrementVelocity:real.velocity,signedIncrementAngularPressure:real.pressure,
++      beforeCovariance:before,afterCovariance:after,deltaCovariance,
++      exactAllOriginalModesPreserved:old.waveRows.every(r=>waveRows.some(z=>z.m===r.m)),
++      scope:{sourceSignedCoverCandidate:true,fullSourceCorrectedCurrentCertified:false}});
++    budget(`signed-template-${old.key}`);
++  }
++  const velocity=Array.from({length:3},(_,j)=>buildIndexed(src,templates,'GenericSigned162_velocity_'+j,
++       t=>t.signedIncrementVelocity[j],'velocity',services)),
++    angularPressure=buildIndexed(src,templates,'GenericSigned162_angular_pressure',
++       t=>t.signedIncrementAngularPressure,'angularPressure',services),
++    covariance=Object.fromEntries(names.map(k=>[k,buildIndexed(src,templates,'GenericSigned162_covariance_delta_'+k,
++       t=>t.deltaCovariance[k],'covariance',services)]));
++  budget('all-162-indexed-velocity-pressure-covariance');
++  const roots={velocity:velocity.map(x=>x.root),angularPressure:angularPressure.root,
++    covariance:Object.fromEntries(names.map(k=>[k,covariance[k].root]))};
++  const result={schema:SIGNED_162_SCHEMA,originalForced:forced,originalCandidate:candidate,G,
++    templates,source:{sourceCommitPinnedByExternalPrivateAdapterOnly:true,
++      originalPressureCover81:cover.rows.length,totalSignedCoverRows:162,
++      fiveDifferencesPerSign:5,registeredFieldCount:10,
++      allGuardRowsRetained:true,privateFullSignedSuccessorSealIssued:false},
++    indexed:{velocity,angularPressure,covariance,roots},
++    scope:{sourceIndexed162SignedASTConstructed:true,
++      originalPrivateForcedInputAsserted:true,originalSignedFullSourceAuthenticated:false,
++      originalFullPressureRecomputed:false,originalPhysicalPDERecomputed:false,
++      originalFinal67JetsEvaluated:0,N706Closed:false,N805Closed:false,
++      originalM3RowsClosed:0,releaseApproved:false}};
++  if(options.refreshAfterAssembly!==false){
++    const oldW=forced.mean.fullCurrentCovariance,
++      updatedCovariance=Object.fromEntries(names.map(k=>[k,G.add(oldW[k],roots.covariance[k])])),
++      g=pressure.current.band.geometry,band=pressure.current.band,
++      background={b:band.fields.b,V:G.mul(band.coordinates.R,band.fields.F),G:band.fields.G},
++      updatedMean=services.refreshMean(G,{geometry:pressure.geometry,background,
++        velocity:forced.mean.completeBetaVGamma,covariance:updatedCovariance,
++        stress:forced.mean.sourceStress,rho:pressure.pressure.rho,chi:pressure.pressure.chi,
++        tag:'GenericSignedAfterForced162'});
++    if(!Array.isArray(updatedMean?.checks)||!updatedMean.checks.length||
++       !updatedMean.checks.every(x=>x.pass===true)||updatedMean.mean?.fullAngularCovariance!==updatedCovariance||
++       !['P','Jtheta','Jz'].every(x=>Number.isSafeInteger(updatedMean.mean[x])))
++      err('POST_SIGNED_MEAN_NOT_RECOMPUTED','Full updated pressure and all three P/J defects are required.');
++    const signedVelocity=roots.velocity,globalVelocity=forced.global.velocity.map((id,j)=>G.add(id,signedVelocity[j])),
++      meanPressureDifference=G.sub(updatedMean.pressure.value,forced.mean.pressure.value),
++      globalPressure=G.add(forced.global.pressure,meanPressureDifference,roots.angularPressure),
++      globalGeometry=forced.global.geometry,
++      pde=services.physicalPDE(G,{geometry:globalGeometry,velocity:globalVelocity,pressure:globalPressure});
++    if(!Array.isArray(pde?.conservativeResidual)||pde.conservativeResidual.length!==3||
++      !pde.conservativeResidual.every(id=>Number.isSafeInteger(id)&&!!G.nodes[id]))
++      err('INCOMPLETE_POST_SIGNED_PDE','Entire signed physical PDE and pressure gradient must be retained.');
++    result.updated={updatedCovariance,updatedMean,fullVelocity:globalVelocity,
++      fullPressure:globalPressure,meanPressureDifference,pde};
++    result.scope.originalFullPressureRecomputed=true;
++    result.scope.originalPhysicalPDERecomputed=true;
++    budget('signed-new-P-J-pressure-full-physical-PDE');
++  }
++  // There is no new private Signed successor seal. The source graph may be
++  // extended, but the original private source must still verify its prefix.
++  if(services.assertForced(forced)!==true||services.assertInitialized(forced.input)!==true)
++    err('MUTATED_ORIGINAL_FORCED','The source seals failed after indexed-field construction.');
++  return result;
++}
+diff --git a/research-ide/mathscope-m3/navier/generic-signed-source-kernel.mjs b/research-ide/mathscope-m3/navier/generic-signed-source-kernel.mjs
+new file mode 100644
+index 0000000..31f7261
+--- /dev/null
++++ b/research-ide/mathscope-m3/navier/generic-signed-source-kernel.mjs
+@@ -0,0 +1,228 @@
++/** MathScope M3: staged, fail-closed Signed substep after the authenticated Forced current.
++ *
++ * This module builds the ACTUAL SOURCE RECIPE for Σ, the original fixed-H,
++ * fixed-positive-a signed inverse, and both unlocalized signed potential/curl
++ * components. The caller's dependency service MUST be the original PRIVATE
++ * source bridge; this standalone mathematical kernel issues NO original
++ * Signed-Current private seal. There is deliberately no `completeCurrent`.
++ */
++export const SIGNED_CANDIDATE_SCHEMA='MathScope.N6.GenericSignedAfterForcedCandidate/1';
++export const COVARIANCE_COMPONENTS=Object.freeze(['rr','rtheta','rz','thetatheta','thetaz','zz']);
++const error=(code,message)=>{const e=new Error(message);e.code=code;throw e;};
++const isRoot=(G,id)=>Number.isSafeInteger(id)&&id>=0&&!!G.nodes?.[id];
++const checkRoot=(G,id,label)=>{if(!isRoot(G,id))error('MISSING_SOURCE_ROOT',`${label} is absent from this original graph.`);return id;};
++const checkVector=(G,x,n,label)=>{if(!Array.isArray(x)||x.length!==n)error('MISSING_SOURCE_VECTOR',`${label} needs ${n} roots.`);x.forEach((id,i)=>checkRoot(G,id,`${label}[${i}]`));return x;};
++const cross=(G,a,b)=>[G.sub(G.mul(a[1],b[2]),G.mul(a[2],b[1])),G.sub(G.mul(a[2],b[0]),G.mul(a[0],b[2])),G.sub(G.mul(a[0],b[1]),G.mul(a[1],b[0]))];
++const checkModes=(templates,currentGraphForModes)=>{
++  if(!Array.isArray(templates)||templates.length!==10)error('INCOMPLETE_ORIGINAL_COVER','Ten original fixed sign/difference templates are mandatory.');
++  const keys=new Set(),perSign=new Map([[0,0],[1,0]]);
++  for(const t of templates){
++    if(!t||typeof t.key!=='string'||keys.has(t.key)||![0,1].includes(t.signIndex)||
++       !Number.isInteger(t.levelDifference)||t.levelDifference<0||t.levelDifference>4||
++       !Array.isArray(t.waveRows))error('INVALID_ORIGINAL_TEMPLATE','Missing or duplicated signed cover/level template.');
++    keys.add(t.key);perSign.set(t.signIndex,perSign.get(t.signIndex)+1);
++    const modes=new Set(t.waveRows.map(r=>r.m));
++    if(modes.size!==t.waveRows.length||[...modes].some(m=>!Number.isSafeInteger(m)||m===0||!modes.has(-m))||
++       !modes.has(-1)||!modes.has(1))error('DROPPED_PRIOR_HARMONIC','Keep the complete finite current ±m inventory (including both primary modes).');
++    if(!t.waveRows.every(r=>Array.isArray(r.velocity)&&r.velocity.length===3&&
++      r.velocity.every(z=>isRoot(currentGraphForModes,z?.real)&&isRoot(currentGraphForModes,z?.imaginary))&&
++      isRoot(currentGraphForModes,r.pressure?.real)&&isRoot(currentGraphForModes,r.pressure?.imaginary)))
++      error('MISSING_FULL_WAVE_PRESSURE','Each retained original angular mode needs its full pressure and velocity.');
++  }
++  if([...perSign.values()].some(n=>n!==5))error('INCOMPLETE_ORIGINAL_COVER','Five differences per original sign are required.');
++  return [...keys];
++};
++function sharesOriginalBaseGraph(coupled,base){
++  const seen=new Set();let node=coupled;
++  // Original SourceCoupledExpressions wraps an auxiliary facade, which wraps
++  // the GlobalSourceExpressions graph. Accept only this actual baseGraph chain.
++  for(let depth=0;depth<8&&node&&!seen.has(node);depth++){
++    if(node===base)return true;
++    seen.add(node);node=node.baseGraph;
++  }
++  return false;
++}
++function assertShape(forced){
++  const G=forced?.G,initial=forced?.input,originalPressure=initial?.mean?.temporal?.pressure,
++    current=originalPressure?.current,band=current?.band,geometry=current?.mean?.geometry;
++  if(!Array.isArray(G?.nodes)||initial?.G!==G||!current||!current.G||
++     current.G!==band?.G||!sharesOriginalBaseGraph(G,current.G))
++    error('CROSS_SOURCE_GRAPH','Only the same original initialized/forced/mean/band graph is admissible.');
++  const W=forced?.mean?.fullCurrentCovariance,M=forced?.mean?.mean,
++    P=forced?.mean?.pressure;
++  if(!W||!COVARIANCE_COMPONENTS.every(k=>isRoot(G,W[k]))||M?.fullAngularCovariance!==W||
++    !Array.isArray(forced.mean.checks)||!forced.mean.checks.length||!forced.mean.checks.every(c=>c.pass===true))
++    error('STALE_OR_INCOMPLETE_FORCED_MEAN','Signed target must come from the latest COMPLETE Forced current and verified pressure refresh.');
++  for(const [name,operand] of Object.entries({Etheta:M.Etheta,Ez:M.Ez,P:M.P,Jtheta:M.Jtheta,Jz:M.Jz,
++     latestPressure:P.value,initialRho:geometry?.rho,initialChi:geometry?.chi,cRho:geometry?.cRho,
++     radialR:geometry?.R,axialZ:geometry?.Z,radialLeft:geometry?.innerRadius,radialRight:geometry?.outerRadius,
++     radialVariable:geometry?.radialVariable,epsilon:band?.geometry?.epsilon}))checkRoot(G,operand,name);
++  if(P?.value!==forced.global.fullMeanPressure||
++     M?.P===undefined||M?.Jtheta===undefined||M?.Jz===undefined||
++     forced?.mean?.fullCurrentCovariance!==W)
++    error('STALE_FORCED_PRESSURE','The post-Forced full pressure must be the one retained by the full physical current.');
++  const H=band?.target?.H,a=band?.target?.squareRootWeights;
++  if(!Array.isArray(H)||H.length!==2||H.some(r=>!Array.isArray(r)||r.length!==2)||
++     !Array.isArray(a)||a.length!==2)error('MISSING_FIXED_ORIGINAL_H','Original H and fixed positive amplitudes must be retained.');
++  H.flat().forEach(x=>checkRoot(G,x,'original H'));a.forEach(x=>checkRoot(G,x,'original a'));
++  const weight=band.target.weights,inverseChecks=band.target.inverseChecks;
++  if(!Array.isArray(weight)||weight.length!==2||
++     !Array.isArray(inverseChecks)||!inverseChecks.length||!inverseChecks.every(c=>c.pass===true)||
++     a.some((id,j)=>G.nodes[id]?.op!=='sqrt_positive'||G.nodes[id]?.args?.[0]!==weight[j]))
++    error('ORIGINAL_FIXED_POSITIVITY_UNVERIFIED','The unchanged positive square-root amplitudes and fixed H inverse require authentic original source checks.');
++  if(!Array.isArray(band.families)||band.families.length!==2||!isRoot(G,band.coordinates?.R)||!isRoot(G,band.coordinates?.Z))
++    error('INVALID_ORIGINAL_BAND','Expected the same two original signed source families.');
++  checkModes(forced.templates,G);
++  return {G,initial,originalPressure,current,band,geometry,W,M,P,H,a};
++}
++/** This returns ACTUAL formula roots under authenticated-service conditions,
++ * not a verified completed subsequent current, nor numerical enclosures.
++ */
++export function buildSignedSourceCandidateFromCheckedForced(forced,services={},options={}){
++  if(!services||!['assertOriginalForced','assertOriginalInitialized','signedInverse','fullCurl','homogeneousPressure','graphEqual','assertLatestStress'].every(x=>typeof services[x]==='function'))
++    error('MISSING_ORIGINAL_PRIVATE_SERVICES','Use the repository private source entry point, not ad-hoc formulas.');
++  if(Object.keys(options).some(k=>!['onProgress','maxAdditionalNodes'].includes(k)))
++    error('INVALID_SIGNED_OPTIONS','The original H, a, target, modes and fields are not caller-selectable.');
++  if(services.assertOriginalForced(forced)!==true||services.assertOriginalInitialized(forced.input)!==true)
++    error('ORIGINAL_PRIVATE_SEAL_REJECTED','Original source authentication did not succeed.');
++  const s=assertShape(forced),{G,band,current,geometry:g,W,M,P,H,a,initial,originalPressure}=s;
++  const eps=band.geometry.epsilon;
++  const maxAdditionalNodes=options.maxAdditionalNodes??200000;
++  if(!Number.isSafeInteger(maxAdditionalNodes)||maxAdditionalNodes<1||maxAdditionalNodes>5000000)
++    error('INVALID_WORK_BUDGET','Use a finite append-only work budget.');
++  const start=G.nodes.length,progress=where=>{
++    if(G.nodes.length-start>maxAdditionalNodes)error('SIGNED_SOURCE_RESOURCE_LIMIT',`Work cap exceeded at ${where}; incomplete stage must not be promoted.`);
++    options.onProgress?.({where,nodesAdded:G.nodes.length-start});
++  };
++  // Proposition 9.6 Step 2 uses <E_theta>_Y and <E_z>_Y,
++  // NOT the raw Y-dependent E fields. The previously staged generic kernel
++  // differentiated the raw residual directly. That route is NOT admissible.
++  // Use the original, privately sealed Corollary 8.5 stress constructor,
++  // which takes the exact normalized two-torus Haar means, pressure and
++  // all radial / auxiliary endpoint terms from the complete Forced state.
++  const latestStress=services.latestStress;
++  if(services.assertLatestStress(latestStress)!==true ||
++     latestStress?.G!==G || latestStress?.input!==forced ||
++     latestStress?.source?.latestCovariance!==W ||
++     latestStress?.source?.latestFullMeanPressure!==P.value ||
++     latestStress?.compatibility?.rawIntegralNodesPreserved!==true ||
++     latestStress?.compatibility?.mechanicalRawIntegralReduction!==false ||
++     latestStress?.compatibility?.sourceTheoremsAppliedToConstructedOperands!==true ||
++     !Array.isArray(latestStress?.checks)||!latestStress.checks.length||
++     latestStress.checks.some(c=>c.pass!==true))
++    error('UNAUTHENTICATED_COR85_STRESS','Require the original private Corollary 8.5 stress of this exact Forced state.');
++  const fresh=latestStress.stress;
++  if(fresh?.meanInput?.Etheta!==M.Etheta || fresh?.meanInput?.Ez!==M.Ez ||
++     fresh?.meanInput?.P!==M.P ||fresh?.meanInput?.Jtheta!==M.Jtheta ||
++     fresh?.meanInput?.Jz!==M.Jz ||
++     !Array.isArray(fresh?.rows)||fresh.rows.length!==2 ||
++     !Array.isArray(latestStress.Sigma)||latestStress.Sigma.length!==2)
++    error('STALE_COR85_MEAN','Signed target must use the current full tangential residual and defects.');
++  const {Y}=originalPressure.geometry;
++  if(!Array.isArray(Y)||Y.length!==2)
++    error('MISSING_ORIGINAL_AUXILIARY_TORUS','Original two-torus Haar coordinates are required.');
++  const expectedResiduals=[M.Etheta,M.Ez],
++    sigmaRows=fresh.rows,
++    residualSources=sigmaRows.map(row=>row.source),
++    weightedSources=sigmaRows.map(row=>row.weightedSource),
++    integrals=sigmaRows.map((row,j)=>({
++      order:2-j,weighted:row.weightedSource,
++      integrand:row.integrals?.radialVariable===undefined?null:
++        G.substitute(row.weightedSource,g.R,row.integrals.radialVariable),
++      partial:row.integrals?.left,whole:row.integrals?.whole,
++      value:row.value,cutoffRemainder:row.cutoffRemainder,
++      normalizedHaarMean:row.mean,
++      haarSource:row.residual,
++      authenticatedCor85Row:row.name,
++      originalRadialSource:row.source
++    })),
++    Sigma=[...latestStress.Sigma],
++    sigmaPointwiseChecks=sigmaRows.map((row,j)=>({
++      component:j,normalizedBump:row.sourceLinearity,
++      fullFTCCutoffIdentity:row.divergenceCheck,
++      normalizedHaarBeforeRadialPrimitive:true,
++      pass:row.residual===expectedResiduals[j] &&
++        row.weight===2-j && row.sourceLinearity?.pass===true &&
++        row.divergenceCheck?.pass===true &&
++        row.value===fresh.Sigma[j] &&
++        !!row.integrals &&
++        Number.isSafeInteger(row.integrals.left) &&
++        Number.isSafeInteger(row.integrals.whole) &&
++        row.compatibility?.mechanicalIntegralReduction===false &&
++        [row.mean,row.source,row.integrals.whole].every(x=>
++          Number.isSafeInteger(x)&&G.nodes[x] &&
++          Y.every(y=>!G.freeCoordinates(x).has(y)))
++    }));
++  if(!sigmaPointwiseChecks.every(x=>x.pass))
++    error('SIGNED_SIGMA_HAAR_OR_FTC_FAILED',
++      'Signed source requires the authenticated, Y-averaged Corollary 8.5 stress, its exact FTC and full compatibility terms.');
++  Sigma.forEach(x=>checkRoot(G,x,'original authenticated Corollary8.5 Sigma'));
++  progress('actual-updated-forced-Sigma');
++  // The original inverse checks all fixed-H/fixed-a factor-two identities.
++  const inversion=services.signedInverse(G,{H,amplitudes:a,epsilon:eps,target:Sigma});
++  if(inversion?.pass!==true||!Array.isArray(inversion.deltaAmplitude)||inversion.deltaAmplitude.length!==2||
++     !inversion.deltaAmplitude.every(id=>isRoot(G,id))||
++     !inversion.checks?.every(x=>x.pass===true))
++    error('ORIGINAL_SIGNED_INVERSE_FAILED','Do not promote an unverified H/a signed inverse.');
++  const {xi}=band.cutoffs,{R:Rc,Z:Zc}=band.coordinates,
++    slowCutoff=current.local?.slowCutoff?.body,
++    geometry=current.geometry,params=current.local?.parameters,
++    k=band.geometry.k;
++  checkRoot(G,slowCutoff,'original slow cutoff');checkRoot(G,k,'original wave carrier');
++  if(!Array.isArray(params)||!params.length||!params.every(x=>isRoot(G,x)))
++    error('MISSING_SOURCE_PARAMETERS','Signed original function parameters must be source bound.');
++  const rows=[];
++  for(let j=0;j<2;j++){
++    const f=band.families[j],da=inversion.deltaAmplitude[j];
++    checkVector(G,f.t,3,'fixed signed tangent');checkVector(G,f.frame?.n,3,'fixed frame normal');
++    for(const [name,v] of Object.entries({da,normalSquared:f.frame.nSquared,xi,radialFast:geometry.radialFast}))checkRoot(G,v,name);
++    const amplitude=f.t.map(x=>G.mul(G.sqrt(eps),da,band.cutoffs.chi,band.cutoffs.psi,x)),
++      weighted=amplitude.map(x=>G.mul(slowCutoff,x)),
++      rawPotential=cross(G,f.frame.n,weighted).map(x=>G.div(x,G.mul(k,f.frame.nSquared))),
++      potential=rawPotential.map((v,component)=>G.share(v,params,`GenericSignedAfterForced_${j}_${component}`)),
++      curl=services.fullCurl(G,{R:Rc,Z:Zc,xi,epsilon:eps,radialFast:geometry.radialFast,k,normal:f.frame.n,potential}),
++      homogeneousPressure=services.homogeneousPressure(G,{normal:f.frame.n,nPrime:f.frame.nPrime,
++        K:f.frame.principalK,k,amplitude:weighted});
++    const tangency=services.graphEqual(G,
++      G.add(...f.frame.n.map((n,index)=>G.mul(n,weighted[index]))),G.zero,
++      [...f.frame.n,...weighted]);
++    if(tangency?.pass!==true)error('SIGNED_TANGENCY_UNPROVED','The actual signed amplitude must retain exact normal tangency.');
++    checkVector(G,curl?.leading,3,'real full signed curl');checkVector(G,curl?.remainder,3,'imaginary full signed curl');
++    if(!isRoot(G,homogeneousPressure?.value?.imaginary)||
++       homogeneousPressure?.value?.real!==G.zero||homogeneousPressure?.identity?.pass!==true)
++      error('SIGNED_PRIMARY_PRESSURE_INCOMPLETE','Retain the original moving-normal homogeneous signed pressure.');
++    if(!Array.isArray(curl?.divergence?.checks)||!curl.divergence.checks.every(c=>c.pass===true))
++      error('SIGNED_CURL_INCOMPLETE','All original full-curl divergence checks must pass.');
++    rows.push({signIndex:j,sourceSign:f.sign,originalPositiveA:a[j],deltaAmplitude:da,
++      amplitude,weighted,potential,curl,tangency,completeCylindricalCurl:true,
++      homogeneousSignedAngularPressure:homogeneousPressure.value,globallyAssembledCoverField:null});
++    progress(`fixed-sign-${j}-potential-and-full-curl`);
++  }
++  if(services.assertOriginalForced(forced)!==true)
++    error('MUTATED_FORCED_SOURCE','Original Forced source failed its private seal after graph extension.');
++  const result={schema:SIGNED_CANDIDATE_SCHEMA,sourceGraph:G,originalForced:forced,
++    source:{originalPaperSHA256:forced.source.paperSHA256,
++      originalParametersSHA256:forced.source.parameterExpressionSHA256,
++      preservedFullCurrent:true,fixedHFromOriginalBand:true,positiveAUnchanged:true,
++      privateServicesReportedValid:true,sourceIdentityCheckedByOriginalBridgeOnly:false},
++    signed:{Sigma,sourceOfSigma:'AUTHENTICATED_ORIGINAL_COR85_NORMALIZED_HAAR',
++      originalMeanStress:latestStress,weightedSources,residualSources,integrals,sigmaPointwiseChecks,inversion,rows},
++    requiredNext:['verify zero weighted source moments with full current and endpoint terms',
++      'authenticate the new signed homogeneous pressure on each full local label',
++      'assemble two signed substeps into all 162 original cover contributions',
++      'recompute the full pressure/P/J and physical PDE on the ACTUAL updated field',
++      'validate complete next-current source and all-order bounds'],
++    scope:{originalForcedPrivateSealValidatedByRealModule:false,
++      originalSignedSigmaPointwiseFTCPassed:true,
++      originalSignedSigmaHaarSourceAuthenticated:true,
++      originalSourceSignedAmplitudeASTGenerated:true,originalSignedLocalPotentialASTGenerated:true,
++      originalSignedFullCurlASTGenerated:true,
++      originalSignedHomogeneousPressureASTGenerated:true,
++      actualSignedWholeCurrentConstructed:false,
++      allOriginalCoverSignedContributionsAssembled:false,
++      weightedMomentZeroIndependentlyCertified:false,
++      wholePressureAndPDEResidualAfterSigned:false,
++      originalSignedPrivateSealIssued:false,
++      numericalFieldEnclosureComputed:false,completedOriginalM3Criteria:0}};
++  return result;
++}
+diff --git a/research-ide/mathscope-m3/navier/original-full-pressure-refresh.mjs b/research-ide/mathscope-m3/navier/original-full-pressure-refresh.mjs
+new file mode 100644
+index 0000000..b5c5e3e
+--- /dev/null
++++ b/research-ide/mathscope-m3/navier/original-full-pressure-refresh.mjs
+@@ -0,0 +1,53 @@
++/** A source-specific, repeatable full-current pressure / PDE residual refresh.
++ * Reuses the ORIGINAL exact updated mean pressure and full cylindrical PDE
++ * constructors. This is NOT a new private seal for Forced/Signed/Temporal/
++ * Five successors: it is a real source-AST consumer for supplied currents.
++ */
++import {assertGlobalInitializedAngular} from './source-initialized-angular.mjs';
++import {reconstructUpdatedFullMeanPressure} from './source-updated-mean-pressure.mjs';
++import {exactRealCylindricalPDE} from './source-harmonic-assembly.mjs';
++
++const fail=(code,message)=>{const e=new Error(message);e.code=code;throw e;};
++
++/** Factory requires an actual privately validated initial current and only
++ * uses its fixed source parameters, original shell and original bump/cutoff.
++ * It accepts updated velocity and six covariance scalar roots on the SAME G.
++ * The caller must separately authenticate how those roots were produced.
++ */
++export function makeOriginalFullPressureRefresher(initialized,context={}){
++  if(assertGlobalInitializedAngular(initialized)!==true)
++    fail('UNAUTHENTICATED_INITIAL_SOURCE','The source initial private seal did not validate.');
++  const {G,mean}=initialized;
++  const previous=mean.temporal.pressure,current=previous.current,
++    {band}=current,geometry=previous.geometry;
++  const R=geometry.R;
++  const background={b:band.fields.b,V:G.mul(R,band.fields.F),G:band.fields.G};
++  const stress=previous.residual.fullOriginalStress;
++  const {rho,chi}=previous.pressure;
++  const theta=band.coordinates.theta;
++  const fixedSource={band,geometry,background,stress,rho,chi,theta};
++  return function refreshOriginalCurrent({G:graph,fullCurrent,requiredBinding,phase,stage}){
++    if(graph!==G||!fullCurrent||!fullCurrent.covariance||!fullCurrent.meanVelocity)
++      fail('WRONG_GRAPH_OR_INCOMPLETE_CURRENT','Use updated full velocity/mean/covariance on the original exact G.');
++    if(typeof requiredBinding!=='string'||!requiredBinding)
++      fail('MISSING_SOURCE_INPUT_BINDING','CurrentState source input binding is missing.');
++    const result=reconstructUpdatedFullMeanPressure(G,{
++      geometry,background,velocity:fullCurrent.meanVelocity,
++      covariance:fullCurrent.covariance,stress,rho,chi,
++      tag:`GlobalGenericCycle${stage}_${phase}_FullPressure`});
++    if(!result.checks.every(x=>x.pass)||result.mean.fullAngularCovariance!==fullCurrent.covariance)
++      fail('ORIGINAL_FULL_PRESSURE_IDENTITY_FAILED','The original full-current pressure and covariance did not agree.');
++    const fullPressure=G.add(band.fields.pressure,result.pressure.value,fullCurrent.angularPressure);
++    const pde=exactRealCylindricalPDE(G,{geometry:{...geometry,theta},velocity:fullCurrent.velocity,pressure:fullPressure});
++    if(!Array.isArray(pde.conservativeResidual)||pde.conservativeResidual.length!==3)
++      fail('INVALID_ORIGINAL_PHYSICAL_RESIDUAL','Original Cartesian-equivalent full physical residual is missing.');
++    context.onPressureRefresh?.({phase,stage,graphNodes:G.nodes.length,pressureRoot:fullPressure,
++      meanDefectRoots:[result.mean.P,result.mean.Jtheta,result.mean.Jz],PDEResidualRoots:pde.conservativeResidual});
++    return {binding:requiredBinding,entireUpdatedCurrent:true,
++      pressure:fullPressure,residual:pde.conservativeResidual,
++      meanPressure:result.pressure.value,
++      defects:{P:result.mean.P,Jtheta:result.mean.Jtheta,Jz:result.mean.Jz},
++      actualSourceMathUsed:true,numericalValuesOrEnclosuresComputed:false,
++      authorityScope:'Original exact pressure/PDE source AST on supplied complete current; not authentication of successor fields.'};
++  };
++}
+diff --git a/research-ide/mathscope-m3/navier/original-generic-signed-bridge.mjs b/research-ide/mathscope-m3/navier/original-generic-signed-bridge.mjs
+new file mode 100644
+index 0000000..0bc3136
+--- /dev/null
++++ b/research-ide/mathscope-m3/navier/original-generic-signed-bridge.mjs
+@@ -0,0 +1,32 @@
++/** The only original-source entry for the staged Signed-after-Forced kernel.
++ * No guessed private seal, replacement family, artificial H or user Σ.
++ */
++import {assertGlobalForcedCurrent} from './source-global-forced-current.mjs';
++import {assertGlobalInitializedAngular} from './source-initialized-angular.mjs';
++import {exactSignedCovarianceInverse} from '../../mathscope-m2/navier/actual-physical-residual-algebra.mjs';
++import {exactCylindricalHarmonicCurl} from '../../mathscope-m2/navier/actual-full-curl.mjs';
++import {originalHomogeneousPrimaryPressure} from './source-global-angular.mjs';
++import {globalGraphEqual} from './source-global-current.mjs';
++import {attachGlobalForcedMeanStress,assertGlobalUpdatedMeanStress} from './source-global-updated-mean-stress.mjs';
++import {buildSignedSourceCandidateFromCheckedForced} from './generic-signed-source-kernel.mjs';
++
++export function prepareOriginalGenericSignedCandidate(actualPrivateForced,options={}){
++  // Original Corollary 8.5 uses normalized auxiliary Haar averages.
++  // No independently reconstructed raw-E Sigma is ever accepted.
++  const latestStress=attachGlobalForcedMeanStress(actualPrivateForced);
++  if(assertGlobalUpdatedMeanStress(latestStress)!==true)
++    throw Object.assign(new Error('Original latest mean stress seal failed.'),{code:'UNAUTHENTICATED_COR85_STRESS'});
++  const candidate=buildSignedSourceCandidateFromCheckedForced(actualPrivateForced,{
++    latestStress,assertLatestStress:assertGlobalUpdatedMeanStress,
++    assertOriginalForced:assertGlobalForcedCurrent,
++    assertOriginalInitialized:assertGlobalInitializedAngular,
++    signedInverse:exactSignedCovarianceInverse,
++    fullCurl:exactCylindricalHarmonicCurl,
++    homogeneousPressure:originalHomogeneousPrimaryPressure,
++    graphEqual:globalGraphEqual
++  },options);
++  candidate.source.sourceIdentityCheckedByOriginalBridgeOnly=true;
++  candidate.latestCor85Stress=latestStress;
++  candidate.scope.originalForcedPrivateSealValidatedByRealModule=true;
++  return candidate;
++}
+diff --git a/research-ide/mathscope-m3/navier/original-initial-forced-bridge.mjs b/research-ide/mathscope-m3/navier/original-initial-forced-bridge.mjs
+new file mode 100644
+index 0000000..6ecfe11
+--- /dev/null
++++ b/research-ide/mathscope-m3/navier/original-initial-forced-bridge.mjs
+@@ -0,0 +1,83 @@
++/** Source-specific first transition through the EXISTING private-seal APIs.
++ * This file is meant to sit next to the PR30 source modules. It is never
++ * allowed to call the initial-only signed / forced constructor on a forged
++ * CurrentState or pretend the first Forced update is the full original cycle.
++ *
++ * The subsequent signed / temporal / five generic successors need genuine
++ * new source-bound implementations. This adapter intentionally stops there.
++ */
++import {assertGlobalInitializedAngular} from './source-initialized-angular.mjs';
++import {attachGlobalForcedCurrent,assertGlobalForcedCurrent} from './source-global-forced-current.mjs';
++import {createGenericCurrentSeed,advanceCurrentPhase,currentStateReport} from './generic-current-state.mjs';
++
++const fail=(code,message)=>{const e=new Error(message);e.code=code;throw e;};
++const modesFromTemplates=templates=>templates.map(t=>({
++  label:String(t.key),modes:[...new Set(t.waveRows.map(row=>row.m))]
++}));
++
++export function adaptPrivateInitializedAngular(initialized,{sourceCommit}={}){
++  // This is the ONLY source-specific authority entry: no caller claims about
++  // the seal are trusted; the original imported WeakMap validator must pass.
++  if(assertGlobalInitializedAngular(initialized)!==true)
++    fail('UNAUTHENTICATED_INITIAL_SOURCE','Original initialized angular private seal was not validated.');
++  const {G,mean,initial,global}=initialized;
++  const moments=mean.stages.moments;
++  const b=mean.temporal.pressure.current.band;
++  if(!moments?.mean||!moments?.velocity||!initial?.global?.pressure?.nonzeroAngular)
++    fail('MISSING_INITIAL_SOURCE_OPERANDS','The original private state is incomplete.');
++  const fields={
++    velocity:global.velocity,pressure:global.pressure,
++    residual:global.direct.conservativeResidual,
++    meanVelocity:moments.velocity,meanPressure:moments.pressure.value,
++    angularPressure:initial.global.pressure.nonzeroAngular,
++    covariance:mean.temporal.pressure.covariance.fullAngularMean,
++    defects:{P:moments.mean.P,Jtheta:moments.mean.Jtheta,Jz:moments.mean.Jz},
++    potential:null // Original A/b/p are not fully attached by this state.
++  };
++  const seed=createGenericCurrentSeed({G,
++    source:{sourceCommit,paperSHA256:initialized.source.paperSHA256,
++      parameterExpressionSHA256:initialized.source.parameterExpressionSHA256},
++    fields,modes:modesFromTemplates(initialized.templates)});
++  return {seed,source:initialized,graph:G,provenance:{
++    initializedPrivateSealValidated:true,sourceGraphIdentical:true,
++    numericalFinalFieldCertified:false,originalExactSupremumSelectorEvaluated:false,
++    reason:'The original private initial state has been validated, but the complete final correction family is not yet computed.'}};
++}
++
++export function produceOriginalFirstForced(initialized,{sourceCommit,context={}}={}){
++  const adapted=adaptPrivateInitializedAngular(initialized,{sourceCommit});
++  let result=null;
++  const step=advanceCurrentPhase(adapted.seed,'forced',{
++    produce({stage,phase}){
++      if(stage!==1||phase!=='forced')fail('INITIAL_ONLY_API_USED_FOR_SUCCESSOR','The PR30 constructor currently authenticates only the initial stage.');
++      result=attachGlobalForcedCurrent(initialized,context);
++      assertGlobalForcedCurrent(result);
++      if(result.G!==initialized.G||result.input!==initialized)
++        fail('CROSS_SOURCE_FORCED_CURRENT','The forced current lost its exact original graph or seed.');
++      const full=result.global,mean=result.mean;
++      return {stage,phase,completeCurrent:true,modes:modesFromTemplates(result.templates),
++        fields:{velocity:full.velocity,meanVelocity:mean.completeBetaVGamma,
++          angularPressure:full.allAngularPressure,covariance:mean.fullCurrentCovariance,potential:null}};
++    },
++    refresh({requiredBinding}){
++      // attachGlobalForcedCurrent itself ran the actual full-pressure refresh
++      // BEFORE calculating this complete current's new pressure/residual.
++      assertGlobalForcedCurrent(result);
++      const {global,mean}=result;
++      if(mean.mean.fullAngularCovariance!==mean.fullCurrentCovariance ||
++         !mean.checks.every(x=>x.pass))
++        fail('UNVERIFIED_FORCED_PRESSURE_REFRESH','Only the authenticated full-current pressure refresh is admissible.');
++      return {binding:requiredBinding,entireUpdatedCurrent:true,
++        pressure:global.pressure,residual:global.direct.conservativeResidual,
++        meanPressure:global.fullMeanPressure,
++        defects:{P:mean.mean.P,Jtheta:mean.mean.Jtheta,Jz:mean.mean.Jz}};
++    }
++  });
++  return {schema:'MathScope.N6.PrivateOriginalForcedBridge/1',
++    sourceAuthenticatedFirstForced:true,graphRootIdentifiers:currentStateReport(step),
++    nextPhase:'signed',nextPhaseImplemented:false,
++    firstForced:result,currentState:step,
++    numericalValueEvaluatorAvailable:false,missingOriginalFinalRootsRemain:true,
++    originalFinalJetCount:0,originalN706Closed:false,originalN805Closed:false,
++    requiredNextWork:'Implement original-source Signed successor on the updated full CurrentState with authentic H/covariance/pressure and the complete mode inventory.'};
++}
+diff --git a/research-ide/mathscope-m3/navier/original-signed-162-bridge.mjs b/research-ide/mathscope-m3/navier/original-signed-162-bridge.mjs
+new file mode 100644
+index 0000000..e0e4176
+--- /dev/null
++++ b/research-ide/mathscope-m3/navier/original-signed-162-bridge.mjs
+@@ -0,0 +1,37 @@
++/** Only authentic original-source entry to the complete 81x2 Signed indexed AST.
++ * No arbitrary injected original services, no fabricated private seal.
++ * This does NOT issue an original Signed CurrentState source seal.
++ */
++import {assertGlobalForcedCurrent} from './source-global-forced-current.mjs';
++import {assertGlobalInitializedAngular} from './source-initialized-angular.mjs';
++import {exactHarmonicComplexAlgebra,reconstructAngularHarmonics,exactRealCylindricalPDE} from './source-harmonic-assembly.mjs';
++import {exactAngularWaveCovariance} from './source-global-forced-current.mjs';
++import {guardGlobalLocalBody} from './source-global-current.mjs';
++import {reconstructUpdatedFullMeanPressure} from './source-updated-mean-pressure.mjs';
++import {prepareOriginalGenericSignedCandidate} from './original-generic-signed-bridge.mjs';
++import {assembleSigned162Candidate} from './generic-signed-162-indexed.mjs';
++
++export function produceOriginalSigned162AfterForced(actualPrivateForced,options={}){
++  if(assertGlobalForcedCurrent(actualPrivateForced)!==true||
++     assertGlobalInitializedAngular(actualPrivateForced.input)!==true)
++    throw Object.assign(new Error('The original private Forced/Initialized seals are required.'),{code:'INVALID_ORIGINAL_PRIVATE_FORCED'});
++  if(Object.keys(options).some(k=>!['onProgress','candidateMaxAdditionalNodes','assemblyMaxAdditionalNodes','refreshAfterAssembly'].includes(k)))
++    throw Object.assign(new Error('Signed source, target, H, amplitudes, cover and domain are not caller-selectable.'),{code:'INVALID_SIGNED_OPTIONS'});
++  const {onProgress,candidateMaxAdditionalNodes=200000,assemblyMaxAdditionalNodes=1500000,refreshAfterAssembly=true}=options;
++  // This is the only candidate creation permitted in the real source bridge.
++  const signed=prepareOriginalGenericSignedCandidate(actualPrivateForced,{onProgress,maxAdditionalNodes:candidateMaxAdditionalNodes});
++  const composed=assembleSigned162Candidate(signed,{
++    assertForced:assertGlobalForcedCurrent,
++    assertInitialized:assertGlobalInitializedAngular,
++    complex:exactHarmonicComplexAlgebra,
++    reconstruct:reconstructAngularHarmonics,
++    covariance:exactAngularWaveCovariance,
++    guard:guardGlobalLocalBody,
++    refreshMean:reconstructUpdatedFullMeanPressure,
++    physicalPDE:exactRealCylindricalPDE
++  },{onProgress,maxAdditionalNodes:assemblyMaxAdditionalNodes,refreshAfterAssembly});
++  return {...composed,scope:{...composed.scope,
++    originalForcedSourceAssertedByRealModule:true,
++    originalPrivateSignedSuccessorSealIssued:false,
++    actualOriginalFullNumericalFieldsEvaluated:false}};
++}
+diff --git a/research-ide/mathscope-m3/navier/original-signed-162-successor.mjs b/research-ide/mathscope-m3/navier/original-signed-162-successor.mjs
+new file mode 100644
+index 0000000..acf4d18
+--- /dev/null
++++ b/research-ide/mathscope-m3/navier/original-signed-162-successor.mjs
+@@ -0,0 +1,133 @@
++/** Private original-source successor authority, bound ONLY to the actual
++ * privately sealed PR30 `GlobalActualForcedCurrent` instance.
++ *
++ * The previous Signed162 candidate assembles fields; THIS module mints an
++ * in-process new Signed successor seal only after the real Force/Initial
++ * constructors and the full indexed, pressure, and PDE graph have succeeded.
++ * Recording a JSON receipt alone can never mint that private seal.
++ */
++import {assertGlobalForcedCurrent} from './source-global-forced-current.mjs';
++import {assertGlobalInitializedAngular} from './source-initialized-angular.mjs';
++import {assertGlobalUpdatedMeanStress} from './source-global-updated-mean-stress.mjs';
++import {produceOriginalSigned162AfterForced} from './original-signed-162-bridge.mjs';
++import {auditSigned162SuccessorFacts} from './source-signed-162-successor-audit.mjs';
++import {verifyPR30OriginalSourceFiles,PR30_HEAD} from './source-signed-162-pr30-pins.mjs';
++import {canonicalStringify,sha256} from '../../mathscope-m0/contracts.mjs';
++const seals=new WeakMap();
++const fail=(code,message)=>{throw Object.assign(new Error(message),{code});};
++function record(s){return {
++  schema:s.schema,source:s.source,stage:s.stage,fields:s.audit.indexedFields,
++  roots:s.audit.rootInventory,scope:s.scope,
++  constructionScope:s.constructed.scope,
++  authenticLatestCor85:{Sigma:s.latestStress.Sigma,
++    source:s.latestStress.source,
++    weightedSourceMoments:s.latestStress.compatibility.rows.map(x=>({
++      rawWeightedSourceWhole:x.rawWeightedSourceWhole,rawCutoffRemainder:x.rawCutoffRemainder}))},
++  signedSource:{
++    Sigma:s.constructed.originalCandidate?.signed?.Sigma,
++    weightedSources:s.constructed.originalCandidate?.signed?.integrals?.map(x=>[x.integrand,x.partial,x.whole,x.value,x.cutoffRemainder,x.normalizedHaarMean]),
++    cor85SigmaIdentityBySource:s.constructed.originalCandidate?.signed?.sourceOfSigma,
++    fixedH:s.constructed.originalCandidate?.signed?.inversion?.H,
++    originalPositiveAmplitudes:s.constructed.originalCandidate?.signed?.inversion?.a,
++    signedAmplitudes:s.constructed.originalCandidate?.signed?.inversion?.deltaAmplitude,
++    signedPotentialAndCurl:s.constructed.originalCandidate?.signed?.rows?.map(x=>({
++      signIndex:x.signIndex,deltaAmplitude:x.deltaAmplitude,potential:x.potential,
++      fullCurlLeading:x.curl?.leading,fullCurlRemainder:x.curl?.remainder,
++      pressure:x.homogeneousSignedAngularPressure}))
++  },
++  correctedTemplateRoots:s.constructed.templates.map(t=>({key:t.key,sign:t.sign,
++    fullModes:t.waveRows.map(x=>({m:x.m,velocity:x.velocity,pressure:x.pressure})),
++    signedModes:t.signedRows.map(x=>({m:x.m,velocity:x.velocity,pressure:x.pressure})),
++    beforeCovariance:t.beforeCovariance.values,afterCovariance:t.afterCovariance.values,
++    deltaCovariance:t.deltaCovariance}))
++};}
++function originalAssertions(s){
++  if(assertGlobalForcedCurrent(s.input)!==true||assertGlobalInitializedAngular(s.input.input)!==true||
++     assertGlobalUpdatedMeanStress(s.latestStress)!==true)
++    fail('PR30_PRIVATE_SOURCE_AUTHORITY_FAILED','Real PR30 original source seals did not validate.');
++}
++/** One full source-bound successor from original Force, with immutable code pin.
++ * No injected services, arbitrary target Σ or alternate H/initialization.
++ */
++export async function attachOriginalSigned162Successor(actualPrivateForced,options={}){
++  if(!options||typeof options!=='object'||Array.isArray(options)||
++    Object.keys(options).some(k=>!['onProgress','candidateMaxAdditionalNodes','assemblyMaxAdditionalNodes'].includes(k)))
++    fail('INVALID_SIGNED_SUCCESSOR_OPTIONS','No replacement target or source seals are admitted.');
++  const pins=await verifyPR30OriginalSourceFiles();
++  if(assertGlobalForcedCurrent(actualPrivateForced)!==true||
++    assertGlobalInitializedAngular(actualPrivateForced.input)!==true)
++    fail('PR30_PRIVATE_SOURCE_AUTHORITY_FAILED','Unsealed or altered original first Forced source.');
++  const G=actualPrivateForced.G,start=G.nodes.length,
++    assembled=produceOriginalSigned162AfterForced(actualPrivateForced,{...options,refreshAfterAssembly:true}),
++    latestStress=assembled.originalCandidate?.latestCor85Stress,
++    audit=auditSigned162SuccessorFacts(assembled);
++  // Signed target is now the very same PRIVATE source Corollary 8.5 Sigma.
++  // A separately recomputed unaveraged E is forbidden (Proposition 9.6 Step 2).
++  if(assembled.originalCandidate.signed.sourceOfSigma!=='AUTHENTICATED_ORIGINAL_COR85_NORMALIZED_HAAR'||
++     assembled.originalCandidate.signed.Sigma.some((id,j)=>id!==latestStress.Sigma[j]))
++    fail('SIGNED_COR85_TARGET_MISMATCH','Signed inverse must use the trusted normalized Haar stress roots.');
++  // Appending the Signed expression graph must preserve the original seals.
++  originalAssertions({input:actualPrivateForced,latestStress});
++  if(assembled.G!==G||assembled.originalForced!==actualPrivateForced||audit.allIndexedRows!==1620||
++     latestStress.G!==G||latestStress.input!==actualPrivateForced||
++     latestStress.source.latestCovariance!==actualPrivateForced.mean.fullCurrentCovariance||
++     latestStress.source.latestFullMeanPressure!==actualPrivateForced.mean.pressure.value||
++     !Array.isArray(latestStress.Sigma)||latestStress.Sigma.length!==2)
++    fail('INVALID_SIGNED_SOURCE_LINEAGE','Signed successor must derive from the same original Forced graph.');
++  const end=G.nodes.length,definitions=G.captureFunctionDefinitions(),
++    successor={schema:'MathScope.N6.PR30SourceBoundSigned162Successor/1',G,input:actualPrivateForced,
++      constructed:assembled,audit,latestStress,
++      source:{sourceCommit:PR30_HEAD,sourceBytePins:pins,
++        sameGraphAsOriginalForced:true,privateOriginalForcedSealChecked:true,
++        originalHOrAmplitudesReplaced:false,sourceClassBoundCertified:false,
++        actualUpdatedMeanCor85StressVerified:true,
++        independentSigmaGraphEqualityToSignedCandidateStillOpen:false,
++        signedInverseSigmaIsAuthenticatedCor85Sigma:true},
++      stage:{name:'first-Signed-after-first-Forced',startNodeCount:start,endNodeCount:end,
++        newNodes:end-start,newIndexedFields:10,newRegisteredRows:1620},
++      scope:{actualPrivateSignedSuccessorInProcessSealIssued:true,
++        mathematicalOriginalM3CriterionClosed:false,numerical67FinalJetsComplete:false,
++        actualFinal67JetsEvaluated:0,N706Closed:false,N805Closed:false,
++        originalHigherStageIterationComplete:false,
++        actualWholeKRefinementExecuted:false,release:'HOLD'}};
++  const encoded=canonicalStringify(record(successor)),
++    delta=canonicalStringify(G.nodes.slice(start,end));
++  seals.set(successor,{G,input:actualPrivateForced,latestStress,start,end,encoded,delta,definitions});
++  return successor;
++}
++export function assertOriginalSigned162Successor(s){
++  const seal=seals.get(s);
++  if(!seal||seal.G!==s?.G||seal.input!==s?.input||seal.latestStress!==s?.latestStress||
++     seal.encoded!==canonicalStringify(record(s))||
++     seal.delta!==canonicalStringify(s.G.nodes.slice(seal.start,seal.end))||
++     !s.G.functionDefinitionsUnchanged(seal.definitions))
++    fail('INVALID_ORIGINAL_SIGNED_SUCCESSOR_SEAL','Signed private successor object, its defining graph, or function registry changed.');
++  originalAssertions(s);
++  const current=auditSigned162SuccessorFacts(s.constructed);
++  if(canonicalStringify(current)!==canonicalStringify(s.audit))
++    fail('SIGNED_SUCCESSOR_MUTATION','The Signed field, cover and pressure/PDE provenance changed.');
++  return true;
++}
++/** Hashes are evidence of the freshly executed in-process source graph,
++ * not cryptographic attestation of remote CI or a Navier–Stokes theorem.
++ */
++export async function originalSigned162SuccessorCertificate(s){
++  assertOriginalSigned162Successor(s);const seal=seals.get(s),
++    graphSnapshot={record:record(s),newNodes:s.G.nodes.slice(seal.start,seal.end),
++      definitions:seal.definitions,originalForcedSource:s.input.source};
++  return {schema:'MathScope.N6.PR30SourceBoundSigned162Certificate/1',
++    execution:'AUTHENTIC_ORIGINAL_FIRST_FORCED_TO_FULL_SIGNED162_AST',
++    sourceCommit:PR30_HEAD,sourceBytePins:s.source.sourceBytePins,
++    graph:{startNodeCount:seal.start,endNodeCount:seal.end,deltaNodeCount:seal.end-seal.start,
++      sha256:await sha256(canonicalStringify(graphSnapshot))},
++    fields:s.audit.indexedFields,roots:s.audit.rootInventory,
++    privateSuccessorSealChecked:true,recordedOnly:false,
++    final67FieldNumericalEnclosures:0,
++    latestCor85StressAuthenticated:true,
++    mathematicalAllOrderSourceBoundsEstablished:false,
++    actualWholeKEnergyIntegrated:false,N706Closed:false,N805Closed:false,release:'HOLD'};
++}
++export function originalSigned162SuccessorRoots(s){
++  assertOriginalSigned162Successor(s);
++  return {...s.audit.rootInventory,indexedRoots:s.audit.indexedFields.map(x=>x.root)};
++}
+diff --git a/research-ide/mathscope-m3/navier/run-original-generic-signed-after-forced.mjs b/research-ide/mathscope-m3/navier/run-original-generic-signed-after-forced.mjs
+new file mode 100644
+index 0000000..1a8362a
+--- /dev/null
++++ b/research-ide/mathscope-m3/navier/run-original-generic-signed-after-forced.mjs
+@@ -0,0 +1,49 @@
++#!/usr/bin/env node
++/** Optional actual PR30 runtime. No initial factory = expected exit 2.
++ * Does not fabricate a private original source object or promote a candidate
++ * to the whole corrected field. Output is bounded metadata, not G.nodes.
++ */
++import {writeFile,mkdir} from 'node:fs/promises';
++import {resolve,dirname} from 'node:path';
++import {pathToFileURL} from 'node:url';
++
++const args=process.argv.slice(2),option=key=>args.includes(key)?args[args.indexOf(key)+1]:null,
++  output=resolve(option('--output')??'MathScope_Original_Signed_AfterForced_Receipt.json');
++const PINNED_PR30_HEAD='a9b3a5b317525f6d0a71e2e356b054c9d25d2e60';
++const receipt={schema:'MathScope.N6.GenericSignedAfterForcedExecutionReceipt/1',
++  repository:'leegahuyn/MathScopeCompute',intendedPullRequest:30,
++  sourceCommit:option('--source-commit'),originalSignedWholeCurrentConstructed:false,
++  realSourceGraphUsed:false,originalPrivateSourceExecuted:false,originalForcedCurrentExecuted:false,
++  sourceSignedCandidateProduced:false,originalFinal67JetsNumericallyEvaluated:0,
++  N706Closed:false,N805Closed:false,actualLastResolvedTau:null,release:'HOLD'};
++async function finish(code){
++  await mkdir(dirname(output),{recursive:true});
++  await writeFile(output,JSON.stringify(receipt,null,2)+'\n');
++  console.log(JSON.stringify(receipt));
++  process.exitCode=code;
++}
++try{
++  const factory=option('--factory');
++  if(!factory||!receipt.sourceCommit)throw Object.assign(new Error('A real private source factory and pinned source commit are required.'),{code:'MISSING_PRIVATE_SOURCE_FACTORY'});
++  if(receipt.sourceCommit!==PINNED_PR30_HEAD)throw Object.assign(new Error('This source adapter was verified against PR30 HEAD '+PINNED_PR30_HEAD+'. Rereview source before changing the pin.'),{code:'SOURCE_COMMIT_MISMATCH'});
++  const {produceOriginalFirstForced}=await import('./original-initial-forced-bridge.mjs');
++  const {prepareOriginalGenericSignedCandidate}=await import('./original-generic-signed-bridge.mjs');
++  const m=await import(pathToFileURL(resolve(factory)).href);
++  if(typeof m.createOriginalInitializedAngular!=='function')throw Object.assign(new Error('Expected the original private initialized-angular constructor.'),{code:'MISSING_PRIVATE_FACTORY_EXPORT'});
++  const initial=await m.createOriginalInitializedAngular();
++  const first=produceOriginalFirstForced(initial,{sourceCommit:receipt.sourceCommit});
++  receipt.realSourceGraphUsed=true;
++  receipt.originalPrivateSourceExecuted=true;
++  receipt.originalForcedCurrentExecuted=first.sourceAuthenticatedFirstForced===true;
++  receipt.firstForcedGraphNodeCount=first.graph.nodes.length;
++  const limitRaw=option('--max-additional-nodes'),limit=limitRaw?Number(limitRaw):200000;
++  const signed=prepareOriginalGenericSignedCandidate(first.firstForced,{maxAdditionalNodes:limit});
++  receipt.sourceSignedCandidateProduced=true;
++  receipt.postSignedCandidateGraphNodeCount=first.graph.nodes.length;
++  receipt.SigmaRootIDs=signed.signed.Sigma;
++  receipt.originalSignedDeltaAmplitudeRootIDs=signed.signed.rows.map(r=>r.deltaAmplitude);
++  receipt.originalSignedLocalPotentialRootIDs=signed.signed.rows.map(r=>r.potential);
++  receipt.originalSignedHomogeneousPressureRootIDs=signed.signed.rows.map(r=>r.homogeneousSignedAngularPressure.imaginary);
++  receipt.missingWholeCurrentGates=signed.requiredNext;
++  await finish(0);
++}catch(e){receipt.error={code:e.code??'ORIGINAL_SIGNED_SOURCE_EXECUTION_FAILED',message:String(e.message).slice(0,400)};await finish(2);}
+diff --git a/research-ide/mathscope-m3/navier/run-original-signed-162-after-forced.mjs b/research-ide/mathscope-m3/navier/run-original-signed-162-after-forced.mjs
+new file mode 100644
+index 0000000..e1abc3f
+--- /dev/null
++++ b/research-ide/mathscope-m3/navier/run-original-signed-162-after-forced.mjs
+@@ -0,0 +1,40 @@
++#!/usr/bin/env node
++/** Optional real private-repo runner, fail closed. Does not write original graph blobs.
++ * Requires source constructor created inside original PR30 runtime.
++ * No output or flag may promote an M3 criterion or the final field.
++ */
++import {writeFile,mkdir} from 'node:fs/promises';
++import {resolve,dirname} from 'node:path';
++import {pathToFileURL} from 'node:url';
++const PIN='a9b3a5b317525f6d0a71e2e356b054c9d25d2e60',args=process.argv.slice(2),
++ get=k=>args.includes(k)?args[args.indexOf(k)+1]:null,
++ output=resolve(get('--output')??'/tmp/mathscope-signed-162-original-receipt.json'),
++ receipt={schema:'MathScope.N6.GenericSigned162RealSourceRunnerReceipt/1',
++    repository:'leegahuyn/MathScopeCompute',pr:30,sourceCommit:get('--source-commit'),
++    realOriginalFactoryExecuted:false,initialPrivateSealValidated:false,forcedPrivateSealValidated:false,
++    signedCandidateProduced:false,signed162IndexedASTProduced:false,fullSignedPressurePDE_ASTProduced:false,
++    originalSignedSuccessorPrivateSealIssued:false,actualFinalField67JetsNumericallyEvaluated:0,
++    N706Closed:false,N805Closed:false,actualLastResolvedTau:null,release:'HOLD'};
++async function end(exit){await mkdir(dirname(output),{recursive:true});await writeFile(output,JSON.stringify(receipt,null,2)+'\n');console.log(JSON.stringify(receipt));process.exitCode=exit;}
++try{
++  const path=get('--factory');
++  if(!path)throw Object.assign(new Error('The actual private initialized-angular constructor is required.'),{code:'MISSING_PRIVATE_SOURCE_FACTORY'});
++  if(receipt.sourceCommit!==PIN)throw Object.assign(new Error('PR30 HEAD changed or source commit was not pinned: rereview before source construction.'),{code:'SOURCE_COMMIT_MISMATCH'});
++  const mod=await import(pathToFileURL(resolve(path)).href);
++  if(typeof mod.createOriginalInitializedAngular!=='function')throw Object.assign(new Error('Missing original private source constructor export.'),{code:'MISSING_PRIVATE_FACTORY_EXPORT'});
++  const {produceOriginalFirstForced}=await import('./original-initial-forced-bridge.mjs');
++  const {produceOriginalSigned162AfterForced}=await import('./original-signed-162-bridge.mjs');
++  const initial=await mod.createOriginalInitializedAngular();receipt.realOriginalFactoryExecuted=true;
++  const first=produceOriginalFirstForced(initial,{sourceCommit:PIN});
++  receipt.initialPrivateSealValidated=first.sourceAuthenticatedFirstForced===true;
++  receipt.forcedPrivateSealValidated=first.sourceAuthenticatedFirstForced===true;
++  const aggregate=produceOriginalSigned162AfterForced(first.firstForced,{candidateMaxAdditionalNodes:Number(get('--candidate-nodes')??200000),
++    assemblyMaxAdditionalNodes:Number(get('--assembly-nodes')??1500000),
++    onProgress:()=>{}});
++  receipt.signedCandidateProduced=true;receipt.signed162IndexedASTProduced=aggregate.scope.sourceIndexed162SignedASTConstructed===true;
++  receipt.fullSignedPressurePDE_ASTProduced=aggregate.scope.originalFullPressureRecomputed&&aggregate.scope.originalPhysicalPDERecomputed;
++  receipt.indexedRowsPerField=162;receipt.indexedFieldCount=10;
++  receipt.postSignedGraphNodeCount=first.graph.nodes.length;
++  receipt.nextUnresolved=['original signed successor private seal','source all-order bounds','next Temporal/FiveMap actual source','final original 67 field numerical enclosures'];
++  await end(0);
++}catch(e){receipt.error={code:e.code??'ORIGINAL_SIGNED_162_EXECUTION_FAILED',message:String(e.message).slice(0,450)};await end(2);}
+diff --git a/research-ide/mathscope-m3/navier/run-pr30-authenticated-signed-162.mjs b/research-ide/mathscope-m3/navier/run-pr30-authenticated-signed-162.mjs
+new file mode 100644
+index 0000000..0ddca68
+--- /dev/null
++++ b/research-ide/mathscope-m3/navier/run-pr30-authenticated-signed-162.mjs
+@@ -0,0 +1,62 @@
++#!/usr/bin/env node
++/** Explicit PR30 source runner: immutable source-byte validation first,
++ * then real initializer -> real Forced -> Signed162 -> private successor seal.
++ * No source/parameter overrides, no implicit release approval.
++ */
++import {mkdir,writeFile} from 'node:fs/promises';
++import {resolve,dirname} from 'node:path';
++import {pathToFileURL} from 'node:url';
++import {verifyPR30OriginalSourceFiles,PR30_HEAD} from './source-signed-162-pr30-pins.mjs';
++const args=process.argv.slice(2),get=name=>{const i=args.indexOf(name);return i<0?null:args[i+1]??null;};
++const out=resolve(get('--output')??'/tmp/mathscope-signed162-authenticated.json');
++const receipt={schema:'MathScope.N6.PR30Signed162AuthenticatedAttempt/1',
++  expectedSourceCommit:PR30_HEAD,sourceCommit:get('--source-commit'),
++  bytesVerified:false,realFactoryExecuted:false,initialPrivateSealValidated:false,
++  forcedPrivateSealValidated:false,signed162CandidateProduced:false,
++  successorPrivateSealIssued:false,wholeOriginalGraphExecuted:false,
++  temporalCenteredSourceASTProduced:false,temporalInverseActuallyExecuted:false,
++  subsequentFiveMapActuallyExecuted:false,
++  signedIndexedRows:0,actualFinal67NumericalJets:0,N706Closed:false,N805Closed:false,release:'HOLD'};
++async function save(code){await mkdir(dirname(out),{recursive:true});await writeFile(out,JSON.stringify(receipt,null,2)+'\n');
++  process.stdout.write(JSON.stringify({status:code===0?'SOURCE_SIGNED162_AST_ATTESTED':'SOURCE_EXECUTION_HOLD',output:out,
++    sealed:receipt.successorPrivateSealIssued,error:receipt.error??null})+'\n');process.exitCode=code;}
++try{
++  if(receipt.sourceCommit!==PR30_HEAD)throw Object.assign(new Error('Exact PR30 HEAD is required.'),{code:'SOURCE_COMMIT_MISMATCH'});
++  const factory=get('--factory');
++  // Verify original repository bytes BEFORE the original modules are imported.
++  receipt.sourceBytePins=await verifyPR30OriginalSourceFiles();receipt.bytesVerified=true;
++  const factoryURL=factory?pathToFileURL(resolve(factory)).href:new URL('./source-pr30-original-factory.mjs',import.meta.url).href;
++  const mod=await import(factoryURL);
++  if(typeof mod.createOriginalInitializedAngular!=='function')
++    throw Object.assign(new Error('Module must export createOriginalInitializedAngular.'),{code:'INVALID_PRIVATE_SOURCE_FACTORY'});
++  const [{assertGlobalInitializedAngular},{produceOriginalFirstForced},{attachOriginalSigned162Successor,
++    assertOriginalSigned162Successor,originalSigned162SuccessorCertificate}]=await Promise.all([
++      import('./source-initialized-angular.mjs'),import('./original-initial-forced-bridge.mjs'),import('./original-signed-162-successor.mjs')]);
++  const initial=await mod.createOriginalInitializedAngular({onProgress:progress=>{
++    if(progress?.stage)process.stderr.write(JSON.stringify({stage:progress.stage,nodeCount:progress.nodeCount??null})+'\n');
++  }});receipt.realFactoryExecuted=true;
++  if(assertGlobalInitializedAngular(initial)!==true)throw Object.assign(new Error('Actual initial source private seal rejected.'),{code:'INVALID_ORIGINAL_PRIVATE_INITIAL'});
++  receipt.initialPrivateSealValidated=true;
++  const forced=produceOriginalFirstForced(initial,{sourceCommit:PR30_HEAD});
++  if(forced.sourceAuthenticatedFirstForced!==true)throw Object.assign(new Error('First Forced constructor unverified.'),{code:'INVALID_ORIGINAL_PRIVATE_FORCED'});
++  receipt.forcedPrivateSealValidated=true;
++  const signed=await attachOriginalSigned162Successor(forced.firstForced,{candidateMaxAdditionalNodes:250000,
++    assemblyMaxAdditionalNodes:1500000});
++  receipt.signed162CandidateProduced=true;
++  if(assertOriginalSigned162Successor(signed)!==true)throw Object.assign(new Error('New Signed successor seal rejected.'),{code:'INVALID_SIGNED_SUCCESSOR_SEAL'});
++  const certificate=await originalSigned162SuccessorCertificate(signed);
++  receipt.signedIndexedRows=certificate.fields.reduce((n,x)=>n+x.rows,0);
++  receipt.successorPrivateSealIssued=true;receipt.wholeOriginalGraphExecuted=false;
++  receipt.certificate=certificate;
++  // Advance only to the honest NEXT source frontier. This consumes the
++  // post-Signed private seal and freshly recomputed E, P/J, pressure.
++  // It does NOT pretend to run the original Fourier inverse or five moments.
++  const {attachSigned162TemporalFrontier,assertSigned162TemporalFrontier,
++    signed162TemporalFrontierCertificate}=await import('./source-signed-temporal-frontier.mjs');
++  const t=attachSigned162TemporalFrontier(signed);
++  if(assertSigned162TemporalFrontier(t)!==true)
++    throw Object.assign(new Error('New centered post-Signed sources did not verify.'),{code:'TEMPORAL_FRONTIER_NOT_VERIFIED'});
++  receipt.temporalFrontierCertificate=await signed162TemporalFrontierCertificate(t);
++  receipt.temporalCenteredSourceASTProduced=true;
++  await save(0);
++}catch(e){receipt.error={code:e.code??'ORIGINAL_SOURCE_RUNTIME_ERROR',message:String(e.message).slice(0,1500)};await save(2);}
+diff --git a/research-ide/mathscope-m3/navier/run-private-source-bridge.mjs b/research-ide/mathscope-m3/navier/run-private-source-bridge.mjs
+new file mode 100644
+index 0000000..28a5f37
+--- /dev/null
++++ b/research-ide/mathscope-m3/navier/run-private-source-bridge.mjs
+@@ -0,0 +1,39 @@
++#!/usr/bin/env node
++/** Optional full-repository entrypoint. Fail-closed without a real factory
++ * that constructs an object accepted by the ORIGINAL private WeakMap seal.
++ * The original source and all 3.8M+ node graph data are NOT embedded here.
++ */
++import {readFile,writeFile,mkdir} from 'node:fs/promises';
++import {resolve,dirname} from 'node:path';
++import {pathToFileURL} from 'node:url';
++import {produceOriginalFirstForced} from './original-initial-forced-bridge.mjs';
++
++const argv=process.argv.slice(2),get=key=>argv.includes(key)?argv[argv.indexOf(key)+1]:null;
++const output=resolve(get('--output')??'MathScope_CurrentState_Actual_Execution_Receipt.json');
++const result={schema:'MathScope.N6.GenericCurrentStateRealBridgeReceipt/1',
++  originalPrivateSourceExecuted:false,stage1OriginalForcedProduced:false,
++  finalRootNumericEnclosures:0,final67JetsNumericCertified:0,
++  originalN706Closed:false,originalN805Closed:false,actualLastResolvedTau:null,
++  release:'HOLD'};
++async function finalize(exitCode){await mkdir(dirname(output),{recursive:true});
++  await writeFile(output,JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify(result));process.exitCode=exitCode;}
++try{
++  const factory=get('--factory'),commit=get('--source-commit');
++  if(!factory||!commit)throw Object.assign(new Error('Supply real initialized-angular factory and pinned source commit.'),{code:'MISSING_PRIVATE_SOURCE_FACTORY'});
++  const module=await import(pathToFileURL(resolve(factory)).href);
++  if(typeof module.createOriginalInitializedAngular!=='function')
++    throw Object.assign(new Error('Factory must export createOriginalInitializedAngular().'),{code:'NO_PRIVATE_FACTORY_EXPORT'});
++  const initialized=await module.createOriginalInitializedAngular();
++  const got=produceOriginalFirstForced(initialized,{sourceCommit:commit});
++  result.originalPrivateSourceExecuted=true;
++  result.stage1OriginalForcedProduced=got.sourceAuthenticatedFirstForced===true;
++  result.generatedGraphNodeCount=got.graphRootIdentifiers.graphNodes;
++  result.producedCurrentRootIdentifiers=got.graphRootIdentifiers.history.map(x=>({stage:x.stage,phase:x.phase,
++    pressureRoot:x.pressureRoot,defects:x.defects}));
++  result.nextRequiredSourceOperator='SIGNED_SUCCESSOR_ON_GENERIC_CURRENT';
++  result.originalSuccessorIsStillMissing=true;
++  await finalize(0);
++}catch(e){
++  result.failure={code:e.code??'ORIGINAL_SOURCE_EXECUTION_FAILED',message:e.message};
++  await finalize(2);
++}
+diff --git a/research-ide/mathscope-m3/navier/source-pr30-original-factory.mjs b/research-ide/mathscope-m3/navier/source-pr30-original-factory.mjs
+new file mode 100644
+index 0000000..4e5073c
+--- /dev/null
++++ b/research-ide/mathscope-m3/navier/source-pr30-original-factory.mjs
+@@ -0,0 +1,40 @@
++/** Authentic PR30 initialization recipe, reconstructed verbatim in ordering
++ * from archived global-source-forced-current.test.mjs (attempt1/attempt3).
++ * No fixture fields, caller-overridden coefficients, signs or symbolic roots.
++ *
++ * The bounded first source computation is known to be very expensive. A
++ * constructor that exhausts resources does not yield a private source seal.
++ */
++import {prepareGlobalSourceBand} from './source-global-band.mjs';
++import {attachGlobalFixedRepresentative} from './source-global-representative.mjs';
++import {attachGlobalCurrentState} from './source-global-current.mjs';
++import {attachGlobalMomentCurrent} from './source-global-moment.mjs';
++import {attachGlobalCurrentPressure} from './source-global-pressure.mjs';
++import {attachGlobalTemporalInverse} from './source-global-temporal.mjs';
++import {attachGlobalInitializedMean} from './source-global-initial-mean.mjs';
++import {attachGlobalInitializedAngular,assertGlobalInitializedAngular} from './source-initialized-angular.mjs';
++import {prepareOriginalMeanMapOperatorSeminorms} from './source-fixed-mean-majorants.mjs';
++import {attachInitializedMeanOperatorMajorants,assertInitializedMeanOperatorMajorants} from './source-initialized-mean-majorants.mjs';
++
++export async function createOriginalInitializedAngular(context={}){
++  if(!context||typeof context!=='object'||Array.isArray(context)||
++     Object.keys(context).some(k=>!['onProgress','checkCancelled'].includes(k)))
++    throw Object.assign(new Error('Only bounded original source progress callbacks are accepted.'),{code:'INVALID_ORIGINAL_FACTORY_OPTIONS'});
++  const band=prepareGlobalSourceBand({coefficientOrder:1,maxNodes:3500000},context);
++  const representative=attachGlobalFixedRepresentative(band,context);
++  const current=attachGlobalCurrentState(representative,context);
++  const momentTemplate=attachGlobalMomentCurrent(current,context);
++  const pressure=attachGlobalCurrentPressure(current,context);
++  const temporal=attachGlobalTemporalInverse(pressure,context);
++  const mean=attachGlobalInitializedMean(temporal,momentTemplate,context);
++  // Retain the same fixed mean operator/majorant initialization order
++  // as the original archived full Forced source test. Independent G graph.
++  const norms=await prepareOriginalMeanMapOperatorSeminorms({order:1,maxNodes:300000,maxWork:10000},context);
++  const majorants=attachInitializedMeanOperatorMajorants(mean,norms);
++  if(assertInitializedMeanOperatorMajorants(majorants)!==true)
++    throw Object.assign(new Error('Original mean operator source majorants did not verify.'),{code:'ORIGINAL_SOURCE_MAJORANTS_FAILED'});
++  const initialized=attachGlobalInitializedAngular(mean,context);
++  if(assertGlobalInitializedAngular(initialized)!==true)
++    throw Object.assign(new Error('Original initializer private seal rejected.'),{code:'ORIGINAL_INITIALIZER_SEAL_FAILED'});
++  return initialized;
++}
+diff --git a/research-ide/mathscope-m3/navier/source-signed-162-pr30-pins.mjs b/research-ide/mathscope-m3/navier/source-signed-162-pr30-pins.mjs
+new file mode 100644
+index 0000000..02b2fe7
+--- /dev/null
++++ b/research-ide/mathscope-m3/navier/source-signed-162-pr30-pins.mjs
+@@ -0,0 +1,60 @@
++/** Read-only Git blob source pins for the unmodified original PR30 producer.
++ * Tests can check generic Git-blob hashing with a temporary fixture, but the
++ * real entry point ALWAYS uses the immutable original-source list below.
++ */
++import {readFile} from 'node:fs/promises';
++import {createHash} from 'node:crypto';
++import {fileURLToPath} from 'node:url';
++import {resolve} from 'node:path';
++export const PR30_HEAD='a9b3a5b317525f6d0a71e2e356b054c9d25d2e60';
++export const PR30_SOURCE_BLOBS=Object.freeze({
++ 'research-ide/mathscope-m3/navier/source-global-band.mjs':'1f1c18a26372c998d8389b6c5138b3c9d3a66f36',
++ 'research-ide/mathscope-m3/navier/source-global-representative.mjs':'6984feb5e56cd2a555a7c521a4d6c3f1775cba9a',
++ 'research-ide/mathscope-m3/navier/source-global-moment.mjs':'e9e00bee923527d11551b5e19f6f3e98cecb2ad3',
++ 'research-ide/mathscope-m3/navier/source-global-temporal.mjs':'04577e8da66311862a17c0ab0fc62491dd366178',
++ 'research-ide/mathscope-m3/navier/source-global-initial-mean.mjs':'1178fd5056f8d9901f7c8b5dc13a2390879bddc3',
++ 'research-ide/mathscope-m3/navier/source-fixed-mean-majorants.mjs':'12b404f08725265fad1c61a6e759999c25105434',
++ 'research-ide/mathscope-m3/navier/source-initialized-mean-majorants.mjs':'9f8bd951197157ffef383213fb9b165c8ea26772',
++ 'research-ide/mathscope-m3/navier/source-global-updated-mean-stress.mjs':'9cb0a663a013219b2c62c41c33e118162454f210',
++ 'research-ide/mathscope-m3/navier/source-global-pressure.mjs':'2bc8193efc695d4e474cb4136d299128b040b9cf',
++ 'research-ide/mathscope-m3/navier/source-global-forced-current.mjs':'03c3e125d93a5bd9e66d00c5f237b100c7b48b50',
++ 'research-ide/mathscope-m3/navier/source-global-current.mjs':'4058059e5438222d4903b5a954bc967bb5faa733',
++ 'research-ide/mathscope-m3/navier/source-global-signed.mjs':'26b467473b4e4c09a59b6c302aee5493d55c2e15',
++ 'research-ide/mathscope-m3/navier/source-global-angular.mjs':'97f982d74a887dcdf4dcff2214a16536bcfc52db',
++ 'research-ide/mathscope-m3/navier/source-harmonic-assembly.mjs':'cc8d24fdc2a7790d393aea86204b63c21a86f1b0',
++ 'research-ide/mathscope-m3/navier/source-initialized-angular.mjs':'69d9311f93e10e176a53f67958f7bd56e0a5691d',
++ 'research-ide/mathscope-m3/navier/source-updated-mean-pressure.mjs':'b9ff97cc3debbfd10323e536d28cfb7d5cba1069',
++ 'research-ide/mathscope-m2/navier/actual-physical-residual-algebra.mjs':'927c8fc97555334bd03ae484b0781e0b842fc439',
++ 'research-ide/mathscope-m2/navier/actual-full-curl.mjs':'479ac2668687fa1115e3494862506c242c25a048',
++ 'research-ide/mathscope-m3/navier/source-updated-mean-stress.mjs':'266bbd37993ab937de5cdc194b834c8c89fb5020',
++ 'research-ide/mathscope-m3/navier/source-signed-stress.mjs':'e9818e1b159ece576af157c1c430b1f34bce4068',
++ 'research-ide/mathscope-m3/navier/source-full-mean-equations.mjs':'5b3ed4fec06f5930c0eb536ae53366985ea9ad17',
++ 'research-ide/mathscope-m3/navier/source-auxiliary-fourier.mjs':'c678b69de5c6593061859106e8b332edd3413e66',
++ 'research-ide/mathscope-m3/navier/source-auxiliary-expressions.mjs':'6d565e7525b800c6a43fb410ca9309b2870b01fe',
++ 'research-ide/mathscope-m3/navier/source-global-expressions.mjs':'e4038a79a9605871f27761feabfdb51f51392e3a',
++ 'research-ide/mathscope-m3/navier/source-coupled-expressions.mjs':'099fa02505f275323ea5e46ede2c864a3ccb8771',
++ 'research-ide/mathscope-m3/navier/source-mapped-forced-curl.mjs':'985d2ee1cffbd5dcbf9dfea297778de71d9fe4e2',
++ 'research-ide/mathscope-m3/navier/source-quadratic-identity.mjs':'6f80482abd2220a89c4451fb230835aa1ada2df6',
++ 'research-ide/mathscope-m3/navier/source-auxiliary-derivative-closure.mjs':'1e80efce9858cba7a2f7baf6ba700f4fb07085f6',
++ 'research-ide/mathscope-m3/navier/source-temporal-potential.mjs':'1ad7b8bacf090f2dc3775e9489f12acd2166656c'
++});
++const fail=(code,message)=>{throw Object.assign(new Error(message),{code});};
++export function gitBlobSHA(bytes){
++  if(!(bytes instanceof Uint8Array))throw new TypeError('bytes must be a Uint8Array');
++  const h=createHash('sha1');h.update(`blob ${bytes.length}\0`);h.update(bytes);return h.digest('hex');
++}
++// Strictly internal to the full original-repository execution path.
++export async function verifyPR30OriginalSourceFiles(){
++  const root=resolve(fileURLToPath(new URL('../../../',import.meta.url)));
++  const verified=[];
++  for(const [path,expectedSHA] of Object.entries(PR30_SOURCE_BLOBS)){
++    let bytes;try{bytes=await readFile(resolve(root,path));}
++    catch(e){fail('PR30_SOURCE_NOT_MATERIALIZED',`${path}: ${e.code||e.message}`)}
++    const actual=gitBlobSHA(bytes);
++    if(actual!==expectedSHA)fail('PR30_ORIGINAL_BLOB_MISMATCH',`${path}: got ${actual}, expected ${expectedSHA}`);
++    verified.push({path,gitBlobSHA:actual,byteLength:bytes.length});
++  }
++  return {schema:'MathScope.N6.PR30ExactSourceBytes/1',sourceCommit:PR30_HEAD,
++    verifiedFiles:verified,allMatch:true,sourceCommitMetadataAloneIsNotProof:true,
++    originalSourceBytesChecked:true,livePrivateConstructorStillRequired:true};
++}
+diff --git a/research-ide/mathscope-m3/navier/source-signed-162-successor-audit.mjs b/research-ide/mathscope-m3/navier/source-signed-162-successor-audit.mjs
+new file mode 100644
+index 0000000..ebd5e69
+--- /dev/null
++++ b/research-ide/mathscope-m3/navier/source-signed-162-successor-audit.mjs
+@@ -0,0 +1,134 @@
++/** Exact finite structural audit for a proposed original Signed162 successor.
++ *
++ * NOT a source authority: this function admits fixture inputs for regression
++ * tests. Only original-signed-162-successor.mjs may create a source seal by
++ * using the original `assertGlobalForcedCurrent` and `assertGlobalInitializedAngular`.
++ * This audits AST inventories, not numerical values or analytic all-order bounds.
++ */
++const COMPONENTS=Object.freeze(['rr','rtheta','rz','thetatheta','thetaz','zz']);
++const fail=(code,message)=>{throw Object.assign(new Error(message),{code});};
++const node=(G,x)=>Number.isSafeInteger(x)&&x>=0&&!!G.nodes?.[x];
++const requireRoot=(G,x,where)=>{if(!node(G,x))fail('MISSING_SIGNED_ROOT',where);};
++const same=(x,y)=>JSON.stringify(x)===JSON.stringify(y);
++function requireVec(G,x,n,where){
++  if(!Array.isArray(x)||x.length!==n)fail('INCOMPLETE_SIGNED_VECTOR',where);
++  x.forEach((v,i)=>requireRoot(G,v,where+'['+i+']'));
++}
++function checkModes(G,before,after,key){
++  const get=(rows)=>new Map(rows.map(row=>[row.m,row]));
++  if(!Array.isArray(before)||!Array.isArray(after)||after.length>257)fail('INVALID_SIGNED_MODES',key);
++  const B=get(before),A=get(after),ids=[...A.keys()].sort((a,b)=>a-b);
++  if(A.size!==after.length||B.size!==before.length||!ids.every(x=>x!==0&&A.has(-x)))
++    fail('INVALID_SIGNED_MODES',key+': duplicated, zero, or unpaired harmonic');
++  for(const [mode,row] of A){
++    if(!Number.isSafeInteger(mode)||!Array.isArray(row.velocity)||row.velocity.length!==3)
++      fail('INCOMPLETE_SIGNED_MODE',key);
++    for(const [j,x] of [...row.velocity,row.pressure].entries()){
++      requireRoot(G,x?.real,key+':'+mode+':'+j+':real');
++      requireRoot(G,x?.imaginary,key+':'+mode+':'+j+':imaginary');
++    }
++  }
++  if([...B.keys()].some(x=>!A.has(x)))fail('LOST_FORCED_HARMONIC',key);
++  if(!A.has(-1)||!A.has(1))fail('LOST_SIGNED_HARMONIC',key);
++}
++function indexRows(G,field,cover,templates,name,angular){
++  requireRoot(G,field?.field,name+': definition');
++  requireRoot(G,field?.root,name+': root');
++  const registry=G.periodicIndexedSystem?.(field.field);
++  if(!registry||!Array.isArray(registry.rows)||registry.rows.length!==162||
++     !Array.isArray(field.systems)||field.systems.length!==2||
++     field.contributionCount!==162||field.angular!==angular)
++    fail('INCOMPLETE_162_REGISTRY',name);
++  for(let i=0;i<81;i++){
++    const origin=cover.rows[i],band=cover.bands[origin.relativeBand+1];
++    if(!band||band.delta===undefined)fail('MISSING_SIGNED_BAND',name+':'+i);
++    for(let j=0;j<2;j++){
++      const signed=origin.signs[j],row=registry.rows[2*i+j],f=field.systems[signed.sourceLocalRow];
++      if(!f||!row||row.localSystem!==f.system||row.guards!==origin.guards||
++         row.label?.key!==origin.key||row.label?.sign!==signed.sign||
++         row.label?.fixedDifference!==band.delta||row.label?.countBoxOnce!==true||
++         !Array.isArray(row.values)||row.values.length!==(angular?16:15)||
++         !Array.isArray(row.derivativeMaps)||!same(row.derivativeMaps.map(x=>x?.[0]?.parameter),angular?[0,1,2,8,9,14]:[0,1,2,8,9]))
++        fail('SIGNED_ROW_PROVENANCE_MISMATCH',name+':'+i+':'+j);
++    }
++  }
++  for(const s of field.systems){
++    if(!same(s.retainedDifferences,[0,1,2,3,4]))
++      fail('MISSING_FIVE_COVER_DIFFERENCES',name);
++  }
++  return {name,field:field.field,root:field.root,rows:registry.rows.length,angular};
++}
++/** Validates every closed finite *expression* required before issuing a seal.
++ * Boolean certificate flags are not accepted instead of the graph operands.
++ */
++export function auditSigned162SuccessorFacts(result){
++  const forced=result?.originalForced,G=result?.G;
++  if(result?.schema!=='MathScope.N6.GenericSigned162IndexedCandidate/1'||!forced||G!==forced.G||
++     !Array.isArray(G?.nodes)||!Array.isArray(result.templates)||result.templates.length!==10)
++    fail('WRONG_ORIGINAL_SIGNED_GRAPH','A complete Signed162 source graph is required.');
++  const pressure=forced.input?.mean?.temporal?.pressure,cover=pressure?.cover;
++  if(!Array.isArray(cover?.rows)||cover.rows.length!==81||
++    new Set(cover.rows.map(x=>x.key)).size!==81||
++    cover.proof?.exactSourceAuthority!==true||cover.proof?.allCrossLabelProductsVanish!==true||
++    cover.proof?.localFinitenessAndFlatJoins!==true)
++    fail('INVALID_ORIGINAL_81_COVER','The authenticated complete 81-box source is required.');
++  const keys=new Set(),bySign=[[],[]];
++  for(const t of result.templates){
++    if(![0,1].includes(t.signIndex)||!Number.isSafeInteger(t.levelDifference)||
++       t.levelDifference<0||t.levelDifference>4||t.key!==`${t.levelDifference}:${t.sign}`||
++       keys.has(t.key)||!Array.isArray(t.signedRows)||
++       !same(t.signedRows.map(x=>x.m),[1,-1]))
++      fail('INCOMPLETE_SIGNED_TEMPLATE','All 10 original signed templates are required.');
++    keys.add(t.key);bySign[t.signIndex].push(t.levelDifference);
++    checkModes(G,forced.templates.find(x=>x.key===t.key)?.waveRows,t.waveRows,t.key);
++    for(const component of COMPONENTS){
++      requireRoot(G,t.beforeCovariance?.values?.[component],t.key+':before:'+component);
++      requireRoot(G,t.afterCovariance?.values?.[component],t.key+':after:'+component);
++      requireRoot(G,t.deltaCovariance?.[component],t.key+':delta:'+component);
++    }
++  }
++  if(bySign.some(a=>!same(a.sort((a,b)=>a-b),[0,1,2,3,4])))
++    fail('MISSING_COVERING_BRANCH','All five original differences per sign are mandatory.');
++  for(const r of cover.rows){
++    if(!Array.isArray(r.signs)||r.signs.length!==2||
++       !same(r.signs.map(x=>x.sourceLocalRow).sort(),[0,1])||
++       r.signs.some(x=>x.sign!==result.templates.find(t=>t.signIndex===x.sourceLocalRow)?.sign))
++      fail('SOURCE_SIGN_INVENTORY_MISMATCH','Both original signs must be retained in each label.');
++  }
++  const indexed=result.indexed,fields=[
++    ...Array.from({length:3},(_,i)=>({name:'velocity'+i,field:indexed?.velocity?.[i],angular:true})),
++    {name:'angularPressure',field:indexed?.angularPressure,angular:true},
++    ...COMPONENTS.map(k=>({name:'covariance_'+k,field:indexed?.covariance?.[k],angular:false}))
++  ];
++  const inventories=fields.map(row=>indexRows(G,row.field,cover,result.templates,row.name,row.angular));
++  if(new Set(inventories.map(x=>x.field)).size!==10||new Set(inventories.map(x=>x.root)).size!==10)
++    fail('DUPLICATE_SIGNED_GLOBAL_FIELD','Distinct source fields are required.');
++  const updated=result.updated;
++  if(!updated||result.scope?.originalFullPressureRecomputed!==true||
++     result.scope?.originalPhysicalPDERecomputed!==true||
++     result.scope?.sourceIndexed162SignedASTConstructed!==true||
++     result.scope?.originalFinal67JetsEvaluated!==0||
++     result.scope?.N706Closed!==false||result.scope?.N805Closed!==false)
++    fail('SIGNED_FULL_REFRESH_INCOMPLETE','Full pressure/P/J/PDE roots are not optional.');
++  requireVec(G,updated.fullVelocity,3,'complete Signed velocity');
++  requireRoot(G,updated.fullPressure,'complete Signed pressure');
++  requireRoot(G,updated.meanPressureDifference,'Signed pressure difference');
++  requireVec(G,updated.pde?.conservativeResidual,3,'complete physical PDE residual');
++  for(const comp of COMPONENTS)requireRoot(G,updated.updatedCovariance?.[comp],'new covariance '+comp);
++  for(const name of ['P','Jtheta','Jz'])
++    requireRoot(G,updated.updatedMean?.mean?.[name],'fresh '+name);
++  requireRoot(G,updated.updatedMean?.pressure?.value,'fresh full mean pressure');
++  if(!Array.isArray(updated.updatedMean?.checks)||!updated.updatedMean.checks.length||
++     updated.updatedMean.checks.some(x=>x.pass!==true)||
++     updated.updatedMean.mean.fullAngularCovariance!==updated.updatedCovariance)
++    fail('SIGNED_PRESSURE_REFRESH_UNVERIFIED','The newly refreshed mean/P/J must be fully checked.');
++  return {schema:'MathScope.N6.Signed162StructuralAudit/1',
++    originalSourceAuthenticatedByThisGenericAudit:false,sourcePrivateAuthorityIssued:false,
++    originalTemplateCount:10,labels:81,signContributionsPerField:162,
++    indexedFields:inventories,allIndexedRows:1620,
++    rootInventory:{velocity:[...updated.fullVelocity],pressure:updated.fullPressure,
++      pdeResidual:[...updated.pde.conservativeResidual],defects:['P','Jtheta','Jz'].map(k=>updated.updatedMean.mean[k]),
++      covariance:COMPONENTS.map(k=>updated.updatedCovariance[k])},
++    originalFieldNumericalEnclosures:0,allOrderAnalysisCertified:false,
++    N706Closed:false,N805Closed:false,release:'HOLD'};
++}
+diff --git a/research-ide/mathscope-m3/navier/source-signed-temporal-frontier.mjs b/research-ide/mathscope-m3/navier/source-signed-temporal-frontier.mjs
+new file mode 100644
+index 0000000..5a631de
+--- /dev/null
++++ b/research-ide/mathscope-m3/navier/source-signed-temporal-frontier.mjs
+@@ -0,0 +1,82 @@
++/** Prop 9.6 Step 3. Exact CURRENT signed-state centered torus source.
++ * Original private Signed successor is mandatory. No earlier pre-Signed
++ * temporal inverse or artificially zeroed auxiliary average is accepted.
++ * This prepares (Eθ - <Eθ>Y, Ez - <Ez>Y); inverse and its tails remain OPEN.
++ */
++import {assertOriginalSigned162Successor} from './original-signed-162-successor.mjs';
++import {exactNormalizedHaar} from './source-updated-mean-pressure.mjs';
++import {canonicalStringify,sha256} from '../../mathscope-m0/contracts.mjs';
++const seals=new WeakMap();
++const fail=(code,message)=>{throw Object.assign(new Error(message),{code});};
++export function attachSigned162TemporalFrontier(signed,context={}){
++  if(!context||typeof context!=='object'||Array.isArray(context)||
++     Object.keys(context).some(k=>!['onProgress','checkCancelled'].includes(k)))
++    fail('INVALID_TEMPORAL_OPTIONS','The source, fields, and inverse are not caller-selectable.');
++  if(assertOriginalSigned162Successor(signed)!==true)
++    fail('MISSING_SIGNED_PRIVATE_SEAL','Only the authenticated original Signed successor is allowed.');
++  const G=signed.G,stage=signed.constructed.updated,
++    original=signed.input.input.mean.temporal.pressure,
++    Y=original.geometry.Y,pressure=signed.input.input.mean.temporal.pressure,
++    band=pressure.current.band;
++  const scalar=id=>Number.isSafeInteger(id)&&id>=0&&!!G.nodes[id];
++  if(!Array.isArray(Y)||Y.length!==2||Y[0]===Y[1]||Y.some(y=>G.nodes[y]?.op!=='coordinate'))
++    fail('INVALID_ORIGINAL_TORUS','Both independent ORIGINAL torus coordinates are mandatory.');
++  const source=[stage?.updatedMean?.mean?.Etheta,stage?.updatedMean?.mean?.Ez],
++    fresh=[stage?.updatedMean?.mean?.P,stage?.updatedMean?.mean?.Jtheta,stage?.updatedMean?.mean?.Jz],
++    p=stage?.updatedMean?.pressure?.value,full=stage?.fullPressure,
++    ci=band?.geometry?.ci,epsilon=band?.geometry?.epsilon;
++  if(!source.every(scalar)||!fresh.every(scalar)||![p,full,ci,epsilon].every(scalar)||
++     stage.updatedMean.mean.fullAngularCovariance!==stage.updatedCovariance||
++     !stage.updatedMean.checks?.length||stage.updatedMean.checks.some(x=>x.pass!==true)||
++     !stage.pde?.conservativeResidual?.every(scalar))
++    fail('INCOMPLETE_POST_SIGNED_CURRENT','Recompute and verify the FULL Signed P/J/pressure/PDE before Temporal.');
++  const start=G.nodes.length,
++    means=source.map(x=>exactNormalizedHaar(G,x,Y)),
++    centered=source.map((x,j)=>G.sub(x,means[j]));
++  if(means.some(x=>Y.some(y=>G.freeCoordinates(x).has(y))))
++    fail('HAAR_MEAN_NOT_A_SCALAR','The exact two-torus Haar average must eliminate both Y coordinates.');
++  const result={schema:'MathScope.N6.SignedTemporalCenteredSourceFrontier/1',G,signed,
++    source:{paperSHA256:signed.input.source.paperSHA256,
++      parameterExpressionSHA256:signed.input.source.parameterExpressionSHA256,
++      previousStep:'AUTHENTICATED_ORIGINAL_SIGNED162_SUCCESSOR',
++      updatedSignedPressure:p,updatedFullPressure:full,updatedDefects:[...fresh],
++      originalTorus:[...Y],originalFastTimeCoefficient:ci,originalEpsilon:epsilon,
++      unaveragedCurrentResidual:[...source]},
++    mean:[...means],centered:[...centered],
++    exactOperation:'E_a^circ = E_a - integral_Y0 integral_Y1 E_a dY1 dY0; inverse N^-1 and its tails NOT executed',
++    requiredNext:['Apply original zero-Haar-mean inverse to these new, not prior, sources.',
++      'Generate original finite Fourier pairs and derivative tails for every requested slow/mixed derivative.',
++      'Realize meridional potential and preserve Fax and the original slow-time/cutoff remainders.',
++      'Recompute pressure and P/J from complete post-Temporal field before new FiveMap.',
++      'Obtain independent common-domain uniform all-order bounds; no finite AST proves these.'],
++    scope:{sameSignedPrivateSource:true,currentPostSignedPressureAndDefectsUsed:true,
++      normalizedTorusMeanComputed:true,exactCenteredSourcesGenerated:true,
++      fourDerivativeAuxiliaryTailsComputed:false,inverseNActuallyConstructed:false,
++      postTemporalPressureReconstructed:false,fiveMomentMapExecuted:false,
++      numerical67JetsComplete:false,originalN706Complete:false,originalN805Complete:false,
++      release:'HOLD'},
++    graph:{before:start,after:G.nodes.length}};
++  context.checkCancelled?.();context.onProgress?.({stage:'signed-temporal-two-new-centered-sources',nodeCount:G.nodes.length});
++  seals.set(result,{G,signed,record:canonicalStringify({source:result.source,mean:result.mean,centered:result.centered,scope:result.scope}),
++    delta:canonicalStringify(G.nodes.slice(start,G.nodes.length)),before:start,after:G.nodes.length,
++    definitions:G.captureFunctionDefinitions()});
++  return result;
++}
++export function assertSigned162TemporalFrontier(x){
++  const s=seals.get(x);
++  if(!s||s.G!==x?.G||s.signed!==x?.signed||
++     s.record!==canonicalStringify({source:x.source,mean:x.mean,centered:x.centered,scope:x.scope})||
++     s.delta!==canonicalStringify(x.G.nodes.slice(s.before,s.after))||
++     !x.G.functionDefinitionsUnchanged(s.definitions))
++    fail('INVALID_TEMPORAL_FRONTIER','Centered original Signed source or graph changed.');
++  assertOriginalSigned162Successor(x.signed);return true;
++}
++export async function signed162TemporalFrontierCertificate(x){
++  assertSigned162TemporalFrontier(x);
++  return {schema:'MathScope.N6.SignedTemporalSourceFrontierCertificate/1',
++    graphSHA256:await sha256(canonicalStringify({source:x.source,means:x.mean,centered:x.centered})),
++    twoCurrentCenteredSourceRoots:x.centered,sourceAuthenticated:true,
++    actualZeroMeanInverseExecuted:false,actualAllOrderFourierTailCertified:false,
++    actualFiveMapExecuted:false,allFiniteStagesCompleted:false,
++    N706Closed:false,N805Closed:false,release:'HOLD'};
++}
+diff --git a/research-ide/mathscope-m3/tests/generic-current-state.test.mjs b/research-ide/mathscope-m3/tests/generic-current-state.test.mjs
+new file mode 100644
+index 0000000..3a039b8
+--- /dev/null
++++ b/research-ide/mathscope-m3/tests/generic-current-state.test.mjs
+@@ -0,0 +1,112 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {createGenericCurrentSeed,assertCurrentState,advanceCurrentPhase,runOneCurrentCycle,
++  currentStateReport,buildSymbolicJetRequests,expectedRefreshBinding} from '../navier/generic-current-state.mjs';
++import {originalJetOrders} from '../navier/actual-67-jet-contract.mjs';
++
++const h='a'.repeat(64),k='b'.repeat(64),cov=make=>Object.fromEntries(['rr','rtheta','rz','thetatheta','thetaz','zz'].map(n=>[n,make()]));
++class Graph {
++  constructor(){this.nodes=[];this.value=null;}
++  fresh(op='source_expr',args=[]){const n=this.nodes.length;this.nodes.push({op,args});return n;}
++  derivative(id,wrt){return this.fresh('derivative',[id,wrt]);}
++  add(...args){return this.fresh('add',args);}
++  captureFunctionDefinitions(){return {fixed:true};}
++  functionDefinitionsUnchanged(s){return s?.fixed===true;}
++}
++function create(){
++  const G=new Graph();
++  const coordinates=Object.fromEntries(['x','y','z','tau','s'].map(name=>[name,G.fresh('coordinate',[name])]));
++  const r=()=>G.fresh('source_expr');
++  const fields={velocity:Array.from({length:3},r),pressure:r(),residual:Array.from({length:3},r),
++    meanVelocity:{beta:r(),v:r(),gamma:r()},meanPressure:r(),angularPressure:r(),
++    defects:{P:r(),Jtheta:r(),Jz:r()},covariance:cov(r),potential:{A:[r(),r(),r()],b:r(),p:r()}};
++  const modes=[{label:'cover_0',modes:[-2,-1,1,2]}, {label:'cover_1',modes:[-2,-1,1,2]}];
++  const seed=createGenericCurrentSeed({G,fields,modes,source:{sourceCommit:'example_fixture',paperSHA256:h,parameterExpressionSHA256:k}});
++  return {G,seed,coordinates,r};
++}
++function handlersFor(c,{tamperPhase,missingMode=false,badRefresh=false}={}){
++  const make=(phase)=>({
++    produce({stage,modeInventory}){
++      const currentModes=modeInventory.map(x=>({label:x.label,modes:phase==='forced'?
++        [...x.modes,-4,4,-8,8]:[...x.modes]}));
++      if(missingMode&&phase==='forced')currentModes[0].modes=currentModes[0].modes.filter(x=>x!==-2);
++      return {stage,phase:tamperPhase??phase,completeCurrent:true,modes:currentModes,
++        fields:{velocity:[c.r(),c.r(),c.r()],meanVelocity:{beta:c.r(),v:c.r(),gamma:c.r()},
++          angularPressure:c.r(),covariance:cov(c.r),potential:{A:[c.r(),c.r(),c.r()],b:c.r(),p:c.r()}}};
++    },
++    refresh({requiredBinding}){
++      return {binding:badRefresh?'stale source identity':requiredBinding,entireUpdatedCurrent:true,
++        pressure:c.r(),residual:[c.r(),c.r(),c.r()],meanPressure:c.r(),
++        defects:{P:c.r(),Jtheta:c.r(),Jz:c.r()}};
++    }
++  });
++  return Object.fromEntries(['forced','signed','temporal','five'].map(x=>[x,make(x)]));
++}
++const error=(fn,code)=>assert.throws(fn,e=>e.code===code,code);
++
++test('full four-substep stage creates distinct graph-root IDs, fresh pressure, retained modes',()=>{
++  const c=create(),old=c.G.nodes.length;
++  const s=runOneCurrentCycle(c.seed,handlersFor(c));
++  assertCurrentState(s);
++  const r=currentStateReport(s);
++  assert.equal(r.stage,1);assert.equal(r.phase,'seed');assert.equal(r.history.length,4);
++  assert.equal(r.history.map(x=>x.phase).join(','),'forced,signed,temporal,five');
++  assert.deepEqual(r.modeInventory[0].modes,[-8,-4,-2,-1,1,2,4,8]);
++  assert.ok(r.graphNodes>old);assert.equal(r.numericalSourceFieldsCertified,false);
++  assert.ok(r.history.every(x=>x.newNodeCount>x.oldNodeCount));
++  for(const x of r.history)assert.deepEqual(Object.keys(x.defects).sort(),['Jtheta','Jz','P']);
++});
++test('source graph prefix mutation cannot be used by old state',()=>{
++  const c=create();c.G.nodes[1]={op:'counterfeit',args:[]};error(()=>assertCurrentState(c.seed),'MUTATED_SOURCE_GRAPH');
++});
++test('producer rewriting an old native source node is rejected even if it appends fresh nodes',()=>{
++  const c=create(),o=handlersFor(c),original=o.forced.produce;
++  o.forced.produce=x=>{const y=original(x);c.G.nodes[0]={op:'counterfeit',args:[]};return y;};
++  error(()=>advanceCurrentPhase(c.seed,'forced',o.forced),'MUTATED_SOURCE_GRAPH');
++});
++test('state metadata corruption cannot be reused',()=>{
++  const c=create();c.seed.history.push({phase:'fake'});error(()=>assertCurrentState(c.seed),'INVALID_CURRENT_STATE_SEAL');
++});
++test('reject wrong phase and stale updates',()=>{
++  const c=create();error(()=>advanceCurrentPhase(c.seed,'signed',handlersFor(c).signed),'BAD_PHASE_ORDER');
++  error(()=>advanceCurrentPhase(c.seed,'forced',handlersFor(c,{tamperPhase:'signed'}).forced),'WRONG_PHASE_PROVENANCE');
++});
++test('reject stale refreshed pressure and P/J defects',()=>{
++  const c=create();error(()=>advanceCurrentPhase(c.seed,'forced',handlersFor(c,{badRefresh:true}).forced),'STALE_OR_UNBOUND_PRESSURE_REFRESH');
++});
++test('reject unpaired and dropped harmonics',()=>{
++  const c=create();error(()=>advanceCurrentPhase(c.seed,'forced',handlersFor(c,{missingMode:true}).forced),'INCOMPLETE_CONJUGATE_MODES');
++  const c2=create();const o=handlersFor(c2);o.forced.produce=({stage})=>({stage,phase:'forced',completeCurrent:true,
++    modes:[{label:'cover_0',modes:[-1,1]},{label:'cover_1',modes:[-2,-1,1,2]}],
++    fields:{velocity:[c2.r(),c2.r(),c2.r()],meanVelocity:{beta:c2.r(),v:c2.r(),gamma:c2.r()},
++      angularPressure:c2.r(),covariance:cov(c2.r),potential:{A:[c2.r(),c2.r(),c2.r()],b:c2.r(),p:c2.r()}}});
++  error(()=>advanceCurrentPhase(c2.seed,'forced',o.forced),'DROPPED_PRIOR_HARMONIC');
++});
++test('a missing original Signed successor is not silently replaced by the initial-only operator',()=>{
++  const c=create(),o=handlersFor(c);delete o.signed;
++  error(()=>runOneCurrentCycle(c.seed,o),'MISSING_GENERALIZED_OPERATOR');
++});
++test('the same graph can materialize 67 symbolic derivative roots, but never numerical certificates',()=>{
++  const c=create(),orders=originalJetOrders();
++  const result=buildSymbolicJetRequests(c.seed,orders,c.coordinates);
++  assert.equal(result.total,67);assert.equal(result.numericalFieldEnclosures,false);
++  assert.equal(result.originalN706Closed,false);
++  assert.ok(result.items.every(x=>c.G.nodes[x.expressionRoot]));
++});
++test('original current without gauge/potential roots is rejected for 67-jet extraction',()=>{
++  const c=create();let f={...c.seed.fields,potential:null};const c2=createGenericCurrentSeed({G:c.G,fields:f,
++    modes:c.seed.modes,source:{sourceCommit:'example_fixture',paperSHA256:h,parameterExpressionSHA256:k}});
++  error(()=>buildSymbolicJetRequests(c2,[],c.coordinates),'MISSING_ORIGINAL_POTENTIAL');
++});
++test('fail closed on missing original graph node and invalid source provenance',()=>{
++  const c=create();const f={...c.seed.fields,pressure:9999999};
++  error(()=>createGenericCurrentSeed({G:c.G,fields:f,modes:c.seed.modes,
++    source:{sourceCommit:'fixture',paperSHA256:h,parameterExpressionSHA256:k}}),'INVALID_ACTUAL_GRAPH_ROOT');
++  error(()=>createGenericCurrentSeed({G:c.G,fields:c.seed.fields,modes:c.seed.modes,
++    source:{sourceCommit:'fixture',paperSHA256:'BAD',parameterExpressionSHA256:k}}),'INCOMPLETE_SOURCE_PROVENANCE');
++});
++test('explicit stale refreshed defect scope is rejected',()=>{
++  const c=create(),o=handlersFor(c);o.forced.refresh=({requiredBinding})=>({binding:requiredBinding,entireUpdatedCurrent:false,
++    pressure:c.r(),residual:[c.r(),c.r(),c.r()],meanPressure:c.r(),defects:{P:c.r(),Jtheta:c.r(),Jz:c.r()}});
++  error(()=>advanceCurrentPhase(c.seed,'forced',o.forced),'STALE_OR_UNBOUND_PRESSURE_REFRESH');
++});
+diff --git a/research-ide/mathscope-m3/tests/generic-signed-162-indexed.test.mjs b/research-ide/mathscope-m3/tests/generic-signed-162-indexed.test.mjs
+new file mode 100644
+index 0000000..3616eb8
+--- /dev/null
++++ b/research-ide/mathscope-m3/tests/generic-signed-162-indexed.test.mjs
+@@ -0,0 +1,154 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {assembleSigned162Candidate as assemble,SIGNED_162_SCHEMA} from '../navier/generic-signed-162-indexed.mjs';
++
++class Graph{
++  constructor(){this.nodes=[];this.indexed=new Map();this.zero=this.addNode('zero',[]);this.one=this.addNode('one',[])}
++  addNode(op,args){const id=this.nodes.length;this.nodes.push({op,args});return id}
++  fresh(tag='source'){return this.addNode('coordinate',[tag])}
++  q(a,b){return this.addNode('rational',[a,b])}
++  add(...a){return this.addNode('add',a)}
++  sub(a,b){return this.addNode('sub',[a,b])}
++  mul(...a){return this.addNode('mul',a)}
++  div(a,b){return this.addNode('div',[a,b])}
++  neg(a){return this.addNode('neg',[a])}
++  pow(a,b){return this.addNode('pow',[a,b])}
++  sqrt(a){return this.addNode('sqrt_positive',[a])}
++  exp(a){return this.addNode('exp',[a])}
++  log(a){return this.addNode('log',[a])}
++  cosine(a){return this.addNode('cosine',[a])}
++  sine(a){return this.addNode('sine',[a])}
++  choose(...a){return this.addNode('choose',a)}
++  simultaneousSubstitute(body,variables,values){return this.addNode('substitute',[body,variables,values])}
++  defineExpressionFunction(x){return this.addNode('expression_def',[x])}
++  expressionValue(id,values){return this.addNode('expression_apply',[id,values])}
++  definePeriodicIndexedField(x){const id=this.addNode('indexed_def',[x.name,x.rows.length]);this.indexed.set(id,x);return id}
++  periodicIndexedSystem(id){return this.indexed.get(id)}
++  periodicIndexedValue(id,params){return this.addNode('indexed_apply',[id,params])}
++}
++function fixture(){
++  const G=new Graph(),n=(tag)=>G.fresh(tag??'p'),
++    R=n('R'),Z=n('Z'),T=n('T'),theta=n('theta'),ell=n('ell'),
++    Xrep=n('Xrep'),etaRep=n('etaRep'),sRep=n('sRep'),xi=n('xi'),v=n('v'),
++    Y=[n('Y0'),n('Y1')],fields={b:n('b'),F:n('F'),G:n('G'),pressure:n('pressure')},
++    param=[R,Z,T,ell,...Array.from({length:3},(_,i)=>n('grid'+i)),...Y,n('center0'),n('center1'),n('copy0'),n('copy1'),theta,n('level')],
++    coverParameters=[R,Z,T,ell,n('covgrid0'),n('covgrid1'),n('covgrid2'),...Y],
++    bands=Array.from({length:3},(_,i)=>({delta:n('band-delta-'+i)})),
++    coverRows=Array.from({length:81},(_,i)=>({key:'label-'+i,relativeBand:i%3-1,
++      label:{key:'label-'+i,ell:n('label-ell'),grid:Array.from({length:3},()=>n('grid'))},
++      guards:[{sourceGuard:i}],signs:[0,1].map(j=>({sign:j?'minus':'plus',sourceLocalRow:j,
++        rectangle:{center:[n('center'),n('center')],copy:[n('copy'),n('copy')]}}))})),
++    cover={rows:coverRows,bands,parameters:coverParameters,directions:[R,Z,T,...Y],
++      proof:{allCrossLabelProductsVanish:true,localFinitenessAndFlatJoins:true,exactSourceAuthority:true}},
++    geometry={R,Z,T,Y,radialFast:n('radialFast')},
++    band={G,coordinates:{R,Z,T,theta,ell,Xrep,etaRep,sRep,v},cutoffs:{xi},geometry:{r0:n('r0'),Ls:n('Ls')},
++      constants:{A:n('A'),D:n('D')},fields},
++    current={G,band,geometry:{...geometry},local:{slowCutoff:{body:n('cutoff')},parameters:param},
++      representative:{roots:{X:n('X'),eta:n('eta'),s:n('s')}}};
++  const pressure={G,current,cover,geometry,pressure:{rho:n('rho'),chi:n('chi')}},
++    forcedInput={G,mean:{temporal:{pressure}},coordinates:{levelDifference:n('level'),localParameters:param},
++      reference:{ratio:n('ratio')}},
++    C={value:(real=G.zero,imaginary=G.zero)=>({real,imaginary}),
++      check:z=>Number.isSafeInteger(z?.real)&&Number.isSafeInteger(z?.imaginary)&&!!G.nodes[z.real]&&!!G.nodes[z.imaginary],
++      conjugate:z=>({real:z.real,imaginary:G.neg(z.imaginary)}),
++      add:(...xs)=>({real:G.add(...xs.map(x=>x.real)),imaginary:G.add(...xs.map(x=>x.imaginary))})},
++    baseWave=()=>[-4,-2,-1,1,2,4].map(m=>({m,velocity:Array.from({length:3},()=>C.value(n(),n())),pressure:C.value(n(),n())})),
++    templates=Array.from({length:10},(_,i)=>{
++      const signIndex=Math.floor(i/5),levelDifference=i%5,sign=signIndex?'minus':'plus';
++      return {key:`${levelDifference}:${sign}`,signIndex,levelDifference,sign,
++        lift:{xi:n('lift-xi'),v:n('lift-v'),geometry:{R,Z,T,Y}},k:n('k'),phase:n('phase'),waveRows:baseWave(),
++        covariance:{values:Object.fromEntries(['rr','rtheta','rz','thetatheta','thetaz','zz'].map(name=>[name,n()])),checks:[{pass:true}]}};
++    }),
++    W=Object.fromEntries(['rr','rtheta','rz','thetatheta','thetaz','zz'].map(k=>[k,n()])),
++    oldMean=n('oldMean'),
++    forced={G,input:forcedInput,templates,mean:{fullCurrentCovariance:W,
++       completeBetaVGamma:{beta:n(),v:n(),gamma:n()},sourceStress:[n(),n()],
++       pressure:{value:oldMean}},
++       global:{velocity:[n(),n(),n()],pressure:n(),geometry:{R,Z,T,Y}}},
++    candidate={schema:'MathScope.N6.GenericSignedAfterForcedCandidate/1',originalForced:forced,sourceGraph:G,
++       signed:{rows:[0,1].map(signIndex=>({signIndex,curl:{leading:[n(),n(),n()],remainder:[n(),n(),n()]},
++          homogeneousSignedAngularPressure:{real:G.zero,imaginary:n()}}))}},
++    services={assertForced:x=>x===forced,assertInitialized:x=>x===forcedInput,
++      complex:()=>C,
++      reconstruct:(graph,{rows})=>{assert.equal(rows.length,2);assert.deepEqual(rows.map(r=>r.m),[-1,1].sort((a,b)=>a-b).reverse());
++        return {velocity:[n(),n(),n()],pressure:n()};},
++      covariance:(graph,{rows})=>{assert.deepEqual(rows.map(r=>r.m),[-4,-2,-1,1,2,4]);return {values:Object.fromEntries(['rr','rtheta','rz','thetatheta','thetaz','zz'].map(k=>[k,n()])),checks:[{pass:true}]};},
++      guard:(graph,geo,cutoff,body)=>({body:graph.choose(body,body)}),
++      refreshMean:(graph,data)=>({checks:[{pass:true}],mean:{fullAngularCovariance:data.covariance,P:n(),Jtheta:n(),Jz:n()},pressure:{value:n()}}),
++      physicalPDE:(graph,req)=>({conservativeResidual:[n(),n(),n()]})};
++  return {G,forced,candidate,services,cover,templates,band,pressure};
++}
++function expectFail(fn,code){assert.throws(fn,e=>e.code===code,code)}
++
++test('creates ten complete indexed fields, each with 81 labels x two actual source sign rows',()=>{
++  const x=fixture(),r=assemble(x.candidate,x.services),indexed=[...r.indexed.velocity,r.indexed.angularPressure,...Object.values(r.indexed.covariance)];
++  assert.equal(r.schema,SIGNED_162_SCHEMA);assert.equal(indexed.length,10);assert.equal(indexed.reduce((n,f)=>n+f.contributionCount,0),1620);
++  for(const f of indexed){const sys=x.G.periodicIndexedSystem(f.field);assert.equal(sys.rows.length,162);
++    assert.equal(sys.sourceRecipe.bothSigns,true);assert.equal(sys.sourceRecipe.allFiveFiniteCoverDifferences,true);
++    assert.deepEqual([...new Set(sys.rows.map(row=>row.label.key))].length,81);
++    assert.deepEqual([...new Set(sys.rows.map(row=>row.label.sign))].sort(),['minus','plus']);
++    assert.deepEqual(f.systems.map(s=>s.retainedDifferences),Array.from({length:2},()=>[0,1,2,3,4]));}
++  assert.equal(r.scope.originalSignedFullSourceAuthenticated,false);
++  assert.equal(r.scope.originalFinal67JetsEvaluated,0);
++  assert.equal(r.scope.originalFullPressureRecomputed,true);
++  assert.equal(r.scope.originalPhysicalPDERecomputed,true);
++  assert.equal(r.updated.pde.conservativeResidual.length,3);
++  assert.equal(r.scope.N706Closed,false);
++});
++test('each source row retains guards, true label source, fixed difference and physical derivative directions',()=>{
++  const x=fixture(),r=assemble(x.candidate,x.services,{refreshAfterAssembly:false});
++  for(const f of [...r.indexed.velocity,r.indexed.angularPressure,...Object.values(r.indexed.covariance)]){
++    const rows=x.G.periodicIndexedSystem(f.field).rows;
++    for(let k=0;k<81;k++)for(let sign=0;sign<2;sign++){
++      const actual=rows[2*k+sign],original=x.cover.rows[k];
++      assert.equal(actual.guards,original.guards);assert.equal(actual.label.key,original.key);
++      assert.equal(actual.label.fixedDifference,x.cover.bands[original.relativeBand+1].delta);
++      assert.equal(actual.values.length,f.angular?16:15);
++      assert.deepEqual(actual.derivativeMaps.map(d=>d[0].parameter),f.angular?[0,1,2,8,9,14]:[0,1,2,8,9]);
++    }
++  }
++});
++test('updated Signed pressure subtracts old mean and adds refreshed mean and new angular pressure',()=>{
++  const x=fixture(),r=assemble(x.candidate,x.services);
++  const p=x.G.nodes[r.updated.fullPressure];assert.equal(p.op,'add');
++  assert.equal(p.args[0],x.forced.global.pressure);assert.equal(p.args[2],r.indexed.roots.angularPressure);
++  const d=x.G.nodes[p.args[1]];assert.equal(d.op,'sub');
++  assert.equal(d.args[0],r.updated.updatedMean.pressure.value);
++  assert.equal(d.args[1],x.forced.mean.pressure.value);
++});
++test('full original fixed difference sign inventory survives',()=>{
++  const x=fixture(),r=assemble(x.candidate,x.services,{refreshAfterAssembly:false});
++  assert.deepEqual(r.templates.map(t=>[t.key,t.signedRows.map(z=>z.m)]),x.templates.map(t=>[t.key,[1,-1]]));
++  for(const t of r.templates)assert.deepEqual(t.waveRows.map(row=>row.m),[-4,-2,-1,1,2,4]);
++});
++test('reject absent original private services',()=>{const x=fixture();delete x.services.assertForced;expectFail(()=>assemble(x.candidate,x.services),'MISSING_ORIGINAL_SERVICES')});
++test('reject forged private forced seal',()=>{const x=fixture();x.services.assertForced=()=>false;expectFail(()=>assemble(x.candidate,x.services),'INVALID_ORIGINAL_PRIVATE_FORCED')});
++test('reject wrong Signed candidate source graph',()=>{const x=fixture();x.candidate.sourceGraph={nodes:[]};expectFail(()=>assemble(x.candidate,x.services),'MISMATCHED_SIGNED_SOURCE_GRAPH')});
++test('reject omitted covering box',()=>{const x=fixture();x.cover.rows.pop();expectFail(()=>assemble(x.candidate,x.services),'UNVERIFIED_OR_INCOMPLETE_ORIGINAL_COVER')});
++test('reject duplicated covering source key',()=>{const x=fixture();x.cover.rows[1].key=x.cover.rows[0].key;expectFail(()=>assemble(x.candidate,x.services),'UNVERIFIED_OR_INCOMPLETE_ORIGINAL_COVER')});
++test('reject incomplete two signs in one cover row',()=>{const x=fixture();x.cover.rows[0].signs.pop();expectFail(()=>assemble(x.candidate,x.services),'BAD_ORIGINAL_COVER_ROW')});
++test('reject repeated sourceLocalRow for two signs',()=>{const x=fixture();x.cover.rows[0].signs[1].sourceLocalRow=0;expectFail(()=>assemble(x.candidate,x.services),'BAD_ORIGINAL_COVER_ROW')});
++test('reject absent original cover proof',()=>{const x=fixture();x.cover.proof.exactSourceAuthority=false;expectFail(()=>assemble(x.candidate,x.services),'UNVERIFIED_OR_INCOMPLETE_ORIGINAL_COVER')});
++test('reject removal of a fixed difference template',()=>{const x=fixture();x.templates.pop();expectFail(()=>assemble(x.candidate,x.services),'INCOMPLETE_SIGN_DIFFERENCE_TEMPLATES')});
++test('reject duplicated fixed difference',()=>{const x=fixture();x.templates[4].levelDifference=3;expectFail(()=>assemble(x.candidate,x.services),'MISSING_COVERING_DIFFERENCE')});
++test('reject source forcing a missing previous wave mode',()=>{const x=fixture();x.templates[0].waveRows[0].pressure.real=9999999;expectFail(()=>assemble(x.candidate,x.services),'INVALID_CURRENT_HARMONIC')});
++test('reject missing previous wave covariance',()=>{const x=fixture();delete x.templates[0].covariance.values.rtheta;expectFail(()=>assemble(x.candidate,x.services),'MISSING_PREVIOUS_FORCED_COVARIANCE')});
++test('reject signed before/after covariance check failure',()=>{const x=fixture();x.services.covariance=()=>({checks:[{pass:false}],values:Object.fromEntries(['rr','rtheta','rz','thetatheta','thetaz','zz'].map(k=>[k,x.G.fresh()]))});expectFail(()=>assemble(x.candidate,x.services),'SIGNED_COVARIANCE_IDENTITY_FAILED')});
++test('reject source registry dropping a contribution',()=>{const x=fixture();x.G.periodicIndexedSystem=id=>({rows:x.G.indexed.get(id).rows.slice(0,-1)});expectFail(()=>assemble(x.candidate,x.services),'PERIODIC_INDEXED_REGISTRY_INCOMPLETE')});
++test('reject missing fresh complete mean',()=>{const x=fixture();x.services.refreshMean=()=>({checks:[{pass:false}]});expectFail(()=>assemble(x.candidate,x.services),'POST_SIGNED_MEAN_NOT_RECOMPUTED')});
++test('reject absent full physical PDE residual',()=>{const x=fixture();x.services.physicalPDE=()=>({conservativeResidual:[x.G.fresh()]});expectFail(()=>assemble(x.candidate,x.services),'INCOMPLETE_POST_SIGNED_PDE')});
++test('reject source graph truncation or failed original seal after constructing indexed fields',()=>{const x=fixture();let count=0;x.services.assertForced=()=>++count===1;expectFail(()=>assemble(x.candidate,x.services),'MUTATED_ORIGINAL_FORCED')});
++test('budget is an error, never a promoted partial Signed successor',()=>{const x=fixture();expectFail(()=>assemble(x.candidate,x.services,{maxAdditionalNodes:1}),'SIGNED_162_RESOURCE_LIMIT')});
++test('reject caller changes to original label/target parameters',()=>{const x=fixture();expectFail(()=>assemble(x.candidate,x.services,{H:[1,2]}),'INVALID_SIGNED_SOURCE_CANDIDATE')});
++test('without refresh, creates indexed fields but does not claim full pressure or PDE recomputation',()=>{const x=fixture();const r=assemble(x.candidate,x.services,{refreshAfterAssembly:false});assert.equal(r.scope.originalFullPressureRecomputed,false);assert.equal(r.scope.originalPhysicalPDERecomputed,false);assert.equal(r.updated,undefined)});
++
++test('reject sign swapping even when two sourceLocalRow IDs are present',()=>{
++  const x=fixture();x.cover.rows[0].signs[1].sign='plus';
++  expectFail(()=>assemble(x.candidate,x.services),'BAD_ORIGINAL_COVER_ROW');
++});
++test('reject incorrect sign-to-template mapping',()=>{
++  const x=fixture();x.cover.rows[7].signs[0].sourceLocalRow=1;
++  expectFail(()=>assemble(x.candidate,x.services),'BAD_ORIGINAL_COVER_ROW');
++});
++
++export {fixture};
+diff --git a/research-ide/mathscope-m3/tests/generic-signed-source-kernel.test.mjs b/research-ide/mathscope-m3/tests/generic-signed-source-kernel.test.mjs
+new file mode 100644
+index 0000000..e727f52
+--- /dev/null
++++ b/research-ide/mathscope-m3/tests/generic-signed-source-kernel.test.mjs
+@@ -0,0 +1,175 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {buildSignedSourceCandidateFromCheckedForced as build} from '../navier/generic-signed-source-kernel.mjs';
++
++class Graph {
++  constructor(){this.nodes=[];this.total=0;this.zero=this.op('q',[0]);}
++  op(op,args){const n=this.nodes.length;this.nodes.push({op,args});return n;}
++  fresh(n='fresh'){return this.op('coordinate',[n]);}
++  q(n){return this.op('q',[n]);}
++  add(...a){return this.op('add',a);}
++  sub(a,b){return this.op('sub',[a,b]);}
++  mul(...a){return this.op('mul',a);}
++  div(a,b){return this.op('div',[a,b]);}
++  neg(a){return this.op('neg',[a]);}
++  pow(a,n){return this.op('pow',[a,n]);}
++  sqrt(a){return this.op('sqrt_positive',[a]);}
++  derivative(a,b){return this.op('derivative',[a,b]);}
++  substitute(a,b,c){return this.op('substitute',[a,b,c]);}
++  integral(...a){return this.op('integral',a);}
++  share(a,params,name){return this.op('share',[a,params,name]);}
++  freeCoordinates(x){return new Set();}
++}
++function create(){
++  const G=new Graph(),n=()=>G.fresh('source'),r=()=>G.fresh('coordinate');
++  const R=r(),Z=r(),T=r(),theta=r(),ell=r(),xi=r(),s=r();
++  const params=Array.from({length:8},r),W=Object.fromEntries(['rr','rtheta','rz','thetatheta','thetaz','zz'].map(k=>[k,n()]));
++  const g={R,Z,T,radialVariable:r(),innerRadius:n(),outerRadius:n(),rho:n(),chi:n(),cRho:n()};
++  const band={G,coordinates:{R,Z,T,theta,ell},geometry:{epsilon:n(),k:n()},cutoffs:{xi,chi:n(),psi:n()},target:{H:[[n(),n()],[n(),n()]],weights:[n(),n()],inverseChecks:[{pass:true}]},
++    families:[0,1].map(index=>({sign:index?'minus':'plus',t:[n(),n(),n()],frame:{n:[n(),n(),n()],nSquared:n(),nPrime:[n(),n(),n()],principalK:Array.from({length:3},()=>[n(),n(),n()])}}))};
++  band.target.squareRootWeights=band.target.weights.map(v=>G.sqrt(v));
++  const current={G,band,geometry:{radialFast:n()},mean:{geometry:g},local:{slowCutoff:{body:n()},parameters:params}},
++    pressure={current,geometry:{Y:[r(),r()]}},initial={G,mean:{temporal:{pressure}}},p=n(),
++    mean={fullCurrentCovariance:W,mean:{Etheta:n(),Ez:n(),P:n(),Jtheta:n(),Jz:n(),fullAngularCovariance:W},pressure:{value:p},checks:[{pass:true}]};
++  const templates=Array.from({length:10},(_,i)=>({key:'label'+i,signIndex:Math.floor(i/5),levelDifference:i%5,
++    waveRows:[-4,-2,-1,1,2,4].map(m=>({m,velocity:[0,1,2].map(()=>({real:n(),imaginary:n()})),pressure:{real:n(),imaginary:n()}}))}));
++  const forced={G,input:initial,mean,global:{fullMeanPressure:p},templates,
++    source:{paperSHA256:'f'.repeat(64),parameterExpressionSHA256:'a'.repeat(64)}};
++  const stressRows=[0,1].map(j=>{
++    const residual=[mean.mean.Etheta,mean.mean.Ez][j],
++      haar=G.integral(G.integral(residual,pressure.geometry.Y[0],G.zero,n()),pressure.geometry.Y[1],G.zero,n()),
++      weightedSource=n(),radialVariable=r(),left=G.integral(weightedSource,radialVariable,g.innerRadius,R),
++      whole=G.integral(weightedSource,radialVariable,g.innerRadius,g.outerRadius),value=n();
++    return {name:j?'z':'theta',weight:2-j,residual,mean:haar,source:n(),weightedSource,
++      integrals:{radialVariable,left,whole},value,cutoffRemainder:n(),
++      sourceLinearity:{pass:true},divergenceCheck:{pass:true},
++      compatibility:{mechanicalIntegralReduction:false}};
++  });
++  const latestStress={G,input:forced,source:{latestCovariance:W,latestFullMeanPressure:p},
++    compatibility:{rawIntegralNodesPreserved:true,mechanicalRawIntegralReduction:false,sourceTheoremsAppliedToConstructedOperands:true},
++    checks:[{pass:true}],
++    stress:{rows:stressRows,Sigma:stressRows.map(x=>x.value),
++      meanInput:{Etheta:mean.mean.Etheta,Ez:mean.mean.Ez,P:mean.mean.P,Jtheta:mean.mean.Jtheta,Jz:mean.mean.Jz}},
++    Sigma:stressRows.map(x=>G.share(x.value,[],`trusted_${x.name}`))};
++  const services={
++    latestStress,assertLatestStress:x=>x===latestStress,
++    assertOriginalForced:x=>x===forced,
++    assertOriginalInitialized:x=>x===initial,
++    signedInverse:(graph,{H,amplitudes,epsilon,target})=>{
++      assert.strictEqual(graph,G);assert.strictEqual(H,band.target.H);assert.strictEqual(amplitudes,band.target.squareRootWeights);
++      assert.strictEqual(epsilon,band.geometry.epsilon);assert.equal(target.length,2);
++      return {pass:true,deltaAmplitude:[n(),n()],checks:[{pass:true},{pass:true}],H,a:amplitudes,Sigma:target};
++    },
++    homogeneousPressure:(graph,{normal,nPrime,K,k,amplitude})=>{
++      assert.equal(normal.length,3);assert.equal(nPrime.length,3);assert.equal(K.length,3);assert.equal(amplitude.length,3);
++      return {value:{real:graph.zero,imaginary:graph.fresh('homogeneous_pressure')},identity:{pass:true}};
++    },
++    graphEqual:(graph,left,right,atoms)=>({pass:true,left,right,atoms}),
++    fullCurl:(graph,req)=>{
++      assert.strictEqual(graph,G);assert.strictEqual(req.R,R);assert.strictEqual(req.Z,Z);assert.strictEqual(req.xi,xi);
++      assert.equal(req.potential.length,3);
++      return {leading:[n(),n(),n()],remainder:[n(),n(),n()],divergence:{checks:[{pass:true}]}};
++    }
++  };
++  return {G,forced,initial,services,band,mean,latestStress,stressRows};
++}
++const reject=(f,code)=>assert.throws(f,e=>e.code===code,code);
++
++test('two actual signed source recipes preserve fixed H, a, all wave modes and curl',()=>{
++  const c=create(),start=c.G.nodes.length,x=build(c.forced,c.services);
++  assert.equal(x.signed.Sigma.length,2);assert.equal(x.signed.rows.length,2);
++  assert.deepEqual(x.signed.rows.map(y=>y.signIndex),[0,1]);
++  assert.equal(x.signed.rows[0].originalPositiveA,c.band.target.squareRootWeights[0]);
++  assert.equal(x.signed.inversion.H,c.band.target.H);
++  assert.ok(x.signed.integrals.every(i=>c.G.nodes[i.whole].op==='integral'));
++  assert.ok(x.signed.rows.every(row=>row.potential.every(root=>c.G.nodes[root].op==='share')));
++  assert.equal(x.scope.actualSignedWholeCurrentConstructed,false);
++  assert.equal(x.scope.weightedMomentZeroIndependentlyCertified,false);
++  assert.ok(x.signed.rows.every(row=>c.G.nodes[row.homogeneousSignedAngularPressure.imaginary].op==='coordinate'));
++  assert.equal(x.scope.originalForcedPrivateSealValidatedByRealModule,false);
++  assert.equal(x.scope.completedOriginalM3Criteria,0);
++  assert.ok(c.G.nodes.length>start);
++});
++test('missing private Forced seal rejected',()=>{const c=create();c.services.assertOriginalForced=()=>false;reject(()=>build(c.forced,c.services),'ORIGINAL_PRIVATE_SEAL_REJECTED');});
++test('missing private initial seal rejected',()=>{const c=create();c.services.assertOriginalInitialized=()=>false;reject(()=>build(c.forced,c.services),'ORIGINAL_PRIVATE_SEAL_REJECTED');});
++test('different G between current and Forced rejected',()=>{const c=create();c.initial.mean.temporal.pressure.current.G=new Graph();reject(()=>build(c.forced,c.services),'CROSS_SOURCE_GRAPH');});
++test('stale full Forced covariance rejected',()=>{const c=create();c.mean.mean.fullAngularCovariance={...c.mean.fullCurrentCovariance};reject(()=>build(c.forced,c.services),'STALE_OR_INCOMPLETE_FORCED_MEAN');});
++test('reusing old mean pressure rejected',()=>{const c=create();c.forced.global.fullMeanPressure=c.G.fresh();reject(()=>build(c.forced,c.services),'STALE_FORCED_PRESSURE');});
++test('missing updated P/J component rejected',()=>{const c=create();delete c.mean.mean.Jtheta;reject(()=>build(c.forced,c.services),'MISSING_SOURCE_ROOT');});
++test('replacement fixed H missing entry rejected',()=>{const c=create();c.band.target.H[0].pop();reject(()=>build(c.forced,c.services),'MISSING_FIXED_ORIGINAL_H');});
++test('missing conjugate generated mode rejected',()=>{const c=create();c.forced.templates[2].waveRows=c.forced.templates[2].waveRows.filter(x=>x.m!==-4);reject(()=>build(c.forced,c.services),'DROPPED_PRIOR_HARMONIC');});
++test('drop one cover label rejected',()=>{const c=create();c.forced.templates.pop();reject(()=>build(c.forced,c.services),'INCOMPLETE_ORIGINAL_COVER');});
++test('duplicate label rejected',()=>{const c=create();c.forced.templates[0].key=c.forced.templates[1].key;reject(()=>build(c.forced,c.services),'INVALID_ORIGINAL_TEMPLATE');});
++test('invalid inverse cannot promote candidate',()=>{const c=create();c.services.signedInverse=()=>({pass:false});reject(()=>build(c.forced,c.services),'ORIGINAL_SIGNED_INVERSE_FAILED');});
++test('missing curl remainder rejected',()=>{const c=create();c.services.fullCurl=()=>({leading:[c.G.fresh(),c.G.fresh(),c.G.fresh()],divergence:{checks:[{pass:true}]}});reject(()=>build(c.forced,c.services),'MISSING_SOURCE_VECTOR');});
++test('failure of curl divergence rejects stage',()=>{const c=create();c.services.fullCurl=()=>({leading:[c.G.fresh(),c.G.fresh(),c.G.fresh()],remainder:[c.G.fresh(),c.G.fresh(),c.G.fresh()],divergence:{checks:[{pass:false}]}});reject(()=>build(c.forced,c.services),'SIGNED_CURL_INCOMPLETE');});
++test('no arbitrary target or new H injection option',()=>{const c=create();reject(()=>build(c.forced,c.services,{target:[1,2]}),'INVALID_SIGNED_OPTIONS');});
++test('work budget exhaustion not marked complete',()=>{const c=create();reject(()=>build(c.forced,c.services,{maxAdditionalNodes:1}),'SIGNED_SOURCE_RESOURCE_LIMIT');});
++test('absent original full pressure root rejects stage',()=>{const c=create();c.mean.pressure.value=c.G.nodes.length+77;reject(()=>build(c.forced,c.services),'MISSING_SOURCE_ROOT');});
++test('input source missing physically tagged family rejects stage',()=>{const c=create();c.band.families.pop();reject(()=>build(c.forced,c.services),'INVALID_ORIGINAL_BAND');});
++
++test('signed homogeneous pressure identity failure blocks candidate',()=>{const c=create();c.services.homogeneousPressure=()=>({value:{real:c.G.zero,imaginary:c.G.fresh()},identity:{pass:false}});reject(()=>build(c.forced,c.services),'SIGNED_PRIMARY_PRESSURE_INCOMPLETE');});
++
++test('changed fixed positive amplitudes without original sqrt proof rejected',()=>{const c=create();c.band.target.squareRootWeights[0]=c.G.fresh();reject(()=>build(c.forced,c.services),'ORIGINAL_FIXED_POSITIVITY_UNVERIFIED');});
++test('missing complete conjugate-mode pressure root rejected',()=>{const c=create();c.forced.templates[0].waveRows[0].pressure.imaginary=9999999;reject(()=>build(c.forced,c.services),'MISSING_FULL_WAVE_PRESSURE');});
++
++test('signed Sigma normalized Haar / FTC rejection blocks source candidate',()=>{const c=create();c.stressRows[0].sourceLinearity.pass=false;reject(()=>build(c.forced,c.services),'SIGNED_SIGMA_HAAR_OR_FTC_FAILED');});
++test('signed exact tangency failure blocks full curl candidate',()=>{const c=create();c.services.graphEqual=()=>({pass:false});reject(()=>build(c.forced,c.services),'SIGNED_TANGENCY_UNPROVED');});
++test('post-construction original private seal mutation rejects the Signed candidate',()=>{
++  const c=create();let call=0;c.services.assertOriginalForced=()=>++call===1;
++  reject(()=>build(c.forced,c.services),'MUTATED_FORCED_SOURCE');
++});
++test('missing source signed inverse service is not tolerated',()=>{
++  const c=create();delete c.services.signedInverse;
++  reject(()=>build(c.forced,c.services),'MISSING_ORIGINAL_PRIVATE_SERVICES');
++});
++test('authentic nested coupled/auxiliary baseGraph lineage is accepted without equality spoof',()=>{
++  const c=create(),baseGraph={nodes:c.G.nodes};
++  c.G.baseGraph={baseGraph:baseGraph};
++  c.initial.mean.temporal.pressure.current.G=baseGraph;
++  c.band.G=baseGraph;
++  const r=build(c.forced,c.services);
++  assert.equal(r.signed.rows.length,2);
++  assert.equal(r.scope.actualSignedWholeCurrentConstructed,false);
++});
++test('unrelated global source with the same numerical roots is not accepted as a graph lineage',()=>{
++  const c=create(),unrelated={nodes:c.G.nodes};
++  c.G.baseGraph={baseGraph:unrelated};
++  c.initial.mean.temporal.pressure.current.G={nodes:c.G.nodes};
++  c.band.G=c.initial.mean.temporal.pressure.current.G;
++  reject(()=>build(c.forced,c.services),'CROSS_SOURCE_GRAPH');
++});
++
++test('Signed inverse receives the COR85 normalized Haar target, not raw Y-dependent E',()=>{
++  const c=create(),x=build(c.forced,c.services);
++  assert.deepEqual(x.signed.Sigma,c.latestStress.Sigma);
++  assert.equal(x.signed.sourceOfSigma,'AUTHENTICATED_ORIGINAL_COR85_NORMALIZED_HAAR');
++  assert.notEqual(x.signed.Sigma[0],c.mean.mean.Etheta);
++  assert.notEqual(x.signed.Sigma[1],c.mean.mean.Ez);
++  assert.strictEqual(x.signed.originalMeanStress,c.latestStress);
++  assert.ok(x.signed.integrals.every(x=>c.G.nodes[x.normalizedHaarMean].op==='integral'));
++});
++test('unsealed stress does not provide a Signed target',()=>{
++  const c=create();c.services.assertLatestStress=()=>false;
++  reject(()=>build(c.forced,c.services),'UNAUTHENTICATED_COR85_STRESS');
++});
++test('a stress sealed for a DIFFERENT Forced current is rejected',()=>{
++  const c=create();c.latestStress.input={...c.forced};
++  reject(()=>build(c.forced,c.services),'UNAUTHENTICATED_COR85_STRESS');
++});
++test('stale P, J or residual cannot reuse an earlier Cor85 stress',()=>{
++  const c=create();c.latestStress.stress.meanInput.Etheta=c.G.fresh('stale');
++  reject(()=>build(c.forced,c.services),'STALE_COR85_MEAN');
++});
++test('missing one torus coordinate fails closed',()=>{
++  const c=create();c.initial.mean.temporal.pressure.geometry.Y.pop();
++  reject(()=>build(c.forced,c.services),'MISSING_ORIGINAL_AUXILIARY_TORUS');
++});
++test('a non-Haar-dependent signed source is rejected before any inverse',()=>{
++  const c=create();c.G.freeCoordinates=x=>new Set(x===c.stressRows[0].mean?[c.initial.mean.temporal.pressure.geometry.Y[0]]:[]);
++  reject(()=>build(c.forced,c.services),'SIGNED_SIGMA_HAAR_OR_FTC_FAILED');
++});
++test('a synthetically forged Cor85 row inconsistent with its own scalar is rejected',()=>{
++  const c=create();c.stressRows[0].value=c.G.fresh('wrong Cor85 root');
++  reject(()=>build(c.forced,c.services),'SIGNED_SIGMA_HAAR_OR_FTC_FAILED');
++});
+diff --git a/research-ide/mathscope-m3/tests/original-adapter-boundary.test.mjs b/research-ide/mathscope-m3/tests/original-adapter-boundary.test.mjs
+new file mode 100644
+index 0000000..f952c26
+--- /dev/null
++++ b/research-ide/mathscope-m3/tests/original-adapter-boundary.test.mjs
+@@ -0,0 +1,62 @@
++/** Stubbed module wiring test ONLY; does not execute the original PR30 producer. */
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {mkdtemp,cp,writeFile,readFile,mkdir} from 'node:fs/promises';
++import {tmpdir} from 'node:os';
++import {join,dirname} from 'node:path';
++import {pathToFileURL} from 'node:url';
++
++const base=new URL('../navier/',import.meta.url);
++async function wiringFixture(){
++  const tmp=await mkdtemp(join(tmpdir(),'mathscope-original-adapter-fixture-'));
++  for(const file of ['generic-current-state.mjs','actual-67-jet-contract.mjs','original-initial-forced-bridge.mjs'])
++    await cp(new URL(file,base),join(tmp,file));
++  await writeFile(join(tmp,'source-initialized-angular.mjs'),`export function assertGlobalInitializedAngular(s) {
++    if (s.privateSeal!=='STUB_FIXTURE_PRIVATE_SEAL') {const e=new Error('NO_PRIVATE_SEAL');e.code='NO_PRIVATE_SEAL';throw e;}
++    return true;
++  }\n`);
++  await writeFile(join(tmp,'source-global-forced-current.mjs'),`export function attachGlobalForcedCurrent(s) {
++    if(s.privateSeal!=='STUB_FIXTURE_PRIVATE_SEAL')throw new Error('INVALID_INITIAL');
++    const G=s.G,mk=()=>G.fresh('synthetic_expression');
++    const covariance=Object.fromEntries(['rr','rtheta','rz','thetatheta','thetaz','zz'].map(k=>[k,mk()])),fullAngularPressure=mk();
++    const mean={mean:{P:mk(),Jtheta:mk(),Jz:mk(),fullAngularCovariance:covariance},
++      fullCurrentCovariance:covariance,completeBetaVGamma:{beta:mk(),v:mk(),gamma:mk()},
++      checks:[{pass:true}]};
++    return {G,input:s,global:{velocity:[mk(),mk(),mk()],pressure:mk(),
++      direct:{conservativeResidual:[mk(),mk(),mk()]},allAngularPressure:fullAngularPressure,
++      fullMeanPressure:mk()},mean,
++      templates:s.templates.map(t=>({...t,waveRows:[...t.waveRows,{m:-4},{m:4}]}))};
++  }
++  export function assertGlobalForcedCurrent(s) {if(s.input.privateSeal!=='STUB_FIXTURE_PRIVATE_SEAL')throw new Error('INVALID_FORCED');return true;}\n`);
++  const {adaptPrivateInitializedAngular,produceOriginalFirstForced}=await import(pathToFileURL(join(tmp,'original-initial-forced-bridge.mjs')).href);
++  const {assertCurrentState}=await import(pathToFileURL(join(tmp,'generic-current-state.mjs')).href);
++  const nodes=[];const G={nodes,fresh(op='synthetic_source_root'){let id=nodes.length;nodes.push({op,args:[]});return id;},
++    captureFunctionDefinitions:()=>({synthetic:true}),functionDefinitionsUnchanged: x=>x.synthetic===true};
++  const mk=()=>G.fresh();
++  const moments={mean:{P:mk(),Jtheta:mk(),Jz:mk()},velocity:{beta:mk(),v:mk(),gamma:mk()},pressure:{value:mk()}};
++  const initialCovariance=Object.fromEntries(['rr','rtheta','rz','thetatheta','thetaz','zz'].map(k=>[k,mk()]));
++  const initialized={privateSeal:'STUB_FIXTURE_PRIVATE_SEAL',G,
++    source:{paperSHA256:'a'.repeat(64),parameterExpressionSHA256:'b'.repeat(64)},
++    mean:{stages:{moments},temporal:{pressure:{current:{band:{}},covariance:{fullAngularMean:initialCovariance}}}},
++    initial:{global:{pressure:{nonzeroAngular:mk()}}},
++    global:{velocity:[mk(),mk(),mk()],pressure:mk(),direct:{conservativeResidual:[mk(),mk(),mk()]}},
++    templates:[{key:'fixed-0',waveRows:[{m:-2},{m:-1},{m:1},{m:2}]}]};
++  return {G,initialized,adaptPrivateInitializedAngular,produceOriginalFirstForced,assertCurrentState};
++}
++test('PR30 source-shape bridge accepts only a privately validated seed, preserving actual graph IDs (mock imports)',async()=>{
++  const c=await wiringFixture();
++  const r=c.produceOriginalFirstForced(c.initialized,{sourceCommit:'fixture-test-only'});
++  c.assertCurrentState(r.currentState);
++  assert.equal(r.graphRootIdentifiers.graphNodes,c.G.nodes.length);
++  assert.equal(r.graphRootIdentifiers.history.length,1);
++  assert.equal(r.graphRootIdentifiers.history[0].phase,'forced');
++  assert.equal(r.nextPhase,'signed');
++  assert.equal(r.nextPhaseImplemented,false);
++  assert.equal(r.numericalValueEvaluatorAvailable,false);
++  assert.equal(r.originalFinalJetCount,0);
++  assert.ok(r.graphRootIdentifiers.modeInventory[0].modes.includes(4));
++});
++test('source-specific adapter refuses a fake private seal, even if all public fields are present',async()=>{
++  const c=await wiringFixture();c.initialized.privateSeal='FORGED';
++  assert.throws(()=>c.adaptPrivateInitializedAngular(c.initialized,{sourceCommit:'fixture'}));
++});
+diff --git a/research-ide/mathscope-m3/tests/original-pressure-refresh.test.mjs b/research-ide/mathscope-m3/tests/original-pressure-refresh.test.mjs
+new file mode 100644
+index 0000000..ac2d210
+--- /dev/null
++++ b/research-ide/mathscope-m3/tests/original-pressure-refresh.test.mjs
+@@ -0,0 +1,58 @@
++/** Contract-only mock integration; actual PR30 imported source is not run. */
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {mkdtemp,cp,writeFile} from 'node:fs/promises';
++import {tmpdir} from 'node:os';
++import {join} from 'node:path';
++import {pathToFileURL} from 'node:url';
++async function mock(){
++  const dir=await mkdtemp(join(tmpdir(),'mathscope-refresh-contract-'));
++  await cp(new URL('../navier/original-full-pressure-refresh.mjs',import.meta.url),join(dir,'original-full-pressure-refresh.mjs'));
++  await writeFile(join(dir,'source-initialized-angular.mjs'),`export function assertGlobalInitializedAngular(s){if(s?.seal!=='fixture-original-private')throw Error('NOT_ORIGINAL');return true;}\n`);
++  await writeFile(join(dir,'source-updated-mean-pressure.mjs'),`
++    export function reconstructUpdatedFullMeanPressure(G,{geometry,background,velocity,covariance,stress,rho,chi,tag}){
++      if(!tag.startsWith('GlobalGenericCycle'))throw Error('WRONG_STAGE_TAG');
++      if(velocity.beta!==G.lastExpected.meanVelocity.beta||covariance.rr!==G.lastExpected.covariance.rr)throw Error('STALE_FULL_CURRENT');
++      return {mean:{P:G.fresh(),Jtheta:G.fresh(),Jz:G.fresh(),fullAngularCovariance:covariance},
++              pressure:{value:G.fresh()},checks:[{pass:true}]};
++    }\n`);
++  await writeFile(join(dir,'source-harmonic-assembly.mjs'),`
++    export function exactRealCylindricalPDE(G,{geometry,velocity,pressure}){
++      if(geometry.theta!==G.theta||pressure!==G.lastAddedPressure)throw Error('LOST_PHYSICAL_PRESSURE');
++      if(velocity[0]!==G.lastExpected.velocity[0])throw Error('STALE_PHYSICAL_VELOCITY');
++      return {conservativeResidual:[G.fresh(),G.fresh(),G.fresh()]};
++    }\n`);
++  const {makeOriginalFullPressureRefresher}=await import(pathToFileURL(join(dir,'original-full-pressure-refresh.mjs')).href);
++  const G={nodes:[],theta:0,lastExpected:null,lastAddedPressure:null,
++    fresh(){let n=this.nodes.length;this.nodes.push({op:'source-ast'});return n;},
++    mul(...args){return this.fresh();},
++    add(...args){const n=this.fresh();this.lastAddedPressure=n;return n;}};
++  const r=()=>G.fresh();
++  const geometry={R:r()},
++    band={fields:{b:r(),F:r(),G:r(),pressure:r()},coordinates:{theta:r()}};
++  G.theta=band.coordinates.theta;
++  const original={seal:'fixture-original-private',G,mean:{temporal:{pressure:{current:{band},geometry,
++      residual:{fullOriginalStress:[r(),r()]},pressure:{rho:r(),chi:r()}}}}};
++  const covariance=Object.fromEntries(['rr','rtheta','rz','thetatheta','thetaz','zz'].map(k=>[k,r()]));
++  const current={velocity:[r(),r(),r()],meanVelocity:{beta:r(),v:r(),gamma:r()},covariance,angularPressure:r()};
++  G.lastExpected=current;
++  return {G,original,current,makeOriginalFullPressureRefresher};
++}
++test('generic fresh-pressure adapter consumes current covariance and velocity, creates distinct original-style roots',async()=>{
++  const c=await mock(),calls=[];
++  const fn=c.makeOriginalFullPressureRefresher(c.original,{onPressureRefresh:x=>calls.push(x)});
++  const old=c.G.nodes.length;
++  const result=fn({G:c.G,fullCurrent:c.current,requiredBinding:'current-stable-input-digest',phase:'signed',stage:1});
++  assert.ok(c.G.nodes.length>old);
++  assert.equal(result.actualSourceMathUsed,true);
++  assert.equal(result.numericalValuesOrEnclosuresComputed,false);
++  assert.equal(result.entireUpdatedCurrent,true);
++  assert.equal(calls.length,1);assert.equal(calls[0].phase,'signed');
++  assert.equal(result.binding,'current-stable-input-digest');
++  assert.ok(result.residual.every(id=>Number.isInteger(id)&&c.G.nodes[id]));
++});
++test('explicitly refuses spoofed private seed and source graph mismatch',async()=>{
++  const c=await mock();const fn=c.makeOriginalFullPressureRefresher(c.original);
++  assert.throws(()=>fn({G:{nodes:[]},fullCurrent:c.current,requiredBinding:'x',phase:'signed',stage:1}),e=>e.code==='WRONG_GRAPH_OR_INCOMPLETE_CURRENT');
++  assert.throws(()=>c.makeOriginalFullPressureRefresher({...c.original,seal:'FORGED'}));
++});
+diff --git a/research-ide/mathscope-m3/tests/original-signed-162-private-seal.test.mjs b/research-ide/mathscope-m3/tests/original-signed-162-private-seal.test.mjs
+new file mode 100644
+index 0000000..7dab939
+--- /dev/null
++++ b/research-ide/mathscope-m3/tests/original-signed-162-private-seal.test.mjs
+@@ -0,0 +1,56 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {mkdtemp,readFile,writeFile,mkdir,copyFile,rm} from 'node:fs/promises';
++import {tmpdir} from 'node:os';
++import {join,dirname} from 'node:path';
++import {pathToFileURL,fileURLToPath} from 'node:url';
++import {createHash} from 'node:crypto';
++const ROOT=fileURLToPath(new URL('../../..',import.meta.url));
++const SRC=fileURLToPath(new URL('../navier/',import.meta.url));
++async function privateTestModule(){
++  const tmp=await mkdtemp(join(tmpdir(),'mathscope-signed-private-')),
++    nav=join(tmp,'research-ide/mathscope-m3/navier'),base=join(tmp,'research-ide/mathscope-m0');
++  await mkdir(nav,{recursive:true});await mkdir(base,{recursive:true});
++  for(const name of ['original-signed-162-successor.mjs','source-signed-162-successor-audit.mjs','generic-signed-162-indexed.mjs'])
++    await copyFile(join(SRC,name),join(nav,name));
++  const former=await readFile(fileURLToPath(new URL('./generic-signed-162-indexed.test.mjs',import.meta.url)),'utf8');
++  const fixture=former.slice(former.indexOf('class Graph{'),former.indexOf('function expectFail'));
++  await writeFile(join(nav,'fixture.mjs'),"import assert from 'node:assert/strict';\n"+fixture+`\nGraph.prototype.captureFunctionDefinitions=function(){return {indexed:this.indexed.size}};\nGraph.prototype.functionDefinitionsUnchanged=function(s){return this.indexed.size>=s.indexed};\nexport {fixture};\nconst x=fixture();export const source=x.forced;export const candidate=x.candidate;export const services=x.services;export const authorized=new WeakSet([source]);export const authorizedInitial=new WeakSet([source.input]);\n`);
++  await writeFile(join(nav,'source-global-forced-current.mjs'),`import {authorized} from './fixture.mjs';export function assertGlobalForcedCurrent(s){if(!authorized.has(s))throw Object.assign(new Error('fake forced'),{code:'BAD_FORCED'});return true;}\n`);
++  await writeFile(join(nav,'source-initialized-angular.mjs'),`import {authorizedInitial} from './fixture.mjs';export function assertGlobalInitializedAngular(s){if(!authorizedInitial.has(s))throw Object.assign(new Error('fake initial'),{code:'BAD_INITIAL'});return true;}\n`);
++  await writeFile(join(nav,'source-global-updated-mean-stress.mjs'),`import {authorized} from './fixture.mjs';const seals=new WeakMap();export function attachGlobalForcedMeanStress(s){if(!authorized.has(s))throw Object.assign(new Error('unsealed forced'),{code:'BAD_FORCED'});const x={G:s.G,input:s,Sigma:[s.G.fresh('signed-stress0'),s.G.fresh('signed-stress1')],source:{latestCovariance:s.mean.fullCurrentCovariance,latestFullMeanPressure:s.mean.pressure.value},compatibility:{rows:[{rawWeightedSourceWhole:s.G.fresh('moment0'),rawCutoffRemainder:s.G.fresh('cutoff0')},{rawWeightedSourceWhole:s.G.fresh('moment1'),rawCutoffRemainder:s.G.fresh('cutoff1')}]}};seals.set(x,JSON.stringify(x.source));return x;}export function assertGlobalUpdatedMeanStress(s){if(!seals.has(s)||JSON.stringify(s.source)!==seals.get(s))throw Object.assign(new Error('bad stress'),{code:'BAD_STRESS'});return true;}\n`);
++
++  await writeFile(join(nav,'source-signed-162-pr30-pins.mjs'),`export const PR30_HEAD='a9b3a5b317525f6d0a71e2e356b054c9d25d2e60';export async function verifyPR30OriginalSourceFiles(){return {allMatch:true,verifiedFiles:[{syntheticOnly:true}]};}\n`);
++  await writeFile(join(nav,'original-signed-162-bridge.mjs'),`import {source,candidate,services} from './fixture.mjs';import {assembleSigned162Candidate} from './generic-signed-162-indexed.mjs';import {attachGlobalForcedMeanStress} from './source-global-updated-mean-stress.mjs';export function produceOriginalSigned162AfterForced(forced){if(forced!==source)throw new Error('wrong forced');const stress=attachGlobalForcedMeanStress(forced);candidate.latestCor85Stress=stress;candidate.signed.Sigma=stress.Sigma;candidate.signed.sourceOfSigma='AUTHENTICATED_ORIGINAL_COR85_NORMALIZED_HAAR';const result=assembleSigned162Candidate(candidate,services);return {...result,scope:{...result.scope,originalForcedSourceAssertedByRealModule:true}};}\n`);
++  await writeFile(join(base,'contracts.mjs'),`import {createHash} from 'node:crypto';export const canonicalStringify=o=>JSON.stringify(o);export async function sha256(s){return createHash('sha256').update(s).digest('hex')}\n`);
++  return {tmp,nav};
++}
++test('synthetic private-seal harness proves weak authority and exact graph mutation rejection (not original source execution)',async()=>{
++  const {tmp,nav}=await privateTestModule();
++  try{
++    const [{source},{attachOriginalSigned162Successor,assertOriginalSigned162Successor,originalSigned162SuccessorCertificate}]=
++      await Promise.all([import(pathToFileURL(join(nav,'fixture.mjs')).href),import(pathToFileURL(join(nav,'original-signed-162-successor.mjs')).href)]);
++    await assert.rejects(attachOriginalSigned162Successor({G:source.G}),e=>e.code==='BAD_FORCED');
++    const att=await attachOriginalSigned162Successor(source);
++    assert.equal(assertOriginalSigned162Successor(att),true);
++    const cert=await originalSigned162SuccessorCertificate(att);
++    assert.equal(cert.fields.length,10);assert.equal(cert.privateSuccessorSealChecked,true);
++    assert.equal(cert.final67FieldNumericalEnclosures,0);
++    assert.equal(cert.N706Closed,false);
++    // Fresh runner may append more graph nodes after a valid sealed stage.
++    source.G.fresh('valid-next-stage-append');assert.equal(assertOriginalSigned162Successor(att),true);
++    // The newly authenticated node cannot be altered without invalidating the seal.
++    const id=att.stage.startNodeCount;source.G.nodes[id].op='malicious-modification';
++    assert.throws(()=>assertOriginalSigned162Successor(att),e=>e.code==='INVALID_ORIGINAL_SIGNED_SUCCESSOR_SEAL');
++  } finally {await rm(tmp,{recursive:true,force:true});}
++});
++test('synthetic in-process original Signed seal rejects field and pressure tampering after mint',async()=>{
++  const {tmp,nav}=await privateTestModule();
++  try{
++    const [{source},{attachOriginalSigned162Successor,assertOriginalSigned162Successor}]=
++      await Promise.all([import(pathToFileURL(join(nav,'fixture.mjs')).href),import(pathToFileURL(join(nav,'original-signed-162-successor.mjs')).href)]);
++    const att=await attachOriginalSigned162Successor(source);
++    att.constructed.updated.fullPressure=att.constructed.updated.fullVelocity[0];
++    assert.throws(()=>assertOriginalSigned162Successor(att),e=>e.code==='SIGNED_SUCCESSOR_MUTATION');
++  }finally{await rm(tmp,{recursive:true,force:true});}
++});
+diff --git a/research-ide/mathscope-m3/tests/original-signed-162-successor-audit.test.mjs b/research-ide/mathscope-m3/tests/original-signed-162-successor-audit.test.mjs
+new file mode 100644
+index 0000000..e9b999e
+--- /dev/null
++++ b/research-ide/mathscope-m3/tests/original-signed-162-successor-audit.test.mjs
+@@ -0,0 +1,54 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {fixture} from './generic-signed-162-indexed.test.mjs';
++import {assembleSigned162Candidate} from '../navier/generic-signed-162-indexed.mjs';
++import {auditSigned162SuccessorFacts} from '../navier/source-signed-162-successor-audit.mjs';
++import {gitBlobSHA,PR30_SOURCE_BLOBS,verifyPR30OriginalSourceFiles} from '../navier/source-signed-162-pr30-pins.mjs';
++const raw=()=>{const x=fixture(),result=assembleSigned162Candidate(x.candidate,x.services);return {x,result};};
++const err=(f,code)=>assert.throws(f,e=>e?.code===code,code);
++
++test('checks full 81x2 x 10 registry and post-Signed field/pressure/PDE root lineage',()=>{
++  const {x,result}=raw(),r=auditSigned162SuccessorFacts(result);
++  assert.equal(r.allIndexedRows,1620);assert.equal(r.indexedFields.length,10);
++  assert.deepEqual(r.indexedFields.map(x=>x.rows),Array(10).fill(162));
++  assert.equal(r.rootInventory.pdeResidual.length,3);
++  assert.equal(r.rootInventory.defects.length,3);
++  assert.equal(r.rootInventory.covariance.length,6);
++  assert.equal(r.originalSourceAuthenticatedByThisGenericAudit,false);
++  assert.equal(r.sourcePrivateAuthorityIssued,false);
++  assert.equal(r.N706Closed,false);
++});
++test('rejects altered source graph after composition',()=>{const {result}=raw();result.G={nodes:[]};err(()=>auditSigned162SuccessorFacts(result),'WRONG_ORIGINAL_SIGNED_GRAPH')});
++test('rejects missing six-component delta tensor',()=>{const {result}=raw();delete result.templates[0].deltaCovariance.rr;err(()=>auditSigned162SuccessorFacts(result),'MISSING_SIGNED_ROOT')});
++test('rejects mangled source row guard even if row count remains 162',()=>{const {x,result}=raw();const first=result.indexed.velocity[0];x.G.indexed.get(first.field).rows[0].guards=[{forged:true}];err(()=>auditSigned162SuccessorFacts(result),'SIGNED_ROW_PROVENANCE_MISMATCH')});
++test('rejects swapped source label even if all labels retained elsewhere',()=>{const {x,result}=raw();const first=result.indexed.angularPressure;x.G.indexed.get(first.field).rows[7].label.key='label-0';err(()=>auditSigned162SuccessorFacts(result),'SIGNED_ROW_PROVENANCE_MISMATCH')});
++test('rejects changing physical derivative map index',()=>{const {x,result}=raw();const first=result.indexed.covariance.rr;x.G.indexed.get(first.field).rows[37].derivativeMaps[1][0].parameter=99;err(()=>auditSigned162SuccessorFacts(result),'SIGNED_ROW_PROVENANCE_MISMATCH')});
++test('rejects missing fixed covering difference',()=>{const {result}=raw();result.templates[0].levelDifference=2;err(()=>auditSigned162SuccessorFacts(result),'INCOMPLETE_SIGNED_TEMPLATE')});
++test('rejects lost first-Forced mode even when 162 rows remain',()=>{const {result}=raw();result.templates[0].waveRows=result.templates[0].waveRows.filter(x=>Math.abs(x.m)!==4);err(()=>auditSigned162SuccessorFacts(result),'LOST_FORCED_HARMONIC')});
++test('rejects missing full PDE spatial component',()=>{const {result}=raw();result.updated.pde.conservativeResidual.pop();err(()=>auditSigned162SuccessorFacts(result),'INCOMPLETE_SIGNED_VECTOR')});
++test('rejects stale P/J defect node even when scope booleans say complete',()=>{const {result}=raw();result.updated.updatedMean.mean.Jz=99999999;err(()=>auditSigned162SuccessorFacts(result),'MISSING_SIGNED_ROOT')});
++test('rejects passing unrefreshed candidate to private authority',()=>{const x=fixture(),r=assembleSigned162Candidate(x.candidate,x.services,{refreshAfterAssembly:false});err(()=>auditSigned162SuccessorFacts(r),'SIGNED_FULL_REFRESH_INCOMPLETE')});
++test('source pinning implements exact Git blob length+NUL+contents algorithm',()=>{
++  const b=Buffer.from('test-content\n');
++  assert.equal(gitBlobSHA(b),'bd83801f897f05a09e1c286e20d4c50da0890952');
++  assert.equal(Object.keys(PR30_SOURCE_BLOBS).length,29);
++  assert.equal(PR30_SOURCE_BLOBS['research-ide/mathscope-m3/navier/source-global-signed.mjs'],'26b467473b4e4c09a59b6c302aee5493d55c2e15');
++  assert.equal(PR30_SOURCE_BLOBS['research-ide/mathscope-m3/navier/source-updated-mean-stress.mjs'],'266bbd37993ab937de5cdc194b834c8c89fb5020');
++});
++test('source pinning does not accept a staged test-only synthetic repo as full PR30',async()=>{
++  await assert.rejects(verifyPR30OriginalSourceFiles(),e=>e?.code==='PR30_SOURCE_NOT_MATERIALIZED');
++});
++test('native PR30 initial constructor follows the archived complete first-Forced source dependency order',async()=>{
++  const s=await (await import('node:fs/promises')).readFile(new URL('../navier/source-pr30-original-factory.mjs',import.meta.url),'utf8');
++  const items=['prepareGlobalSourceBand(','attachGlobalFixedRepresentative(','attachGlobalCurrentState(',
++    'attachGlobalMomentCurrent(','attachGlobalCurrentPressure(','attachGlobalTemporalInverse(',
++    'attachGlobalInitializedMean(','prepareOriginalMeanMapOperatorSeminorms(',
++    'attachInitializedMeanOperatorMajorants(','attachGlobalInitializedAngular('];
++  let previous=-1;for(const call of items){
++    const p=s.indexOf(call,s.indexOf('export async function createOriginalInitializedAngular'));
++    assert.ok(p>previous,`${call} must follow the exact archived source construction order`);previous=p;
++  }
++  assert.match(s,/coefficientOrder:1,maxNodes:3500000/);
++  assert.match(s,/order:1,maxNodes:300000,maxWork:10000/);
++  assert.match(s,/assertGlobalInitializedAngular\(initialized\)/);
++});
+diff --git a/research-ide/mathscope-m3/tests/signed-temporal-frontier.test.mjs b/research-ide/mathscope-m3/tests/signed-temporal-frontier.test.mjs
+new file mode 100644
+index 0000000..39e849b
+--- /dev/null
++++ b/research-ide/mathscope-m3/tests/signed-temporal-frontier.test.mjs
+@@ -0,0 +1,91 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {mkdtemp,mkdir,writeFile,readFile,copyFile,rm} from 'node:fs/promises';
++import {tmpdir} from 'node:os';
++import {join,dirname} from 'node:path';
++import {fileURLToPath,pathToFileURL} from 'node:url';
++const src=fileURLToPath(new URL('../navier/source-signed-temporal-frontier.mjs',import.meta.url));
++async function setUp(){
++ const temp=await mkdtemp(join(tmpdir(),'m3-temporal-'));
++ const nav=join(temp,'research-ide/mathscope-m3/navier');
++ const m0=join(temp,'research-ide/mathscope-m0');
++ await mkdir(nav,{recursive:true});await mkdir(m0,{recursive:true});
++ await copyFile(src,join(nav,'source-signed-temporal-frontier.mjs'));
++ await writeFile(join(nav,'original-signed-162-successor.mjs'),`import {allowed} from './fixture.mjs';export function assertOriginalSigned162Successor(x){if(!allowed.has(x))throw Object.assign(Error('bad source'),{code:'BAD_SIGNED'});return true;}`);
++ await writeFile(join(nav,'source-updated-mean-pressure.mjs'),`export function exactNormalizedHaar(G,x,Y){return G.integral(G.integral(x,Y[0],G.zero,G.one),Y[1],G.zero,G.one)}`);
++ await writeFile(join(m0,'contracts.mjs'),`import {createHash} from 'node:crypto';export const canonicalStringify=x=>JSON.stringify(x);export const sha256=async x=>createHash('sha256').update(x).digest('hex');`);
++ await writeFile(join(nav,'fixture.mjs'),`
++ export const allowed=new WeakSet();
++ export class GClass{
++  constructor(){this.nodes=[];this.zero=this.node('rational',[]);this.one=this.node('rational',[]);}
++  node(op,args){const id=this.nodes.length;this.nodes.push({op,args});return id;}
++  fresh(){return this.node('coordinate',[])}
++  sub(a,b){return this.node('subtract',[a,b]);}
++  integral(a,y,l,r){return this.node('definite_integral',[a,y,l,r]);}
++  freeCoordinates(id){const n=this.nodes[id];if(n.op==='coordinate')return new Set([id]);
++   if(n.op==='definite_integral'){const s=this.freeCoordinates(n.args[0]);s.delete(n.args[1]);return s;}
++   if(n.op==='subtract')return new Set([...this.freeCoordinates(n.args[0]),...this.freeCoordinates(n.args[1])]);return new Set();}
++  captureFunctionDefinitions(){return {pinned:this.nodes.length};}
++  functionDefinitionsUnchanged(s){return this.nodes.length>=s.pinned;}
++ }
++ export function fixture(){const G=new GClass(),n=()=>G.fresh(),Y=[n(),n()],
++  fields={Etheta:n(),Ez:n(),P:n(),Jtheta:n(),Jz:n()},
++  updatedCovariance={rr:n()},pressure=n(),p=n(),
++  band={geometry:{ci:n(),epsilon:n()}},
++  original={geometry:{Y},current:{band}},
++  initial={mean:{temporal:{pressure:original}}},
++  forced={input:initial,source:{paperSHA256:'a'.repeat(64),parameterExpressionSHA256:'b'.repeat(64)}},
++  signed={G,input:forced,constructed:{updated:{updatedMean:{mean:{...fields,fullAngularCovariance:updatedCovariance},
++   pressure:{value:pressure},checks:[{pass:true}]},updatedCovariance,fullPressure:p,
++   pde:{conservativeResidual:[n(),n(),n()]}}}};
++  allowed.add(signed);return {G,signed,updated:signed.constructed.updated,Y,fields};}
++ `);
++ const [fixtureModule,frontier]=await Promise.all([import(pathToFileURL(join(nav,'fixture.mjs')).href),import(pathToFileURL(join(nav,'source-signed-temporal-frontier.mjs')).href)]);
++ return {...fixtureModule,...frontier,temp};
++}
++async function wrap(cb){const s=await setUp();try{await cb(s)}finally{await rm(s.temp,{recursive:true,force:true})}}
++
++test('new post-Signed source is exactly E - double-normalized Haar E with ORIGINAL Y',()=>wrap(async s=>{
++ const x=s.fixture(),f=s.attachSigned162TemporalFrontier(x.signed);
++ assert.equal(f.mean.length,2);assert.equal(f.centered.length,2);
++ for(let j=0;j<2;j++){
++   const outer=x.G.nodes[f.mean[j]],inner=x.G.nodes[outer.args[0]],sub=x.G.nodes[f.centered[j]];
++   assert.equal(outer.op,'definite_integral');assert.equal(inner.op,'definite_integral');
++   assert.equal(inner.args[1],x.Y[0]);assert.equal(outer.args[1],x.Y[1]);
++   assert.equal(sub.op,'subtract');assert.equal(sub.args[0],[x.fields.Etheta,x.fields.Ez][j]);assert.equal(sub.args[1],f.mean[j]);
++ }
++ assert.equal(s.assertSigned162TemporalFrontier(f),true);
++ const c=await s.signed162TemporalFrontierCertificate(f);
++ assert.equal(c.actualZeroMeanInverseExecuted,false);assert.equal(c.actualFiveMapExecuted,false);
++}));
++
++test('unsealed Signed current cannot enter temporal stage',()=>wrap(async s=>{
++ const x=s.fixture();s.allowed.delete(x.signed);
++ assert.throws(()=>s.attachSigned162TemporalFrontier(x.signed),{code:'BAD_SIGNED'});
++}));
++
++test('missing new Signed pressure or post-Signed PDE is rejected',()=>wrap(async s=>{
++ const x=s.fixture();x.updated.fullPressure=x.G.nodes.length+5;
++ assert.throws(()=>s.attachSigned162TemporalFrontier(x.signed),{code:'INCOMPLETE_POST_SIGNED_CURRENT'});
++}));
++
++test('an old mean covariance cannot replace the newly recomputed one',()=>wrap(async s=>{
++ const x=s.fixture();x.updated.updatedMean.mean.fullAngularCovariance={...x.updated.updatedCovariance};
++ assert.throws(()=>s.attachSigned162TemporalFrontier(x.signed),{code:'INCOMPLETE_POST_SIGNED_CURRENT'});
++}));
++
++test('one torus coordinate or non-coordinate fails closed',()=>wrap(async s=>{
++ const x=s.fixture();x.Y[0]=x.G.sub(x.Y[0],x.Y[1]);
++ assert.throws(()=>s.attachSigned162TemporalFrontier(x.signed),{code:'INVALID_ORIGINAL_TORUS'});
++}));
++
++test('changing authenticated centered source or its physical node invalidates the stage seal',()=>wrap(async s=>{
++ const x=s.fixture(),f=s.attachSigned162TemporalFrontier(x.signed);f.centered[0]=x.G.zero;
++ assert.throws(()=>s.assertSigned162TemporalFrontier(f),{code:'INVALID_TEMPORAL_FRONTIER'});
++}));
++
++test('changing the sealed graph expression invalidates the stage',()=>wrap(async s=>{
++ const x=s.fixture(),f=s.attachSigned162TemporalFrontier(x.signed),id=f.centered[0];
++ x.G.nodes[id].op='malicious';
++ assert.throws(()=>s.assertSigned162TemporalFrontier(f),{code:'INVALID_TEMPORAL_FRONTIER'});
++}));
+diff --git a/research-ide/mathscope-m3/tools/verify_pr30_original_source.py b/research-ide/mathscope-m3/tools/verify_pr30_original_source.py
+new file mode 100644
+index 0000000..8acd657
+--- /dev/null
++++ b/research-ide/mathscope-m3/tools/verify_pr30_original_source.py
+@@ -0,0 +1,47 @@
++#!/usr/bin/env python3
++"""Read-only guard against silently applying the CurrentState patch to drifted PR30 source.
++
++Use: python tools/verify_pr30_original_source.py --repo /path/to/MathScopeCompute
++Never edits any source, Git ref, checkpoint, or manifest.
++"""
++import argparse, json, subprocess, sys
++from pathlib import Path
++EXPECTED_BASE='a9b3a5b317525f6d0a71e2e356b054c9d25d2e60'
++ORIGINAL_BLOBS={
++ 'source-initialized-angular.mjs':'69d9311f93e10e176a53f67958f7bd56e0a5691d',
++ 'source-global-forced-current.mjs':'03c3e125d93a5bd9e66d00c5f237b100c7b48b50',
++ 'source-global-signed.mjs':'26b467473b4e4c09a59b6c302aee5493d55c2e15',
++ 'source-global-current.mjs':'4058059e5438222d4903b5a954bc967bb5faa733',
++ 'source-updated-mean-pressure.mjs':'b9ff97cc3debbfd10323e536d28cfb7d5cba1069',
++ 'source-harmonic-assembly.mjs':'cc8d24fdc2a7790d393aea86204b63c21a86f1b0',
++ 'source-global-temporal.mjs':'04577e8da66311862a17c0ab0fc62491dd366178',
++ 'source-global-initial-mean.mjs':'1178fd5056f8d9901f7c8b5dc13a2390879bddc3',
++}
++def git(repo,*args):
++ r=subprocess.run(['git','-C',str(repo),*args],capture_output=True,text=True)
++ if r.returncode:raise RuntimeError(r.stderr.strip() or f'git failed on {args}')
++ return r.stdout.strip()
++def verify(repo):
++ out={'schema':'MathScope.OriginalSourceReadOnlyGuard/1','expected_base':EXPECTED_BASE,
++      'files':[],'overall':'HOLD'}
++ try:
++  out['head']=git(repo,'rev-parse','HEAD')
++  out['base_is_ancestor']=subprocess.run(['git','-C',str(repo),'merge-base','--is-ancestor',EXPECTED_BASE,out['head']]).returncode==0
++  if not out['base_is_ancestor']:
++   out['blocker']='CURRENT_BRANCH_DOES_NOT_CONTAIN_PR30_BASE'
++  for name,sha in ORIGINAL_BLOBS.items():
++   p=Path(repo)/'research-ide/mathscope-m3/navier'/name
++   observed=git(repo,'hash-object',str(p)) if p.is_file() else None
++   out['files'].append({'name':name,'expected_blob':sha,'actual_blob':observed,'pass':observed==sha})
++  out['source_bytes_match']=all(x['pass'] for x in out['files'])
++  out['pass']=bool(out['source_bytes_match'] and out['base_is_ancestor'])
++  if not out['pass'] and 'blocker' not in out:out['blocker']='SOURCE_BYTES_OR_IMPORT_DRIFT'
++  if out['pass']:out['overall']='SOURCE_BASELINE_VERIFIED_ONLY'
++ except Exception as e:
++  out['pass']=False;out['blocker']=f'SOURCE_READ_ERROR:{e}'
++ return out
++if __name__=='__main__':
++ p=argparse.ArgumentParser();p.add_argument('--repo',type=Path,required=True);p.add_argument('--output',type=Path);a=p.parse_args()
++ result=verify(a.repo);data=json.dumps(result,indent=2,ensure_ascii=False)+'\n';print(data)
++ if a.output:a.output.write_text(data)
++ sys.exit(0 if result['pass'] else 2)
