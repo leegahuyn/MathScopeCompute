@@ -24,7 +24,7 @@ export function attachActualPostSignedFiveMap(temporal,context={}){
   if(assertActualPostSignedTemporalInverse(temporal)!==true)
     fail('MISSING_NEW_POST_SIGNED_TEMPORAL','Require actual Signed successor and new exact temporal AST.');
   const signed=temporal.frontier.signed,G=temporal.G,
-    {originalPressure:pressure,band,bump:b,updated:signedUpdated}=resolveOriginalPostSignedSourceShape(signed),
+    {originalPressure:pressure,band,template,bump:b,updated:signedUpdated}=resolveOriginalPostSignedSourceShape(signed),
     geometry=pressure.geometry,{R,Z,T,Y,epsilon}=geometry,
     source=temporal.postTemporal.updatedMeanPressure,previous=temporal.postTemporal.velocity,
     covariance=signedUpdated.updatedCovariance,
@@ -59,11 +59,12 @@ export function attachActualPostSignedFiveMap(temporal,context={}){
     primitive=G.integral(integrand,r,geometry.innerRadius,R),
     whole=G.integral(integrand,r,geometry.innerRadius,geometry.outerRadius),
     psi=G.div(primitive,R),compactPsi=G.div(G.sub(primitive,G.mul(pressure.pressure.chi,whole)),R),
-    deltaBeta=shareGlobalScalar(G,G.neg(G.mul(epsilon,G.derivative(psi,Z))),'PostSignedFiveBump_beta'),
+    rawDeltaBeta=G.neg(G.mul(epsilon,G.derivative(psi,Z))),
+    deltaBeta=shareGlobalScalar(G,rawDeltaBeta,'PostSignedFiveBump_beta'),
     increment={beta:deltaBeta,v:deltaV,gamma:gammaDesired},
     updated=Object.fromEntries(names.map(n=>[n,G.add(previous[n],increment[n])])),
     {De,Dz}=originalFullMeanOperators(G,geometry),
-    realizedGamma=De(psi,1),divergence=G.add(De(deltaBeta,1),Dz(gammaDesired)),
+    realizedGamma=De(psi,1),divergence=G.add(De(rawDeltaBeta,1),Dz(gammaDesired)),
     afterFive=reconstructUpdatedFullMeanPressure(G,{
       geometry,background,velocity:updated,covariance,stress,
       rho:pressure.pressure.rho,chi:pressure.pressure.chi,
@@ -100,7 +101,7 @@ export function attachActualPostSignedFiveMap(temporal,context={}){
       originalMeanRadialEnvelopeRetained:true,
       neverUseOldInitializedMomentTargets:true},
     targets,coefficients,increment,
-    potential:{psi,compactPsi,primitive,whole,realizedGamma,gammaDesired,
+    potential:{psi,compactPsi,primitive,whole,rawDeltaBeta,realizedGamma,gammaDesired,
       divergence,wholeIntegralAnalyticCancellationRequired:true},
     postFiveMean:{velocity:updated,updatedMeanPressure:afterFive},
     nonlinear,checks,
