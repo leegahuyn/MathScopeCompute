@@ -86,7 +86,7 @@ export function attachActualPostSignedFiveMap(temporal,context={}){
       {id:'new-targets-not-old-initial-targets',
         pass:defects.P!==template.mean.P&&defects.P!==pressure.current.mean.P},
       {id:'original-quadratic-nonlinear-terms-retained',
-        pass:nonlinear.allOldNewAndQuadraticTermsRetained&&!nonlinear.remaindersDeclaredZero},
+        pass:nonlinear.allOldNewAndQuadraticTermsRetained&&nonlinear.nonlinearRemaindersDeclaredZero===false},
     ];
   if(checks.some(x=>x.pass!==true))
     fail('POST_SIGNED_FIVEMAP_IDENTITY_FAILED','Original post-signed 5×5 moment or new PDE mean failed: '+
