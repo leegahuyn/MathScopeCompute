@@ -6,6 +6,7 @@
  */
 import {assertSigned162TemporalFrontier} from '../navier/source-signed-temporal-frontier.mjs';
 import {resolveOriginalPostSignedSourceShape} from './original-post-signed-source-shape.mjs';
+import {checkOriginalCoupledTemporalInverse} from './original-coupled-inverse-proof.mjs';
 import {finiteAuxiliaryInverse} from '../navier/source-auxiliary-fourier.mjs';
 import {checkActualFiniteAuxiliaryIdentity} from '../navier/source-global-temporal.mjs';
 import {realizeOriginalTemporalPotential} from '../navier/source-temporal-potential.mjs';
@@ -75,8 +76,9 @@ export function attachActualPostSignedTemporalInverse(frontier,context={}){
       {id:'same-source-signed-mean-and-covariance',pass:noChangedCovariance&&
         keys.every(k=>root(G,updatedVelocity[k]))},
       {id:'new-post-signed-T1-exact-formal-limits',pass:Object.values(inverses)
-          .every(x=>G.nodes[x.exact].op==='m3_aux_inverse_partial'&&
-            x.finite.tails.length===2&&x.finite.tails.every(t=>t.tailTendsToZero))},
+          .every(x=>checkOriginalCoupledTemporalInverse(G,{
+            system:x.system,exact:x.exact,body:x.body,Y,parameters,finite:x.finite
+          }).pass===true)},
       {id:'no-old-temporal-mean-reused',pass:afterTemporal.mean.P!==
         updated.updatedMean.mean.P},
     ];
