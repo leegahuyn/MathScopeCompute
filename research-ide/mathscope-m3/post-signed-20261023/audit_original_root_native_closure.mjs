@@ -59,6 +59,9 @@ export async function auditRootReachableNativeOperations(dir,{maxNodes=5000000,m
    }
  }
  const catalog=Object.entries(byOp).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0]));
+ const opaqueDefinitionNodes=catalog
+   .filter(([op])=>op.startsWith('m3_')||op.startsWith('actual_')||op==='source_parameter')
+   .map(([op,n])=>({op,n,requiresCaptureFunctionDefinitionsOrParameterGraph:true}));
  const unsupported=catalog.filter(([op])=>!elementary.has(op));
  const notGuaranteed=catalog.filter(([op])=>!elementary.has(op)&&!bounded.has(op));
  return {schema:'MathScope.M3.RootReachableNativeOperationBacklog/1',
@@ -70,6 +73,9 @@ export async function auditRootReachableNativeOperations(dir,{maxNodes=5000000,m
       bounded.has(op)?'BOUNDED_ARGUMENT_INTERVAL_KERNEL_ONLY':
       'ACTUAL_ORIGINAL_NUMERICAL_KERNEL_UNVERIFIED'})),
    reachable_non_elementary_nodes:unsupported.reduce((s,[,n])=>s+n,0),
+   opaque_native_definition_dependencies:opaqueDefinitionNodes,
+   native_definition_semantic_dependencies_traversed:false,
+   syntactic_root_closure_only:true,
    reachable_native_operator_kinds_without_validated_generic_interval_value:notGuaranteed.map(([op,n])=>({op,n})),
    actual_final_all_cycle_A_b_p_present:false,actual_final_67_numeric_intervals_certified:0,
    exact_original_operator_graph_digest_checked:provenance.source_node_sha256===m.node_stream_sha256,
