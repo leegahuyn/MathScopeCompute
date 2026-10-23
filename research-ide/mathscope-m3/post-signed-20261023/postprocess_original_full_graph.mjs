@@ -2,6 +2,7 @@ import path from 'node:path';
 import {promises as fs} from 'node:fs';
 import {auditOriginalSourceReplay} from './audit_original_source_graph_replay.mjs';
 import {auditRootReachableNativeOperations} from './audit_original_root_native_closure.mjs';
+import {auditNativeDefinitionBodyClosure} from './audit_original_native_semantic_closure.mjs';
 
 /** Postprocess a COMPLETE checked source-graph archive, never a partial run log. */
 export async function produceFirstFiveMapNativeOperatorReceipt(dir,{requireOriginal=false}={}){
@@ -20,9 +21,12 @@ export async function produceFirstFiveMapNativeOperatorReceipt(dir,{requireOrigi
       code:'MISSING_NATIVE_SOURCE_DEFINITIONS'});
 
  const census=await auditRootReachableNativeOperations(dir);
+ const semantic=await auditNativeDefinitionBodyClosure(dir);
  if(full.node_count!==census.original_first_fivemap_graph_nodes||
    full.source_node_sha256!==census.source_stream_sha256||
-   census.exact_original_operator_graph_digest_checked!==true)
+   census.exact_original_operator_graph_digest_checked!==true||
+   semantic.verified_graph_SHA256!==full.source_node_sha256||
+   semantic.verified_function_registry_SHA256!==m.definitions_sha256)
    throw Error('Independent full-graph/reachable-root identity mismatch');
  const nativeKinds=census.operator_counts
    .filter(r=>r.evidence!=='ELEMENTARY_INTERVAL_KERNEL_TESTED_ONLY')
@@ -43,6 +47,18 @@ export async function produceFirstFiveMapNativeOperatorReceipt(dir,{requireOrigi
    root_count:census.root_ids.length,
    root_usage:perRoot,
    native_operations_reachable_from_any_root:nativeKinds,
+   expanded_native_definition_semantic_closure:{
+      body_reachable_unique_nodes:semantic.semantic_body_reachable_unique_nodes,
+      expanded_native_body_edges:semantic.source_native_body_extra_edges_constructed,
+      resolved_native_function_calls:semantic.reached_native_body_calls_with_source_definitions,
+      unresolved_native_function_calls:semantic.reached_native_calls_with_unresolved_definitions,
+      reached_native_body_categories:semantic.reached_native_body_categories,
+      unresolved_native_semantic_blockers:semantic.unresolved_native_semantic_blockers,
+      structural_body_reachability_complete:semantic.native_definition_reachability_complete,
+      actual_native_function_ODE_Fourier_values_proved:false,
+      counts_by_physical_root:semantic.original_root_semantic_body_usage
+   },
+
    first_blocking_native_operation_by_reachable_count:nativeKinds[0]?.op??null,
    complete_full_stream_SHA256_verified:true,
    captured_source_definitions_bytes_SHA256_verified:true,
