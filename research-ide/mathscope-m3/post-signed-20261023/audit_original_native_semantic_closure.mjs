@@ -35,7 +35,7 @@ export async function auditNativeDefinitionBodyClosure(dir,{maxNodes=5000000,max
     halt('Original source node and root budgets exceeded');
  const starts=new Uint32Array(count+1),edges=[],
    opIds=new Uint16Array(count),opNames=[],opIndex=new Map();
- const bodyByNode=new Map(),missingByNode=new Map(),cachedNativeDefinitions=new Map();
+ const bodyByNode=new Map(),missingByNode=new Map(),cachedNativeDefinitions=new Map(),cacheKeyByNode=new Map();
  let n=0,header=false,bodyEdges=0;
  const lines=readline.createInterface({input:createReadStream(path.join(dir,'original-source-nodes.jsonl.gz')).pipe(createGunzip()),crlfDelay:Infinity});
  for await(const line of lines){
@@ -56,6 +56,7 @@ export async function auditNativeDefinitionBodyClosure(dir,{maxNodes=5000000,max
    opIds[n]=opIndex.get(item.op);
    if(item.op.startsWith('m3_')||item.op.startsWith('actual_')){
      const cacheKey=item.op+':'+JSON.stringify(item.args[0]);
+     cacheKeyByNode.set(n,cacheKey);
      const newlySeen=!cachedNativeDefinitions.has(cacheKey);
      const def=newlySeen?nativeSemanticDefinitionEdges(item,registry):
        cachedNativeDefinitions.get(cacheKey);
@@ -91,8 +92,8 @@ export async function auditNativeDefinitionBodyClosure(dir,{maxNodes=5000000,max
    if(++work>count*17)halt('Excessive semantic graph propagation');
  }
  const union=Object.create(null),perRoot=roots.map(()=>Object.create(null)),
-   missing=Object.create(null),byKind=Object.create(null);
- let reachable=0,expandedNativeCalls=0,unresolvedCalls=0;
+   missing=Object.create(null),byKind=Object.create(null),reachedDefinitionKeys=new Set();
+ let reachable=0,expandedNativeCalls=0,unresolvedCalls=0,reachedUniqueBodyEdges=0;
  for(let i=0;i<count;i++){
    const bits=mask[i];if(!bits)continue;
    reachable++;
@@ -104,6 +105,11 @@ export async function auditNativeDefinitionBodyClosure(dir,{maxNodes=5000000,max
    if(def){
      expandedNativeCalls++;
      byKind[def.kind]=(byKind[def.kind]??0)+1;
+     const key=cacheKeyByNode.get(i);
+     if(!reachedDefinitionKeys.has(key)){
+       reachedDefinitionKeys.add(key);
+       reachedUniqueBodyEdges+=def.roots.length;
+     }
    }
    const unresolved=missingByNode.get(i);
    if(unresolved){
@@ -126,7 +132,9 @@ export async function auditNativeDefinitionBodyClosure(dir,{maxNodes=5000000,max
    semantic_body_reachable_unique_nodes:reachable,
    syntactic_and_native_body_union_operations:format(union),
    source_native_body_extra_edges_constructed:bodyEdges,
-   source_unique_native_definition_keys:cachedNativeDefinitions.size,
+   source_unique_native_definition_keys_in_whole_graph:cachedNativeDefinitions.size,
+   source_unique_reachable_native_definition_keys:reachedDefinitionKeys.size,
+   source_native_unique_body_edges_reached:reachedUniqueBodyEdges,
    native_source_body_expansion_cache_enabled:true,
    reached_native_body_calls_with_source_definitions:expandedNativeCalls,
    reached_native_calls_with_unresolved_definitions:unresolvedCalls,
