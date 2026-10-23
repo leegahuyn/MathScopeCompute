@@ -10,6 +10,7 @@ on:
       - 'research-ide/mathscope-m3/closure-evidence-20261023/audit_original_56_Y_eta_domain.py'
       - 'research-ide/mathscope-m3/closure-evidence-20261023/prove_original_n3_Q_rho_signs.py'
       - 'research-ide/mathscope-m3/closure-evidence-20261023/prove_original_n3_t1_natural_domain.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/conditional_original_33Y_natural_tail.py'
   workflow_dispatch:
     inputs:
       original_run_id:
@@ -114,6 +115,28 @@ jobs:
           assert x['release']=='HOLD'
           print('SHA_PINNED_REAL56_CERTIFICATION_SCOPE_CHECKED')
           PY
+      - name: Compute all exactly source-bounded 33 natural-series call tail factors without coefficient norm promotion
+        shell: bash
+        run: |
+          set -euo pipefail
+          python research-ide/mathscope-m3/closure-evidence-20261023/conditional_original_33Y_natural_tail.py \
+            "$RUNNER_TEMP/real-56-source-Y-eta-domain-rewrite-receipt.json" \
+            "$RUNNER_TEMP/real-33-source-Y-interval-natural-tail-conditional.json"
+          python - <<'PY'
+          import os,json
+          from fractions import Fraction as F
+          r=json.load(open(os.environ['RUNNER_TEMP']+'/real-33-source-Y-interval-natural-tail-conditional.json'))
+          assert r['original_Y_interval_algebraically_certified_calls']==33
+          assert not r['source_coefficient_Brho_norm_le_Q_proven']
+          assert not r['shared_complex_eta_domain_proven']
+          assert r['finite_original_natural_coefficients_numerically_certified']==0
+          assert r['final_original_67_jet_intervals_certified']==0
+          candidates={(q['Y_root'],q['m']):F(q['conditional_scaled_tail_coefficient'])
+                      for q in r['source_derivative_rows']}
+          assert candidates[474,4]==F(204,15869140625)
+          assert candidates[3628,5]==F(112150186033152,114217653172314453125)
+          print('33_SOURCE_Y_BOUNDS_WITH_CONDITIONAL_TAILS_PROVEN')
+          PY
       - if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -122,5 +145,6 @@ jobs:
             ${{ runner.temp }}/first-fivemap-physical-root-native-operator-receipt.json
             ${{ runner.temp }}/original-source-run-metadata.json
             ${{ runner.temp }}/real-56-source-Y-eta-domain-rewrite-receipt.json
+            ${{ runner.temp }}/real-33-source-Y-interval-natural-tail-conditional.json
           if-no-files-found: warn
           retention-days: 30
