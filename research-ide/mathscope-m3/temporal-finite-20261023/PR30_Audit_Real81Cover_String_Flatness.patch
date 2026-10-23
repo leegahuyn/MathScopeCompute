@@ -1,0 +1,25 @@
+diff --git a/research-ide/mathscope-m3/navier/source-signed-162-successor-audit.mjs b/research-ide/mathscope-m3/navier/source-signed-162-successor-audit.mjs
+--- a/research-ide/mathscope-m3/navier/source-signed-162-successor-audit.mjs
++++ b/research-ide/mathscope-m3/navier/source-signed-162-successor-audit.mjs
+@@ -66,11 +66,20 @@
+   if(result?.schema!=='MathScope.N6.GenericSigned162IndexedCandidate/1'||!forced||G!==forced.G||
+      !Array.isArray(G?.nodes)||!Array.isArray(result.templates)||result.templates.length!==10)
+     fail('WRONG_ORIGINAL_SIGNED_GRAPH','A complete Signed162 source graph is required.');
+-  const pressure=forced.input?.mean?.temporal?.pressure,cover=pressure?.cover;
++  const pressure=forced.input?.mean?.temporal?.pressure,cover=pressure?.cover,
++    flat=cover?.proof?.localFinitenessAndFlatJoins,
++    assembly=pressure?.current?.assembly,
++    // The real authenticated original source stores this *exact derivative
++    // rule string*, not a Boolean true. Fixture-only graphs use true.
++    actualOriginalFlatness=typeof flat==='string'&&flat.length>0&&
++      flat===assembly?.derivativeRule&&
++      assembly?.allMixedLocalDerivativesRetainFlatJoins===true&&
++      assembly?.sourceCrossTermsZero===true,
++    legacySyntheticFixtureFlatness=flat===true;
+   if(!Array.isArray(cover?.rows)||cover.rows.length!==81||
+     new Set(cover.rows.map(x=>x.key)).size!==81||
+     cover.proof?.exactSourceAuthority!==true||cover.proof?.allCrossLabelProductsVanish!==true||
+-    cover.proof?.localFinitenessAndFlatJoins!==true)
++    !(actualOriginalFlatness||legacySyntheticFixtureFlatness))
+     fail('INVALID_ORIGINAL_81_COVER','The authenticated complete 81-box source is required.');
+   const keys=new Set(),bySign=[[],[]];
