@@ -1,0 +1,49 @@
+name: MathScope actual Signed162 native string registry audit fix
+on:
+  push:
+    branches: [mathscope-m3m4-evidence-gates-20261023]
+    paths:
+      - '.github/workflows/mathscope-native-signed-field-audit-20261023.yml'
+      - 'research-ide/mathscope-m3/actual-audit-fix-20261023/**'
+      - 'research-ide/mathscope-m3/tests/original-signed-162-native-field-ids.test.mjs'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  native-source-shape:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Apply pinned original Signed162 and audited original 81-cover corrections
+        run: |
+          set -euo pipefail
+          echo 'd23a2ac3b56412f176c3f86a7303a623fe07931453aff0e55ddf1730e34ee312  research-ide/mathscope-m3/staged-patches-20261023/PR30_Cumulative_Signed162_Cor85_TemporalFrontier.patch' | sha256sum --check
+          git apply --check research-ide/mathscope-m3/staged-patches-20261023/PR30_Cumulative_Signed162_Cor85_TemporalFrontier.patch
+          git apply research-ide/mathscope-m3/staged-patches-20261023/PR30_Cumulative_Signed162_Cor85_TemporalFrontier.patch
+          git apply research-ide/mathscope-m3/temporal-finite-20261023/PR30_Cor85_SameSeal_NoDuplicate.patch
+          git apply research-ide/mathscope-m3/temporal-finite-20261023/PR30_Audit_Real81Cover_String_Flatness.patch
+          git apply --check research-ide/mathscope-m3/actual-audit-fix-20261023/PR30_NativeCoupledField_Handle_And_ClonedGuard.patch
+          git apply research-ide/mathscope-m3/actual-audit-fix-20261023/PR30_NativeCoupledField_Handle_And_ClonedGuard.patch
+          git apply research-ide/mathscope-m3/pin-test-hotfix-20261023/PR30_RealCheckout_PinTest_EnvPortable.patch
+          cp research-ide/mathscope-m3/tangency-proof-20261023/generic-signed-source-kernel.fixed.mjs research-ide/mathscope-m3/navier/generic-signed-source-kernel.mjs
+          cp research-ide/mathscope-m3/tangency-proof-20261023/signed-source-frame-tangency.mjs research-ide/mathscope-m3/navier/signed-source-frame-tangency.mjs
+          cp research-ide/mathscope-m3/tangency-proof-20261023/signed-source-frame-tangency.test.mjs research-ide/mathscope-m3/tests/signed-source-frame-tangency.test.mjs
+          node --check research-ide/mathscope-m3/navier/source-signed-162-successor-audit.mjs
+          node --input-type=module -e "import {verifyPR30OriginalSourceFiles} from './research-ide/mathscope-m3/navier/source-signed-162-pr30-pins.mjs';let x=await verifyPR30OriginalSourceFiles();if(x.verifiedFiles.length!==29)process.exit(2);console.log('29_ORIGINAL_SOURCE_GIT_BLOBS_VERIFIED')"
+      - name: Execute authentic checkout 8 native-handle mutation tests and full Signed regression
+        run: |
+          set -euo pipefail
+          node --test --test-reporter=tap --test-concurrency=1 research-ide/mathscope-m3/tests/*.test.mjs 2>&1 | tee "$RUNNER_TEMP/native-registry-81cover-signed162.tap"
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: original-signed162-native-string-registry-guard-provenance
+          path: ${{ runner.temp }}/native-registry-81cover-signed162.tap
+          if-no-files-found: warn
+          retention-days: 30
