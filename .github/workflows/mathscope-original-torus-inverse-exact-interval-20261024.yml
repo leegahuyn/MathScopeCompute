@@ -5,6 +5,8 @@ on:
     paths:
       - 'research-ide/mathscope-m3/closure-evidence-20261023/original_torus_fourier_interval.py'
       - 'research-ide/mathscope-m3/closure-evidence-20261023/test_original_torus_fourier_interval.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/paper_eq820_torus_mean_update.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/test_paper_eq820_torus_mean_update.py'
       - '.github/workflows/mathscope-original-torus-inverse-exact-interval-20261024.yml'
   workflow_dispatch:
 jobs:
@@ -21,4 +23,4 @@ jobs:
       - name: Verify Eq 8.19 finite mode enclosures and four-derivative conditional tail
         run: |
           cd research-ide/mathscope-m3/closure-evidence-20261023
-          python -m unittest -v test_original_torus_fourier_interval
+          python -m unittest -v test_original_torus_fourier_interval test_paper_eq820_torus_mean_update
