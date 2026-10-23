@@ -40,7 +40,11 @@ export function loadOriginalExtendedNativeRegistry(snapshot,{runtimeCovarianceSy
  };
  if(globals.expressions.length!==base.expressionCount||
     globals.indexed.length!==base.m3GlobalFieldCount||
-    globals.pulses.length!==base.m3GlobalPulseCount)bad('original base source registry counts changed');
+    globals.pulses.length!==base.m3GlobalPulseCount||
+    globals.quadratic.length!==base.quadraticCount||
+    globals.monotone.length!==base.monotoneCount||
+    globals.picard.length!==base.picardCount)
+    bad('Original implicit and global function registry counts changed');
  if(runtimeCovarianceSystems!==null){
    array(runtimeCovarianceSystems,'source covariance');
    for(const d of runtimeCovarianceSystems){
@@ -152,6 +156,26 @@ export function nativeSemanticDefinitionEdges(node,r){
   const f=at(r.globals.indexed,args[0],'global.indexed');
   return {kind:'global_indexed',bodyRoots:sourceFieldRoots(f,r),resolved:true,
     differentiationSemanticsVerified:false};
+ }
+ if(op==='actual_quadratic_root'){
+  const d=at(r.globals.quadratic,args[0],'actual.contracting.quadratic');
+  if(!Array.isArray(d.rhs)||!Array.isArray(d.linear)||!Array.isArray(d.quadraticDiagonal))
+    bad('Quadratic root original RHS, linear and quadratic coefficient bodies missing');
+  return {kind:'actual_implicit_quadratic_root',resolved:true,
+    bodyRoots:rooted(d.rhs,d.linear,d.quadraticDiagonal,d.scale),
+    nonlinear_root_iteration_and_contraction_bounds_proved:false};
+ }
+ if(op==='actual_monotone_root'){
+  const d=at(r.globals.monotone,args[0],'actual.monotone.root');
+  return {kind:'actual_implicit_monotone_root',resolved:true,
+    bodyRoots:rooted(d.variable,d.parameters,d.body,d.left,d.right,d.derivativeLower,d.derivativeUpper),
+    source_monotonicity_and_iteration_error_proved:false};
+ }
+ if(op==='actual_background_even_profile'){
+  const d=at(r.globals.picard,args[0],'actual.even.picard');
+  return {kind:'actual_background_even_picard',resolved:true,
+    bodyRoots:rooted(d.xi,d.eta,d.A0,d.A1,d.forcing),
+    even_radial_axis_and_all_derivative_estimates_proved:false};
  }
  if(op==='actual_background_picard'){
   const f=at(r.globals.picard,args[0],'global.picard');
