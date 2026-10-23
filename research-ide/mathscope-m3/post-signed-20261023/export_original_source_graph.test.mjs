@@ -32,3 +32,34 @@ test('reject source graphs lacking native definitions',async()=>{
  try{await assert.rejects(()=>exportOriginalSourceGraph({nodes},{...settings,dir}),{code:'MISSING_SOURCE_FUNCTION_DEFINITIONS'});}
  finally{await fs.rm(dir,{recursive:true,force:true})}
 });
+test('complete extended source owner captures auxiliary coupled forced defining bodies',async()=>{
+ const dir=await fs.mkdtemp(path.join(os.tmpdir(),'ms-extended-snap-'));
+ try{
+  const extended={nodes:G.nodes,captureFunctionDefinitions:()=>({
+    base:{native_source:'toy'},counts:[1,0,1,0,0],
+    definitions:JSON.stringify([[{id:'coupled-expression:0',body:1}],[],
+      [{id:'coupled-inverse:0',body:2}],[],[]])})};
+  const r=await exportOriginalSourceGraph(G,{...settings,dir,definitionGraph:extended});
+  assert.equal(r.function_registry_capture_kind,'EXTENDED_COUPLED_FACADE');
+  assert.equal(r.extended_coupled_registry_included,true);
+  assert.deepEqual(r.extended_coupled_function_counts,[1,0,1,0,0]);
+  const x=JSON.parse(await fs.readFile(path.join(dir,'original-source-functions.json'),'utf8'));
+  assert.equal(JSON.parse(x.definitions)[2][0].body,2);
+ }finally{await fs.rm(dir,{recursive:true,force:true})}
+});
+test('extended owner missing exact coupled native definitions is rejected',async()=>{
+ const dir=await fs.mkdtemp(path.join(os.tmpdir(),'ms-invalid-owner-'));
+ try{
+  const missing={nodes:G.nodes,captureFunctionDefinitions:()=>({base:{}})};
+  await assert.rejects(()=>exportOriginalSourceGraph(G,{...settings,dir,definitionGraph:missing}),
+    {code:'MISSING_COUPLED_NATIVE_DEFINITIONS'});
+ }finally{await fs.rm(dir,{recursive:true,force:true})}
+});
+test('extended owner whose graph is not identical original source graph rejected',async()=>{
+ const dir=await fs.mkdtemp(path.join(os.tmpdir(),'ms-other-graph-'));
+ try{
+  const unrelated={nodes:[...G.nodes],captureFunctionDefinitions:()=>({base:{},counts:[0,0,0,0,0],definitions:'[[],[],[],[],[]]'})};
+  await assert.rejects(()=>exportOriginalSourceGraph(G,{...settings,dir,definitionGraph:unrelated}),
+    {code:'WRONG_SOURCE_DEFINITION_OWNER'});
+ }finally{await fs.rm(dir,{recursive:true,force:true})}
+});
