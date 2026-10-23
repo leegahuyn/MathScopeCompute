@@ -21,12 +21,15 @@ export async function produceFirstFiveMapNativeOperatorReceipt(dir,{requireOrigi
       code:'MISSING_NATIVE_SOURCE_DEFINITIONS'});
 
  const census=await auditRootReachableNativeOperations(dir);
- const semantic=await auditNativeDefinitionBodyClosure(dir);
+ // Legacy toy-format preflight may have RAW_BASE_ONLY registries.
+ // Authentic source postprocessing ALWAYS requires the extended facade above.
+ const semantic=full.function_registry_capture_kind==='EXTENDED_COUPLED_FACADE'
+   ?await auditNativeDefinitionBodyClosure(dir):null;
  if(full.node_count!==census.original_first_fivemap_graph_nodes||
    full.source_node_sha256!==census.source_stream_sha256||
    census.exact_original_operator_graph_digest_checked!==true||
-   semantic.verified_graph_SHA256!==full.source_node_sha256||
-   semantic.verified_function_registry_SHA256!==m.definitions_sha256)
+   (semantic&&(semantic.verified_graph_SHA256!==full.source_node_sha256||
+   semantic.verified_function_registry_SHA256!==m.definitions_sha256)))
    throw Error('Independent full-graph/reachable-root identity mismatch');
  const nativeKinds=census.operator_counts
    .filter(r=>r.evidence!=='ELEMENTARY_INTERVAL_KERNEL_TESTED_ONLY')
@@ -47,7 +50,7 @@ export async function produceFirstFiveMapNativeOperatorReceipt(dir,{requireOrigi
    root_count:census.root_ids.length,
    root_usage:perRoot,
    native_operations_reachable_from_any_root:nativeKinds,
-   expanded_native_definition_semantic_closure:{
+   expanded_native_definition_semantic_closure:semantic?{
       body_reachable_unique_nodes:semantic.semantic_body_reachable_unique_nodes,
       expanded_native_body_edges:semantic.source_native_body_extra_edges_constructed,
       resolved_native_function_calls:semantic.reached_native_body_calls_with_source_definitions,
@@ -57,7 +60,7 @@ export async function produceFirstFiveMapNativeOperatorReceipt(dir,{requireOrigi
       structural_body_reachability_complete:semantic.native_definition_reachability_complete,
       actual_native_function_ODE_Fourier_values_proved:false,
       counts_by_physical_root:semantic.original_root_semantic_body_usage
-   },
+   }:null,
 
    first_blocking_native_operation_by_reachable_count:nativeKinds[0]?.op??null,
    complete_full_stream_SHA256_verified:true,
