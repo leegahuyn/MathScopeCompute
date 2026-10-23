@@ -1,0 +1,88 @@
+name: M3 process completed original source graph artifact without repeating expensive original run
+on:
+  workflow_dispatch:
+    inputs:
+      original_run_id:
+        description: Completed trusted source replay Actions run ID
+        type: string
+        required: true
+        default: '39977528137'
+permissions:
+  contents: read
+  actions: read
+jobs:
+  validate-and-count-original-reachable-kernels:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 95
+    env:
+      GH_TOKEN: ${{ github.token }}
+      SOURCE_RUN_ID: ${{ inputs.original_run_id }}
+      NODE_OPTIONS: --max-old-space-size=5200
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Require completed authentic audit-branch original source run
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$SOURCE_RUN_ID" =~ ^[0-9]+$ ]]
+          gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${SOURCE_RUN_ID}" > "$RUNNER_TEMP/original-source-run-metadata.json"
+          node --input-type=module - <<'NODE'
+          import {readFileSync} from 'node:fs';
+          const x=JSON.parse(readFileSync(process.env.RUNNER_TEMP+'/original-source-run-metadata.json'));
+          for(const [key,val] of Object.entries({
+            id:Number(process.env.SOURCE_RUN_ID),
+            status:'completed',
+            conclusion:'success',
+            head_branch:'mathscope-m3m4-evidence-gates-20261023',
+            head_sha:'91e4326ac601af6dcd207061f26cf01a0901004b',
+            event:'push'
+          }))if(x[key]!==val)throw Error('SOURCE_ARCHIVE_RUN_AUTHENTICITY_FAILED '+key);
+          if(x.head_repository?.full_name!==process.env.GITHUB_REPOSITORY)
+            throw Error('SOURCE_ARCHIVE_UNTRUSTED_REPOSITORY');
+          console.log('PINNED_COMPLETED_ORIGINAL_SOURCE_RUN_VERIFIED');
+          NODE
+      - name: Download finished original full DAG and sealed function definitions
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/original-source-downloaded"
+          gh run download "$SOURCE_RUN_ID" --repo "$GITHUB_REPOSITORY" \
+            --name authenticated-first-fivemap-full-source-dag-replay-not-final-67 \
+            --dir "$RUNNER_TEMP/original-source-downloaded"
+          manifest="$(find "$RUNNER_TEMP/original-source-downloaded" -type f -name original-source-export-manifest.json -print -quit)"
+          test -n "$manifest"
+          archive="$(dirname "$manifest")"
+          printf '%s\n' "$archive" > "$RUNNER_TEMP/original-source-archive-path.txt"
+          test -s "$archive/original-source-nodes.jsonl.gz"
+          test -s "$archive/original-source-functions.json"
+      - name: Independently hash and classify each original 3D physical and residual root
+        shell: bash
+        run: |
+          set -euo pipefail
+          dir="$(cat "$RUNNER_TEMP/original-source-archive-path.txt")"
+          node research-ide/mathscope-m3/post-signed-20261023/postprocess_original_full_graph.mjs \
+            "$dir" "$RUNNER_TEMP/first-fivemap-physical-root-native-operator-receipt.json"
+          node --input-type=module - <<'NODE'
+          import {readFileSync} from 'node:fs';
+          const a=JSON.parse(readFileSync(process.env.RUNNER_TEMP+'/first-fivemap-physical-root-native-operator-receipt.json'));
+          if(!a.complete_full_stream_SHA256_verified||!a.captured_source_definitions_bytes_SHA256_verified||
+            a.root_count!==11||a.actual_original_final_67_jet_interval_count!==0||
+            a.release!=='HOLD')throw Error('ACTUAL_SOURCE_PROOF_SCOPE_UNSAFE');
+          console.log(JSON.stringify({originalNodes:a.source_node_count,
+            rootCount:a.root_count,firstNative:a.first_blocking_native_operation_by_reachable_count,
+            distinctNative:a.native_operations_reachable_from_any_root.length,final67:0}));
+          NODE
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: source-archive-physical-root-ode-volterra-fourier-counts-not-final67
+          path: |
+            ${{ runner.temp }}/first-fivemap-physical-root-native-operator-receipt.json
+            ${{ runner.temp }}/original-source-run-metadata.json
+          if-no-files-found: warn
+          retention-days: 30
