@@ -9,6 +9,7 @@ on:
       - 'research-ide/mathscope-m3/post-signed-20261023/audit_original_native_semantic_closure.mjs'
       - 'research-ide/mathscope-m3/closure-evidence-20261023/audit_original_56_Y_eta_domain.py'
       - 'research-ide/mathscope-m3/closure-evidence-20261023/prove_original_n3_Q_rho_signs.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/prove_original_n3_t1_natural_domain.py'
   workflow_dispatch:
     inputs:
       original_run_id:
@@ -108,6 +109,7 @@ jobs:
           p=os.environ['RUNNER_TEMP']+'/real-56-source-Y-eta-domain-rewrite-receipt.json'
           x=json.load(open(p))
           assert x['unique_Y_eta_pairs']==56 and x['natural_calls']==523
+          assert x['original_source_Y_interval_0_to_5_algebraically_certified_calls']>=33
           assert x['final_original_67_jets_certified']==0
           assert x['release']=='HOLD'
           print('SHA_PINNED_REAL56_CERTIFICATION_SCOPE_CHECKED')
