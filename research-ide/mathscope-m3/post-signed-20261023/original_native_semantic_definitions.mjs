@@ -13,7 +13,7 @@ const indexed=(id,prefix,rows)=>{
  if(row.id!==id)bad(prefix+' id in native registry does not match '+id);
  return row;
 };
-export function loadOriginalExtendedNativeRegistry(snapshot){
+export function loadOriginalExtendedNativeRegistry(snapshot,{runtimeCovarianceSystems=null}={}){
  if(!snapshot||!snapshot.base||!Array.isArray(snapshot.counts)||snapshot.counts.length!==5)
     bad('full coupled facade snapshot absent');
  const coupled=decode(snapshot.definitions,'coupled');
@@ -41,7 +41,17 @@ export function loadOriginalExtendedNativeRegistry(snapshot){
  if(globals.expressions.length!==base.expressionCount||
     globals.indexed.length!==base.m3GlobalFieldCount||
     globals.pulses.length!==base.m3GlobalPulseCount)bad('original base source registry counts changed');
- return {coupled,aux,globals,
+ if(runtimeCovarianceSystems!==null){
+   array(runtimeCovarianceSystems,'source covariance');
+   for(const d of runtimeCovarianceSystems){
+     if(!Number.isSafeInteger(d.variable)||!Array.isArray(d.parameters)||
+        !Array.isArray(d.matrix)||d.matrix.length!==2||
+        d.matrix.some(row=>!Array.isArray(row)||row.length!==2)||
+        !Number.isSafeInteger(d.normUpper)||!Number.isSafeInteger(d.length))
+       bad('Original actual covariance runtime system lacks matrix, norm and interval roots');
+   }
+ }
+ return {coupled,aux,globals,covariance:runtimeCovarianceSystems,
    counts:{coupled:snapshot.counts,auxiliary:[aux.expressions.length,aux.fields.length,aux.inverses.length],
        baseExpressions:globals.expressions.length,baseIndexed:globals.indexed.length,basePulse:globals.pulses.length}};
 }
@@ -148,8 +158,13 @@ export function nativeSemanticDefinitionEdges(node,r){
   return {kind:'background_picard',bodyRoots:rooted(f.xi,f.eta,f.A0,f.A1,f.forcing),resolved:true,
     analyticODEProofVerified:false};
  }
- if(op==='actual_covariance_volterra')
-  return {kind:'source_covariance_volterra',bodyRoots:[],resolved:false,
-    blocker:'Original covariance system body must be extracted from complete native provenance; do not assume its matrix is in the graph child args'};
+ if(op==='actual_covariance_volterra'){
+  if(!r.covariance)return {kind:'source_covariance_volterra',bodyRoots:[],resolved:false,
+    blocker:'Missing separately captured actual covarianceSystems source registry'};
+  const d=at(r.covariance,args[0],'actual.covariance.volterra');
+  return {kind:'source_covariance_volterra',resolved:true,
+    bodyRoots:rooted(d.variable,d.parameters,d.matrix,d.normUpper,d.length,d.initial),
+    matrixCoefficientBoundsAndTailVerified:false};
+ }
  return null;
 }
