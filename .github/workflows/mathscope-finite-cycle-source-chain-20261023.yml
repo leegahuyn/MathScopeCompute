@@ -1,0 +1,22 @@
+name: MathScope finite A-D chain evidence gate
+on:
+  push:
+    branches: [mathscope-m3m4-evidence-gates-20261023]
+    paths:
+      - 'research-ide/mathscope-m3/post-signed-20261023/finite_cycle_all_order_gate.py'
+      - 'research-ide/mathscope-m3/post-signed-20261023/test_finite_cycle_all_order_gate.py'
+      - '.github/workflows/mathscope-finite-cycle-source-chain-20261023.yml'
+  workflow_dispatch:
+jobs:
+  finite-source-chain:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Seven negative controls for A-D source-bound finite chain
+        run: |
+          cd research-ide/mathscope-m3/post-signed-20261023
+          python -m unittest -v test_finite_cycle_all_order_gate
