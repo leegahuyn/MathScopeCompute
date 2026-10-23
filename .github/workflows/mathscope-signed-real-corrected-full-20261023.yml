@@ -1,4 +1,4 @@
-name: M3 authentic Signed162 with corrected native field IDs and full downstream source AST
+name: M3 authentic Signed162 and exact Temporal to fixed original FiveMap source
 on:
   push:
     branches: [mathscope-m3m4-evidence-gates-20261023]
@@ -41,6 +41,8 @@ jobs:
           node --check research-ide/mathscope-m3/navier/source-signed-162-successor-audit.mjs
           node --check research-ide/mathscope-m3/post-signed-20261023/source-signed-actual-temporal-inverse.mjs
           node --check research-ide/mathscope-m3/post-signed-20261023/source-signed-actual-five-map.mjs
+          grep -F 'band,template,bump:b,updated:signedUpdated' research-ide/mathscope-m3/post-signed-20261023/source-signed-actual-five-map.mjs
+          grep -F 'divergence=G.add(De(rawDeltaBeta,1),Dz(gammaDesired))' research-ide/mathscope-m3/post-signed-20261023/source-signed-actual-five-map.mjs
           node --test --test-reporter=tap research-ide/mathscope-m3/tests/original-signed-162-native-field-ids.test.mjs | tee "$RUNNER_TEMP/native-preflight.tap"
       - name: Execute authentic full initial -> Forced -> Cor85 -> Signed162 -> finite + exact Temporal -> FiveMap
         run: |
