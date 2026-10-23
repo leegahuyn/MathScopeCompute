@@ -1,0 +1,45 @@
+name: M3 real original Forced Cor85 Signed162 bounded execution
+on:
+  push:
+    branches:
+      - mathscope-m3m4-evidence-gates-20261023
+    paths:
+      - '.github/workflows/mathscope-original-forced-cor85-signed162-20261023.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  authentic-original-source-signed162:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    env:
+      NODE_OPTIONS: --max-old-space-size=5200
+      M3_MAX_MINUTES: '29'
+      M3_MAX_RSS_GB: '6'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Bind precise source patches and assert full 29-file authentic PR30 identity
+        run: |
+          set -o pipefail
+          echo 'd23a2ac3b56412f176c3f86a7303a623fe07931453aff0e55ddf1730e34ee312  research-ide/mathscope-m3/staged-patches-20261023/PR30_Cumulative_Signed162_Cor85_TemporalFrontier.patch' | sha256sum --check
+          echo '5f225deef9418ce3b50d8791ed40524e4202873148c953c36fa66f19d74f7f92  research-ide/mathscope-m3/pin-test-hotfix-20261023/PR30_RealCheckout_PinTest_EnvPortable.patch' | sha256sum --check
+          git apply --check research-ide/mathscope-m3/staged-patches-20261023/PR30_Cumulative_Signed162_Cor85_TemporalFrontier.patch
+          git apply research-ide/mathscope-m3/staged-patches-20261023/PR30_Cumulative_Signed162_Cor85_TemporalFrontier.patch
+          git apply --check research-ide/mathscope-m3/pin-test-hotfix-20261023/PR30_RealCheckout_PinTest_EnvPortable.patch
+          git apply research-ide/mathscope-m3/pin-test-hotfix-20261023/PR30_RealCheckout_PinTest_EnvPortable.patch
+          node --input-type=module -e "import {verifyPR30OriginalSourceFiles} from './research-ide/mathscope-m3/navier/source-signed-162-pr30-pins.mjs'; const x=await verifyPR30OriginalSourceFiles(); if(x.verifiedFiles.length!==29)process.exit(2); console.log('AUTHENTIC_29_ORIGINAL_BLOBS_PASS')"
+      - name: Run authentic full original pipeline then source-bound Signed162
+        run: |
+          timeout -s TERM 1860s node --expose-gc research-ide/mathscope-m3/extended-signed-run-20261023/run_real_original_signed162.mjs "$RUNNER_TEMP/m3-real-signed162-attempt.json"
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mathscope-authentic-pr30-forced-cor85-signed162-evidence
+          path: ${{ runner.temp }}/m3-real-signed162-attempt.json
+          if-no-files-found: warn
+          retention-days: 14
