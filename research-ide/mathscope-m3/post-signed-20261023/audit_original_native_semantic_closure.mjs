@@ -39,12 +39,15 @@ export async function auditNativeDefinitionBodyClosure(dir,{maxNodes=5000000,max
    opIds=new Uint16Array(count),opNames=[],opIndex=new Map();
  const bodyByNode=new Map(),missingByNode=new Map(),cachedNativeDefinitions=new Map(),cacheKeyByNode=new Map();
  const naturalSeriesByNode=new Map();
+ const earlyOriginalSourceNodes=[];
+ const EARLY_Y_INSPECTION_LIMIT=70000;
  let n=0,header=false,bodyEdges=0;
  const lines=readline.createInterface({input:createReadStream(path.join(dir,'original-source-nodes.jsonl.gz')).pipe(createGunzip()),crlfDelay:Infinity});
  for await(const line of lines){
    const item=JSON.parse(line);
    if(!header){header=true;if(item.node_count!==count)halt('Original native graph header mismatch');continue}
    if(n>=count)halt('Too many original nodes');
+   if(n<EARLY_Y_INSPECTION_LIMIT)earlyOriginalSourceNodes[n]=item;
    for(const child of exactOriginalSourceNodeChildren(item)){
      if(!Number.isSafeInteger(child)||child<0||child>=n)
        halt('Non-topological syntactic source child '+child+' of node '+n);
@@ -103,7 +106,7 @@ export async function auditNativeDefinitionBodyClosure(dir,{maxNodes=5000000,max
    if(++work>count*17)halt('Excessive semantic graph propagation');
  }
  const naturalComponents=Object.create(null),naturalOrders=Object.create(null),
-       naturalArgumentPairs=new Set();
+       naturalArgumentPairs=new Map();
  const union=Object.create(null),perRoot=roots.map(()=>Object.create(null)),
    missing=Object.create(null),byKind=Object.create(null),reachedDefinitionKeys=new Set();
  let reachable=0,expandedNativeCalls=0,unresolvedCalls=0,reachedUniqueBodyEdges=0;
@@ -117,7 +120,15 @@ export async function auditNativeDefinitionBodyClosure(dir,{maxNodes=5000000,max
      naturalComponents[a.component]=(naturalComponents[a.component]??0)+1;
      const key=a.radialOrder+','+a.etaOrder;
      naturalOrders[key]=(naturalOrders[key]??0)+1;
-     naturalArgumentPairs.add(a.Y+','+a.eta);
+     const pairKey=a.Y+','+a.eta;
+     if(!naturalArgumentPairs.has(pairKey))
+       naturalArgumentPairs.set(pairKey,{Y_node_id:a.Y,eta_node_id:a.eta,
+          source_call_nodes:0,component_counts:Object.create(null),
+          derivative_orders:Object.create(null)});
+     const pair=naturalArgumentPairs.get(pairKey);
+     pair.source_call_nodes++;
+     pair.component_counts[a.component]=(pair.component_counts[a.component]??0)+1;
+     pair.derivative_orders[key]=(pair.derivative_orders[key]??0)+1;
    }
    union[op]=(union[op]??0)+1;
    for(let j=0;j<roots.length;j++)if(bits&(1<<j))
@@ -167,6 +178,34 @@ export async function auditNativeDefinitionBodyClosure(dir,{maxNodes=5000000,max
    reached_native_body_categories:byKind,
    unresolved_native_semantic_blockers:format(missing),
    original_reachable_natural_series_source_profile:{
+     original_56_input_pairs:[...naturalArgumentPairs.values()].map(pair=>{
+       const Y=earlyOriginalSourceNodes[pair.Y_node_id],
+             eta=earlyOriginalSourceNodes[pair.eta_node_id];
+       if(!Y||!eta)halt('Original Y/eta argument exceeds preserved source shape cache');
+       let actualOriginalYUpper5Proved=false,actualOriginalYExactValue=null;
+       if(Y.op==='rational'&&Y.args.length===2){
+         const numerator=BigInt(Y.args[0]),denominator=BigInt(Y.args[1]);
+         if(denominator===0n)halt('Actual source Y rational denominator zero');
+         actualOriginalYUpper5Proved=denominator>0n?
+           numerator>=0n&&numerator<=5n*denominator:
+           numerator<=0n&&numerator>=5n*denominator;
+         actualOriginalYExactValue=Y.args.join('/');
+       }
+       return {...pair,Y_source_node:{op:Y.op,args:Y.args},
+         eta_source_node:{op:eta.op,args:eta.args},
+         source_Y_bound_0_to_5_proved_by_AST:actualOriginalYUpper5Proved,
+         source_Y_exact_rational:actualOriginalYExactValue,
+         eta_common_complex_domain_proved:false,
+         component_calls_total:Object.values(pair.component_counts).reduce((a,b)=>a+b,0)};
+     }).sort((a,b)=>b.source_call_nodes-a.source_call_nodes||a.Y_node_id-b.Y_node_id),
+     direct_exact_Y_upper5_source_call_count:[...naturalArgumentPairs.values()].reduce((total,pair)=>{
+       const Y=earlyOriginalSourceNodes[pair.Y_node_id];
+       if(!Y||Y.op!=='rational')return total;
+       const n=BigInt(Y.args[0]),d=BigInt(Y.args[1]);
+       if(d===0n)halt('Original source rational zero denominator');
+       return total+((d>0n?n>=0n&&n<=5n*d:n<=0n&&n>=5n*d)?pair.source_call_nodes:0);
+     },0),
+     source_input_provenance:'FIRST_FIVEMAP_ARCHIVE_SHA_BOUND_Y_COORDINATE_SHAPES_NOT_FINAL_A_b_p',
      total_reachable_calls:Object.values(naturalComponents).reduce((a,b)=>a+b,0),
      counts_by_component:naturalComponents,
      derivative_orders:Object.entries(naturalOrders).sort((a,b)=>b[1]-a[1])
