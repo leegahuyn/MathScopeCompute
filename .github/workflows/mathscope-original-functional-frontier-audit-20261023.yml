@@ -1,0 +1,37 @@
+name: MathScope pinned original 117-node proof frontier audit
+on:
+  push:
+    branches: [mathscope-m3m4-evidence-gates-20261023]
+    paths:
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/audit_original_functional_proof_frontier.py'
+      - '.github/workflows/mathscope-original-functional-frontier-audit-20261023.yml'
+  workflow_dispatch:
+jobs:
+  source-receipt:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify original pinned DAG and five negative mutation controls
+        run: |
+          python research-ide/mathscope-m3/closure-evidence-20261023/audit_original_functional_proof_frontier.py --self-test --out original-functional-frontier-receipt.json
+          python - <<'PY'
+          import json
+          q=json.load(open('original-functional-frontier-receipt.json'))
+          assert q['source_function_nodes']==117
+          assert q['finite_cycle_descriptions']==5
+          assert q['source_private_cycles_authenticated_here']==0
+          assert q['real_final_67_closed_intervals_certified']==0
+          assert q['mutation_controls_passed']==5
+          assert q['release']=='HOLD'
+          print('PINNED_ORIGINAL_FUNCTIONAL_DAG_NEGATIVE_CONTROLS_PASS')
+          PY
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pinned-original-functional-proof-frontier-not-global-theorem
+          path: original-functional-frontier-receipt.json
+          retention-days: 30
