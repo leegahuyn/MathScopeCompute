@@ -24,10 +24,10 @@ export function attachActualPostSignedFiveMap(temporal,context={}){
   if(assertActualPostSignedTemporalInverse(temporal)!==true)
     fail('MISSING_NEW_POST_SIGNED_TEMPORAL','Require actual Signed successor and new exact temporal AST.');
   const signed=temporal.frontier.signed,G=temporal.G,
-    {originalPressure:pressure,band,bump:b,updated}=resolveOriginalPostSignedSourceShape(signed),
+    {originalPressure:pressure,band,bump:b,updated:signedUpdated}=resolveOriginalPostSignedSourceShape(signed),
     geometry=pressure.geometry,{R,Z,T,Y,epsilon}=geometry,
     source=temporal.postTemporal.updatedMeanPressure,previous=temporal.postTemporal.velocity,
-    covariance=updated.updatedCovariance,
+    covariance=signedUpdated.updatedCovariance,
     stress=pressure.residual.fullOriginalStress,
     background={b:band.fields.b,V:G.mul(R,band.fields.F),G:band.fields.G},
     q=(n,d=1)=>G.q(n,d),power=(x,a)=>G.exp(G.mul(a,G.log(x)));
