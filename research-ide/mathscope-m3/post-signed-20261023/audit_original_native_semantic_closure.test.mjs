@@ -240,3 +240,30 @@ test('global indexed field retains actual physical chart label Q ell grid source
  assert.equal(semantic.kind,'global_indexed');
  assert.deepEqual(semantic.bodyRoots,[1,2,0,6,7,8,9]);
 });
+
+test('crosschecked embedded global pulses recover both actual covariance definitions',()=>{
+ const state=structuredClone(captured);
+ const mk=(id,M)=>({
+   covariance:id,variable:1,parameters:[1],length:2,
+   matrix:M,initial:[1,0],
+   originalDefinition:JSON.stringify({name:'source covariance '+id,
+     variable:1,parameters:[1],matrix:M,initial:[1,0],length:2,normUpper:2})
+ });
+ const pulse0=mk(0,[[0,1],[1,0]]),pulse1=mk(1,[[0,2],[2,0]]);
+ state.base.base.m3GlobalPulses=JSON.stringify([pulse0,pulse1]);
+ state.base.base.m3GlobalPulseCount=2;
+ const registry=loadOriginalExtendedNativeRegistry(state);
+ assert.equal(registry.covarianceProvenance,
+   'EMBEDDED_ORIGINAL_DEFINITION_CROSSCHECKED_NOT_RUNTIME_SHA_VERIFIED');
+ const node={op:'actual_covariance_volterra',args:[1,0,1,[1]]};
+ const def=nativeSemanticDefinitionEdges(node,registry);
+ assert.equal(def.kind,'source_covariance_volterra');
+ assert.deepEqual(def.bodyRoots,[0,1,2]);
+ assert.equal(def.matrixCoefficientBoundsAndTailVerified,false);
+ const mutation=structuredClone(state);
+ const q=JSON.parse(mutation.base.base.m3GlobalPulses);
+ q[1].matrix=[[0,3],[3,0]];
+ mutation.base.base.m3GlobalPulses=JSON.stringify(q);
+ assert.throws(()=>loadOriginalExtendedNativeRegistry(mutation),
+   {code:'NATIVE_REGISTRY_SEMANTIC_GAP'});
+});
