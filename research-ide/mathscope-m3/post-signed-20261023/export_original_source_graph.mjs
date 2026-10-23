@@ -27,7 +27,7 @@ export async function exportOriginalSourceGraph(G,{dir,roots,scope,sourceCommit,
  await fs.mkdir(dir,{recursive:true});
  const compressor=createGzip({level:3}),file=path.join(dir,'original-source-nodes.jsonl.gz');
  const pipe=pipeline(compressor,createWriteStream(file,{flags:'wx'})),digest=createHash('sha256');
- let bytes=0;
+ let bytes=0;const operationHistogram=Object.create(null);
  async function write(item){
    const line=stable(item)+'\n',buf=Buffer.from(line);
    digest.update(buf);bytes+=buf.length;
@@ -39,6 +39,7 @@ export async function exportOriginalSourceGraph(G,{dir,roots,scope,sourceCommit,
      const n=G.nodes[i];
      if(!n||typeof n.op!=='string'||!Array.isArray(n.args))
        fail('INVALID_ORIGINAL_NODE','Missing source graph node '+i);
+     operationHistogram[n.op]=(operationHistogram[n.op]??0)+1;
      await write(n);
    }
    compressor.end();await pipe;
@@ -47,6 +48,7 @@ export async function exportOriginalSourceGraph(G,{dir,roots,scope,sourceCommit,
  const manifest={schema:'MathScope.M3.SourceGraphReplayManifest/1',
    original_pr30_commit:pr30Commit,executing_commit:sourceCommit,
    scope,final_all_cycle_A_b_p:false,node_count:G.nodes.length,
+   operation_histogram:Object.fromEntries(Object.entries(operationHistogram).sort(([a],[b])=>a.localeCompare(b))),
    original_root_ids:[...roots],node_stream_uncompressed_bytes:bytes,
    node_stream_sha256:digest.digest('hex'),
    definitions_sha256:createHash('sha256').update(definitions+'\n').digest('hex'),
