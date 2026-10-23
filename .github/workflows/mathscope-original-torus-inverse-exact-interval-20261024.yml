@@ -1,0 +1,24 @@
+name: MathScope original torus Fourier interval inverse - paper eq 8.19
+on:
+  push:
+    branches: [mathscope-m3m4-evidence-gates-20261023]
+    paths:
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/original_torus_fourier_interval.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/test_original_torus_fourier_interval.py'
+      - '.github/workflows/mathscope-original-torus-inverse-exact-interval-20261024.yml'
+  workflow_dispatch:
+jobs:
+  conditional-original-torus-inverse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify Eq 8.19 finite mode enclosures and four-derivative conditional tail
+        run: |
+          cd research-ide/mathscope-m3/closure-evidence-20261023
+          python -m unittest -v test_original_torus_fourier_interval
