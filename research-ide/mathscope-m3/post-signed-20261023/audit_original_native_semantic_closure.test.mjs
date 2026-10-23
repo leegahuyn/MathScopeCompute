@@ -101,3 +101,22 @@ test('a missing original definition is never replaced with arbitrary node zero',
  const d=nativeSemanticDefinitionEdges(graph.nodes[4],r);
  assert.deepEqual(d.bodyRoots,[999]);
 });
+
+test('indexed localSystem body and retained localBody must be the identical source definition',()=>{
+ const changed=structuredClone(captured);
+ changed.counts[1]=1;
+ const groups=JSON.parse(changed.definitions);
+ const row={localSystem:'coupled-expression:0',localBody:3,
+   coefficient:0,values:[1],localParameters:[1],guards:[],derivativeMaps:[]};
+ groups[1]=[{id:'coupled-field:0',parameters:[1],directions:[1],rows:[row]}];
+ changed.definitions=JSON.stringify(groups);
+ const r=loadOriginalExtendedNativeRegistry(changed);
+ const call={op:'m3_coupled_indexed_partial',args:['coupled-field:0',[1],[0]]};
+ const good=nativeSemanticDefinitionEdges(call,r);
+ assert.equal(good.kind,'coupled_indexed');
+ assert.deepEqual(good.bodyRoots,[1,3,0]);
+ const forged=structuredClone(changed);const invalid=JSON.parse(forged.definitions);
+ invalid[1][0].rows[0].localBody=2;forged.definitions=JSON.stringify(invalid);
+ const s=loadOriginalExtendedNativeRegistry(forged);
+ assert.throws(()=>nativeSemanticDefinitionEdges(call,s),{code:'NATIVE_REGISTRY_SEMANTIC_GAP'});
+});
