@@ -1,0 +1,43 @@
+import {createReadStream,promises as fs} from 'node:fs';
+import {createGunzip} from 'node:zlib';
+import {createHash} from 'node:crypto';
+import readline from 'node:readline';
+import path from 'node:path';
+const fail=s=>{throw Object.assign(Error(s),{code:'UNTRUSTED_SOURCE_REPLAY'})};
+/** Streaming proof-boundary check; native ops inventoried, never evaluated or assigned zero. */
+export async function auditOriginalSourceReplay(dir){
+ const m=JSON.parse(await fs.readFile(path.join(dir,'original-source-export-manifest.json'),'utf8'));
+ if(m.schema!=='MathScope.M3.SourceGraphReplayManifest/1'||
+    m.exact_source_node_stream_preserved!==true||m.final_all_cycle_A_b_p!==false||
+    m.actual_final_67_jets_certified!==0||!Array.isArray(m.original_root_ids))
+   fail('First-FiveMap graph cannot be promoted to final source jets');
+ const defs=await fs.readFile(path.join(dir,'original-source-functions.json'));
+ if(createHash('sha256').update(defs).digest('hex')!==m.definitions_sha256)
+   fail('Native function definitions changed');
+ let n=0,expected=null,bytes=0;const ops={},hash=createHash('sha256');
+ const input=readline.createInterface({input:createReadStream(path.join(dir,'original-source-nodes.jsonl.gz')).pipe(createGunzip()),crlfDelay:Infinity});
+ for await(const line of input){
+   const raw=Buffer.from(line+'\n');hash.update(raw);bytes+=raw.length;
+   const a=JSON.parse(line);
+   if(expected===null){
+     expected=a.node_count;
+     if(a.schema!=='MathScope.M3.FullNodesJSONL/1'||expected!==m.node_count)fail('Invalid original graph header');
+     continue;
+   }
+   if(!a||typeof a.op!=='string'||!Array.isArray(a.args))fail('Malformed node '+n);
+   ops[a.op]=(ops[a.op]??0)+1;n++;if(n>expected)fail('Unexpected appended source nodes');
+ }
+ if(n!==expected||bytes!==m.node_stream_uncompressed_bytes||hash.digest('hex')!==m.node_stream_sha256||
+    !m.original_root_ids.every(x=>Number.isSafeInteger(x)&&x>=0&&x<n))
+   fail('Source graph missing/modified or root IDs unbound');
+ const complicated=Object.entries(ops).filter(([name])=>
+   name.startsWith('m3_')||name.startsWith('actual_')||
+   ['definite_integral','source_step_derivative','smooth_piecewise','source_parameter'].includes(name))
+   .sort((a,b)=>b[1]-a[1]);
+ return {schema:'MathScope.M3.SourceNumericKernelInventory/1',
+   node_count:n,original_root_ids:m.original_root_ids,
+   source_node_sha256:m.node_stream_sha256,
+   operation_histogram:ops,operations_with_nontrivial_numeric_semantics:complicated,
+   first_fivemap_source_serialized:true,final_all_cycle_A_b_p_serialized:false,
+   final_67_numeric_certified:0,release:'HOLD'};
+}
