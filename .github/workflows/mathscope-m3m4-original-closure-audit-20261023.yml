@@ -1,0 +1,53 @@
+name: M3-M4 original source closure evidence (no status promotion)
+on:
+  push:
+    branches:
+      - mathscope-m3m4-evidence-gates-20261023
+    paths:
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/**'
+      - '.github/workflows/mathscope-m3m4-original-closure-audit-20261023.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  acceptance-readonly:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Verify actual M3 64-row and M4 16-row source-pinned acceptance
+        run: python -B research-ide/mathscope-m3/closure-evidence-20261023/audit_original_acceptance.py "$RUNNER_TEMP/m3m4-original-acceptance.json"
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mathscope-m3m4-original-acceptance-audit
+          path: ${{ runner.temp }}/m3m4-original-acceptance.json
+          if-no-files-found: warn
+          retention-days: 14
+  original-source-execution:
+    needs: acceptance-readonly
+    runs-on: ubuntu-24.04
+    timeout-minutes: 19
+    env:
+      NODE_OPTIONS: --max-old-space-size=5200
+      M3_MAX_MINUTES: '15'
+      M3_MAX_RSS_GB: '6'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Source-pinned native original Initialized Angular -> Forced -> Corollary 8.5
+        run: |
+          timeout -s TERM 1050s node --expose-gc research-ide/mathscope-m3/closure-evidence-20261023/run_actual_original_pipeline.mjs "$RUNNER_TEMP/m3-real-source.json"
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mathscope-m3-original-source-progress-and-blockers
+          path: ${{ runner.temp }}/m3-real-source.json
+          if-no-files-found: warn
+          retention-days: 14
