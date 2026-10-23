@@ -7,6 +7,8 @@ on:
       - 'research-ide/mathscope-m3/post-signed-20261023/postprocess_original_full_graph.mjs'
       - 'research-ide/mathscope-m3/post-signed-20261023/original_native_semantic_definitions.mjs'
       - 'research-ide/mathscope-m3/post-signed-20261023/audit_original_native_semantic_closure.mjs'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/audit_original_56_Y_eta_domain.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/prove_original_n3_Q_rho_signs.py'
   workflow_dispatch:
     inputs:
       original_run_id:
@@ -93,6 +95,23 @@ jobs:
             unresolvedNative:a.expanded_native_definition_semantic_closure.unresolved_native_function_calls,
             final67:0}));
           NODE
+      - name: Certify source Y=4 and Lambda*Xa=4 source algebra and enumerate 56 real eta-domain obligations
+        shell: bash
+        run: |
+          set -euo pipefail
+          dir="$(cat "$RUNNER_TEMP/original-source-archive-path.txt")"
+          python research-ide/mathscope-m3/closure-evidence-20261023/audit_original_56_Y_eta_domain.py \
+            "$dir" "$RUNNER_TEMP/first-fivemap-physical-root-native-operator-receipt.json" \
+            "$RUNNER_TEMP/real-56-source-Y-eta-domain-rewrite-receipt.json"
+          python - <<'PY'
+          import json,os
+          p=os.environ['RUNNER_TEMP']+'/real-56-source-Y-eta-domain-rewrite-receipt.json'
+          x=json.load(open(p))
+          assert x['unique_Y_eta_pairs']==56 and x['natural_calls']==523
+          assert x['final_original_67_jets_certified']==0
+          assert x['release']=='HOLD'
+          print('SHA_PINNED_REAL56_CERTIFICATION_SCOPE_CHECKED')
+          PY
       - if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -100,5 +119,6 @@ jobs:
           path: |
             ${{ runner.temp }}/first-fivemap-physical-root-native-operator-receipt.json
             ${{ runner.temp }}/original-source-run-metadata.json
+            ${{ runner.temp }}/real-56-source-Y-eta-domain-rewrite-receipt.json
           if-no-files-found: warn
           retention-days: 30
