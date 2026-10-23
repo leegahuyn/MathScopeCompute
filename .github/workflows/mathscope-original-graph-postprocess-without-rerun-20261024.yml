@@ -70,12 +70,21 @@ jobs:
           node --input-type=module - <<'NODE'
           import {readFileSync} from 'node:fs';
           const a=JSON.parse(readFileSync(process.env.RUNNER_TEMP+'/first-fivemap-physical-root-native-operator-receipt.json'));
+          if(!a.expanded_native_definition_semantic_closure||
+            !Number.isSafeInteger(a.expanded_native_definition_semantic_closure.body_reachable_unique_nodes)||
+            a.expanded_native_definition_semantic_closure.actual_native_function_ODE_Fourier_values_proved!==false||
+            !Array.isArray(a.expanded_native_definition_semantic_closure.counts_by_physical_root)||
+            a.expanded_native_definition_semantic_closure.counts_by_physical_root.length!==11)
+            throw Error('EXTENDED_BODY_DEPENDENCY_RECEIPT_REQUIRED');
           if(!a.complete_full_stream_SHA256_verified||!a.captured_source_definitions_bytes_SHA256_verified||
             a.root_count!==11||a.actual_original_final_67_jet_interval_count!==0||
             a.release!=='HOLD')throw Error('ACTUAL_SOURCE_PROOF_SCOPE_UNSAFE');
           console.log(JSON.stringify({originalNodes:a.source_node_count,
             rootCount:a.root_count,firstNative:a.first_blocking_native_operation_by_reachable_count,
-            distinctNative:a.native_operations_reachable_from_any_root.length,final67:0}));
+            distinctNative:a.native_operations_reachable_from_any_root.length,
+            nativeBodyNodes:a.expanded_native_definition_semantic_closure.body_reachable_unique_nodes,
+            unresolvedNative:a.expanded_native_definition_semantic_closure.unresolved_native_function_calls,
+            final67:0}));
           NODE
       - if: always()
         uses: actions/upload-artifact@v4
