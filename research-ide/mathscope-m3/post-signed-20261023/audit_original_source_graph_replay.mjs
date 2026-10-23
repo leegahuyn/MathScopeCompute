@@ -29,6 +29,24 @@ export async function auditOriginalSourceReplay(dir){
      fail('Native function manifest and recorded extended registries differ');
  }
 
+ let covarianceSystemBodiesShaVerified=false,covarianceSystemCount=null;
+ if(m.covariance_runtime_registry_included===true){
+   const cov=await fs.readFile(path.join(dir,'original-source-covariance-systems.json'));
+   if(createHash('sha256').update(cov).digest('hex')!==m.covariance_runtime_registry_sha256)
+     fail('Original runtime covariance system archive SHA256 mismatch');
+   const systems=JSON.parse(cov.toString());
+   if(!Array.isArray(systems)||systems.length!==m.covariance_runtime_registry_count)
+     fail('Original runtime covariance system registry size mismatch');
+   for(const system of systems)
+     if(!Number.isSafeInteger(system.variable)||!Array.isArray(system.parameters)||
+       !Array.isArray(system.matrix)||system.matrix.length!==2||
+       system.matrix.some(row=>!Array.isArray(row)||row.length!==2)||
+       !Number.isSafeInteger(system.normUpper)||!Number.isSafeInteger(system.length))
+        fail('Covariance system lacks original matrix, normUpper or length source roots');
+   covarianceSystemBodiesShaVerified=true;covarianceSystemCount=systems.length;
+ }else if(m.covariance_runtime_registry_included!==false&&
+          m.covariance_runtime_registry_included!==undefined)
+     fail('Malformed runtime covariance evidence flag');
  let n=0,expected=null,bytes=0;const ops={},hash=createHash('sha256');
  const input=readline.createInterface({input:createReadStream(path.join(dir,'original-source-nodes.jsonl.gz')).pipe(createGunzip()),crlfDelay:Infinity});
  for await(const line of input){
@@ -62,6 +80,9 @@ export async function auditOriginalSourceReplay(dir){
    function_registry_capture_kind:m.function_registry_capture_kind??'LEGACY_RAW_BASE_ONLY',
    extended_coupled_registry_sha256_verified:extended,
    native_extended_function_bodies_structurally_present:extended,
+   covariance_runtime_registry_sha256_verified:covarianceSystemBodiesShaVerified,
+   covariance_runtime_registry_system_count:covarianceSystemCount,
+
    actual_native_ODE_Fourier_function_values_evaluated:false,
 
    operation_histogram:canonicalOps,operators_requiring_dedicated_interval_interpreters:requiresDedicatedValidatedNumerics,
