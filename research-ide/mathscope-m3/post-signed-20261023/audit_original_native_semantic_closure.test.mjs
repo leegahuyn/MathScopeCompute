@@ -120,3 +120,24 @@ test('indexed localSystem body and retained localBody must be the identical sour
  const s=loadOriginalExtendedNativeRegistry(forged);
  assert.throws(()=>nativeSemanticDefinitionEdges(call,s),{code:'NATIVE_REGISTRY_SEMANTIC_GAP'});
 });
+
+test('repeated native derivative calls reuse one defining-body expansion',async()=>{
+ const dir=await fs.mkdtemp(path.join(os.tmpdir(),'ms-native-cache-'));
+ try{
+  const duplicated={
+   nodes:[...graph.nodes,
+     {op:'m3_coupled_expression_partial',args:['coupled-expression:0',[1],[2]]},
+     {op:'add',args:[7,9]}],
+   captureFunctionDefinitions:()=>({raw:true})};
+  const owner={nodes:duplicated.nodes,captureFunctionDefinitions:()=>captured};
+  await exportOriginalSourceGraph(duplicated,{
+    dir,definitionGraph:owner,roots:[10],scope:'FIRST_FIVEMAP_TOY',
+    sourceCommit:'toy',pr30Commit:'toy'});
+  const r=await auditNativeDefinitionBodyClosure(dir);
+  assert.equal(r.source_unique_native_definition_keys,3);
+  assert.equal(r.reached_native_body_calls_with_source_definitions,4);
+  assert.equal(r.semantic_body_reachable_unique_nodes,9);
+  assert.equal(r.reached_native_calls_with_unresolved_definitions,0);
+  assert.equal(r.native_source_body_expansion_cache_enabled,true);
+ }finally{await fs.rm(dir,{recursive:true,force:true})}
+});
