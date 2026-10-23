@@ -5,6 +5,8 @@ on:
     paths:
       - 'research-ide/mathscope-m3/closure-evidence-20261023/compile_original_67jet_force_stencil.py'
       - 'research-ide/mathscope-m3/closure-evidence-20261023/test_compile_original_67jet_force_stencil.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/conditional_67jet_force_intervals.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/test_conditional_67jet_force_intervals.py'
       - '.github/workflows/mathscope-67jet-derivative-stencil-20261023.yml'
   workflow_dispatch:
 jobs:
@@ -34,6 +36,11 @@ jobs:
           assert not a['actual_external_force_proved']
           assert a['release']=='HOLD'
           PY
+      - name: Evaluate exact rational conditional physical force and whole-cell enclosure fixtures
+        run: |
+          cd research-ide/mathscope-m3/closure-evidence-20261023
+          python -m unittest -v test_conditional_67jet_force_intervals
+          python conditional_67jet_force_intervals.py
       - uses: actions/upload-artifact@v4
         with:
           name: original67plus13-exact-derivative-stencil-not-actual-numeric-jets
