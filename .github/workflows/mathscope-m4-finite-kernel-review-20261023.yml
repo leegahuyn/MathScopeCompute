@@ -1,0 +1,38 @@
+name: M4 source-pinned finite kernel independent review (not release)
+on:
+  push:
+    branches:
+      - mathscope-m3m4-evidence-gates-20261023
+    paths:
+      - '.github/workflows/mathscope-m4-finite-kernel-review-20261023.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  finite-lean-artifact-and-acceptance:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Execute all 3 M4 source-bound finite kernel/acceptance test modules
+        run: |
+          node --test --test-reporter=tap --test-concurrency=1             research-ide/mathscope-m4/tests/acceptance.test.mjs             research-ide/mathscope-m4/tests/kernel-evidence.test.mjs             research-ide/mathscope-m4/tests/pinned-kernel-contract.test.mjs             2>&1 | tee "$RUNNER_TEMP/m4-kernel-review.tap"
+      - name: Run original 16-criterion acceptance-module reconciliation
+        run: node research-ide/mathscope-m4/acceptance-review-20261019/verify_m4_modules.mjs | tee "$RUNNER_TEMP/m4-original-matrix-review.json"
+      - name: Recheck source-pinned inherited finite proof artifacts
+        run: node research-ide/mathscope-m4/audit-m4.mjs | tee "$RUNNER_TEMP/m4-inherited-artifact-review.json"
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mathscope-m4-independently-executed-finite-gates
+          path: |
+            ${{ runner.temp }}/m4-kernel-review.tap
+            ${{ runner.temp }}/m4-original-matrix-review.json
+            ${{ runner.temp }}/m4-inherited-artifact-review.json
+          if-no-files-found: warn
+          retention-days: 14
