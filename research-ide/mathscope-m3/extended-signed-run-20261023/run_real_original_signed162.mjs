@@ -166,6 +166,10 @@ try{
    const {exportOriginalSourceGraph}=await import('../post-signed-20261023/export_original_source_graph.mjs');
    receipt.stage='SOURCE_GRAPH_REPLAY_EXPORT_FIRST_FIVEMAP_NOT_FINAL_67';save();bound();
    const snapshot=await exportOriginalSourceGraph(G,{
+     // First Forced carries the original SourceCoupledExpressions facade that
+     // owns the actual auxiliary/coupled/forced defining bodies. The raw band.G
+     // shares its nodes but captures only the base/global function registry.
+     definitionGraph:forced.G,
      dir:process.env.M3_SOURCE_GRAPH_EXPORT_DIR,
      roots:[...actualFull3D.velocity.fullPhysicalVelocity,actualFull3D.pressure.fullPhysicalPressure,
        actualFull3D.residual.divergence,...actualFull3D.residual.conservative,
@@ -173,6 +177,9 @@ try{
      scope:'ORIGINAL_FIRST_POST_SIGNED_FIVEMAP_3D_DIRECT_SPLIT_NOT_FINAL_A_b_p',
      sourceCommit:process.env.GITHUB_SHA??'UNKNOWN_LOCAL_RUN',
      pr30Commit:receipt.expected_base_commit});
+   if(snapshot.function_registry_capture_kind!=='EXTENDED_COUPLED_FACADE'||
+      snapshot.extended_coupled_registry_included!==true)
+     throw Error('Original source native function bodies were not archived');
    receipt.first_fivemap_graph_replay_manifest=snapshot;
    receipt.first_fivemap_graph_exported=true;
    receipt.final_67_original_numeric_producer_available=false;save();
