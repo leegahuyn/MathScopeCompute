@@ -1,4 +1,4 @@
-name: M3 authentic Signed162 with corrected source-bound 81 cover and downstream finite temporal
+name: M3 authentic Signed162 with corrected native field IDs and full downstream source AST
 on:
   push:
     branches: [mathscope-m3m4-evidence-gates-20261023]
@@ -30,17 +30,26 @@ jobs:
           git apply research-ide/mathscope-m3/pin-test-hotfix-20261023/PR30_RealCheckout_PinTest_EnvPortable.patch
           git apply research-ide/mathscope-m3/temporal-finite-20261023/PR30_Cor85_SameSeal_NoDuplicate.patch
           git apply research-ide/mathscope-m3/temporal-finite-20261023/PR30_Audit_Real81Cover_String_Flatness.patch
+          git apply --check research-ide/mathscope-m3/actual-audit-fix-20261023/PR30_NativeCoupledField_Handle_And_ClonedGuard.patch
+          git apply research-ide/mathscope-m3/actual-audit-fix-20261023/PR30_NativeCoupledField_Handle_And_ClonedGuard.patch
           cp research-ide/mathscope-m3/tangency-proof-20261023/generic-signed-source-kernel.fixed.mjs research-ide/mathscope-m3/navier/generic-signed-source-kernel.mjs
           cp research-ide/mathscope-m3/tangency-proof-20261023/signed-source-frame-tangency.mjs research-ide/mathscope-m3/navier/signed-source-frame-tangency.mjs
           node --input-type=module -e "import {verifyPR30OriginalSourceFiles} from './research-ide/mathscope-m3/navier/source-signed-162-pr30-pins.mjs'; const x=await verifyPR30OriginalSourceFiles(); if(x.verifiedFiles.length!==29)process.exit(2); console.log('ORIGINAL_29_GIT_BLOBS_VALIDATED')"
-      - name: Execute authentic full initial -> Forced -> Cor85 -> Signed162 -> finite Temporal
+      - name: Verify real source native 81-cover field descriptors, and prepare gated Temporal/FiveMap
+        run: |
+          set -euo pipefail
+          node --check research-ide/mathscope-m3/navier/source-signed-162-successor-audit.mjs
+          node --check research-ide/mathscope-m3/post-signed-20261023/source-signed-actual-temporal-inverse.mjs
+          node --check research-ide/mathscope-m3/post-signed-20261023/source-signed-actual-five-map.mjs
+          node --test --test-reporter=tap research-ide/mathscope-m3/tests/original-signed-162-native-field-ids.test.mjs | tee "$RUNNER_TEMP/native-preflight.tap"
+      - name: Execute authentic full initial -> Forced -> Cor85 -> Signed162 -> finite + exact Temporal -> FiveMap
         run: |
           set -o pipefail
-          timeout -s TERM 4200s node --expose-gc research-ide/mathscope-m3/extended-signed-run-20261023/run_real_original_signed162.mjs "$RUNNER_TEMP/m3-original-signed-temporal-after-cover-correction.json"
+          timeout -s TERM 4200s node --expose-gc research-ide/mathscope-m3/extended-signed-run-20261023/run_real_original_signed162.mjs "$RUNNER_TEMP/m3-original-signed-temporal-five-after-native-field-fix.json"
       - if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: authentic-signed162-real-81cover-and-finite-temporal-checkpoint
+          name: authentic-signed162-real-native-field-and-post-five-checkpoint
           path: ${{ runner.temp }}/m3-original-signed-temporal-after-cover-correction.json
           if-no-files-found: warn
           retention-days: 30
