@@ -1,0 +1,82 @@
+name: MathScope next-chat complete focused source handoff bundle
+on:
+  push:
+    branches: [mathscope-m3m4-evidence-gates-20261023]
+    paths:
+      - '.github/workflows/mathscope-research-handoff-source-bundle-20261023.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source_bundle:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Archive exact current handoff branch working source and acceptance criteria
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          from fnmatch import fnmatch
+          import zipfile,hashlib,json,subprocess
+          root=Path('.')
+          prefixes=[
+            'research-ide/mathscope-m3/post-signed-20261023/',
+            'research-ide/mathscope-m3/closure-evidence-20261023/',
+            'research-ide/mathscope-m3/extended-signed-run-20261023/',
+            'research-ide/mathscope-m3/actual-audit-fix-20261023/',
+            'research-ide/mathscope-m3/pin-test-hotfix-20261023/',
+            'research-ide/mathscope-m3/staged-patches-20261023/',
+            'research-ide/mathscope-m3/tangency-proof-20261023/',
+            'research-ide/mathscope-m3/temporal-finite-20261023/',
+            'research-ide/mathscope-m3/recovery-20261019/',
+            'research-ide/mathscope-m3/navier/tests/',
+            'research-ide/mathscope-m3/cloud/',
+            'research-ide/mathscope-m3/n6-cloud-20261014/',
+            'research-ide/mathscope-m3/n6-continuation-20261014/',
+            'research-ide/mathscope-m3/n6-unconditional-20261014/',
+          ]
+          exact=[
+            'research-ide/mathscope-m3/ORIGINAL_M3_M4_CRITERIA.json',
+            'research-ide/mathscope-m3/gauge/original-criteria.json',
+            'research-ide/mathscope-m3/navier/N8_LITERAL_ACCEPTANCE_REVIEW_2026_10_12.md',
+            'README.md'
+          ]
+          files=[]
+          for p in root.rglob('*'):
+            if not p.is_file() or p.is_symlink() or '.git' in p.parts:continue
+            s=p.as_posix()
+            if (s in exact or
+                any(s.startswith(pre) for pre in prefixes) or
+                (s.startswith('research-ide/mathscope-m3/navier/') and
+                 p.parent.as_posix()=='research-ide/mathscope-m3/navier' and p.suffix in ('.mjs','.js','.py','.md','.json')) or
+                (s.startswith('research-ide/mathscope-m2/navier/') and
+                 p.parent.as_posix()=='research-ide/mathscope-m2/navier' and
+                 p.name.startswith('actual-') and p.suffix=='.mjs') or
+                (s.startswith('.github/workflows/mathscope-') and s.endswith('.yml'))):
+                if p.stat().st_size<=5000000:files.append(p)
+          out=Path('/tmp/mathscope-source-next-chat-20261023.zip')
+          entries=[]
+          head=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()
+          with zipfile.ZipFile(out,'w',zipfile.ZIP_DEFLATED,compresslevel=8) as z:
+            for p in sorted(files):
+              b=p.read_bytes()
+              name=p.as_posix()
+              z.writestr('GITHUB_BRANCH_SNAPSHOT/'+name,b)
+              entries.append({'path':name,'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()})
+            z.writestr('GITHUB_BRANCH_SNAPSHOT/MANIFEST_GIT_BRANCH.json',json.dumps({
+              'repo':'leegahuyn/MathScopeCompute','branch':'mathscope-m3m4-evidence-gates-20261023',
+              'actual_archive_checkout_commit':head,'complete_repository':False,
+              'exclusion':'Original repository >2GB. This focused snapshot contains all latest branch-specific implementation, selected original math source, tests, original criteria, and CI workflows. Live GitHub URL is authoritative for remaining repo paths.',
+              'entries':entries},ensure_ascii=False,indent=2)+'\n')
+          with zipfile.ZipFile(out) as z:assert z.testzip() is None
+          print(json.dumps({'head':head,'file_count':len(files),'snapshot_size_bytes':out.stat().st_size,'manifest_entries':len(entries)}))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mathscope-focused-source-snapshot-20261023
+          path: /tmp/mathscope-source-next-chat-20261023.zip
+          retention-days: 30
+          if-no-files-found: error
