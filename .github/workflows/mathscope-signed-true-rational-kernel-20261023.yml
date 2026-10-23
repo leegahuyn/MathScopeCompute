@@ -1,0 +1,32 @@
+name: M3 signed tangency genuine rational engine isolated verification
+on:
+  push:
+    branches: [mathscope-m3m4-evidence-gates-20261023]
+    paths: ['.github/workflows/mathscope-signed-true-rational-kernel-20261023.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  actual-rational-kernel:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Original source-bound Signed algebra, unmodified rational engine
+        run: |
+          set -euo pipefail
+          git apply research-ide/mathscope-m3/staged-patches-20261023/PR30_Cumulative_Signed162_Cor85_TemporalFrontier.patch
+          cp research-ide/mathscope-m3/tangency-proof-20261023/signed-source-frame-tangency.mjs research-ide/mathscope-m3/navier/signed-source-frame-tangency.mjs
+          node --test --test-reporter=tap research-ide/mathscope-m3/tangency-proof-20261023/original-source-rational-tangency.test.mjs 2>&1 | tee "$RUNNER_TEMP/original-frame-rational-proof.tap"
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: original-signed-frame-rational-checker
+          path: ${{ runner.temp }}/original-frame-rational-proof.tap
+          if-no-files-found: warn
+          retention-days: 30
