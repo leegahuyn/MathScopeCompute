@@ -11,10 +11,10 @@ permissions:
 jobs:
   authentic-original-source-signed162:
     runs-on: ubuntu-24.04
-    timeout-minutes: 35
+    timeout-minutes: 62
     env:
       NODE_OPTIONS: --max-old-space-size=5200
-      M3_MAX_MINUTES: '29'
+      M3_MAX_MINUTES: '54'
       M3_MAX_RSS_GB: '6'
     steps:
       - uses: actions/checkout@v4
@@ -35,7 +35,7 @@ jobs:
           node --input-type=module -e "import {verifyPR30OriginalSourceFiles} from './research-ide/mathscope-m3/navier/source-signed-162-pr30-pins.mjs'; const x=await verifyPR30OriginalSourceFiles(); if(x.verifiedFiles.length!==29)process.exit(2); console.log('AUTHENTIC_29_ORIGINAL_BLOBS_PASS')"
       - name: Run authentic full original pipeline then source-bound Signed162
         run: |
-          timeout -s TERM 1860s node --expose-gc research-ide/mathscope-m3/extended-signed-run-20261023/run_real_original_signed162.mjs "$RUNNER_TEMP/m3-real-signed162-attempt.json"
+          timeout -s TERM 3360s node --expose-gc research-ide/mathscope-m3/extended-signed-run-20261023/run_real_original_signed162.mjs "$RUNNER_TEMP/m3-real-signed162-attempt.json"
       - if: always()
         uses: actions/upload-artifact@v4
         with:
