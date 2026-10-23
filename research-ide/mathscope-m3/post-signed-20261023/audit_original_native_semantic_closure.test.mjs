@@ -289,3 +289,33 @@ test('actual natural-series retained call shape and derivative frontier stay OPE
   assert.equal(r.actual_final_67_jet_intervals_certified,0);
  }finally{await fs.rm(dir,{recursive:true,force:true})}
 });
+
+test('real source rational Y=4 witness is separate from symbolic Y and unproved eta',async()=>{
+ const dir=await fs.mkdtemp(path.join(os.tmpdir(),'ms-verified-Y4-pairs-'));
+ try{
+  const g={nodes:[
+    {op:'coordinate',args:['eta']},
+    {op:'rational',args:['4','1']},
+    {op:'coordinate',args:['actual_core_J$19']},
+    {op:'actual_natural_series',args:['Phi',1,0,0,0]},
+    {op:'actual_natural_series',args:['u',1,0,0,1]},
+    {op:'actual_natural_series',args:['Phi',2,0,0,0]},
+    {op:'add',args:[3,4]},
+    {op:'add',args:[6,5]}],captureFunctionDefinitions:()=>({raw:true})};
+  const owner={nodes:g.nodes,captureFunctionDefinitions:()=>captured};
+  await exportOriginalSourceGraph(g,{dir,definitionGraph:owner,roots:[7],
+      scope:'FIRST_FIVEMAP_TOY',sourceCommit:'toy',pr30Commit:'toy'});
+  const q=await auditNativeDefinitionBodyClosure(dir);
+  const profile=q.original_reachable_natural_series_source_profile;
+  assert.equal(profile.total_reachable_calls,3);
+  assert.equal(profile.original_56_input_pairs.length,2);
+  assert.equal(profile.direct_exact_Y_upper5_source_call_count,2);
+  const exact=profile.original_56_input_pairs.find(x=>x.Y_node_id===1);
+  assert.equal(exact.source_Y_exact_rational,'4/1');
+  assert.equal(exact.source_Y_bound_0_to_5_proved_by_AST,true);
+  assert.equal(exact.eta_common_complex_domain_proved,false);
+  const symbolic=profile.original_56_input_pairs.find(x=>x.Y_node_id===2);
+  assert.equal(symbolic.source_Y_bound_0_to_5_proved_by_AST,false);
+  assert.equal(q.actual_final_67_jet_intervals_certified,0);
+ }finally{await fs.rm(dir,{recursive:true,force:true})}
+});
