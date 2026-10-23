@@ -1,0 +1,37 @@
+name: MathScope universal cylindrical operator identity (abstract theorem)
+on:
+  push:
+    branches: [mathscope-m3m4-evidence-gates-20261023]
+    paths:
+      - 'research-ide/mathscope-m3/post-signed-20261023/verify_universal_full_3d_polarization.py'
+      - '.github/workflows/mathscope-universal-cylindrical-polarization-20261023.yml'
+  workflow_dispatch:
+jobs:
+  universal-operator-identity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install independent exact symbolic algebra
+        run: python -m pip install 'sympy==1.13.3'
+      - name: Check arbitrary smooth-field polarization over the original 6-coordinate source chart
+        run: |
+          python research-ide/mathscope-m3/post-signed-20261023/verify_universal_full_3d_polarization.py > universal-polarization-evidence.json
+          python - <<'PY'
+          import json
+          v=json.load(open('universal-polarization-evidence.json'))
+          assert v['direct_minus_split_components']==['0','0','0']
+          assert v['divergence_additivity']=='0'
+          assert v['missing_cylindrical_connection_rejected']
+          assert not v['actual_source_AST_defects_reduced']
+          assert not v['source_regularities_proved']
+          assert v['release']=='HOLD'
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: abstract-universal-operator-identity-not-original-source-proof
+          path: universal-polarization-evidence.json
+          retention-days: 30
