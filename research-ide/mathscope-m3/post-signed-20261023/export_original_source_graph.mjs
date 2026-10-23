@@ -19,9 +19,10 @@ export async function exportOriginalSourceGraph(G,{dir,roots,scope,sourceCommit,
     typeof scope!=='string'||!scope||typeof sourceCommit!=='string'||!sourceCommit||
     typeof pr30Commit!=='string'||!pr30Commit)
    fail('INVALID_ORIGINAL_GRAPH_EXPORT','Missing original roots/provenance or node budget exceeded');
- if(!definitionGraph||definitionGraph.nodes!==G.nodes||
-     typeof definitionGraph.captureFunctionDefinitions!=='function')
+ if(!definitionGraph||definitionGraph.nodes!==G.nodes)
      fail('WRONG_SOURCE_DEFINITION_OWNER','Replay owner must share the exact complete original G.nodes array');
+ if(typeof definitionGraph.captureFunctionDefinitions!=='function')
+     fail('MISSING_SOURCE_FUNCTION_DEFINITIONS','Original native function registry cannot be omitted');
  const defs=definitionGraph.captureFunctionDefinitions();
  if(definitionGraph!==G&&(!Array.isArray(defs?.counts)||defs.counts.length!==5||
     typeof defs.definitions!=='string'||!defs.base))
