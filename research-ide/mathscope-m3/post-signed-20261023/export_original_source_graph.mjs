@@ -53,12 +53,25 @@ export async function exportOriginalSourceGraph(G,{dir,roots,scope,sourceCommit,
    compressor.end();await pipe;
  }catch(e){compressor.destroy(e);try{await pipe}catch{};throw e}
  await fs.writeFile(path.join(dir,'original-source-functions.json'),definitions+'\n',{flag:'wx'});
+ // The raw actual source's covarianceSystems are not part of
+ // SourceCoupledExpressions.captureFunctionDefinitions() or its nested base.
+ // Retain them as a distinct source-authenticated runtime registry when given.
+ let covarianceRegistrySHA256=null,covarianceRegistryCount=null;
+ if(Array.isArray(G.covarianceSystems)){
+   const covariance=stable(G.covarianceSystems)+'\n';
+   await fs.writeFile(path.join(dir,'original-source-covariance-systems.json'),covariance,{flag:'wx'});
+   covarianceRegistrySHA256=createHash('sha256').update(covariance).digest('hex');
+   covarianceRegistryCount=G.covarianceSystems.length;
+ }
  const manifest={schema:'MathScope.M3.SourceGraphReplayManifest/1',
    original_pr30_commit:pr30Commit,executing_commit:sourceCommit,
    scope,final_all_cycle_A_b_p:false,node_count:G.nodes.length,
    function_registry_capture_kind:definitionGraph===G?'RAW_BASE_ONLY':'EXTENDED_COUPLED_FACADE',
    extended_coupled_function_counts:definitionGraph===G?null:[...defs.counts],
    extended_coupled_registry_included:definitionGraph!==G,
+   covariance_runtime_registry_included:covarianceRegistrySHA256!==null,
+   covariance_runtime_registry_count:covarianceRegistryCount,
+   covariance_runtime_registry_sha256:covarianceRegistrySHA256,
 
    operation_histogram:Object.fromEntries(Object.entries(operationHistogram).sort(([a],[b])=>a.localeCompare(b))),
    original_root_ids:[...roots],node_stream_uncompressed_bytes:bytes,
