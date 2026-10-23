@@ -30,6 +30,13 @@ export async function auditOriginalSourceReplay(dir){
  if(n!==expected||bytes!==m.node_stream_uncompressed_bytes||hash.digest('hex')!==m.node_stream_sha256||
     !m.original_root_ids.every(x=>Number.isSafeInteger(x)&&x>=0&&x<n))
    fail('Source graph missing/modified or root IDs unbound');
+ const canonicalOps=Object.fromEntries(Object.entries(ops).sort(([a],[b])=>a.localeCompare(b)));
+ if(m.operation_histogram&&JSON.stringify(m.operation_histogram)!==JSON.stringify(canonicalOps))
+   fail('Native operation inventory differs from the archived source graph');
+ const elementary=new Set(['rational','coordinate','add','multiply','inverse','integer_power']);
+ const requiresDedicatedValidatedNumerics=Object.entries(ops)
+   .filter(([op])=>!elementary.has(op))
+   .sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0]));
  const complicated=Object.entries(ops).filter(([name])=>
    name.startsWith('m3_')||name.startsWith('actual_')||
    ['definite_integral','source_step_derivative','smooth_piecewise','source_parameter'].includes(name))
@@ -37,7 +44,9 @@ export async function auditOriginalSourceReplay(dir){
  return {schema:'MathScope.M3.SourceNumericKernelInventory/1',
    node_count:n,original_root_ids:m.original_root_ids,
    source_node_sha256:m.node_stream_sha256,
-   operation_histogram:ops,operations_with_nontrivial_numeric_semantics:complicated,
+   operation_histogram:canonicalOps,operators_requiring_dedicated_interval_interpreters:requiresDedicatedValidatedNumerics,
+   requires_original_source_provenance:true,certified_final_numeric_kernels_assumed:0,
+   operations_with_nontrivial_numeric_semantics:complicated,
    first_fivemap_source_serialized:true,final_all_cycle_A_b_p_serialized:false,
    final_67_numeric_certified:0,release:'HOLD'};
 }
