@@ -1,0 +1,31 @@
+name: MathScope original 523 natural-series derivative tail proof boundaries
+on:
+  push:
+    branches: [mathscope-m3m4-evidence-gates-20261023]
+    paths:
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/conditional_original_natural523_tail.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/test_conditional_original_natural523_tail.py'
+      - '.github/workflows/mathscope-natural523-source-tail-20261024.yml'
+  workflow_dispatch:
+jobs:
+  conditional-original-natural-source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify actual 523 source operation shapes with rigorous conditional B14/B15 tail and negative analytic-premise controls
+        run: |
+          cd research-ide/mathscope-m3/closure-evidence-20261023
+          python -m unittest -v test_conditional_original_natural523_tail
+          python - <<'PY'
+          from conditional_original_natural523_tail import original_523_conditional_frontier
+          import json
+          z=original_523_conditional_frontier()
+          assert z['final_original_67_jet_intervals_certified']==0
+          print(json.dumps(z,indent=2))
+          PY
