@@ -1,0 +1,41 @@
+name: MathScope original 67+13 derivative source-stencil closure
+on:
+  push:
+    branches: [mathscope-m3m4-evidence-gates-20261023]
+    paths:
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/compile_original_67jet_force_stencil.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/test_compile_original_67jet_force_stencil.py'
+      - '.github/workflows/mathscope-67jet-derivative-stencil-20261023.yml'
+  workflow_dispatch:
+jobs:
+  exact-source-stencil:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test actual pinned 67 field and 13 cutoff derivative coverage with seven negative controls
+        run: |
+          cd research-ide/mathscope-m3/closure-evidence-20261023
+          python -m unittest -v test_compile_original_67jet_force_stencil
+      - name: Compile source-dependent 67+13 forcing operator derivative stencil
+        run: |
+          python research-ide/mathscope-m3/closure-evidence-20261023/compile_original_67jet_force_stencil.py --out original67-force-derivative-stencil.json
+          python - <<'PY'
+          import json
+          a=json.load(open('original67-force-derivative-stencil.json'))
+          assert sum(a['original_target_counts'].values())==67
+          assert a['original_cutoff_count']==13
+          assert a['original_final_field_value_intervals_obtained']==0
+          assert not a['actual_external_force_proved']
+          assert a['release']=='HOLD'
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: original67plus13-exact-derivative-stencil-not-actual-numeric-jets
+          path: original67-force-derivative-stencil.json
+          retention-days: 30
