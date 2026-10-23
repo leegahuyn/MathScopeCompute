@@ -8,6 +8,7 @@ This generic finite interpreter NEVER certifies MathScope's final A,b,p.
 """
 from fractions import Fraction
 from rigorous_rational_intervals import Interval,UncertifiedExpression,exact_fraction
+from certified_bounded_transcendentals import exp_positive_bounded,log_positive_bounded,sqrt_positive_bounded
 
 class UnsupportedOriginalNumericKernel(UncertifiedExpression):
     def __init__(self,operation,node_id):
@@ -23,7 +24,7 @@ def _node_inputs(args,previous,arity):
        'Missing/forward SourceExpressions numeric argument')
     return [previous[x] for x in args]
 
-def evaluate_original_elementary_nodes(nodes,roots,coordinates,max_nodes=20000):
+def evaluate_original_elementary_nodes(nodes,roots,coordinates,max_nodes=20000,enable_bounded_transcendentals=False):
     _require(type(nodes) is list and 0<len(nodes)<=max_nodes,
        'Finite original node budget exhausted; no partial result promoted')
     _require(type(roots) is list and roots and
@@ -58,6 +59,12 @@ def evaluate_original_elementary_nodes(nodes,roots,coordinates,max_nodes=20000):
                 type(args[0]) is int and 0<=args[0]<len(evaluated) and
                 type(args[1]) is int,'Original integer power args invalid')
             result=evaluated[args[0]].power(args[1])
+        elif enable_bounded_transcendentals and op in ('exp','log_positive','sqrt_positive'):
+            (v,)=_node_inputs(args,evaluated,1)
+            kernel={'exp':exp_positive_bounded,
+                    'log_positive':log_positive_bounded,
+                    'sqrt_positive':sqrt_positive_bounded}[op]
+            result=kernel(v)
         else:
             raise UnsupportedOriginalNumericKernel(op,i)
         evaluated.append(result)
