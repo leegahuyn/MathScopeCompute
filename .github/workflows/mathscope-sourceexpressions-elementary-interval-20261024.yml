@@ -1,0 +1,24 @@
+name: MathScope source-expression exact elementary interval kernels
+on:
+  push:
+    branches: [mathscope-m3m4-evidence-gates-20261023]
+    paths:
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/sourceexpressions_elementary_intervals.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/test_sourceexpressions_elementary_intervals.py'
+      - '.github/workflows/mathscope-sourceexpressions-elementary-interval-20261024.yml'
+  workflow_dispatch:
+jobs:
+  elementary-interval-kernels:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Prove exact finite rational DAG interval arithmetic and reject unavailable source-native kernels
+        run: |
+          cd research-ide/mathscope-m3/closure-evidence-20261023
+          python -m unittest -v test_sourceexpressions_elementary_intervals
