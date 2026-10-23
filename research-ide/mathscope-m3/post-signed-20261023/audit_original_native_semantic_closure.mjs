@@ -132,6 +132,9 @@ export async function auditNativeDefinitionBodyClosure(dir,{maxNodes=5000000,max
    source_node_count:count,root_count:roots.length,
    native_registry_counts:registry.counts,
    actual_covariance_runtime_source_registry_SHA_verified:integrity.covariance_runtime_registry_sha256_verified,
+   embedded_source_covariance_definition_crosschecked:registry.covarianceProvenance===
+     'EMBEDDED_ORIGINAL_DEFINITION_CROSSCHECKED_NOT_RUNTIME_SHA_VERIFIED',
+   covariance_definition_provenance:registry.covarianceProvenance,
    actual_covariance_runtime_source_system_count:integrity.covariance_runtime_registry_system_count,
    semantic_body_reachable_unique_nodes:reachable,
    syntactic_and_native_body_union_operations:format(union),
