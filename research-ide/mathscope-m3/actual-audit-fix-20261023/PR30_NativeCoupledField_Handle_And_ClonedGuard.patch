@@ -1,0 +1,37 @@
+diff --git a/research-ide/mathscope-m3/navier/source-signed-162-successor-audit.mjs b/research-ide/mathscope-m3/navier/source-signed-162-successor-audit.mjs
+index 3ef0369..8ec5892 100644
+--- a/research-ide/mathscope-m3/navier/source-signed-162-successor-audit.mjs
++++ b/research-ide/mathscope-m3/navier/source-signed-162-successor-audit.mjs
+@@ -32,9 +32,21 @@ function checkModes(G,before,after,key){
+   if(!A.has(-1)||!A.has(1))fail('LOST_SIGNED_HARMONIC',key);
+ }
+ function indexRows(G,field,cover,templates,name,angular){
+-  requireRoot(G,field?.field,name+': definition');
++  // SourceCoupledExpressions stores NEW field definitions in a separate
++  // namespace: 'coupled-field:N'. They are not integer AST node roots.
++  // The field APPLICATION, unlike its definition handle, must be a node.
++  const handle=field?.field;
++  const native=typeof handle==='string'&&/^coupled-field:(0|[1-9]\d*)$/.test(handle);
++  if(!native&&!node(G,handle))fail('MISSING_SIGNED_DEFINITION',name+': definition');
+   requireRoot(G,field?.root,name+': root');
+-  const registry=G.periodicIndexedSystem?.(field.field);
++  let registry;
++  try{registry=G.periodicIndexedSystem?.(handle)}catch(e){
++    fail('MISSING_SIGNED_DEFINITION',name+': native field definition inaccessible: '+(e?.code??e?.message??'unknown'));
++  }
++  if(native&&(registry?.id!==handle||
++       G.nodes[field.root]?.op!=='m3_coupled_indexed_partial'||
++       G.nodes[field.root]?.args?.[0]!==handle))
++    fail('MISMATCHED_NATIVE_SIGNED_FIELD','The exact native field ID must be the root application operand: '+name);
+   if(!registry||!Array.isArray(registry.rows)||registry.rows.length!==162||
+      !Array.isArray(field.systems)||field.systems.length!==2||
+      field.contributionCount!==162||field.angular!==angular)
+@@ -44,7 +56,7 @@ function indexRows(G,field,cover,templates,name,angular){
+     if(!band||band.delta===undefined)fail('MISSING_SIGNED_BAND',name+':'+i);
+     for(let j=0;j<2;j++){
+       const signed=origin.signs[j],row=registry.rows[2*i+j],f=field.systems[signed.sourceLocalRow];
+-      if(!f||!row||row.localSystem!==f.system||row.guards!==origin.guards||
++      if(!f||!row||row.localSystem!==f.system||!same(row.guards,origin.guards)||
+          row.label?.key!==origin.key||row.label?.sign!==signed.sign||
+          row.label?.fixedDifference!==band.delta||row.label?.countBoxOnce!==true||
+          !Array.isArray(row.values)||row.values.length!==(angular?16:15)||
