@@ -46,19 +46,43 @@ export async function auditRootReachableNativeOperations(dir,{maxNodes=5000000,m
    starts[count+1]=edges.length;count++;
  }
  if(count!==m.node_count)abort('Original node stream incomplete');
- // Source closure from roots. This identifies reachable operation *kinds* only.
- const visited=new Uint8Array(count),stack=[...m.original_root_ids],byOp=Object.create(null);
+ // Original nodes are topologically ordered: every referenced child < parent.
+ // Reverse-propagate all root reachability as independent bits in one DAG pass.
+ const roots=m.original_root_ids;
+ if(roots.length>16)abort('At most sixteen original roots in one exact mask census');
+ const masks=new Uint16Array(count);
+ for(let i=0;i<roots.length;i++)masks[roots[i]]|=(1<<i);
+ for(let i=count-1;i>=0;i--){
+   const bits=masks[i];
+   if(!bits)continue;
+   for(let p=starts[i];p<starts[i+1];p++)masks[edges[p]]|=bits;
+ }
+ const byOp=Object.create(null),perRoot=roots.map(()=>Object.create(null));
  let used=0;
- while(stack.length){
-   const i=stack.pop();
-   if(visited[i])continue;
-   visited[i]=1;used++;
+ for(let i=0;i<count;i++){
+   const bits=masks[i];if(!bits)continue;
+   used++;
    const op=opNames[nodeOps[i]];
    byOp[op]=(byOp[op]??0)+1;
-   for(let p=starts[i];p<starts[i+1];p++){
-     if(!visited[edges[p]])stack.push(edges[p]);
+   for(let j=0;j<roots.length;j++){
+     if(bits&(1<<j))perRoot[j][op]=(perRoot[j][op]??0)+1;
    }
  }
+ const sourceRoles=roots.length===11&&m.scope==='ORIGINAL_FIRST_POST_SIGNED_FIVEMAP_3D_DIRECT_SPLIT_NOT_FINAL_A_b_p'?
+    ['velocity_component_0','velocity_component_1','velocity_component_2',
+     'full_pressure','full_divergence','PDE_residual_0','PDE_residual_1',
+     'PDE_residual_2','direct_split_defect_0','direct_split_defect_1',
+     'direct_split_defect_2']:roots.map((_,i)=>'source_root_'+i);
+ const byRoot=perRoot.map((counts,i)=>({
+   root_id:roots[i],role:sourceRoles[i],reachable_nodes:Object.values(counts).reduce((a,b)=>a+b,0),
+   operation_counts:Object.entries(counts)
+     .sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0]))
+     .map(([op,n])=>({op,n,category:
+       op.includes('volterra')||op.includes('covariance')?'VOLTERRA':
+       op.includes('inverse_partial')?'FOURIER_INVERSE':
+       op.includes('pulse')||op.includes('picard')?'PULSE_ODE':
+       elementary.has(op)?'ELEMENTARY':'OTHER_NATIVE'}))
+ }));
  const catalog=Object.entries(byOp).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0]));
  const opaqueDefinitionNodes=catalog
    .filter(([op])=>op.startsWith('m3_')||op.startsWith('actual_')||op==='source_parameter')
@@ -69,6 +93,8 @@ export async function auditRootReachableNativeOperations(dir,{maxNodes=5000000,m
    original_pr30_commit:m.original_pr30_commit,source_stream_sha256:m.node_stream_sha256,
    original_first_fivemap_graph_nodes:count,reachable_nodes:used,
    unreachable_nodes:count-used,root_ids:[...m.original_root_ids],
+   original_source_per_root_native_usage:byRoot,
+   multiple_root_reachability_method:'SINGLE_REVERSE_TOPOLOGICAL_BITMASK_PASS',
    operator_counts:catalog.map(([op,n])=>({op,n,
      evidence:elementary.has(op)?'ELEMENTARY_INTERVAL_KERNEL_TESTED_ONLY':
       bounded.has(op)?'BOUNDED_ARGUMENT_INTERVAL_KERNEL_ONLY':
