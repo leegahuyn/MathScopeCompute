@@ -36,11 +36,14 @@ export function recoverEmbeddedOriginalCovariance(pulses){
       original.matrix.some(row=>!Array.isArray(row)||row.length!==2)||
       !Number.isSafeInteger(original.normUpper)||original.normUpper<0)
      bad('Embedded covariance lacks source 2x2 matrix and normUpper');
+   if(byCovariance[id]&&JSON.stringify(byCovariance[id])===JSON.stringify(original))
+     bad('Duplicate source covariance pulse registry id '+id);
    if(byCovariance[id]&&JSON.stringify(byCovariance[id])!==JSON.stringify(original))
      bad('Conflicting original covariance definition for same source system '+id);
    byCovariance[id]=original;
  }
- if(byCovariance.some(x=>x===undefined)||byCovariance.length!==pulses.length)
+ if(byCovariance.length!==pulses.length||
+    Array.from({length:byCovariance.length},(_,i)=>byCovariance[i]).some(x=>x===undefined))
    bad('Embedded covariance registry has missing IDs or duplicate system IDs');
  return byCovariance;
 }
