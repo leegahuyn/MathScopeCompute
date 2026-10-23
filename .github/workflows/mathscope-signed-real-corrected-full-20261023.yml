@@ -1,4 +1,4 @@
-name: M3 original FiveMap to full 3D physical residual AST evidence gate
+name: M3 source-private full 3D and direct-vs-split roots evidence gate
 on:
   push:
     branches: [mathscope-m3m4-evidence-gates-20261023]
@@ -47,7 +47,10 @@ jobs:
           node --check research-ide/mathscope-m3/post-signed-20261023/source-postfive-full-3d-residual.mjs
           node --test --test-reporter=tap research-ide/mathscope-m3/post-signed-20261023/postfive-original-receipt-gate.test.mjs
           node --test --test-reporter=tap research-ide/mathscope-m3/post-signed-20261023/source-postfive-full-3d-residual.test.mjs
-      - name: Execute original private source through FiveMap then directly compute complete physical 3D residual AST
+          node --check research-ide/mathscope-m3/post-signed-20261023/source-postfive-direct-split.mjs
+          node --test --test-reporter=tap research-ide/mathscope-m3/post-signed-20261023/source-postfive-direct-split.test.mjs
+          node --check research-ide/mathscope-m3/extended-signed-run-20261023/run_real_original_signed162.mjs
+      - name: Run full original Signed Temporal FiveMap full3D and independent direct-split roots
         run: |
           set -o pipefail
           timeout -s TERM 6000s node --expose-gc research-ide/mathscope-m3/extended-signed-run-20261023/run_real_original_signed162.mjs "$RUNNER_TEMP/m3-original-signed-temporal-five-after-native-field-fix.json"
