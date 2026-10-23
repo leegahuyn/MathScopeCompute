@@ -1,0 +1,32 @@
+name: MathScope original natural 56 inputs and N3 Q rho positivity audit
+on:
+  push:
+    branches: [mathscope-m3m4-evidence-gates-20261023]
+    paths:
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/prove_original_n3_Q_rho_signs.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/test_prove_original_n3_Q_rho_signs.py'
+      - '.github/workflows/mathscope-real-natural56-Q-rho-source-gate-20261024.yml'
+  workflow_dispatch:
+jobs:
+  certified-original-source-signs:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify immutable exact N3 profile positivity and reject all unauthenticated analytic norm promotion
+        run: |
+          cd research-ide/mathscope-m3/closure-evidence-20261023
+          python -m unittest -v test_prove_original_n3_Q_rho_signs test_pinned_n3_parameter_intervals
+          python - <<'PY'
+          import json
+          from prove_original_n3_Q_rho_signs import original_n3_Q_rho_strict_positivity
+          v=original_n3_Q_rho_strict_positivity()
+          assert v['source_coefficient_Brho_norm_le_Q_proven'] is False
+          assert v['shared_complex_analytic_domain_proven'] is False
+          print(json.dumps(v,indent=2))
+          PY
