@@ -140,9 +140,23 @@ try{
  receipt.post_five_full_three_dimensional_PDE_AST_checked=true;
  receipt.post_five_full_three_dimensional_PDE_residual_roots=[...actualFull3D.residual.conservative];
  receipt.post_five_full_three_dimensional_PDE_residual_proved_zero=false;
+ // Independently polarized AST uses the SAME privately sealed original graph;
+ // constructing defects never certifies their vanishing or the forcing theorem.
+ const {buildSourcePostFiveDirectSplit}=await import('../post-signed-20261023/source-postfive-direct-split.mjs');
+ receipt.stage='post_five_source_bound_direct_vs_split_AST';save();bound();
+ const directSplit=buildSourcePostFiveDirectSplit(actualFull3D);
+ if(!directSplit.checks.allRootsValid || directSplit.roots.defects.length!==3)
+   throw Object.assign(new Error('Source-bound 3D polarization roots incomplete'),{code:'INCOMPLETE_SOURCE_3D_POLARIZATION'});
+ receipt.post_five_direct_vs_split_AST_constructed=true;
+ receipt.post_five_direct_vs_split_difference_roots=[...directSplit.roots.defects];
+ receipt.post_five_direct_vs_split_divergence_difference_root=directSplit.roots.divergenceDefect;
+ receipt.post_five_direct_vs_split_same_original_pressure_root=actualFull3D.pressure.fullPhysicalPressure;
+ receipt.post_five_direct_vs_split_node_count=G.nodes.length;
+ receipt.post_five_direct_vs_split_proved_zero=false;
+ receipt.progress.push({stage:receipt.stage,nodeCount:G.nodes.length,scope:'AST_ONLY_PROOF_OPEN'});
  receipt.actual_final67_jets_evaluated=0;save();
  receipt.stage='FOUR_STAGE_ITERATION_ALL_ORDER_ESTIMATES_AND_FINAL67_NUMERIC_OPEN';
- receipt.stop_reason='First authentic Signed->Temporal->FiveMap->whole 3D PDE AST is constructed, but its residual has not been proved zero, infinite A-D corrections, analytic class bounds, scale selectors and the final 67 original numeric intervals remain OPEN.';
+ receipt.stop_reason='Signed->Temporal->FiveMap->whole 3D PDE and direct/split ASTs constructed, but their identity and the forced PDE remain OPEN, infinite A-D corrections, analytic class bounds, scale selectors and the final 67 original numeric intervals remain OPEN.';
  receipt.status='PARTIAL_SOURCE_AUTHENTICATED';save();
 }catch(e){receipt.error={code:e.code??e.name??'ERROR',message:String(e.message??e).slice(0,1000)};
  receipt.status='BLOCKED';receipt.failed_at_stage=receipt.stage;
