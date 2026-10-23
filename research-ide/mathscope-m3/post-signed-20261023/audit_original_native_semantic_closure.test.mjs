@@ -267,3 +267,25 @@ test('crosschecked embedded global pulses recover both actual covariance definit
  assert.throws(()=>loadOriginalExtendedNativeRegistry(mutation),
    {code:'NATIVE_REGISTRY_SEMANTIC_GAP'});
 });
+
+test('actual natural-series retained call shape and derivative frontier stay OPEN',async()=>{
+ const dir=await fs.mkdtemp(path.join(os.tmpdir(),'ms-natural-real-shape-'));
+ try{
+  const g={nodes:[{op:'rational',args:['1','1']},
+   {op:'coordinate',args:['Y']},{op:'coordinate',args:['eta']},
+   {op:'actual_natural_series',args:['Phi',1,2,3,5]}],
+   captureFunctionDefinitions:()=>({raw:true})};
+  const owner={nodes:g.nodes,captureFunctionDefinitions:()=>captured};
+  await exportOriginalSourceGraph(g,{dir,definitionGraph:owner,roots:[3],
+    scope:'FIRST_FIVEMAP_TOY',sourceCommit:'toy',pr30Commit:'toy'});
+  const r=await auditNativeDefinitionBodyClosure(dir);
+  const n=r.original_reachable_natural_series_source_profile;
+  assert.equal(n.total_reachable_calls,1);
+  assert.equal(n.counts_by_component.Phi,1);
+  assert.equal(n.max_radial_order,3);
+  assert.equal(n.max_eta_order,5);
+  assert.equal(n.distinct_source_Y_eta_argument_node_pairs,1);
+  assert.equal(n.source_coefficient_norm_proved,false);
+  assert.equal(r.actual_final_67_jet_intervals_certified,0);
+ }finally{await fs.rm(dir,{recursive:true,force:true})}
+});
