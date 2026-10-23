@@ -13,6 +13,12 @@ export async function produceFirstFiveMapNativeOperatorReceipt(dir,{requireOrigi
     !Number.isSafeInteger(m.node_count)||m.node_count<4400000
  ))throw Object.assign(Error('Not the complete pinned original first-FiveMap source archive'),{code:'WRONG_ORIGINAL_SOURCE_ARCHIVE'});
  const full=await auditOriginalSourceReplay(dir);
+ if(requireOriginal&&(
+     full.function_registry_capture_kind!=='EXTENDED_COUPLED_FACADE'||
+     full.native_extended_function_bodies_structurally_present!==true))
+    throw Object.assign(Error('Original native function bodies missing despite valid graph hash'),{
+      code:'MISSING_NATIVE_SOURCE_DEFINITIONS'});
+
  const census=await auditRootReachableNativeOperations(dir);
  if(full.node_count!==census.original_first_fivemap_graph_nodes||
    full.source_node_sha256!==census.source_stream_sha256||
@@ -40,6 +46,7 @@ export async function produceFirstFiveMapNativeOperatorReceipt(dir,{requireOrigi
    first_blocking_native_operation_by_reachable_count:nativeKinds[0]?.op??null,
    complete_full_stream_SHA256_verified:true,
    captured_source_definitions_bytes_SHA256_verified:true,
+   complete_extended_native_function_registry_SHA_verified:full.extended_coupled_registry_sha256_verified,
    native_function_definitions_semantically_evaluated:false,
    first_fivemap_only:true,final_all_iteration_fields_present:false,
    actual_original_final_67_jet_interval_count:0,release:'HOLD'};
