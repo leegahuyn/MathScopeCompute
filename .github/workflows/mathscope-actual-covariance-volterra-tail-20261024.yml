@@ -1,0 +1,24 @@
+name: MathScope actual covariance Volterra conditional interval norm gate
+on:
+  push:
+    branches: [mathscope-m3m4-evidence-gates-20261023]
+    paths:
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/conditional_covariance_volterra_tail.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/test_conditional_covariance_volterra_tail.py'
+      - '.github/workflows/mathscope-actual-covariance-volterra-tail-20261024.yml'
+  workflow_dispatch:
+jobs:
+  exact-rational-volterra:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Exact-rational source homogeneous 2x2 Picard tail proof with negative controls
+        run: |
+          cd research-ide/mathscope-m3/closure-evidence-20261023
+          python -m unittest -v test_conditional_covariance_volterra_tail
