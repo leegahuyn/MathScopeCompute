@@ -1,0 +1,31 @@
+name: MathScope M3 original five moment and full mean kernels
+on:
+  push:
+    branches: [mathscope-m3m4-evidence-gates-20261023]
+    paths:
+      - '.github/workflows/mathscope-post-signed-five-map-algebra-20261023.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  original-five-moment-algebra-independent:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Actual full mean PDE and original five-moment inverse algebra
+        run: |
+          set -euo pipefail
+          node --test --test-reporter=tap --test-concurrency=1             research-ide/mathscope-m3/navier/tests/global-source-moment-kernel.test.mjs             research-ide/mathscope-m3/navier/tests/full-mean-equations-kernel.test.mjs             2>&1 | tee "$RUNNER_TEMP/m3-five-moment-kernel.tap"
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mathscope-original-five-moment-algebra-tests
+          path: ${{ runner.temp }}/m3-five-moment-kernel.tap
+          if-no-files-found: warn
+          retention-days: 30
