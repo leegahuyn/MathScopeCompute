@@ -1,0 +1,67 @@
+diff --git a/research-ide/mathscope-m3/navier/original-generic-signed-bridge.mjs b/research-ide/mathscope-m3/navier/original-generic-signed-bridge.mjs
+--- a/research-ide/mathscope-m3/navier/original-generic-signed-bridge.mjs
++++ b/research-ide/mathscope-m3/navier/original-generic-signed-bridge.mjs
+@@ -13,7 +13,14 @@
+ export function prepareOriginalGenericSignedCandidate(actualPrivateForced,options={}){
+   // Original Corollary 8.5 uses normalized auxiliary Haar averages.
+   // No independently reconstructed raw-E Sigma is ever accepted.
+-  const latestStress=attachGlobalForcedMeanStress(actualPrivateForced);
++  if(!options||typeof options!=='object'||Array.isArray(options)||
++     Object.keys(options).some(k=>!['onProgress','maxAdditionalNodes','authenticatedLatestStress'].includes(k)))
++    throw Object.assign(new Error('Only the separately authenticated original stress may be reused.'),{code:'INVALID_SIGNED_OPTIONS'});
++  const {authenticatedLatestStress,...candidateOptions}=options;
++  const latestStress=authenticatedLatestStress===undefined?
++    attachGlobalForcedMeanStress(actualPrivateForced):authenticatedLatestStress;
++  if(latestStress?.G!==actualPrivateForced.G||latestStress?.input!==actualPrivateForced)
++    throw Object.assign(new Error('Signed source stress must be from this exact original Forced state.'),{code:'SIGNED_COR85_LINEAGE_MISMATCH'});
+   if(assertGlobalUpdatedMeanStress(latestStress)!==true)
+     throw Object.assign(new Error('Original latest mean stress seal failed.'),{code:'UNAUTHENTICATED_COR85_STRESS'});
+   const candidate=buildSignedSourceCandidateFromCheckedForced(actualPrivateForced,{
+@@ -24,7 +31,7 @@
+     fullCurl:exactCylindricalHarmonicCurl,
+     homogeneousPressure:originalHomogeneousPrimaryPressure,
+     graphEqual:globalGraphEqual
+-  },options);
++  },candidateOptions);
+   candidate.source.sourceIdentityCheckedByOriginalBridgeOnly=true;
+   candidate.latestCor85Stress=latestStress;
+   candidate.scope.originalForcedPrivateSealValidatedByRealModule=true;
+diff --git a/research-ide/mathscope-m3/navier/original-signed-162-bridge.mjs b/research-ide/mathscope-m3/navier/original-signed-162-bridge.mjs
+--- a/research-ide/mathscope-m3/navier/original-signed-162-bridge.mjs
++++ b/research-ide/mathscope-m3/navier/original-signed-162-bridge.mjs
+@@ -15,11 +15,11 @@
+   if(assertGlobalForcedCurrent(actualPrivateForced)!==true||
+      assertGlobalInitializedAngular(actualPrivateForced.input)!==true)
+     throw Object.assign(new Error('The original private Forced/Initialized seals are required.'),{code:'INVALID_ORIGINAL_PRIVATE_FORCED'});
+-  if(Object.keys(options).some(k=>!['onProgress','candidateMaxAdditionalNodes','assemblyMaxAdditionalNodes','refreshAfterAssembly'].includes(k)))
++  if(Object.keys(options).some(k=>!['onProgress','candidateMaxAdditionalNodes','assemblyMaxAdditionalNodes','refreshAfterAssembly','authenticatedLatestStress'].includes(k)))
+     throw Object.assign(new Error('Signed source, target, H, amplitudes, cover and domain are not caller-selectable.'),{code:'INVALID_SIGNED_OPTIONS'});
+-  const {onProgress,candidateMaxAdditionalNodes=200000,assemblyMaxAdditionalNodes=1500000,refreshAfterAssembly=true}=options;
++  const {onProgress,candidateMaxAdditionalNodes=200000,assemblyMaxAdditionalNodes=1500000,refreshAfterAssembly=true,authenticatedLatestStress}=options;
+   // This is the only candidate creation permitted in the real source bridge.
+-  const signed=prepareOriginalGenericSignedCandidate(actualPrivateForced,{onProgress,maxAdditionalNodes:candidateMaxAdditionalNodes});
++  const signed=prepareOriginalGenericSignedCandidate(actualPrivateForced,{onProgress,maxAdditionalNodes:candidateMaxAdditionalNodes,authenticatedLatestStress});
+   const composed=assembleSigned162Candidate(signed,{
+     assertForced:assertGlobalForcedCurrent,
+     assertInitialized:assertGlobalInitializedAngular,
+diff --git a/research-ide/mathscope-m3/navier/original-signed-162-successor.mjs b/research-ide/mathscope-m3/navier/original-signed-162-successor.mjs
+--- a/research-ide/mathscope-m3/navier/original-signed-162-successor.mjs
++++ b/research-ide/mathscope-m3/navier/original-signed-162-successor.mjs
+@@ -51,7 +51,7 @@
+  */
+ export async function attachOriginalSigned162Successor(actualPrivateForced,options={}){
+   if(!options||typeof options!=='object'||Array.isArray(options)||
+-    Object.keys(options).some(k=>!['onProgress','candidateMaxAdditionalNodes','assemblyMaxAdditionalNodes'].includes(k)))
++    Object.keys(options).some(k=>!['onProgress','candidateMaxAdditionalNodes','assemblyMaxAdditionalNodes','authenticatedLatestStress'].includes(k)))
+     fail('INVALID_SIGNED_SUCCESSOR_OPTIONS','No replacement target or source seals are admitted.');
+   const pins=await verifyPR30OriginalSourceFiles();
+   if(assertGlobalForcedCurrent(actualPrivateForced)!==true||
+@@ -61,6 +61,8 @@
+     assembled=produceOriginalSigned162AfterForced(actualPrivateForced,{...options,refreshAfterAssembly:true}),
+     latestStress=assembled.originalCandidate?.latestCor85Stress,
+     audit=auditSigned162SuccessorFacts(assembled);
++  if(options.authenticatedLatestStress!==undefined&&latestStress!==options.authenticatedLatestStress)
++    fail('SIGNED_COR85_IDENTITY_MISMATCH','The Signed candidate did not reuse the exact separately sealed Cor85 source.');
+   // Signed target is now the very same PRIVATE source Corollary 8.5 Sigma.
+   // A separately recomputed unaveraged E is forbidden (Proposition 9.6 Step 2).
+   if(assembled.originalCandidate.signed.sourceOfSigma!=='AUTHENTICATED_ORIGINAL_COR85_NORMALIZED_HAAR'||
