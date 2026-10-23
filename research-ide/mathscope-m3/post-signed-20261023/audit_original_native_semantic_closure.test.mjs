@@ -175,3 +175,34 @@ test('tampering original covariance source matrix fails independent SHA validati
     {code:'UNTRUSTED_SOURCE_REPLAY'});
  }finally{await fs.rm(dir,{recursive:true,force:true})}
 });
+
+test('original implicit systems expand authentic saved coefficient roots but do not prove convergence',()=>{
+ const state=structuredClone(captured);
+ const raw=state.base.base;
+ raw.quadratic=JSON.stringify([{rhs:[2],linear:[[0]],quadraticDiagonal:[[0]],scale:1}]);
+ raw.quadraticCount=1;
+ raw.monotone=JSON.stringify([{
+   variable:1,parameters:[1],body:2,left:0,right:1,derivativeLower:0,derivativeUpper:2}]);
+ raw.monotoneCount=1;
+ raw.picard=JSON.stringify([{xi:1,eta:2,A0:[[0]],A1:[[2]],forcing:[0]}]);
+ raw.picardCount=1;
+ const registry=loadOriginalExtendedNativeRegistry(state);
+ const quadr=nativeSemanticDefinitionEdges({op:'actual_quadratic_root',args:[0,0,2]},registry);
+ assert.equal(quadr.kind,'actual_implicit_quadratic_root');
+ assert.deepEqual(quadr.bodyRoots,[2,0,1]);
+ assert.equal(quadr.nonlinear_root_iteration_and_contraction_bounds_proved,false);
+ const mono=nativeSemanticDefinitionEdges({op:'actual_monotone_root',args:[0,2]},registry);
+ assert.equal(mono.kind,'actual_implicit_monotone_root');
+ assert.deepEqual(mono.bodyRoots,[1,2,0]);
+ assert.equal(mono.source_monotonicity_and_iteration_error_proved,false);
+ const even=nativeSemanticDefinitionEdges({
+   op:'actual_background_even_profile',args:[0,0,1,2,1,1]},registry);
+ assert.equal(even.kind,'actual_background_even_picard');
+ assert.deepEqual(even.bodyRoots,[1,2,0]);
+ assert.equal(even.even_radial_axis_and_all_derivative_estimates_proved,false);
+});
+test('forged implicit subsystem count fails source registry integrity',()=>{
+ const state=structuredClone(captured);
+ state.base.base.picardCount=1;
+ assert.throws(()=>loadOriginalExtendedNativeRegistry(state),{code:'NATIVE_REGISTRY_SEMANTIC_GAP'});
+});
