@@ -14,6 +14,21 @@ export async function auditOriginalSourceReplay(dir){
  const defs=await fs.readFile(path.join(dir,'original-source-functions.json'));
  if(createHash('sha256').update(defs).digest('hex')!==m.definitions_sha256)
    fail('Native function definitions changed');
+ const captured=JSON.parse(defs.toString());
+ const extended=m.function_registry_capture_kind==='EXTENDED_COUPLED_FACADE';
+ if(extended){
+   if(!Array.isArray(captured.counts)||captured.counts.length!==5||
+      typeof captured.definitions!=='string'||!captured.base)
+     fail('Captured native auxiliary/coupled/forced function namespaces missing');
+   const lists=JSON.parse(captured.definitions);
+   if(!Array.isArray(lists)||lists.length!==5||
+      !lists.every((rows,j)=>Array.isArray(rows)&&rows.length===captured.counts[j]))
+     fail('Captured native registry counts do not match their bodies');
+   if(m.extended_coupled_registry_included!==true||
+      JSON.stringify(m.extended_coupled_function_counts)!==JSON.stringify(captured.counts))
+     fail('Native function manifest and recorded extended registries differ');
+ }
+
  let n=0,expected=null,bytes=0;const ops={},hash=createHash('sha256');
  const input=readline.createInterface({input:createReadStream(path.join(dir,'original-source-nodes.jsonl.gz')).pipe(createGunzip()),crlfDelay:Infinity});
  for await(const line of input){
@@ -44,6 +59,11 @@ export async function auditOriginalSourceReplay(dir){
  return {schema:'MathScope.M3.SourceNumericKernelInventory/1',
    node_count:n,original_root_ids:m.original_root_ids,
    source_node_sha256:m.node_stream_sha256,
+   function_registry_capture_kind:m.function_registry_capture_kind??'LEGACY_RAW_BASE_ONLY',
+   extended_coupled_registry_sha256_verified:extended,
+   native_extended_function_bodies_structurally_present:extended,
+   actual_native_ODE_Fourier_function_values_evaluated:false,
+
    operation_histogram:canonicalOps,operators_requiring_dedicated_interval_interpreters:requiresDedicatedValidatedNumerics,
    requires_original_source_provenance:true,certified_final_numeric_kernels_assumed:0,
    operations_with_nontrivial_numeric_semantics:complicated,
