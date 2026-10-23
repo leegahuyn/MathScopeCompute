@@ -1,4 +1,4 @@
-name: M3 authentic Signed162 and exact Temporal to fixed original FiveMap source
+name: M3 original FiveMap to full 3D physical residual AST evidence gate
 on:
   push:
     branches: [mathscope-m3m4-evidence-gates-20261023]
@@ -44,7 +44,10 @@ jobs:
           grep -F 'band,template,bump:b,updated:signedUpdated' research-ide/mathscope-m3/post-signed-20261023/source-signed-actual-five-map.mjs
           grep -F 'divergence=G.add(De(rawDeltaBeta,1),Dz(gammaDesired))' research-ide/mathscope-m3/post-signed-20261023/source-signed-actual-five-map.mjs
           node --test --test-reporter=tap research-ide/mathscope-m3/tests/original-signed-162-native-field-ids.test.mjs | tee "$RUNNER_TEMP/native-preflight.tap"
-      - name: Execute authentic full initial -> Forced -> Cor85 -> Signed162 -> finite + exact Temporal -> FiveMap
+          node --check research-ide/mathscope-m3/post-signed-20261023/source-postfive-full-3d-residual.mjs
+          node --test --test-reporter=tap research-ide/mathscope-m3/post-signed-20261023/postfive-original-receipt-gate.test.mjs
+          node --test --test-reporter=tap research-ide/mathscope-m3/post-signed-20261023/source-postfive-full-3d-residual.test.mjs
+      - name: Execute original private source through FiveMap then directly compute complete physical 3D residual AST
         run: |
           set -o pipefail
           timeout -s TERM 6000s node --expose-gc research-ide/mathscope-m3/extended-signed-run-20261023/run_real_original_signed162.mjs "$RUNNER_TEMP/m3-original-signed-temporal-five-after-native-field-fix.json"
