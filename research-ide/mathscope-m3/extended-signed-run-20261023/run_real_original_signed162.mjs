@@ -79,7 +79,7 @@ try{
  const {attachOriginalSigned162Successor,assertOriginalSigned162Successor}=await import('../navier/original-signed-162-successor.mjs');
  const signed=await stage('original_signed162_successor',async()=>{
     const obj=await attachOriginalSigned162Successor(forced,{onProgress:context.onProgress,
-       candidateMaxAdditionalNodes:250000,assemblyMaxAdditionalNodes:1500000});
+       candidateMaxAdditionalNodes:250000,assemblyMaxAdditionalNodes:1500000,authenticatedLatestStress:stress});
     if(assertOriginalSigned162Successor(obj)!==true)throw Error('actual source-bound Signed162 private seal rejected');
     return obj;
  });
