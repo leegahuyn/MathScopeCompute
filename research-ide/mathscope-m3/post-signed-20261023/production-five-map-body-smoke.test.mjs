@@ -22,18 +22,25 @@ function harness(){
     current:{mean:{P:G.zero}},residual:{fullOriginalStress:[G.q(1),G.q(2)]}};
   const covariance={rr:G.q(1)},provenance={G,band,bump,template:{mean:{P:G.zero}},
     originalPressure,updated:{updatedCovariance:covariance}};
-  const source={checks:[{pass:true}],mean:{P:G.q(5),Jtheta:G.q(6),Jz:G.q(7),fullAngularCovariance:covariance}};
+  const source={checks:[{pass:true}],mean:{P:G.q(5),Jtheta:G.q(6),Jz:G.q(7),
+    raw:{gr:G.q(2),fluxTheta:G.q(3),fluxZ:G.q(4)},fullAngularCovariance:covariance}};
   const temporal={G,frontier:{signed:{G}},postTemporal:{updatedMeanPressure:source,
     velocity:{beta:G.zero,v:G.zero,gamma:G.zero}}};
   const deps={
     assertActualPostSignedTemporalInverse:()=>true,resolveOriginalPostSignedSourceShape:()=>provenance,
     assertGlobalMomentCurrent:()=>true,
     exactFiveMomentCoefficients:()=>({angular:[G.q(1),G.q(2),G.q(3)],axial:[G.q(4),G.q(5)],
-      angularMatrix:bump.coefficients.angularMatrix,axialMatrix:bump.coefficients.axialMatrix,checks:[{pass:true}]}),
-    exactFullMeanMomentRemainders:()=>({allOldNewAndQuadraticTermsRetained:true,nonlinearRemaindersDeclaredZero:false}),
+      angularMatrix:bump.coefficients.angularMatrix,axialMatrix:bump.coefficients.axialMatrix,
+      angularValues:[G.zero,G.q(-5),G.q(7)],axialValues:[G.zero,G.q(-6)],checks:[{pass:true}]}),
+    exactFullMeanMomentRemainders:()=>({allOldNewAndQuadraticTermsRetained:true,nonlinearRemaindersDeclaredZero:false,
+      Rg:G.q(2),JthetaIntegrand:G.q(3),JzVelocityIntegrand:G.q(4),
+      linear:{PIntegrand:G.q(5),JthetaIntegrand:G.q(6)}}),
     originalFullMeanOperators:()=>({De:x=>G.add(x,G.one),Dz:x=>G.derivative(x,geometry.Z)}),
-    reconstructUpdatedFullMeanPressure:(_,opts)=>({mean:{P:G.q(7),Jtheta:G.q(8),Jz:G.q(9),fullAngularCovariance:opts.covariance},
+    reconstructUpdatedFullMeanPressure:(_,opts)=>({mean:{P:G.q(7),Jtheta:G.q(8),Jz:G.q(9),
+      raw:{gr:G.q(2),fluxTheta:G.q(3),fluxZ:G.q(4)},fullAngularCovariance:opts.covariance},
       checks:[{pass:true}],pressure:{value:G.q(2)}}),
+    exactNormalizedHaar:(_,body)=>G.add(body,G.one),
+    exactWholeRadialIntegral:(_,body)=>G.add(body,G.one),
     globalGraphEqual:()=>({pass:true}),shareGlobalScalar:(_,id)=>id,
     canonicalStringify:JSON.stringify,sha256:async()=>''};
   const sourceText=readFileSync(new URL('./source-signed-actual-five-map.mjs',import.meta.url),'utf8')
@@ -47,6 +54,9 @@ test('unchanged production FiveMap body reaches five rows and fresh pressure wit
   assert.equal(x.schema,'MathScope.N6.ActualPostSignedFiveMapAST/1');
   assert.equal(x.coefficients.angular.length,3);
   assert.equal(x.coefficients.axial.length,2);
+  assert.equal(x.exactFiveRows.length,5);
+  assert.equal(x.expansionChecks.length,3);
+  assert.deepEqual(Object.keys(x.remainderDefects),['P','Jtheta','Jz']);
   assert.ok(x.checks.every(c=>c.pass===true));
   assert.equal(x.scope.actualFinal67NumericalJets,0);
 });
