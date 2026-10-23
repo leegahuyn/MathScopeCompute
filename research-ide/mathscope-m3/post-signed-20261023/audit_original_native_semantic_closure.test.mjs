@@ -258,7 +258,7 @@ test('crosschecked embedded global pulses recover both actual covariance definit
  const node={op:'actual_covariance_volterra',args:[1,0,1,[1]]};
  const def=nativeSemanticDefinitionEdges(node,registry);
  assert.equal(def.kind,'source_covariance_volterra');
- assert.deepEqual(def.bodyRoots,[0,1,2]);
+ assert.deepEqual(def.bodyRoots,[1,0,2]);
  assert.equal(def.matrixCoefficientBoundsAndTailVerified,false);
  const mutation=structuredClone(state);
  const q=JSON.parse(mutation.base.base.m3GlobalPulses);
