@@ -2,7 +2,7 @@ import {createReadStream,promises as fs} from 'node:fs';
 import {createGunzip} from 'node:zlib';
 import readline from 'node:readline';
 import path from 'node:path';
-import {coupledExpressionChildren} from '../navier/source-coupled-expressions.mjs';
+import {exactOriginalSourceNodeChildren} from './exact_original_node_children.mjs';
 import {auditOriginalSourceReplay} from './audit_original_source_graph_replay.mjs';
 
 const abort=message=>{throw Object.assign(Error(message),{code:'INVALID_SOURCE_DEPENDENCY_CLOSURE'});};
@@ -10,8 +10,9 @@ const elementary=new Set(['rational','coordinate','add','multiply','inverse','in
 const bounded=new Set(['exp','log_positive','sqrt_positive']);
 /**
  * Roots-to-leaves source-operation census without loading G.nodes objects.
- * This is NOT a source evaluator: coupledExpressionChildren defines only
- * syntactic node dependency references, never the native function value.
+ * This is NOT a source evaluator: exactOriginalSourceNodeChildren defines only
+ * typed syntactic node dependencies, never a native function's value. Unknown
+ * source-native operations halt rather than inventing an incomplete census.
  */
 export async function auditRootReachableNativeOperations(dir,{maxNodes=5000000,maxEdges=30000000}={}){
  const provenance=await auditOriginalSourceReplay(dir);
@@ -34,7 +35,7 @@ export async function auditRootReachableNativeOperations(dir,{maxNodes=5000000,m
      idByOp.set(obj.op,opNames.length);opNames.push(obj.op);
    }
    nodeOps[count]=idByOp.get(obj.op);
-   const children=coupledExpressionChildren(obj);
+   const children=exactOriginalSourceNodeChildren(obj);
    if(!Array.isArray(children))abort('Original source child extractor returned no array');
    for(const child of children){
      if(!Number.isSafeInteger(child)||child<0||child>=count)
