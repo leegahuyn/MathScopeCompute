@@ -93,7 +93,18 @@ try{
     if(assertSigned162TemporalFrontier(obj)!==true)throw Error('authentic centered post-signed temporal source rejected');
     return obj;
  });
- receipt.real_original_temporal_centered_input_constructed=true;
+ receipt.real_original_temporal_centered_input_constructed=true;save();
+ const {attachSigned162FiniteTemporalReplay,assertSigned162FiniteTemporalReplay}=
+   await import('../temporal-finite-20261023/source-signed-temporal-finite-replay.mjs');
+ const temporalFinite=await stage('post_signed_original_finite_fourier_with_tails',()=>{
+   const x=attachSigned162FiniteTemporalReplay(frontier,context);
+   if(assertSigned162FiniteTemporalReplay(x)!==true)throw Error('Original post-Signed finite Fourier source rejected');
+   return x;
+ });
+ receipt.real_original_temporal_finite_prefix_constructed=true;
+ receipt.temporal_finite_roots=temporalFinite.roots;
+ receipt.temporal_finite_full_lattice_modes_each=8;
+ receipt.temporal_finite_tails_retained=true;save();
  receipt.real_original_temporal_seal_issued=false;
  receipt.real_original_five_map_seal_issued=false;
  receipt.stage='TEMPORAL_INVERSE_FIVEMAP_AND_FINAL67_JETS_OPEN';
