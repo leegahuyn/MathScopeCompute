@@ -22,6 +22,8 @@ jobs:
       - name: Check genuine PR30 source AST import and post-Signed private-entry contracts
         run: |
           set -euo pipefail
+          git apply --check research-ide/mathscope-m3/staged-patches-20261023/PR30_Cumulative_Signed162_Cor85_TemporalFrontier.patch
+          git apply research-ide/mathscope-m3/staged-patches-20261023/PR30_Cumulative_Signed162_Cor85_TemporalFrontier.patch
           for code in research-ide/mathscope-m3/post-signed-20261023/*.mjs; do node --check "$code"; done
           git status --short
           node --test --test-reporter=tap --test-concurrency=1 \
