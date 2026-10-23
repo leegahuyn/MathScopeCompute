@@ -85,5 +85,5 @@ test('single reverse pass reports separate root native closures accurately',asyn
  assert.equal(add.reachable_nodes,4);
  assert.equal(exp.operation_counts.find(x=>x.op==='exp').n,1);
  assert.equal(add.operation_counts.some(x=>x.op==='exp'),false);
- assert.equal(r.operation_counts.find(x=>x.op==='exp').n,1);
+ assert.equal(r.operator_counts.find(x=>x.op==='exp').n,1);
 });
