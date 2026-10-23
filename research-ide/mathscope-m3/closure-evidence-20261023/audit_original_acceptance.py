@@ -10,7 +10,7 @@ EXPECTED={"m3":{"blob_sha":"4634076ded72d588c862fb8002bb1cf4e634b940","row_count
           "m4":{"blob_sha":"a046586e421155f72914eb1ffbec48519b4bd2bb","row_count":16}}
 def read(path):
     raw=(ROOT/path).read_bytes()
-    return json.loads(raw),hashlib.sha256(raw).hexdigest(),hashlib.sha1(b"blob "+str(len(raw)).encode()+b"\\0"+raw).hexdigest()
+    return json.loads(raw),hashlib.sha256(raw).hexdigest(),hashlib.sha1(b"blob "+str(len(raw)).encode()+bytes([0])+raw).hexdigest()
 def check(value, message):
     if not value: raise RuntimeError("FAIL_CLOSED: "+message)
 def main():
@@ -37,6 +37,6 @@ def main():
       "all_M3_M4_closed":False,"release":"HOLD"}
     dest=pathlib.Path(sys.argv[1]) if len(sys.argv)>1 else pathlib.Path("audit_original_acceptance_result.json")
     dest.parent.mkdir(parents=True,exist_ok=True)
-    dest.write_text(json.dumps(output,ensure_ascii=False,indent=2)+"\\n")
+    dest.write_text(json.dumps(output,ensure_ascii=False,indent=2)+chr(10))
     print(json.dumps({"audit":"PASS","original_M3":"62/64","original_M4":"0/16 ACCEPTED","destination":str(dest),"release":"HOLD"}))
 if __name__=="__main__":main()
