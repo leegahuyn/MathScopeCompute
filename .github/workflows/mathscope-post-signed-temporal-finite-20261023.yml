@@ -1,0 +1,33 @@
+name: M3 exact post-Signed finite temporal Fourier kernels
+on:
+  push:
+    branches: [mathscope-m3m4-evidence-gates-20261023]
+    paths:
+      - '.github/workflows/mathscope-post-signed-temporal-finite-20261023.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  original-temporal-finite-kernel:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Source AST imports and original Fourier identity without numerical substitutions
+        run: |
+          set -euo pipefail
+          node --check research-ide/mathscope-m3/temporal-finite-20261023/source-signed-temporal-finite-replay.mjs
+          node --check research-ide/mathscope-m3/temporal-finite-20261023/finite-temporal-exact-kernel.test.mjs
+          node --test --test-reporter=tap research-ide/mathscope-m3/temporal-finite-20261023/finite-temporal-exact-kernel.test.mjs 2>&1 | tee "$RUNNER_TEMP/temporal-finite-kernel.tap"
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mathscope-post-signed-finite-temporal-original-kernel-test
+          path: ${{ runner.temp }}/temporal-finite-kernel.tap
+          if-no-files-found: warn
+          retention-days: 30
