@@ -1,0 +1,21 @@
+name: MathScope source-shaped full3D split preflight (not global proof)
+on:
+  push:
+    branches: [mathscope-m3m4-evidence-gates-20261023]
+    paths:
+      - 'research-ide/mathscope-m3/post-signed-20261023/source-postfive-direct-split*.mjs'
+      - '.github/workflows/mathscope-postfive-direct-split-ci.yml'
+  workflow_dispatch:
+jobs:
+  source-split-preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check strict source graph module syntax
+        run: node --check research-ide/mathscope-m3/post-signed-20261023/source-postfive-direct-split.mjs
+      - name: Execute source-shaped negative tests (fixture-only)
+        run: node --test research-ide/mathscope-m3/post-signed-20261023/source-postfive-direct-split.test.mjs
