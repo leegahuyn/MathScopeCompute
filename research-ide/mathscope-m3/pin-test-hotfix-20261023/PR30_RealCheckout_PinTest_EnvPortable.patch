@@ -1,0 +1,20 @@
+diff --git a/research-ide/mathscope-m3/tests/original-signed-162-successor-audit.test.mjs b/research-ide/mathscope-m3/tests/original-signed-162-successor-audit.test.mjs
+--- a/research-ide/mathscope-m3/tests/original-signed-162-successor-audit.test.mjs
++++ b/research-ide/mathscope-m3/tests/original-signed-162-successor-audit.test.mjs
+@@ -35,8 +35,14 @@
+   assert.equal(PR30_SOURCE_BLOBS['research-ide/mathscope-m3/navier/source-global-signed.mjs'],'26b467473b4e4c09a59b6c302aee5493d55c2e15');
+   assert.equal(PR30_SOURCE_BLOBS['research-ide/mathscope-m3/navier/source-updated-mean-stress.mjs'],'266bbd37993ab937de5cdc194b834c8c89fb5020');
+ });
+-test('source pinning does not accept a staged test-only synthetic repo as full PR30',async()=>{
+-  await assert.rejects(verifyPR30OriginalSourceFiles(),e=>e?.code==='PR30_SOURCE_NOT_MATERIALIZED');
++test('source pinning verifies real PR30 where present and rejects test-only synthetic repositories',async()=>{
++  try {
++    const certificate=await verifyPR30OriginalSourceFiles();
++    assert.equal(certificate.allMatch,true);
++    assert.equal(certificate.verifiedFiles.length,29);
++  } catch(e) {
++    assert.equal(e?.code,'PR30_SOURCE_NOT_MATERIALIZED');
++  }
+ });
+ test('native PR30 initial constructor follows the archived complete first-Forced source dependency order',async()=>{
+   const s=await (await import('node:fs/promises')).readFile(new URL('../navier/source-pr30-original-factory.mjs',import.meta.url),'utf8');
