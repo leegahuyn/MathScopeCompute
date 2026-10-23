@@ -1,0 +1,24 @@
+name: MathScope exact rational bounded transcendental interval proofs
+on:
+  push:
+    branches: [mathscope-m3m4-evidence-gates-20261023]
+    paths:
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/certified_bounded_transcendentals.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/test_certified_bounded_transcendentals.py'
+      - '.github/workflows/mathscope-bounded-transcendentals-exact-interval.yml'
+  workflow_dispatch:
+jobs:
+  rational-transcendental-proof-controls:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Exact rational Taylor and integer dyadic root enclosure with rigorous remainder and fail-closed controls
+        run: |
+          cd research-ide/mathscope-m3/closure-evidence-20261023
+          python -m unittest -v test_certified_bounded_transcendentals
