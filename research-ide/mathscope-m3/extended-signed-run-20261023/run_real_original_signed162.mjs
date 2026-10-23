@@ -49,6 +49,7 @@ async function stage(name,callback){
     const result=await callback();
     receipt.successfully_authenticated.push(name);
     receipt.graph_node_counts.push({stage:name,node_count:G?.nodes?.length??null,elapsed_ms:Date.now()-START});
+    console.log(JSON.stringify({kind:'ORIGINAL_STAGE_COMPLETED',stage:name,elapsed_ms:Date.now()-START,node_count:G?.nodes?.length??null}));
     save();return result;
 }
 try{
