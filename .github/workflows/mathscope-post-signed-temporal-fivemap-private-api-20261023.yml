@@ -1,0 +1,39 @@
+name: M3 original post-Signed exact temporal AST plus 5-moment source gated contract
+on:
+  push:
+    branches: [mathscope-m3m4-evidence-gates-20261023]
+    paths:
+      - '.github/workflows/mathscope-post-signed-temporal-fivemap-private-api-20261023.yml'
+      - 'research-ide/mathscope-m3/post-signed-20261023/**'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-temporal-and-post-five-source-contract:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Check genuine PR30 source AST import and post-Signed private-entry contracts
+        run: |
+          set -euo pipefail
+          for code in research-ide/mathscope-m3/post-signed-20261023/*.mjs; do node --check "$code"; done
+          git status --short
+          node --test --test-reporter=tap --test-concurrency=1 \
+            research-ide/mathscope-m3/post-signed-20261023/post-signed-actual-downstream-contract.test.mjs \
+            research-ide/mathscope-m3/navier/tests/global-source-moment-kernel.test.mjs \
+            research-ide/mathscope-m3/navier/tests/full-mean-equations-kernel.test.mjs \
+            research-ide/mathscope-m3/temporal-finite-20261023/finite-temporal-exact-kernel.test.mjs \
+            2>&1 | tee "$RUNNER_TEMP/post-signed-full-temporal-and-fivemap-kernels.tap"
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mathscope-postsigned-temporal-five-private-api-native-source-tests
+          path: ${{ runner.temp }}/post-signed-full-temporal-and-fivemap-kernels.tap
+          if-no-files-found: warn
+          retention-days: 30
