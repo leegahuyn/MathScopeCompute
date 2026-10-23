@@ -1,4 +1,4 @@
-name: M3 original full-graph numeric-source replay capture
+name: M3 source-private full-DAG plus extended native-definition capture
 on:
   push:
     branches: [mathscope-m3m4-evidence-gates-20261023]
@@ -50,6 +50,9 @@ jobs:
           node --check research-ide/mathscope-m3/post-signed-20261023/source-postfive-direct-split.mjs
           node --test --test-reporter=tap research-ide/mathscope-m3/post-signed-20261023/source-postfive-direct-split.test.mjs
           node --check research-ide/mathscope-m3/extended-signed-run-20261023/run_real_original_signed162.mjs
+          node --check research-ide/mathscope-m3/post-signed-20261023/export_original_source_graph.mjs
+          node --check research-ide/mathscope-m3/post-signed-20261023/audit_original_source_graph_replay.mjs
+          node --test research-ide/mathscope-m3/post-signed-20261023/export_original_source_graph.test.mjs
       - name: Run full original Signed Temporal FiveMap full3D and independent direct-split roots
         run: |
           set -o pipefail
@@ -63,7 +66,11 @@ jobs:
           const dir=process.env.RUNNER_TEMP+'/first-post-five-source-graph';
           const r=await auditOriginalSourceReplay(dir);
           writeFileSync(dir+'/source-numeric-operator-inventory.json',JSON.stringify(r,null,2)+'\n');
-          if(r.final_all_cycle_A_b_p_serialized!==false||r.final_67_numeric_certified!==0)throw Error('Original release guard mismatch');
+          if(r.final_all_cycle_A_b_p_serialized!==false||r.final_67_numeric_certified!==0||
+            r.function_registry_capture_kind!=='EXTENDED_COUPLED_FACADE'||
+            r.extended_coupled_registry_sha256_verified!==true||
+            r.native_extended_function_bodies_structurally_present!==true)
+            throw Error('Missing exact extended native function bodies or unsafe final-field promotion');
           console.log(JSON.stringify({nodeCount:r.node_count,distinctOps:Object.keys(r.operation_histogram).length,
               dedicatedNumericOpCount:r.operators_requiring_dedicated_interval_interpreters.length,originalFinal67:0,release:'HOLD'}));
           NODE
