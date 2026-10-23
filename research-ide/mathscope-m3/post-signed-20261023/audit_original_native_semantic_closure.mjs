@@ -38,6 +38,7 @@ export async function auditNativeDefinitionBodyClosure(dir,{maxNodes=5000000,max
  const starts=new Uint32Array(count+1),edges=[],
    opIds=new Uint16Array(count),opNames=[],opIndex=new Map();
  const bodyByNode=new Map(),missingByNode=new Map(),cachedNativeDefinitions=new Map(),cacheKeyByNode=new Map();
+ const naturalSeriesByNode=new Map();
  let n=0,header=false,bodyEdges=0;
  const lines=readline.createInterface({input:createReadStream(path.join(dir,'original-source-nodes.jsonl.gz')).pipe(createGunzip()),crlfDelay:Infinity});
  for await(const line of lines){
@@ -56,6 +57,14 @@ export async function auditNativeDefinitionBodyClosure(dir,{maxNodes=5000000,max
      opIndex.set(item.op,opNames.length);opNames.push(item.op)
    }
    opIds[n]=opIndex.get(item.op);
+   if(item.op==='actual_natural_series'){
+     const [component,Y,eta,k,m]=item.args;
+     if(!['Phi','u','average'].includes(component)||
+        !Number.isSafeInteger(Y)||!Number.isSafeInteger(eta)||
+        !Number.isSafeInteger(k)||k<0||!Number.isSafeInteger(m)||m<0)
+        halt('Malformed native actual natural-series source call at '+n);
+     naturalSeriesByNode.set(n,{component,Y,eta,radialOrder:k,etaOrder:m});
+   }
    if(item.op.startsWith('m3_')||item.op.startsWith('actual_')){
      const cacheKey=item.op+':'+JSON.stringify(item.args[0]);
      cacheKeyByNode.set(n,cacheKey);
@@ -93,6 +102,8 @@ export async function auditNativeDefinitionBodyClosure(dir,{maxNodes=5000000,max
    if(def)for(const id of def.roots)visit(id);
    if(++work>count*17)halt('Excessive semantic graph propagation');
  }
+ const naturalComponents=Object.create(null),naturalOrders=Object.create(null),
+       naturalArgumentPairs=new Set();
  const union=Object.create(null),perRoot=roots.map(()=>Object.create(null)),
    missing=Object.create(null),byKind=Object.create(null),reachedDefinitionKeys=new Set();
  let reachable=0,expandedNativeCalls=0,unresolvedCalls=0,reachedUniqueBodyEdges=0;
@@ -100,6 +111,14 @@ export async function auditNativeDefinitionBodyClosure(dir,{maxNodes=5000000,max
    const bits=mask[i];if(!bits)continue;
    reachable++;
    const op=opNames[opIds[i]];
+   if(op==='actual_natural_series'){
+     const a=naturalSeriesByNode.get(i);
+     if(!a)halt('Natural source tuple lost from actual graph');
+     naturalComponents[a.component]=(naturalComponents[a.component]??0)+1;
+     const key=a.radialOrder+','+a.etaOrder;
+     naturalOrders[key]=(naturalOrders[key]??0)+1;
+     naturalArgumentPairs.add(a.Y+','+a.eta);
+   }
    union[op]=(union[op]??0)+1;
    for(let j=0;j<roots.length;j++)if(bits&(1<<j))
      perRoot[j][op]=(perRoot[j][op]??0)+1;
@@ -147,6 +166,18 @@ export async function auditNativeDefinitionBodyClosure(dir,{maxNodes=5000000,max
    reached_native_calls_with_unresolved_definitions:unresolvedCalls,
    reached_native_body_categories:byKind,
    unresolved_native_semantic_blockers:format(missing),
+   original_reachable_natural_series_source_profile:{
+     total_reachable_calls:Object.values(naturalComponents).reduce((a,b)=>a+b,0),
+     counts_by_component:naturalComponents,
+     derivative_orders:Object.entries(naturalOrders).sort((a,b)=>b[1]-a[1])
+       .map(([k,n])=>({radialOrder:Number(k.split(',')[0]),etaOrder:Number(k.split(',')[1]),calls:n})),
+     max_radial_order:Math.max(0,...Object.keys(naturalOrders).map(k=>Number(k.split(',')[0]))),
+     max_eta_order:Math.max(0,...Object.keys(naturalOrders).map(k=>Number(k.split(',')[1]))),
+     distinct_source_Y_eta_argument_node_pairs:naturalArgumentPairs.size,
+     source_coefficient_norm_proved:false,source_uniform_analytic_domain_proved:false,
+     source_fourier_or_series_numeric_value_proved:false,
+     original_final_67_certified:0
+   },
    original_root_semantic_body_usage:perRoot.map((c,j)=>({
       root_id:roots[j],role:rootRoles[j],
       structurally_reachable_nodes:Object.values(c).reduce((a,b)=>a+b,0),
