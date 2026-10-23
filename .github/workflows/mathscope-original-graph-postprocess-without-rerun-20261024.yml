@@ -1,5 +1,12 @@
 name: M3 process completed original source graph artifact without repeating expensive original run
 on:
+  push:
+    branches: [mathscope-m3m4-evidence-gates-20261023]
+    paths:
+      - '.github/workflows/mathscope-original-graph-postprocess-without-rerun-20261024.yml'
+      - 'research-ide/mathscope-m3/post-signed-20261023/postprocess_original_full_graph.mjs'
+      - 'research-ide/mathscope-m3/post-signed-20261023/original_native_semantic_definitions.mjs'
+      - 'research-ide/mathscope-m3/post-signed-20261023/audit_original_native_semantic_closure.mjs'
   workflow_dispatch:
     inputs:
       original_run_id:
@@ -16,7 +23,7 @@ jobs:
     timeout-minutes: 95
     env:
       GH_TOKEN: ${{ github.token }}
-      SOURCE_RUN_ID: ${{ inputs.original_run_id }}
+      SOURCE_RUN_ID: ${{ inputs.original_run_id || '39988632325' }}
       NODE_OPTIONS: --max-old-space-size=5200
     steps:
       - uses: actions/checkout@v4
