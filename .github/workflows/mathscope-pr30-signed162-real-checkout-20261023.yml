@@ -1,0 +1,51 @@
+name: PR30 real checkout Signed162 patch integrity and native regression
+on:
+  push:
+    branches:
+      - mathscope-m3m4-evidence-gates-20261023
+    paths:
+      - '.github/workflows/mathscope-pr30-signed162-real-checkout-20261023.yml'
+      - 'research-ide/mathscope-m3/staged-patches-20261023/**'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  real-checkout-apply-and-regression:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify exact prior cumulative patch bytes
+        run: |
+          echo 'd23a2ac3b56412f176c3f86a7303a623fe07931453aff0e55ddf1730e34ee312  research-ide/mathscope-m3/staged-patches-20261023/PR30_Cumulative_Signed162_Cor85_TemporalFrontier.patch' | sha256sum --check | tee "$RUNNER_TEMP/mathscope-patch-integrity.log"
+      - name: Apply unchanged source-bound Signed162 plus Cor85 fix to real PR30 checkout
+        run: |
+          git apply --check research-ide/mathscope-m3/staged-patches-20261023/PR30_Cumulative_Signed162_Cor85_TemporalFrontier.patch
+          git apply research-ide/mathscope-m3/staged-patches-20261023/PR30_Cumulative_Signed162_Cor85_TemporalFrontier.patch
+          git status --short | tee "$RUNNER_TEMP/mathscope-real-patch-status.txt"
+      - name: Validate source imports and syntax of all generated .mjs
+        run: |
+          for p in research-ide/mathscope-m3/navier/{generic*,original*,source-signed*,source-pr30*,run-pr30*,actual-67*}.mjs; do
+            if test -f "$p"; then node --check "$p"; fi
+          done
+      - name: Execute full source-bound signed/current/temporal regression in real PR30 repository
+        run: |
+          node --test --test-concurrency=1 research-ide/mathscope-m3/tests/*.test.mjs 2>&1 | tee "$RUNNER_TEMP/mathscope-signed162-real-checkout.tap"
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mathscope-real-pr30-signed162-patch-evidence
+          path: |
+            ${{ runner.temp }}/mathscope-patch-integrity.log
+            ${{ runner.temp }}/mathscope-real-patch-status.txt
+            ${{ runner.temp }}/mathscope-signed162-real-checkout.tap
+          if-no-files-found: warn
+          retention-days: 14
