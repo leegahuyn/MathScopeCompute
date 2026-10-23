@@ -56,12 +56,16 @@ function rooted(...items){
  items.forEach(append);
  return [...new Set(nodes)];
 }
-function sourceFieldRoots(field){
+function sourceFieldRoots(field,r){
  if(!field||!Array.isArray(field.rows))bad('native indexed field rows missing');
  let out=[...(field.parameters??[]),...(field.directions??[])];
  for(const row of field.rows){
   if(!Number.isSafeInteger(row.localBody)||!Number.isSafeInteger(row.coefficient)||!Array.isArray(row.values))
     bad('native indexed row missing retained localBody/coefficient/values');
+  if(row.localSystem!==undefined){
+    const [expectedBody]=originalExpression(row.localSystem,r);
+    if(expectedBody!==row.localBody)bad('Native indexed row localSystem does not match stored localBody');
+  }
   out.push(row.localBody,row.coefficient,...row.values,...(row.localParameters??[]));
   for(const item of (row.derivativeMaps??[]).flat())out.push(item.coefficient);
   for(const guard of row.guards??[])out.push(...guard);
@@ -81,11 +85,11 @@ function originalExpression(id,r){
 }
 function originalIndexed(id,r){
  if(typeof id==='string'){
-  if(id.startsWith('coupled-field:'))return [sourceFieldRoots(indexed(id,'coupled-field:',r.coupled[1])),'coupled_indexed'];
+  if(id.startsWith('coupled-field:'))return [sourceFieldRoots(indexed(id,'coupled-field:',r.coupled[1]),r),'coupled_indexed'];
   bad('unrecognized indexed source id '+id);
  }
  // Auxiliary indexed uses numeric list IDs; global indexed belongs to global op.
- return [sourceFieldRoots(at(r.aux.fields,id,'auxiliary.indexed')),'auxiliary_indexed'];
+ return [sourceFieldRoots(at(r.aux.fields,id,'auxiliary.indexed'),r),'auxiliary_indexed'];
 }
 function originalInverse(id,r){
  if(typeof id==='string'){
@@ -136,7 +140,7 @@ export function nativeSemanticDefinitionEdges(node,r){
  }
  if(op==='m3_global_indexed_partial'){
   const f=at(r.globals.indexed,args[0],'global.indexed');
-  return {kind:'global_indexed',bodyRoots:sourceFieldRoots(f),resolved:true,
+  return {kind:'global_indexed',bodyRoots:sourceFieldRoots(f,r),resolved:true,
     differentiationSemanticsVerified:false};
  }
  if(op==='actual_background_picard'){
