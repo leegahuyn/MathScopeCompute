@@ -9,6 +9,7 @@ This generic finite interpreter NEVER certifies MathScope's final A,b,p.
 from fractions import Fraction
 from rigorous_rational_intervals import Interval,UncertifiedExpression,exact_fraction
 from certified_bounded_transcendentals import exp_positive_bounded,log_positive_bounded,sqrt_positive_bounded
+from pinned_n3_parameter_intervals import pinned_profile,exact_pinned_parameter_interval
 
 class UnsupportedOriginalNumericKernel(UncertifiedExpression):
     def __init__(self,operation,node_id):
@@ -24,7 +25,7 @@ def _node_inputs(args,previous,arity):
        'Missing/forward SourceExpressions numeric argument')
     return [previous[x] for x in args]
 
-def evaluate_original_elementary_nodes(nodes,roots,coordinates,max_nodes=20000,enable_bounded_transcendentals=False):
+def evaluate_original_elementary_nodes(nodes,roots,coordinates,max_nodes=20000,enable_bounded_transcendentals=False,enable_pinned_n3_parameter_bounds=False):
     _require(type(nodes) is list and 0<len(nodes)<=max_nodes,
        'Finite original node budget exhausted; no partial result promoted')
     _require(type(roots) is list and roots and
@@ -32,6 +33,7 @@ def evaluate_original_elementary_nodes(nodes,roots,coordinates,max_nodes=20000,e
        'Every root must be an existing node index')
     _require(type(coordinates) is dict,'Closed coordinate boxes required')
     variables={name:Interval.parse(raw) for name,raw in coordinates.items()}
+    pinned=pinned_profile() if enable_pinned_n3_parameter_bounds else None
     evaluated=[]
     for i,node in enumerate(nodes):
         _require(type(node) is dict and set(node)=={'op','args'},
@@ -43,6 +45,10 @@ def evaluate_original_elementary_nodes(nodes,roots,coordinates,max_nodes=20000,e
                 'SourceExpressions rational must use decimal numerator and denominator')
             d=int(args[1]);_require(d!=0,'Source rational zero denominator')
             q=Fraction(int(args[0]),d);result=Interval(q,q)
+        elif op=='source_parameter' and enable_pinned_n3_parameter_bounds:
+            _require(type(args) is list and len(args)==1 and type(args[0]) is str,
+              'Original pinned parameter node name required')
+            result=exact_pinned_parameter_interval(args[0],pinned)
         elif op=='coordinate':
             _require(type(args) is list and len(args)==1 and type(args[0]) is str,
                 'SourceExpressions coordinate label absent')
