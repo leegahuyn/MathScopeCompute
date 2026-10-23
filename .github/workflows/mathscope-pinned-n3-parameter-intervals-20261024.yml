@@ -1,0 +1,26 @@
+name: MathScope source-pinned N3 parameter interval gate
+on:
+  push:
+    branches: [mathscope-m3m4-evidence-gates-20261023]
+    paths:
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/pinned_n3_parameter_intervals.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/test_pinned_n3_parameter_intervals.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/sourceexpressions_elementary_intervals.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/test_sourceexpressions_original_n3_parameter_integration.py'
+      - '.github/workflows/mathscope-pinned-n3-parameter-intervals-20261024.yml'
+  workflow_dispatch:
+jobs:
+  strictly-source-bound-parameter-enclosures:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify source formula SHA and exponent enclosures without replacing positive h by zero
+        run: |
+          cd research-ide/mathscope-m3/closure-evidence-20261023
+          python -m unittest -v test_pinned_n3_parameter_intervals test_sourceexpressions_original_n3_parameter_integration test_sourceexpressions_elementary_intervals test_sourceexpressions_bounded_transcendental_integration
