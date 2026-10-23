@@ -5,6 +5,7 @@
  * interval evaluation, whole-iteration uniform convergence or N7/N8 proof.
  */
 import {assertSigned162TemporalFrontier} from '../navier/source-signed-temporal-frontier.mjs';
+import {resolveOriginalPostSignedSourceShape} from './original-post-signed-source-shape.mjs';
 import {finiteAuxiliaryInverse} from '../navier/source-auxiliary-fourier.mjs';
 import {checkActualFiniteAuxiliaryIdentity} from '../navier/source-global-temporal.mjs';
 import {realizeOriginalTemporalPotential} from '../navier/source-temporal-potential.mjs';
@@ -22,13 +23,14 @@ export function attachActualPostSignedTemporalInverse(frontier,context={}){
     fail('INVALID_TEMPORAL_OPTIONS','No replacement temporal source, Fourier direction, gauge, mean or tail bounds.');
   if(assertSigned162TemporalFrontier(frontier)!==true)
     fail('MISSING_SIGNED_SOURCE','A truly sealed original Signed162 successor is required.');
-  const signed=frontier.signed,G=frontier.G,original=signed.input.input.mean.temporal.pressure,
-    pressure=original,band=pressure.current.band,geometry={...pressure.geometry,chi:pressure.pressure.chi},
+  const signed=frontier.signed,G=frontier.G,
+    {originalPressure:pressure,band,meanVelocity,updated}=resolveOriginalPostSignedSourceShape(signed),
+    geometry={...pressure.geometry,chi:pressure.pressure.chi},
     {R,Z,T,Y}=geometry,ell=band.coordinates.ell;
   if(![R,Z,T,ell,...Y,geometry.ci,geometry.epsilon,geometry.radialFast,
       geometry.radialPrimitive].every(x=>root(G,x))||
     Y.length!==2||Y.some(y=>G.nodes[y].op!=='coordinate')||
-    signed.constructed.updated.updatedMean.checks.some(x=>x.pass!==true)||
+    updated.updatedMean.checks.some(x=>x.pass!==true)||
     pressure.cover.rows.length!==81||!pressure.cover.proof.allCrossLabelProductsVanish||
     !pressure.cover.proof.haarInvariance?.normalizedMeasure)
     fail('INVALID_ORIGINAL_SIGNED_TEMPORAL_DOMAIN','Original common-torus and post-Signed pressure premises are required.');
@@ -57,17 +59,16 @@ export function attachActualPostSignedTemporalInverse(frontier,context={}){
   const potential=realizeOriginalTemporalPotential(G,{
     geometry,inverseTheta:inverses.theta.exact,inverseZ:inverses.z.exact,
     tag:'afterActualSigned162'});
-  const previous=signed.input.mean.completeBetaVGamma,
+  const previous=meanVelocity,
     updatedVelocity=Object.fromEntries(keys.map(k=>[k,G.add(previous[k],potential.velocity[k])])),
     background={b:band.fields.b,V:G.mul(R,band.fields.F),G:band.fields.G},
     afterTemporal=reconstructUpdatedFullMeanPressure(G,{
       geometry:pressure.geometry,background,velocity:updatedVelocity,
-      covariance:signed.constructed.updated.updatedCovariance,
+      covariance:updated.updatedCovariance,
       stress:pressure.residual.fullOriginalStress,
       rho:pressure.pressure.rho,chi:pressure.pressure.chi,
       tag:'ActualSignedAfterTemporalUpdatedPressure'}),
-    noChangedCovariance=afterTemporal.mean.fullAngularCovariance===
-      signed.constructed.updated.updatedCovariance,
+    noChangedCovariance=afterTemporal.mean.fullAngularCovariance===updated.updatedCovariance,
     checks=[
       ...potential.checks,
       ...afterTemporal.checks,
@@ -77,7 +78,7 @@ export function attachActualPostSignedTemporalInverse(frontier,context={}){
           .every(x=>G.nodes[x.exact].op==='m3_aux_inverse_partial'&&
             x.finite.tails.length===2&&x.finite.tails.every(t=>t.tailTendsToZero))},
       {id:'no-old-temporal-mean-reused',pass:afterTemporal.mean.P!==
-        signed.constructed.updated.updatedMean.mean.P},
+        updated.updatedMean.mean.P},
     ];
   if(checks.some(x=>x.pass!==true))
     fail('INVALID_SIGNED_TEMPORAL_RECOMPUTATION',
