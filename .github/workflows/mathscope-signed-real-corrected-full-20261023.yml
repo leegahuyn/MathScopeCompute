@@ -10,10 +10,10 @@ permissions:
 jobs:
   exact-original-full-current-signed:
     runs-on: ubuntu-24.04
-    timeout-minutes: 75
+    timeout-minutes: 105
     env:
       NODE_OPTIONS: --max-old-space-size=5200
-      M3_MAX_MINUTES: '65'
+      M3_MAX_MINUTES: '95'
       M3_MAX_RSS_GB: '6'
     steps:
       - uses: actions/checkout@v4
@@ -45,11 +45,13 @@ jobs:
       - name: Execute authentic full initial -> Forced -> Cor85 -> Signed162 -> finite + exact Temporal -> FiveMap
         run: |
           set -o pipefail
-          timeout -s TERM 4200s node --expose-gc research-ide/mathscope-m3/extended-signed-run-20261023/run_real_original_signed162.mjs "$RUNNER_TEMP/m3-original-signed-temporal-five-after-native-field-fix.json"
+          timeout -s TERM 6000s node --expose-gc research-ide/mathscope-m3/extended-signed-run-20261023/run_real_original_signed162.mjs "$RUNNER_TEMP/m3-original-signed-temporal-five-after-native-field-fix.json"
       - if: always()
         uses: actions/upload-artifact@v4
         with:
           name: authentic-signed162-real-native-field-and-post-five-checkpoint
-          path: ${{ runner.temp }}/m3-original-signed-temporal-after-cover-correction.json
+          path: |
+            ${{ runner.temp }}/m3-original-signed-temporal-five-after-native-field-fix.json
+            ${{ runner.temp }}/native-preflight.tap
           if-no-files-found: warn
           retention-days: 30
