@@ -13,6 +13,36 @@ const indexed=(id,prefix,rows)=>{
  if(row.id!==id)bad(prefix+' id in native registry does not match '+id);
  return row;
 };
+/** Replay-only recovery from separately retained originalDefinition text embedded
+ * by GlobalSourceExpressions.bindGlobalPulseDerivatives. This is a byte-stable
+ * source CROSS-CHECK, not the independent missing G.covarianceSystems runtime
+ * registry SHA, nor a Volterra limit certificate.
+ */
+export function recoverEmbeddedOriginalCovariance(pulses){
+ if(!Array.isArray(pulses))bad('Missing global source pulse definitions');
+ const byCovariance=[];
+ for(const pulse of pulses){
+   const id=pulse?.covariance;
+   if(!Number.isSafeInteger(id)||id<0||typeof pulse.originalDefinition!=='string')
+     bad('Global source pulse lacks exact original covariance reference');
+   let original;
+   try{original=JSON.parse(pulse.originalDefinition)}catch{bad('Original covariance defining string is not valid JSON')}
+   for(const key of ['variable','parameters','matrix','initial','length']){
+     if(JSON.stringify(original[key])!==JSON.stringify(pulse[key]))
+       bad('Original covariance '+id+' differs from bound global pulse '+key);
+   }
+   if(!Array.isArray(original.matrix)||original.matrix.length!==2||
+      original.matrix.some(row=>!Array.isArray(row)||row.length!==2)||
+      !Number.isSafeInteger(original.normUpper)||original.normUpper<0)
+     bad('Embedded covariance lacks source 2x2 matrix and normUpper');
+   if(byCovariance[id]&&JSON.stringify(byCovariance[id])!==JSON.stringify(original))
+     bad('Conflicting original covariance definition for same source system '+id);
+   byCovariance[id]=original;
+ }
+ if(byCovariance.some(x=>x===undefined)||byCovariance.length!==pulses.length)
+   bad('Embedded covariance registry has missing IDs or duplicate system IDs');
+ return byCovariance;
+}
 export function loadOriginalExtendedNativeRegistry(snapshot,{runtimeCovarianceSystems=null}={}){
  if(!snapshot||!snapshot.base||!Array.isArray(snapshot.counts)||snapshot.counts.length!==5)
     bad('full coupled facade snapshot absent');
@@ -55,7 +85,13 @@ export function loadOriginalExtendedNativeRegistry(snapshot,{runtimeCovarianceSy
        bad('Original actual covariance runtime system lacks matrix, norm and interval roots');
    }
  }
- return {coupled,aux,globals,covariance:runtimeCovarianceSystems,
+ const embedded=runtimeCovarianceSystems===null?
+   recoverEmbeddedOriginalCovariance(globals.pulses):null;
+ return {coupled,aux,globals,
+   covariance:runtimeCovarianceSystems??embedded,
+   covarianceProvenance:runtimeCovarianceSystems!==null?
+     'INDEPENDENT_RUNTIME_SHA_VERIFIED_BY_CALLER':
+     'EMBEDDED_ORIGINAL_DEFINITION_CROSSCHECKED_NOT_RUNTIME_SHA_VERIFIED',
    counts:{coupled:snapshot.counts,auxiliary:[aux.expressions.length,aux.fields.length,aux.inverses.length],
        baseExpressions:globals.expressions.length,baseIndexed:globals.indexed.length,basePulse:globals.pulses.length}};
 }
