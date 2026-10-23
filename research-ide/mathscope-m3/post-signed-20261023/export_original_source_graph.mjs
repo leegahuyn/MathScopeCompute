@@ -12,14 +12,21 @@ const stable=x=>JSON.stringify(x,(_,v)=>{
  if(v instanceof Set)return {__exact_set_values__:[...v]};
  if(typeof v==='function'||typeof v==='symbol')fail('NON_SERIALIZABLE_SOURCE','Source runtime definition cannot be faithfully serialized');
  return v;});
-export async function exportOriginalSourceGraph(G,{dir,roots,scope,sourceCommit,pr30Commit,maxNodes=5000000}={}){
+export async function exportOriginalSourceGraph(G,{dir,roots,scope,sourceCommit,pr30Commit,maxNodes=5000000,definitionGraph=G}={}){
  if(typeof dir!=='string'||!dir||!Array.isArray(roots)||!roots.length||
     !Number.isSafeInteger(G?.nodes?.length)||G.nodes.length>maxNodes||
     !roots.every(x=>Number.isSafeInteger(x)&&x>=0&&x<G.nodes.length&&G.nodes[x])||
     typeof scope!=='string'||!scope||typeof sourceCommit!=='string'||!sourceCommit||
     typeof pr30Commit!=='string'||!pr30Commit)
    fail('INVALID_ORIGINAL_GRAPH_EXPORT','Missing original roots/provenance or node budget exceeded');
- const defs=G.captureFunctionDefinitions?.();
+ if(!definitionGraph||definitionGraph.nodes!==G.nodes||
+     typeof definitionGraph.captureFunctionDefinitions!=='function')
+     fail('WRONG_SOURCE_DEFINITION_OWNER','Replay owner must share the exact complete original G.nodes array');
+ const defs=definitionGraph.captureFunctionDefinitions();
+ if(definitionGraph!==G&&(!Array.isArray(defs?.counts)||defs.counts.length!==5||
+    typeof defs.definitions!=='string'||!defs.base))
+     fail('MISSING_COUPLED_NATIVE_DEFINITIONS','An extended source owner must capture nested auxiliary, coupled and forced definitions');
+
  if(defs===undefined)fail('MISSING_SOURCE_FUNCTION_DEFINITIONS','No replay without original definitions');
  // Serialize definitions BEFORE node export, avoiding incomplete exports on failure.
  const definitions=stable(defs);
@@ -48,6 +55,10 @@ export async function exportOriginalSourceGraph(G,{dir,roots,scope,sourceCommit,
  const manifest={schema:'MathScope.M3.SourceGraphReplayManifest/1',
    original_pr30_commit:pr30Commit,executing_commit:sourceCommit,
    scope,final_all_cycle_A_b_p:false,node_count:G.nodes.length,
+   function_registry_capture_kind:definitionGraph===G?'RAW_BASE_ONLY':'EXTENDED_COUPLED_FACADE',
+   extended_coupled_function_counts:definitionGraph===G?null:[...defs.counts],
+   extended_coupled_registry_included:definitionGraph!==G,
+
    operation_histogram:Object.fromEntries(Object.entries(operationHistogram).sort(([a],[b])=>a.localeCompare(b))),
    original_root_ids:[...roots],node_stream_uncompressed_bytes:bytes,
    node_stream_sha256:digest.digest('hex'),
