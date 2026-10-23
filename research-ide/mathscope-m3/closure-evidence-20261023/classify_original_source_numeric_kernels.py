@@ -35,10 +35,10 @@ def category(op):
     if re.match(r'^actual_',op):return 'UNRECOGNIZED_ACTUAL_NATIVE_KERNEL_REQUIRED'
     return 'UNKNOWN_SOURCE_OPERATION_IMPLEMENTATION_REQUIRED'
 def audit(m):
-    if m.get('schema')!='MathScope.M3.SourceGraphReplayManifest/1' or
-       m.get('final_all_cycle_A_b_p') is not False or
-       m.get('actual_final_67_jets_certified')!=0 or
-       m.get('release')!='HOLD':
+    if (m.get('schema')!='MathScope.M3.SourceGraphReplayManifest/1' or
+        m.get('final_all_cycle_A_b_p') is not False or
+        m.get('actual_final_67_jets_certified')!=0 or
+        m.get('release')!='HOLD'):
         raise ValueError('Require original first-FiveMap scoped HOLD manifest')
     ops=m.get('operation_histogram')
     if not isinstance(ops,dict) or not ops:
