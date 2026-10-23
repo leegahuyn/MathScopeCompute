@@ -27,6 +27,9 @@ test('only root-reachable source nodes count, never disconnected special functio
  assert.equal(r.original_first_fivemap_graph_nodes,5);
  assert.equal(r.reachable_nodes,4);
  assert.equal(r.unreachable_nodes,1);
+ assert.equal(r.multiple_root_reachability_method,'SINGLE_REVERSE_TOPOLOGICAL_BITMASK_PASS');
+ assert.equal(r.original_source_per_root_native_usage.length,1);
+ assert.equal(r.original_source_per_root_native_usage[0].reachable_nodes,4);
  assert.equal(r.reachable_non_elementary_nodes,0);
  assert.equal(r.actual_final_67_numeric_intervals_certified,0);
  assert.equal(r.exact_original_operator_graph_digest_checked,true);
@@ -71,4 +74,16 @@ test('native system, component and derivative metadata never appear as reachable
    assert.equal(r.unreachable_nodes,1);
    assert.equal(r.reachable_native_operator_kinds_without_validated_generic_interval_value.length,2);
  }finally{await fs.rm(dir,{recursive:true,force:true})}
+});
+
+test('single reverse pass reports separate root native closures accurately',async()=>{
+ const r=await run([3,4]);
+ assert.equal(r.reachable_nodes,5);
+ assert.equal(r.original_source_per_root_native_usage.length,2);
+ const [exp,add]=r.original_source_per_root_native_usage;
+ assert.equal(exp.reachable_nodes,2);
+ assert.equal(add.reachable_nodes,4);
+ assert.equal(exp.operation_counts.find(x=>x.op==='exp').n,1);
+ assert.equal(add.operation_counts.some(x=>x.op==='exp'),false);
+ assert.equal(r.operation_counts.find(x=>x.op==='exp').n,1);
 });
