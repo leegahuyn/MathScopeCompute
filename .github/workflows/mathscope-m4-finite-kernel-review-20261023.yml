@@ -21,11 +21,16 @@ jobs:
           node-version: '24'
       - name: Execute all 3 M4 source-bound finite kernel/acceptance test modules
         run: |
+          set -o pipefail
           node --test --test-reporter=tap --test-concurrency=1             research-ide/mathscope-m4/tests/acceptance.test.mjs             research-ide/mathscope-m4/tests/kernel-evidence.test.mjs             research-ide/mathscope-m4/tests/pinned-kernel-contract.test.mjs             2>&1 | tee "$RUNNER_TEMP/m4-kernel-review.tap"
       - name: Run original 16-criterion acceptance-module reconciliation
-        run: node research-ide/mathscope-m4/acceptance-review-20261019/verify_m4_modules.mjs | tee "$RUNNER_TEMP/m4-original-matrix-review.json"
+        run: |
+          set -o pipefail
+          node research-ide/mathscope-m4/acceptance-review-20261019/verify_m4_modules.mjs | tee "$RUNNER_TEMP/m4-original-matrix-review.json"
       - name: Recheck source-pinned inherited finite proof artifacts
-        run: node research-ide/mathscope-m4/audit-m4.mjs | tee "$RUNNER_TEMP/m4-inherited-artifact-review.json"
+        run: |
+          set -o pipefail
+          node research-ide/mathscope-m4/audit-m4.mjs | tee "$RUNNER_TEMP/m4-inherited-artifact-review.json"
       - if: always()
         uses: actions/upload-artifact@v4
         with:
