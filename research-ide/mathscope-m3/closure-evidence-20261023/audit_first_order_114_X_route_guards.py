@@ -47,6 +47,10 @@ def audit_first_order_routes(overrides=None):
       "choose(x,left,right,before,inside,after){return this.node('smooth_piecewise',[x,left,right,before,inside,after]);}",
       "v=ev(x<=a?args[3]:x>=b?args[5]:args[4],env);",
     ],'exact smooth_piecewise branch semantics')
+    need(ast,[
+      "// The compiler uses this only at source joins with matching derivatives.",
+      "out=this.choose(args[0],args[1],args[2],d(3),d(4),d(5));",
+    ],'piecewise derivative requires matching interface jets')
     need(inner,[
       "aSquared=G.mul(Xa,G.exp(G.div(t1,q(16))))",
       "F0=G.choose(X,Xa,aSquared,naturalF,collarF,collarF)",
@@ -89,6 +93,8 @@ def audit_first_order_routes(overrides=None):
       'original_X_pair_count':8,'original_X_call_count':114,
       'smooth_piecewise_selected_arm_semantics_source_checked':True,
       'required_hypothesis_X_nonnegative':True,
+      'piecewise_join_derivative_formula_source_assumes_matching_jets':True,
+      'actual_join_matching_jets_certified_here':False,
       'local_selected_Ft_Ut_X_le_Xcut_implies_picard_argument_within_radial_domain':True,
       'local_moment_t_in_0_Xcut_implies_picard_argument_within_radial_domain':True,
       'axis_average_t_in_0_1_and_X_in_0_Xkeep_implies_tX_in_0_Xkeep':True,
