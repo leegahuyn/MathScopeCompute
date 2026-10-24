@@ -34,6 +34,7 @@ from pathlib import Path
 
 GRAPH='a6d99fd02036780f9c994268651f6d99d3d6f8702d5476a219c212156e0ca269'
 BAND='1f1c18a26372c998d8389b6c5138b3c9d3a66f36'
+ORDER_ONE_SHA='a94a7079f6884795b79145a143ca2ba7ab15a1eb'
 PIN={
     19:('rational',['1','2']),20:('rational',['-1','1']),
     24:('rational',['2','1']),190:('rational',['-2','1']),
@@ -141,10 +142,54 @@ def central_slice_negative_projection(ell,r,t,Xa,K):
       'actual_original_11root_all_image_paths_proved':False,
     }
 
-def inspect_sha_original_geometry(graph_dir,source_band_file):
+def certify_actual_source_representative_in_mesh(
+    ell,r_index,z_index,t_index,Xa,Xb,Xrep,srep,Rrep,Zrep,Trep):
+    """PROVEN original representative -> s and T intervals, conditional on
+    true point-mesh pairing, original Xb = XR exp(outer-stage-end).
+    This does not certify matching of arbitrary native consumer coordinates.
+    """
+    vals=(r_index,z_index,t_index,Xa,Xb,Xrep,srep,Rrep,Zrep,Trep)
+    require(all(type(x) is F for x in vals),
+            'actual representative must have exact rational source witness')
+    require(F(0)<Xa<=Xrep<=Xb and F(1,2)<=srep<=F(2),
+            'original representative source X,s domain absent')
+    require(Rrep>=0 and Rrep*Rrep==2*srep*Xrep,
+            'Rrep²=2*srep*Xrep source relation absent')
+    require(F(0)<=Trep<=srep and Zrep*Zrep<=F(2),
+            'original slow-image necessary scalar bounds absent')
+    c=real_mesh_box(ell,r_index,z_index,t_index,Xa,Xb)
+    dr,dz,dt=(F(z) for z in c['physical_mesh_center'])
+    d=F(c['mesh_radius_delta'])
+    require(all(abs(u-v)<=d for u,v in (
+      (Rrep,dr),(Zrep,dz),(Trep,dt))),
+      'source representative is not proven inside THIS integer-mesh box')
+    a,b,m,M=(F(c[k]) for k in (
+       'source_s_lower_a','source_s_upper_b','source_T_lower_m','source_T_upper_M'))
+    require(a<=srep<=b<=2 and m<=Trep<=M,
+            'source representative radial/time interval transport failed')
+    return {
+      'schema':'MathScope.M3.OriginalRepresentativeMeshRadialAndTimeTransport/1',
+      'exact_source_mesh_center_grid_indices':[str(v) for v in (r_index,z_index,t_index)],
+      'exact_Xa_Xrep_Xb':[str(Xa),str(Xrep),str(Xb)],
+      'exact_srep':str(srep),
+      'exact_source_representative_R_Z_T':[str(Rrep),str(Zrep),str(Trep)],
+      's_lower_a_le_srep_le_s_upper_b_proved':True,
+      'T_lower_m_le_Trep_le_T_upper_M_proved':True,
+      'original_radial_time_box_feasible':True,
+      'source_Z_T_representative_full_image_identity_proved':False,
+      'actual_root623935_all_runtime_representatives_inside_source_mesh_proved':False,
+      'all_11_physical_root_native_domain_certified':False,
+    }
+
+def inspect_sha_original_geometry(graph_dir,source_band_file,order_one_file):
     data=Path(source_band_file).read_bytes()
     blob=hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest()
     require(blob==BAND,'source-global-band Git blob SHA mismatched')
+    order_bytes=Path(order_one_file).read_bytes()
+    order_blob=hashlib.sha1(b'blob '+str(len(order_bytes)).encode()+b'\\x00'+order_bytes).hexdigest()
+    require(order_blob==ORDER_ONE_SHA and
+      'const Xb=G.mul(XR,G.exp(G.outer.stages.at(-1).end));' in order_bytes.decode('utf8'),
+      'original order-one Xb=XR exp(stageEnd) expression not authenticated')
     want=set(PIN)|{0}
     found={};sha=hashlib.sha256();n=0
     with gzip.open(Path(graph_dir)/'original-source-nodes.jsonl.gz','rb') as f:
@@ -164,6 +209,8 @@ def inspect_sha_original_geometry(graph_dir,source_band_file):
     return {
         'schema':'MathScope.M3.OriginalRoot623935ActualMeshRadialAndTimeGuards/1',
         'original_source_graph_sha256':GRAPH,'source_band_blob_sha1':BAND,
+        'original_order_one_Xb_source_blob_sha1':ORDER_ONE_SHA,
+        'original_lower_radial_denominator_K_equals_order_one_Xb':True,
         'original_frozen_mesh_coordinate_nodes':{'ell':622791,'r':623855,'z':623856,'t':623857},
         'original_delta':'3/(4*ell^6)',
         'actual_grid_index_to_physical_center':'(r,z,t)/ell^6',
@@ -183,8 +230,10 @@ def inspect_sha_original_geometry(graph_dir,source_band_file):
 
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--graph-dir',required=True)
-    p.add_argument('--global-band',required=True);p.add_argument('--output')
+    p.add_argument('--global-band',required=True)
+    p.add_argument('--order-one-source',required=True)
+    p.add_argument('--output')
     x=p.parse_args()
-    report=inspect_sha_original_geometry(x.graph_dir,x.global_band)
+    report=inspect_sha_original_geometry(x.graph_dir,x.global_band,x.order_one_source)
     if x.output:Path(x.output).write_text(json.dumps(report,indent=2)+'\n')
     print(json.dumps(report,indent=2))
