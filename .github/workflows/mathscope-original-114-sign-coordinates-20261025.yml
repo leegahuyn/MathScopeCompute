@@ -1,0 +1,40 @@
+name: MathScope 114 source coordinate sign cases (not global radius proof)
+on:
+  push:
+    branches: [mathscope-m3m4-evidence-gates-20261023]
+    paths:
+      - '.github/workflows/mathscope-original-114-sign-coordinates-20261025.yml'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/audit_original_114_five_coordinate_sign_cases.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/test_audit_original_114_five_coordinate_sign_cases.py'
+  workflow_dispatch:
+permissions:
+  actions: read
+  contents: read
+jobs:
+  114-source-sign-cases:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Fetch immutable full original 4420257 source AST
+        uses: actions/download-artifact@v4
+        with:
+          github-token: ${{ github.token }}
+          run-id: 39988632325
+          name: authenticated-first-fivemap-full-source-dag-replay-not-final-67
+          path: ${{ runner.temp }}/source
+      - name: Run 114-source sign cases, exact SHA and falsification tests
+        env:
+          MATHSCOPE_GRAPH_DIR: ${{ runner.temp }}/source/first-post-five-source-graph
+        working-directory: research-ide/mathscope-m3/closure-evidence-20261023
+        run: |
+          python -m unittest -v test_audit_original_114_five_coordinate_sign_cases.py
+          python audit_original_114_five_coordinate_sign_cases.py --graph-dir "$MATHSCOPE_GRAPH_DIR" --output "$RUNNER_TEMP/SOURCE_114_FIVE_COORDINATE_SIGN_CASES.json"
+      - name: Preserve conditional sign-source receipt, not release
+        uses: actions/upload-artifact@v4
+        with:
+          name: first-FiveMap-114-source-sign-cases-conditional-OPEN-native
+          path: ${{ runner.temp }}/SOURCE_114_FIVE_COORDINATE_SIGN_CASES.json
