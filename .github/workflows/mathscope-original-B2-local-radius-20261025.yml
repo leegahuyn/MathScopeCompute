@@ -1,0 +1,32 @@
+name: MathScope source-bound B2 local analytic radius (not global proof)
+on:
+  push:
+    branches: [mathscope-m3m4-evidence-gates-20261023]
+    paths:
+      - '.github/workflows/mathscope-original-B2-local-radius-20261025.yml'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/audit_original_local_B2_radius_41.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/test_audit_original_local_B2_radius_41.py'
+      - 'research-ide/mathscope-m2/navier/actual-continuation-exact-inner.mjs'
+      - 'research-ide/mathscope-m2/navier/actual-continuation-exact-order-one.mjs'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify-local-B2-radius:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Source-bound radius and fail-closed regression suite
+        working-directory: research-ide/mathscope-m3/closure-evidence-20261023
+        run: |
+          python -m unittest -v test_audit_original_local_B2_radius_41.py test_prove_original_inner_Xcut_natural_radius.py test_audit_original_217_Y_domain_obligations.py
+          python audit_original_local_B2_radius_41.py "$RUNNER_TEMP/LOCAL_B2_RADIUS_CERT.json"
+      - name: Save conditional audit result; not release evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: original-local-B2-radius-41-conditional-not-release
+          path: ${{ runner.temp }}/LOCAL_B2_RADIUS_CERT.json
