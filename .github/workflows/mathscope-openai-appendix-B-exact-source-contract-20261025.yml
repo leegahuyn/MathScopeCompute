@@ -1,0 +1,33 @@
+name: MathScope OpenAI Appendix B exact analytic reference checks (NOT physical fields)
+on:
+  push:
+    branches: [mathscope-m3m4-evidence-gates-20261023]
+    paths:
+      - '.github/workflows/mathscope-openai-appendix-B-exact-source-contract-20261025.yml'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/certify_openai_paper_B11_f0_exact.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/certify_openai_paper_Brho_tail_exact.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/test_certify_openai_paper_analytic_bounds.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  paper-appendix-B-reference:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Recheck exact paper reference finite bounds and reject false profile promotions
+        working-directory: research-ide/mathscope-m3/closure-evidence-20261023
+        run: |
+          python -m unittest -v test_certify_openai_paper_analytic_bounds.py
+          python certify_openai_paper_B11_f0_exact.py "$RUNNER_TEMP/EXACT_B11_F0_COMPARISON_ONLY.json"
+          python certify_openai_paper_Brho_tail_exact.py "$RUNNER_TEMP/EXACT_B4_B_RHO_CONDITIONAL_TAIL_ONLY.json"
+      - name: Store finite mathematical certificates (not source-profile proof)
+        uses: actions/upload-artifact@v4
+        with:
+          name: openai-paper-appendix-B-exact-rational-reference-OPEN-physical-67
+          path: |
+            ${{ runner.temp }}/EXACT_B11_F0_COMPARISON_ONLY.json
+            ${{ runner.temp }}/EXACT_B4_B_RHO_CONDITIONAL_TAIL_ONLY.json
