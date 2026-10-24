@@ -26,15 +26,43 @@ jobs:
           run-id: 39988632325
           github-token: ${{ github.token }}
           path: ${{ runner.temp }}/source
+      - name: Download correct Cor85 source receipt for the source-67 readiness gate
+        uses: actions/download-artifact@v4
+        with:
+          name: mathscope-authentic-pr30-forced-cor85-signed162-evidence
+          run-id: 39899886766
+          github-token: ${{ github.token }}
+          path: ${{ runner.temp }}/cor85
+      - name: Download actual Signed162 + post-Signed Temporal receipt
+        uses: actions/download-artifact@v4
+        with:
+          name: authentic-signed162-real-native-field-and-post-five-checkpoint
+          run-id: 39933504384
+          github-token: ${{ github.token }}
+          path: ${{ runner.temp }}/signed
       - name: Verify original 114 graph calls and 67+13 conditional preflight
         env:
           MATHSCOPE_GRAPH_DIR: ${{ runner.temp }}/source/first-post-five-source-graph
+          REAL_RECEIPT_FILE: ${{ runner.temp }}/cor85/m3-real-signed162-attempt.json
+          ACTUAL_SIGNED_CI_RECEIPT: ${{ runner.temp }}/signed/m3-original-signed-temporal-five-after-native-field-fix.json
         working-directory: research-ide/mathscope-m3/closure-evidence-20261023
         run: |
-          python -m unittest -v test_audit_original_114_ast_call_ledger.py test_compile_original_67jet_force_stencil.py test_conditional_67jet_force_intervals.py test_real_67jet_readiness.py
+          python -m unittest -v test_audit_original_114_ast_call_ledger.py test_compile_original_67jet_force_stencil.py test_conditional_67jet_force_intervals.py test_real_67jet_readiness.py test_67jet_after_actual_signed.py
           python audit_original_114_ast_call_ledger.py --graph-dir "$MATHSCOPE_GRAPH_DIR" --output "$RUNNER_TEMP/ORIGINAL_114_AST_NODE_LEDGER.json"
+          python verify_real_67jet_readiness.py --actual-receipt "$REAL_RECEIPT_FILE" --output "$RUNNER_TEMP/ORIGINAL_PRE_SIGNED_67_READINESS.json"
+          python verify_67jet_after_actual_signed.py --receipt "$ACTUAL_SIGNED_CI_RECEIPT" --output "$RUNNER_TEMP/ORIGINAL_POST_SIGNED_67_READINESS.json"
+          set +e
+          python verify_67jet_after_actual_signed.py --receipt "$ACTUAL_SIGNED_CI_RECEIPT" --output "$RUNNER_TEMP/POST_SIGNED_67_REQUIRED_NEGATIVE.json" --require-67
+          code=$?
+          if [ "$code" -ne 2 ]; then echo "ERROR: incorrectly accepted missing final physical 67 intervals ($code)"; exit 1; fi
+          echo "FINAL_67_JETS_MISSING_FAIL_CLOSED"
+          set -e
       - name: Upload verified original AST inventory (NOT support or jet proof)
         uses: actions/upload-artifact@v4
         with:
           name: original-114-AST-inventory-source-verified-OPEN-Y-HOLD
-          path: ${{ runner.temp }}/ORIGINAL_114_AST_NODE_LEDGER.json
+          path: |
+            ${{ runner.temp }}/ORIGINAL_114_AST_NODE_LEDGER.json
+            ${{ runner.temp }}/ORIGINAL_PRE_SIGNED_67_READINESS.json
+            ${{ runner.temp }}/ORIGINAL_POST_SIGNED_67_READINESS.json
+            ${{ runner.temp }}/POST_SIGNED_67_REQUIRED_NEGATIVE.json
