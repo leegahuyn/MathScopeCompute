@@ -44,6 +44,8 @@ def operands(graph_dir,shape_file):
     shape_cases=Counter();coord_names=Counter();parameter_names=Counter()
     xa_rational_coefficients=Counter()
     add_rational_coefficients=Counter()
+    inverse_product_power_exponents=Counter()
+    inverse_product_denominator_nodes=Counter()
     xa_rational_proved_under_5=0
     xa_rational_over_5=0
     parent_rows=[];direct_X_factor=0;zero_factor=0
@@ -60,6 +62,12 @@ def operands(graph_dir,shape_file):
         if {a['op'],c['op']}=={'add','rational'}:
             rat=a if a['op']=='rational' else c
             add_rational_coefficients[str(Q(int(rat['args'][0]),int(rat['args'][1])))]+=times
+        if {a['op'],c['op']}=={'integer_power','inverse'}:
+            pw=a if a['op']=='integer_power' else c
+            inv=a if a['op']=='inverse' else c
+            demand(type(pw['args'][1]) is int,'Source native integer-power exponent must be exact')
+            inverse_product_power_exponents[pw['args'][1]]+=times
+            inverse_product_denominator_nodes[inv['args'][0]]+=times
         if {a['op'],c['op']}=={'source_parameter','rational'}:
             par=a if a['op']=='source_parameter' else c
             rat=a if a['op']=='rational' else c
@@ -75,6 +83,7 @@ def operands(graph_dir,shape_file):
     demand(sum(shape_cases.values())==4714,'Original source product count changed')
     demand(xa_rational_proved_under_5+xa_rational_over_5==80,
            'Original Xa rational source expressions not covered')
+    demand(sum(inverse_product_power_exponents.values())==56,'56 original inverse/power actual native calls drifted')
     demand(dict(xa_rational_coefficients)=={'1/2':80} and xa_rational_proved_under_5==80,
            'Exact original native argument Xa/2 (Y=2) witness drifted')
     return {
@@ -89,6 +98,9 @@ def operands(graph_dir,shape_file):
        'multiply_calls_with_literal_zero_operand':zero_factor,
        'original_rational_times_Xa_coefficient_occurrences':dict(sorted(xa_rational_coefficients.items())),
        'original_rational_times_add_coefficients':dict(sorted(add_rational_coefficients.items())),
+       'inverse_times_power_exponents':dict(sorted(inverse_product_power_exponents.items())),
+       'inverse_product_denominator_AST_nodes':dict(sorted(inverse_product_denominator_nodes.items())),
+       'inverse_denominator_strict_positivity_proven':False,
        'source_exact_Xa_half_native_argument_Y_equals_2_occurrences':80,
        'source_exact_Xa_half_native_argument_within_actual_OpenAI_B2_Y_4point1':True,
        'individual_rational_Xa_actual_arguments_proved_0_le_Lambda_X_le_5':xa_rational_proved_under_5,
