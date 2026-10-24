@@ -90,6 +90,7 @@ def audit(folder):
     node_kinds=[]   # immutable original op name for each exact actual argument AST ID
     counters=Counter();families=Counter()
     x_actual_kinds=Counter()
+    x_actual_node_ids=Counter()
     per_target=defaultdict(lambda:{'native_expression_call_count':0,
                                     'formal_X_binding_count':0,'ambient_X_formal_absent_count':0,
                                     'actual_X_arg_node_examples':[]})
@@ -132,6 +133,7 @@ def audit(folder):
                 counters['native_expression_calls_with_direct_formal_X_slot']+=1
                 counters['native_expression_calls_with_formal_X_actual_identity' if x_actual==SOURCE_X_COORD_NODE else 'native_expression_calls_with_substituted_formal_X']+=1
                 x_actual_kinds[node_kinds[x_actual]]+=1
+                x_actual_node_ids[x_actual]+=1
             record={
                 'original_native_call_node_id':i,'native_op':node['op'],'system_id':sid,
                 'native_definition_body_id':definition['body'],
@@ -161,6 +163,8 @@ def audit(folder):
       'registered_native_expression_call_counts':dict(counters),
       'relevant_expression_partial_counts_by_operator':dict(families),
       'X_actual_argument_source_operator_counts':dict(x_actual_kinds),
+      'distinct_X_actual_argument_AST_nodes':len(x_actual_node_ids),
+      'actual_X_argument_AST_node_ID_and_count':[{'node_id':n,'calls':v} for n,v in sorted(x_actual_node_ids.items())],
       'distinct_relevant_registered_expression_systems':len(relevant_systems),
       'ordered_native_argument_mapping_sha256':signatures_hash.hexdigest(),
       'representative_exact_actual_binding_examples':examples,
