@@ -91,6 +91,33 @@ def exact_signed_interval_midpoint(L,U,zlo,zhi):
         'certifies_L_le_absZ_le_U':True,'piecewise_first_derivative_join_proved':False}
     raise ProjectedImageConditionOPEN('source-selected signed projection has no admissible intersection')
 
+def exact_T_midpoint_on_source_s_interval(a,b,m,M,ga,gb):
+    """Actual T=(max(m,g(a))+min(M,g(b)))/2, g(s)=s-Z²*s^(2h).
+
+    The exact rational parameters ga,gb are externally certified enclosures
+    or evaluated source function values, NOT invented values for original
+    transcendental g. For g monotone and source L<=|Z|<=U, sufficient:
+    1/2<=a<=b<=2, 0<=m<=M, m<=b, ga<=gb, ga<=M, m<=gb.
+    """
+    vals=(a,b,m,M,ga,gb)
+    if any(type(v) is not Q for v in vals):
+        raise ProjectedImageConditionOPEN('all T source interval entries must be exact rational witnesses')
+    require(Q(1,2)<=a<=b<=Q(2),'actual native s bracket must be within original [1/2,2]')
+    require(Q(0)<=m<=M and m<=b,'source T range and m<=b feasibility missing')
+    require(ga<=gb and ga<=M and m<=gb,
+            'actual signed Z does not preserve g(a)<=T<=g(b)')
+    lo=max(m,ga);hi=min(M,gb)
+    require(lo<=hi,'original source selected T interval empty')
+    value=(lo+hi)/2
+    require(ga<=value<=gb and m<=value<=M,'source exact T midpoint outside slow image')
+    return {
+        'T_source_lower':str(lo),'T_source_upper':str(hi),
+        'T_exact_midpoint':str(value),
+        'source_F_a_le_zero_F_b_ge_zero_given_real_g':True,
+        'native_s_root_in_a_b_given_original_h_monotonicity':True,
+        'actual_original_Z_T_domains_without_external_ga_gb_certified':False
+    }
+
 def original_exact_projection(graph_dir,reached_receipt):
     proof=json.loads(Path(reached_receipt).read_text(encoding='utf8'))
     require(proof.get('schema')=='MathScope.M3.Original11PhysicalRootsExactly2Monotone2SourceCalls/1'
