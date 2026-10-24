@@ -6,6 +6,9 @@ chart guards and native parameter binding must be checked separately.
 """
 import argparse,gzip,hashlib,json
 from collections import Counter
+from fractions import Fraction as Q
+from prove_original_n3_Q_rho_signs import original_n3_Q_rho_strict_positivity
+from pinned_n3_parameter_intervals import pinned_profile
 from pathlib import Path
 from audit_original_114_ast_call_ledger import EXPECTED_GRAPH_SHA
 from audit_original_114_native_X_argument_shapes import UnprovedNativeArgumentShape,demand
@@ -32,7 +35,16 @@ def operands(graph_dir,shape_file):
                 children[node_id]={'op':node['op'],'args':node['args']}
     demand(count==4420257 and h.hexdigest()==EXPECTED_GRAPH_SHA,'Full original AST no longer SHA-authentic')
     demand(set(children)==source_child_ids,'Missing source product operand nodes')
+    # The exact original N3 source parameters yield Lambda*Xa=4, Lambda>0.
+    n3=original_n3_Q_rho_strict_positivity()
+    profile=pinned_profile()
+    demand(n3['Lambda_is_strictly_positive'] and
+       profile['parametersExactExpressions']['Xa']=={'quotient':[{'integer':4},{'ref':'Lambda'}]},
+       'Original N3 Lambda Xa product identity not established')
     shape_cases=Counter();coord_names=Counter();parameter_names=Counter()
+    xa_rational_coefficients=Counter()
+    xa_rational_proved_under_5=0
+    xa_rational_over_5=0
     parent_rows=[];direct_X_factor=0;zero_factor=0
     for p in sorted(xs):
         row=xs[p]
@@ -44,11 +56,21 @@ def operands(graph_dir,shape_file):
             if v['op']=='coordinate':coord_names[v['args'][0]]+=times
             if v['op']=='source_parameter':parameter_names[v['args'][0]]+=times
             if v['op']=='rational' and int(v['args'][0])==0:zero_factor+=times
+        if {a['op'],c['op']}=={'source_parameter','rational'}:
+            par=a if a['op']=='source_parameter' else c
+            rat=a if a['op']=='rational' else c
+            if par['args'][0]=='Xa':
+                multiplier=Q(int(rat['args'][0]),int(rat['args'][1]))
+                xa_rational_coefficients[str(multiplier)]+=times
+                if Q(0)<=multiplier<=Q(5,4):xa_rational_proved_under_5+=times
+                else:xa_rational_over_5+=times
         if 4756 in factor_ids:direct_X_factor+=times
         parent_rows.append({'actual_X_product_AST_node_id':p,
           'native_call_occurrences':times,
           'factors':[{'source_node_id':k,**children[k]} for k in factor_ids]})
     demand(sum(shape_cases.values())==4714,'Original source product count changed')
+    demand(xa_rational_proved_under_5+xa_rational_over_5==80,
+           'Original Xa rational source expressions not covered')
     return {
        'schema':'MathScope.M3.NativeX4714ImmediateFactorShapes/1',
        'source_graph_SHA256':EXPECTED_GRAPH_SHA,
@@ -59,6 +81,10 @@ def operands(graph_dir,shape_file):
        'named_source_parameter_operand_call_counts':dict(sorted(parameter_names.items())),
        'multiply_calls_with_immediate_original_X_coordinate_4756_factor':direct_X_factor,
        'multiply_calls_with_literal_zero_operand':zero_factor,
+       'original_rational_times_Xa_coefficient_occurrences':dict(sorted(xa_rational_coefficients.items())),
+       'individual_rational_Xa_actual_arguments_proved_0_le_Lambda_X_le_5':xa_rational_proved_under_5,
+       'individual_rational_Xa_actual_arguments_not_proved_in_0_to_5':xa_rational_over_5,
+       'WARNING_actual_X_argument_bound_is_not_native_call_path_guard_proof':True,
        'original_X_product_factor_rows':parent_rows,
        'coordinate_support_and_integration_interval_proven':False,
        'actual_native_call_path_branch_dominance_proved':False,
