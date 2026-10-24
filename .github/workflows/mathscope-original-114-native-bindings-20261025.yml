@@ -10,6 +10,7 @@ on:
       - 'research-ide/mathscope-m3/closure-evidence-20261023/test_audit_original_114_native_X_argument_shapes.py'
       - 'research-ide/mathscope-m3/closure-evidence-20261023/audit_original_114_native_X_product_factors.py'
       - 'research-ide/mathscope-m3/closure-evidence-20261023/audit_original_114_native_X_half_sum_components.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/audit_original_114_native_quadratic_bases_denominator.py'
   workflow_dispatch:
 permissions:
   contents: read
@@ -40,6 +41,7 @@ jobs:
           python audit_original_114_native_X_argument_shapes.py --graph-dir "$RUNNER_TEMP/source/first-post-five-source-graph" --bindings "$RUNNER_TEMP/NATIVE_114_FORMAL_ACTUAL_BINDING_FRONTIER.json" --output "$RUNNER_TEMP/NATIVE_114_CONCRETE_X_ARGUMENT_SHAPES.json"
           python audit_original_114_native_X_product_factors.py --graph-dir "$RUNNER_TEMP/source/first-post-five-source-graph" --shapes "$RUNNER_TEMP/NATIVE_114_CONCRETE_X_ARGUMENT_SHAPES.json" --output "$RUNNER_TEMP/NATIVE_114_CONCRETE_X_PRODUCT_FACTORS.json"
           python audit_original_114_native_X_half_sum_components.py --graph-dir "$RUNNER_TEMP/source/first-post-five-source-graph" --product-factors "$RUNNER_TEMP/NATIVE_114_CONCRETE_X_PRODUCT_FACTORS.json" --output "$RUNNER_TEMP/NATIVE_114_HALF_SUM_ADDENDS.json"
+          python audit_original_114_native_quadratic_bases_denominator.py --graph-dir "$RUNNER_TEMP/source/first-post-five-source-graph" --halfsums "$RUNNER_TEMP/NATIVE_114_HALF_SUM_ADDENDS.json" --product-factors "$RUNNER_TEMP/NATIVE_114_CONCRETE_X_PRODUCT_FACTORS.json" --output "$RUNNER_TEMP/NATIVE_114_QUADRATIC_BASES_AND_DENOMINATOR.json"
       - name: Preserve original native actual-argument debt ledger
         if: always()
         uses: actions/upload-artifact@v4
@@ -50,4 +52,5 @@ jobs:
             ${{ runner.temp }}/NATIVE_114_CONCRETE_X_ARGUMENT_SHAPES.json
             ${{ runner.temp }}/NATIVE_114_CONCRETE_X_PRODUCT_FACTORS.json
             ${{ runner.temp }}/NATIVE_114_HALF_SUM_ADDENDS.json
+            ${{ runner.temp }}/NATIVE_114_QUADRATIC_BASES_AND_DENOMINATOR.json
           if-no-files-found: warn
