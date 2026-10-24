@@ -70,6 +70,15 @@ def proof(graph_dir):
     ensure(t_upper<F(1,16) and 2*F(1,16)==F(1,8),'strengthened t1 comparison')
     bound=F(4,1)/(1-F(1,8))
     ensure(bound==F(32,7) and bound<F(5),'original 2t1 exponential bound invalid')
+    # The original paper's Proposition B.2 is certified on Y<=4.1, NOT Y<=5.
+    # Original t1<CSelected^-120<2^-120 is strong enough for that smaller radius:
+    # for 0<=u<1, exp(u)<=1/(1-u). With u=2t1<2^-119<1/41,
+    # Lambda*x<=4*exp(2t1)<4/(1-2^-119)<41/10.
+    analytic_u_upper=F(1,2**119)
+    paper_radius=F(41,10)
+    paper_upper=F(4)/(1-analytic_u_upper)
+    ensure(analytic_u_upper<F(1,41) and paper_upper<paper_radius,
+           'original source guard does not reach actual Appendix B radius 4.1')
     need=set(PINS)
     found={}
     with gzip.open(Path(graph_dir)/'original-source-nodes.jsonl.gz','rt') as f:
@@ -106,6 +115,10 @@ def proof(graph_dir):
       'original_exact_N3_t1_strict_bound':'1/2^120',
       'weaker_simple_t1_strict_bound':'1/16',
       'exact_sufficient_exp_2t1_upper':str(bound),
+      'actual_OpenAI_Proposition_B2_Y_radius':'41/10',
+      'exact_new_exp_2t1_upper_for_B2':str(paper_upper),
+      'all_first_syntactic_arms_conditional_Y_lt_4point1':114,
+      'strict_paper_B2_radius_uses_original_t1_lt_2pow_minus120':True,
       'source_Xa_eq_4_over_Lambda':True,
       'first_before_local_conditional_Y_le_5':94,
       'first_inside_alias_local_conditional_Y_le_5':20,
