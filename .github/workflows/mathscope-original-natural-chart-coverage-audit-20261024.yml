@@ -1,0 +1,33 @@
+name: MathScope real original slow chart versus natural Y radius coverage proof gate
+on:
+  push:
+    branches: [mathscope-m3m4-evidence-gates-20261023]
+    paths:
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/audit_original_chart_natural_domain_overlap.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/test_audit_original_chart_natural_domain_overlap.py'
+      - '.github/workflows/mathscope-original-natural-chart-coverage-audit-20261024.yml'
+  workflow_dispatch:
+jobs:
+  exact-chart-domain-source-no-go:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Prove original full slow chart does not establish Y<=5; retain source domain and jet proof blockers
+        run: |
+          cd research-ide/mathscope-m3/closure-evidence-20261023
+          python -m unittest -v test_audit_original_chart_natural_domain_overlap test_audit_source56_Y_algebraic_normal_forms
+          python - <<'PY'
+          import json
+          from audit_original_chart_natural_domain_overlap import verify_chart_natural_domain_mismatch
+          x=verify_chart_natural_domain_mismatch()
+          assert x['Y_at_algebraic_test_point']=='8'
+          assert x['declared_full_box_alone_proves_natural_Y_le_5'] is False
+          assert x['actual_original_final_67_jets_certified']==0
+          print(json.dumps(x,indent=2))
+          PY
