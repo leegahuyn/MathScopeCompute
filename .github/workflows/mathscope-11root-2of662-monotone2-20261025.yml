@@ -11,6 +11,8 @@ on:
       - 'research-ide/mathscope-m3/closure-evidence-20261023/test_prove_original_slow_image_mesh_transport.py'
       - 'research-ide/mathscope-m3/closure-evidence-20261023/prove_original_root623935_interval_projection.py'
       - 'research-ide/mathscope-m3/closure-evidence-20261023/test_prove_original_root623935_interval_projection.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/prove_original_root623935_mesh_prerequisites.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/test_prove_original_root623935_mesh_prerequisites.py'
   workflow_dispatch:
 permissions:
   actions: read
@@ -48,6 +50,8 @@ jobs:
           python prove_original_slow_image_mesh_transport.py --source-global-band "$MATHSCOPE_GLOBAL_BAND_SOURCE" --source-profile "$MATHSCOPE_N3_SOURCE_PROFILE" --two-root-receipt "$RUNNER_TEMP/TWO_ROOT2_ENDPOINT_IMAGE_OBLIGATIONS.json" --output "$RUNNER_TEMP/TWO_ROOT2_EXACT_SAME_MESH_IMAGE_TRANSPORT.json"
           python -m unittest -v test_prove_original_root623935_interval_projection.py
           python prove_original_root623935_interval_projection.py --graph-dir "$MATHSCOPE_GRAPH_DIR" --reach-receipt "$MATHSCOPE_ORIGINAL_REACH" --output "$RUNNER_TEMP/ROOT_623935_SIGNED_ANNULAR_PROJECTION.json"
+          python -m unittest -v test_prove_original_root623935_mesh_prerequisites.py
+          python prove_original_root623935_mesh_prerequisites.py --graph-dir "$MATHSCOPE_GRAPH_DIR" --global-band "$MATHSCOPE_GLOBAL_BAND_SOURCE" --output "$RUNNER_TEMP/ROOT_623935_ACTUAL_MESH_RADIAL_AND_T_GUARDS.json"
       - name: Preserve strictly semantic 2-of-662 call frontier (not runtime/domain certificate)
         uses: actions/upload-artifact@v4
         with:
@@ -57,3 +61,4 @@ jobs:
             ${{ runner.temp }}/TWO_ROOT2_ENDPOINT_IMAGE_OBLIGATIONS.json
             ${{ runner.temp }}/TWO_ROOT2_EXACT_SAME_MESH_IMAGE_TRANSPORT.json
             ${{ runner.temp }}/ROOT_623935_SIGNED_ANNULAR_PROJECTION.json
+            ${{ runner.temp }}/ROOT_623935_ACTUAL_MESH_RADIAL_AND_T_GUARDS.json
