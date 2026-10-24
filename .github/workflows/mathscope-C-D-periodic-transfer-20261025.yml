@@ -6,6 +6,8 @@ on:
       - '.github/workflows/mathscope-C-D-periodic-transfer-20261025.yml'
       - 'research-ide/mathscope-m3/closure-evidence-20261023/certify_original_C_to_D_periodic_transfer.py'
       - 'research-ide/mathscope-m3/closure-evidence-20261023/test_certify_original_C_to_D_periodic_transfer.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/energy_defect_rational_20261025.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/test_energy_defect_rational_20261025.py'
   workflow_dispatch:
 permissions:
   contents: read
@@ -20,7 +22,7 @@ jobs:
       - name: Source-faithful rational C-to-D transfer; do not close M3 or M4
         working-directory: research-ide/mathscope-m3/closure-evidence-20261023
         run: |
-          python -m unittest -v test_certify_original_C_to_D_periodic_transfer.py
+          python -m unittest -v test_certify_original_C_to_D_periodic_transfer.py test_energy_defect_rational_20261025.py
           python certify_original_C_to_D_periodic_transfer.py --output "$RUNNER_TEMP/CLAY_C_TO_D_CONDITIONAL_TRANSFER_HOLD.json"
       - uses: actions/upload-artifact@v4
         with:
