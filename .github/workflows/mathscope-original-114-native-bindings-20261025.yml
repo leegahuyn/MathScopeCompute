@@ -1,0 +1,42 @@
+name: MathScope exact 114 native formal-to-actual binding frontier (HOLD)
+on:
+  push:
+    branches: [mathscope-m3m4-evidence-gates-20261023]
+    paths:
+      - '.github/workflows/mathscope-original-114-native-bindings-20261025.yml'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/audit_original_114_native_expression_argument_bindings.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/test_audit_original_114_native_expression_argument_bindings.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  native-formal-actual-114:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Test exact original expression argument binding fail-closed contracts
+        working-directory: research-ide/mathscope-m3/closure-evidence-20261023
+        run: python -m unittest -v test_audit_original_114_native_expression_argument_bindings.py
+      - name: Fetch immutable original 4,420,257-node source graph
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 39988632325
+          github-token: ${{ github.token }}
+          name: authenticated-first-fivemap-full-source-dag-replay-not-final-67
+          path: ${{ runner.temp }}/source
+      - name: SHA-check every original native expression actual argument reference
+        working-directory: research-ide/mathscope-m3/closure-evidence-20261023
+        run: |
+          python audit_original_114_native_expression_argument_bindings.py --graph-dir "$RUNNER_TEMP/source/first-post-five-source-graph" --output "$RUNNER_TEMP/NATIVE_114_FORMAL_ACTUAL_BINDING_FRONTIER.json"
+      - name: Preserve original native actual-argument debt ledger
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: first-FiveMap-114-native-formal-actual-frontier-open-physical-fields
+          path: ${{ runner.temp }}/NATIVE_114_FORMAL_ACTUAL_BINDING_FRONTIER.json
+          if-no-files-found: warn
