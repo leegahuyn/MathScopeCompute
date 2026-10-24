@@ -186,7 +186,7 @@ def inspect_sha_original_geometry(graph_dir,source_band_file,order_one_file):
     blob=hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest()
     require(blob==BAND,'source-global-band Git blob SHA mismatched')
     order_bytes=Path(order_one_file).read_bytes()
-    order_blob=hashlib.sha1(b'blob '+str(len(order_bytes)).encode()+b'\\x00'+order_bytes).hexdigest()
+    order_blob=hashlib.sha1(b'blob '+str(len(order_bytes)).encode()+b'\x00'+order_bytes).hexdigest()
     require(order_blob==ORDER_ONE_SHA and
       'const Xb=G.mul(XR,G.exp(G.outer.stages.at(-1).end));' in order_bytes.decode('utf8'),
       'original order-one Xb=XR exp(stageEnd) expression not authenticated')
