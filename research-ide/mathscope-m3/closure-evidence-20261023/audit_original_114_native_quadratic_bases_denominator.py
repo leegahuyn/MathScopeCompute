@@ -31,7 +31,7 @@ def audit(graph_dir,halfsums,products):
             all_bases[x['args'][0]]+=row['native_call_occurrences']
     demand(sum(all_bases.values())==9156,'Source 4578*2 squared bases missing')
     original_den={int(k):v for k,v in p['inverse_product_denominator_AST_nodes'].items()}
-    want=set(all_bases)|set(original_den)
+    want=set(all_bases)|set(original_den)|{24,622820}
     found={};digest=hashlib.sha256();count=0
     with gzip.open(Path(graph_dir)/'original-source-nodes.jsonl.gz','rb') as stream:
         for i,line in enumerate(stream):
@@ -53,6 +53,10 @@ def audit(graph_dir,halfsums,products):
         if n['op']=='coordinate':coords[n['args'][0]]+=weight
         if n['op']=='source_parameter':sources[n['args'][0]]+=weight
         examples.append({'base_node_id':node_id,'op':n['op'],'args':n['args'],'occurrences':weight})
+    demand(found[24]=={'op':'rational','args':['2','1']},
+           'Original common inverse denominator scalar is no longer exactly 2')
+    demand(found[622822]=={'op':'multiply','args':[24,622820]},
+           'Original common inverse denominator no longer 2 * source node 622820')
     denominator=[{'source_node_id':node_id,'node':found[node_id],
                   'native_call_occurrences':weight}
                  for node_id,weight in sorted(original_den.items())]
@@ -66,6 +70,8 @@ def audit(graph_dir,halfsums,products):
       'square_base_original_source_parameter_counts':dict(sorted(sources.items())),
       'exact_square_base_source_AST_nodes':examples,
       'inverse_56_actual_X_denominator_AST_description':denominator,
+      'inverse_denominator_remaining_factor_original_node_id':622820,
+      'inverse_denominator_remaining_factor_source_AST_node':found[622820],
       'conditional_quadratic_Y_upper':'For real a,b and Lambda>0, Lambda*(a²+b²)/2<=41/10 iff a²+b²<=41/(5 Lambda)',
       'base_realness_and_support_for_all_actual_native_calls_proved':False,
       'inverse_denominator_nonzero_positive_proved':False,
