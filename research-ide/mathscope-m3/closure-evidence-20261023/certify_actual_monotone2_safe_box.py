@@ -21,7 +21,7 @@ conditional theorem as 56 globally certified native callers.
 import argparse,json
 from fractions import Fraction as Q
 from pathlib import Path
-from hashlib import sha256
+from hashlib import sha1
 
 SOURCE_GRAPH_SHA="a6d99fd02036780f9c994268651f6d99d3d6f8702d5476a219c212156e0ca269"
 SOURCE_NATIVE_SHA="bc0587085298da014c10a61a15e09f436c7f62cce1879eeb44c63dbfeadabb6e"
@@ -51,7 +51,10 @@ def source_bound_certificate(source_receipt,source_file=None):
         demand(trees[name]["source_tree"]=={"id":d[name],"op":"rational","args":[str(num),str(den)]},
                "source bracket/derivative rational literal: "+name)
     if source_file:
-        src=Path(source_file).read_text(encoding="utf8")
+        srcbytes=Path(source_file).read_bytes()
+        hsh=sha1(b"blob "+str(len(srcbytes)).encode()+b"\x00"+srcbytes).hexdigest()
+        demand(hsh==SOURCE_BAND_GIT_BLOB_SHA1,"source-global-band actual Git blob SHA1 drift")
+        src=srcbytes.decode("utf8")
         demand(SOURCE_EXPRESSION in src and
           "name:'ActualCommonBandSlowInverse'" in src and
           "left:q(1,2),right:q(2),derivativeLower:q(1,2),derivativeUpper:G.one" in src,
