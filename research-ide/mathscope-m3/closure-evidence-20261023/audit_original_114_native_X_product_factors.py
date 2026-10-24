@@ -43,6 +43,7 @@ def operands(graph_dir,shape_file):
        'Original N3 Lambda Xa product identity not established')
     shape_cases=Counter();coord_names=Counter();parameter_names=Counter()
     xa_rational_coefficients=Counter()
+    add_rational_coefficients=Counter()
     xa_rational_proved_under_5=0
     xa_rational_over_5=0
     parent_rows=[];direct_X_factor=0;zero_factor=0
@@ -56,6 +57,9 @@ def operands(graph_dir,shape_file):
             if v['op']=='coordinate':coord_names[v['args'][0]]+=times
             if v['op']=='source_parameter':parameter_names[v['args'][0]]+=times
             if v['op']=='rational' and int(v['args'][0])==0:zero_factor+=times
+        if {a['op'],c['op']}=={'add','rational'}:
+            rat=a if a['op']=='rational' else c
+            add_rational_coefficients[str(Q(int(rat['args'][0]),int(rat['args'][1])))]+=times
         if {a['op'],c['op']}=={'source_parameter','rational'}:
             par=a if a['op']=='source_parameter' else c
             rat=a if a['op']=='rational' else c
@@ -71,6 +75,8 @@ def operands(graph_dir,shape_file):
     demand(sum(shape_cases.values())==4714,'Original source product count changed')
     demand(xa_rational_proved_under_5+xa_rational_over_5==80,
            'Original Xa rational source expressions not covered')
+    demand(dict(xa_rational_coefficients)=={'1/2':80} and xa_rational_proved_under_5==80,
+           'Exact original native argument Xa/2 (Y=2) witness drifted')
     return {
        'schema':'MathScope.M3.NativeX4714ImmediateFactorShapes/1',
        'source_graph_SHA256':EXPECTED_GRAPH_SHA,
@@ -82,6 +88,9 @@ def operands(graph_dir,shape_file):
        'multiply_calls_with_immediate_original_X_coordinate_4756_factor':direct_X_factor,
        'multiply_calls_with_literal_zero_operand':zero_factor,
        'original_rational_times_Xa_coefficient_occurrences':dict(sorted(xa_rational_coefficients.items())),
+       'original_rational_times_add_coefficients':dict(sorted(add_rational_coefficients.items())),
+       'source_exact_Xa_half_native_argument_Y_equals_2_occurrences':80,
+       'source_exact_Xa_half_native_argument_within_actual_OpenAI_B2_Y_4point1':True,
        'individual_rational_Xa_actual_arguments_proved_0_le_Lambda_X_le_5':xa_rational_proved_under_5,
        'individual_rational_Xa_actual_arguments_not_proved_in_0_to_5':xa_rational_over_5,
        'WARNING_actual_X_argument_bound_is_not_native_call_path_guard_proof':True,
