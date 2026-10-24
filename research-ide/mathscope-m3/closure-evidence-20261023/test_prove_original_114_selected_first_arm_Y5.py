@@ -11,12 +11,16 @@ class ExactOriginalAll114SelectedArmRadius(unittest.TestCase):
         self.assertEqual(self.result['weaker_simple_t1_strict_bound'],'1/16')
         self.assertEqual(F(self.result['exact_sufficient_exp_2t1_upper']),F(32,7))
         self.assertLess(F(self.result['exact_sufficient_exp_2t1_upper']),F(5))
+        self.assertEqual(self.result['actual_OpenAI_Proposition_B2_Y_radius'],'41/10')
+        self.assertLess(F(self.result['exact_new_exp_2t1_upper_for_B2']),F(41,10))
+        self.assertTrue(self.result['strict_paper_B2_radius_uses_original_t1_lt_2pow_minus120'])
 
     def test_all_114_selected_local_arms(self):
         r=self.result
         self.assertEqual(r['first_before_local_conditional_Y_le_5'],94)
         self.assertEqual(r['first_inside_alias_local_conditional_Y_le_5'],20)
         self.assertEqual(r['all_first_syntactic_arms_local_conditional_Y_le_5'],114)
+        self.assertEqual(r['all_first_syntactic_arms_conditional_Y_lt_4point1'],114)
         self.assertEqual({int(k):v['calls'] for k,v in r['verified_inside_Y_alias_source_nodes'].items()},INSIDE_COUNTS)
 
     def test_no_unconditional_global_promotion(self):
