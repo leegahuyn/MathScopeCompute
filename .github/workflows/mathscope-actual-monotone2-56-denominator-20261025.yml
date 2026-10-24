@@ -9,6 +9,7 @@ on:
       - 'research-ide/mathscope-m3/closure-evidence-20261023/test_certify_actual_monotone2_safe_box.py'
       - 'research-ide/mathscope-m3/closure-evidence-20261023/certify_actual_monotone2_source_image.py'
       - 'research-ide/mathscope-m3/closure-evidence-20261023/test_certify_actual_monotone2_source_image.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/audit_all_original_monotone2_actual_image_calls.py'
   workflow_dispatch:
 permissions:
   actions: read
@@ -37,6 +38,7 @@ jobs:
         working-directory: research-ide/mathscope-m3/closure-evidence-20261023
         run: |
           python audit_actual_monotone2_interval_certificate.py --graph-dir "$RUNNER_TEMP/source/first-post-five-source-graph" --output "$RUNNER_TEMP/ACTUAL_MONOTONE_SYSTEM_2_56_DENOMINATOR.json"
+          python audit_all_original_monotone2_actual_image_calls.py --graph-dir "$RUNNER_TEMP/source/first-post-five-source-graph" --output "$RUNNER_TEMP/ALL_ORIGINAL_MONOTONE2_ACTUAL_ARGUMENT_PAIRS.json"
           python certify_actual_monotone2_safe_box.py --original-receipt "$RUNNER_TEMP/ACTUAL_MONOTONE_SYSTEM_2_56_DENOMINATOR.json" --source-file "../navier/source-global-band.mjs" --output "$RUNNER_TEMP/CONDITIONAL_MONOTONE2_SAFE_BOX_CERTIFICATE.json"
           ACTUAL_MONOTONE2_RECEIPT="$RUNNER_TEMP/ACTUAL_MONOTONE_SYSTEM_2_56_DENOMINATOR.json" ACTUAL_GLOBAL_BAND_SOURCE="../navier/source-global-band.mjs" python -m unittest -v test_certify_actual_monotone2_safe_box.py
           python certify_actual_monotone2_source_image.py --monotone2-receipt "$RUNNER_TEMP/ACTUAL_MONOTONE_SYSTEM_2_56_DENOMINATOR.json" --profile-receipt "$RUNNER_TEMP/AUTHENTIC_N3_h_D.json" --source-file "../navier/source-global-band.mjs" --output "$RUNNER_TEMP/ACTUAL_MONOTONE2_FULL_SOURCE_IMAGE_INVERSE.json"
@@ -50,3 +52,4 @@ jobs:
             ${{ runner.temp }}/CONDITIONAL_MONOTONE2_SAFE_BOX_CERTIFICATE.json
             ${{ runner.temp }}/AUTHENTIC_N3_h_D.json
             ${{ runner.temp }}/ACTUAL_MONOTONE2_FULL_SOURCE_IMAGE_INVERSE.json
+            ${{ runner.temp }}/ALL_ORIGINAL_MONOTONE2_ACTUAL_ARGUMENT_PAIRS.json
