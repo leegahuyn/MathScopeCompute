@@ -8,6 +8,7 @@ on:
       - 'research-ide/mathscope-m3/closure-evidence-20261023/test_audit_original_114_native_expression_argument_bindings.py'
       - 'research-ide/mathscope-m3/closure-evidence-20261023/audit_original_114_native_X_argument_shapes.py'
       - 'research-ide/mathscope-m3/closure-evidence-20261023/test_audit_original_114_native_X_argument_shapes.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/audit_original_114_native_X_product_factors.py'
   workflow_dispatch:
 permissions:
   contents: read
@@ -36,6 +37,7 @@ jobs:
         run: |
           python audit_original_114_native_expression_argument_bindings.py --graph-dir "$RUNNER_TEMP/source/first-post-five-source-graph" --output "$RUNNER_TEMP/NATIVE_114_FORMAL_ACTUAL_BINDING_FRONTIER.json"
           python audit_original_114_native_X_argument_shapes.py --graph-dir "$RUNNER_TEMP/source/first-post-five-source-graph" --bindings "$RUNNER_TEMP/NATIVE_114_FORMAL_ACTUAL_BINDING_FRONTIER.json" --output "$RUNNER_TEMP/NATIVE_114_CONCRETE_X_ARGUMENT_SHAPES.json"
+          python audit_original_114_native_X_product_factors.py --graph-dir "$RUNNER_TEMP/source/first-post-five-source-graph" --shapes "$RUNNER_TEMP/NATIVE_114_CONCRETE_X_ARGUMENT_SHAPES.json" --output "$RUNNER_TEMP/NATIVE_114_CONCRETE_X_PRODUCT_FACTORS.json"
       - name: Preserve original native actual-argument debt ledger
         if: always()
         uses: actions/upload-artifact@v4
@@ -44,4 +46,5 @@ jobs:
           path: |
             ${{ runner.temp }}/NATIVE_114_FORMAL_ACTUAL_BINDING_FRONTIER.json
             ${{ runner.temp }}/NATIVE_114_CONCRETE_X_ARGUMENT_SHAPES.json
+            ${{ runner.temp }}/NATIVE_114_CONCRETE_X_PRODUCT_FACTORS.json
           if-no-files-found: warn
