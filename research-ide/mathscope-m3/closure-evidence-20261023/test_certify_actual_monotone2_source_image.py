@@ -27,6 +27,14 @@ class OriginalSlowChartActualMonotone2Image(unittest.TestCase):
         self.assertTrue(x['source_image_root_uniquely_equals_original_s0'])
         self.assertEqual(x['source_image_common_inverse_denominator_2s_min'],'1')
 
+    def test_first_derivative_jet_strict_source_image_bounds(self):
+        x=self.c
+        self.assertTrue(x['source_image_real_inverse_first_order_implicit_jet_proved'])
+        self.assertEqual(x['source_image_inverse_Jacobian_minimum_strict'],'1-2^-4093')
+        self.assertEqual(x['source_image_ds_dT_strict_upper'],'1/(1-2^-4093)')
+        self.assertEqual(x['source_image_absolute_ds_dZ_strict_upper'],'6/(1-2^-4093)')
+        self.assertEqual(x['actual_final_physical_67_jets_from_this_inverse_proved'],0)
+
     def test_image_is_required_not_arbitrary_real_Z_T(self):
         # All separate ranges |Z|<=sqrt(2),0<=T<=2 do not ensure an image pair.
         # At Z^2=2 and T=2, F(s)=s-2*s^(2h)-2 <0 for s in [1/2,2].
