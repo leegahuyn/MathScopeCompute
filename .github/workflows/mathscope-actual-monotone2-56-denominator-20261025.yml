@@ -7,6 +7,8 @@ on:
       - 'research-ide/mathscope-m3/closure-evidence-20261023/audit_actual_monotone2_interval_certificate.py'
       - 'research-ide/mathscope-m3/closure-evidence-20261023/certify_actual_monotone2_safe_box.py'
       - 'research-ide/mathscope-m3/closure-evidence-20261023/test_certify_actual_monotone2_safe_box.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/certify_actual_monotone2_source_image.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/test_certify_actual_monotone2_source_image.py'
   workflow_dispatch:
 permissions:
   actions: read
@@ -27,12 +29,18 @@ jobs:
           github-token: ${{ github.token }}
           name: authenticated-first-fivemap-full-source-dag-replay-not-final-67
           path: ${{ runner.temp }}/source
+      - name: Authenticate original N3 h,D source and run exact graph checks
+        run: |
+          test "$(git hash-object research-ide/mathscope-m2/navier/source-profile.mjs)" = "84cbf606cab6510ab61f0446f0a6fdc7a89ec006"
+          node --input-type=module -e 'import fs from "node:fs";import {sourceExponentContract,validateParameterGraph} from "./research-ide/mathscope-m2/navier/source-profile.mjs";fs.writeFileSync(process.env.RUNNER_TEMP+"/AUTHENTIC_N3_h_D.json",JSON.stringify({exponent:sourceExponentContract(),validation:validateParameterGraph()},null,2)+"\n")'
       - name: Audit exact system 2 original endpoints and its two actual arguments
         working-directory: research-ide/mathscope-m3/closure-evidence-20261023
         run: |
           python audit_actual_monotone2_interval_certificate.py --graph-dir "$RUNNER_TEMP/source/first-post-five-source-graph" --output "$RUNNER_TEMP/ACTUAL_MONOTONE_SYSTEM_2_56_DENOMINATOR.json"
           python certify_actual_monotone2_safe_box.py --original-receipt "$RUNNER_TEMP/ACTUAL_MONOTONE_SYSTEM_2_56_DENOMINATOR.json" --source-file "../navier/source-global-band.mjs" --output "$RUNNER_TEMP/CONDITIONAL_MONOTONE2_SAFE_BOX_CERTIFICATE.json"
           ACTUAL_MONOTONE2_RECEIPT="$RUNNER_TEMP/ACTUAL_MONOTONE_SYSTEM_2_56_DENOMINATOR.json" ACTUAL_GLOBAL_BAND_SOURCE="../navier/source-global-band.mjs" python -m unittest -v test_certify_actual_monotone2_safe_box.py
+          python certify_actual_monotone2_source_image.py --monotone2-receipt "$RUNNER_TEMP/ACTUAL_MONOTONE_SYSTEM_2_56_DENOMINATOR.json" --profile-receipt "$RUNNER_TEMP/AUTHENTIC_N3_h_D.json" --source-file "../navier/source-global-band.mjs" --output "$RUNNER_TEMP/ACTUAL_MONOTONE2_FULL_SOURCE_IMAGE_INVERSE.json"
+          ACTUAL_MONOTONE2_RECEIPT="$RUNNER_TEMP/ACTUAL_MONOTONE_SYSTEM_2_56_DENOMINATOR.json" ACTUAL_GLOBAL_BAND_SOURCE="../navier/source-global-band.mjs" EXACT_N3_EXPONENT_PROFILE_RECEIPT="$RUNNER_TEMP/AUTHENTIC_N3_h_D.json" python -m unittest -v test_certify_actual_monotone2_source_image.py
       - name: Publish strictly scoped monotone root 2 evidence
         uses: actions/upload-artifact@v4
         with:
@@ -40,3 +48,5 @@ jobs:
           path: |
             ${{ runner.temp }}/ACTUAL_MONOTONE_SYSTEM_2_56_DENOMINATOR.json
             ${{ runner.temp }}/CONDITIONAL_MONOTONE2_SAFE_BOX_CERTIFICATE.json
+            ${{ runner.temp }}/AUTHENTIC_N3_h_D.json
+            ${{ runner.temp }}/ACTUAL_MONOTONE2_FULL_SOURCE_IMAGE_INVERSE.json
