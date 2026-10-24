@@ -1,0 +1,32 @@
+name: MathScope 11 real physical roots native reach 2 of 662 original monotone inverses
+on:
+  push:
+    branches: [mathscope-m3m4-evidence-gates-20261023]
+    paths:
+      - '.github/workflows/mathscope-11root-2of662-monotone2-20261025.yml'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/prove_original_11root_semantic_monotone2_reach.mjs'
+  workflow_dispatch:
+permissions:
+  actions: read
+  contents: read
+jobs:
+  original-11root-native-2of662:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Original SHA-pinned graph
+        uses: actions/download-artifact@v4
+        with:
+          github-token: ${{ github.token }}
+          run-id: 39988632325
+          name: authenticated-first-fivemap-full-source-dag-replay-not-final-67
+          path: ${{ runner.temp }}/source
+      - name: Rebuild all 4,420,257 direct AST edges and native system-definition edges
+        run: |
+          node --max-old-space-size=6144 research-ide/mathscope-m3/closure-evidence-20261023/prove_original_11root_semantic_monotone2_reach.mjs "$RUNNER_TEMP/source/first-post-five-source-graph" "$RUNNER_TEMP/EXACT_REACHABLE_ROOT2_11_PHYSICAL_ROOTS.json"
+      - name: Preserve strictly semantic 2-of-662 call frontier (not runtime/domain certificate)
+        uses: actions/upload-artifact@v4
+        with:
+          name: original-11-physical-roots-2of662-monotone2-semantic-not-final
+          path: ${{ runner.temp }}/EXACT_REACHABLE_ROOT2_11_PHYSICAL_ROOTS.json
