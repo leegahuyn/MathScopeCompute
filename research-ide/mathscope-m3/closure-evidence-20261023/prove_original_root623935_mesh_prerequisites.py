@@ -4,9 +4,10 @@
 Critical: source *lower* slow-s bound uses K=XR*exp(u) at node #28826,
 while source *upper* slow-s bound uses Xa. They are NOT interchangeable!
 
-Original mesh center (r,z,t), source frozen N1 integer ell>=3:
- delta=3/(4*ell^6),
- r-=r-delta,r+=r+delta,z-=z-delta,z+=z+delta,t-=t-delta,t+=t+delta.
+Original mesh INTEGER GRID INDEX (r,z,t), source frozen N1 integer ell>=3:
+ E=ell^6, delta=3/(4*E),
+ r-=(r-3/4)/E, r+=(r+3/4)/E and analogously for z,t.
+ BEWARE original coordinate index is DIVIDED BY E, NOT a physical center!
  a=max(1/2,max(0,r-)^2/(2*K)).
  b=max(a,min(2,r+^2/(2*Xa))).
  m=max(0,t-), M=t+.
@@ -84,10 +85,14 @@ def real_mesh_box(ell,r,z,t,Xa,K):
     if any(type(v) is not F for v in (r,z,t,Xa,K)):
         raise OriginalMeshConditionOPEN('exact rational witness inputs required')
     require(Xa>0 and K>0,'source Xa and K=XR*exp(u) strictly positive')
-    d=F(3,4*ell**6)
-    rlo,rhi=r-d,r+d
-    zlo,zhi=z-d,z+d
-    tlo,thi=t-d,t+d
+    E=ell**6
+    d=F(3,4*E)
+    # Exact original AST: source first divides integer mesh INDEX
+    # by ell^6, then subtracts/adds 3/(4 ell^6).
+    r0,z0,t0=r/E,z/E,t/E
+    rlo,rhi=r0-d,r0+d
+    zlo,zhi=z0-d,z0+d
+    tlo,thi=t0-d,t0+d
     a=max(F(1,2),max(F(0),rlo)**2/(2*K))
     b=max(a,min(F(2),rhi*rhi/(2*Xa)))
     m=max(F(0),tlo)
@@ -95,6 +100,8 @@ def real_mesh_box(ell,r,z,t,Xa,K):
     # Code must not silently replace Xa with K in upper s bound.
     return {
       'ell':ell,'mesh_radius_delta':str(d),
+      'source_coordinates_are_grid_indices_not_physical_centers':True,
+      'physical_mesh_center':[str(r0),str(z0),str(t0)],
       'r_bounds':[str(rlo),str(rhi)],
       'z_bounds':[str(zlo),str(zhi)],
       't_bounds':[str(tlo),str(thi)],
@@ -159,12 +166,13 @@ def inspect_sha_original_geometry(graph_dir,source_band_file):
         'original_source_graph_sha256':GRAPH,'source_band_blob_sha1':BAND,
         'original_frozen_mesh_coordinate_nodes':{'ell':622791,'r':623855,'z':623856,'t':623857},
         'original_delta':'3/(4*ell^6)',
-        'actual_lower_s_expression':'max(1/2,max(0,r-delta)^2/(2*XR*exp(u)))',
-        'actual_upper_s_expression':'max(a,min(2,(r+delta)^2/(2*Xa)))',
-        'actual_lower_T_expression':'max(0,t-delta)',
-        'actual_upper_T_expression':'t+delta',
-        'necessary_radial_condition':'max(0,r-delta)^2<=4*XR*exp(u)',
-        'necessary_time_conditions':'t+delta>=0 AND max(0,t-delta)<=b',
+        'actual_grid_index_to_physical_center':'(r,z,t)/ell^6',
+        'actual_lower_s_expression':'max(1/2,max(0,(r-3/4)/ell^6)^2/(2*XR*exp(u)))',
+        'actual_upper_s_expression':'max(a,min(2,((r+3/4)/ell^6)^2/(2*Xa)))',
+        'actual_lower_T_expression':'max(0,(t-3/4)/ell^6)',
+        'actual_upper_T_expression':'(t+3/4)/ell^6',
+        'necessary_radial_condition':'max(0,(r-3/4)/ell^6)^2<=4*XR*exp(u)',
+        'necessary_time_conditions':'(t+3/4)/ell^6>=0 AND max(0,(t-3/4)/ell^6)<=b',
         'central_slice_z_zero_negative_projection_conditional_certified':True,
         'actual_11_root_mesh_r_z_t_support_globally_proved':False,
         'actual_negative_projection_all_source_switches_proved':False,
