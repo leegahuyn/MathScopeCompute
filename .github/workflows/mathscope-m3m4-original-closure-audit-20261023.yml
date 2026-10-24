@@ -4,7 +4,14 @@ on:
     branches:
       - mathscope-m3m4-evidence-gates-20261023
     paths:
-      - 'research-ide/mathscope-m3/closure-evidence-20261023/**'
+      # Preserve native source execution for changes that can affect actual
+      # source construction or original 64/16 acceptance. Local math lemmas
+      # have their own SHA-pinned fast CI; they must not spawn identical
+      # 15-minute unfinishable original pipeline runs on every commit.
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/run_actual_original_pipeline.mjs'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/audit_original_acceptance.py'
+      - 'research-ide/mathscope-m3/navier/**'
+      - 'research-ide/mathscope-m2/navier/**'
       - '.github/workflows/mathscope-m3m4-original-closure-audit-20261023.yml'
   workflow_dispatch:
 permissions:
