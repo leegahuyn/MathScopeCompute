@@ -7,14 +7,15 @@ M=T_upper with 1/2<=a<=b<=2, 0<=m<=M, 0<h<2^-4096.
 Set
   L=sqrt(max(0,(a-M)/a^(2h))),
   U=sqrt(max(0,(b-m)/b^(2h))).
-If 0<=L<=U, U²<=2 and mesh z interval [zlo,zhi] has a
-strictly nonempty intersection with EITHER [-U,-L] or [L,U],
-select the SIGNED interval with positive width:
+If 0<=L<=U and 1/2<=a<=b<=2, 0<=m<=M, b>=m, then U²<=2.
+If mesh z interval [zlo,zhi] intersects the source selected signed interval,
+select the SIGNED interval with the source's exact tie-breaking rule:
   negative width w-=min(zhi,-L)-max(zlo,-U);
   positive width w+=min(zhi,U)-max(zlo,L).
-Source Z value #623921 selects negative when w->0; positive when w-<0.
-WARNING at w-=0: source smooth_piecewise has coincident endpoints
-and its source-branch joining convention is not certified; leave OPEN.
+Source Z value #623921 selects negative when w->0; positive when w-<=0.
+At w-=0 the source chooses the positive candidate; its VALUE is
+certified if w+>=0 (including an isolated point), BUT derivative/flat
+joining is OPEN when the two candidate Z values do not agree.
 
 For the selected Zmid, |Zmid| in [L,U]. Then
  lower=max(m,a-a^(2h)*Zmid²)
@@ -82,11 +83,13 @@ def exact_signed_interval_midpoint(L,U,zlo,zhi):
     wnegative=neghi-neglo;wpositive=poshi-poslo
     if wnegative>0: return {
         'branch':'negative','Z_midpoint':str((neglo+neghi)/2),
-        'strict_w_negative':True,'certifies_L_le_absZ_le_U':True}
-    if wnegative<0 and wpositive>=0:return {
+        'strict_w_negative':True,'zero_width_negative_source_switch':False,
+        'certifies_L_le_absZ_le_U':True,'piecewise_first_derivative_join_proved':False}
+    if wnegative<=0 and wpositive>=0:return {
         'branch':'positive','Z_midpoint':str((poslo+poshi)/2),
-        'strict_w_negative':False,'certifies_L_le_absZ_le_U':True}
-    raise ProjectedImageConditionOPEN('negative width equals zero (join) or no admissible positive interval')
+        'strict_w_negative':False,'zero_width_negative_source_switch':wnegative==0,
+        'certifies_L_le_absZ_le_U':True,'piecewise_first_derivative_join_proved':False}
+    raise ProjectedImageConditionOPEN('source-selected signed projection has no admissible intersection')
 
 def original_exact_projection(graph_dir,reached_receipt):
     proof=json.loads(Path(reached_receipt).read_text(encoding='utf8'))
@@ -123,10 +126,13 @@ def original_exact_projection(graph_dir,reached_receipt):
        'source_monotone_system2_call_node':623935,
        'strict_negative_or_strict_positive_intersection_proves_chart_image_conditionally':True,
        'sufficient_source_s_interval':'1/2 <= a <= b <= 2',
-       'sufficient_source_T_interval':'0 <= m <= M',
-       'sufficient_source_signed_Z_intersection':'w_minus>0 OR (w_minus<0 AND w_plus>=0)',
+       'sufficient_source_T_interval':'0 <= m <= M AND m <= b',
+       'sufficient_source_signed_Z_intersection':'w_minus>0 OR (w_minus<=0 AND w_plus>=0)',
+       'zero_negative_width_with_admissible_positive_interval_value_case_proved':True,
+       'extra_source_T_feasibility_m_le_b_required':True,
        'sufficient_source_square_bound':'U^2<=2',
        'sufficient_source_h_interval':'0<h<2^-4096',
+       'source_piecewise_equality_at_zero_value_certified_if_positive_interval_exists':True,
        'source_piecewise_equality_at_zero_derivative_join_certified':False,
        'all_original_11_root_actual_mesh_intersections_certified':False,
        'all_actual_slow_image_guard_domains_globally_certified':False,
