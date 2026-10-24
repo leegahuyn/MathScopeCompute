@@ -6,6 +6,8 @@ on:
       - '.github/workflows/mathscope-original-114-native-bindings-20261025.yml'
       - 'research-ide/mathscope-m3/closure-evidence-20261023/audit_original_114_native_expression_argument_bindings.py'
       - 'research-ide/mathscope-m3/closure-evidence-20261023/test_audit_original_114_native_expression_argument_bindings.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/audit_original_114_native_X_argument_shapes.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/test_audit_original_114_native_X_argument_shapes.py'
   workflow_dispatch:
 permissions:
   contents: read
@@ -21,7 +23,7 @@ jobs:
           python-version: '3.11'
       - name: Test exact original expression argument binding fail-closed contracts
         working-directory: research-ide/mathscope-m3/closure-evidence-20261023
-        run: python -m unittest -v test_audit_original_114_native_expression_argument_bindings.py
+        run: python -m unittest -v test_audit_original_114_native_expression_argument_bindings.py test_audit_original_114_native_X_argument_shapes.py
       - name: Fetch immutable original 4,420,257-node source graph
         uses: actions/download-artifact@v4
         with:
@@ -33,10 +35,13 @@ jobs:
         working-directory: research-ide/mathscope-m3/closure-evidence-20261023
         run: |
           python audit_original_114_native_expression_argument_bindings.py --graph-dir "$RUNNER_TEMP/source/first-post-five-source-graph" --output "$RUNNER_TEMP/NATIVE_114_FORMAL_ACTUAL_BINDING_FRONTIER.json"
+          python audit_original_114_native_X_argument_shapes.py --graph-dir "$RUNNER_TEMP/source/first-post-five-source-graph" --bindings "$RUNNER_TEMP/NATIVE_114_FORMAL_ACTUAL_BINDING_FRONTIER.json" --output "$RUNNER_TEMP/NATIVE_114_CONCRETE_X_ARGUMENT_SHAPES.json"
       - name: Preserve original native actual-argument debt ledger
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: first-FiveMap-114-native-formal-actual-frontier-open-physical-fields
-          path: ${{ runner.temp }}/NATIVE_114_FORMAL_ACTUAL_BINDING_FRONTIER.json
+          path: |
+            ${{ runner.temp }}/NATIVE_114_FORMAL_ACTUAL_BINDING_FRONTIER.json
+            ${{ runner.temp }}/NATIVE_114_CONCRETE_X_ARGUMENT_SHAPES.json
           if-no-files-found: warn
