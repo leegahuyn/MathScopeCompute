@@ -6,6 +6,8 @@ on:
       - '.github/workflows/mathscope-original-B2-local-radius-20261025.yml'
       - 'research-ide/mathscope-m3/closure-evidence-20261023/audit_original_local_B2_radius_41.py'
       - 'research-ide/mathscope-m3/closure-evidence-20261023/test_audit_original_local_B2_radius_41.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/audit_original_Omega_prefix_sign.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/test_audit_original_Omega_prefix_sign.py'
       - 'research-ide/mathscope-m2/navier/actual-continuation-exact-inner.mjs'
       - 'research-ide/mathscope-m2/navier/actual-continuation-exact-order-one.mjs'
   workflow_dispatch:
@@ -23,10 +25,13 @@ jobs:
       - name: Source-bound radius and fail-closed regression suite
         working-directory: research-ide/mathscope-m3/closure-evidence-20261023
         run: |
-          python -m unittest -v test_audit_original_local_B2_radius_41.py test_prove_original_inner_Xcut_natural_radius.py test_audit_original_217_Y_domain_obligations.py
+          python -m unittest -v test_audit_original_local_B2_radius_41.py test_prove_original_inner_Xcut_natural_radius.py test_audit_original_217_Y_domain_obligations.py test_audit_original_Omega_prefix_sign.py
           python audit_original_local_B2_radius_41.py "$RUNNER_TEMP/LOCAL_B2_RADIUS_CERT.json"
+          python audit_original_Omega_prefix_sign.py "$RUNNER_TEMP/OMEGA_PREFIX_CERT.json"
       - name: Save conditional audit result; not release evidence
         uses: actions/upload-artifact@v4
         with:
           name: original-local-B2-radius-41-conditional-not-release
-          path: ${{ runner.temp }}/LOCAL_B2_RADIUS_CERT.json
+          path: |
+            ${{ runner.temp }}/LOCAL_B2_RADIUS_CERT.json
+            ${{ runner.temp }}/OMEGA_PREFIX_CERT.json
