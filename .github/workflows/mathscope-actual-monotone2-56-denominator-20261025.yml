@@ -5,6 +5,8 @@ on:
     paths:
       - '.github/workflows/mathscope-actual-monotone2-56-denominator-20261025.yml'
       - 'research-ide/mathscope-m3/closure-evidence-20261023/audit_actual_monotone2_interval_certificate.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/certify_actual_monotone2_safe_box.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/test_certify_actual_monotone2_safe_box.py'
   workflow_dispatch:
 permissions:
   actions: read
@@ -29,8 +31,12 @@ jobs:
         working-directory: research-ide/mathscope-m3/closure-evidence-20261023
         run: |
           python audit_actual_monotone2_interval_certificate.py --graph-dir "$RUNNER_TEMP/source/first-post-five-source-graph" --output "$RUNNER_TEMP/ACTUAL_MONOTONE_SYSTEM_2_56_DENOMINATOR.json"
+          python certify_actual_monotone2_safe_box.py --original-receipt "$RUNNER_TEMP/ACTUAL_MONOTONE_SYSTEM_2_56_DENOMINATOR.json" --source-file "../navier/source-global-band.mjs" --output "$RUNNER_TEMP/CONDITIONAL_MONOTONE2_SAFE_BOX_CERTIFICATE.json"
+          ACTUAL_MONOTONE2_RECEIPT="$RUNNER_TEMP/ACTUAL_MONOTONE_SYSTEM_2_56_DENOMINATOR.json" ACTUAL_GLOBAL_BAND_SOURCE="../navier/source-global-band.mjs" python -m unittest -v test_certify_actual_monotone2_safe_box.py
       - name: Publish strictly scoped monotone root 2 evidence
         uses: actions/upload-artifact@v4
         with:
           name: actual-monotone2-56-native-denominator-source-bracket-OPEN
-          path: ${{ runner.temp }}/ACTUAL_MONOTONE_SYSTEM_2_56_DENOMINATOR.json
+          path: |
+            ${{ runner.temp }}/ACTUAL_MONOTONE_SYSTEM_2_56_DENOMINATOR.json
+            ${{ runner.temp }}/CONDITIONAL_MONOTONE2_SAFE_BOX_CERTIFICATE.json
