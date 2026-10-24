@@ -5,9 +5,9 @@ For 0<=X<=a^2, Lambda*a^2<512/127 (SHA-pinned N3 source).
 Original prefixes Omega0=int_0^X v0, Omega1=int_0^X U0*v0,
 Omega2=int_0^X v0^2. Given real integrable functions and independently
 proved Mv=sup|v0|, MU=sup|U0| over [0,X], then
-Lambda|Omega0| < (512/127)*Mv,
-Lambda|Omega1| < (512/127)*Mv*MU,
-0 <= Lambda Omega2 < (512/127)*Mv^2.
+Lambda|Omega0| <= (512/127)*Mv,
+Lambda|Omega1| <= (512/127)*Mv*MU,
+0 <= Lambda Omega2 <= (512/127)*Mv^2.
 M <= 635/512 is SUFFICIENT for Y<=5. This DOES NOT assert that the
 source has verified such sup norms, positivity of Omega0/Omega1,
 or native consumer support X<=a^2.
@@ -33,7 +33,7 @@ def conditional_bound_with_external_sup(Mv,MU):
       'hypothetical_MU':str(MU),
       'source_proven_supnorm_inputs_present':False,
       'conditional_upper_products':[str(v) for v in products],
-      'conditional_strict_Lambda_Omega_absolute_upper':[str(LAMBDA_A2_UPPER*v) for v in products],
+      'conditional_non_strict_Lambda_Omega_absolute_upper':[str(LAMBDA_A2_UPPER*v) for v in products],
       'Omega2_Y_nonnegative_under_real_integrability':True,
       'Omega0_and_Omega1_nonnegative_requires_extra_sign_proof':True,
       'sufficient_upper_5':[v<=PRODUCT_THRESHOLD for v in products],
