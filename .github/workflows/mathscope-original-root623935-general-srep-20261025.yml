@@ -1,0 +1,40 @@
+name: MathScope original root623935 general-s conditional signed image (HOLD)
+on:
+  push:
+    branches: [mathscope-m3m4-evidence-gates-20261023]
+    paths:
+      - '.github/workflows/mathscope-original-root623935-general-srep-20261025.yml'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/prove_original_root623935_general_srep_image.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/test_prove_original_root623935_general_srep_image.py'
+  workflow_dispatch:
+permissions:
+  actions: read
+  contents: read
+jobs:
+  original-623935-general-srep-conditional:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Download immutable original first FiveMap AST (not final A-D)
+        uses: actions/download-artifact@v4
+        with:
+          github-token: ${{ github.token }}
+          run-id: 39988632325
+          name: authenticated-first-fivemap-full-source-dag-replay-not-final-67
+          path: ${{ runner.temp }}/source
+      - name: Verify exact AST pins and conditional all-s slow-chart theorem
+        env:
+          MATHSCOPE_ORIGINAL_GRAPH_FILE: ${{ runner.temp }}/source/first-post-five-source-graph/original-source-nodes.jsonl.gz
+        working-directory: research-ide/mathscope-m3/closure-evidence-20261023
+        run: |
+          python -m unittest -v test_prove_original_root623935_general_srep_image.py
+          python prove_original_root623935_general_srep_image.py --original-graph "$MATHSCOPE_ORIGINAL_GRAPH_FILE" --output "$RUNNER_TEMP/ROOT623935_GENERAL_SREP_CONDITIONAL_IMAGE_HOLD.json"
+      - name: Preserve conditional result, NOT a release or runtime-domain certificate
+        uses: actions/upload-artifact@v4
+        with:
+          name: original-623935-general-srep-conditional-value-only-HOLD
+          path: ${{ runner.temp }}/ROOT623935_GENERAL_SREP_CONDITIONAL_IMAGE_HOLD.json
