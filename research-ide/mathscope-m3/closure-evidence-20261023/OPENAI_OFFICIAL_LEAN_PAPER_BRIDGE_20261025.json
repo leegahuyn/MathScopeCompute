@@ -1,0 +1,76 @@
+{
+  "schema": "MathScope.M3.OfficialOpenAILeanReferenceBridge/1",
+  "upstream": {
+    "repository": "openai/NavierStokesAndEuler",
+    "revision": "f9e8bc5b38b6e212696e8a30e3e91517af887bbd",
+    "paper_pdf_sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+    "scope": "UPSTREAM_THEOREMS_NOT_MATHSCOPE_NATIVE_NUMERIC_INTERVALS"
+  },
+  "proof_targets": [
+    {
+      "section": "Appendix B B.4-B.16 axis coefficient space and contraction",
+      "module": "NavierStokes/AxisWeightEstimates.lean",
+      "git_blob_sha1": "4c101be601a6bf4e63144673aef038ec9f7c3043",
+      "local_obligation": "original 523 natural-series calls common B_rho norm and analytic domain",
+      "source_to_lean_refinement_proved": false
+    },
+    {
+      "section": "Appendix B radial analytic series",
+      "module": "NavierStokes/AxisAnalyticRadialSeries.lean",
+      "git_blob_sha1": "4801d80d1131354beaab818e88fa3edcf11d2ca0",
+      "local_obligation": "56 original (Y,eta) pairs, local analytic coefficients and exact values",
+      "source_to_lean_refinement_proved": false
+    },
+    {
+      "section": "Appendix B axis coefficient Banach space",
+      "module": "NavierStokes/AxisCoefficientSpace.lean",
+      "git_blob_sha1": "b90a0f4f8c03b011103deee1dd6c267703fcc930",
+      "local_obligation": "source native coefficient norm",
+      "source_to_lean_refinement_proved": false
+    },
+    {
+      "section": "Proposition 9.6 residual correction",
+      "module": "NavierStokes/CorrectionStep.lean",
+      "git_blob_sha1": "34d00e34b2819f1b7c3b04bf4cb77ff98f96a9a3",
+      "local_obligation": "original A-D finite physical residual and each source corrective step",
+      "source_to_lean_refinement_proved": false
+    },
+    {
+      "section": "Lemma 5.4 / Proposition 9.9 Borel summation",
+      "module": "NavierStokes/BorelExtension.lean",
+      "git_blob_sha1": "866c1fa1bb43825eb023208415f8bab33b3ea617",
+      "local_obligation": "cutoff sum convergence / C infinity source",
+      "source_to_lean_refinement_proved": false
+    },
+    {
+      "section": "Proposition 10.1 smooth compact forcing",
+      "module": "NavierStokes/CompactForceDecay.lean",
+      "git_blob_sha1": "74d6b8d68914ba42cc7b51a41c15765714d06933",
+      "local_obligation": "final original localized force all jets and compact support",
+      "source_to_lean_refinement_proved": false
+    },
+    {
+      "section": "source cutoff derivatives",
+      "module": "NavierStokes/NativeCutoffJets.lean",
+      "git_blob_sha1": "af1cae8053380714b3fd1d5717c4e9e7c7abcafa",
+      "local_obligation": "original specific cutoff jet refinement and final 67 field jet intervals",
+      "source_to_lean_refinement_proved": false
+    },
+    {
+      "section": "Official theorem exposed in comparator",
+      "module": "NavierStokes/ComparatorSolution.lean",
+      "git_blob_sha1": "cc232068cd384dbbddce2753b1fc4a4017c0f2d7",
+      "local_obligation": "do not substitute theorem-level existence for exact MathScope physical field evaluator",
+      "source_to_lean_refinement_proved": false
+    }
+  ],
+  "release_gates": {
+    "source_114_global_support": false,
+    "source_523_actual_natural_bounds": 33,
+    "final_numeric_67": 0,
+    "M3": "62/64",
+    "M4": "0/16",
+    "release": "HOLD"
+  },
+  "interpretation": "Official Lean mathematical proof modules are reference theorems; MathScope must still prove equality of its source AST/native semantics, domains, real values, and final 67 jet interval computations."
+}
