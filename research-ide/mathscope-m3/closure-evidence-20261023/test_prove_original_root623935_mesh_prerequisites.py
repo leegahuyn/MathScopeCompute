@@ -1,7 +1,7 @@
 import os,unittest
 from fractions import Fraction as F
 from prove_original_root623935_mesh_prerequisites import (
- real_mesh_box,central_slice_negative_projection,certify_actual_source_representative_in_mesh,inspect_sha_original_geometry,
+ real_mesh_box,central_slice_negative_projection,certify_actual_source_representative_in_mesh,certify_actual_source_srep_one_signed_projection,inspect_sha_original_geometry,
  OriginalMeshConditionOPEN
 )
 
@@ -46,6 +46,27 @@ class OriginalPhysicalMeshRadialTGuards(unittest.TestCase):
             certify_actual_source_representative_in_mesh(
                 3,F(729),F(0),F(729),F(1,2),F(3,2),F(2),
                 F(1),F(2),F(0),F(1))
+
+    def test_full_eta_axis_and_both_signed_branches_original_source_slice(self):
+        for eta,zi,ti in [(F(0),0,729),(F(3,5),437,467),
+                          (F(-3,5),-437,467),(F(1),729,0),(F(-1),-729,0)]:
+            x=certify_actual_source_srep_one_signed_projection(
+                3,F(729),F(zi),F(ti),F(1,2),F(3,2),F(1,2),eta)
+            self.assertTrue(x['source_selects_ONLY_valid_signed_intersections'])
+            self.assertTrue(x['original_actual_source_T_clamp_produces_image_value'])
+            self.assertTrue(x['original_inverse_denominator_two_s_ge_one_for_this_slice'])
+            self.assertFalse(x['all_actual_runtime_representatives_have_srep_eq_one'])
+            self.assertEqual(x['original_final_67_jets'],0)
+
+    def test_signed_projection_rejects_false_actual_t_grid(self):
+        with self.assertRaises(OriginalMeshConditionOPEN):
+            certify_actual_source_srep_one_signed_projection(
+                3,F(729),F(0),F(500),F(1,2),F(3,2),F(1,2),F(0))
+
+    def test_signed_projection_rejects_non_square_radial_rational_witness(self):
+        with self.assertRaisesRegex(OriginalMeshConditionOPEN,'rational witness'):
+            certify_actual_source_srep_one_signed_projection(
+                3,F(729),F(0),F(729),F(1,2),F(3,2),F(3,4),F(0))
 
     def test_original_radial_outside_native_s_bracket_rejected(self):
         c=real_mesh_box(3,F(4*729),F(0),F(1*729),F(1),F(1))
