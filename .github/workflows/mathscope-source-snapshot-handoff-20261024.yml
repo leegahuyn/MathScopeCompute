@@ -1,0 +1,73 @@
+name: MathScope research handoff source snapshot 20261024
+on:
+  push:
+    branches: [mathscope-m3m4-evidence-gates-20261023]
+    paths:
+      - '.github/workflows/mathscope-source-snapshot-handoff-20261024.yml'
+  workflow_dispatch:
+jobs:
+  preserve-audit-source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Export reproducible exact research source and CI workflow snapshot
+        env:
+          SNAPSHOT_SHA: ${{ github.sha }}
+        run: |
+          python - <<'PY'
+          import os,json,hashlib,zipfile,datetime
+          from pathlib import Path
+          repo=Path('.')
+          archive=Path(os.environ['RUNNER_TEMP'])/'MathScope_AuditBranch_ExactSource_Snapshot_20261024.zip'
+          prefixes=[
+            'research-ide/mathscope-m3/closure-evidence-20261023',
+            'research-ide/mathscope-m3/post-signed-20261023',
+          ]
+          singles=[
+            'research-ide/mathscope-m3/navier/source-global-band.mjs',
+            'research-ide/mathscope-m3/navier/source-saved-quadratic-series-audit.mjs',
+            'research-ide/mathscope-m3/navier/source-core-refinement.mjs',
+            'research-ide/mathscope-m2/navier/source-profile-data.mjs',
+            'research-ide/mathscope-m2/navier/actual-common-admissible-family.mjs',
+            'research-ide/mathscope-m2/navier/actual-common-admissible-band.mjs',
+          ]
+          found=set()
+          for prefix in prefixes:
+            for p in (repo/prefix).rglob('*'):
+              if p.is_file() and not ('__pycache__' in p.parts or '.pytest_cache' in p.parts):
+                found.add(p.as_posix())
+          found.update(path for path in singles if (repo/path).is_file())
+          for p in (repo/'.github/workflows').glob('mathscope*2026102*.yml'):
+            found.add(p.as_posix())
+          manifest={'schema':'MathScope.ResearchAudit.SourceSnapshot/1',
+            'audited_branch':'mathscope-m3m4-evidence-gates-20261023',
+            'source_commit':os.environ['SNAPSHOT_SHA'],
+            'unchanged_original_PR30_reference':'a9b3a5b317525f6d0a71e2e356b054c9d25d2e60',
+            'first_FiveMap_graph_sha256':'a6d99fd02036780f9c994268651f6d99d3d6f8702d5476a219c212156e0ca269',
+            'source_56Y_actual_calls':523,'source_Y_domain_proven_calls':33,
+            'final_original_67_jet_intervals_proven':0,
+            'release':'HOLD','files':[]}
+          with zipfile.ZipFile(archive,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=6) as zipout:
+            for rel in sorted(found):
+              p=repo/rel
+              contents=p.read_bytes()
+              if len(contents)>30_000_000:
+                continue
+              zipout.writestr(rel,contents)
+              manifest['files'].append({'path':rel,'bytes':len(contents),
+                'sha256':hashlib.sha256(contents).hexdigest()})
+            zipout.writestr('SNAPSHOT_MANIFEST.json',
+              json.dumps(manifest,ensure_ascii=False,indent=2)+'\n')
+          print(json.dumps({'snapshot':str(archive),'files':len(manifest['files']),
+            'archive_bytes':archive.stat().st_size,'source_commit':manifest['source_commit']}))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mathscope-audit-original-source-snapshot-20261024
+          path: ${{ runner.temp }}/MathScope_AuditBranch_ExactSource_Snapshot_20261024.zip
+          retention-days: 30
