@@ -1,0 +1,36 @@
+name: MathScope actual monotone root 2 denominator (56 source calls)
+on:
+  push:
+    branches: [mathscope-m3m4-evidence-gates-20261023]
+    paths:
+      - '.github/workflows/mathscope-actual-monotone2-56-denominator-20261025.yml'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/audit_actual_monotone2_interval_certificate.py'
+  workflow_dispatch:
+permissions:
+  actions: read
+  contents: read
+jobs:
+  exact-native-monotone2:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Reuse SHA pinned original first FiveMap source graph
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 39988632325
+          github-token: ${{ github.token }}
+          name: authenticated-first-fivemap-full-source-dag-replay-not-final-67
+          path: ${{ runner.temp }}/source
+      - name: Audit exact system 2 original endpoints and its two actual arguments
+        working-directory: research-ide/mathscope-m3/closure-evidence-20261023
+        run: |
+          python audit_actual_monotone2_interval_certificate.py --graph-dir "$RUNNER_TEMP/source/first-post-five-source-graph" --output "$RUNNER_TEMP/ACTUAL_MONOTONE_SYSTEM_2_56_DENOMINATOR.json"
+      - name: Publish strictly scoped monotone root 2 evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: actual-monotone2-56-native-denominator-source-bracket-OPEN
+          path: ${{ runner.temp }}/ACTUAL_MONOTONE_SYSTEM_2_56_DENOMINATOR.json
