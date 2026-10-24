@@ -11,6 +11,8 @@ on:
       - 'research-ide/mathscope-m3/closure-evidence-20261023/prove_original_n3_Q_rho_signs.py'
       - 'research-ide/mathscope-m3/closure-evidence-20261023/prove_original_n3_t1_natural_domain.py'
       - 'research-ide/mathscope-m3/closure-evidence-20261023/conditional_original_33Y_natural_tail.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/audit_source56_Y_algebraic_normal_forms.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/test_audit_source56_Y_algebraic_normal_forms.py'
   workflow_dispatch:
     inputs:
       original_run_id:
@@ -137,6 +139,27 @@ jobs:
           assert candidates[3628,5]==F(112150186033152,114217653172314453125)
           print('33_SOURCE_Y_BOUNDS_WITH_CONDITIONAL_TAILS_PROVEN')
           PY
+      - name: Normalize all 56 authentic Y algebraically, preserve real logarithm guards, and keep missing 490 OPEN
+        shell: bash
+        run: |
+          set -euo pipefail
+          (cd research-ide/mathscope-m3/closure-evidence-20261023 && python -m unittest -v test_audit_source56_Y_algebraic_normal_forms)
+          dir="$(cat "$RUNNER_TEMP/original-source-archive-path.txt")"
+          python research-ide/mathscope-m3/closure-evidence-20261023/audit_source56_Y_algebraic_normal_forms.py \
+            "$dir" "$RUNNER_TEMP/real-56-source-Y-eta-domain-rewrite-receipt.json" \
+            "$RUNNER_TEMP/real-56-source-Y-43-algebraic-normal-forms.json"
+          python - <<'PY'
+          import json,os
+          x=json.load(open(os.environ['RUNNER_TEMP']+'/real-56-source-Y-43-algebraic-normal-forms.json'))
+          assert x['source_pairs']==56 and x['source_calls']==523
+          assert x['different_algebraic_signatures']==43
+          assert x['Y_bound_certified_calls']==33 and x['remaining_unproved_Y_bounds']==490
+          g=next(i for i in x['groups'] if i['normal_form']=='COORD:X * Lambda')
+          assert g['pairs']==8 and g['calls']==114 and g['Y_bound_certified_calls']==0
+          assert not x['coefficient_Brho_norm_le_Q_proved']
+          assert x['final_67_closed_cell_jets_certified']==0 and x['release']=='HOLD'
+          print('REAL_FIRST_FIVEMAP_SOURCE_56_NORMAL_FORMS_SHA_REPLAY_PASS')
+          PY
       - if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -146,5 +169,6 @@ jobs:
             ${{ runner.temp }}/original-source-run-metadata.json
             ${{ runner.temp }}/real-56-source-Y-eta-domain-rewrite-receipt.json
             ${{ runner.temp }}/real-33-source-Y-interval-natural-tail-conditional.json
+            ${{ runner.temp }}/real-56-source-Y-43-algebraic-normal-forms.json
           if-no-files-found: warn
           retention-days: 30
