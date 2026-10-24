@@ -59,6 +59,31 @@ def exact_transport(ell,delta=Q(1,8)):
        "target_source_inverse_denominator_two_s_lower":"1",
     }
 
+def actual_boundary_image_counterexamples(ell):
+    """Exact same-box closeness alone cannot prove original source image.
+
+    Source image: (Z,T)=(1,0) from s0=1, eta=1. A target (1,-eps/2)
+    is distance eps/2<eps=4/ell^6 but T<0, impossible for image.
+    Image point (0,1/2) from s0=1/2,eta=0; target
+    (0,1/2-eps/2) is also within eps, but its unique root is T<1/2.
+    Thus actual representative margins, not merely distance, ARE required.
+    """
+    if type(ell) is not int or ell<3:
+        raise MissingActualMeshSupport('counterexample requires exact ell>=3')
+    eps=Q(4,ell**6)
+    require(eps>0 and eps<Q(1,2),'mesh counterexample radius invalid')
+    return {
+      'source_mesh_epsilon':str(eps),
+      'source_image_boundary_eta_plus1':[str(Q(1)),str(Q(0))],
+      'outside_image_target_near_eta_plus1':['1',str(-eps/2)],
+      'target_distance_less_than_source_epsilon':True,
+      'reason_target_outside':'T<0 violates T=s*(1-eta^2)>=0',
+      'source_image_boundary_s_half':['0','1/2'],
+      'outside_image_target_near_s_half':['0',str(Q(1,2)-eps/2)],
+      'reason_s_half_outside':'Z=0 requires s=T<1/2',
+      'source_same_box_closeness_alone_implies_image':False
+    }
+
 def pin_and_prove(source_band,source_profile,source_two_root=None):
     original=Path(source_band).read_bytes()
     profile=Path(source_profile).read_bytes()
@@ -90,6 +115,8 @@ def pin_and_prove(source_band,source_profile,source_two_root=None):
       "source_reference_s_delta":"1/8",
       "all_ell_ge3_sufficient_by_exact_monotonicity":True,
       "worst_ell_3_exact_certificate":smallest,
+      "exact_boundary_counterexamples_show_same_box_without_margins_insufficient":
+        actual_boundary_image_counterexamples(3),
       "required_original_reference_image_s_interior":"5/8 <= s0 <= 15/8",
       "required_original_reference_T0_positivity":"T0 >= 4/ell^6",
       "required_actual_target_same_mesh_box_with_that_reference":True,
