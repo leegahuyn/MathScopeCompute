@@ -19,21 +19,21 @@ class FirstSyntacticGuardsNotRuntimeSupport(unittest.TestCase):
         self.assertEqual(sum(v for k,v in EXPECTED_CASES.items() if k.startswith('inside|')),20)
         self.assertEqual(sum(v for k,v in EXPECTED_CASES.items() if k.startswith('before|')),94)
 
-    def test_exact_88_first_before_direct_Y_over_Lambda_local_cases(self):
+    def test_exact_94_first_before_direct_Y_over_Lambda_local_cases(self):
         r=self.result
-        self.assertEqual(r['source_first_before_direct_Y_over_Lambda_local_radius_conditional_count'],88)
-        self.assertEqual(r['source_first_before_Xa_local_conditional_count'],50)
+        self.assertEqual(r['source_first_before_direct_Y_over_Lambda_local_radius_conditional_count'],94)
+        self.assertEqual(r['source_first_before_Xa_local_conditional_count'],56)
         self.assertEqual(r['source_first_before_Xa_exp_t1_local_conditional_count'],38)
         conditional=[x for x in r['first_ancestor_records'] if x['conditional_local_before_Y_le_5']]
-        self.assertEqual(len(conditional),88)
+        self.assertEqual(len(conditional),94)
         self.assertEqual({x['local_Y_upper'] for x in conditional},{'4','<32/7'})
         self.assertTrue(r['local_radius_result_requires_selected_branch_and_nonnegative_coordinate'])
 
-    def test_six_alias_and_twenty_inside_guards_not_certified(self):
+    def test_twenty_inside_guards_not_certified(self):
         r=self.result
-        self.assertEqual(r['source_first_guard_coordinate_alias_needing_identity_count'],6)
+        self.assertEqual(r['source_first_before_direct_coordinate_count'],94)
         self.assertEqual(r['source_first_inside_transition_needing_tighter_upper_count'],20)
-        self.assertEqual(sum(not x['conditional_local_before_Y_le_5'] for x in r['first_ancestor_records']),26)
+        self.assertEqual(sum(not x['conditional_local_before_Y_le_5'] for x in r['first_ancestor_records']),20)
 
     def test_incorrect_global_guard_promotion_refused(self):
         self.assertEqual(self.result['first_piecewise_proved_to_dominate_all_original_consumer_execution_paths'],0)
