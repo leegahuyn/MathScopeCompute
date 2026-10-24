@@ -13,6 +13,8 @@ on:
       - 'research-ide/mathscope-m3/closure-evidence-20261023/conditional_original_33Y_natural_tail.py'
       - 'research-ide/mathscope-m3/closure-evidence-20261023/audit_source56_Y_algebraic_normal_forms.py'
       - 'research-ide/mathscope-m3/closure-evidence-20261023/test_audit_source56_Y_algebraic_normal_forms.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/audit_original_217_Y_domain_obligations.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/test_audit_original_217_Y_domain_obligations.py'
   workflow_dispatch:
     inputs:
       original_run_id:
@@ -160,6 +162,26 @@ jobs:
           assert x['final_67_closed_cell_jets_certified']==0 and x['release']=='HOLD'
           print('REAL_FIRST_FIVEMAP_SOURCE_56_NORMAL_FORMS_SHA_REPLAY_PASS')
           PY
+      - name: Authenticate 217 original source X xi Omega domain obligations and retain full 490 open
+        shell: bash
+        run: |
+          set -euo pipefail
+          (cd research-ide/mathscope-m3/closure-evidence-20261023 && python -m unittest -v test_audit_original_217_Y_domain_obligations)
+          python research-ide/mathscope-m3/closure-evidence-20261023/audit_original_217_Y_domain_obligations.py \
+            "$RUNNER_TEMP/real-56-source-Y-43-algebraic-normal-forms.json" \
+            "$RUNNER_TEMP/real-217-source-XY-Omega-local-domain-obligations.json"
+          python - <<'PY'
+          import json,os
+          z=json.load(open(os.environ['RUNNER_TEMP']+'/real-217-source-XY-Omega-local-domain-obligations.json'))
+          assert z['source_input_pairs']==17 and z['original_natural_calls']==217
+          assert z['source_call_log_guard_count']==128
+          assert [g['source_calls'] for g in z['groups']]==[114,33,26,26,18]
+          assert z['original_523_remaining_unproved_Y_calls']==490
+          assert not z['source_chart_support_upper_bounds_proved']
+          assert not z['coefficient_Brho_norm_proved']
+          assert z['actual_final_67_closed_cell_jets']==0 and z['release']=='HOLD'
+          print('REAL_ORIGINAL_217_NATURAL_CALLS_DOMAIN_OBLIGATION_RECEIPT_PASS')
+          PY
       - if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -170,5 +192,6 @@ jobs:
             ${{ runner.temp }}/real-56-source-Y-eta-domain-rewrite-receipt.json
             ${{ runner.temp }}/real-33-source-Y-interval-natural-tail-conditional.json
             ${{ runner.temp }}/real-56-source-Y-43-algebraic-normal-forms.json
+            ${{ runner.temp }}/real-217-source-XY-Omega-local-domain-obligations.json
           if-no-files-found: warn
           retention-days: 30
