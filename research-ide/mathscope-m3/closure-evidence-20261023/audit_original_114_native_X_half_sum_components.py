@@ -53,17 +53,26 @@ def audit(folder,factor_json):
            'Original AST not SHA-verified')
     demand(set(found)==want,'Missing an actual native half-sum operand')
     shape_counter=Counter();coordinate_counter=Counter();param_counter=Counter()
+    exponent_counter=Counter()
+    all_half_sums_even_nonnegative_power_under_real_input=True
     witness_rows=[]
     for x in add_rows.values():
         aa=x['two_addend_AST_node_IDs']
         entries=[dict(node_id=n,**found[n]) for n in aa]
         shape_counter['+'.join(sorted(z['op'] for z in entries))]+=x['native_call_occurrences']
         for e in entries:
+            if e['op']=='integer_power':
+                power=e['args'][1]
+                demand(type(power) is int and power>=0,'Expected genuine nonnegative integral source exponent')
+                exponent_counter[power]+=x['native_call_occurrences']
+                if power%2:all_half_sums_even_nonnegative_power_under_real_input=False
+            else:all_half_sums_even_nonnegative_power_under_real_input=False
             if e['op']=='coordinate':coordinate_counter[e['args'][0]]+=x['native_call_occurrences']
             if e['op']=='source_parameter':param_counter[e['args'][0]]+=x['native_call_occurrences']
         witness_rows.append({**x,'actual_addends':entries,
               'both_real_interval_bounds_proved':False})
     demand(sum(shape_counter.values())==4578,'Original source sum operand count drift')
+    demand(sum(exponent_counter.values())==9156,'Source 4578 half-sum addend exponents missing')
     return {
        'schema':'MathScope.M3.NativeX4578HalfSumActualAddends/1',
        'original_graph_sha256':EXPECTED_GRAPH_SHA,
@@ -71,6 +80,9 @@ def audit(folder,factor_json):
        'distinct_exact_half_sum_AST_argument_nodes':len(add_rows),
        'two_addend_operator_type_call_counts':dict(sorted(shape_counter.items())),
        'named_coordinate_addend_call_counts':dict(sorted(coordinate_counter.items())),
+       'power_exponents_weighted_by_native_call_occurrence':dict(sorted(exponent_counter.items())),
+       'real_source_argument_half_sum_nonnegativity_certified':all_half_sums_even_nonnegative_power_under_real_input,
+       'upper_B2_radius_requires_squared_base_bounds':True,
        'named_parameter_addend_call_counts':dict(sorted(param_counter.items())),
        'conditional_interval_transport':'If A,B in [0,41/(10 Lambda)] then (A+B)/2 in [0,41/(10 Lambda)], Lambda>0',
        'actual_addend_interval_bounds_authenticated':False,
