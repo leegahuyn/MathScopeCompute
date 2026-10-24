@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """Exact source-native #623935 integer-mesh counterexample without pairing guard.
 
-This is a genuine ORIGINAL INTEGER MESH configuration for the SOURCE expression,
-but is NOT claimed to be in an actual 11-root physical evaluation support.
+This is a genuine ORIGINAL INTEGER MESH configuration for the SOURCE expression with Xa<Xb,
+but is NOT claimed to match the pinned N3 numeric parameter values or actual 11-root physical evaluation support.
 Proof holds uniformly for every 0<h<2^-4096 without choosing a numeric h.
 
-ell=3, r=0, z=1000, t=0, Xa=Xb=1 yields a=b=1/2,
+ell=3, r=0, z=1000, t=0, Xa=1, Xb=2 yields a=b=1/2,
 m=0, M=1/972, zlo=3997/2916>4/3.
 A=(1/2)^(2h) lies in (1/2,1), hence U=sqrt((b-m)/A)
 lies in (sqrt(1/2),1), with U>2/3.
@@ -22,7 +22,7 @@ from prove_original_root623935_mesh_prerequisites import real_mesh_box
 from prove_original_root623935_general_srep_image import graph_pin,GRAPH_SHA
 
 def exact_original_integer_mesh_counterexample():
-    ell=3;r=F(0);z=F(1000);t=F(0);Xa=Xb=F(1)
+    ell=3;r=F(0);z=F(1000);t=F(0);Xa=F(1);Xb=F(2)
     q=real_mesh_box(ell,r,z,t,Xa,Xb)
     a=F(q['source_s_lower_a']);b=F(q['source_s_upper_b'])
     m=F(q['source_T_lower_m']);M=F(q['source_T_upper_M'])
@@ -47,7 +47,7 @@ def exact_original_integer_mesh_counterexample():
       'schema':'MathScope.M3.OriginalRoot623935ExactIntegerMeshNoImageWitness/1',
       'original_AST_sha256_required':GRAPH_SHA,
       'original_integer_mesh_ell_r_z_t':[ell,0,1000,0],
-      'source_Xa_and_Xb':['1','1'],
+      'source_Xa_and_Xb':['1','2'],
       'source_s_interval':[str(a),str(b)],
       'source_T_interval':[str(m),str(M)],
       'source_z_cell':[str(zlo),str(zhi)],
@@ -61,6 +61,7 @@ def exact_original_integer_mesh_counterexample():
       'source_T_lower_is_zero':True,
       'source_selected_Tmid_strict_negative':True,
       'actual_monotone2_s_in_half_two_exists':False,
+      'actual_N3_parameters_equal_these_source_witnesses_proved':False,
       'actual_runtime_support_contains_this_unpaired_integer_cell_proved':False,
       'shows_unqualified_source_mesh_is_not_globally_safe':True,
       'need_original_actual_mesh_representative_pairing':True,
