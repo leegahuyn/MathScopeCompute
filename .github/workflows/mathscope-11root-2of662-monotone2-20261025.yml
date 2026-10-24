@@ -5,6 +5,8 @@ on:
     paths:
       - '.github/workflows/mathscope-11root-2of662-monotone2-20261025.yml'
       - 'research-ide/mathscope-m3/closure-evidence-20261023/prove_original_11root_semantic_monotone2_reach.mjs'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/certify_original_two_root2_image_endpoints.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/test_certify_original_two_root2_image_endpoints.py'
   workflow_dispatch:
 permissions:
   actions: read
@@ -15,6 +17,9 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
       - name: Original SHA-pinned graph
         uses: actions/download-artifact@v4
         with:
@@ -25,8 +30,20 @@ jobs:
       - name: Rebuild all 4,420,257 direct AST edges and native system-definition edges
         run: |
           node --max-old-space-size=6144 research-ide/mathscope-m3/closure-evidence-20261023/prove_original_11root_semantic_monotone2_reach.mjs "$RUNNER_TEMP/source/first-post-five-source-graph" "$RUNNER_TEMP/EXACT_REACHABLE_ROOT2_11_PHYSICAL_ROOTS.json"
+      - name: Authenticate exactly two reachable actual root arguments and prove image endpoint criterion
+        env:
+          MATHSCOPE_GRAPH_DIR: ${{ runner.temp }}/source/first-post-five-source-graph
+          MATHSCOPE_ORIGINAL_REACH: ${{ runner.temp }}/EXACT_REACHABLE_ROOT2_11_PHYSICAL_ROOTS.json
+          MATHSCOPE_N3_SOURCE_PROFILE: ${{ github.workspace }}/research-ide/mathscope-m2/navier/source-profile.mjs
+          MATHSCOPE_GLOBAL_BAND_SOURCE: ${{ github.workspace }}/research-ide/mathscope-m3/navier/source-global-band.mjs
+        working-directory: research-ide/mathscope-m3/closure-evidence-20261023
+        run: |
+          python -m unittest -v test_certify_original_two_root2_image_endpoints.py
+          python certify_original_two_root2_image_endpoints.py --graph-dir "$MATHSCOPE_GRAPH_DIR" --reach-receipt "$MATHSCOPE_ORIGINAL_REACH" --source-profile "$MATHSCOPE_N3_SOURCE_PROFILE" --source-global-band "$MATHSCOPE_GLOBAL_BAND_SOURCE" --output "$RUNNER_TEMP/TWO_ROOT2_ENDPOINT_IMAGE_OBLIGATIONS.json"
       - name: Preserve strictly semantic 2-of-662 call frontier (not runtime/domain certificate)
         uses: actions/upload-artifact@v4
         with:
           name: original-11-physical-roots-2of662-monotone2-semantic-not-final
-          path: ${{ runner.temp }}/EXACT_REACHABLE_ROOT2_11_PHYSICAL_ROOTS.json
+          path: |
+            ${{ runner.temp }}/EXACT_REACHABLE_ROOT2_11_PHYSICAL_ROOTS.json
+            ${{ runner.temp }}/TWO_ROOT2_ENDPOINT_IMAGE_OBLIGATIONS.json
