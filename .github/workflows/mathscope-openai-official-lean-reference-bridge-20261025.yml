@@ -1,0 +1,48 @@
+name: MathScope reference OpenAI Lean theorem provenance (no native proof promotion)
+on:
+  push:
+    branches: [mathscope-m3m4-evidence-gates-20261023]
+    paths:
+      - '.github/workflows/mathscope-openai-official-lean-reference-bridge-20261025.yml'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/OPENAI_OFFICIAL_LEAN_PAPER_BRIDGE_20261025.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verified-upstream-module-pins:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Current MathScope audit revision
+        uses: actions/checkout@v4
+        with:
+          path: mathscope
+      - name: Official OpenAI Lean proof sources (immutable revision)
+        uses: actions/checkout@v4
+        with:
+          repository: openai/NavierStokesAndEuler
+          ref: f9e8bc5b38b6e212696e8a30e3e91517af887bbd
+          path: upstream
+          persist-credentials: false
+      - name: Fail closed if Lean module SHA or MathScope proof grade differs
+        run: |
+          python - <<'PY'
+          import json, pathlib, subprocess
+          manifest=pathlib.Path('mathscope/research-ide/mathscope-m3/closure-evidence-20261023/OPENAI_OFFICIAL_LEAN_PAPER_BRIDGE_20261025.json')
+          d=json.loads(manifest.read_text())
+          assert d['schema']=='MathScope.M3.OfficialOpenAILeanReferenceBridge/1'
+          assert d['upstream']['revision']=='f9e8bc5b38b6e212696e8a30e3e91517af887bbd'
+          assert len(d['proof_targets'])==8
+          root=pathlib.Path('upstream')
+          sha=subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip()
+          assert sha==d['upstream']['revision'],sha
+          for row in d['proof_targets']:
+              b=subprocess.check_output(['git','hash-object',row['module']],cwd=root,text=True).strip()
+              assert b==row['git_blob_sha1'],row['module']
+              assert row['source_to_lean_refinement_proved'] is False,row['module']
+          gates=d['release_gates']
+          assert gates['source_114_global_support'] is False
+          assert gates['source_523_actual_natural_bounds']==33
+          assert gates['final_numeric_67']==0 and gates['M3']=='62/64'
+          assert gates['M4']=='0/16' and gates['release']=='HOLD'
+          print('OPENAI_LEAN_MODULE_PINS_8_OF_8_VERIFIED_REF_ONLY_NOT_MATHSCOPE_NUMERICS')
+          PY
