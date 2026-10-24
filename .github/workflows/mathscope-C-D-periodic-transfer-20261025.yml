@@ -1,0 +1,28 @@
+name: MathScope Clay C-to-D periodic transfer exact audit (source conditional HOLD)
+on:
+  push:
+    branches: [mathscope-m3m4-evidence-gates-20261023]
+    paths:
+      - '.github/workflows/mathscope-C-D-periodic-transfer-20261025.yml'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/certify_original_C_to_D_periodic_transfer.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/test_certify_original_C_to_D_periodic_transfer.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-C-to-D-conditional:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Source-faithful rational C-to-D transfer; do not close M3 or M4
+        working-directory: research-ide/mathscope-m3/closure-evidence-20261023
+        run: |
+          python -m unittest -v test_certify_original_C_to_D_periodic_transfer.py
+          python certify_original_C_to_D_periodic_transfer.py --output "$RUNNER_TEMP/CLAY_C_TO_D_CONDITIONAL_TRANSFER_HOLD.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: clay-C-to-D-conditional-original-source-not-final-fields-HOLD
+          path: ${{ runner.temp }}/CLAY_C_TO_D_CONDITIONAL_TRANSFER_HOLD.json
