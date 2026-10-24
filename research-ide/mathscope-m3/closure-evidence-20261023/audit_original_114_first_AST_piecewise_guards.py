@@ -117,12 +117,12 @@ def audit_first_AST_piecewise(graph_dir):
             row['conditional_local_hypotheses'] = None
             row['local_Y_upper'] = None
     upper=Counter(x['left_node'] for x in safe)
-    ensure(len(safe)==88 and upper=={3617:50,3624:38},
+    ensure(len(safe)==94 and upper=={3617:56,3624:38},
            'original direct-input first-BEFORE source branch audit drifted')
     ensure(sum(x['arm']=='inside' for x in rows)==20,
            'original transition branch count drifted')
-    ensure(len(rows)-len(safe)-20==6,
-           'original exp-log/sqrt coordinate alias cases drifted')
+    ensure(len(rows)-len(safe)==20,
+           'original 20 first-inside source branches drifted')
     return {
       'schema':'MathScope.M3.Original114FirstSyntacticPiecewiseAncestors/1',
       'graph_source_sha256':EXPECTED_GRAPH_SHA,
@@ -134,7 +134,7 @@ def audit_first_AST_piecewise(graph_dir):
       'source_first_before_direct_Y_over_Lambda_local_radius_conditional_count':len(safe),
       'source_first_before_Xa_local_conditional_count':upper[3617],
       'source_first_before_Xa_exp_t1_local_conditional_count':upper[3624],
-      'source_first_guard_coordinate_alias_needing_identity_count':6,
+      'source_first_before_direct_coordinate_count':len(safe),
       'source_first_inside_transition_needing_tighter_upper_count':20,
       'local_radius_result_requires_selected_branch_and_nonnegative_coordinate':True,
       'proof_note':'Topological first *syntactic* ancestor, NOT all native root-to-call execution paths and NOT a support proof',
