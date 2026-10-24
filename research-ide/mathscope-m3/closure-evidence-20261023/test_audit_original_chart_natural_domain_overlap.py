@@ -9,6 +9,8 @@ class SourceNaturalChartDomainContradiction(unittest.TestCase):
   self.assertEqual(x['Y_at_algebraic_test_point'],'8')
   self.assertFalse(x['declared_full_box_alone_proves_natural_Y_le_5'])
   self.assertEqual(x['necessary_extra_source_chart_condition'],'0<=X<=5/Lambda')
+  self.assertEqual(x['conditional_Y_lower_bound_from_chart_box'],'2')
+  self.assertTrue(x['actual_source_log_X_over_Xa_positive_if_chart_hypotheses_hold'])
  def test_declared_chart_is_not_actual_point_realizability_proof(self):
   x=verify_chart_natural_domain_mismatch()
   self.assertFalse(x['tested_point_is_known_attained_by_actual_PDE_field'])
