@@ -87,7 +87,9 @@ def audit(folder):
     targets=expected_index()
     bit={node:1<<i for i,node in enumerate(sorted(targets))}
     masks=[]
+    node_kinds=[]   # immutable original op name for each exact actual argument AST ID
     counters=Counter();families=Counter()
+    x_actual_kinds=Counter()
     per_target=defaultdict(lambda:{'native_expression_call_count':0,
                                     'formal_X_binding_count':0,'ambient_X_formal_absent_count':0,
                                     'actual_X_arg_node_examples':[]})
@@ -109,6 +111,7 @@ def audit(folder):
                 ensure(type(child) is int and 0<=child<i,'non-topological original source AST')
                 m|=masks[child]
             masks.append(m)
+            node_kinds.append(node['op'])
             count+=1
             if node['op'] not in OPS:continue
             definition,sid,params,values,orders=validate_binding(node,registry)
@@ -122,6 +125,13 @@ def audit(folder):
             relevant_systems.add((node['op'],sid))
             x_actual=values[params.index(SOURCE_X_COORD_NODE)] if SOURCE_X_COORD_NODE in params else None
             eta_actual=values[params.index(SOURCE_ETA_COORD_NODE)] if SOURCE_ETA_COORD_NODE in params else None
+            if x_actual is None:
+                counters['native_expression_calls_without_direct_formal_X_slot']+=1
+            else:
+                ensure(x_actual<i,'formal X actual argument was not an existing prior AST node')
+                counters['native_expression_calls_with_direct_formal_X_slot']+=1
+                counters['native_expression_calls_with_formal_X_actual_identity' if x_actual==SOURCE_X_COORD_NODE else 'native_expression_calls_with_substituted_formal_X']+=1
+                x_actual_kinds[node_kinds[x_actual]]+=1
             record={
                 'original_native_call_node_id':i,'native_op':node['op'],'system_id':sid,
                 'native_definition_body_id':definition['body'],
@@ -150,6 +160,7 @@ def audit(folder):
       'original_114_source_natural_call_count':len(targets),
       'registered_native_expression_call_counts':dict(counters),
       'relevant_expression_partial_counts_by_operator':dict(families),
+      'X_actual_argument_source_operator_counts':dict(x_actual_kinds),
       'distinct_relevant_registered_expression_systems':len(relevant_systems),
       'ordered_native_argument_mapping_sha256':signatures_hash.hexdigest(),
       'representative_exact_actual_binding_examples':examples,
