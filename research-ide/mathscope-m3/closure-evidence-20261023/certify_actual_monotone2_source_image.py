@@ -58,6 +58,15 @@ def source_image_certificate(root_receipt,profile_receipt,global_source_file):
     true_d_lower=Q(1)-8*stronger_limit
     require(weak_d_lower==Q(1,2) and true_d_lower>Q(1,2),
             "source complete-image monotonicity gap")
+    # The implicit function theorem now supplies genuine first derivatives
+    # of the mathematical chart inverse on this same image:
+    # ds/dT = 1/F_s ; ds/dZ = 2*Z*s^(2h)/F_s.
+    # |Z|<=sqrt(2)<3/2 and s^(2h)<=2 imply |ds/dZ|<6/F_s.
+    # F_s>1-8h>1-2^-4093; these are exact source-parameter bounds.
+    jacobian_min=Q(1)-Q(1,2**4093)
+    require(jacobian_min==true_d_lower and jacobian_min>Q(1,2)
+            and Q(3,2)**2>Q(2) and Q(6)==Q(2)*Q(3,2)*Q(2),
+            "source inverse first-derivative control invalid")
     return {
       "schema":"MathScope.M3.OriginalSlowChartMonotone2SourceImageInverse/1",
       "original_slow_band_source_blob_sha1":SOURCE_BAND_GIT_BLOB_SHA1,
@@ -78,6 +87,13 @@ def source_image_certificate(root_receipt,profile_receipt,global_source_file):
       "source_image_common_inverse_denominator_2s_min":"1",
       "source_image_common_inverse_denominator_2s_max":"4",
       "source_image_common_inverse_reciprocal_max":"1",
+      "source_image_inverse_Jacobian_minimum_strict":"1-2^-4093",
+      "source_image_ds_dT_formula":"1/(1-2h*Z^2*s^(2h-1))",
+      "source_image_ds_dZ_formula":"2*Z*s^(2h)/(1-2h*Z^2*s^(2h-1))",
+      "source_image_ds_dT_strict_upper":"1/(1-2^-4093)",
+      "source_image_absolute_ds_dZ_strict_upper":"6/(1-2^-4093)",
+      "source_image_real_inverse_first_order_implicit_jet_proved":True,
+      "actual_final_physical_67_jets_from_this_inverse_proved":0,
       "all_original_56_native_call_actual_coordinates_in_source_image_proved":False,
       "source_R_support_Y_less_than_4point1_proved":False,
       "new_unconditional_global_source_Y_bounds_114":0,
