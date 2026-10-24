@@ -14,6 +14,8 @@ on:
       - 'research-ide/mathscope-m3/closure-evidence-20261023/test_audit_original_11_root_native_bridge_gap.py'
       - 'research-ide/mathscope-m3/closure-evidence-20261023/audit_native_global_expression_114_guard_gaps.py'
       - 'research-ide/mathscope-m3/closure-evidence-20261023/test_audit_native_global_expression_114_guard_gaps.py'
+      - 'research-ide/mathscope-m3/post-signed-20261023/audit_original_all_native_114_conditional_guard_coverage.mjs'
+      - 'research-ide/mathscope-m3/post-signed-20261023/audit_original_all_native_114_conditional_guard_coverage.test.mjs'
   workflow_dispatch:
 permissions:
   contents: read
@@ -48,6 +50,8 @@ jobs:
           run-id: 39933504384
           github-token: ${{ github.token }}
           path: ${{ runner.temp }}/signed
+      - name: Native structural-guard theorem tests (do not certify physical fields)
+        run: node --test research-ide/mathscope-m3/post-signed-20261023/audit_original_all_native_114_conditional_guard_coverage.test.mjs
       - name: Verify original 114 graph calls and 67+13 conditional preflight
         env:
           MATHSCOPE_GRAPH_DIR: ${{ runner.temp }}/source/first-post-five-source-graph
@@ -61,6 +65,7 @@ jobs:
           python prove_original_114_selected_first_arm_Y5.py --graph-dir "$MATHSCOPE_GRAPH_DIR" --output "$RUNNER_TEMP/ORIGINAL_114_CONDITIONAL_FIRST_ARM_Y5.json"
           python audit_original_11_root_native_bridge_gap.py --graph-dir "$MATHSCOPE_GRAPH_DIR" --output "$RUNNER_TEMP/ORIGINAL_11_ROOT_NATIVE_BRIDGE_GAP.json"
           python audit_native_global_expression_114_guard_gaps.py --graph-dir "$MATHSCOPE_GRAPH_DIR" --output "$RUNNER_TEMP/ORIGINAL_NATIVE_FIRST_GUARD_BYPASS_GAPS.json"
+          node ../post-signed-20261023/audit_original_all_native_114_conditional_guard_coverage.mjs "$MATHSCOPE_GRAPH_DIR" "$RUNNER_TEMP/ORIGINAL_114_AST_NODE_LEDGER.json" "$RUNNER_TEMP/ORIGINAL_114_CONDITIONAL_FIRST_ARM_Y5.json" "$RUNNER_TEMP/ORIGINAL_ALL_NATIVE_114_CONDITIONAL_GUARD_COVERAGE.json"
           python verify_real_67jet_readiness.py --actual-receipt "$REAL_RECEIPT_FILE" --output "$RUNNER_TEMP/ORIGINAL_PRE_SIGNED_67_READINESS.json"
           python verify_67jet_after_actual_signed.py --receipt "$ACTUAL_SIGNED_CI_RECEIPT" --output "$RUNNER_TEMP/ORIGINAL_POST_SIGNED_67_READINESS.json"
           set +e
@@ -79,6 +84,7 @@ jobs:
             ${{ runner.temp }}/ORIGINAL_114_CONDITIONAL_FIRST_ARM_Y5.json
             ${{ runner.temp }}/ORIGINAL_11_ROOT_NATIVE_BRIDGE_GAP.json
             ${{ runner.temp }}/ORIGINAL_NATIVE_FIRST_GUARD_BYPASS_GAPS.json
+            ${{ runner.temp }}/ORIGINAL_ALL_NATIVE_114_CONDITIONAL_GUARD_COVERAGE.json
             ${{ runner.temp }}/ORIGINAL_PRE_SIGNED_67_READINESS.json
             ${{ runner.temp }}/ORIGINAL_POST_SIGNED_67_READINESS.json
             ${{ runner.temp }}/POST_SIGNED_67_REQUIRED_NEGATIVE.json
