@@ -31,6 +31,11 @@ class RealSourceFirstOrderRouteContracts(unittest.TestCase):
         self.assertTrue(a['axis_average_selected_arm_sqrt_tX_in_0_a_for_original_Picard'])
         self.assertLess(F(a['local_Y_Lambda_Xkeep_strict_upper']),F(a['local_Y_Lambda_a_squared_strict_upper']))
 
+    def test_piecewise_derivative_interfaces_remain_open(self):
+        a=self.receipt
+        self.assertTrue(a['piecewise_join_derivative_formula_source_assumes_matching_jets'])
+        self.assertFalse(a['actual_join_matching_jets_certified_here'])
+
     def test_release_and_original_jets_remain_blocked(self):
         a=self.receipt
         self.assertTrue(a['WARNING_selected_branch_routing_not_global_114_consumer_path_certificate'])
