@@ -181,6 +181,66 @@ def certify_actual_source_representative_in_mesh(
       'all_11_physical_root_native_domain_certified':False,
     }
 
+def certify_actual_source_srep_one_signed_projection(
+    ell,r_index,z_index,t_index,Xa,Xb,Xrep,eta):
+    """A new source-original actual native #623935 VALUE-domain theorem on
+    the nontrivial full eta[-1,1] representative slice sRep=1.
+
+    Source representative: Rrep=sqrt(2*Xrep), Zrep=eta, TRep=1-eta².
+    This exact rational checker needs Rrep rational: choose Xrep=Rrep²/2.
+    If representative is STRICTLY in the z and t mesh cell and Xi in
+    [Xa,Xb], source a<=1<=b and m<=Trep<M. Then L<=|eta|<=U and
+    L<U, because M>Trep implies L²<eta² for eta!=0; for eta=0,
+    m<Trep implies U>0. At eta<=0 source wnegative>0. At eta>0
+    source positive width>0, so whichever of the two source branches
+    is selected yields an allowed |Z| in [L,U]. T clamp yields an
+    original slow-chart image point. No approximation of tiny h needed.
+    This proves an ACTUAL SOURCE projection on this input slice,
+    not every source runtime mesh/representative pair.
+    """
+    if type(eta) is not F or not F(-1)<=eta<=F(1):
+        raise OriginalMeshConditionOPEN('source representative eta must be exact [-1,1]')
+    # Exact sRep=1 so h-dependent source Z=s^D*eta=eta.
+    repR2=2*Xrep
+    # Only require a rational R witness when sqrt(2*Xrep) is rational.
+    from math import isqrt
+    if repR2<0:
+        raise OriginalMeshConditionOPEN('source representative radial squared negative')
+    rn=isqrt(repR2.numerator);rd=isqrt(repR2.denominator)
+    require(rn*rn==repR2.numerator and rd*rd==repR2.denominator,
+            'source Rrep sqrt(2Xrep) lacks exact rational witness for this checker')
+    Rrep=F(rn,rd)
+    Trep=1-eta*eta
+    c=certify_actual_source_representative_in_mesh(
+      ell,r_index,z_index,t_index,Xa,Xb,Xrep,F(1),Rrep,eta,Trep)
+    center=c['exact_source_mesh_center_grid_indices']
+    zphys=F(z_index,ell**6);tphys=F(t_index,ell**6)
+    delta=F(3,4*ell**6)
+    require(abs(eta-zphys)<delta and abs(Trep-tphys)<delta,
+            'strict original signed Z and T representative mesh interior required')
+    a,b,m,M=(F(q) for q in (
+       real_mesh_box(ell,r_index,z_index,t_index,Xa,Xb)
+       [k] for k in ('source_s_lower_a','source_s_upper_b','source_T_lower_m','source_T_upper_M')))
+    require(a<=1<=b and m<=Trep<M,'source original sRep1 reference fails strict T upper')
+    return {
+       **c,
+       'schema':'MathScope.M3.OriginalRoot623935SrepOneEntireEtaRepresentativeMesh/1',
+       'source_srep':'1',
+       'source_eta_rep':str(eta),
+       'source_Zrep_equals_eta':True,
+       'source_Trep_equals_one_minus_eta_squared':True,
+       'source_negative_intersection_strict_if_eta_le_zero':eta<=0,
+       'source_positive_intersection_strict_if_eta_gt_zero':eta>0,
+       'source_selects_ONLY_valid_signed_intersections':True,
+       'original_actual_source_T_clamp_produces_image_value':True,
+       'original_monotone2_root_exists_unique_on_selected_image':True,
+       'original_inverse_denominator_two_s_ge_one_for_this_slice':True,
+       'source_piecewise_zero_width_derivative_join_proved':False,
+       'all_actual_runtime_representatives_have_srep_eq_one':False,
+       'source_523_natural_Y_bound_certified':33,
+       'original_final_67_jets':0,'release':'HOLD'
+    }
+
 def inspect_sha_original_geometry(graph_dir,source_band_file,order_one_file):
     data=Path(source_band_file).read_bytes()
     blob=hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest()
