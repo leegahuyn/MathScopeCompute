@@ -20,7 +20,7 @@ class MissingOriginalInnerBranchProof(ValueError):pass
 
 def first_order_inner_natural_radius_bound(source=None):
     src=Path(source) if source is not None else (
-      Path(__file__).resolve().parents[1]/'navier/actual-continuation-exact-order-one.mjs')
+      Path(__file__).resolve().parents[2]/'mathscope-m2/navier/actual-continuation-exact-order-one.mjs')
     s=src.read_text(encoding='utf8')
     snippets=[
       "Xa=G.parameter('Xa'),t1=G.parameter('t1')",
