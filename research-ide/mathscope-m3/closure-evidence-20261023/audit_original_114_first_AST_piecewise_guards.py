@@ -61,7 +61,7 @@ def audit_first_AST_piecewise(graph_dir):
     source=replay(graph_dir)
     target=expected_index();positions={node:1<<k for k,node in enumerate(sorted(target))}
     bit_id=sorted(target)
-    masks=[];first={};sha=hashlib.sha256();count=0
+    masks=[];first={};Y_source={};sha=hashlib.sha256();count=0
     with gzip.open(Path(graph_dir)/'original-source-nodes.jsonl.gz','rb') as f:
         for line_idx,line in enumerate(f):
             sha.update(line)
@@ -71,6 +71,7 @@ def audit_first_AST_piecewise(graph_dir):
             i=line_idx-1; count+=1
             item=json.loads(line)
             op=item['op'];a=item['args']
+            if i in set(target.values()):Y_source[i]=item
             bits=positions.get(i,0)
             for child in original_children(op,a):
                 ensure(type(child) is int and 0<=child<i,'not a topological AST child')
@@ -98,6 +99,30 @@ def audit_first_AST_piecewise(graph_dir):
     ensure(count==4420257 and sha.hexdigest()==EXPECTED_GRAPH_SHA,'full original source graph changed')
     rows=sorted(first.values(),key=lambda r:r['original_natural_node_id'])
     cases=verify_first_rows(rows)
+    # First encountered BEFORE arm x<=left provides a *conditional local*
+    # source-radius theorem whenever the original Y-expression is literally
+    # Lambda*x with the same x used by the piecewise guard, and x>=0.
+    # It is NOT a native root-to-call dominance/execution certificate.
+    safe=[]
+    for row in rows:
+        Y=Y_source.get(row['Y_node_id'])
+        if (Y and Y['op']=='multiply' and Y['args']==[3454,row['guard_x_node']]
+            and row['arm']=='before' and row['left_node'] in (3617,3624)):
+            row['conditional_local_before_Y_le_5'] = True
+            row['conditional_local_hypotheses'] = 'selected before arm, original x>=0, Lambda>0, Xa=4/Lambda, 0<t1<1/8'
+            row['local_Y_upper'] = '4' if row['left_node']==3617 else '<32/7'
+            safe.append(row)
+        else:
+            row['conditional_local_before_Y_le_5'] = False
+            row['conditional_local_hypotheses'] = None
+            row['local_Y_upper'] = None
+    upper=Counter(x['left_node'] for x in safe)
+    ensure(len(safe)==88 and upper=={3617:50,3624:38},
+           'original direct-input first-BEFORE source branch audit drifted')
+    ensure(sum(x['arm']=='inside' for x in rows)==20,
+           'original transition branch count drifted')
+    ensure(len(rows)-len(safe)-20==6,
+           'original exp-log/sqrt coordinate alias cases drifted')
     return {
       'schema':'MathScope.M3.Original114FirstSyntacticPiecewiseAncestors/1',
       'graph_source_sha256':EXPECTED_GRAPH_SHA,
@@ -106,6 +131,12 @@ def audit_first_AST_piecewise(graph_dir):
       'number_with_at_least_one_syntactic_piecewise_ancestor':len(rows),
       'first_ancestor_case_counts':cases,
       'first_ancestor_records':rows,
+      'source_first_before_direct_Y_over_Lambda_local_radius_conditional_count':len(safe),
+      'source_first_before_Xa_local_conditional_count':upper[3617],
+      'source_first_before_Xa_exp_t1_local_conditional_count':upper[3624],
+      'source_first_guard_coordinate_alias_needing_identity_count':6,
+      'source_first_inside_transition_needing_tighter_upper_count':20,
+      'local_radius_result_requires_selected_branch_and_nonnegative_coordinate':True,
       'proof_note':'Topological first *syntactic* ancestor, NOT all native root-to-call execution paths and NOT a support proof',
       'first_piecewise_proved_to_dominate_all_original_consumer_execution_paths':0,
       'native_coordinate_alias_substitution_verified':False,
