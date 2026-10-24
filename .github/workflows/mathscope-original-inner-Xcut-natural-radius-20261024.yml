@@ -1,0 +1,34 @@
+name: MathScope original first-order inner Xcut natural-series radius source theorem
+on:
+  push:
+    branches: [mathscope-m3m4-evidence-gates-20261023]
+    paths:
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/prove_original_inner_Xcut_natural_radius.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/test_prove_original_inner_Xcut_natural_radius.py'
+      - '.github/workflows/mathscope-original-inner-Xcut-natural-radius-20261024.yml'
+  workflow_dispatch:
+jobs:
+  source-inner-choose-natural-radius-theorem:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify real first-order choose branches and exact Xcut normalized radius bound
+        run: |
+          cd research-ide/mathscope-m3/closure-evidence-20261023
+          python -m unittest -v test_prove_original_inner_Xcut_natural_radius
+          python - <<'PY'
+          import json
+          from prove_original_inner_Xcut_natural_radius import first_order_inner_natural_radius_bound
+          proof=first_order_inner_natural_radius_bound()
+          assert proof['conditional_selected_inner_branch_Lambda_X_le_5_proved']
+          assert not proof['all_114_physically_reachable_Lambda_X_calls_inside_that_branch_proved']
+          assert not proof['common_Brho_coefficient_norm_proved']
+          assert proof['actual_final_67_jets_certified']==0
+          print(json.dumps(proof,indent=2))
+          PY
