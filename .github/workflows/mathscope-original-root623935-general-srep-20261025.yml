@@ -4,6 +4,8 @@ on:
     branches: [mathscope-m3m4-evidence-gates-20261023]
     paths:
       - '.github/workflows/mathscope-original-root623935-general-srep-20261025.yml'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/prove_original_monotone2_uniform_complex_tube.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/test_prove_original_monotone2_uniform_complex_tube.py'
       - 'research-ide/mathscope-m3/closure-evidence-20261023/prove_original_root623935_general_srep_image.py'
       - 'research-ide/mathscope-m3/closure-evidence-20261023/test_prove_original_root623935_general_srep_image.py'
       - 'research-ide/mathscope-m3/closure-evidence-20261023/prove_original_root623935_autoselected_mesh.py'
@@ -41,7 +43,8 @@ jobs:
           MATHSCOPE_ORIGINAL_GRAPH_FILE: ${{ runner.temp }}/source/first-post-five-source-graph/original-source-nodes.jsonl.gz
         working-directory: research-ide/mathscope-m3/closure-evidence-20261023
         run: |
-          python -m unittest -v test_prove_original_root623935_general_srep_image.py test_prove_original_root623935_autoselected_mesh.py test_audit_original_root623935_integer_mesh_no_image_witness.py test_audit_original_root623935_switch_discontinuity.py test_prove_original_root623935_overlapping_mesh_nonidentity.py test_audit_original_root622820_free_coordinate_gap.py
+          python -m unittest -v test_prove_original_monotone2_uniform_complex_tube.py test_prove_original_root623935_general_srep_image.py test_prove_original_root623935_autoselected_mesh.py test_audit_original_root623935_integer_mesh_no_image_witness.py test_audit_original_root623935_switch_discontinuity.py test_prove_original_root623935_overlapping_mesh_nonidentity.py test_audit_original_root622820_free_coordinate_gap.py
+          python prove_original_monotone2_uniform_complex_tube.py --output "$RUNNER_TEMP/ROOT2_COMPLEX_INVERSE_SOURCE_IMAGE_HOLD.json"
           python prove_original_root623935_general_srep_image.py --original-graph "$MATHSCOPE_ORIGINAL_GRAPH_FILE" --output "$RUNNER_TEMP/ROOT623935_GENERAL_SREP_CONDITIONAL_IMAGE_HOLD.json"
           python audit_original_root622820_free_coordinate_gap.py --original-graph "$MATHSCOPE_ORIGINAL_GRAPH_FILE" --output "$RUNNER_TEMP/ROOT622820_UNGUARDED_COORDINATE_COUNTEREXAMPLE_HOLD.json"
           python prove_original_root623935_autoselected_mesh.py --original-graph "$MATHSCOPE_ORIGINAL_GRAPH_FILE" --output "$RUNNER_TEMP/ROOT623935_S_REP_AUTOSELECTED_MESH_HOLD.json"
@@ -54,6 +57,7 @@ jobs:
           name: original-two-slow-roots-conditional-and-obstruction-HOLD
           path: |
             ${{ runner.temp }}/ROOT623935_GENERAL_SREP_CONDITIONAL_IMAGE_HOLD.json
+            ${{ runner.temp }}/ROOT2_COMPLEX_INVERSE_SOURCE_IMAGE_HOLD.json
             ${{ runner.temp }}/ROOT622820_UNGUARDED_COORDINATE_COUNTEREXAMPLE_HOLD.json
             ${{ runner.temp }}/ROOT623935_S_REP_AUTOSELECTED_MESH_HOLD.json
             ${{ runner.temp }}/ROOT623935_UNPAIRED_INTEGER_MESH_OUTSIDE_IMAGE_HOLD.json
