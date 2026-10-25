@@ -1,7 +1,7 @@
 import unittest
 from fractions import Fraction as Q
 from prove_original_monotone2_uniform_complex_tube import (
-  exact_tube_contract,cauchy_derivative_majorant,original_chart_complex_eta_pullback,H_UPPER,R,DELTA)
+  exact_tube_contract,cauchy_derivative_majorant,original_chart_complex_eta_pullback,native_inverse_two_variable_taylor_tail,H_UPPER,R,DELTA)
 
 class SourceImageUniformComplexTube(unittest.TestCase):
     def test_all_source_guards_and_explicit_complex_inverse(self):
@@ -31,6 +31,21 @@ class SourceImageUniformComplexTube(unittest.TestCase):
         self.assertEqual(e['every_positive_order_eta_derivative_of_inverse_on_exact_source_image'],'0')
         self.assertFalse(e['source_native_free_coordinate_call_uses_this_pullback_proved'])
         self.assertFalse(e['original_analytic_profile_phi_u_Brho_scope_proved'])
+
+    def test_actual_native_inverse_local_two_variable_tail_N12(self):
+        x=native_inverse_two_variable_taylor_tail(12)
+        self.assertEqual(x['cauchy_bivariate_total_degree_tail_upper'],'731/1207959552')
+        self.assertEqual(x['exact_complex_perturbation_each_coordinate_max'],'1/400')
+        self.assertFalse(x['source_inverse_actual_natural_Phi_u_tail_proved'])
+        self.assertEqual(x['source_final_67_jets_proved'],0)
+        for n in (0,1,5,13,64):
+            self.assertLessEqual(Q(native_inverse_two_variable_taylor_tail(n)['cauchy_bivariate_total_degree_tail_upper']),
+                                 Q(native_inverse_two_variable_taylor_tail(0)['cauchy_bivariate_total_degree_tail_upper']))
+    def test_taylor_tail_invalid_certificates_rejected(self):
+        for n,r in ((-1,Q(1,400)),(513,Q(1,400)),(12,Q(1,399)),(12,0.001)):
+            with self.subTest(order=n,radius=r),self.assertRaises(ValueError):
+                native_inverse_two_variable_taylor_tail(n,r)
+        self.assertEqual(native_inverse_two_variable_taylor_tail(12,Q(0))['cauchy_bivariate_total_degree_tail_upper'],'0')
 
     def test_infinite_order_claim_not_per_call_certificate(self):
         x=exact_tube_contract()
