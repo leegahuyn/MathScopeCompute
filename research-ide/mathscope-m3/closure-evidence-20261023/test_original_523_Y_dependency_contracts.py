@@ -1,12 +1,14 @@
-import json,sys,unittest,tempfile,zipfile
+import json,sys,unittest,tempfile,zipfile,os
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parent))
 from certify_original_523_Y_dependency_contracts import extract_contracts
 HERE=Path(__file__).resolve().parent
-ARCHIVE=HERE/'03_ORIGINAL_PROOF_EVIDENCE/MathScope_20261025_NEWCHAT_PROOF_EVIDENCE.zip'
+ARCHIVE=Path(os.environ.get('MATHSCOPE_ORIGINAL_PROOF_ARCHIVE',str(HERE/'03_ORIGINAL_PROOF_EVIDENCE/MathScope_20261025_NEWCHAT_PROOF_EVIDENCE.zip')))
 class OriginalNaturalYTests(unittest.TestCase):
  @classmethod
- def setUpClass(cls):cls.result=extract_contracts(ARCHIVE)
+ def setUpClass(cls):
+  if not ARCHIVE.is_file():raise unittest.SkipTest('External pinned original proof archive required; not a passed M3 acceptance test')
+  cls.result=extract_contracts(ARCHIVE)
  def test_inherited_natural_call_ast_bindings(self):
   r=self.result;self.assertEqual(r['reachable_natural_calls'],523);self.assertEqual(r['distinct_source_Y_nodes'],56)
   self.assertEqual(r['components'],{'Phi':254,'average':93,'u':176})
