@@ -1,7 +1,7 @@
 import unittest
 from fractions import Fraction as Q
 from prove_original_monotone2_uniform_complex_tube import (
-  exact_tube_contract,cauchy_derivative_majorant,H_UPPER,R,DELTA)
+  exact_tube_contract,cauchy_derivative_majorant,original_chart_complex_eta_pullback,H_UPPER,R,DELTA)
 
 class SourceImageUniformComplexTube(unittest.TestCase):
     def test_all_source_guards_and_explicit_complex_inverse(self):
@@ -21,6 +21,17 @@ class SourceImageUniformComplexTube(unittest.TestCase):
         self.assertEqual(cauchy_derivative_majorant(4,3),
           Q(17,8)*24*6*100**7)
         self.assertGreater(cauchy_derivative_majorant(50,14),0)
+    def test_exact_source_image_complex_eta_pullback_all_derivatives_zero(self):
+        e=original_chart_complex_eta_pullback()
+        self.assertEqual(e['source_chart_complex_eta_radius'],'1/1000')
+        self.assertEqual(e['source_chart_eta_Z_excursion_bound'],'3/2000')
+        self.assertEqual(e['source_chart_eta_T_excursion_bound'],'2001/500000')
+        self.assertTrue(e['source_chart_complex_F_s0_Z_eta_T_eta_identically_zero'])
+        self.assertTrue(e['native_inverse_after_source_image_eta_pullback_is_s0_identically'])
+        self.assertEqual(e['every_positive_order_eta_derivative_of_inverse_on_exact_source_image'],'0')
+        self.assertFalse(e['source_native_free_coordinate_call_uses_this_pullback_proved'])
+        self.assertFalse(e['original_analytic_profile_phi_u_Brho_scope_proved'])
+
     def test_infinite_order_claim_not_per_call_certificate(self):
         x=exact_tube_contract()
         self.assertEqual(x['actual_original_reachable_call_ids'],[622820,623935])
