@@ -15,6 +15,8 @@ class ActualOriginalTGVorticity(unittest.TestCase):
     self.assertAlmostEqual(receipt["mean_vorticity_squared"],0.13532914809999755,places=13)
     self.assertAlmostEqual(receipt["mean_enstrophy"],0.06766457404999877,places=13)
     self.assertEqual(receipt["Fourier_divergence_max"],0)
+    self.assertLess(receipt["original_81_point_3D_Fourier_curl_vs_exact_Taylor_Green_max_error"],1e-12)
+    self.assertEqual(receipt["original_81_point_horizontal_vorticity_max"],0)
     self.assertEqual(receipt["N7_06"],"OPEN")
     self.assertEqual(receipt["release"],"HOLD")
   def test_modified_3D_coefficient_not_accepted(self):
