@@ -21,7 +21,7 @@ jobs:
           python-version: '3.11'
       - name: Verify original 3D Fourier coefficients, energy, curl identity and reject counterfeits
         run: |
-          python -m unittest -v discover -s research-ide/mathscope-m3/closure-evidence-20261023 -p 'test_verify_original_N8_TG_vorticity.py'
+          python -m unittest discover -v -s research-ide/mathscope-m3/closure-evidence-20261023 -p 'test_verify_original_N8_TG_vorticity.py'
           python research-ide/mathscope-m3/closure-evidence-20261023/verify_original_N8_TG_vorticity.py --out "$RUNNER_TEMP/mathscope-original-N8-TG-vorticity.json"
       - uses: actions/upload-artifact@v4
         with:
