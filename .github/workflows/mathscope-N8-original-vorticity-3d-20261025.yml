@@ -1,0 +1,30 @@
+name: MathScope M3 N8 original Fourier 3D vorticity and energy (finite comparator only)
+on:
+  push:
+    branches:
+      - mathscope-m3m4-evidence-gates-20261023
+    paths:
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/verify_original_N8_TG_vorticity.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/test_verify_original_N8_TG_vorticity.py'
+      - '.github/workflows/mathscope-N8-original-vorticity-3d-20261025.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  pinned-original-TG-Fourier-vorticity:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify original 3D Fourier coefficients, energy, curl identity and reject counterfeits
+        run: |
+          python -m unittest -v discover -s research-ide/mathscope-m3/closure-evidence-20261023 -p 'test_verify_original_N8_TG_vorticity.py'
+          python research-ide/mathscope-m3/closure-evidence-20261023/verify_original_N8_TG_vorticity.py --out "$RUNNER_TEMP/mathscope-original-N8-TG-vorticity.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: N8-TG-actual-3D-curl-enstrophy-source-Git-SHA-HOLD
+          path: ${{ runner.temp }}/mathscope-original-N8-TG-vorticity.json
+          if-no-files-found: error
