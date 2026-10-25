@@ -17,6 +17,23 @@ def check(ok,msg):
 def git_blob(data):
     return hashlib.sha1(b"blob "+str(len(data)).encode()+b"\x00"+data).hexdigest()
 
+def curl_from_actual_3D_Fourier(coef,K,position):
+    """Evaluate every original k x u_hat with the exp(i k.x) convention."""
+    out=[0.,0.,0.];i=0
+    for kx in range(-K,K+1):
+      for ky in range(-K,K+1):
+       for kz in range(-K,K+1):
+        u=[complex(coef[6*i+2*j],coef[6*i+2*j+1]) for j in range(3)]
+        omega=(1j*(ky*u[2]-kz*u[1]),
+               1j*(kz*u[0]-kx*u[2]),
+               1j*(kx*u[1]-ky*u[0]))
+        phase=kx*position[0]+ky*position[1]+kz*position[2]
+        c=complex(math.cos(phase),math.sin(phase))
+        for j in range(3):out[j]+=(omega[j]*c).real
+        i+=1
+    check(i==(2*K+1)**3,"incorrect Fourier mode traversal")
+    return out
+
 def replay(data,actual_blob):
     check(actual_blob==ORIGINAL_BLOB,"original Git blob SHA drift")
     check(data["schema"]=="MathScope.NavierM3.Result/1" and data["runHash"]==RUN,"run/hash drift")
@@ -52,6 +69,19 @@ def replay(data,actual_blob):
     check(abs(grad2-last["gradientSquared"])<1e-12,"gradient norm disagrees")
     check(vort2-grad2<1e-12 and abs(vort2-grad2)<1e-12,"curl vs gradient mismatch")
     check(divMax<=1e-12 and z3err<=1e-12,"not the recorded 2D-in-3D TG field")
+    # Replay pointwise curl from original coefficients; do not infer any
+    # per-time Fourier coefficients at earlier frames.
+    max_curl_error=0.;max_horizontal_vort=0.
+    amplitude=math.sqrt(4*last["energy"])
+    for sample in data["observations"]["samples"]:
+      pos=sample["position"]
+      check(len(pos)==3,"sample point is not a 3D coordinate")
+      curl=curl_from_actual_3D_Fourier(v,modes,pos)
+      analytic=2*amplitude*math.sin(pos[0])*math.sin(pos[1])
+      max_curl_error=max(max_curl_error,abs(curl[2]-analytic))
+      max_horizontal_vort=max(max_horizontal_vort,math.hypot(curl[0],curl[1]))
+    check(max_curl_error<1e-12 and max_horizontal_vort<1e-12,
+          "original 81 source sample 3D curl/Taylor-Green reference mismatch")
     return {
       "schema":"MathScope.M3.N8.OriginalTG3DFourierVorticityIndependentReplay/1",
       "original_blob_sha1":ORIGINAL_BLOB,"runHash":RUN,
@@ -62,6 +92,8 @@ def replay(data,actual_blob):
       "mean_gradient_squared":grad2,
       "mean_vorticity_squared":vort2,
       "mean_enstrophy":vort2/2,
+      "original_81_point_3D_Fourier_curl_vs_exact_Taylor_Green_max_error":max_curl_error,
+      "original_81_point_horizontal_vorticity_max":max_horizontal_vort,
       "Fourier_divergence_max":divMax,
       "z_invariance_and_u_z_and_horizontal_vorticity_max":z3err,
       "Parseval_and_curl_divergence_identity_verified":True,
