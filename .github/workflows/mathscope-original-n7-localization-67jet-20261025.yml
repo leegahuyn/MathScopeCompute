@@ -1,0 +1,36 @@
+name: MathScope N6/N7 independent native 67jet source geometry and full cutoff residual (HOLD)
+on:
+  push:
+    branches: [mathscope-m3m4-evidence-gates-20261023]
+    paths:
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/verify_original_N7_localization_67jet_independent.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/test_verify_original_N7_localization_67jet_independent.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/conditional_67jet_force_intervals.py'
+      - 'research-ide/mathscope-m3/closure-evidence-20261023/compile_original_67jet_force_stencil.py'
+      - '.github/workflows/mathscope-original-n7-localization-67jet-20261025.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  actual-source-geometry-independently-tested:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install sympy==1.13.3
+      - name: Independent Cartesian differentiation against exact 67+13 native jet backend
+        working-directory: research-ide/mathscope-m3/closure-evidence-20261023
+        run: |
+          python -B -m unittest -v test_verify_original_N7_localization_67jet_independent.py
+          python -B verify_original_N7_localization_67jet_independent.py --out "$RUNNER_TEMP/N7_SOURCE_GEOMETRY_INDEPENDENT_HOLD.json"
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: n7-structural-cutoff-native-67jets-not-C-D-actual-source-HOLD
+          path: ${{ runner.temp }}/N7_SOURCE_GEOMETRY_INDEPENDENT_HOLD.json
+          if-no-files-found: warn
