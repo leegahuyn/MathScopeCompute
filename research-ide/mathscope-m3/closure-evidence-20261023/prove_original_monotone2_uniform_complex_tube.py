@@ -75,6 +75,7 @@ def exact_tube_contract():
       'cauchy_all_mixed_Z_T_orders_bound':'(17/8) * a! * b! * 100^(a+b)',
       'complex_s_root_bound':'17/8',
       'complex_eta_exact_chart_pullback':original_chart_complex_eta_pullback(),
+      'native_inverse_taylor_N12_radius_1_over_400':native_inverse_two_variable_taylor_tail(12),
       'native_callers_real_source_image_all_verified':False,
       'source_mesh_switch_gluing_C_infinity':False,
       'source_Brho_global_norm_and_complex_eta_transport':False,
@@ -121,6 +122,34 @@ def cauchy_derivative_majorant(a,b):
         raise ValueError('Need nonnegative native inverse derivative multiindex')
     if a+b>64:raise ValueError('Finite certificate evaluation limited to total order 64')
     return Q(17,8)*math.factorial(a)*math.factorial(b)*100**(a+b)
+
+def native_inverse_two_variable_taylor_tail(order,radius=Q(1,400)):
+    """Certified absolute tail for the source-image inverse holomorphic
+    expansion at (Z0,T0), evaluated with |dZ|,|dT|<=radius.
+
+    Cauchy coefficient bound |c_ab|<=(17/8)*100^(a+b).
+    For radius<=1/400, r=100*radius<=1/4, and every
+    total-degree-k contribution is bounded by M*(k+1)*r^k.
+    Sum k>=N+1 using the exact differentiated geometric series.
+    This is NOT the Phi/u natural series or global A-D cutoff tail.
+    """
+    if type(order) is not int or order<0 or order>512:
+        raise ValueError('Taylor total order must be a nonnegative integer <=512')
+    if type(radius) is not Q or not Q(0)<=radius<=Q(1,400):
+        raise ValueError('Taylor perturbation must be exact rational <=1/400')
+    r=100*radius
+    if r>=1:raise ValueError('Taylor series outside Cauchy convergence range')
+    n=order+1
+    upper=Q(17,8)*r**n*(Q(n+1)-n*r)/(1-r)**2
+    return {
+      'source_polydisk_center':'Z0,T0 on original native slow chart image',
+      'exact_complex_perturbation_each_coordinate_max':str(radius),
+      'taylor_total_degree_N':order,
+      'cauchy_bivariate_total_degree_tail_upper':str(upper),
+      'source_inverse_actual_natural_Phi_u_tail_proved':False,
+      'source_final_67_jets_proved':0,
+      'release':'HOLD'
+    }
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('--output',type=Path)
