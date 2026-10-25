@@ -11,6 +11,9 @@ class OriginalNativeN7Localization(unittest.TestCase):
         for row in self.data["rows"]:
             self.assertTrue(row["full_localization_commutator_equals_direct_3D_residual"])
             self.assertTrue(row["original_jet_backend_equals_independent_differentiation"])
+            self.assertTrue(row["original_N6_full_nonlinear_decomposed_residual_equals_direct_3D_PDE"])
+            self.assertTrue(row["N6_div_deltaU_zero_exact"])
+            self.assertTrue(row["negative_missing_N6_quadratic_deltaU_tensor_deltaU_rejected"])
             self.assertEqual(row["original_67_field_plus_13_cutoff_jet_inputs"],80)
             self.assertEqual(row["direct_divergence"],"0")
     def test_genuine_cutoff_and_quadratic_negative_controls(self):
