@@ -76,6 +76,22 @@ def fixture_receipt(point):
     decomposed+=p*gradient(C)
     if any(S.expand(physical_force[i]-decomposed[i])!=0 for i in range(3)):
         raise AssertionError("Independent direct residual != full localization corrections")
+    # N6-02 original direct versus decomposed *full* NS residual:
+    # U=U0+dU and p_new=p+dP with both velocities divergence-free.
+    # The quadratic correction is div(dU tensor dU), not a dropped
+    # linear approximation. All original scalar/time source conventions
+    # follow the same tau = 1-t sign.
+    deltaU=U-U0
+    deltaP=C*p-p
+    ddiv=S.expand(sum(S.diff(deltaU[i],space[i]) for i in range(3)))
+    if ddiv!=0:raise AssertionError("N6 correction lost divergence-free curl structure")
+    linear=-deltaU.diff(tau)-laplace(deltaU)
+    linear+=advection(U0,deltaU)+advection(deltaU,U0)+gradient(deltaP)
+    quadratic=advection(deltaU,deltaU)
+    if any(S.expand(physical_force[i]-
+            (R(U0,p)+linear+quadratic)[i])!=0 for i in range(3)):
+        raise AssertionError("N6-02 actual 3D full residual decomposition is inconsistent")
+
     sx,sy,sz,st=point
     subs={x:S.Rational(sx),y:S.Rational(sy),z:S.Rational(sz),tau:S.Rational(st)}
     radial_sub={ss:subs[x]**2+subs[y]**2,z:subs[z],tau:subs[tau]}
@@ -107,6 +123,8 @@ def fixture_receipt(point):
         raise AssertionError("Negative cutoff commutator control no longer distinguishes")
     if all(S.expand((physical_force-omit_nonlin)[i]).subs(subs)==0 for i in range(3)):
         raise AssertionError("Negative nonlinear residual control no longer distinguishes")
+    if all(S.expand(quadratic[i]).subs(subs)==0 for i in range(3)):
+        raise AssertionError("Negative missing N6 quadratic correction was not detected")
     return {"point_x_y_z_tau":[str(v) for v in point],
             "original_67_field_plus_13_cutoff_jet_inputs":len(jet_intervals),
             "source_geometry_u_equals_curl_CA_plus_cb_rotation":True,
@@ -115,6 +133,9 @@ def fixture_receipt(point):
             "direct_divergence":expected_div,
             "original_jet_backend_equals_independent_differentiation":True,
             "full_localization_commutator_equals_direct_3D_residual":True,
+            "original_N6_full_nonlinear_decomposed_residual_equals_direct_3D_PDE":True,
+            "N6_div_deltaU_zero_exact":True,
+            "negative_missing_N6_quadratic_deltaU_tensor_deltaU_rejected":True,
             "negative_missing_grad_c_cross_A_rejected":True,
             "negative_omitted_quadratic_u_grad_u_rejected":True,
             "stencil_sha_scope":stencil["schema"]}
