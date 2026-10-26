@@ -111,6 +111,7 @@ def inverse_jets(z,t,order=3,bits=128):
         s=t
     elif w.lo==w.hi and t.lo==t.hi and w.lo+t.lo==1:
         s=point(1)
+    if s.lo==s.hi==1:
         power=point(1)
     exponent=I(Q(0),2*H)
     jac=point(1)-w*power*exponent/s
