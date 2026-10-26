@@ -1,0 +1,29 @@
+<!-- MathScope A21 U1 source coefficient view 20261027 BEGIN -->
+<details id="ms-a21-u1" class="ms-a21" data-payload-sha="__PAYLOAD_SHA__" data-run-hash="__RUN_HASH__">
+  <summary><span class="ms-a21-badge">CONDITIONAL</span> 원본 A.21 압력 · 첫 u₁ 계수의 실제 계산</summary>
+  <div class="ms-a21-inner">
+    <p class="ms-a21-lead">원본 재귀에서 계산한 <strong>첫 Taylor 기여 Y·u₁/K</strong>이며 K=Pstar²로 정규화합니다. 전체 u·속도장·와도·최종 A–D 장은 아직 인증되지 않았습니다.</p>
+    <div class="ms-a21-gates"><span>M3 62/64</span><span>M4 0/16</span><span>최종 제트 0/67</span><strong>RELEASE HOLD</strong></div>
+    <p id="ms-a21-status" role="status" aria-live="polite">실행 데이터의 SHA-256을 확인하고 있습니다.</p>
+    <div class="ms-a21-controls">
+      <label>보기<select id="ms-a21-mode"><option value="surface">3D 계수 표면</option><option value="slice">Y 최대 단면</option></select></label>
+      <label class="ms-a21-range">표시 Y 최대 <output id="ms-a21-y-label">4.10</output><input id="ms-a21-y" type="range" min="0.5" max="4.1" step="0.1" value="4.1" aria-label="표시할 Y 최대값"></label>
+      <button type="button" id="ms-a21-reset">초기화</button>
+      <button type="button" id="ms-a21-retry">다시 확인</button>
+      <button type="button" id="ms-a21-close" aria-label="M3 증거 패널 닫기">패널 닫기</button>
+    </div>
+    <canvas id="ms-a21-canvas" width="960" height="420" tabindex="0" role="img" aria-label="조건부 원본 u₁ 계수의 3D 표면. 가로 η, 깊이 Y, 높이 Y·u₁/K. 드래그나 방향키로 회전하며 단면 보기도 선택할 수 있습니다." hidden></canvas>
+    <p class="ms-a21-hint">CPU Canvas · 드래그/방향키로 회전 · 핀치는 브라우저 확대 · 초록=양의 기여, 황토색=음의 기여. 표면은 구간 중앙값의 보간 표시이며 원래 값은 JSON의 유리수 구간으로 보존됩니다.</p>
+    <div class="ms-a21-exports"><button type="button" id="ms-a21-json" disabled>실행 JSON</button><button type="button" id="ms-a21-png" disabled>그림 PNG</button><button type="button" id="ms-a21-share">보기 링크</button><input id="ms-a21-share-url" readonly aria-label="공유할 보기 링크" hidden></div>
+    <p class="ms-a21-readout" id="ms-a21-readout"></p>
+    <p class="ms-a21-hash">동일 실행 SHA-256 <code id="ms-a21-hash">__RUN_HASH__</code></p>
+    <details class="ms-a21-method"><summary>수치·수식·Lean과 남은 의무</summary>
+      <p>A.21의 12개 구간과 무한 압력 tail을 보존합니다. 압력 P₀/K와 첫 계수 u₁/K는 원본 정의의 구간 계산이며, h와 K의 작은 항도 오차에 포함됩니다. K=Pstar², Y=ΛX입니다.</p>
+      <p>I′=[−2,2]에서 유한 degree-1 쌍의 Bρ 부분 상한을 얻었습니다. 원본 I 결속, radial n≥2, 무한 fixed point·tail, 최종장·전역 에너지·네 축 refinement는 OPEN입니다. 아래 표도 전체 물리장의 제트가 아닙니다.</p>
+      <div class="ms-a21-table-wrap"><table><caption>동일 실행의 원본 계수 샘플 · 정규화 구간 근사 표시</caption><thead><tr><th>η</th><th>u₁/K 구간</th><th>P₀/K 구간</th></tr></thead><tbody id="ms-a21-values"></tbody></table></div>
+      <p><a href="https://github.com/leegahuyn/MathScopeCompute/blob/__SOURCE_COMMIT__/research-ide/mathscope-m3/closure-evidence-20261023/ACTUAL_PRESSURE_U1_20261027_KO.md" target="_blank" rel="noopener noreferrer">원본 식 → 계산·상한</a> · <a href="https://github.com/leegahuyn/MathScopeCompute/blob/__SOURCE_COMMIT__/research-ide/mathscope-m3/closure-evidence-20261023/PressureU1Coefficient.lean" target="_blank" rel="noopener noreferrer">Lean 대수·상수 단계</a></p>
+    </details>
+  </div>
+</details>
+<script id="ms-a21-payload" type="application/octet-stream">__PAYLOAD_BASE64__</script>
+<!-- MathScope A21 U1 source coefficient view 20261027 END -->
