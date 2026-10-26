@@ -20,9 +20,12 @@ class RealPinnedN3Positivity(unittest.TestCase):
  def test_negative_power_zero_refused(self):
   with self.assertRaises(MissingSourceAnalyticPremise):
    structural_real_sign({'power':[{'integer':0},-2]},{})
- def test_unsupported_log_sign_is_not_invented(self):
-  with self.assertRaises(MissingSourceAnalyticPremise):
-   structural_real_sign({'log':{'integer':1}},{})
+ def test_real_log_sign_is_not_invented(self):
+  self.assertIsNone(structural_real_sign({'log':{'integer':1}},{}))
+  self.assertEqual(structural_real_sign({'exp':{'log':{'integer':2}}},{}),1)
+  for n in (0,-1):
+   with self.assertRaises(MissingSourceAnalyticPremise):
+    structural_real_sign({'log':{'integer':n}},{})
  def test_negative_plus_positive_has_undetermined_sign(self):
   self.assertIsNone(structural_real_sign({'sum':[{'integer':5},{'integer':-2}]},{}))
  def test_invalid_cyclic_source_reference_refused(self):

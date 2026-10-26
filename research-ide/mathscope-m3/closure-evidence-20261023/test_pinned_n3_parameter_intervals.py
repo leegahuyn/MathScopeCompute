@@ -36,6 +36,11 @@ class OriginalN3SourceParameterControls(unittest.TestCase):
         x=copy.deepcopy(self.profile);x['parameterExpressionSHA256']='0'*64
         with self.assertRaises(UnavailablePinnedSourceParameter):
             exact_pinned_parameter_interval('h',x)
+    def test_changed_formula_cannot_keep_old_embedded_hash(self):
+        for key,value in [('h',{'integer':0}),('XR',{'integer':1})]:
+            x=copy.deepcopy(self.profile);x['parametersExactExpressions'][key]=value
+            with self.assertRaises(UnavailablePinnedSourceParameter):
+                exact_pinned_parameter_interval('h',x)
     def test_critical_nested_formula_changed_rejected(self):
         x=copy.deepcopy(self.profile);x['parametersExactExpressions']['h']={'integer':0}
         from pinned_n3_parameter_intervals import SOURCE

@@ -23,14 +23,14 @@ NAMES={
                     'abs(actual_inner_xi) <= sqrt(5/Lambda)',
                     'source-specific xi support bound and coordinate/cutoff identity needed'),
  'COORD:actual_n1_Omega_prefix0$201 * Lambda':('Omega0',2,26,
-                    '0 <= actual_n1_Omega_prefix0$201 <= 5/Lambda',
-                    'original implicit root and sign/branch interval needed'),
+                    '0 <= bound radial integration variable actual_n1_Omega_prefix0$201 <= 5/Lambda at each selected natural branch',
+                    'integral binder and selected natural branch; this coordinate is NOT an integral result or implicit root'),
  'COORD:actual_n1_Omega_prefix1$202 * Lambda':('Omega1',2,26,
-                    '0 <= actual_n1_Omega_prefix1$202 <= 5/Lambda',
-                    'original implicit root and sign/branch interval needed'),
+                    '0 <= bound radial integration variable actual_n1_Omega_prefix1$202 <= 5/Lambda at each selected natural branch',
+                    'integral binder and selected natural branch; this coordinate is NOT an integral result or implicit root'),
  'COORD:actual_n1_Omega_prefix2$203 * Lambda':('Omega2',2,18,
-                    '0 <= actual_n1_Omega_prefix2$203 <= 5/Lambda',
-                    'original implicit root and sign/branch interval needed'),
+                    '0 <= bound radial integration variable actual_n1_Omega_prefix2$203 <= 5/Lambda at each selected natural branch',
+                    'integral binder and selected natural branch; this coordinate is NOT an integral result or implicit root'),
 }
 class UnsupportedNaturalSourceObligation(ValueError):pass
 
@@ -75,6 +75,7 @@ def audit_217_domain_obligations(receipt):
         if d['pair_count']!=expected_pairs or d['natural_calls']!=expected_calls:
             raise UnsupportedNaturalSourceObligation('Source 217-domain group mismatch: '+group)
         summaries.append({'kind':group,'normal_form':name,
+            'coordinate_role':'BOUND_RADIAL_INTEGRATION_VARIABLE' if group.startswith('Omega') else 'SOURCE_COORDINATE',
             'source_pairs':d['pair_count'],'source_calls':d['natural_calls'],
             'log_guard_pairs':d['source_log_guard_pairs'],'log_guard_calls':d['source_log_guard_calls'],
             'required_bound':criterion,'proof_frontier':reason,
@@ -94,6 +95,8 @@ def audit_217_domain_obligations(receipt):
         'source_lambda_X_nonnegative_if_declared_slow_chart_holds':True,
         'source_lambda_xi_squared_nonnegative_from_real_square':True,
         'source_all_Omega_signs_and_bounds_proved':False,
+        'Omega_named_Y_coordinates_are_integral_values':False,
+        'Omega_integral_value_supnorms_are_required_for_these_Y_inputs':False,
         'source_chart_support_upper_bounds_proved':False,
         'source_natural_217_Y_interval_certified_calls':0,
         'original_56_total_Y_interval_certified_calls':33,

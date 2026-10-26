@@ -15,7 +15,7 @@ const G='a6d99fd02036780f9c994268651f6d99d3d6f8702d5476a219c212156e0ca269';
 const F='bc0587085298da014c10a61a15e09f436c7f62cce1879eeb44c63dbfeadabb6e';
 const fail=m=>{throw Error('ORIGINAL_SEMANTIC_ROOT2_FRONTIER_MISMATCH: '+m)};
 const check=(v,m)=>{if(!v)fail(m)};
-export async function certifyOriginalReachableMonotone2(dir) {
+export async function certifyOriginalReachableMonotone2(dir,{includeNaturalNodeIds=false}={}) {
  const mf=JSON.parse(fs.readFileSync(path.join(dir,'original-source-export-manifest.json'),'utf8'));
  const N=4420257;
  check(mf.node_count===N&&mf.node_stream_sha256===G&&mf.definitions_sha256===F&&
@@ -118,6 +118,14 @@ export async function certifyOriginalReachableMonotone2(dir) {
    source_semantic_root_reachable_calls:reachedRoot2,
    original_reachable_AST_union_count:reachable,
    original_reachable_actual_natural_series_call_count:reachedNatural.length,
+   ...(includeNaturalNodeIds?{
+     original_reachable_natural_series_node_ids:reachedNatural,
+     original_reachable_native_body_entry_roots:[...new Set(
+       [...nativeEdges].filter(([id])=>mask[id]!==0).flatMap(([,bodies])=>bodies)
+     )].sort((a,b)=>a-b),
+     original_reachable_expression_call_node_ids:[...nativeEdges.keys()].filter(id=>mask[id]!==0&&
+       ['actual_expression_partial','m3_aux_expression_partial','m3_coupled_expression_partial','m3_forced_expression_partial'].includes(names[opAt[id]]))
+   }:{}),
    additional_semantic_native_registry_provenance:'EMBEDDED_GLOBAL_COVARIANCE_SOURCE_CROSSCHECK_ONLY_NOT_RUNTIME_OWNER_SEAL',
    semantic_reachability_is_not_actual_runtime_branch_selection:true,
    system2_two_real_Z_T_source_image_memberships_unconditionally_proved:0,

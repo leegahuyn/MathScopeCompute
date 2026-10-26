@@ -8,6 +8,8 @@ class ExactOriginalOmegaPrefix(unittest.TestCase):
         r=source_omega_sign_contract()
         self.assertEqual(r['prefix_j_to_integrand'],['v0','U0*v0','v0^2'])
         self.assertTrue(r['Omega2_nonnegative_under_stated_hypotheses'])
+        self.assertFalse(r['natural_Y_uses_integral_value'])
+        self.assertEqual(r['prefix_name_role'],'INTEGRATION_DUMMY_VARIABLE_NAME_NOT_INTEGRAL_VALUE_NAME')
 
     def test_every_upper_remains_open(self):
         r=source_omega_sign_contract()

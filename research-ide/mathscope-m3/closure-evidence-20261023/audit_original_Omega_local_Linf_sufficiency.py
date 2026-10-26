@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
-"""Exact conditional L-infinity sufficient criteria for 70 original Omega calls.
+"""Generic integral-value estimates, NOT the 70 native natural Y inputs.
+
+The older description confused an integration variable's generated name with
+the integral value. actual_n1_Omega_prefixj is the dummy radial coordinate.
+These algebraic L-infinity estimates remain correct for integral VALUES,
+but neither their signs nor the threshold below is a natural-call obligation.
+Use original_omega_binder_domains.py for the actual Y-coordinate analysis.
 
 For 0<=X<=a^2, Lambda*a^2<512/127 (SHA-pinned N3 source).
 Original prefixes Omega0=int_0^X v0, Omega1=int_0^X U0*v0,
@@ -32,6 +38,7 @@ def conditional_bound_with_external_sup(Mv,MU):
       'hypothetical_Mv':str(Mv),
       'hypothetical_MU':str(MU),
       'source_proven_supnorm_inputs_present':False,
+      'applies_to_integral_values_not_Omega_named_bound_coordinates':True,
       'conditional_upper_products':[str(v) for v in products],
       'conditional_non_strict_Lambda_Omega_absolute_upper':[str(LAMBDA_A2_UPPER*v) for v in products],
       'Omega2_Y_nonnegative_under_real_integrability':True,
@@ -51,7 +58,10 @@ def original_Omega_local_sup_targets():
         raise UnprovedOmegaHypothesis('Original source or exact local radius contract drifted')
     assert LAMBDA_A2_UPPER*PRODUCT_THRESHOLD == 5
     return {
-      'schema':'MathScope.M3.SourceOmega70LocalSupNormSufficiency/1',
+      'schema':'MathScope.M3.GenericOmegaIntegralValueSupNormSufficiency/2',
+      'deprecated_as_native_70_Y_domain_obligation':True,
+      'actual_Omega_named_Y_input_role':'BOUND_RADIAL_INTEGRATION_VARIABLE',
+      'integral_value_supnorms_required_for_70_Y_inputs':False,
       'original_source_blob_SHA1':omega['original_order_one_blob_SHA1'],
       'original_source_SHA256':omega['original_order_one_SHA256'],
       'original_graph_sha256':base['original_node_SHA256'],

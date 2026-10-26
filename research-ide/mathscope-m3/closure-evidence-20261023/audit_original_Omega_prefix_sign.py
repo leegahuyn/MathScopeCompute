@@ -5,6 +5,11 @@ Under X>=0 and real integrable v0,
  Omega2(X)=integral_[0,X] v0(x)^2 dx >=0.
 Omega0/Omega1 signs and every upper bound remain OPEN. Not a proof
 that all 70 natural-series call sites respect their original domains.
+
+CORRECTION: the AST coordinates named actual_n1_Omega_prefix0/1/2 are
+the DUMMY integration variables chosen by integrate(), not the integrals
+Omega_j themselves. Integral sign estimates below concern integral values;
+they cannot be used as domain obligations for those 70 natural inputs.
 """
 from pathlib import Path
 import hashlib,json,sys
@@ -31,6 +36,9 @@ def source_omega_sign_contract(path=None):
       'original_order_one_SHA256':hashlib.sha256(data).hexdigest(),
       'prefix_j_to_integrand':['v0','U0*v0','v0^2'],
       'prefix_j_source_function_names':['actual_n1_Omega_prefix0','actual_n1_Omega_prefix1','actual_n1_Omega_prefix2'],
+      'prefix_name_role':'INTEGRATION_DUMMY_VARIABLE_NAME_NOT_INTEGRAL_VALUE_NAME',
+      'natural_Y_uses_integral_value':False,
+      'integral_sign_statement_is_separate_from_native_Y_domain':True,
       'conditional_hypotheses':['X>=0','v0 real and integrable on [0,X]'],
       'Omega2_nonnegative_under_stated_hypotheses':True,
       'Omega0_sign_from_source_alone':'UNKNOWN',

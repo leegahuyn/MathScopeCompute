@@ -42,6 +42,12 @@ class Actual217SourceObligationTests(unittest.TestCase):
   a=audit_217_domain_obligations(fixture())
   self.assertEqual([x['source_calls'] for x in a['groups'] if x['kind'].startswith('Omega')],[26,26,18])
   self.assertFalse(a['source_all_Omega_signs_and_bounds_proved'])
+  self.assertFalse(a['Omega_named_Y_coordinates_are_integral_values'])
+  self.assertFalse(a['Omega_integral_value_supnorms_are_required_for_these_Y_inputs'])
+  for row in a['groups']:
+   if row['kind'].startswith('Omega'):
+    self.assertEqual(row['coordinate_role'],'BOUND_RADIAL_INTEGRATION_VARIABLE')
+    self.assertNotIn('original implicit root',row['proof_frontier'])
  def test_no_coefficient_norm_promotion(self):
   a=audit_217_domain_obligations(fixture())
   self.assertFalse(a['coefficient_Brho_norm_proved'])

@@ -77,7 +77,7 @@ def validate_binding(node,defs):
            'registered native body root missing')
     return definition,sid,params,values,orders
 
-def audit(folder):
+def audit(folder,*,retain_binding_records=False):
     folder=Path(folder)
     manifest=json.loads((folder/'original-source-export-manifest.json').read_text())
     ensure(manifest['node_stream_sha256']==EXPECTED_GRAPH_SHA and manifest['definitions_sha256']==EXPECTED_REG_SHA
@@ -94,7 +94,7 @@ def audit(folder):
     per_target=defaultdict(lambda:{'native_expression_call_count':0,
                                     'formal_X_binding_count':0,'ambient_X_formal_absent_count':0,
                                     'actual_X_arg_node_examples':[]})
-    examples=[];h=hashlib.sha256();count=0
+    examples=[];all_records=[];h=hashlib.sha256();count=0
     signatures_hash=hashlib.sha256()
     relevant_systems=set()
     with gzip.open(folder/'original-source-nodes.jsonl.gz','rb') as stream:
@@ -145,6 +145,7 @@ def audit(folder):
             }
             signatures_hash.update((json.dumps(record,sort_keys=True,separators=(',',':'))+'\n').encode())
             if len(examples)<24:examples.append(record)
+            if retain_binding_records:all_records.append(record)
             for k,natural_id in enumerate(sorted(targets)):
                 if not natural_mask>>k & 1:continue
                 row=per_target[natural_id];row['native_expression_call_count']+=1
@@ -168,6 +169,7 @@ def audit(folder):
       'distinct_relevant_registered_expression_systems':len(relevant_systems),
       'ordered_native_argument_mapping_sha256':signatures_hash.hexdigest(),
       'representative_exact_actual_binding_examples':examples,
+      **({'all_exact_binding_records':all_records} if retain_binding_records else {}),
       'per_original_source_natural_call':[{'source_natural_node_id':n,'source_Y_node_id':targets[n],**per_target[n]}
                                           for n in sorted(targets)],
       'scope_limitations':['native body membership is not actual root-to-call path dominance',

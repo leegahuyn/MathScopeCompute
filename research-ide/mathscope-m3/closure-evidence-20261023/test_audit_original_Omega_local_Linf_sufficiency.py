@@ -13,6 +13,8 @@ class OmegaExactSourceNormSufficiency(unittest.TestCase):
         self.assertEqual(F(r['exact_upper_on_Lambda_a_squared']),F(512,127))
         self.assertEqual(F(r['exact_allowed_sup_product_threshold']),F(635,512))
         self.assertEqual(LAMBDA_A2_UPPER*PRODUCT_THRESHOLD,F(5))
+        self.assertTrue(r['deprecated_as_native_70_Y_domain_obligation'])
+        self.assertFalse(r['integral_value_supnorms_required_for_70_Y_inputs'])
 
     def test_one_one_toy_assumptions_are_not_proof(self):
         trial=conditional_bound_with_external_sup(F(1),F(1))

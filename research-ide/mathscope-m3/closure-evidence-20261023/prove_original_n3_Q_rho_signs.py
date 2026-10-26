@@ -36,6 +36,13 @@ def structural_real_sign(expression,definitions,stack=()):
         # exp(real-valued finite argument) is always strictly positive.
         structural_real_sign(val,definitions,stack)
         return 1
+    if op=='log':
+        # A real logarithm needs a strictly positive argument. Its sign is
+        # generally unknown, but exp(logarithmic real source expressions)
+        # remains strictly positive. Do not confuse realness with positivity.
+        if structural_real_sign(val,definitions,stack)!=1:
+            raise MissingSourceAnalyticPremise('Log argument not proved strictly positive')
+        return None
     if op=='power':
         if not isinstance(val,list) or len(val)!=2:
             raise MissingSourceAnalyticPremise('Invalid source power')

@@ -8,14 +8,27 @@ No claim of evaluating the physical fields or the source pulse/ODE is made.
 from fractions import Fraction
 from pathlib import Path
 from rigorous_rational_intervals import Interval,UncertifiedExpression
-import json
+import json,hashlib
 
 EXPECTED_HASH='e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152'
 SOURCE_ID='same-profile-2026-10-10.3'
+# Independent digest of ALL expressions decoded from the original source
+# profile (Git blob f1559221145b5d4ce051bbdb9cb84254045c8696).
+# The older embedded parameterExpressionSHA256 is a different upstream seal;
+# checking that field alone does not authenticate an injected dictionary.
+EXPECTED_DECODED_EXPRESSIONS_SHA256='1a4589381ad2cd8b59e95b76113fd75e2bbb28b9b93e885520ab22643f50d5ce'
 ROOT=Path(__file__).resolve().parents[2]
 SOURCE=ROOT/'mathscope-m2/navier/source-profile-data.mjs'
 
 class UnavailablePinnedSourceParameter(UncertifiedExpression):pass
+
+def authenticate_decoded_expressions(profile):
+    expressions=profile.get('parametersExactExpressions')
+    if not isinstance(expressions,dict):
+        raise UnavailablePinnedSourceParameter('Original parameter expressions missing')
+    canonical=json.dumps(expressions,sort_keys=True,separators=(',',':'),ensure_ascii=False).encode('utf-8')
+    if hashlib.sha256(canonical).hexdigest()!=EXPECTED_DECODED_EXPRESSIONS_SHA256:
+        raise UnavailablePinnedSourceParameter('Original complete decoded parameter expression digest changed')
 
 def pinned_profile(path=SOURCE):
     text=path.read_text(encoding='utf8')
@@ -26,6 +39,7 @@ def pinned_profile(path=SOURCE):
     if x.get('schema')!='MathScope.PinnedN3SourceProfile/1' or x.get('id')!=SOURCE_ID or x.get('parameterExpressionSHA256')!=EXPECTED_HASH or x.get('globalNumericalEvaluator') is not False:
         raise UnavailablePinnedSourceParameter('Original pinned N3 source or evidence hash changed')
     p=x['parametersExactExpressions']
+    authenticate_decoded_expressions(x)
     # Check the complete critical symbolic dependency path, not just parameter names.
     want={
      'Md':{'integer':1048576},
@@ -48,6 +62,7 @@ def exact_pinned_parameter_interval(name,profile=None):
     # Require identical source profile even when injected from known source bytes
     if p.get('id')!=SOURCE_ID or p.get('parameterExpressionSHA256')!=EXPECTED_HASH:
         raise UnavailablePinnedSourceParameter('Unpinned N3 profile')
+    authenticate_decoded_expressions(p)
     # Proof: Md>0 => T=exp(Md)+10>10. e>2 implies
     # 0<h=exp(-8002*T)<exp(-8002)<2^-8002<2^-4096.
     # Similarly 0<lambda=exp(-1000*T)<exp(-10000)<2^-10000<2^-4096.
