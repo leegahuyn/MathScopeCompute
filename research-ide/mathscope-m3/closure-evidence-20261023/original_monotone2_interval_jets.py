@@ -30,7 +30,8 @@ def authenticate_source(folder):
         raise UncertifiedExpression('Original system-2 definition mismatch')
     pins={0:('rational',['0','1']),1:('rational',['1','1']),
           9:('source_parameter',['h']),19:('rational',['1','2']),
-          20:('rational',['-1','1']),24:('rational',['2','1']),
+          20:('rational',['-1','1']),21:('multiply',[9,20]),
+          22:('add',[19,21]),24:('rational',['2','1']),
           25:('multiply',[9,24]),
           622803:('coordinate',['m3_global_band_slow_Z$30436']),
           622804:('coordinate',['m3_global_band_slow_T$30437']),
@@ -77,6 +78,17 @@ def round_out(x,bits):
     return I(Q(lo,scale),Q(hi,scale))
 
 
+def _validate_options(z,t,order,bits):
+    if not isinstance(z,I) or not isinstance(t,I):
+        raise UncertifiedExpression('Exact rational Z,T intervals required')
+    if any(type(q)is not Q for q in (z.lo,z.hi,t.lo,t.hi)):
+        raise UncertifiedExpression('Floating point endpoints forbidden')
+    if type(order)is not int or not 0<=order<=4:
+        raise UncertifiedExpression('Supported total native jet order is 0..4')
+    if type(bits)is not int or not 32<=bits<=8192:
+        raise UncertifiedExpression('Dyadic arithmetic precision must be 32..8192 bits')
+
+
 def inverse_jets(z,t,order=3,bits=128):
     """Each entry encloses a Taylor coefficient, derivative/(a! b!).
 
@@ -88,14 +100,7 @@ def inverse_jets(z,t,order=3,bits=128):
     The finite polynomial expansion of (1+u)^(2h) is an exact identity for
     each requested jet; its omitted terms have strictly higher degree.
     """
-    if not isinstance(z,I) or not isinstance(t,I):
-        raise UncertifiedExpression('Exact rational Z,T intervals required')
-    if any(type(q)is not Q for q in (z.lo,z.hi,t.lo,t.hi)):
-        raise UncertifiedExpression('Floating point endpoints forbidden')
-    if type(order)is not int or not 0<=order<=4:
-        raise UncertifiedExpression('Supported total native jet order is 0..4')
-    if type(bits)is not int or not 32<=bits<=8192:
-        raise UncertifiedExpression('Dyadic arithmetic precision must be 32..8192 bits')
+    _validate_options(z,t,order,bits)
     w=z.power(2)
     certify_independent_W_T_box(w.lo,w.hi,t.lo,t.hi)
     power=I(1-2*H,1/(1-2*H))
@@ -107,9 +112,25 @@ def inverse_jets(z,t,order=3,bits=128):
     elif w.lo==w.hi and t.lo==t.hi and w.lo+t.lo==1:
         s=point(1)
         power=point(1)
-    s=round_out(s,bits)
     exponent=I(Q(0),2*H)
-    jac=round_out(point(1)-w*power*exponent/s,bits)
+    jac=point(1)-w*power*exponent/s
+    return _jets_from_proved_image(z,t,s,power,jac,order,bits)
+
+
+def _jets_from_proved_image(z,t,s,power,jac,order,bits):
+    """Internal recurrence, not an independent image certificate.
+
+    Callers must establish existence, the source bracket, power=s^(2h),
+    and the Jacobian enclosure for every represented input point. In
+    particular correlated image inputs are NOT independent Z,T boxes.
+    Only inverse_jets and the physical chart factory establish those inputs.
+    """
+    _validate_options(z,t,order,bits)
+    if s.lo<Q(1,2) or s.hi>2 or power.lo<=0:
+        raise UncertifiedExpression('Proved original native bracket required')
+    s=round_out(s,bits)
+    jac=round_out(jac,bits)
+    exponent=I(Q(0),2*H)
     if jac.lo<=Q(1,2):
         raise UncertifiedExpression('Implicit Jacobian lower bound is not proved')
     indices=[(a,n-a) for n in range(order+1) for a in range(n+1)]
