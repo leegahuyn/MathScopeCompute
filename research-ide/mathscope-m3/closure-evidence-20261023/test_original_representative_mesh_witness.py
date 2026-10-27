@@ -1,4 +1,5 @@
 import pytest
+import json
 from fractions import Fraction as F
 from original_representative_mesh_witness import nearest_index,certify_axis_witness,MeshPremiseOpen
 
@@ -27,3 +28,16 @@ def test_bad_source_image_fails_closed(bad):
 def test_wrong_radial_interval_fails_closed():
     with pytest.raises(MeshPremiseOpen):
         certify_axis_witness(3,F(1),F(0),F(2),F(3))
+
+def test_original_ell_over_2_to_8204_exact_without_decimal_expansion():
+    ell=1<<8205
+    x=F(1,128)
+    result=certify_axis_witness(ell,F(1,8),F(1,3),x/2,x*2)
+    assert result['ell']['bits']==8206
+    assert result['E']['bits']==6*8205+1
+    assert result['E']['hex'].startswith('0x')
+    assert int(result['E']['hex'],16).bit_length()==6*8205+1
+    assert F(result['max_scaled_cell_distance'])<=F(1,2)
+    assert result['global_native_caller_image_proved'] is False
+    assert result['release']=='HOLD'
+    assert len(json.dumps(result)) < 150_000
