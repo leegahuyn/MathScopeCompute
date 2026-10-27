@@ -34,6 +34,7 @@ jobs:
           lake env lean MathScope/M3/CD/MomentFive.lean
           lake env lean MathScope/M3/CD/InverseChart.lean
           lake env lean MathScope/M3/CD/FrozenMesh.lean
+          lake env lean MathScope/M3/CD/OriginalInputContract.lean
       - name: Confirm no sorry or axiom in new source
         run: |
           ! grep -nE '^[[:space:]]*(sorry|axiom)[[:space:]]' research-ide/mathscope-m3/p8/lean/MathScope/M3/CD/*.lean
