@@ -6,7 +6,6 @@ def originalChartF (s Z T h : ℝ) : ℝ := s - Z^2 * s ^ (2*h) - T
 theorem chart_axis_s_one (η h : ℝ) :
     originalChartF 1 η (1-η^2) h = 0 := by
   simp [originalChartF]
-  ring
 theorem chart_zero_Z (s T h : ℝ) :
     originalChartF s 0 T h = s-T := by
   simp [originalChartF]

@@ -36,7 +36,6 @@ theorem five_physical_moment_cancellation
   · dsimp [axisU0, axisU1]
     field_simp
     ring
-    <;> ring
   · dsimp [axisE2]
     field_simp
     ring
