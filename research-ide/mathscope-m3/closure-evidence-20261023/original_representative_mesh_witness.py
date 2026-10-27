@@ -16,6 +16,17 @@ def nearest_index(E: int, value: F) -> int:
     x = E*value+F(1, 2)
     return x.numerator // x.denominator
 
+def compact_integer(n: int):
+    """Exact big-integer serialization that retains all digits in hexadecimal."""
+    return n if n.bit_length() <= 8192 else {"base":16,"hex":hex(n),"bits":n.bit_length()}
+
+def compact_rational(q: F):
+    """Exact rational serialization for very large original source scales."""
+    if max(q.numerator.bit_length(),q.denominator.bit_length()) <= 8192:
+        return str(q)
+    return {"numerator_hex":hex(q.numerator),
+            "denominator_hex":hex(q.denominator),"exact":True}
+
 def certify_axis_witness(ell: int, R: F, eta: F, Xa: F, Xb: F):
     if type(ell) is not int or ell < 3 or any(type(v) is not F for v in (R,eta,Xa,Xb)):
         raise MeshPremiseOpen("Original integer level and exact rational witnesses required")
@@ -43,11 +54,11 @@ def certify_axis_witness(ell: int, R: F, eta: F, Xa: F, Xb: F):
     assert F(1,2)<=a<=1<=b<=2 and 0<=m<=T<M
     return {"schema":"MathScope.M3.OriginalRepresentativeNearestMeshAxisWitness/1",
             "scope":"CONDITIONAL_EXISTENTIAL_AXIS_ONLY",
-            "ell":ell,"E":str(E),"s_rep":"1","Z_rep":str(Z),"T_rep":str(T),
-            "R_rep":str(R),"X_rep":str(X),"indices":[r,z,t],
+            "ell":compact_integer(ell),"E":compact_integer(E),"s_rep":"1","Z_rep":str(Z),"T_rep":str(T),
+            "R_rep":str(R),"X_rep":str(X),"indices":[compact_integer(v) for v in (r,z,t)],
             "max_scaled_cell_distance":str(max(dr,dz,dt)),
             "strict_3_over_4_cell_margin":str(F(3,4)-max(dr,dz,dt)),
-            "s_bracket":[str(a),str(b)],"T_bracket":[str(m),str(M)],
+            "s_bracket":[compact_rational(a),compact_rational(b)],"T_bracket":[compact_rational(m),compact_rational(M)],
             "h_replaced_by_zero":False,"runtime_mesh_indices_match_proved":False,
             "global_native_caller_image_proved":False,
             "new_original_Y_bounds_certified":0,"final_jets":0,"release":"HOLD"}
