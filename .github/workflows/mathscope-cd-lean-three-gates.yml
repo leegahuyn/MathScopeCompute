@@ -19,10 +19,17 @@ jobs:
       - uses: leanprover/lean-action@v1
         with:
           lake-package-directory: research-ide/mathscope-m3/p8/lean
-          use-mathlib-cache: 'true'
+          auto-config: 'false'
+          use-mathlib-cache: 'false'
           build: 'false'
           test: 'false'
           lint: 'false'
+      - name: Fetch pinned Mathlib build artifacts
+        working-directory: research-ide/mathscope-m3/p8/lean
+        run: |
+          set -euxo pipefail
+          lake update
+          lake exe cache get
       - name: Compile each proof file against pinned Mathlib
         working-directory: research-ide/mathscope-m3/p8/lean
         run: |
