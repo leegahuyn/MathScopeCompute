@@ -1,0 +1,35 @@
+name: MathScope C/D native three-gate Lean checks (conditional only)
+on:
+  push:
+    branches: [mathscope-cd-lean-three-gates-20261027]
+    paths:
+      - 'research-ide/mathscope-m3/p8/lean/MathScope/M3/CD/*.lean'
+      - '.github/workflows/mathscope-cd-lean-three-gates.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  lean-algebra:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: leanprover/lean-action@v1
+        with:
+          lake-package-directory: research-ide/mathscope-m3/p8/lean
+          use-mathlib-cache: 'true'
+          build: 'false'
+          test: 'false'
+          lint: 'false'
+      - name: Compile each proof file against pinned Mathlib
+        working-directory: research-ide/mathscope-m3/p8/lean
+        run: |
+          set -euxo pipefail
+          lake env lean MathScope/M3/CD/MomentFive.lean
+          lake env lean MathScope/M3/CD/InverseChart.lean
+          lake env lean MathScope/M3/CD/FrozenMesh.lean
+      - name: Confirm no sorry or axiom in new source
+        run: |
+          ! grep -nE '^[[:space:]]*(sorry|axiom)[[:space:]]' research-ide/mathscope-m3/p8/lean/MathScope/M3/CD/*.lean
