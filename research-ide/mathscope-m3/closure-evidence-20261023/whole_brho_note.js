@@ -42,5 +42,7 @@
   document.getElementById('ms-brho-retry').addEventListener('click',verify);
   window.addEventListener('hashchange',openHash);
   dialog.addEventListener('close',()=>{if(location.hash==='#m3-brho')history.replaceState(null,'',location.pathname+location.search);});
-  verify();
+  // The inline note precedes its parent's payload in the published HTML.
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',verify,{once:true});
+  else verify();
 })();
