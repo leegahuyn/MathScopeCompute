@@ -23,18 +23,23 @@ theorem five_physical_moment_cancellation
   constructor
   · dsimp [axisU0]
     field_simp
+    ring
   constructor
   · dsimp [axisE0]
     field_simp
+    ring
   constructor
   · dsimp [axisE1]
     field_simp
+    ring
   constructor
   · dsimp [axisU0, axisU1]
     field_simp
+    ring
     <;> ring
   · dsimp [axisE2]
     field_simp
+    ring
 
 theorem adjugate_two_by_two (a b c d : ℝ) :
     (a * d + b * (-c) = a*d-b*c) ∧
