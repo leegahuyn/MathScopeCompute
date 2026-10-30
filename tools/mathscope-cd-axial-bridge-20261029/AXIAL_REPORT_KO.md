@@ -26,4 +26,6 @@ M3 **62/64**, M4 **0/16**, 원본 Y **33/523**, jets **0/67**, **RELEASE HOLD**�
 
 M4 I3-05에 관해 기존 finite 증거의 입력 재결속 검사를 별도 실행했다. 원본 증거는 일치했고 문자, 계수, 가정, D, G, p, 정밀도 변형 7개 모두 STALE로 거부됐다. 단 G/p/정밀도는 메타데이터 변형이며 실제 UI에서 신규 ProofJob을 생성한 검사는 아니다. 과거 커널 실행 증거를 재확인한 것이므로 현재 커널 실행이나 I3-05 완료로 취급하지 않는다. 재현 코드와 결과는 패키지 `m4-i3-05`에 있다.
 
+추가로 원본 `createM4ProofJob`를 직접 9회 실행해 기본 입력과 G/Δ/p/정밀도/계수식/계수체/계수/가정 8개 변경에서 새 job ID와 소스 해시를 확인했고, 이전 PASS 재사용은 8/8 거부됐다. 한 글자 변형과 같은 해시를 내세운 위조 PASS 대조도 거부됐다. 다만 계수값을 제외한 변경은 생성된 정리 본문이 아니라 주석이나 namespace에 반영되므로, 실제 다양한 수학 모델의 생성과 UI 경로는 미검증이다. 증거는 `m4-followup`에 있다.
+
 재현: `python scripts/audit_source_graph.py --source inputs/graph --out rerun/source` 및 `python scripts/operator_audit.py --out rerun/operators.json` (SymPy 1.14.0). Lean은 포함된 GitHub Actions 워크플로의 고정 도구체인과 Mathlib 커밋을 사용한다.

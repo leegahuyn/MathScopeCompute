@@ -1,0 +1,84 @@
+{
+  "criterion": "I3-05",
+  "commit": "9595b4de5a1065b694d225c0ad2a14d5aa4435a9",
+  "baseline": {
+    "jobId": "M4-781e842f1eeabfbc2a23fa52a9655ad26936233ed07dc5979358f5c056ed889a",
+    "sha256": "43cdc79ccee212a9152d90de8f58504bc9bff224da02c9d039183b01d7e247c6"
+  },
+  "freshGeneratedJobs": [
+    {
+      "name": "G",
+      "jobId": "M4-c962a651c655b49b1254405f0dc8862014fa68d3798e4640256e082f068336b4",
+      "sourceSha256": "19e5e7ced3048be30025693715499f155d2719d62b5fc636de72f35e6ea2a4ea",
+      "reuse": "STALE_SOURCE_OR_PARAMETERS",
+      "kernelPass": false,
+      "theoremBodyChanged": false
+    },
+    {
+      "name": "delta",
+      "jobId": "M4-99e4b1411f2fa147a4bc83a96d8d4719536bcf4ae2ea58614c1150bd0149ea6a",
+      "sourceSha256": "b55b14a3b0ca911b95b5da85dfea32884ea0018acec3325118147d3533cc6838",
+      "reuse": "STALE_SOURCE_OR_PARAMETERS",
+      "kernelPass": false,
+      "theoremBodyChanged": false
+    },
+    {
+      "name": "p",
+      "jobId": "M4-97800daef4c38f02f524d93a30c3cc10e5204e55f6a09d8cb6d3a745e27729c8",
+      "sourceSha256": "1686eaa5077da66094f687d926e4418dd39eac4fd7bfad96520070688479a7ee",
+      "reuse": "STALE_SOURCE_OR_PARAMETERS",
+      "kernelPass": false,
+      "theoremBodyChanged": false
+    },
+    {
+      "name": "precision",
+      "jobId": "M4-7aef70e16b102bad9f218b0d9e3e823776e41a83085578986052107f55f55ff5",
+      "sourceSha256": "801e9ada2a51ceb563692a90e618cd6ea3c90f0537737cf2eddbd220604c8162",
+      "reuse": "STALE_SOURCE_OR_PARAMETERS",
+      "kernelPass": false,
+      "theoremBodyChanged": false
+    },
+    {
+      "name": "coefficientFormula",
+      "jobId": "M4-fba01039ee346c2db6203fc56f9fb49bb71df1d8cce6f80d30a5d096f43d685c",
+      "sourceSha256": "1c7a3c372266617779b26dd82fcd9e068770da8974545537e5cd36c88c0dde97",
+      "reuse": "STALE_SOURCE_OR_PARAMETERS",
+      "kernelPass": false,
+      "theoremBodyChanged": false
+    },
+    {
+      "name": "coefficientField",
+      "jobId": "M4-f2564efbc0fb8d71b917f4583e2072ef2a88e40d2a993b4ccbb00a6f848258ac",
+      "sourceSha256": "ff17cfd0c69521ed1d3d82e5eaeaad88c1e675ee44fc43c55d8ba75cf826dd1f",
+      "reuse": "STALE_SOURCE_OR_PARAMETERS",
+      "kernelPass": false,
+      "theoremBodyChanged": false
+    },
+    {
+      "name": "coefficients",
+      "jobId": "M4-9c7946342e37d0abd0f6f499294714ae4b50f7b637638efcbd97947d30671514",
+      "sourceSha256": "6bb536ae5f7662672e0e2941683f2ffd862afbb5882110ca956bd5526fb103e0",
+      "reuse": "STALE_SOURCE_OR_PARAMETERS",
+      "kernelPass": false,
+      "theoremBodyChanged": true
+    },
+    {
+      "name": "assumptions",
+      "jobId": "M4-e868b231c5be0439e905d9af79ca1a3a1c534162cb2831a5b56490fdf1c403c3",
+      "sourceSha256": "641261c428faebcaa7d6d15e5a93d2273d002a95e1fa77e974c033ed95200cb7",
+      "reuse": "STALE_SOURCE_OR_PARAMETERS",
+      "kernelPass": false,
+      "theoremBodyChanged": false
+    }
+  ],
+  "oneCharacterTamper": {
+    "state": "INVALID_CURRENT_JOB",
+    "kernelPass": false
+  },
+  "sameBindingForgedPass": {
+    "state": "BINDING_MATCH_KERNEL_RECHECK_REQUIRED",
+    "kernelPass": false
+  },
+  "findings": "Eight actual generator calls change job and source hash, reject prior PASS; only changed coefficient values affect theorem body. G, delta, p, precision, formula, field, assumptions affect metadata or namespace but do not instantiate different mathematics. No UI action or current Lean kernel execution performed.",
+  "status": "PARTIAL; no acceptance promotion"
+}
