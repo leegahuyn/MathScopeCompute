@@ -17,7 +17,6 @@ theorem normalized_eq (h Z T s : ℝ) (hs : 0 < s) :
   unfold G F
   rw [Real.rpow_sub_one (ne_of_gt hs)]
   field_simp
-  ring
 
 theorem normalized_strictMonoOn (h Z T : ℝ) (hh : h < 1/2) (hT : 0 ≤ T)
     (hnonzero : Z ≠ 0 ∨ 0 < T) : StrictMonoOn (G h Z T) (Ioi 0) := by
