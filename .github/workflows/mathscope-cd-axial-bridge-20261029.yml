@@ -1,0 +1,56 @@
+name: MathScope axial moment bridge Lean
+on:
+  push:
+    branches: [mathscope-cd-axial-source-bridge-20261029]
+    paths:
+      - 'research-ide/mathscope-m3/p8/lean/MathScope/M3/CD/*.lean'
+      - '.github/workflows/mathscope-cd-axial-bridge-20261029.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  lean:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: research-ide/mathscope-m3/p8/lean
+      - name: Install Lean
+        run: |
+          set -euxo pipefail
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Download pinned Mathlib
+        working-directory: research-ide/mathscope-m3/p8/lean
+        run: |
+          set -euxo pipefail
+          lake update
+          lake exe cache get
+      - name: Compile and record proof assumptions
+        working-directory: research-ide/mathscope-m3/p8/lean
+        run: |
+          set -uo pipefail
+          mkdir -p proof-logs
+          lean --version | tee proof-logs/version.txt
+          sha256sum MathScope/M3/CD/*.lean | tee proof-logs/source-sha256.txt
+          result=0
+          for file in MomentFive InverseChart FrozenMesh OriginalInputContract AxialMomentBridge; do
+            if lake env lean "MathScope/M3/CD/$file.lean" > "proof-logs/$file.log" 2>&1; then
+              echo "$file PASS"
+            else
+              echo "$file FAIL"
+              result=1
+            fi
+            cat "proof-logs/$file.log"
+          done
+          if grep -nE '^[[:space:]]*(sorry|admit|axiom)([[:space:]]|$)' MathScope/M3/CD/*.lean; then result=1; fi
+          exit "$result"
+      - name: Upload proof logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mathscope-axial-lean-logs
+          path: research-ide/mathscope-m3/p8/lean/proof-logs
+          if-no-files-found: warn
