@@ -52,6 +52,31 @@ theorem axial_all_order_divergence_defect_zero
   intro i hi
   rw [hdiv i (Nat.le_of_lt_succ (Finset.mem_range.mp hi)), mul_zero]
 
+/--
+An explicit all-order conservative-to-advective transport equality.  The two
+axial-flux Leibniz summands are deliberately kept distinct: the indices are
+not swapped by an unproved reindexing rule.  This is the polynomial coefficient
+identity only; the source AST, cylindrical coordinate transform, support,
+differentiation and integration remain separate obligations.
+-/
+theorem axial_all_order_conservative_transport
+    (n : ℕ) (r : ℝ) (U V Vr Ur Uz : ℕ → ℝ)
+    (hdiv : ∀ i, i ≤ n → V i + r * Vr i + r * Uz i = 0) :
+    (∑ i ∈ Finset.range (n + 1),
+      (U (n - i) * (V i + r * Vr i)
+        + r * V i * Ur (n - i)
+        + r * U (n - i) * Uz i
+        + r * U i * Uz (n - i))) =
+    (∑ i ∈ Finset.range (n + 1),
+      (r * V i * Ur (n - i) + r * U i * Uz (n - i))) := by
+  apply Finset.sum_congr rfl
+  intro i hi
+  have h := hdiv i (Nat.le_of_lt_succ (Finset.mem_range.mp hi))
+  calc
+    _ = (r * V i * Ur (n - i) + r * U i * Uz (n - i))
+          + U (n - i) * (V i + r * Vr i + r * Uz i) := by ring
+    _ = _ := by rw [h]; ring
+
 /-- Pressure integration by parts on a finite interval retains both endpoint
 terms. To obtain the paper's zero-boundary formula they must separately vanish
 or agree. Passing to `(0, infinity)` requires additional integrability and limits. -/
@@ -159,6 +184,7 @@ end MathScope.M3.CD
 #print axioms MathScope.M3.CD.axial_conservative_defect
 #print axioms MathScope.M3.CD.axial_conservative_of_divergence
 #print axioms MathScope.M3.CD.axial_all_order_divergence_defect_zero
+#print axioms MathScope.M3.CD.axial_all_order_conservative_transport
 #print axioms MathScope.M3.CD.pressure_moment_boundary_identity
 #print axioms MathScope.M3.CD.pressure_moment_zero_boundary
 #print axioms MathScope.M3.CD.axial_backward_primitive
