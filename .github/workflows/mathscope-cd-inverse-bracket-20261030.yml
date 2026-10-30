@@ -1,0 +1,50 @@
+name: MathScope inverse bracket Lean
+on:
+  push:
+    branches: [mathscope-cd-inverse-bracket-20261030]
+    paths:
+      - 'research-ide/mathscope-m3/p8/lean/MathScope/M3/CD/InverseBracket.lean'
+      - '.github/workflows/mathscope-cd-inverse-bracket-20261030.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  lean:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: research-ide/mathscope-m3/p8/lean
+      - name: Install pinned Lean
+        run: |
+          set -euxo pipefail
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Download pinned Mathlib
+        working-directory: research-ide/mathscope-m3/p8/lean
+        run: |
+          set -euxo pipefail
+          lake update
+          lake exe cache get
+      - name: Compile inverse theorem and inspect axioms
+        working-directory: research-ide/mathscope-m3/p8/lean
+        run: |
+          set -uo pipefail
+          mkdir -p proof-logs
+          lean --version > proof-logs/version.txt
+          sha256sum MathScope/M3/CD/InverseBracket.lean > proof-logs/source-sha256.txt
+          result=0
+          lake env lean MathScope/M3/CD/InverseBracket.lean > proof-logs/InverseBracket.log 2>&1 || result=1
+          cat proof-logs/InverseBracket.log
+          if grep -nE 'sorryAx|declaration uses .sorry.' proof-logs/InverseBracket.log; then result=1; fi
+          if grep -nE '^[[:space:]]*(sorry|admit|axiom)([[:space:]]|$)' MathScope/M3/CD/InverseBracket.lean; then result=1; fi
+          exit "$result"
+      - name: Upload proof logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mathscope-inverse-bracket-lean-logs
+          path: research-ide/mathscope-m3/p8/lean/proof-logs
+          if-no-files-found: warn
