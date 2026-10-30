@@ -104,6 +104,68 @@ theorem source_bracket_zero_input_counterexample (h : ℝ) :
     F h 0 0 (1/2) = 1/2 ∧ F h 0 0 2 = 2 := by
   simp [F]
 
+theorem chart_power_factor (h s : ℝ) (hs : 0 < s) :
+    (s ^ ((1/2:ℝ)-h))^2 * s^(2*h) = s := by
+  have hsquare : (s ^ ((1/2:ℝ)-h))^2 =
+      s ^ (((1/2:ℝ)-h) + ((1/2:ℝ)-h)) := by
+    calc
+      _ = s ^ ((1/2:ℝ)-h) * s ^ ((1/2:ℝ)-h) := by ring
+      _ = _ := (Real.rpow_add hs _ _).symm
+  rw [hsquare, ← Real.rpow_add hs]
+  have hsum : ((1/2:ℝ)-h) + ((1/2:ℝ)-h) + (2*h) = 1 := by ring
+  rw [hsum]
+  simp
+
+theorem root_to_chart (h Z T s : ℝ) (hs : 0 < s) (hT : 0 ≤ T)
+    (hz : F h Z T s = 0) :
+    ∃ eta : ℝ, |eta| ≤ 1 ∧ Z = s^((1/2:ℝ)-h)*eta ∧ T = s*(1-eta^2) := by
+  let p : ℝ := s^((1/2:ℝ)-h)
+  have hp : p ≠ 0 := ne_of_gt (Real.rpow_pos_of_pos hs _)
+  let eta : ℝ := Z/p
+  have hZ : Z = p*eta := by
+    dsimp [eta]
+    field_simp
+  have hfac : p^2 * s^(2*h) = s := chart_power_factor h s hs
+  have hterm : Z^2 * s^(2*h) = s*eta^2 := by
+    rw [hZ]
+    calc
+      _ = (p^2 * s^(2*h))*eta^2 := by ring
+      _ = _ := by rw [hfac]
+  have hTval : T = s*(1-eta^2) := by
+    unfold F at hz
+    rw [hterm] at hz
+    linarith
+  have hsq : eta^2 ≤ 1 := by
+    by_contra ht
+    have hneg : 1-eta^2 < 0 := by linarith
+    have hn : s*(1-eta^2) < 0 := mul_neg_of_pos_of_neg hs hneg
+    linarith
+  refine ⟨eta, (sq_le_one_iff_abs_le_one eta).mp hsq, ?_, hTval⟩
+  exact hZ
+
+theorem chart_to_root (h Z T s eta : ℝ) (hs : 0 < s)
+    (hZ : Z = s^((1/2:ℝ)-h)*eta) (hT : T = s*(1-eta^2)) :
+    F h Z T s = 0 := by
+  have hfac := chart_power_factor h s hs
+  unfold F
+  rw [hZ, hT]
+  calc
+    _ = s - ((s^((1/2:ℝ)-h))^2*s^(2*h))*eta^2 - s*(1-eta^2) := by ring
+    _ = 0 := by rw [hfac]; ring
+
+theorem chart_image_iff_endpoint_signs (h Z T a b : ℝ) (ha : 0 < a) (hab : a ≤ b)
+    (hh : h < 1/2) (hT : 0 ≤ T) :
+    (∃ s ∈ Icc a b, ∃ eta : ℝ, |eta| ≤ 1 ∧
+      Z = s^((1/2:ℝ)-h)*eta ∧ T = s*(1-eta^2)) ↔
+    (F h Z T a ≤ 0 ∧ 0 ≤ F h Z T b) := by
+  rw [← exact_bracket_root_iff h Z T a b ha hab hh hT]
+  constructor
+  · rintro ⟨s, hs, eta, heta, hZ, hTval⟩
+    exact ⟨s, hs, chart_to_root h Z T s eta (lt_of_lt_of_le ha hs.1) hZ hTval⟩
+  · rintro ⟨s, hs, hz⟩
+    obtain ⟨eta, heta, hZ, hTval⟩ := root_to_chart h Z T s (lt_of_lt_of_le ha hs.1) hT hz
+    exact ⟨s, hs, eta, heta, hZ, hTval⟩
+
 end
 end MathScope.M3.CD.InverseBracket
 
@@ -114,3 +176,7 @@ end MathScope.M3.CD.InverseBracket
 #print axioms MathScope.M3.CD.InverseBracket.endpoint_signs_of_root
 #print axioms MathScope.M3.CD.InverseBracket.exact_bracket_root_iff
 #print axioms MathScope.M3.CD.InverseBracket.source_bracket_zero_input_counterexample
+#print axioms MathScope.M3.CD.InverseBracket.chart_power_factor
+#print axioms MathScope.M3.CD.InverseBracket.root_to_chart
+#print axioms MathScope.M3.CD.InverseBracket.chart_to_root
+#print axioms MathScope.M3.CD.InverseBracket.chart_image_iff_endpoint_signs
