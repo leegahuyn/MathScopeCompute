@@ -65,7 +65,7 @@ theorem pressure_moment_boundary_identity
   have hpoly : ∀ x ∈ uIcc a b,
       HasDerivAt (fun y : ℝ => y ^ 2) (2 * x) x := by
     intro x hx
-    convert (hasDerivAt_id x).pow 2 using 1 <;> ring
+    simpa using (hasDerivAt_pow 2 x)
   have hint : IntervalIntegrable (fun x : ℝ => 2 * x) volume a b :=
     (by fun_prop : Continuous (fun x : ℝ => 2 * x)).intervalIntegrable a b
   have h := intervalIntegral.integral_mul_deriv_eq_deriv_mul hpoly hP hint hdP
@@ -144,7 +144,7 @@ theorem omitted_pressure_boundary_countermodel :
     (∫ x : ℝ in (0 : ℝ)..1, x ^ 2 * (0 : ℝ)) = 0 := by
   constructor
   · simp only [mul_one]
-    rw [intervalIntegral.integral_id]
+    rw [integral_id]
     norm_num
   · simp
 
