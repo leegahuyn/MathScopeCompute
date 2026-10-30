@@ -122,6 +122,56 @@ theorem axial_backward_primitive
   rw [hzero] at h
   linarith
 
+/--
+Finite-interval bridge for the *actual cutoff shape* of axial native1:
+source body 117047 is an interior selection of raw body 117045 between
+Xminus 28814 and Xplus 28824.  The manuscript integrates the full raw
+physical residual after the Jacobian R dR = dX.
+
+This does not prove the two exterior integrals vanish, the middle source AST
+identity, or the improper-limit passage; those are explicit hypotheses.
+No endpoint ordering is required for signed interval integrals.
+-/
+theorem axial_cutoff_full_residual_bridge_finite
+    (raw supported : ℝ → ℝ) (c a b d : ℝ)
+    (hca : IntervalIntegrable raw volume c a)
+    (hab : IntervalIntegrable raw volume a b)
+    (hcb : IntervalIntegrable raw volume c b)
+    (hbd : IntervalIntegrable raw volume b d)
+    (hleft : (∫ x in c..a, raw x) = 0)
+    (hright : (∫ x in b..d, raw x) = 0)
+    (hmiddle : (∫ x in a..b, supported x) =
+      (∫ x in a..b, raw x)) :
+    (∫ x in c..d, raw x) =
+      (∫ x in a..b, supported x) := by
+  have hfirst := intervalIntegral.integral_add_adjacent_intervals hca hab
+  have hsecond := intervalIntegral.integral_add_adjacent_intervals hcb hbd
+  rw [hleft] at hfirst
+  rw [hright] at hsecond
+  rw [← hmiddle] at hfirst
+  linarith
+
+/--
+A genuine zero total raw moment transfers to the actual supported source
+only when both excluded tails and the middle integral have been bound.
+-/
+theorem axial_cutoff_zero_moment_transfer_finite
+    (raw supported : ℝ → ℝ) (c a b d : ℝ)
+    (hca : IntervalIntegrable raw volume c a)
+    (hab : IntervalIntegrable raw volume a b)
+    (hcb : IntervalIntegrable raw volume c b)
+    (hbd : IntervalIntegrable raw volume b d)
+    (hleft : (∫ x in c..a, raw x) = 0)
+    (hright : (∫ x in b..d, raw x) = 0)
+    (hmiddle : (∫ x in a..b, supported x) =
+      (∫ x in a..b, raw x))
+    (hwhole : (∫ x in c..d, raw x) = 0) :
+    (∫ x in a..b, supported x) = 0 := by
+  have hbridge := axial_cutoff_full_residual_bridge_finite
+    raw supported c a b d hca hab hcb hbd hleft hright hmiddle
+  rw [hwhole] at hbridge
+  exact hbridge.symm
+
 /-- The forward stress is zero at the outer endpoint if the full integral
 vanishes. Its derivative jets still need independent smoothness/support. -/
 theorem axial_outer_value
@@ -188,6 +238,8 @@ end MathScope.M3.CD
 #print axioms MathScope.M3.CD.pressure_moment_boundary_identity
 #print axioms MathScope.M3.CD.pressure_moment_zero_boundary
 #print axioms MathScope.M3.CD.axial_backward_primitive
+#print axioms MathScope.M3.CD.axial_cutoff_full_residual_bridge_finite
+#print axioms MathScope.M3.CD.axial_cutoff_zero_moment_transfer_finite
 #print axioms MathScope.M3.CD.axial_outer_value
 #print axioms MathScope.M3.CD.eta_moment_two_derivatives_zero
 #print axioms MathScope.M3.CD.eta_interior_moment_two_derivatives_zero
