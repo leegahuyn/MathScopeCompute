@@ -9,7 +9,7 @@ export function mountM4ProofJobUI(root,options={}){
  const title=document.createElement('h4');title.id='m4-proof-job-title';title.textContent='새 ProofJob 준비';
  const description=document.createElement('p');description.textContent='입력마다 새 소스와 작업을 준비합니다. 기존 검사 결과는 새 입력에 적용되지 않습니다. 현재 생성되는 정리는 정수 계수 예제입니다.';
  const label=document.createElement('label');label.textContent='ProofJob 입력 JSON';label.style.display='block';
- const input=document.createElement('textarea');input.rows=12;input.spellcheck=false;input.dataset.proof='input';input.style.boxSizing='border-box';input.style.width='100%';input.style.resize='vertical';input.value=JSON.stringify(DEFAULT_M4_PROOF_INPUT,null,2);label.append(input);
+ const input=document.createElement('textarea');input.rows=12;input.spellcheck=false;input.dataset.proof='input';input.style.boxSizing='border-box';input.style.width='100%';input.style.resize='vertical';input.value=JSON.stringify(options.initial ?? DEFAULT_M4_PROOF_INPUT,null,2);label.append(input);
  const status=document.createElement('p');status.dataset.proof='status';status.setAttribute('role','status');status.setAttribute('aria-live','polite');
  const details=document.createElement('pre');details.dataset.proof='details';details.style.whiteSpace='pre-wrap';details.style.overflowWrap='anywhere';
  section.append(title,description,label,status,details);root.append(section);
