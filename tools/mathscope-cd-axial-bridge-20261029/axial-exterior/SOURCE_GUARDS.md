@@ -1,10 +1,10 @@
 # Source-bound n=1 axial exterior guards
 
-**INDEPENDENT REVIEW OPEN:** the source tests the left branch before the right branch. The listed `X>right` bounds alone do not establish that the right branch is selected unless the corresponding left bound is also smaller; each used piecewise pair still needs a separate authenticated ordering or `X>left` proof. The original 8/8 certificate has this additional hypothesis.
+**Independent review correction:** the previous checker did not account for the source's left-first branch selection. The revised checker requires the ordered pairs proved below, and rejects a reversed-pair negative control. The result remains conditional on defined, smooth source semantics.
 
 Status: **VERIFIED conditional on the real interpretation of the fixed source parameter definitions and smooth source operator semantics**. This establishes the exterior guard inequalities for the pinned source, not global native chart membership, inner equality, cancellation of an integral, or all-order induction. The precise uploaded PDF remains unavailable.
 
-The graph replay `check_exterior.py` verifies the exact source nodes, graph and registry hashes, and the eight n=1 axial summands. With source step flatness, it reduces all eight to zero when the explicit guards listed below hold. Source parameter trees are separately matched byte-for-byte against `source-profile-data.mjs`, SHA-256 `df33560d2b9369ba32cf9f50877e355824ed1e7fdb84ef6b145d941c80db8e4a`, Git blob `f1559221145b5d4ce051bbdb9cb84254045c8696`, which matches branch `mathscope-cd-lean-three-gates-20261027`. `check_source_guards.py` validates the 22 relevant expression trees and rejects a modified X0I1. It separately checks the exact rational comparisons used below; the exponent inequalities here are a written mathematical proof, not a Lean proof.
+The graph replay `check_exterior.py` verifies the exact source nodes, graph and registry hashes, and the eight n=1 axial summands. With source step flatness, it reduces all eight to zero when the explicit guards listed below hold. Source parameter trees are separately matched byte-for-byte against `source-profile-data.mjs`, SHA-256 `df33560d2b9369ba32cf9f50877e355824ed1e7fdb84ef6b145d941c80db8e4a`, Git blob `f1559221145b5d4ce051bbdb9cb84254045c8696`, which matches branch `mathscope-cd-lean-three-gates-20261027`. `check_source_guards.py` validates 23 relevant expression trees and rejects a modified X0I1. It separately checks the exact rational comparisons used below; the exponent inequalities here are a written mathematical proof, not a Lean proof.
 
 Let `T=exp(1048576)+10`, `B=1000T`, `lambda=exp(-1000T)` and `XR=110(CSelected Pstar)^10`. Put
 
@@ -22,6 +22,16 @@ For X≥Xplus, the remaining inequalities follow from these exact source definit
 6. `Xcut #28823 = Xa exp(t1/32)<XR exp(1/32)<Xplus`: T>10, B>0 and lambda>0 make the exponent of XR in Xplus greater than 3.
 7. `log(X/Xp) >= 13/lambda+1 > 13/lambda`. Exact graph #5099 is log(X/Xp), #103 is 13/lambda.
 8. `Xplus/X0I1=exp(26+13/lambda)>exp(26)>27`. Thus the exact graph arguments `#9198=2(X/X0I1−9)` and `#9203=2(X/X0I1−10)` are both >1. The identities use `X0I1=XR exp(T+2+60B−25)`, also verified from the pinned source tree. `exp(26)>27` follows from exp(x)>1+x for x>0. The source flat-step function and all its positive-order derivatives vanish when its argument exceeds 1.
+
+The source interpreter selects `before` first when `x<=left`, and only otherwise selects `after` when `x>=right`. Thus `x>right` does not suffice without `left<=right`. For example `(left,right,x,before,after)=(2,1,3/2,1,0)` selects 1 although `x>right`; this is a counterexample to an unrestricted checker rule, not a source counterexample. Every pair used by this audit is ordered:
+
+* Logarithmic coordinate: `#0=0 < #103=13/lambda`.
+* Radial `(left,right)=(#4567,#5089)` equals `(XR exp(-7),XR exp(-5))`; `(5091,5093)` equals `(XR exp(1),XR exp(T+1))`.
+* `#6257=loopILeft=Xa exp(t1/8) < XR exp(T+3)=loopIRight #6258`, since `Xa<XR`, `t1/8<1/8`, and `T+3>13`.
+* `#28819=Xa exp(t1/64) < Xa exp(t1/32)=Xcut #28823` because `t1>0`; `#28987=X0Ipos < IposRight #28988 = X0Ipos exp(5)`.
+* `#28819 < #29328=X0Ipos(8193/4096)^2`: indeed `X0Ipos=XR exp(60001T-12)>XR exp(1/64)>Xa exp(t1/64)` and the rational factor exceeds 1. Likewise `#28819 < Xplus #28824` by the positive exponent of `Xplus/XR` exceeding `1/64`.
+
+The revised replay checks these exact source endpoint trees and applies its right-branch reduction only to these seven radial and one logarithmic ordered pairs. The inequalities rely on the displayed mathematical proof and source-real semantics; their existence is not inferred from the mere name `smooth_piecewise`.
 
 Consequently every guard used by the eight-term exterior branch replay holds for every X>Xplus, all |eta|<1 and the fixed source parameters, **provided** the source operations and the expression-function derivatives have the real smooth semantics and are defined on the relevant neighborhood. In the actual producer this is the specific claim that raw #117045=0 on that strict exterior, including its lower axial-viscosity term; it is stronger than merely reading the clipped zero branch of #117047. It is a source-structure and handwritten analytic proof; it is not a Lean-kernel proof of those semantics or of global native caller arguments.
 

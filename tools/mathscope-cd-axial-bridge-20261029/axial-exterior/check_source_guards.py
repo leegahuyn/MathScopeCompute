@@ -30,6 +30,7 @@ def check(p):
   'X0I1':mul(XR,exp(add(T,integer(2),mul(integer(60),B),integer(-25)))),
   'X0Ipos':mul(XR,exp(add(T,integer(2),mul(integer(60),B),integer(-14)))),
   'IposRight':mul(ref('X0Ipos'),exp(integer(5))),
+  'loopILeft':mul(div(integer(4),ref('Lambda')),exp(div(ref('t1'),integer(8)))),
   'loopIRight':mul(XR,exp(add(T,integer(3))))}
  return [k for k,v in expected.items() if p.get(k)!=v]
 
@@ -40,6 +41,7 @@ def main():
  assert v['parameterExpressionSHA256']=='e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152'
  assert check(p)==[]
  fake=dict(p);fake['X0I1']=integer(1);assert check(fake)==['X0I1']
+ fake_left=dict(p);fake_left['loopILeft']=integer(1);assert check(fake_left)==['loopILeft']
  assert 8193**2==67125249 and 4096**2==16777216 and 67125249 < 6*16777216
  assert 26+1>11 and 3*32-1>0
  # Exponents use exact coefficient vectors (constant,T,B,1/lambda).
@@ -52,9 +54,9 @@ def main():
  assert sub(plus,(-23,1,60,0))==(26,0,0,1)   # X0I1
  data={'source_profile_sha256':EXPECTED_SHA,'git_blob':'f1559221145b5d4ce051bbdb9cb84254045c8696',
        'parameter_expression_sha256':v['parameterExpressionSHA256'],
-       'checked_source_parameters':sorted(p.keys() & {'Md','T','BOuter','lambda','h','j0','sigmaStar','logP','Pstar','K','Q','Lambda','Xa','BRefUpper','logCSelected','CSelected','t1','XR','X0I1','X0Ipos','IposRight','loopIRight'}),
-       'negative_control':'mutated X0I1 rejected',
+       'checked_source_parameters':sorted(p.keys() & {'Md','T','BOuter','lambda','h','j0','sigmaStar','logP','Pstar','K','Q','Lambda','Xa','BRefUpper','logCSelected','CSelected','t1','XR','X0I1','X0Ipos','IposRight','loopILeft','loopIRight'}),
+       'negative_control':'mutated X0I1 and loopILeft independently rejected',
        'rational_checks':{'(8193/4096)^2<6':True,'exp(5)>6':'by exp(x)>1+x for x>0','exp(26)>27>10.5':'by exp(x)>1+x for x>0'},
        'status':'Exact source parameter AST matches; mathematical guard ordering proof in SOURCE_GUARDS.md; conditional smooth/natively-defined semantics and actual caller-domain binding remain open.'}
- a.out.parent.mkdir(parents=True,exist_ok=True);a.out.write_text(json.dumps(data,indent=2),encoding='utf8');print('PASS: 22 pinned source parameter trees; rational guard comparisons; mutated parameter rejected')
+ a.out.parent.mkdir(parents=True,exist_ok=True);a.out.write_text(json.dumps(data,indent=2),encoding='utf8');print('PASS: 23 pinned source parameter trees; rational guard comparisons; mutated parameter rejected')
 if __name__=='__main__':main()

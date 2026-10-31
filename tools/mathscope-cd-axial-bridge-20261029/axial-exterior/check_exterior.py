@@ -4,11 +4,17 @@ The result is conditional on cutoff ordering and smooth semantics. It is not an
 evaluation of actual Picard profiles or a proof of an integral moment.
 """
 import argparse, gzip, hashlib, json
+from fractions import Fraction
 from pathlib import Path
 from functools import lru_cache
 
 HASH='a6d99fd02036780f9c994268651f6d99d3d6f8702d5476a219c212156e0ca269'
 REGHASH='bc0587085298da014c10a61a15e09f436c7f62cce1879eeb44c63dbfeadabb6e'
+# Source interpreter checks left first, so x>right needs left<=right.
+# Each listed relation follows from the pinned source parameters in SOURCE_GUARDS.md.
+ORDERED_RADIAL_PAIRS={(28819,28823),(28987,28988),(28819,29328),
+                      (28819,28824),(6257,6258),(5091,5093),(4567,5089)}
+ORDERED_LOG_PAIRS={(0,103)}
 def sha(p): return hashlib.sha256(p.read_bytes()).hexdigest()
 
 def main():
@@ -49,9 +55,9 @@ def main():
      l,r=zero(v[0]),zero(v[1]);return min((x for x in (l,r) if x is not None),key=lambda x:(len(x),tuple(sorted(x))),default=None)
     if op=='integer_power' and v[1]>0:return zero(v[0])
     if op=='sqrt_positive':return zero(v[0])
-    if op=='smooth_piecewise' and v[0]==4756 and v[2] in allowed:
+    if op=='smooth_piecewise' and v[0]==4756 and v[2] in allowed and (v[1],v[2]) in ORDERED_RADIAL_PAIRS:
      z=zero(v[5]);return z|{(v[2],i)} if z is not None else None
-    if op=='smooth_piecewise' and extended and v[0]==5099 and v[2]==103:
+    if op=='smooth_piecewise' and extended and v[0]==5099 and (v[1],v[2]) in ORDERED_LOG_PAIRS:
      z=zero(v[5]);return z|{(103,i)} if z is not None else None
     if op=='source_step_derivative' and extended and allow_step and v[0] in (9198,9203) and v[1]>=1:
      return frozenset({(v[0],i)})
@@ -73,6 +79,11 @@ def main():
  assert all(extended_result[i] is not None for i in terms)
  no_step,_=solve(extended_allowed,extended=True,allow_step=False)
  assert no_step[117031] is None
+ # x>right is insufficient if the left branch has precedence.
+ x,left,right=Fraction(3,2),Fraction(2),Fraction(1)
+ selected=1 if x<=left else (0 if x>=right else 2)
+ assert x>right and selected==1
+ assert (28824,28819) not in ORDERED_RADIAL_PAIRS
  expected={
   # Bind the cutoff inequalities to exact source endpoint trees, not only to
   # coordinate-independent node IDs.  These constants are used explicitly by
@@ -83,6 +94,10 @@ def main():
   28988:('source_parameter',['IposRight']),
   29328:('multiply',[28987,29327]),28987:('source_parameter',['X0Ipos']),
   29327:('rational',['67125249','16777216']),
+  28819:('multiply',[3617,28818]),28818:('exp',[28817]),
+  28817:('multiply',[3612,28816]),28816:('rational',['1','64']),
+  6257:('source_parameter',['loopILeft']),
+  4567:('multiply',[12,4566]),4566:('exp',[4565]),4565:('rational',['-7','1']),
   12:('source_parameter',['XR']),6:('source_parameter',['T']),
   7:('source_parameter',['BOuter']),8:('source_parameter',['lambda']),
   1:('rational',['1','1']),24:('rational',['2','1']),588:('exp',[1]),
@@ -116,10 +131,15 @@ def main():
        'cutoffs':{'28823':'Xcut=Xa*exp(t1/32)','28988':'IposRight','29328':'X0Ipos*(8193/4096)^2','28824':'Xplus'},
        'particular_unresolved':'#117031 = -#79047; producer identifies #79047 as Z_(c-D)(Z_c(U0)); its reduction requires leading axial support and eta derivatives, not supplied by these seven branch proofs.',
        'partials_reached':partials,'negative_control':'Removing permission to use cutoff #28824 leaves #117027 unproved; PASS',
+       'ordered_branch_pairs':{'radial':sorted(map(list,ORDERED_RADIAL_PAIRS)),
+         'logarithmic':sorted(map(list,ORDERED_LOG_PAIRS))},
+       'left_precedence_counterexample':{'x':'3/2','left':'2','right':'1',
+         'before':'1','after':'0','actual_selected':'1',
+         'result':'x>right alone is unsound; left<=right is required'},
        'extended_result':{'successful_terms':8,'node117031_proof_guards':[{'guard':e,'node':k} for e,k in sorted(extended_result[117031])],
          'interpretation':'In addition to the first seven conditional branch rules, assume X exceeds 6258=loopIRight, 5093=XR exp(T+1), and 5089=XR exp(-5); log(X/Xp)>13/lambda; source step arguments 2(X/X0I1-9), 2(X/X0I1-10) exceed 1; source step derivatives vanish there. These are explicit analytic hypotheses, not native-domain proofs.',
          'negative_control':'without the step-derivative flatness rule, #117031 cannot be reduced'},
        'limits':['This is not a numerical evaluation, native binder proof or proof of source cutoff ordering.', 'No moment integral or boundary equality has been proved.', 'Only n=1 is addressed; no all-order induction.', 'A prefix integral is never replaced with zero because its integrand is compactly supported.']}
  a.out.parent.mkdir(parents=True,exist_ok=True);a.out.write_text(json.dumps(data,indent=2,ensure_ascii=False),encoding='utf8')
- print('PASS: exact source SHA; all eight exterior terms conditionally reduce under explicit branch/step guards; both negative controls PASS; native guards and actual moment remain OPEN')
+ print('PASS: exact source SHA; all eight exterior terms conditionally reduce under ordered branch/step guards; cutoff, flat-step and left-precedence controls PASS; native guards and actual moment remain OPEN')
 if __name__=='__main__':main()
