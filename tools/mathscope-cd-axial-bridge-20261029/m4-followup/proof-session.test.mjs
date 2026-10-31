@@ -31,3 +31,11 @@ test('same binding and forged pass never produce a verified current result',asyn
  const s=createProofSession({initial:DEFAULT_M4_PROOF_INPUT});await s.update();const job=s.snapshot().active;
  assert.deepEqual(await s.inspectOldReceipt({...job,status:'PASS',kernelPass:true}),{state:'BINDING_MATCH_KERNEL_RECHECK_REQUIRED',kernelPass:false});
 });
+
+test('invalid JSON while generation is pending prevents the pending job becoming current',async()=>{
+ let release;const gate=new Promise(r=>release=r);
+ const make=async p=>{if(p.G==='SLOW')await gate;return createM4ProofJob(p);};
+ const s=createProofSession({make});await s.update();const slow=s.update({G:'SLOW'});
+ s.invalidate('invalid JSON');release();assert.equal((await slow).state,'SUPERSEDED');
+ assert.equal(s.snapshot().state,'INVALID_INPUT');assert.equal(s.snapshot().active,null);
+});

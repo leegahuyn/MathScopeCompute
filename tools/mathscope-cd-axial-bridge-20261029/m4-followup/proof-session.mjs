@@ -33,5 +33,10 @@ export function createProofSession({initial=DEFAULT_M4_PROOF_INPUT, make=createM
     const checked=await classifyM4ProofReuse(active,old);
     return before===revision ? checked : {state:'SUPERSEDED',kernelPass:false};
   }
-  return {update,snapshot,inspectOldReceipt};
+  function invalidate(reason='INVALID_INPUT') {
+    const thisRevision=++revision;active=null;state='INVALID_INPUT';
+    events.push({revision:thisRevision,event:'INVALIDATED_INPUT',reason,kernelPass:false});
+    return snapshot();
+  }
+  return {update,snapshot,inspectOldReceipt,invalidate};
 }

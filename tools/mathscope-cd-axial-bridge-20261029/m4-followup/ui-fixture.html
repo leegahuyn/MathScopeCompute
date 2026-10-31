@@ -1,0 +1,22 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>MathScope proof job isolated integration fixture</title><link rel="icon" href="data:,"><link rel="stylesheet" href="release-lab.css"></head><body><section id="ms-r1-lab" aria-labelledby="ms-r1-title">
+  <div class="ms-r1-header"><div><span>M4 / R1 · 실행·재현 작업대</span><h3 id="ms-r1-title">같은 입력, 새 Worker, 같은 결과</h3></div><span class="ms-r1-scope">유한 계산 · 열린 수학 의무 별도</span></div>
+  <p>점·P¹·타원곡선, SU2/SU3/G2, heat·axis·기준 PDE를 실제 설치 엔진으로 실행합니다. 이 작업대는 연구 세션과 별도의 작업을 사용합니다.</p>
+  <label>기준 예제 <select data-r1="fixture"></select></label>
+  <div class="ms-r1-actions"><button type="button" data-r1="run">새 Worker 실행</button><button type="button" data-r1="cancel">취소</button><button type="button" data-r1="resume">중단 입력 재개</button><button type="button" data-r1="replay">독립 재실행 비교</button><button type="button" data-r1="export">실행 JSON 저장</button></div>
+  <p data-r1="status" role="status" aria-live="polite">예제를 선택하고 실행하세요.</p>
+  <details><summary>실제 입력 · 변경 시 해당 예제의 기존 결과가 STALE</summary><label>입력 JSON<textarea data-r1="input" spellcheck="false" rows="9"></textarea></label><button type="button" data-r1="apply">입력 적용</button></details>
+  <div class="ms-r1-layout"><div><h4>실제 계산 표본</h4><p data-r1="axes"></p><svg data-r1="chart" viewBox="0 0 600 230" role="img" aria-label="실제 계산 표본의 2차원 관측"></svg><div class="ms-r1-table"><table><thead><tr><th>선택</th><th>원래 값/좌표</th><th>출처</th></tr></thead><tbody data-r1="rows"></tbody></table></div></div><div><h4>그림 → 값 → 소스 → 작업</h4><pre data-r1="inspect">실행 결과를 기다립니다.</pre><a data-r1="source" target="_blank" rel="noopener noreferrer">실제 계산 소스 열기</a></div></div>
+  <details><summary>독립 정밀도·해상도 비교 · 실행 영수증</summary><p>p-adic M, 급수 J, 공간 K, lattice a/L, 표본 수를 각각 변경한 기록입니다. 유한 근사와 인증된 경계를 구분합니다.</p><div class="ms-r1-table"><table><thead><tr><th>축</th><th>독립 입력</th><th>관측·오차·범위</th></tr></thead><tbody data-r1="refinements"></tbody></table></div></details>
+  <div data-r1="proof-job-host"></div>
+  <details><summary>새 Lean 커널 실행 및 오류 대조</summary><pre data-r1="kernel"></pre></details>
+  <details><summary>M3 실제 소스의 유한 Fourier 꼬리 비교 · 원래 전역 의무와 별도</summary><p>temporal 보정 전 동일 원본 잔차의 꼬리 상계입니다. 세로축은 K=1 상계에 대한 정확한 비율 1/K이며, 미평가 source scalar의 절대 수치가 아닙니다.</p><div data-r1="m3-tail-chart"></div><div class="ms-r1-table"><table><thead><tr><th>성분/차수</th><th>K · 상대 상계</th><th>원본 scalar</th></tr></thead><tbody data-r1="m3-tail-rows"></tbody></table></div><pre data-r1="m3-source"></pre></details>
+  <label>실행 가져오기 <input type="file" data-r1="import" accept="application/json,.json"></label>
+  <p class="ms-r1-note">가져온 결과는 다시 계산하여 비교합니다. 다른 입력·소스·정리·force/cutoff의 증거는 연결되지 않습니다. 화면의 유한 실행 성공은 원래 NS 전역 구성이나 M3 64/64 완료를 뜻하지 않습니다.</p>
+</section>
+<script type="module">
+import {mountM4ProofJobUI} from './proof-job-ui.mjs';
+import {createM4ProofJob} from './research-ide/mathscope-m4/proof-jobs.mjs';
+let release;const gate=new Promise(r=>release=r);window.releaseSlow=()=>release();
+const options=location.search.includes('race')?{make:async p=>{if(p.G==='SLOW')await gate;return createM4ProofJob(p);}}:{};
+window.proofEditor=mountM4ProofJobUI(document.querySelector('[data-r1="proof-job-host"]'),options);
+</script></body></html>
