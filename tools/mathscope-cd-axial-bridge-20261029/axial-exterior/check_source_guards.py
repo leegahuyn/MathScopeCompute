@@ -42,6 +42,14 @@ def main():
  fake=dict(p);fake['X0I1']=integer(1);assert check(fake)==['X0I1']
  assert 8193**2==67125249 and 4096**2==16777216 and 67125249 < 6*16777216
  assert 26+1>11 and 3*32-1>0
+ # Exponents use exact coefficient vectors (constant,T,B,1/lambda).
+ plus=(3,1,60,1)
+ def sub(x,y):return tuple(a-b for a,b in zip(x,y))
+ assert sub(plus,(3,1,0,0))==(0,0,60,1)       # loopIRight
+ assert sub(plus,(1,1,0,0))==(2,0,60,1)       # XR exp(T+1)
+ assert sub(plus,(-5,0,0,0))==(8,1,60,1)     # XR exp(-5)
+ assert sub(plus,(-7,1,60,0))==(10,0,0,1)    # IposRight
+ assert sub(plus,(-23,1,60,0))==(26,0,0,1)   # X0I1
  data={'source_profile_sha256':EXPECTED_SHA,'git_blob':'f1559221145b5d4ce051bbdb9cb84254045c8696',
        'parameter_expression_sha256':v['parameterExpressionSHA256'],
        'checked_source_parameters':sorted(p.keys() & {'Md','T','BOuter','lambda','h','j0','sigmaStar','logP','Pstar','K','Q','Lambda','Xa','BRefUpper','logCSelected','CSelected','t1','XR','X0I1','X0Ipos','IposRight','loopIRight'}),

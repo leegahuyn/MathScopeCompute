@@ -1,0 +1,57 @@
+{
+  "graph_sha256": "a6d99fd02036780f9c994268651f6d99d3d6f8702d5476a219c212156e0ca269",
+  "registry_sha256": "bc0587085298da014c10a61a15e09f436c7f62cce1879eeb44c63dbfeadabb6e",
+  "nodes_scanned": 4420257,
+  "exact_nodes_checked": 40,
+  "picard_system": {
+    "id": 0,
+    "name": "ActualSameN3OrderOneInner",
+    "radial_domain": [
+      0,
+      24806
+    ],
+    "zero_axis_datum": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "diagonal": [
+      0,
+      0,
+      2,
+      0,
+      3,
+      1
+    ],
+    "k_row": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      20
+    ]
+  },
+  "conditional_inner_restrictions": {
+    "F1": "#29290=#28834=even(system 0, component 0)",
+    "U1": "#29289=#28835=even(system 0, component 1)",
+    "Pi1": "#50558=#50557=even(system 0, component 3)",
+    "average": "#29336=#29332=integral_0^1 even(system 0,component 1,t X,eta) dt"
+  },
+  "guards": [
+    "0<=X<=Xminus<Xkeep<Xcut<aSquared",
+    "Xminus<X0Ipos",
+    "all nodes needed in selected branch are defined, with correct smooth source semantics"
+  ],
+  "limits": [
+    "This only checks AST and conditional branch identities.",
+    "No proof of source-level Picard convergence or equation semantics.",
+    "No proof global leading profiles equal inner leading profiles.",
+    "Average equals U1+K1 only if Picard system row equation and zero axis datum hold as functions.",
+    "No proof #117045=0, eta-derivative interchange, all-order result, or native caller membership."
+  ],
+  "negative_control": "mutated additive bump left branch is structurally rejected"
+}

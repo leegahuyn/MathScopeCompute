@@ -74,6 +74,18 @@ def main():
  no_step,_=solve(extended_allowed,extended=True,allow_step=False)
  assert no_step[117031] is None
  expected={
+  # Bind the cutoff inequalities to exact source endpoint trees, not only to
+  # coordinate-independent node IDs.  These constants are used explicitly by
+  # SOURCE_GUARDS.md and must fail closed if the source graph changes.
+  28823:('multiply',[3617,28822]),3617:('source_parameter',['Xa']),
+  28822:('exp',[28821]),28821:('multiply',[3612,28820]),
+  3612:('source_parameter',['t1']),28820:('rational',['1','32']),
+  28988:('source_parameter',['IposRight']),
+  29328:('multiply',[28987,29327]),28987:('source_parameter',['X0Ipos']),
+  29327:('rational',['67125249','16777216']),
+  12:('source_parameter',['XR']),6:('source_parameter',['T']),
+  7:('source_parameter',['BOuter']),8:('source_parameter',['lambda']),
+  1:('rational',['1','1']),24:('rational',['2','1']),588:('exp',[1]),
   5099:('log_positive',[5098]),5098:('multiply',[4756,5097]),5097:('inverse',[613]),
   103:('multiply',[101,102]),101:('rational',['13','1']),102:('inverse',[8]),
   9198:('multiply',[24,9197]),9197:('add',[8843,9196]),8843:('rational',['-9','1']),
