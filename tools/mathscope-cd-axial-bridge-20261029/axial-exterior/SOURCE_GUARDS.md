@@ -1,5 +1,7 @@
 # Source-bound n=1 axial exterior guards
 
+**INDEPENDENT REVIEW OPEN:** the source tests the left branch before the right branch. The listed `X>right` bounds alone do not establish that the right branch is selected unless the corresponding left bound is also smaller; each used piecewise pair still needs a separate authenticated ordering or `X>left` proof. The original 8/8 certificate has this additional hypothesis.
+
 Status: **VERIFIED conditional on the real interpretation of the fixed source parameter definitions and smooth source operator semantics**. This establishes the exterior guard inequalities for the pinned source, not global native chart membership, inner equality, cancellation of an integral, or all-order induction. The precise uploaded PDF remains unavailable.
 
 The graph replay `check_exterior.py` verifies the exact source nodes, graph and registry hashes, and the eight n=1 axial summands. With source step flatness, it reduces all eight to zero when the explicit guards listed below hold. Source parameter trees are separately matched byte-for-byte against `source-profile-data.mjs`, SHA-256 `df33560d2b9369ba32cf9f50877e355824ed1e7fdb84ef6b145d941c80db8e4a`, Git blob `f1559221145b5d4ce051bbdb9cb84254045c8696`, which matches branch `mathscope-cd-lean-three-gates-20261027`. `check_source_guards.py` validates the 22 relevant expression trees and rejects a modified X0I1. It separately checks the exact rational comparisons used below; the exponent inequalities here are a written mathematical proof, not a Lean proof.
