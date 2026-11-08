@@ -1,0 +1,22 @@
+# Independent review: F0 matching and heat boundary guard
+
+The independent invocation of `check_f0_binding.py` on the recovered graph and pinned profile returned PASS for both core and collar, with the three negative controls. The graph's 4,420,257-node uncompressed SHA256 and the registry/profile hashes match the pinned values. Structural interning applies explicit source branch substitutions only outside integral binders and treats dummy integration coordinates with lexical scoping. Associativity/commutativity, removal of zero products and sums, and integral alpha conversion require defined real operands; the matcher lists this condition. It does not establish native callers, limits at Xa/axis/Xminus, Picard convergence, or moment cancellation.
+
+The source uses a left-first piecewise interpreter. For the core `0<X<Xa`, source #71959 and Picard #25601 both select their `before` branches regardless of the order of the other cutoff, provided branch operands are interpreted lazily. For the collar `Xa<X<Xminus`, the indicated before/inside choices require the explicitly stated cutoff and plateau inequalities. In particular source heat correction #71955 has both boundaries equal to XK #71673 and is zero only on the left plateau. Removing this heat rewrite or the B8 step-plateau rewrite prevents the comparison; changing the concrete collar branch is rejected. The guard Xminus<XK is a real obligation, not an automatic consequence of the AST name.
+
+For pinned source parameters, the separate verified source-parameter identities give `Xa<4`, `t1<1`, `XR>110`, `T>10`, `B=1000T>0`, hence `Xminus=Xa exp(t1/128)<4e<12<XR` and `X0I2=XR exp(60001T-18)>XR>Xminus`. The F0 checker tests the exact X0I2 tree. The more difficult guard is XK.
+
+`check_terminal_guards.py` independently verifies full source JSONL SHA and exact XK graph #71673 = XR * exp(#71476) * exp(1/5). It checks #71476 = prewait + log(#71461/#71471)/(1-h), the prewait source DAG, `Tf=128` and `co=1/256`, and exact structural equality of #71461/#71471 to the original outer-source Qb #259 and Qp #275 modulo integral bound-variable renaming and real associative/commutative operations. Both copies have no free coordinate. This is a structural check, not an evaluation of the actual improper/definite integrals.
+
+The original `actual-continuation-exact-support.mjs` (Git blob `21a4dffe89f77056588fb00f0bac20e6881b8343`) gives an analytic argument that `Qb>1` and `0<Qp<h<1`, using `0<h<lambda<1`, `rho=h/256`, the smooth step's positivity and fundamental theorem of calculus, and `e^3<27`. If those analytic assumptions, convergence/definedness, and exact source-to-real interpretation hold, `wait=log(Qb/Qp)/(1-h)>0`; all preceding stage lengths are positive, so `XK>XR>Xminus`. This is a mathematically described source argument, not a separately kernel-verified integral theorem or native evaluation. For a countermodel to omitting the required inequality, Qb=1/2 and Qp=1 give a negative wait when h<1; this is not an actual-source counterexample and alone does not establish the sign of the full prewait-plus-wait expression.
+
+The quantitative argument can be reconstructed as follows. The pinned exponentials imply `0<h<lambda<1/2` and `log(1/h)=8002T>2048`. The initial Q value and the Qsteep integral have strictly positive terms because `lambda>h`, `0≤sigma≤1` and exponential factors are positive. Thus `Qhold>4(1-h)log(1/h)>4096`. The flatten integrand is nonnegative and `exp(-(1-h)/2)>1/3`, so `Qb>Qhold/3>1`. The normalized smooth step is strictly increasing on (0,1), with endpoint values 0 and 1, so its derivative is nonnegative, has integral one, and gives `0<integral_1^3 sigma'((s-1)/2)ds=2`. For `rho=h/256` and `0<h<1`, bound `exp((1-h)s)<exp(3)<27` and `(1-rho)>(255/256)` to obtain `0<Qp<27h/255<h`. The proof uses real integral/FTC and smooth-step properties; the graph-hash and finite shape checker are not an independent mechanized proof of them.
+
+The source AST compiler `actual-global-source-outer.mjs` Git blob is `f8097860af5514eaa0b0dbad6ac2086277047f16`. Full acceptance still needs actual real semantics, regularity and source-native caller arguments. No change to M3/M4/Y/jets status is implied.
+
+Reproduce from package root:
+
+```
+python f0-binding/check_f0_binding.py --source inputs/graph --profile inputs/producer/source-profile-data.mjs --out f0-binding-result.json
+python f0-binding/check_terminal_guards.py --source inputs/graph --profile inputs/producer/source-profile-data.mjs --out terminal-guards.json
+```

@@ -1,0 +1,26 @@
+{
+  "graph_sha256": "a6d99fd02036780f9c994268651f6d99d3d6f8702d5476a219c212156e0ca269",
+  "nodes": 4420257,
+  "profile_sha256": "df33560d2b9369ba32cf9f50877e355824ed1e7fdb84ef6b145d941c80db8e4a",
+  "source_paths": {
+    "outer_blob": "f8097860af5514eaa0b0dbad6ac2086277047f16",
+    "support_blob": "21a4dffe89f77056588fb00f0bac20e6881b8343"
+  },
+  "checks": {
+    "Qb_copy_exact_modulo_alpha_and_AC": true,
+    "Qp_copy_exact_modulo_alpha_and_AC": true,
+    "Qb_Qp_have_no_free_coordinate": true
+  },
+  "guards": {
+    "X0I2": "XR*exp(60001*T-18)>XR>Xminus, provided stated pinned parameter inequalities",
+    "XK": "XK=XR*exp(prewait+log(Qb/Qp)/(1-h)+1/5); prewait>0 and Qb>Qp>0 imply XK>XR>Xminus"
+  },
+  "negative_control": {
+    "Qb": "1/2",
+    "Qp": "1",
+    "observation": "Qb/Qp<1; wait is negative for h<1, so positivity is not automatic"
+  },
+  "limits": [
+    "This checks finite graph equality; it does not itself prove analytic Qb>Qp, integrability, flat-step properties or native inputs."
+  ]
+}

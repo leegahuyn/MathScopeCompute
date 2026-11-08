@@ -1,0 +1,55 @@
+{
+  "graph_sha256": "a6d99fd02036780f9c994268651f6d99d3d6f8702d5476a219c212156e0ca269",
+  "registry_sha256": "bc0587085298da014c10a61a15e09f436c7f62cce1879eeb44c63dbfeadabb6e",
+  "profile_sha256": "df33560d2b9369ba32cf9f50877e355824ed1e7fdb84ef6b145d941c80db8e4a",
+  "node_count": 4420257,
+  "actual_F0": 71959,
+  "picard_F0": 25601,
+  "core": {
+    "equal": true,
+    "rewrites": [
+      25586,
+      25601,
+      71959
+    ],
+    "intern_nodes": 38
+  },
+  "collar": {
+    "equal": true,
+    "rewrites": [
+      5087,
+      6302,
+      6304,
+      25586,
+      25601,
+      71741,
+      71903,
+      71904,
+      71905,
+      71955,
+      71959
+    ],
+    "intern_nodes": 358
+  },
+  "conditions": [
+    "0<X<Xa (core) or Xa<X<Xminus (collar); X=xi^2 with xi>0",
+    "Xminus<min(110,aSquared,XK,X0I2,X0I1,loopILeft,XR,XR exp(-5))",
+    "Xminus/XR<1/256; source step derivative order one is zero on negative arguments",
+    "source choose is left-first and non-eager, smooth real interpretations are defined locally",
+    "all factors being eliminated are actually defined, no zero times undefined",
+    "source-derived guards use Xa<4, 0<t1<1, T>10 and XR>110 exp(20T); see F0_BINDING.md",
+    "Xminus<XK remains an explicit hypothesis unless separately proven"
+  ],
+  "negative_controls": [
+    "remove B8 step plateau: no match",
+    "remove heat cutoff: no match",
+    "mutate actual collar branch: rejected"
+  ],
+  "not_proved": [
+    "Xminus<XK from source parameters",
+    "native argument domain",
+    "boundary and axis differentiability",
+    "Picard ODE or convergence",
+    "residual or integral moment"
+  ]
+}
