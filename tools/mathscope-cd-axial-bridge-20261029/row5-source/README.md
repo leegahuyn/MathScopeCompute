@@ -40,4 +40,10 @@ Reproduce with Python 3 + SymPy:
 
 ```
 python check_source_row.py --source <original-graph-dir> --out source-row.json
+python audit_mutations.py --source <original-graph-dir> --out mutations.json
 ```
+
+`audit_mutations.py` injects each test mutation after authenticating the graph,
+inside a temporary checker only. It requires rejection at the intended row or
+raw-term assertion; failure for a different missing file/check is not accepted.
+It does not modify the original graph. Its source path is an explicit argument.

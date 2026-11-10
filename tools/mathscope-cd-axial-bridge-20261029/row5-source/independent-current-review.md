@@ -4,7 +4,8 @@ Reviewed the current source files by exact bytes:
 
 * `check_source_row.py`: SHA-256 `f395c3cd818aa1ac4becd77ef68903bd144ae2da50e7496afa967565c54b8925`.
 * `source-row.json`: SHA-256 `40193582bf3701a2dd8a40e95ba70aa426f5688024f02bdb3ac73dedec3df4c9f`.
-* `README.md`: SHA-256 `7a05e2d6c2b5c2449df7192889b315ad2bbb3e399619f1cf68713190b7e74f9c`.
+* `README.md`: SHA-256 `2870b70d3e6ab069a31a6c707c9536ab7d91a2cedc6d0f5f3448b7efd6f9293c` (including the mutation CLI addendum).
+* `audit_mutations.py`: SHA-256 `906e07103facacba6caa312a94e6f3f3844fe9678c9084cbd807c28cd8a54b09`.
 
 An independent normal-mode run against the packaged original graph completed
 with exit code 0 and the generated JSON was equal to the saved `source-row.json`
@@ -12,6 +13,13 @@ after parsing. It scanned 4,420,257 nodes and checked the graph and registry
 SHA-256 values. Optimized `python -O` exited with code 1 at the explicit
 `__debug__` guard before creating output. This matters because the checker uses
 Python assertions for mandatory checks.
+
+The mutation CLI addendum was independently rerun: after authenticating the
+unchanged graph, replacing either node #25811 or #117030 inside a temporary
+checker was rejected at its intended row or raw-term assertion, respectively.
+The mutation program also rejects `python -O` before it can create output.
+These controls exercise two concrete failures and do not establish coverage of
+every possible corruption.
 
 The exact structural projection matches the actual stress producer's eight
 terms and the six entries in each of A0 and A1 row 5 plus the forcing. The two
