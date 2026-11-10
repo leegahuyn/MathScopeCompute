@@ -1,0 +1,113 @@
+{
+  "status": "PASS",
+  "graph_sha256": "a6d99fd02036780f9c994268651f6d99d3d6f8702d5476a219c212156e0ca269",
+  "registry_sha256": "bc0587085298da014c10a61a15e09f436c7f62cce1879eeb44c63dbfeadabb6e",
+  "nodes": 4420257,
+  "A0_row5": [
+    25811,
+    25921,
+    25923,
+    25560,
+    0,
+    25808
+  ],
+  "A1_row5": [
+    0,
+    25934,
+    25936,
+    25576,
+    0,
+    0
+  ],
+  "forcing": 26744,
+  "remainder_A0": [
+    "0",
+    "0",
+    "0",
+    "0",
+    "0",
+    "0"
+  ],
+  "remainder_A1": [
+    "0",
+    "0",
+    "0",
+    "0",
+    "0",
+    "0"
+  ],
+  "forcing_remainder": "0",
+  "negative_control_wrong_pressure_coefficient_remainder": "-eta/(2*eta**2*h - 1)",
+  "raw_source_id": 117045,
+  "raw_term_ids": [
+    87480,
+    87481,
+    87488,
+    87489,
+    87490,
+    117027,
+    117030,
+    117031
+  ],
+  "raw_remainder_terms": [
+    "0",
+    "0",
+    "0",
+    "0",
+    "0",
+    "0",
+    "0",
+    "0"
+  ],
+  "raw_negative_control_wrong_viscosity_remainder": "U1x + U1xx*X",
+  "raw_analytic_atoms": {
+    "2": "eta",
+    "9": "h",
+    "4756": "X",
+    "9236": "U0",
+    "18778": "v0",
+    "33214": "U0x",
+    "19029": "U0eta",
+    "29289": "U",
+    "72309": "U1x",
+    "72376": "U1xx",
+    "87475": "U1eta",
+    "50558": "P",
+    "96317": "Px",
+    "117024": "Peta",
+    "79047": "RawVisc",
+    "29440": "v1_factor"
+  },
+  "notation": "source node #29440 is v1_factor; manuscript radial coefficient V1 is X*v1_factor",
+  "conditional_ast_bridge_remainder": "0",
+  "source_v1_average_formula_remainder": "0",
+  "picard_pressure_row": "A0[3,0]=4xi*F0; forcing[3]=2xi*(-Omega/2); all other coefficients 0",
+  "bridge_substitutions": [
+    "X=xi^2 and xi != 0",
+    "U_X=W/(2xi), U_XX=(Uxx-W/xi)/(4xi^2)",
+    "actual and Picard leading U0/v0 and their derivatives agree",
+    "actual raw lower viscosity equals Picard lower viscosity",
+    "Pi_X=2 F0 F1 - Omega/2",
+    "v1_factor=(2 eta U1-2 eta (D+lambda)(U1+K1)-d(U1_eta+K1_eta))/L",
+    "L != 0 and all used terms are defined"
+  ],
+  "analytic_atoms": {
+    "2": "eta",
+    "9": "h",
+    "25516": "xi",
+    "25601": "F0",
+    "25638": "U0",
+    "25637": "v0",
+    "25901": "Ux",
+    "25911": "Ueta",
+    "26393": "Omega",
+    "26738": "Visc"
+  },
+  "scope": "source Picard system0 coefficient/forcing AND source stress raw #117045 AST, related by explicit substitutions at lambda1=2h; analytic atoms retained, not Picard ODE solvability",
+  "limits": [
+    "source atoms Ux/Ueta must be derivatives of U0",
+    "Visc atom must match actual stress lower viscosity",
+    "actual stress leading profiles, pressure reconstruction and all native domains remain separate",
+    "no Picard convergence or moment cancellation proved"
+  ]
+}

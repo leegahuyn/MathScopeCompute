@@ -1,0 +1,745 @@
+{
+  "schema": "MathScope.M4.ReleaseLabCatalog/1",
+  "baseline": {
+    "M3OriginalAccepted": 56,
+    "M3OriginalTotal": 64,
+    "M4FinalAcceptance": "UNCONFIRMED"
+  },
+  "fixtures": [
+    {
+      "id": "point",
+      "label": "점 P⁰",
+      "engine": "M2",
+      "request": {
+        "kind": "arithmetic.projective",
+        "input": {
+          "p": "3",
+          "n": 0,
+          "m": 1
+        },
+        "precision": {
+          "N": 4
+        },
+        "budget": {
+          "maxMillis": 30000,
+          "maxBytes": 8388608,
+          "maxItems": 250000,
+          "maxOperations": 20000000
+        }
+      },
+      "claimId": "R1-01/P1-01",
+      "formula": "|P^n(F_q)| = 1+q+…+q^n; det(1−TF|H²ⁱ)=1−pⁱT",
+      "source": {
+        "repoPath": "research-ide/mathscope-m2/arithmetic/projective.mjs",
+        "page": 28,
+        "equation": "trace / determinant comparison",
+        "url": "https://github.com/leegahuyn/MathScopeCompute/blob/mathscope-m3-m4-20261014/research-ide/mathscope-m2/arithmetic/projective.mjs",
+        "pageDocument": "99-page Research IDE blueprint"
+      },
+      "expected": {
+        "pointCount": "1"
+      },
+      "refinementAxes": [
+        "padic:N"
+      ]
+    },
+    {
+      "id": "p1",
+      "label": "P¹ / F₃",
+      "engine": "M2",
+      "request": {
+        "kind": "arithmetic.projective",
+        "input": {
+          "p": "3",
+          "n": 1,
+          "m": 1
+        },
+        "precision": {
+          "N": 4
+        },
+        "budget": {
+          "maxMillis": 30000,
+          "maxBytes": 8388608,
+          "maxItems": 250000,
+          "maxOperations": 20000000
+        }
+      },
+      "claimId": "R1-01/P4-01",
+      "formula": "|P^n(F_q)| = 1+q+…+q^n; det(1−TF|H²ⁱ)=1−pⁱT",
+      "source": {
+        "repoPath": "research-ide/mathscope-m2/arithmetic/projective.mjs",
+        "page": 28,
+        "equation": "trace / determinant comparison",
+        "url": "https://github.com/leegahuyn/MathScopeCompute/blob/mathscope-m3-m4-20261014/research-ide/mathscope-m2/arithmetic/projective.mjs",
+        "pageDocument": "99-page Research IDE blueprint"
+      },
+      "expected": {
+        "pointCount": "4"
+      },
+      "refinementAxes": [
+        "padic:N"
+      ]
+    },
+    {
+      "id": "elliptic",
+      "label": "E: y²=x³−x / F₅",
+      "engine": "M2",
+      "request": {
+        "kind": "arithmetic.elliptic",
+        "input": {
+          "p": "5",
+          "m": 1
+        },
+        "precision": {
+          "N": 4
+        },
+        "budget": {
+          "maxMillis": 30000,
+          "maxBytes": 8388608,
+          "maxItems": 250000,
+          "maxOperations": 20000000
+        }
+      },
+      "claimId": "R1-01/P4-03",
+      "formula": "a_p=p+1−#E(F_p); L_p(T)=(1−a_pT+pT²)⁻¹",
+      "source": {
+        "repoPath": "research-ide/mathscope-m2/arithmetic/projective.mjs",
+        "page": 28,
+        "equation": "elliptic local factor",
+        "url": "https://github.com/leegahuyn/MathScopeCompute/blob/mathscope-m3-m4-20261014/research-ide/mathscope-m2/arithmetic/projective.mjs",
+        "pageDocument": "99-page Research IDE blueprint"
+      },
+      "expected": {
+        "pointCount": "8",
+        "aP": "-2"
+      },
+      "refinementAxes": [
+        "padic:N"
+      ]
+    },
+    {
+      "id": "su2",
+      "label": "SU2 정확 유한 대수",
+      "engine": "M1",
+      "request": {
+        "kind": "gauge.group",
+        "input": {
+          "group": {
+            "family": "SU",
+            "parameter": 2,
+            "globalForm": "SIMPLY_CONNECTED",
+            "representation": "DEFINING"
+          },
+          "exact": true
+        },
+        "precision": {
+          "mode": "FLOAT64",
+          "tolerance": 1e-9
+        },
+        "budget": {
+          "maxSamples": 2200,
+          "maxEvaluations": 12000,
+          "maxMatrixDimension": 8
+        }
+      },
+      "claimId": "R1-01/Y1-01",
+      "formula": "[X,[Y,Z]]+[Y,[Z,X]]+[Z,[X,Y]]=0; B([X,Y],Z)=B(X,[Y,Z])",
+      "source": {
+        "repoPath": "research-ide/mathscope-m1/gauge/groups.mjs",
+        "page": 34,
+        "equation": "Lie bracket / invariant Gram matrix",
+        "url": "https://github.com/leegahuyn/MathScopeCompute/blob/mathscope-m3-m4-20261014/research-ide/mathscope-m1/gauge/groups.mjs",
+        "pageDocument": "99-page Research IDE blueprint"
+      },
+      "expected": {
+        "dimension": 3,
+        "matrixDimension": 2
+      },
+      "refinementAxes": []
+    },
+    {
+      "id": "su3",
+      "label": "SU3 정확 유한 대수",
+      "engine": "M1",
+      "request": {
+        "kind": "gauge.group",
+        "input": {
+          "group": {
+            "family": "SU",
+            "parameter": 3,
+            "globalForm": "SIMPLY_CONNECTED",
+            "representation": "DEFINING"
+          },
+          "exact": true
+        },
+        "precision": {
+          "mode": "FLOAT64",
+          "tolerance": 1e-9
+        },
+        "budget": {
+          "maxSamples": 2200,
+          "maxEvaluations": 12000,
+          "maxMatrixDimension": 8
+        }
+      },
+      "claimId": "R1-01/Y1-01",
+      "formula": "[X,[Y,Z]]+[Y,[Z,X]]+[Z,[X,Y]]=0; B([X,Y],Z)=B(X,[Y,Z])",
+      "source": {
+        "repoPath": "research-ide/mathscope-m1/gauge/groups.mjs",
+        "page": 34,
+        "equation": "Lie bracket / invariant Gram matrix",
+        "url": "https://github.com/leegahuyn/MathScopeCompute/blob/mathscope-m3-m4-20261014/research-ide/mathscope-m1/gauge/groups.mjs",
+        "pageDocument": "99-page Research IDE blueprint"
+      },
+      "expected": {
+        "dimension": 8,
+        "matrixDimension": 3
+      },
+      "refinementAxes": []
+    },
+    {
+      "id": "g2",
+      "label": "G2 정확 유한 대수",
+      "engine": "M1",
+      "request": {
+        "kind": "gauge.group",
+        "input": {
+          "group": {
+            "family": "G2",
+            "parameter": 2,
+            "globalForm": "ADJOINT",
+            "representation": "REAL_7"
+          },
+          "exact": true
+        },
+        "precision": {
+          "mode": "FLOAT64",
+          "tolerance": 1e-9
+        },
+        "budget": {
+          "maxSamples": 2200,
+          "maxEvaluations": 12000,
+          "maxMatrixDimension": 8
+        }
+      },
+      "claimId": "R1-01/Y1-01",
+      "formula": "[X,[Y,Z]]+[Y,[Z,X]]+[Z,[X,Y]]=0; B([X,Y],Z)=B(X,[Y,Z])",
+      "source": {
+        "repoPath": "research-ide/mathscope-m1/gauge/groups.mjs",
+        "page": 34,
+        "equation": "Lie bracket / invariant Gram matrix",
+        "url": "https://github.com/leegahuyn/MathScopeCompute/blob/mathscope-m3-m4-20261014/research-ide/mathscope-m1/gauge/groups.mjs",
+        "pageDocument": "99-page Research IDE blueprint"
+      },
+      "expected": {
+        "dimension": 14,
+        "matrixDimension": 7
+      },
+      "refinementAxes": []
+    },
+    {
+      "id": "heat",
+      "label": "Heat factor H",
+      "engine": "M1",
+      "request": {
+        "kind": "ns.heat",
+        "input": {
+          "Z": 1,
+          "h": 0.005,
+          "derivativeOrder": 2,
+          "taylorOrder": 8
+        },
+        "precision": {
+          "bits": 53,
+          "absoluteTolerance": 1e-8,
+          "relativeTolerance": 1e-8
+        },
+        "budget": {
+          "maxOperations": 20000000,
+          "maxMilliseconds": 60000,
+          "maxPoints": 480
+        }
+      },
+      "claimId": "R1-01/N2-04",
+      "formula": "H(Z)=Γ(1+h)⁻¹∫₀∞ e⁻ᵛvʰ(1+Zv)⁻ʰdv",
+      "source": {
+        "repoPath": "research-ide/mathscope-m1/navier/heat.mjs",
+        "page": 138,
+        "equation": "A.32–A.38",
+        "url": "https://github.com/leegahuyn/MathScopeCompute/blob/mathscope-m3-m4-20261014/research-ide/mathscope-m1/navier/heat.mjs",
+        "paperUrl": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf",
+        "pageDocument": "N00 166-page pinned paper"
+      },
+      "expected": {
+        "enclosure": true
+      },
+      "refinementAxes": [
+        "heat:tolerance"
+      ]
+    },
+    {
+      "id": "exterior",
+      "label": "Heat 외곽 r>0",
+      "engine": "M1",
+      "request": {
+        "kind": "ns.exterior",
+        "input": {
+          "tau": 0.1,
+          "h": 0.005,
+          "viscosity": 1,
+          "cInfinity": 1,
+          "radialCount": 6
+        },
+        "precision": {
+          "bits": 53,
+          "absoluteTolerance": 1e-8,
+          "relativeTolerance": 1e-8
+        },
+        "budget": {
+          "maxOperations": 20000000,
+          "maxMilliseconds": 60000,
+          "maxPoints": 480
+        }
+      },
+      "claimId": "R1-01/N2-04",
+      "formula": "K=C r^(−1−2h)H(4τ/r²); u=K eθ",
+      "source": {
+        "repoPath": "research-ide/mathscope-m1/navier/heat.mjs",
+        "page": 138,
+        "equation": "A.32–A.38",
+        "url": "https://github.com/leegahuyn/MathScopeCompute/blob/mathscope-m3-m4-20261014/research-ide/mathscope-m1/navier/heat.mjs",
+        "paperUrl": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf",
+        "pageDocument": "N00 166-page pinned paper"
+      },
+      "expected": {
+        "axisExcluded": true
+      },
+      "refinementAxes": [
+        "spatial:radialCount"
+      ]
+    },
+    {
+      "id": "axis",
+      "label": "국소 축 해 / 정확 tail",
+      "engine": "M1",
+      "request": {
+        "kind": "ns.axis-certificate",
+        "input": {
+          "pressure": {
+            "family": "rational",
+            "K": "10"
+          },
+          "h": "1/200",
+          "j0": "3/100",
+          "sigmaMode": "computed-cutoff",
+          "lambdaMode": "computed-threshold",
+          "lambdaMultiplier": 2,
+          "tailDegree": 24,
+          "sampleEta": "1/5",
+          "sampleCount": 17
+        },
+        "budget": {
+          "maxOperations": 20000000,
+          "maxMilliseconds": 60000,
+          "maxPoints": 2048
+        },
+        "precision": {
+          "bits": 53,
+          "absoluteTolerance": 1e-8,
+          "relativeTolerance": 1e-8
+        }
+      },
+      "claimId": "R1-01/N3-03",
+      "formula": "fixed point in Bρ; tail_N ≤ M Σ(n>N) w_n(Y,ρ)",
+      "source": {
+        "repoPath": "research-ide/mathscope-m1/navier/followup-construction/axis-certificates.mjs",
+        "page": 145,
+        "equation": "B.12–B.16 / local explicit datum",
+        "url": "https://github.com/leegahuyn/MathScopeCompute/blob/mathscope-m3-m4-20261014/research-ide/mathscope-m1/navier/followup-construction/axis-certificates.mjs",
+        "paperUrl": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf",
+        "pageDocument": "N00 166-page pinned paper"
+      },
+      "expected": {
+        "localTailCertified": true
+      },
+      "refinementAxes": [
+        "series:tailDegree"
+      ]
+    },
+    {
+      "id": "taylor-green",
+      "label": "Taylor–Green 기준 PDE",
+      "engine": "M1",
+      "request": {
+        "kind": "ns.benchmark",
+        "input": {
+          "time": 0.19,
+          "viscosity": 1
+        },
+        "precision": {
+          "bits": 53,
+          "absoluteTolerance": 1e-8,
+          "relativeTolerance": 1e-8
+        },
+        "budget": {
+          "maxOperations": 20000000,
+          "maxMilliseconds": 60000,
+          "maxPoints": 480
+        }
+      },
+      "claimId": "R1-01/N2-06",
+      "formula": "u=e^(−2νt)(sin x cos y,−cos x sin y,0); dE/dt=−ν‖∇u‖²",
+      "source": {
+        "repoPath": "research-ide/mathscope-m1/navier/heat.mjs",
+        "page": 54,
+        "equation": "N2 exact periodic benchmark (separate model)",
+        "url": "https://github.com/leegahuyn/MathScopeCompute/blob/mathscope-m3-m4-20261014/research-ide/mathscope-m1/navier/heat.mjs",
+        "paperUrl": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf",
+        "pageDocument": "99-page Research IDE blueprint"
+      },
+      "expected": {
+        "energyBalance": true
+      },
+      "refinementAxes": [
+        "time:step"
+      ]
+    },
+    {
+      "id": "prism",
+      "label": "Perfect prism → de Rham 비교",
+      "engine": "M2",
+      "request": {
+        "kind": "arithmetic.comparison",
+        "input": {
+          "operation": "perfectPrism",
+          "p": "3",
+          "target": "deRham"
+        },
+        "precision": {
+          "N": 3
+        },
+        "budget": {}
+      },
+      "claimId": "R1-03/P6-08",
+      "formula": "derived base change with Frobenius-twisted de Rham target",
+      "source": {
+        "repoPath": "research-ide/mathscope-m2/arithmetic/perfectoid-comparisons.mjs",
+        "page": 32,
+        "equation": "perfectPrismComparison / exported comparison model",
+        "url": "https://github.com/leegahuyn/MathScopeCompute/blob/mathscope-m3-m4-20261014/research-ide/mathscope-m2/arithmetic/perfectoid-comparisons.mjs",
+        "pageDocument": "99-page Research IDE blueprint"
+      },
+      "expected": {
+        "referenceBoundary": true
+      },
+      "refinementAxes": []
+    },
+    {
+      "id": "delta",
+      "label": "Δ 상태족 / 같은 생성 규칙",
+      "engine": "M1",
+      "request": {
+        "kind": "gauge.family",
+        "input": {
+          "group": {
+            "family": "G2",
+            "parameter": 2,
+            "globalForm": "ADJOINT",
+            "representation": "REAL_7"
+          },
+          "field": {
+            "kind": "BPST_PLUS_PERTURBATION",
+            "embedding": "canonical-su2",
+            "rho": 1,
+            "center": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "gaugeConvention": "D=d+A",
+            "coupling": {
+              "g": 1,
+              "normalization": "BASIC_FORM"
+            },
+            "domain": {
+              "kind": "R4_WINDOW",
+              "bounds": [
+                [
+                  -4,
+                  4
+                ],
+                [
+                  -4,
+                  4
+                ],
+                [
+                  -4,
+                  4
+                ],
+                [
+                  -4,
+                  4
+                ]
+              ],
+              "boundary": "OPEN_RESTRICTION"
+            },
+            "units": {
+              "length": "ell0",
+              "hbarC": 1
+            },
+            "perturbation": {
+              "kind": "GAUSSIAN_POLYNOMIAL",
+              "amplitude": 0.2,
+              "length": 1.2,
+              "seed": "mathscope-m1-gauge-2026",
+              "modes": [
+                [
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  1,
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  1,
+                  0,
+                  0
+                ]
+              ]
+            }
+          },
+          "family": {
+            "mode": "CLASSICAL_SCALE",
+            "delta": 1,
+            "referenceDelta": 1,
+            "energyUnits": "hbar*c/ell0",
+            "assumptionId": "declared-gap-lower-bound"
+          },
+          "observation": {
+            "kind": "SLICE",
+            "quantity": "actionDensity",
+            "samplesPerAxis": 3,
+            "bounds": [
+              [
+                -2,
+                2
+              ],
+              [
+                -2,
+                2
+              ],
+              [
+                -2,
+                2
+              ]
+            ],
+            "slice": 0
+          },
+          "verify": {
+            "field": true,
+            "densityQuadrature": false
+          },
+          "compareDeltas": [
+            1,
+            2
+          ],
+          "probe": [
+            0.2,
+            -0.3,
+            0.4,
+            0.1
+          ]
+        },
+        "precision": {
+          "mode": "FLOAT64",
+          "tolerance": 1e-9
+        },
+        "budget": {
+          "maxSamples": 2200,
+          "maxEvaluations": 12000,
+          "maxMatrixDimension": 8
+        }
+      },
+      "claimId": "R1-03/Y5-01",
+      "formula": "ρΔ=ρref Δref/Δ; each Δ recomputes the declared classical field",
+      "source": {
+        "repoPath": "research-ide/mathscope-m1/gauge/family.mjs",
+        "page": 46,
+        "equation": "CLASSICAL_SCALE generator",
+        "url": "https://github.com/leegahuyn/MathScopeCompute/blob/mathscope-m3-m4-20261014/research-ide/mathscope-m1/gauge/family.mjs",
+        "pageDocument": "99-page Research IDE blueprint"
+      },
+      "expected": {
+        "deltaComparison": 2
+      },
+      "refinementAxes": [
+        "samples:samplesPerAxis"
+      ]
+    },
+    {
+      "id": "lattice",
+      "label": "SU2 identity 격자",
+      "engine": "M2",
+      "request": {
+        "kind": "gauge.lattice",
+        "input": {
+          "group": {
+            "family": "SU",
+            "parameter": 2,
+            "globalForm": "SIMPLY_CONNECTED",
+            "representation": "DEFINING"
+          },
+          "lattice": {
+            "Ns": 2,
+            "Nt": 2,
+            "as": 0.5,
+            "at": 0.5,
+            "spatialBoundary": "PERIODIC",
+            "temporalBoundary": "PERIODIC",
+            "lengthUnit": "ell0",
+            "origin": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "beta": 2,
+          "measurement": "PLAQUETTE",
+          "view": {
+            "timeSlice": 0,
+            "quantity": "actionDensity",
+            "stride": 1
+          },
+          "initial": {
+            "kind": "IDENTITY"
+          }
+        },
+        "precision": {
+          "mode": "FLOAT64"
+        },
+        "budget": {
+          "maxMillis": 60000,
+          "maxOperations": 50000000,
+          "maxBytes": 8388608,
+          "maxItems": 250000
+        }
+      },
+      "claimId": "R1-01/Y3-01",
+      "formula": "Uℓ=I; Pμν=I; S_W=Σβ(1−Re tr P/N)=0",
+      "source": {
+        "repoPath": "research-ide/mathscope-m2/gauge/lattice.mjs",
+        "page": 38,
+        "equation": "Wilson plaquette action",
+        "url": "https://github.com/leegahuyn/MathScopeCompute/blob/mathscope-m3-m4-20261014/research-ide/mathscope-m2/gauge/lattice.mjs",
+        "pageDocument": "99-page Research IDE blueprint"
+      },
+      "expected": {
+        "flatIdentity": true
+      },
+      "refinementAxes": [
+        "lattice:as",
+        "lattice:Ns"
+      ]
+    }
+  ],
+  "refinementPlan": [
+    {
+      "id": "padic",
+      "fixtureId": "point",
+      "axis": "precision.N",
+      "values": [
+        4,
+        8
+      ],
+      "invariant": "pointCount remains 1; exact finite residue comparison",
+      "boundType": "EXACT_FINITE",
+      "sourceScope": "Point comparison fixture; not a generic p-adic convergence theorem"
+    },
+    {
+      "id": "series",
+      "fixtureId": "axis",
+      "axis": "input.tailDegree",
+      "values": [
+        8,
+        16
+      ],
+      "invariant": "same selected local datum; omitted coefficient tail shrinks",
+      "boundType": "EXACT_LOCAL_ANALYTIC_TAIL",
+      "sourceScope": "Explicit rational-pressure local certificate; original A.21 profile remains separate"
+    },
+    {
+      "id": "spatial",
+      "fixtureId": "exterior",
+      "axis": "input.radialCount",
+      "values": [
+        3,
+        6
+      ],
+      "invariant": "fixed rmin/rmax and source parameters; common endpoint values agree",
+      "boundType": "NUMERICAL_SAMPLING_ONLY",
+      "sourceScope": "Standalone heat exterior, excluding axis and global compact solution"
+    },
+    {
+      "id": "lattice-spacing",
+      "fixtureId": "lattice",
+      "axis": "input.lattice.as + at",
+      "values": [
+        0.5,
+        0.25
+      ],
+      "invariant": "Ns,Nt fixed; identity plaquette action exactly zero",
+      "boundType": "TRIVIAL_FINITE_IDENTITY",
+      "sourceScope": "Physical volume changes as a changes; does not establish continuum convergence"
+    },
+    {
+      "id": "lattice-volume",
+      "fixtureId": "lattice",
+      "axis": "input.lattice.Ns",
+      "values": [
+        2,
+        3
+      ],
+      "invariant": "as,at,Nt fixed; identity plaquette action exactly zero",
+      "boundType": "TRIVIAL_FINITE_IDENTITY",
+      "sourceScope": "Spatial volume changes independently; no infinite-volume or quantum limit"
+    },
+    {
+      "id": "samples",
+      "fixtureId": "delta",
+      "axis": "input.observation.samplesPerAxis",
+      "values": [
+        3,
+        5
+      ],
+      "invariant": "same physical field hashes and Δ targets; display samples change",
+      "boundType": "DETERMINISTIC_DISPLAY_SAMPLING_ONLY",
+      "sourceScope": "Classical grid observations, not Monte Carlo confidence intervals"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+const {chromium}=require(process.env.MATHSCOPE_PLAYWRIGHT_PATH || 'C:/Users/사용자/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+(async()=>{
+  const browser=await chromium.launch({executablePath:process.env.MATHSCOPE_CHROME_PATH || 'C:/Program Files/Google/Chrome/Application/chrome.exe',headless:true,args:['--no-sandbox']});
+  const page=await browser.newPage();const writes=[],errors=[];
+  page.on('request',r=>{if(!['GET','HEAD','OPTIONS'].includes(r.method())) writes.push({method:r.method(),url:r.url()});});
+  page.on('pageerror',e=>errors.push(e.message));
+  await page.goto(process.env.MATHSCOPE_TEST_URL || 'http://127.0.0.1:39147/candidate.html',{waitUntil:'domcontentloaded',timeout:120000});
+  await page.locator('#ms-m4-launcher').click();
+  await page.waitForFunction(()=>document.querySelector('[data-r1="proof-job-host"]')?.dataset.proofState==='KERNEL_PENDING');
+  const input=page.locator('[data-proof="input"]');const p=JSON.parse(await input.inputValue());
+  p.G='</textarea><img id="audit-injection" src=x onerror="window.__auditXss=1">';
+  p.assumptions=['</script><script>window.__auditXss=2</script>'];
+  await input.fill(JSON.stringify(p));
+  await page.waitForFunction(()=>document.querySelector('[data-r1="proof-job-host"]').dataset.proofState==='KERNEL_PENDING');
+  assert.equal(await page.evaluate(()=>window.__auditXss || null),null);
+  assert.equal(await page.locator('#audit-injection').count(),0);
+  assert.equal(JSON.parse(await page.locator('[data-proof="details"]').textContent()).kernelPass,false);
+  await input.fill('{');assert.equal(await page.locator('[data-r1="proof-job-host"]').getAttribute('data-proof-state'),'INVALID_INPUT');
+  assert.equal(await page.locator('[data-proof="details"]').textContent(),'');
+  assert.deepEqual(writes,[]);assert.deepEqual(errors,[]);
+  const out={status:'PASS',scenario:'Hostile G and assumptions strings, invalid input, observed request methods',domInjection:false,executedInjectedScript:false,kernelPass:false,mutatingRequests:writes,pageErrors:errors,scope:'one isolated browser session; does not certify all inputs, server endpoints, or Lean semantics'};
+  fs.writeFileSync(require('node:path').join(__dirname,'security-result.json'),JSON.stringify(out,null,2));console.log(JSON.stringify(out,null,2));await browser.close();
+})().catch(e=>{console.error(e);process.exitCode=1});
