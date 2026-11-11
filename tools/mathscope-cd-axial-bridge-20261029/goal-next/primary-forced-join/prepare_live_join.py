@@ -27,7 +27,7 @@ import {attachGlobalPrimaryClassOperator,assertGlobalPrimaryClassOperator} from 
 import {assertLivePrimaryForcedJoin} from './assert_live_join.mjs';""")
  s=replace_one(s,"const band=await stage('source_band',()=>prepareGlobalSourceBand({coefficientOrder:1,maxNodes:3500000},context));", """const family=await stage('same_family_C5',()=>prepareActualCommonAdmissibleFamily({throughOrder:2,derivativeOrder:5,maxNodes:5000000,maxProfileJets:60000,maxJetRequests:600000},context));
  assertActualCommonAdmissibleFamily(family);clearDisposableThirdJetCaches(family.G);global.gc?.();
- const band=await stage('source_band',()=>attachGlobalSourceBand(family,{coefficientOrder:1,maxNodes:6000000},context));""")
+ const band=await stage('source_band',()=>attachGlobalSourceBand(family,{coefficientOrder:1,maxNodes:4000000},context));""")
  s=replace_one(s,"const cur=await stage('original_current',()=>attachGlobalCurrentState(rep,context));", """const cur=await stage('original_current',()=>attachGlobalCurrentState(rep,context));
  const collect=()=>{clearDisposableThirdJetCaches(family.G);clearDisposableThirdJetCaches(cur.G);global.gc?.();bound();};
  collect();

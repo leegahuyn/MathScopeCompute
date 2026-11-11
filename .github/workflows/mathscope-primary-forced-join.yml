@@ -2,7 +2,10 @@ name: MathScope corrected primary Forced live join
 on:
   push:
     branches: [mathscope-cd-axial-source-bridge-20261029]
-    paths: ['.github/workflows/mathscope-primary-forced-join.yml']
+    paths:
+      - '.github/workflows/mathscope-primary-forced-join.yml'
+      - 'tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-forced-join/prepare_live_join.py'
+      - 'tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-forced-join/assert_live_join.mjs'
   workflow_dispatch:
 permissions:
   contents: read
@@ -73,12 +76,16 @@ jobs:
         working-directory: reference
         run: |
           set -uo pipefail
+          set +e
           helper=../evidence/tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-forced-join
           out="$RUNNER_TEMP/primary-forced-join"
           node --expose-gc research-ide/mathscope-m3/extended-signed-run-20261023/run_primary_forced_live_join.mjs "$out/native-receipt.json" 2>&1 | tee "$out/native-run.log"
           native_result=${PIPESTATUS[0]}
-          python "$helper/verify_join_receipt.py" "$out/native-receipt.json" "$out/source-pins.json" "$out/independent-readback.json" 2>&1 | tee "$out/independent-readback.log"
-          verify_result=${PIPESTATUS[0]}
+          verify_result=not_run
+          if [ "$native_result" -eq 0 ]; then
+            python "$helper/verify_join_receipt.py" "$out/native-receipt.json" "$out/source-pins.json" "$out/independent-readback.json" 2>&1 | tee "$out/independent-readback.log"
+            verify_result=${PIPESTATUS[0]}
+          fi
           printf 'native_exit=%s verifier_exit=%s\n' "$native_result" "$verify_result" | tee "$out/exit-status.txt"
           test "$native_result" -eq 0 && test "$verify_result" -eq 0
       - uses: actions/upload-artifact@v4

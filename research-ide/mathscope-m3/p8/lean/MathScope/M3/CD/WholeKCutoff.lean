@@ -106,6 +106,17 @@ theorem whole_k_narrow_q_window_obstruction {Q a alpha : ℝ}
       simpa only [Real.rpow_one] using
         (Real.rpow_lt_rpow_of_exponent_gt hQ (show Q < 1 by linarith) halpha)
     linarith
+  have heSquare : (Real.exp (1 / 2)) ^ (2 : ℕ) = Real.exp 1 := by
+    rw [pow_two, ← Real.exp_add]
+    norm_num
+  have he : Real.exp (1 / 2) < 7 / 4 := by
+    by_contra! h
+    have hp := pow_le_pow_left₀ (by norm_num : 0 ≤ (7 / 4 : ℝ)) h 2
+    rw [heSquare] at hp
+    linarith [Real.exp_one_lt_three]
+  intro hcover
+  have hm := mul_le_mul_of_nonneg_left hcover.1 (Real.exp_pos (1 / 2)).le
+  linarith [hcover.2]
 
 /-- At viscosity one, the full outer cutoff on an angle-independent
 heat swirl leaves the displayed time, Laplacian and pressure terms.
@@ -125,17 +136,6 @@ theorem whole_k_heat_exterior_cutoff_force
     · dsimp
       ring
     · rfl
-  have heSquare : (Real.exp (1 / 2)) ^ (2 : ℕ) = Real.exp 1 := by
-    rw [pow_two, ← Real.exp_add]
-    norm_num
-  have he : Real.exp (1 / 2) < 7 / 4 := by
-    by_contra! h
-    have hp := pow_le_pow_left₀ (by norm_num : 0 ≤ (7 / 4 : ℝ)) h 2
-    rw [heSquare] at hp
-    linarith [Real.exp_one_lt_three]
-  intro hcover
-  have hm := mul_le_mul_of_nonneg_left hcover.1 (Real.exp_pos (1 / 2)).le
-  linarith [hcover.2]
 
 #print axioms whole_k_normalized_q_bounds
 #print axioms whole_k_correction_cutoff_argument
