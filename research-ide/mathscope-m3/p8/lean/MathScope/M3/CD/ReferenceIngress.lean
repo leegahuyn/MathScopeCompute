@@ -132,6 +132,18 @@ theorem representative_midpoint_brackets {F : ℝ → ℝ} {lo hi tLo tHi : ℝ}
   exact ⟨ht₁, ht₂, (hmono.monotoneOn hfirst hloSet hlo).trans_lt ht₁,
     ht₂.trans_le (hmono.monotoneOn hhiSet hlast hhi)⟩
 
+/-- The original open three-quarter band guard cannot activate a label
+outside the integer window within either quarter-width margin. -/
+theorem open_band_guard_within_window {t : ℝ} {lo hi j : ℤ}
+    (htlo : (lo : ℝ) - 1 / 4 ≤ t) (hthi : t ≤ (hi : ℝ) + 1 / 4)
+    (hactive : |t - (j : ℝ)| < 3 / 4) : lo ≤ j ∧ j ≤ hi := by
+  obtain ⟨hl, hu⟩ := abs_lt.mp hactive
+  have hjlo : (lo : ℝ) - 1 < (j : ℝ) := by linarith
+  have hjhi : (j : ℝ) < (hi : ℝ) + 1 := by linarith
+  have hloInt : lo - 1 < j := by exact_mod_cast hjlo
+  have hhiInt : j < hi + 1 := by exact_mod_cast hjhi
+  omega
+
 #print axioms reference_band_label
 #print axioms reference_general_window_lower_label
 #print axioms reference_general_window_strict_point
@@ -140,5 +152,6 @@ theorem representative_midpoint_brackets {F : ℝ → ℝ} {lo hi tLo tHi : ℝ}
 #print axioms positive_reference_root_unique
 #print axioms zero_axial_time_below_reference_bracket
 #print axioms representative_midpoint_brackets
+#print axioms open_band_guard_within_window
 
 end MathScope.M3.CD
