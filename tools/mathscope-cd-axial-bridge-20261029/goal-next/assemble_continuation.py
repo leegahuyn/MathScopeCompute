@@ -23,6 +23,12 @@ EXTRAS = [
     ".github/workflows/mathscope-cd-axial-bridge-20261029.yml",
     "research-ide/mathscope-m3/p8/lean/MathScope/M3/CD/ReferenceIngress.lean",
     "research-ide/mathscope-m4/research-boundaries.json",
+    "research-ide/mathscope-m4/formal-claims.mjs",
+    "research-ide/mathscope-m4/release-lab/catalog.json",
+    *["research-ide/mathscope-m4/web/" + name for name in (
+        "build-release-lab.py", "release-lab.html", "release-lab.js",
+        "formal-claim-view.html", "formal-claim-view.js", "formal-claim-view.mjs",
+    )],
 ]
 
 def git(*args):

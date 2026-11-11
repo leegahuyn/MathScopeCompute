@@ -1,0 +1,221 @@
+{
+  "schema": "MathScope.M4.I308.ClaimParityReadback/1",
+  "criterionId": "I3-08",
+  "originalBlueprintPage": 20,
+  "originalCriterion": "학생에게는 문장과 예제를, 연구자에게는 동일 claim의 정확한 Lean type·가정·출처·반례 조건을 보여준다. 합격: 두 모드가 같은 claim ID를 사용하고, 쉬운 설명에서 양화사·조건·근사 범위가 빠지지 않는다.",
+  "checks": {
+    "SHARED_CLAIM_ID": "PASS",
+    "STUDENT_EXPERT_QUANTIFIER_CONDITION_SCOPE_PARITY": "PASS"
+  },
+  "originalMatrixSHA256": "ef56f18cedfe50618800bbff6e41bed912171bf0df9b8596cc48bc85c401c68b",
+  "kernelReceiptSHA256": "4b3b4c024fe3aa3998eeec9d484496e1bf8c3186ceade64ceff5d646c43fe1cf",
+  "currentKernelExecuted": false,
+  "exactClaims": [
+    {
+      "claimId": "M4.FINITE.DELTA_TWO_NUMERATOR",
+      "shared": {
+        "claimId": "M4.FINITE.DELTA_TWO_NUMERATOR",
+        "scope": "Universal x,y in Int; exact p=2 numerator polynomial only.",
+        "assumptionIds": [],
+        "quantifier": "p=2를 고정한 모든 정수 x,y에 적용합니다.",
+        "approximationScope": "표시된 대수 연산에 대한 정확한 항등식입니다."
+      },
+      "grade": "EXACT_FINITE",
+      "expertTarget": "MathScope.M4.Finite.delta_two_numerator",
+      "source": "research-ide/mathscope-m4/lean/MathScope/M4/Finite.lean",
+      "actualSourceSha256": "0fb67cdd8ba09cadd6d12d1e89c15a03b36e902bf28bd6e77f7f6b9598861b3e",
+      "hasWorkedExample": false
+    },
+    {
+      "claimId": "M4.FINITE.D_SQUARED_ZERO",
+      "shared": {
+        "claimId": "M4.FINITE.D_SQUARED_ZERO",
+        "scope": "Universal Int⁴ coordinates for the fixed inherited D=1 matrices.",
+        "assumptionIds": [],
+        "quantifier": "고정 D=1 행렬의 모든 정수 4-벡터 v에 적용합니다.",
+        "approximationScope": "표시된 대수 연산에 대한 정확한 항등식입니다."
+      },
+      "grade": "EXACT_FINITE",
+      "expertTarget": "MathScope.M4.Finite.differential_squared_zero",
+      "source": "research-ide/mathscope-m4/lean/MathScope/M4/Finite.lean",
+      "actualSourceSha256": "0fb67cdd8ba09cadd6d12d1e89c15a03b36e902bf28bd6e77f7f6b9598861b3e",
+      "hasWorkedExample": false
+    },
+    {
+      "claimId": "M4.FINITE.IDENTITY_SEMILINEAR_CHAIN_MAP",
+      "shared": {
+        "claimId": "M4.FINITE.IDENTITY_SEMILINEAR_CHAIN_MAP",
+        "scope": "All s:Int and v:Int⁴; coefficient endomorphism sigma=id on Int.",
+        "assumptionIds": [
+          "COEFFICIENT_ENDOMORPHISM_IDENTITY"
+        ],
+        "quantifier": "정수 위 항등 계수 사상을 고정한 모든 s∈ℤ와 v∈ℤ⁴에 적용합니다.",
+        "approximationScope": "표시된 대수 연산에 대한 정확한 항등식입니다."
+      },
+      "grade": "EXACT_FINITE",
+      "expertTarget": "MathScope.M4.Finite.scalar_chain_map",
+      "source": "research-ide/mathscope-m4/lean/MathScope/M4/Finite.lean",
+      "actualSourceSha256": "0fb67cdd8ba09cadd6d12d1e89c15a03b36e902bf28bd6e77f7f6b9598861b3e",
+      "hasWorkedExample": false
+    },
+    {
+      "claimId": "M4.FINITE.PRIMES_BELOW_30",
+      "shared": {
+        "claimId": "M4.FINITE.PRIMES_BELOW_30",
+        "scope": "Finite exact trial-division interval [2,30).",
+        "assumptionIds": [],
+        "quantifier": "2≤n<30인 자연수 n에 대한 유한 목록입니다.",
+        "approximationScope": "유한 범위의 정확한 나머지 검사입니다."
+      },
+      "grade": "EXACT_FINITE",
+      "expertTarget": "MathScope.M4.Finite.prime_interval_fixture",
+      "source": "research-ide/mathscope-m4/lean/MathScope/M4/Finite.lean",
+      "actualSourceSha256": "0fb67cdd8ba09cadd6d12d1e89c15a03b36e902bf28bd6e77f7f6b9598861b3e",
+      "hasWorkedExample": false
+    },
+    {
+      "claimId": "M4.FINITE.BRACKET_ANTISYMMETRY",
+      "shared": {
+        "claimId": "M4.FINITE.BRACKET_ANTISYMMETRY",
+        "scope": "Universal integer 2x2 matrix commutator.",
+        "assumptionIds": [],
+        "quantifier": "모든 2×2 정수 행렬 A,B에 적용합니다.",
+        "approximationScope": "표시된 대수 연산에 대한 정확한 항등식입니다."
+      },
+      "grade": "EXACT_FINITE",
+      "expertTarget": "MathScope.M4.Finite.bracket_antisymmetric",
+      "source": "research-ide/mathscope-m4/lean/MathScope/M4/Finite.lean",
+      "actualSourceSha256": "0fb67cdd8ba09cadd6d12d1e89c15a03b36e902bf28bd6e77f7f6b9598861b3e",
+      "hasWorkedExample": false
+    },
+    {
+      "claimId": "M4.FINITE.BRACKET_JACOBI",
+      "shared": {
+        "claimId": "M4.FINITE.BRACKET_JACOBI",
+        "scope": "Universal integer 2x2 matrix commutator Jacobi identity.",
+        "assumptionIds": [],
+        "quantifier": "모든 2×2 정수 행렬 A,B,C에 적용합니다.",
+        "approximationScope": "표시된 대수 연산에 대한 정확한 항등식입니다."
+      },
+      "grade": "EXACT_FINITE",
+      "expertTarget": "MathScope.M4.Finite.bracket_jacobi",
+      "source": "research-ide/mathscope-m4/lean/MathScope/M4/Finite.lean",
+      "actualSourceSha256": "0fb67cdd8ba09cadd6d12d1e89c15a03b36e902bf28bd6e77f7f6b9598861b3e",
+      "hasWorkedExample": false
+    },
+    {
+      "claimId": "M4.FINITE.SHEAR_PLAQUETTE",
+      "shared": {
+        "claimId": "M4.FINITE.SHEAR_PLAQUETTE",
+        "scope": "Universal integer shear subgroup U(s)U(t)U(-s)U(-t)=I.",
+        "assumptionIds": [],
+        "quantifier": "모든 s,t∈ℤ에서 지정된 네 shear 행렬에 적용합니다.",
+        "approximationScope": "표시된 대수 연산에 대한 정확한 항등식입니다."
+      },
+      "grade": "EXACT_FINITE",
+      "expertTarget": "MathScope.M4.Finite.shear_plaquette",
+      "source": "research-ide/mathscope-m4/lean/MathScope/M4/Finite.lean",
+      "actualSourceSha256": "0fb67cdd8ba09cadd6d12d1e89c15a03b36e902bf28bd6e77f7f6b9598861b3e",
+      "hasWorkedExample": false
+    },
+    {
+      "claimId": "M4.ANALYTIC.UNIFORM_LIMIT_CONTINUITY",
+      "shared": {
+        "claimId": "M4.ANALYTIC.UNIFORM_LIMIT_CONTINUITY",
+        "scope": "All X,Y:Type with supplied PrecisionMetric structures; uniform convergence across all domain x; continuity of every n-th approximant. Uses two triangle steps at k+2,k+1,k.",
+        "assumptionIds": [
+          "PRECISION_BALL_REFLEXIVE_SYMMETRIC_TRIANGLE_FINER",
+          "UNIFORM_CONVERGENCE_ALL_DOMAIN",
+          "UNIFORM_CONTINUITY_EVERY_APPROXIMANT"
+        ],
+        "quantifier": "모든 구조 X,Y,mx,my와 u,f에 대해, 모든 n에서 uₙ의 균등연속성과 u의 균등수렴을 가정합니다. 모든 출력 정밀도 k에 대해 공통 입력 정밀도 ℓ이 존재합니다.",
+        "approximationScope": "근사는 precision ball의 자연수 지수로 표현합니다. 균등수렴의 N은 같은 지수에서 모든 x에 공통입니다."
+      },
+      "grade": "CONDITIONAL_FORMAL",
+      "expertTarget": "MathScope.M4.Analytic.uniform_limit_uniformly_continuous",
+      "source": "research-ide/mathscope-m4/lean/MathScope/M4/Analytic.lean",
+      "actualSourceSha256": "8cbd276dca0dc5d5267a615107a6ba6c1f796769dbbaaa0212c331b71b3806e0",
+      "hasWorkedExample": true
+    },
+    {
+      "claimId": "M4.COMPARISON.UNIFORM_CONTINUITY_ADAPTER",
+      "shared": {
+        "claimId": "M4.COMPARISON.UNIFORM_CONTINUITY_ADAPTER",
+        "scope": "Exact import of MathScope.M4.Analytic.uniform_limit_uniformly_continuous with unchanged types and premises.",
+        "assumptionIds": [
+          "SAME_PRECISION_METRIC",
+          "UNIFORM_CONVERGENCE_ALL_DOMAIN",
+          "UNIFORM_CONTINUITY_EVERY_APPROXIMANT"
+        ],
+        "quantifier": "모든 구조 X,Y,mx,my와 u,f에 대해, 모든 n에서 uₙ의 균등연속성과 u의 균등수렴을 가정합니다. 모든 출력 정밀도 k에 대해 공통 입력 정밀도 ℓ이 존재합니다.",
+        "approximationScope": "근사는 precision ball의 자연수 지수로 표현합니다. 균등수렴의 N은 같은 지수에서 모든 x에 공통입니다."
+      },
+      "grade": "CONDITIONAL_FORMAL",
+      "expertTarget": "MathScope.M4.Comparison.uniform_continuity_adapter",
+      "source": "research-ide/mathscope-m4/lean/MathScope/M4/Comparison.lean",
+      "actualSourceSha256": "e1acc6c6359e4c805f910aa4d707b74ae5cbcfdc8e2e3c41194583e71339cca0",
+      "hasWorkedExample": false
+    },
+    {
+      "claimId": "M4.CONDITIONAL.ASSUMED_COMPLETE_LIMIT",
+      "shared": {
+        "claimId": "M4.CONDITIONAL.ASSUMED_COMPLETE_LIMIT",
+        "scope": "Explicit user-axiom demonstration, intentionally barred from unconditional grade.",
+        "assumptionIds": [
+          "MathScope.M4.Conditional.assumedComplete"
+        ],
+        "quantifier": "모든 precision metric과 모든 Cauchy 열 u에 대해 극한의 존재를 결론으로 둡니다.",
+        "approximationScope": "Cauchy 및 수렴 조건을 precision ball 지수로 표시합니다. 완비성은 명시된 사용자 공리입니다."
+      },
+      "grade": "USER_AXIOM_CONDITIONAL",
+      "expertTarget": "MathScope.M4.Conditional.assumed_cauchy_limit",
+      "source": "research-ide/mathscope-m4/lean/MathScope/M4/Conditional.lean",
+      "actualSourceSha256": "bef1701760da5abb50b3786e0a8af0d0a44022ce14ed706bddd1f79466b413b8",
+      "hasWorkedExample": false
+    },
+    {
+      "claimId": "M4.FINITE.GENERATED_VECTOR",
+      "shared": {
+        "claimId": "M4.FINITE.GENERATED_VECTOR",
+        "scope": "One generated Int⁴ fixture (2,-3,5,7) for the fixed inherited D=1 differential. Other bound parameters do not broaden this theorem.",
+        "assumptionIds": [],
+        "quantifier": "지정된 정수 벡터 v=(2,−3,5,7) 한 개와 고정 D=1 미분입니다.",
+        "approximationScope": "표시된 대수 연산에 대한 정확한 항등식입니다."
+      },
+      "grade": "EXACT_FINITE",
+      "expertTarget": "MathScope.M4.Generated.Jdc78e9cb182c9864ae5c.selected_finite_fixture",
+      "source": "research-ide/mathscope-m4/evidence/core-kernel-20261014-attempt4/sources/MathScope/M4/Generated.lean",
+      "actualSourceSha256": "43cdc79ccee212a9152d90de8f58504bc9bff224da02c9d039183b01d7e247c6",
+      "hasWorkedExample": true
+    }
+  ],
+  "finiteExample": {
+    "input": [
+      "2",
+      "-3",
+      "5",
+      "7"
+    ],
+    "d0": [
+      "-3",
+      "7",
+      "7",
+      "3",
+      "3"
+    ],
+    "d1": [
+      "0",
+      "0",
+      "0"
+    ]
+  },
+  "controls": {
+    "serializedRejected": true,
+    "changedSource": "CURRENT_SOURCE_STALE:MathScope/M4/Analytic.lean",
+    "changedLog": "ARTIFACT_HASH_MISMATCH:research-ide/mathscope-m4/evidence/core-kernel-20261014-attempt4/compile-MathScope-M4-Analytic.log"
+  },
+  "scope": "Eleven claims projected from the exact archived core replay; precision metrics and finite algebra at their stated scope.",
+  "grantsOriginalCriterionAcceptance": false,
+  "publicationConfirmed": false,
+  "verdict": "PASS_SHARED_AUTHENTIC_CLAIM_AND_SCOPE_PARITY"
+}

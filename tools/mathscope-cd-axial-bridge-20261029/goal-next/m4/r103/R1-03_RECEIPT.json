@@ -1,0 +1,320 @@
+{
+  "schema": "MathScope.M4.R1-03.Provenance/1",
+  "criterionId": "R1-03",
+  "originalBlueprintPage": 68,
+  "sourcePatchBase": "294e36eb04a8269def23fe82a4d503d67a05d514",
+  "browser": {
+    "version": "157.0.8103.39",
+    "viewport": [
+      1250,
+      960
+    ],
+    "candidateSHA256": "f7dbaf250a36677a954889079ad59c5fbea53b1f5a30612833708ddc7b2e1cf7",
+    "errors": []
+  },
+  "evidence": {
+    "ns": {
+      "claimId": "R1-03/N4-03",
+      "formula": "2(XU₁,XX + U₁,X) = 원문 (5.4)의 축방향 우변",
+      "source": {
+        "repoPath": "research-ide/mathscope-m2/navier/actual-background-jets.mjs",
+        "page": 46,
+        "equation": "(5.4), Lemma 5.2",
+        "url": "https://github.com/leegahuyn/MathScopeCompute/blob/9595b4de5a1065b694d225c0ad2a14d5aa4435a9/research-ide/mathscope-m2/navier/actual-background-jets.mjs",
+        "paperUrl": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf#page=46",
+        "pageDocument": "N00 166-page pinned paper"
+      },
+      "jobId": "r1-1",
+      "state": "PARTIAL",
+      "inputHash": "ac5524c7370648c9612047ba4041c1696a0e372e9198ecdb20023708eeb82f33",
+      "sourceWorkerSHA256": "c34ab138ca5e088a4bb0a4564b8401b3caf384af4801d47eeb16088d8c4f8bb8",
+      "environmentHash": "85a490878c7e6ba31e2382703a48c60efd1413bfbec4c4704a33d38b0686419d",
+      "resultHash": "58ffeea54d8ec774034cf650631f4ac9c171f24a6e22a9fb02439b1464db5f60",
+      "selectedPath": "results.axisObservations.samples[1].normalizedInterval",
+      "sampleTrace": {
+        "sourceId": "N00",
+        "theoremId": "N00/Lemma 5.2",
+        "paper": {
+          "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+          "title": "Finite Time Blowup for Navier–Stokes",
+          "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf"
+        },
+        "equations": [
+          "5.2",
+          "5.3",
+          "5.4",
+          "5.5",
+          "5.6"
+        ],
+        "formula": "partial_X U_1(0,0)=(1/2+h)*j0",
+        "normalization": "1/j0",
+        "restoration": "partial_X U_1 = j0 * normalizedValue",
+        "premises": [
+          "actual h",
+          "actual j0"
+        ],
+        "profileId": "same-profile-2026-10-10.3",
+        "parameterHash": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+        "generator": {
+          "path": "results.jets.positive.U[1]",
+          "nodeId": 797,
+          "expression": {
+            "args": [
+              8,
+              790
+            ],
+            "op": "multiply"
+          },
+          "producer": {
+            "bytes": 8775,
+            "path": "mathscope-m1/navier/followup-20261010-same-datum-axis/symbolic_axis_jet.py",
+            "sha256": "477ae1b888eaa5b3a7da39922d96443023c717bf8c75a12e44fe891aba13ccfa"
+          },
+          "convention": "ordinary Taylor coefficient [X^k], not the kth derivative"
+        },
+        "verifiedScope": {
+          "actualPositiveOrderValuesEnclosed": true,
+          "actualPressureIntervalsUsed": true,
+          "firstRadialDerivativesOnly": true,
+          "globalMomentRepairComplete": false,
+          "nonzeroRadiusPicardSolutionEvaluated": false,
+          "physicalResidualDecayVerified": false,
+          "suppliedProbeValuesUsed": false,
+          "valuesProducedFromActualSameN3": true
+        }
+      },
+      "rawValue": {
+        "lower": "1/2",
+        "upper": "16158503035655503650357438344334975980222051334857742016065172713762327569433945446598600705761456731844358980460949009747059779575245460547544076193224141560315438683650498045875098875194826053398028819192033784138396109321309878080919047169238085235290822926018152521443787945770532904303776199561965192760957166694834171210342487393282284747428088017663161029038902829665513096354230157075129296432088558362971801859230928678799175576150822952201848806616643615613562842355410104862578550863465661734839271290328348967522998634176499319107762583194718667771801067716614802322659239302476074096777926805529798115329/32317006071311007300714876688669951960444102669715484032130345427524655138867890893197201411522913463688717960921898019494119559150490921095088152386448283120630877367300996091750197750389652106796057638384067568276792218642619756161838094338476170470581645852036305042887575891541065808607552399123930385521914333389668342420684974786564569494856176035326322058077805659331026192708460314150258592864177116725943603718461857357598351152301645904403697613233287231227125684710820209725157101726931323469678542580656697935045997268352998638215525166389437335543602135433229604645318478604952148193555853611059596230656",
+        "width": "1/32317006071311007300714876688669951960444102669715484032130345427524655138867890893197201411522913463688717960921898019494119559150490921095088152386448283120630877367300996091750197750389652106796057638384067568276792218642619756161838094338476170470581645852036305042887575891541065808607552399123930385521914333389668342420684974786564569494856176035326322058077805659331026192708460314150258592864177116725943603718461857357598351152301645904403697613233287231227125684710820209725157101726931323469678542580656697935045997268352998638215525166389437335543602135433229604645318478604952148193555853611059596230656"
+      },
+      "error": {
+        "arithmetic": "Exact BigInt rational interval operations; retained A.21 analytic and quadrature errors; directed binary64 marks only.",
+        "normalizedInterval": {
+          "lower": "1/2",
+          "upper": "16158503035655503650357438344334975980222051334857742016065172713762327569433945446598600705761456731844358980460949009747059779575245460547544076193224141560315438683650498045875098875194826053398028819192033784138396109321309878080919047169238085235290822926018152521443787945770532904303776199561965192760957166694834171210342487393282284747428088017663161029038902829665513096354230157075129296432088558362971801859230928678799175576150822952201848806616643615613562842355410104862578550863465661734839271290328348967522998634176499319107762583194718667771801067716614802322659239302476074096777926805529798115329/32317006071311007300714876688669951960444102669715484032130345427524655138867890893197201411522913463688717960921898019494119559150490921095088152386448283120630877367300996091750197750389652106796057638384067568276792218642619756161838094338476170470581645852036305042887575891541065808607552399123930385521914333389668342420684974786564569494856176035326322058077805659331026192708460314150258592864177116725943603718461857357598351152301645904403697613233287231227125684710820209725157101726931323469678542580656697935045997268352998638215525166389437335543602135433229604645318478604952148193555853611059596230656",
+          "width": "1/32317006071311007300714876688669951960444102669715484032130345427524655138867890893197201411522913463688717960921898019494119559150490921095088152386448283120630877367300996091750197750389652106796057638384067568276792218642619756161838094338476170470581645852036305042887575891541065808607552399123930385521914333389668342420684974786564569494856176035326322058077805659331026192708460314150258592864177116725943603718461857357598351152301645904403697613233287231227125684710820209725157101726931323469678542580656697935045997268352998638215525166389437335543602135433229604645318478604952148193555853611059596230656"
+        },
+        "displayEnclosure": [
+          0.5,
+          0.5000000000000001
+        ],
+        "domain": {
+          "XExact": "0",
+          "actualNonzeroRadiusSamples": false,
+          "etaExact": "0",
+          "positiveOrder": 1,
+          "radialDerivativeOrder": 1
+        }
+      },
+      "formalPass": false,
+      "paperHref": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf#page=46"
+    },
+    "prism": {
+      "claimId": "R1-03/P6-08",
+      "formula": "derived base change with Frobenius-twisted de Rham target",
+      "source": {
+        "repoPath": "research-ide/mathscope-m2/arithmetic/perfectoid-comparisons.mjs",
+        "page": 32,
+        "equation": "perfectPrismComparison / exported comparison model",
+        "url": "https://github.com/leegahuyn/MathScopeCompute/blob/mathscope-m3-m4-20261014/research-ide/mathscope-m2/arithmetic/perfectoid-comparisons.mjs",
+        "pageDocument": "99-page Research IDE blueprint"
+      },
+      "jobId": "r1-2",
+      "state": "COMPLETED",
+      "inputHash": "8e68e6b9835b76d7e6968b7303be43c735d10a9b2d8d88c76102d818e3c13378",
+      "sourceWorkerSHA256": "c34ab138ca5e088a4bb0a4564b8401b3caf384af4801d47eeb16088d8c4f8bb8",
+      "environmentHash": "85a490878c7e6ba31e2382703a48c60efd1413bfbec4c4704a33d38b0686419d",
+      "resultHash": "13b451680205099eea33eb232ed0660d2297169c26307e73d6a9a6fb71c3a581",
+      "selectedPath": "visualization.points[0].value",
+      "sampleTrace": {
+        "theoremIds": [
+          {
+            "sourceId": "S01",
+            "locators": [
+              "Theorem 1.8: crystalline, de Rham, etale and base-change clauses",
+              "Theorem 3.10"
+            ]
+          }
+        ],
+        "paper": [
+          {
+            "id": "S01",
+            "locators": [
+              "Theorem 1.8: crystalline, de Rham, etale and base-change clauses",
+              "Theorem 3.10"
+            ],
+            "url": "https://people.mpim-bonn.mpg.de/scholze/prisms.pdf"
+          }
+        ],
+        "comparisonPath": "results.route.details",
+        "comparisonMap": {
+          "coefficientMap": "A_inf --phi--> A_inf --theta--> O_K",
+          "completion": "derived p-completion",
+          "pointModel": {
+            "after": "O_K[0]",
+            "before": "A_inf[0]",
+            "differential": [],
+            "tensorIsDerived": true,
+            "torVanishing": "the source term is free"
+          },
+          "source": "Delta_(R/A_inf)",
+          "target": "R Gamma_dR(R/O_K)",
+          "xiImage": "theta(phi(xi))=p^p-p for xi=[p^flat]-p"
+        },
+        "baseHash": "58ed6635da966a7885a1e4bff63731a1a652cc973d9d42921e01023c0b6b99d5",
+        "premises": [
+          "the completed tilt is perfect",
+          "W of a perfect characteristic-p ring is p-torsionfree and has invertible Frobenius",
+          "xi_1=-1 is a unit; theta(xi)=0",
+          "theta quotient recovers the selected untilt by S03 Lemmas 3.10–3.12"
+        ],
+        "proofGrade": "TYPED_EXTERNAL_COMPARISON_WITH_CHECKED_STANDARD_HYPOTHESES"
+      },
+      "rawValue": {
+        "operation": "FROBENIUS_TWISTED_DERIVED_BASE_CHANGE_THETA",
+        "stage": 0
+      },
+      "error": {
+        "kind": "EXACT_CATEGORICAL_STAGE",
+        "displayedStageRounding": 0,
+        "precision": {
+          "finiteScope": {
+            "displayedModPpower": 3,
+            "finite": true,
+            "finiteModPObservationIsZpCertificate": false,
+            "formalComplete": false,
+            "geometry": "standard smooth formal torus; coefficient-level derived maps also evaluated on the point",
+            "routeForCompletedObjects": true
+          },
+          "precisionAxesIndependent": true,
+          "requested": {
+            "N": 3
+          },
+          "roundingError": "0 for exact integer, polynomial, finite-field and finite Witt operations; explicitly tagged complex roots are Float64 display only."
+        }
+      },
+      "formalPass": false,
+      "paperHref": "https://people.mpim-bonn.mpg.de/scholze/prisms.pdf"
+    },
+    "delta": {
+      "claimId": "R1-03/Y5-01",
+      "formula": "ρΔ=ρref Δref/Δ; each Δ recomputes the declared classical field",
+      "source": {
+        "repoPath": "research-ide/mathscope-m1/gauge/family.mjs",
+        "page": 46,
+        "equation": "CLASSICAL_SCALE generator",
+        "url": "https://github.com/leegahuyn/MathScopeCompute/blob/mathscope-m3-m4-20261014/research-ide/mathscope-m1/gauge/family.mjs",
+        "pageDocument": "99-page Research IDE blueprint"
+      },
+      "jobId": "r1-4",
+      "state": "COMPLETED",
+      "inputHash": "c06899e3fe1f66dba17191b9e68b08d4a392f083e0b33248484d9cc3d6e240ec",
+      "sourceWorkerSHA256": "0526fb1030c328e940c39672e86dfb9d24f09f4622794269c1e0eadbb92cc0ca",
+      "environmentHash": "fc67a6b29748d52cb295758caf972327655477a1c34283bac207d2b6b8864531",
+      "resultHash": "f1d5966c612e7a4dbb0ded17d07f66ac5018173f4cc31c231e7cb795edd28fe3",
+      "selectedPath": "comparison[1].physicalDensity.actionDensity",
+      "sampleTrace": {
+        "generatorId": "Y5-01/CLASSICAL_SCALE",
+        "formula": "Actual classical dilation A_lambda(x)=lambda A(center+lambda(x-center)), lambda=Delta/referenceDelta. Rho and all trial-function lengths are divided by lambda. On a torus the physical periods are also rescaled. This chosen use of Delta is not a quantum mass-gap conclusion.",
+        "generatorPath": "stateFamilySpec.fieldConstruction.parameters",
+        "family": {
+          "assumptionId": "declared-gap-lower-bound",
+          "delta": 2,
+          "energyUnits": "hbar*c/ell0",
+          "mode": "CLASSICAL_SCALE",
+          "quantumExistenceClaim": false,
+          "referenceDelta": 1
+        },
+        "selected": {
+          "delta": 2,
+          "rho": 0.5,
+          "trialLength": 0.6,
+          "probe": [
+            0.1,
+            -0.15,
+            0.2,
+            0.05
+          ],
+          "physicalFieldHash": "49a69c82483d95a0e20dc74c5cc1761de7c08c5395aac6141588cb49ae53f19d",
+          "assumptionHash": "991b74755e6f52db68d9c796c9a9a27ab6935a6acf8c59620476be69188d204a"
+        },
+        "sourceIds": [
+          "YM-R06"
+        ],
+        "paper": {
+          "authors": "Stefan Vandoren; Peter van Nieuwenhuizen",
+          "id": "YM-R06",
+          "kernelReceipt": null,
+          "leanImport": null,
+          "locator": "§2 pp.7–13; eqs.(2.12)–(2.15) BPST, eq.(2.20) SU(N) embedding",
+          "role": "anti-Hermitian SU(2) conventions, BPST A/F와 밀도, SU(N) embedding 기준. 정확 marginal 식은 이 밀도를 적분한 설계 계산.",
+          "status": "THEOREM_REFERENCE",
+          "title": "Lectures on instantons",
+          "url": "https://arxiv.org/pdf/0802.1862"
+        },
+        "assumptionRefs": [],
+        "interpretation": "EFFECTIVE_MODEL"
+      },
+      "rawValue": 266.7056522161867,
+      "error": {
+        "scope": "FLOAT64_DIAGNOSTICS",
+        "certifiedDensityError": null,
+        "sameProbe": true,
+        "finiteDifference": {
+          "error": 0.000014633815427886562,
+          "h": 0.0005,
+          "halfStepError": 0.000003658454772484939,
+          "method": "independent central differences of evaluated A; analytic jet is not used in this curvature",
+          "observedErrorRatio": 3.9999989990164093
+        },
+        "coordinateCurvature": {
+          "activeCoefficientDirections": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13
+          ],
+          "connectionResidual": 4.040737860859256e-16,
+          "curvatureResidual": 4.218274682093958e-15,
+          "fullBasisDimension": 14,
+          "method": "direct scalar coefficients + exact sparse f_ab^c, independently compared to matrix products"
+        },
+        "gaugeDensityDifference": 5.684341886080802e-14
+      },
+      "formalPass": false,
+      "paperHref": "https://arxiv.org/pdf/0802.1862"
+    }
+  },
+  "browserDeltaExportSHA256": "3a9a330d8cb9dc4745896f9ec4a801fa5dfcad3ed79bcf805c6fd77ce8a1e7f1",
+  "crossRuntimeDelta": {
+    "browserResultHash": "f1d5966c612e7a4dbb0ded17d07f66ac5018173f4cc31c231e7cb795edd28fe3",
+    "nativeResultHash": "2af7410c8da1d073d6d465b3d940d48d83042fa5ced64a0f2aea671f3100ab78",
+    "commonInputHash": "c06899e3fe1f66dba17191b9e68b08d4a392f083e0b33248484d9cc3d6e240ec",
+    "commonWorkerSHA256": "0526fb1030c328e940c39672e86dfb9d24f09f4622794269c1e0eadbb92cc0ca",
+    "commonPhysicalFieldHash": "49a69c82483d95a0e20dc74c5cc1761de7c08c5395aac6141588cb49ae53f19d",
+    "observedAbsoluteDensityDifference": 0,
+    "comparisonTolerance": 1e-12
+  },
+  "controls": {
+    "unmatchedDeltaDiagnosticWithheld": true,
+    "foreignInputStale": true
+  },
+  "checks": {
+    "NS_POINT_TO_ORIGINAL_EQUATION_JOB_ERROR_CLAIM": "PASS",
+    "PRISM_POINT_TO_COMPARISON_JOB_ERROR_CLAIM": "PASS",
+    "DELTA_POINT_TO_GENERATOR_JOB_ERROR_CLAIM": "PASS"
+  },
+  "verdict": "PASS_BROWSER_SAMPLE_PROVENANCE",
+  "publicationConfirmed": false
+}
