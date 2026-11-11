@@ -79,7 +79,30 @@ jobs:
           set +e
           helper=../evidence/tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-forced-join
           out="$RUNNER_TEMP/primary-forced-join"
-          node --expose-gc research-ide/mathscope-m3/extended-signed-run-20261023/run_primary_forced_live_join.mjs "$out/native-receipt.json" 2>&1 | tee "$out/native-run.log"
+          plan="$(python3 - <<'PY'
+          from pathlib import Path
+          gib = 1024**3
+          mem = dict(line.split(":", 1) for line in Path("/proc/meminfo").read_text().splitlines())
+          available = int(mem["MemAvailable"].split()[0]) * 1024
+          cgroup = Path("/sys/fs/cgroup")
+          for limit_path, usage_path in (("memory.max", "memory.current"),
+                                         ("memory/memory.limit_in_bytes", "memory/memory.usage_in_bytes")):
+              limit, usage = cgroup / limit_path, cgroup / usage_path
+              if limit.exists() and usage.exists():
+                  cap = limit.read_text().strip()
+                  if cap != "max":
+                      available = min(available, int(cap) - int(usage.read_text()))
+          roomy = available >= 11 * gib
+          print(9 if roomy else 6, 8100 if roomy else 6100, available)
+          PY
+          )"
+          plan_result=$?
+          if [ "$plan_result" -ne 0 ]; then exit "$plan_result"; fi
+          read -r M3_MAX_RSS_GB heap_mb available_bytes <<< "$plan"
+          export M3_MAX_RSS_GB
+          printf 'measured available bytes=%s; owned RSS cap=%s GiB; V8 heap cap=%s MiB\n' \
+            "$available_bytes" "$M3_MAX_RSS_GB" "$heap_mb" | tee "$out/memory-plan.txt"
+          node --max-old-space-size="$heap_mb" --expose-gc research-ide/mathscope-m3/extended-signed-run-20261023/run_primary_forced_live_join.mjs "$out/native-receipt.json" 2>&1 | tee "$out/native-run.log"
           native_result=${PIPESTATUS[0]}
           verify_result=not_run
           if [ "$native_result" -eq 0 ]; then
