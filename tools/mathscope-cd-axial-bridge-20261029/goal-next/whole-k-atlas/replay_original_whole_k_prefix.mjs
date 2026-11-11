@@ -19,29 +19,51 @@ assert.ok(request === String(N) && [0, 3, 4].includes(N));
 mkdirSync(directory, { recursive: true });
 
 const started = Date.now();
+const gcIntervalMs = 20_000;
+let lastGC = 0;
 const receipt = {
   schema: 'MathScope.M3.OriginalWholeKHigherPrefix/1',
   sourceCommit, executingCommit, requestedPrefix: N, stages: [],
-  maxMinutes, maxRss, maxRssObserved: 0, finalJets: 0, release: 'HOLD',
+  maxMinutes, maxRss, maxRssObserved: 0, memoryCheckpoints: [], finalJets: 0, release: 'HOLD',
 };
 const save = () => writeFileSync(join(directory, 'original-whole-k-prefix.json'), JSON.stringify(receipt, null, 2) + '\n');
 function measure() {
-  const rss = process.memoryUsage().rss;
+  const rss = process.memoryUsage.rss();
   receipt.maxRssObserved = Math.max(rss, receipt.maxRssObserved);
   return { elapsedMs: Date.now() - started, rssBytes: rss };
 }
 
+function collectAt(label) {
+  if (!global.gc) return;
+  const before = process.memoryUsage();
+  measure();
+  global.gc();
+  const after = process.memoryUsage();
+  const item = { label, before, after, ...measure() };
+  lastGC = Date.now();
+  receipt.memoryCheckpoints.push(item);
+  console.log(JSON.stringify(item));
+  save();
+}
+
 const context = {
   checkCancelled() {
-    const { elapsedMs, rssBytes } = measure();
+    let { elapsedMs, rssBytes } = measure();
     if (elapsedMs > maxMinutes * 60_000) {
       throw Object.assign(Error('Original prefix exceeded the runner time bound.'), { code: 'SOURCE_TIME_LIMIT' });
+    }
+    if (rssBytes >= maxRss * 0.93 && Date.now() - lastGC > gcIntervalMs) {
+      collectAt('runner-near-RSS-limit');
+      ({ rssBytes } = measure());
     }
     if (rssBytes > maxRss) {
       throw Object.assign(Error('Original prefix exceeded the runner RSS bound.'), { code: 'SOURCE_RSS_LIMIT' });
     }
   },
   onProgress(row) {
+    if (row.stage === 'common-pressure-stress-diagonal-norms-ready') {
+      collectAt(row.stage);
+    }
     context.checkCancelled();
     if (row.stage && row.stage !== receipt.lastProgress?.stage) {
       receipt.lastProgress = { stage: row.stage, nodeCount: row.nodeCount ?? null, ...measure() };
