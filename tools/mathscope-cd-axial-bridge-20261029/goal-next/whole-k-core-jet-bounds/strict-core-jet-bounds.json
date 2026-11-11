@@ -1,0 +1,1283 @@
+{
+  "schema": "MathScope.N7.StrictOriginalCoreFieldAtomBounds/1",
+  "inputs": {
+    "atomSHA256": "1f342570c0ac63a919441ed999860c835574299b73a2c36fb1b1c658b386876f",
+    "endpointSHA256": "de578dd4f456e8ad698f33baa8302bd65af8550d53e4317589946aacc85be28f",
+    "wholeKSHA256": "af17e240150ca11452ccd5dcde5e1d2a21f5872d3a1e29a9247d75e6902e86b9",
+    "highNormSHA256": "091007ee09d78be9405c5b8c62dc994aa5b6dd1e6cbcbc57a0f2fb89ff06db7b"
+  },
+  "domain": "whole-K 1/2<=rho<=1, 2<=Y=Lambda*X<=5/2, |eta|<=1/4, all theta",
+  "sameOriginalChart": "q=tau0*rho/(1-eta^2), X=s/(2*q), eta=z*q^-D",
+  "chartOperatorReadback": {
+    "verifiedEntries": 9,
+    "coordinates": [
+      "s",
+      "z",
+      "tau"
+    ],
+    "profile": [
+      "log(q)",
+      "Y",
+      "eta"
+    ]
+  },
+  "activeScope": "common b_n: all n>=4 flat zero; historical c_n only controls each listed n, no claim about its active tail",
+  "leadingSources": {
+    "sourceBlobs": {
+      "actual-covariance-sensitivity.mjs": "e7e3d31bd83f321bb3006121059e5bfc842ad378",
+      "actual-leading-all-order-jets.mjs": "221e1923bd615dddfa2d32b161d000feb57de2b6",
+      "actual-continuation-exact-core.mjs": "b877d5962a6051cf4fe48eef575c8ad31fb5de1a"
+    },
+    "graphNodesChecked": 34,
+    "F0": 117100,
+    "U0": 117101,
+    "M0": 9239,
+    "M0StrictCoreBranch": 5180,
+    "M0StrictCoreFormula": "X*(Ustar+Lambda^-1*actual_natural_average(Lambda*X,eta))",
+    "pressure": 617757,
+    "axisDatumP0": 3451,
+    "pressurePrefix": 617756,
+    "pressureBinder": 617752,
+    "pressureIntegrand": "(actual F0 at [binder,eta])^2",
+    "pressureNormalization": "original A.21 datum plus exact radial prefix, no adjustable constant"
+  },
+  "originalNormFactors": {
+    "L_U": 197828,
+    "L_F": 80391,
+    "L_FGraphSHA256": "5e58852fc00d6161eeefdbc2b0881d1dc87c2bcc58c2f17333114c01cc5769d1",
+    "K": "original Pstar^2",
+    "canonical": {
+      "1,0": 137401,
+      "1,1": 137416,
+      "2,0": 163558,
+      "2,1": 163574,
+      "2,2": 163605,
+      "3,0": 212757,
+      "3,1": 212775,
+      "3,2": 212806,
+      "3,3": 212860
+    },
+    "unabsorbed": {
+      "1,2,StreamOverR": 212882,
+      "1,2,E": 212886,
+      "1,3,StreamOverR": 212893,
+      "2,3,StreamOverR": 212905
+    }
+  },
+  "intervalConvention": "each nonzero row is [-R,R] with R=Lambda^LambdaPower*tau0^-tau0ReciprocalPower*(sum leadingTerms+positiveMultiplier*sum positiveTerms)",
+  "scalarIntervals": {
+    "a@0,0,0": {
+      "LambdaPower": "0",
+      "tau0ReciprocalPower": "h + 1/2",
+      "leadingTerms": {
+        "L_U": "1"
+      },
+      "positiveTerms": {
+        "tau0^(1*h)": "1",
+        "tau0^(2*h)": "1/2",
+        "tau0^(3*h)": "1/4"
+      },
+      "positiveMultiplier": "sqrt(Lambda)",
+      "positiveProfileMassByDerivativeOrder": {
+        "0": "1"
+      }
+    },
+    "a@0,0,1": {
+      "LambdaPower": "0",
+      "tau0ReciprocalPower": "h + 3/2",
+      "leadingTerms": {
+        "L_U": "1936/511"
+      },
+      "positiveTerms": {
+        "tau0^(1*h)": "3729/511",
+        "tau0^(2*h)": "3729/1022",
+        "tau0^(3*h)": "3729/2044"
+      },
+      "positiveMultiplier": "sqrt(Lambda)",
+      "positiveProfileMassByDerivativeOrder": {
+        "0": "17/511",
+        "1": "3712/511"
+      }
+    },
+    "a@0,1,0": {
+      "LambdaPower": "0",
+      "tau0ReciprocalPower": "1",
+      "leadingTerms": {
+        "L_U": "964/511"
+      },
+      "positiveTerms": {
+        "tau0^(1*h)": "1668/511",
+        "tau0^(2*h)": "834/511",
+        "tau0^(3*h)": "417/511"
+      },
+      "positiveMultiplier": "sqrt(Lambda)",
+      "positiveProfileMassByDerivativeOrder": {
+        "0": "260/511",
+        "1": "1408/511"
+      }
+    },
+    "a@0,1,1": {
+      "LambdaPower": "0",
+      "tau0ReciprocalPower": "2",
+      "leadingTerms": {
+        "L_U": "4624952320/400298493"
+      },
+      "positiveTerms": {
+        "H_212882*tau0^(2*h)": "10223616/261121",
+        "tau0^(1*h)": "216903296/19061833",
+        "tau0^(2*h)": "42147520/2723119",
+        "tau0^(3*h)": "21073760/2723119"
+      },
+      "positiveMultiplier": "sqrt(Lambda)",
+      "positiveProfileMassByDerivativeOrder": {
+        "0": "69271424/133432831",
+        "1": "1449051648/133432831",
+        "2": "5111808/261121"
+      }
+    },
+    "a@0,2,0": {
+      "LambdaPower": "0",
+      "tau0ReciprocalPower": "3/2 - h",
+      "leadingTerms": {
+        "L_U": "6099832832/400298493"
+      },
+      "positiveTerms": {
+        "H_212882*tau0^(2*h)": "7929856/261121",
+        "tau0^(1*h)": "357995520/19061833",
+        "tau0^(2*h)": "46245376/2723119",
+        "tau0^(3*h)": "23122688/2723119"
+      },
+      "positiveMultiplier": "sqrt(Lambda)",
+      "positiveProfileMassByDerivativeOrder": {
+        "0": "43988992/133432831",
+        "1": "2461979648/133432831",
+        "2": "3964928/261121"
+      }
+    },
+    "a@0,3,0": {
+      "LambdaPower": "0",
+      "tau0ReciprocalPower": "2 - 2*h",
+      "leadingTerms": {
+        "L_U": "9408513338245120/104526342790653"
+      },
+      "positiveTerms": {
+        "H_212882*tau0^(2*h)": "19231791644672/68184176641",
+        "H_212893*tau0^(2*h)": "11165237248/133432831",
+        "H_212905*tau0^(4*h)": "11165237248/133432831",
+        "tau0^(1*h)": "2174382345681984/34842114263551",
+        "tau0^(2*h)": "3544052555447840/34842114263551",
+        "tau0^(3*h)": "2136461017153296/34842114263551"
+      },
+      "positiveMultiplier": "sqrt(Lambda)",
+      "positiveProfileMassByDerivativeOrder": {
+        "0": "55945989586944/34842114263551",
+        "1": "2118436356095040/34842114263551",
+        "2": "9615895822336/68184176641",
+        "3": "5582618624/133432831"
+      }
+    },
+    "a@1,0,0": {
+      "LambdaPower": "1",
+      "tau0ReciprocalPower": "h + 3/2",
+      "leadingTerms": {
+        "L_U": "1/2"
+      },
+      "positiveTerms": {
+        "tau0^(1*h)": "5/4",
+        "tau0^(2*h)": "5/8",
+        "tau0^(3*h)": "5/16"
+      },
+      "positiveMultiplier": "sqrt(Lambda)",
+      "positiveProfileMassByDerivativeOrder": {
+        "0": "1/4",
+        "1": "1"
+      }
+    },
+    "a@1,0,1": {
+      "LambdaPower": "1",
+      "tau0ReciprocalPower": "h + 5/2",
+      "leadingTerms": {
+        "L_U": "5080/1533"
+      },
+      "positiveTerms": {
+        "H_212882*tau0^(2*h)": "7424/511",
+        "tau0^(1*h)": "4497/2555",
+        "tau0^(2*h)": "23057/5110",
+        "tau0^(3*h)": "23057/10220"
+      },
+      "positiveMultiplier": "sqrt(Lambda)",
+      "positiveProfileMassByDerivativeOrder": {
+        "0": "407/2555",
+        "1": "818/511",
+        "2": "3712/511"
+      }
+    },
+    "a@1,1,0": {
+      "LambdaPower": "1",
+      "tau0ReciprocalPower": "2",
+      "leadingTerms": {
+        "L_U": "1990/1533"
+      },
+      "positiveTerms": {
+        "H_212882*tau0^(2*h)": "2816/511",
+        "tau0^(1*h)": "147/73",
+        "tau0^(2*h)": "2437/1022",
+        "tau0^(3*h)": "2437/2044"
+      },
+      "positiveMultiplier": "sqrt(Lambda)",
+      "positiveProfileMassByDerivativeOrder": {
+        "0": "193/511",
+        "1": "836/511",
+        "2": "1408/511"
+      }
+    },
+    "a@1,2,0": {
+      "LambdaPower": "1",
+      "tau0ReciprocalPower": "5/2 - h",
+      "leadingTerms": {
+        "L_U": "4866959360/400298493"
+      },
+      "positiveTerms": {
+        "H_212882*tau0^(2*h)": "6464448512/133432831",
+        "H_212893*tau0^(2*h)": "7929856/261121",
+        "H_212905*tau0^(4*h)": "7929856/261121",
+        "tau0^(1*h)": "6178927168/667164155",
+        "tau0^(2*h)": "11170024224/667164155",
+        "tau0^(3*h)": "8117609872/667164155"
+      },
+      "positiveMultiplier": "sqrt(Lambda)",
+      "positiveProfileMassByDerivativeOrder": {
+        "0": "1195281728/667164155",
+        "1": "996729088/133432831",
+        "2": "3232224256/133432831",
+        "3": "3964928/261121"
+      }
+    },
+    "a@2,0,0": {
+      "LambdaPower": "2",
+      "tau0ReciprocalPower": "h + 5/2",
+      "leadingTerms": {
+        "L_U": "1/3"
+      },
+      "positiveTerms": {
+        "H_212882*tau0^(2*h)": "2",
+        "tau0^(1*h)": "11/16",
+        "tau0^(2*h)": "27/32",
+        "tau0^(3*h)": "27/64"
+      },
+      "positiveMultiplier": "sqrt(Lambda)",
+      "positiveProfileMassByDerivativeOrder": {
+        "0": "3/16",
+        "1": "1/2",
+        "2": "1"
+      }
+    },
+    "a@2,1,0": {
+      "LambdaPower": "2",
+      "tau0ReciprocalPower": "3",
+      "leadingTerms": {
+        "L_U": "1636/1533"
+      },
+      "positiveTerms": {
+        "H_212882*tau0^(2*h)": "2824/511",
+        "H_212893*tau0^(2*h)": "2816/511",
+        "H_212905*tau0^(4*h)": "2816/511",
+        "tau0^(1*h)": "3979/2044",
+        "tau0^(2*h)": "9627/4088",
+        "tau0^(3*h)": "15259/8176"
+      },
+      "positiveMultiplier": "sqrt(Lambda)",
+      "positiveProfileMassByDerivativeOrder": {
+        "0": "963/2044",
+        "1": "754/511",
+        "2": "1412/511",
+        "3": "1408/511"
+      }
+    },
+    "a@3,0,0": {
+      "LambdaPower": "3",
+      "tau0ReciprocalPower": "h + 7/2",
+      "leadingTerms": {
+        "L_U": "1/4"
+      },
+      "positiveTerms": {
+        "H_212882*tau0^(2*h)": "3/2",
+        "H_212893*tau0^(2*h)": "2",
+        "H_212905*tau0^(4*h)": "2",
+        "tau0^(1*h)": "51/64",
+        "tau0^(2*h)": "99/128",
+        "tau0^(3*h)": "163/256"
+      },
+      "positiveMultiplier": "sqrt(Lambda)",
+      "positiveProfileMassByDerivativeOrder": {
+        "0": "15/64",
+        "1": "9/16",
+        "2": "3/4",
+        "3": "1"
+      }
+    },
+    "b@0,0,0": {
+      "LambdaPower": "0",
+      "tau0ReciprocalPower": "h + 1",
+      "leadingTerms": {
+        "L_F": "4"
+      },
+      "positiveTerms": {
+        "tau0^(1*h)": "2",
+        "tau0^(2*h)": "1",
+        "tau0^(3*h)": "1/2"
+      },
+      "positiveMultiplier": "sqrt(Lambda)",
+      "positiveProfileMassByDerivativeOrder": {
+        "0": "2"
+      }
+    },
+    "b@0,0,1": {
+      "LambdaPower": "0",
+      "tau0ReciprocalPower": "h + 2",
+      "leadingTerms": {
+        "L_F": "14912/511"
+      },
+      "positiveTerms": {
+        "tau0^(1*h)": "8482/511",
+        "tau0^(2*h)": "4241/511",
+        "tau0^(3*h)": "4241/1022"
+      },
+      "positiveMultiplier": "sqrt(Lambda)",
+      "positiveProfileMassByDerivativeOrder": {
+        "0": "1058/511",
+        "1": "7424/511"
+      }
+    },
+    "b@0,1,0": {
+      "LambdaPower": "0",
+      "tau0ReciprocalPower": "3/2",
+      "leadingTerms": {
+        "L_F": "5648/511"
+      },
+      "positiveTerms": {
+        "tau0^(1*h)": "3592/511",
+        "tau0^(2*h)": "1796/511",
+        "tau0^(3*h)": "898/511"
+      },
+      "positiveMultiplier": "sqrt(Lambda)",
+      "positiveProfileMassByDerivativeOrder": {
+        "0": "776/511",
+        "1": "2816/511"
+      }
+    },
+    "b@0,2,0": {
+      "LambdaPower": "0",
+      "tau0ReciprocalPower": "2 - h",
+      "leadingTerms": {
+        "L_F": "7445110784/133432831"
+      },
+      "positiveTerms": {
+        "H_212886*tau0^(2*h)": "7929856/261121",
+        "tau0^(1*h)": "3093596160/133432831",
+        "tau0^(2*h)": "2559837184/133432831",
+        "tau0^(3*h)": "1279918592/133432831"
+      },
+      "positiveMultiplier": "sqrt(Lambda)",
+      "positiveProfileMassByDerivativeOrder": {
+        "0": "380449792/133432831",
+        "1": "2713146368/133432831",
+        "2": "3964928/261121"
+      }
+    },
+    "b@1,0,0": {
+      "LambdaPower": "1",
+      "tau0ReciprocalPower": "h + 2",
+      "leadingTerms": {
+        "L_F": "4"
+      },
+      "positiveTerms": {
+        "tau0^(1*h)": "5/2",
+        "tau0^(2*h)": "5/4",
+        "tau0^(3*h)": "5/8"
+      },
+      "positiveMultiplier": "sqrt(Lambda)",
+      "positiveProfileMassByDerivativeOrder": {
+        "0": "1/2",
+        "1": "2"
+      }
+    },
+    "b@2,0,0": {
+      "LambdaPower": "2",
+      "tau0ReciprocalPower": "h + 3",
+      "leadingTerms": {
+        "L_F": "4"
+      },
+      "positiveTerms": {
+        "H_212886*tau0^(2*h)": "4",
+        "tau0^(1*h)": "11/8",
+        "tau0^(2*h)": "27/16",
+        "tau0^(3*h)": "27/32"
+      },
+      "positiveMultiplier": "sqrt(Lambda)",
+      "positiveProfileMassByDerivativeOrder": {
+        "0": "3/8",
+        "1": "1",
+        "2": "2"
+      }
+    },
+    "p_loc@0,0,0": {
+      "LambdaPower": "0",
+      "tau0ReciprocalPower": "2*h + 1",
+      "leadingTerms": {
+        "K": "20",
+        "L_F^2": "4"
+      },
+      "positiveTerms": {
+        "tau0^(1*h)": "4",
+        "tau0^(2*h)": "2",
+        "tau0^(3*h)": "1"
+      },
+      "positiveMultiplier": "1",
+      "positiveProfileMassByDerivativeOrder": {
+        "0": "4"
+      }
+    },
+    "p_loc@0,1,0": {
+      "LambdaPower": "0",
+      "tau0ReciprocalPower": "h + 3/2",
+      "leadingTerms": {
+        "K": "332960/511",
+        "L_F^2": "7712/511"
+      },
+      "positiveTerms": {
+        "tau0^(1*h)": "6688/511",
+        "tau0^(2*h)": "3344/511",
+        "tau0^(3*h)": "1672/511"
+      },
+      "positiveMultiplier": "1",
+      "positiveProfileMassByDerivativeOrder": {
+        "0": "1056/511",
+        "1": "5632/511"
+      }
+    },
+    "p_loc@1,0,0": {
+      "LambdaPower": "1",
+      "tau0ReciprocalPower": "2*h + 2",
+      "leadingTerms": {
+        "L_F^2": "4"
+      },
+      "positiveTerms": {
+        "tau0^(1*h)": "4",
+        "tau0^(2*h)": "2",
+        "tau0^(3*h)": "1"
+      },
+      "positiveMultiplier": "1",
+      "positiveProfileMassByDerivativeOrder": {
+        "1": "4"
+      }
+    }
+  },
+  "fieldAtomIntervals": {
+    "A0@0,0,0,0": {
+      "LambdaPower": "-1/2",
+      "tau0ReciprocalPower": "h",
+      "leadingTerms": {
+        "L_U": "4"
+      },
+      "positiveTerms": {
+        "tau0^(1*h)": "4",
+        "tau0^(2*h)": "2",
+        "tau0^(3*h)": "1"
+      },
+      "positiveMultiplier": "sqrt(Lambda)"
+    },
+    "A0@0,0,0,1": {
+      "LambdaPower": "-1/2",
+      "tau0ReciprocalPower": "h + 1",
+      "leadingTerms": {
+        "L_U": "7744/511"
+      },
+      "positiveTerms": {
+        "tau0^(1*h)": "14916/511",
+        "tau0^(2*h)": "7458/511",
+        "tau0^(3*h)": "3729/511"
+      },
+      "positiveMultiplier": "sqrt(Lambda)"
+    },
+    "A0@0,0,1,0": {
+      "LambdaPower": "-1/2",
+      "tau0ReciprocalPower": "1/2",
+      "leadingTerms": {
+        "L_U": "3856/511"
+      },
+      "positiveTerms": {
+        "tau0^(1*h)": "6672/511",
+        "tau0^(2*h)": "3336/511",
+        "tau0^(3*h)": "1668/511"
+      },
+      "positiveMultiplier": "sqrt(Lambda)"
+    },
+    "A0@0,0,1,1": {
+      "LambdaPower": "-1/2",
+      "tau0ReciprocalPower": "3/2",
+      "leadingTerms": {
+        "L_U": "18499809280/400298493"
+      },
+      "positiveTerms": {
+        "H_212882*tau0^(2*h)": "40894464/261121",
+        "tau0^(1*h)": "867613184/19061833",
+        "tau0^(2*h)": "168590080/2723119",
+        "tau0^(3*h)": "84295040/2723119"
+      },
+      "positiveMultiplier": "sqrt(Lambda)"
+    },
+    "A0@0,0,2,0": {
+      "LambdaPower": "-1/2",
+      "tau0ReciprocalPower": "1 - h",
+      "leadingTerms": {
+        "L_U": "24399331328/400298493"
+      },
+      "positiveTerms": {
+        "H_212882*tau0^(2*h)": "31719424/261121",
+        "tau0^(1*h)": "1431982080/19061833",
+        "tau0^(2*h)": "184981504/2723119",
+        "tau0^(3*h)": "92490752/2723119"
+      },
+      "positiveMultiplier": "sqrt(Lambda)"
+    },
+    "A0@0,0,3,0": {
+      "LambdaPower": "-1/2",
+      "tau0ReciprocalPower": "3/2 - 2*h",
+      "leadingTerms": {
+        "L_U": "37634053352980480/104526342790653"
+      },
+      "positiveTerms": {
+        "H_212882*tau0^(2*h)": "76927166578688/68184176641",
+        "H_212893*tau0^(2*h)": "44660948992/133432831",
+        "H_212905*tau0^(4*h)": "44660948992/133432831",
+        "tau0^(1*h)": "8697529382727936/34842114263551",
+        "tau0^(2*h)": "14176210221791360/34842114263551",
+        "tau0^(3*h)": "8545844068613184/34842114263551"
+      },
+      "positiveMultiplier": "sqrt(Lambda)"
+    },
+    "A0@0,1,0,0": {
+      "LambdaPower": "0",
+      "tau0ReciprocalPower": "h + 1/2",
+      "leadingTerms": {
+        "L_U": "17"
+      },
+      "positiveTerms": {
+        "tau0^(1*h)": "41",
+        "tau0^(2*h)": "41/2",
+        "tau0^(3*h)": "41/4"
+      },
+      "positiveMultiplier": "sqrt(Lambda)"
+    },
+    "A0@0,1,0,1": {
+      "LambdaPower": "0",
+      "tau0ReciprocalPower": "h + 3/2",
+      "leadingTerms": {
+        "L_U": "168368/1533"
+      },
+      "positiveTerms": {
+        "H_212882*tau0^(2*h)": "237568/511",
+        "tau0^(1*h)": "162549/2555",
+        "tau0^(2*h)": "108067/730",
+        "tau0^(3*h)": "108067/1460"
+      },
+      "positiveMultiplier": "sqrt(Lambda)"
+    },
+    "A0@0,1,1,0": {
+      "LambdaPower": "0",
+      "tau0ReciprocalPower": "1",
+      "leadingTerms": {
+        "L_U": "66572/1533"
+      },
+      "positiveTerms": {
+        "H_212882*tau0^(2*h)": "90112/511",
+        "tau0^(1*h)": "34596/511",
+        "tau0^(2*h)": "39826/511",
+        "tau0^(3*h)": "19913/511"
+      },
+      "positiveMultiplier": "sqrt(Lambda)"
+    },
+    "A0@0,1,2,0": {
+      "LambdaPower": "0",
+      "tau0ReciprocalPower": "3/2 - h",
+      "leadingTerms": {
+        "L_U": "53947510784/133432831"
+      },
+      "positiveTerms": {
+        "H_212882*tau0^(2*h)": "210914508800/133432831",
+        "H_212893*tau0^(2*h)": "253755392/261121",
+        "H_212905*tau0^(4*h)": "253755392/261121",
+        "tau0^(1*h)": "210255512576/667164155",
+        "tau0^(2*h)": "368770892288/667164155",
+        "tau0^(3*h)": "265428574464/667164155"
+      },
+      "positiveMultiplier": "sqrt(Lambda)"
+    },
+    "A0@0,2,0,0": {
+      "LambdaPower": "1/2",
+      "tau0ReciprocalPower": "h + 1",
+      "leadingTerms": {
+        "L_U": "292/3"
+      },
+      "positiveTerms": {
+        "H_212882*tau0^(2*h)": "512",
+        "tau0^(1*h)": "206",
+        "tau0^(2*h)": "231",
+        "tau0^(3*h)": "231/2"
+      },
+      "positiveMultiplier": "sqrt(Lambda)"
+    },
+    "A0@0,2,1,0": {
+      "LambdaPower": "1/2",
+      "tau0ReciprocalPower": "3/2",
+      "leadingTerms": {
+        "L_U": "466576/1533"
+      },
+      "positiveTerms": {
+        "H_212882*tau0^(2*h)": "790528/511",
+        "H_212893*tau0^(2*h)": "720896/511",
+        "H_212905*tau0^(4*h)": "720896/511",
+        "tau0^(1*h)": "279352/511",
+        "tau0^(2*h)": "337308/511",
+        "tau0^(3*h)": "258766/511"
+      },
+      "positiveMultiplier": "sqrt(Lambda)"
+    },
+    "A0@0,3,0,0": {
+      "LambdaPower": "1",
+      "tau0ReciprocalPower": "h + 3/2",
+      "leadingTerms": {
+        "L_U": "643"
+      },
+      "positiveTerms": {
+        "H_212882*tau0^(2*h)": "3840",
+        "H_212893*tau0^(2*h)": "4096",
+        "H_212905*tau0^(4*h)": "4096",
+        "tau0^(1*h)": "3807/2",
+        "tau0^(2*h)": "7647/4",
+        "tau0^(3*h)": "11743/8"
+      },
+      "positiveMultiplier": "sqrt(Lambda)"
+    },
+    "A0@1,0,0,0": {
+      "LambdaPower": "0",
+      "tau0ReciprocalPower": "h + 1/2",
+      "leadingTerms": {
+        "L_U": "16"
+      },
+      "positiveTerms": {
+        "tau0^(1*h)": "40",
+        "tau0^(2*h)": "20",
+        "tau0^(3*h)": "10"
+      },
+      "positiveMultiplier": "sqrt(Lambda)"
+    },
+    "A0@1,0,1,0": {
+      "LambdaPower": "0",
+      "tau0ReciprocalPower": "1",
+      "leadingTerms": {
+        "L_U": "63680/1533"
+      },
+      "positiveTerms": {
+        "H_212882*tau0^(2*h)": "90112/511",
+        "tau0^(1*h)": "4704/73",
+        "tau0^(2*h)": "38992/511",
+        "tau0^(3*h)": "19496/511"
+      },
+      "positiveMultiplier": "sqrt(Lambda)"
+    },
+    "A0@1,1,0,0": {
+      "LambdaPower": "1/2",
+      "tau0ReciprocalPower": "h + 1",
+      "leadingTerms": {
+        "L_U": "268/3"
+      },
+      "positiveTerms": {
+        "H_212882*tau0^(2*h)": "512",
+        "tau0^(1*h)": "186",
+        "tau0^(2*h)": "221",
+        "tau0^(3*h)": "221/2"
+      },
+      "positiveMultiplier": "sqrt(Lambda)"
+    },
+    "A0@2,0,0,0": {
+      "LambdaPower": "1/2",
+      "tau0ReciprocalPower": "h + 1",
+      "leadingTerms": {
+        "L_U": "268/3"
+      },
+      "positiveTerms": {
+        "H_212882*tau0^(2*h)": "512",
+        "tau0^(1*h)": "186",
+        "tau0^(2*h)": "221",
+        "tau0^(3*h)": "221/2"
+      },
+      "positiveMultiplier": "sqrt(Lambda)"
+    },
+    "A0@2,0,1,0": {
+      "LambdaPower": "1/2",
+      "tau0ReciprocalPower": "3/2",
+      "leadingTerms": {
+        "L_U": "144912/511"
+      },
+      "positiveTerms": {
+        "H_212882*tau0^(2*h)": "106496/73",
+        "H_212893*tau0^(2*h)": "720896/511",
+        "H_212905*tau0^(4*h)": "720896/511",
+        "tau0^(1*h)": "262888/511",
+        "tau0^(2*h)": "317812/511",
+        "tau0^(3*h)": "35574/73"
+      },
+      "positiveMultiplier": "sqrt(Lambda)"
+    },
+    "A0@2,1,0,0": {
+      "LambdaPower": "1",
+      "tau0ReciprocalPower": "h + 3/2",
+      "leadingTerms": {
+        "L_U": "1667/3"
+      },
+      "positiveTerms": {
+        "H_212882*tau0^(2*h)": "3328",
+        "H_212893*tau0^(2*h)": "4096",
+        "H_212905*tau0^(4*h)": "4096",
+        "tau0^(1*h)": "3445/2",
+        "tau0^(2*h)": "6773/4",
+        "tau0^(3*h)": "10869/8"
+      },
+      "positiveMultiplier": "sqrt(Lambda)"
+    },
+    "A1@0,0,0,0": {
+      "LambdaPower": "-1/2",
+      "tau0ReciprocalPower": "h",
+      "leadingTerms": {
+        "L_U": "4"
+      },
+      "positiveTerms": {
+        "tau0^(1*h)": "4",
+        "tau0^(2*h)": "2",
+        "tau0^(3*h)": "1"
+      },
+      "positiveMultiplier": "sqrt(Lambda)"
+    },
+    "A1@0,0,0,1": {
+      "LambdaPower": "-1/2",
+      "tau0ReciprocalPower": "h + 1",
+      "leadingTerms": {
+        "L_U": "7744/511"
+      },
+      "positiveTerms": {
+        "tau0^(1*h)": "14916/511",
+        "tau0^(2*h)": "7458/511",
+        "tau0^(3*h)": "3729/511"
+      },
+      "positiveMultiplier": "sqrt(Lambda)"
+    },
+    "A1@0,0,1,0": {
+      "LambdaPower": "-1/2",
+      "tau0ReciprocalPower": "1/2",
+      "leadingTerms": {
+        "L_U": "3856/511"
+      },
+      "positiveTerms": {
+        "tau0^(1*h)": "6672/511",
+        "tau0^(2*h)": "3336/511",
+        "tau0^(3*h)": "1668/511"
+      },
+      "positiveMultiplier": "sqrt(Lambda)"
+    },
+    "A1@0,0,1,1": {
+      "LambdaPower": "-1/2",
+      "tau0ReciprocalPower": "3/2",
+      "leadingTerms": {
+        "L_U": "18499809280/400298493"
+      },
+      "positiveTerms": {
+        "H_212882*tau0^(2*h)": "40894464/261121",
+        "tau0^(1*h)": "867613184/19061833",
+        "tau0^(2*h)": "168590080/2723119",
+        "tau0^(3*h)": "84295040/2723119"
+      },
+      "positiveMultiplier": "sqrt(Lambda)"
+    },
+    "A1@0,0,2,0": {
+      "LambdaPower": "-1/2",
+      "tau0ReciprocalPower": "1 - h",
+      "leadingTerms": {
+        "L_U": "24399331328/400298493"
+      },
+      "positiveTerms": {
+        "H_212882*tau0^(2*h)": "31719424/261121",
+        "tau0^(1*h)": "1431982080/19061833",
+        "tau0^(2*h)": "184981504/2723119",
+        "tau0^(3*h)": "92490752/2723119"
+      },
+      "positiveMultiplier": "sqrt(Lambda)"
+    },
+    "A1@0,0,3,0": {
+      "LambdaPower": "-1/2",
+      "tau0ReciprocalPower": "3/2 - 2*h",
+      "leadingTerms": {
+        "L_U": "37634053352980480/104526342790653"
+      },
+      "positiveTerms": {
+        "H_212882*tau0^(2*h)": "76927166578688/68184176641",
+        "H_212893*tau0^(2*h)": "44660948992/133432831",
+        "H_212905*tau0^(4*h)": "44660948992/133432831",
+        "tau0^(1*h)": "8697529382727936/34842114263551",
+        "tau0^(2*h)": "14176210221791360/34842114263551",
+        "tau0^(3*h)": "8545844068613184/34842114263551"
+      },
+      "positiveMultiplier": "sqrt(Lambda)"
+    },
+    "A1@0,1,0,0": {
+      "LambdaPower": "0",
+      "tau0ReciprocalPower": "h + 1/2",
+      "leadingTerms": {
+        "L_U": "16"
+      },
+      "positiveTerms": {
+        "tau0^(1*h)": "40",
+        "tau0^(2*h)": "20",
+        "tau0^(3*h)": "10"
+      },
+      "positiveMultiplier": "sqrt(Lambda)"
+    },
+    "A1@0,1,1,0": {
+      "LambdaPower": "0",
+      "tau0ReciprocalPower": "1",
+      "leadingTerms": {
+        "L_U": "63680/1533"
+      },
+      "positiveTerms": {
+        "H_212882*tau0^(2*h)": "90112/511",
+        "tau0^(1*h)": "4704/73",
+        "tau0^(2*h)": "38992/511",
+        "tau0^(3*h)": "19496/511"
+      },
+      "positiveMultiplier": "sqrt(Lambda)"
+    },
+    "A1@0,2,0,0": {
+      "LambdaPower": "1/2",
+      "tau0ReciprocalPower": "h + 1",
+      "leadingTerms": {
+        "L_U": "268/3"
+      },
+      "positiveTerms": {
+        "H_212882*tau0^(2*h)": "512",
+        "tau0^(1*h)": "186",
+        "tau0^(2*h)": "221",
+        "tau0^(3*h)": "221/2"
+      },
+      "positiveMultiplier": "sqrt(Lambda)"
+    },
+    "A1@0,2,1,0": {
+      "LambdaPower": "1/2",
+      "tau0ReciprocalPower": "3/2",
+      "leadingTerms": {
+        "L_U": "144912/511"
+      },
+      "positiveTerms": {
+        "H_212882*tau0^(2*h)": "106496/73",
+        "H_212893*tau0^(2*h)": "720896/511",
+        "H_212905*tau0^(4*h)": "720896/511",
+        "tau0^(1*h)": "262888/511",
+        "tau0^(2*h)": "317812/511",
+        "tau0^(3*h)": "35574/73"
+      },
+      "positiveMultiplier": "sqrt(Lambda)"
+    },
+    "A1@1,0,0,0": {
+      "LambdaPower": "0",
+      "tau0ReciprocalPower": "h + 1/2",
+      "leadingTerms": {
+        "L_U": "17"
+      },
+      "positiveTerms": {
+        "tau0^(1*h)": "41",
+        "tau0^(2*h)": "41/2",
+        "tau0^(3*h)": "41/4"
+      },
+      "positiveMultiplier": "sqrt(Lambda)"
+    },
+    "A1@1,0,0,1": {
+      "LambdaPower": "0",
+      "tau0ReciprocalPower": "h + 3/2",
+      "leadingTerms": {
+        "L_U": "168368/1533"
+      },
+      "positiveTerms": {
+        "H_212882*tau0^(2*h)": "237568/511",
+        "tau0^(1*h)": "162549/2555",
+        "tau0^(2*h)": "108067/730",
+        "tau0^(3*h)": "108067/1460"
+      },
+      "positiveMultiplier": "sqrt(Lambda)"
+    },
+    "A1@1,0,1,0": {
+      "LambdaPower": "0",
+      "tau0ReciprocalPower": "1",
+      "leadingTerms": {
+        "L_U": "66572/1533"
+      },
+      "positiveTerms": {
+        "H_212882*tau0^(2*h)": "90112/511",
+        "tau0^(1*h)": "34596/511",
+        "tau0^(2*h)": "39826/511",
+        "tau0^(3*h)": "19913/511"
+      },
+      "positiveMultiplier": "sqrt(Lambda)"
+    },
+    "A1@1,0,2,0": {
+      "LambdaPower": "0",
+      "tau0ReciprocalPower": "3/2 - h",
+      "leadingTerms": {
+        "L_U": "53947510784/133432831"
+      },
+      "positiveTerms": {
+        "H_212882*tau0^(2*h)": "210914508800/133432831",
+        "H_212893*tau0^(2*h)": "253755392/261121",
+        "H_212905*tau0^(4*h)": "253755392/261121",
+        "tau0^(1*h)": "210255512576/667164155",
+        "tau0^(2*h)": "368770892288/667164155",
+        "tau0^(3*h)": "265428574464/667164155"
+      },
+      "positiveMultiplier": "sqrt(Lambda)"
+    },
+    "A1@1,1,0,0": {
+      "LambdaPower": "1/2",
+      "tau0ReciprocalPower": "h + 1",
+      "leadingTerms": {
+        "L_U": "268/3"
+      },
+      "positiveTerms": {
+        "H_212882*tau0^(2*h)": "512",
+        "tau0^(1*h)": "186",
+        "tau0^(2*h)": "221",
+        "tau0^(3*h)": "221/2"
+      },
+      "positiveMultiplier": "sqrt(Lambda)"
+    },
+    "A1@1,2,0,0": {
+      "LambdaPower": "1",
+      "tau0ReciprocalPower": "h + 3/2",
+      "leadingTerms": {
+        "L_U": "1667/3"
+      },
+      "positiveTerms": {
+        "H_212882*tau0^(2*h)": "3328",
+        "H_212893*tau0^(2*h)": "4096",
+        "H_212905*tau0^(4*h)": "4096",
+        "tau0^(1*h)": "3445/2",
+        "tau0^(2*h)": "6773/4",
+        "tau0^(3*h)": "10869/8"
+      },
+      "positiveMultiplier": "sqrt(Lambda)"
+    },
+    "A1@2,0,0,0": {
+      "LambdaPower": "1/2",
+      "tau0ReciprocalPower": "h + 1",
+      "leadingTerms": {
+        "L_U": "292/3"
+      },
+      "positiveTerms": {
+        "H_212882*tau0^(2*h)": "512",
+        "tau0^(1*h)": "206",
+        "tau0^(2*h)": "231",
+        "tau0^(3*h)": "231/2"
+      },
+      "positiveMultiplier": "sqrt(Lambda)"
+    },
+    "A1@2,0,1,0": {
+      "LambdaPower": "1/2",
+      "tau0ReciprocalPower": "3/2",
+      "leadingTerms": {
+        "L_U": "466576/1533"
+      },
+      "positiveTerms": {
+        "H_212882*tau0^(2*h)": "790528/511",
+        "H_212893*tau0^(2*h)": "720896/511",
+        "H_212905*tau0^(4*h)": "720896/511",
+        "tau0^(1*h)": "279352/511",
+        "tau0^(2*h)": "337308/511",
+        "tau0^(3*h)": "258766/511"
+      },
+      "positiveMultiplier": "sqrt(Lambda)"
+    },
+    "A1@3,0,0,0": {
+      "LambdaPower": "1",
+      "tau0ReciprocalPower": "h + 3/2",
+      "leadingTerms": {
+        "L_U": "643"
+      },
+      "positiveTerms": {
+        "H_212882*tau0^(2*h)": "3840",
+        "H_212893*tau0^(2*h)": "4096",
+        "H_212905*tau0^(4*h)": "4096",
+        "tau0^(1*h)": "3807/2",
+        "tau0^(2*h)": "7647/4",
+        "tau0^(3*h)": "11743/8"
+      },
+      "positiveMultiplier": "sqrt(Lambda)"
+    },
+    "A2@0,0,0,0": {
+      "exactInterval": [
+        "0",
+        "0"
+      ]
+    },
+    "A2@0,0,0,1": {
+      "exactInterval": [
+        "0",
+        "0"
+      ]
+    },
+    "A2@0,0,1,0": {
+      "exactInterval": [
+        "0",
+        "0"
+      ]
+    },
+    "A2@0,0,2,0": {
+      "exactInterval": [
+        "0",
+        "0"
+      ]
+    },
+    "A2@0,1,0,0": {
+      "exactInterval": [
+        "0",
+        "0"
+      ]
+    },
+    "A2@0,1,0,1": {
+      "exactInterval": [
+        "0",
+        "0"
+      ]
+    },
+    "A2@0,1,1,0": {
+      "exactInterval": [
+        "0",
+        "0"
+      ]
+    },
+    "A2@0,1,2,0": {
+      "exactInterval": [
+        "0",
+        "0"
+      ]
+    },
+    "A2@0,2,0,0": {
+      "exactInterval": [
+        "0",
+        "0"
+      ]
+    },
+    "A2@0,3,0,0": {
+      "exactInterval": [
+        "0",
+        "0"
+      ]
+    },
+    "A2@1,0,0,0": {
+      "exactInterval": [
+        "0",
+        "0"
+      ]
+    },
+    "A2@1,0,0,1": {
+      "exactInterval": [
+        "0",
+        "0"
+      ]
+    },
+    "A2@1,0,1,0": {
+      "exactInterval": [
+        "0",
+        "0"
+      ]
+    },
+    "A2@1,0,2,0": {
+      "exactInterval": [
+        "0",
+        "0"
+      ]
+    },
+    "A2@1,1,0,0": {
+      "exactInterval": [
+        "0",
+        "0"
+      ]
+    },
+    "A2@1,2,0,0": {
+      "exactInterval": [
+        "0",
+        "0"
+      ]
+    },
+    "A2@2,0,0,0": {
+      "exactInterval": [
+        "0",
+        "0"
+      ]
+    },
+    "A2@2,1,0,0": {
+      "exactInterval": [
+        "0",
+        "0"
+      ]
+    },
+    "A2@3,0,0,0": {
+      "exactInterval": [
+        "0",
+        "0"
+      ]
+    },
+    "b@0,0,0": {
+      "LambdaPower": "0",
+      "tau0ReciprocalPower": "h + 1",
+      "leadingTerms": {
+        "L_F": "4"
+      },
+      "positiveTerms": {
+        "tau0^(1*h)": "2",
+        "tau0^(2*h)": "1",
+        "tau0^(3*h)": "1/2"
+      },
+      "positiveMultiplier": "sqrt(Lambda)"
+    },
+    "b@0,0,1": {
+      "LambdaPower": "0",
+      "tau0ReciprocalPower": "h + 2",
+      "leadingTerms": {
+        "L_F": "14912/511"
+      },
+      "positiveTerms": {
+        "tau0^(1*h)": "8482/511",
+        "tau0^(2*h)": "4241/511",
+        "tau0^(3*h)": "4241/1022"
+      },
+      "positiveMultiplier": "sqrt(Lambda)"
+    },
+    "b@0,1,0": {
+      "LambdaPower": "0",
+      "tau0ReciprocalPower": "3/2",
+      "leadingTerms": {
+        "L_F": "5648/511"
+      },
+      "positiveTerms": {
+        "tau0^(1*h)": "3592/511",
+        "tau0^(2*h)": "1796/511",
+        "tau0^(3*h)": "898/511"
+      },
+      "positiveMultiplier": "sqrt(Lambda)"
+    },
+    "b@0,2,0": {
+      "LambdaPower": "0",
+      "tau0ReciprocalPower": "2 - h",
+      "leadingTerms": {
+        "L_F": "7445110784/133432831"
+      },
+      "positiveTerms": {
+        "H_212886*tau0^(2*h)": "7929856/261121",
+        "tau0^(1*h)": "3093596160/133432831",
+        "tau0^(2*h)": "2559837184/133432831",
+        "tau0^(3*h)": "1279918592/133432831"
+      },
+      "positiveMultiplier": "sqrt(Lambda)"
+    },
+    "b@1,0,0": {
+      "LambdaPower": "1",
+      "tau0ReciprocalPower": "h + 2",
+      "leadingTerms": {
+        "L_F": "4"
+      },
+      "positiveTerms": {
+        "tau0^(1*h)": "5/2",
+        "tau0^(2*h)": "5/4",
+        "tau0^(3*h)": "5/8"
+      },
+      "positiveMultiplier": "sqrt(Lambda)"
+    },
+    "b@2,0,0": {
+      "LambdaPower": "2",
+      "tau0ReciprocalPower": "h + 3",
+      "leadingTerms": {
+        "L_F": "4"
+      },
+      "positiveTerms": {
+        "H_212886*tau0^(2*h)": "4",
+        "tau0^(1*h)": "11/8",
+        "tau0^(2*h)": "27/16",
+        "tau0^(3*h)": "27/32"
+      },
+      "positiveMultiplier": "sqrt(Lambda)"
+    },
+    "p@0,0,0,0": {
+      "LambdaPower": "0",
+      "tau0ReciprocalPower": "2*h + 1",
+      "leadingTerms": {
+        "K": "20",
+        "L_F^2": "4"
+      },
+      "positiveTerms": {
+        "tau0^(1*h)": "4",
+        "tau0^(2*h)": "2",
+        "tau0^(3*h)": "1"
+      },
+      "positiveMultiplier": "1"
+    },
+    "p@0,0,1,0": {
+      "LambdaPower": "0",
+      "tau0ReciprocalPower": "h + 3/2",
+      "leadingTerms": {
+        "K": "332960/511",
+        "L_F^2": "7712/511"
+      },
+      "positiveTerms": {
+        "tau0^(1*h)": "6688/511",
+        "tau0^(2*h)": "3344/511",
+        "tau0^(3*h)": "1672/511"
+      },
+      "positiveMultiplier": "1"
+    },
+    "p@0,1,0,0": {
+      "LambdaPower": "1/2",
+      "tau0ReciprocalPower": "2*h + 3/2",
+      "leadingTerms": {
+        "L_F^2": "32"
+      },
+      "positiveTerms": {
+        "tau0^(1*h)": "32",
+        "tau0^(2*h)": "16",
+        "tau0^(3*h)": "8"
+      },
+      "positiveMultiplier": "1"
+    },
+    "p@1,0,0,0": {
+      "LambdaPower": "1/2",
+      "tau0ReciprocalPower": "2*h + 3/2",
+      "leadingTerms": {
+        "L_F^2": "32"
+      },
+      "positiveTerms": {
+        "tau0^(1*h)": "32",
+        "tau0^(2*h)": "16",
+        "tau0^(3*h)": "8"
+      },
+      "positiveMultiplier": "1"
+    }
+  },
+  "scope": {
+    "localAtoms": 67,
+    "exactLocalZeros": 19,
+    "outerCutoffAtomsSeparate": 13,
+    "normFactorsNumericallyEvaluated": false,
+    "originalAnnularSupportTheoremUsed": true,
+    "globalJets": "0/67",
+    "N7-06": "OPEN",
+    "N8-05": "OPEN",
+    "release": "HOLD"
+  }
+}

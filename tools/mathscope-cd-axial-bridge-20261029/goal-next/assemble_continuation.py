@@ -296,6 +296,22 @@ with zipfile.ZipFile(DEST, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=
                 assert sha_manifest[name]["sha256"] == digest(source), relative
             else:
                 add(name, source)
+    selector_base = ("research-ide/mathscope-m2/navier/research/evidence/physical-full-jets-20261011/"
+                     "actual-physical-center-full-jet-source-attempt4")
+    selector_receipt = json.loads(git("show", commit + ":" + CURRENT + "/whole-k-selector-scales/common-b-scales.json"))
+    exact_archive_hashes = selector_receipt["archiveComparison"]["archiveSHA256"]
+    for suffix, key in ((".json", "final"), ("-closed-selector-and-physical-scales.json", "closedScales"),
+                        ("-first-selector-ftc-upper-bounds.json.gz", "upperBounds"),
+                        ("-selection-trace.json", "trace")):
+        original = selector_base + suffix
+        data = git("show", selector_receipt["originalCommit"] + ":" + original)
+        if suffix.endswith(".gz"):
+            import gzip
+            check = gzip.decompress(data)
+        else:
+            check = data
+        assert digest(check) == exact_archive_hashes[key], original
+        add("inputs/original-selector-scales/" + Path(original).name, data)
     add("REPORT_KO.md", report)
     add("STATUS.json", status)
     target.writestr("SHA256.json", encode(sha_manifest))
