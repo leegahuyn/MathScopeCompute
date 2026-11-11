@@ -9,12 +9,13 @@ import zipfile
 
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("--workspace", type=Path, default=Path.cwd())
+parser.add_argument("--checkpoint", default="Continuation")
 args = parser.parse_args()
 TASK = args.workspace.resolve()
 REPO = TASK / "work/MathScopeCompute-CD"
 OUT = TASK / "outputs"
 PREVIOUS = OUT / "MathScope_Goal_Evidence_20261111.zip"
-DEST = OUT / "MathScope_Goal_Continuation_20261111.zip"
+DEST = OUT / f"MathScope_Goal_{args.checkpoint}_20261111.zip"
 PREFIX = "tools/mathscope-cd-axial-bridge-20261029"
 CURRENT = PREFIX + "/goal-next"
 AUDITOR = "research-ide/mathscope-m4/acceptance.mjs"
@@ -22,6 +23,7 @@ EXTRAS = [
     AUDITOR, ".github/workflows/mathscope-m4-generated-jobs.yml",
     ".github/workflows/mathscope-cd-axial-bridge-20261029.yml",
     "research-ide/mathscope-m3/p8/lean/MathScope/M3/CD/ReferenceIngress.lean",
+    "research-ide/mathscope-m3/p8/lean/MathScope/M3/CD/PulseCutoff.lean",
     "research-ide/mathscope-m4/research-boundaries.json",
     "research-ide/mathscope-m4/formal-claims.mjs",
     "research-ide/mathscope-m4/release-lab/catalog.json",
@@ -113,10 +115,10 @@ with zipfile.ZipFile(DEST) as archive:
         assert assessment["publicationConfirmed"] is False
         assert assessment["canFreeze"] is False
 
-(OUT / "MathScope_Goal_Continuation_Report_20261111_KO.md").write_bytes(report)
+(OUT / f"MathScope_Goal_{args.checkpoint}_Report_20261111_KO.md").write_bytes(report)
 receipt = {"file": DEST.name, "files": len(sha_manifest) + 1, "bytes": DEST.stat().st_size,
     "sha256": digest(DEST.read_bytes()), "branch_head": commit,
     "verified_archive_manifest_and_assessment": True,
     "verified_M4": len(assessment["accepted"])}
-(OUT / "MathScope_Goal_Continuation_Receipt_20261111.json").write_bytes(encode(receipt))
+(OUT / f"MathScope_Goal_{args.checkpoint}_Receipt_20261111.json").write_bytes(encode(receipt))
 print(json.dumps(receipt))
