@@ -5,7 +5,7 @@
   const data = JSON.parse(document.getElementById('ms-r1-data').textContent);
   const q = key => root.querySelector('[data-r1="' + key + '"]');
   const make = (tag, value) => { const n = document.createElement(tag); if (value !== undefined) n.textContent = String(value); return n; };
-  const catalog = data.catalog.fixtures;
+  const catalog = [...data.catalog.fixtures, ...(data.catalog.provenanceFixtures || [])];
   const factories = { M1: () => window.MathScopeResearchM1.createReleaseEngine(), M2: () => window.MathScopeResearchM2.createReleaseEngine() };
   let selected = catalog[0].id, last = null, rows = [];
   const normalizers = { M1: request => window.MathScopeResearchM1.normalizeReleaseRequest(request), M2: request => window.MathScopeResearchM2.normalizeReleaseRequest(request) };
@@ -21,12 +21,74 @@
     if (job) { root.dataset.state = job.stale ? 'STALE' : job.state; root.dataset.inputHash = job.inputHash || ''; }
   }
   const numeric = value => typeof value === 'number' ? value : value && typeof value === 'object' && value.kind === 'FLOAT64' ? numeric(value.value) : typeof value === 'string' && /^-?\d+(?:\.\d+)?(?:e[+-]?\d+)?$/i.test(value) ? Number(value) : NaN;
+  function sourceRows(result) {
+    const data = result.results;
+    if (result.kind === 'ns.actual-background') {
+      const observations = data?.axisObservations, jets = data?.jets;
+      const i = observations?.samples?.findIndex(sample => sample.id === 'actual-U1-axis-slope');
+      const sample = observations?.samples?.[i], nodeId = jets?.positive?.U?.[1];
+      if (!sample || !jets?.nodes?.[nodeId] || !data.verification?.pass ||
+          observations.profileId !== jets.profileId || sample.sourceHash !== observations.sourceInputs?.axisProducer?.sha256) return [];
+      return [{
+        x: 1, y: sample.value, path: `results.axisObservations.samples[${i}].normalizedInterval`,
+        value: sample.normalizedInterval, axes: '방사 계수 차수 / ∂ₓU₁(0,0) / j₀',
+        error: { arithmetic: observations.arithmetic, normalizedInterval: sample.normalizedInterval,
+          displayEnclosure: sample.displayEnclosure, domain: observations.domain },
+        trace: { sourceId: 'N00', theoremId: 'N00/Lemma 5.2', paper: result.sourceLedger.paper,
+          equations: observations.sourceEquations, formula: sample.unnormalizedFormula,
+          normalization: sample.normalization, restoration: sample.restoration, premises: sample.dependsOn,
+          profileId: observations.profileId, parameterHash: observations.parameterExpressionSHA256,
+          generator: { path: 'results.jets.positive.U[1]', nodeId, expression: jets.nodes[nodeId],
+            producer: observations.sourceInputs.axisProducer, convention: jets.coefficientConvention },
+          verifiedScope: observations.scope },
+      }];
+    }
+    if (data?.object?.kind === 'PERFECT_PRISM_TYPED_COMPARISON' && data.object.target === 'deRham') {
+      const { route, perfectPrism } = data;
+      return (result.visualization?.points || []).flatMap((point, i) => {
+        const stage = point.value;
+        if (stage?.stage !== i || stage.operation !== route?.orderedOperations?.[i]) return [];
+        return [{ x: i, y: 0, path: `visualization.points[${i}].value`, value: stage,
+          axes: result.visualization.description,
+          error: { kind: 'EXACT_CATEGORICAL_STAGE', displayedStageRounding: 0, precision: result.precisionLedger },
+          trace: { theoremIds: route.sources.map(source => ({ sourceId: source.id, locators: source.locators })),
+            paper: route.sources, comparisonPath: 'results.route.details', comparisonMap: route.details,
+            baseHash: data.object.baseHash, premises: perfectPrism.proofInputs, proofGrade: route.proofGrade },
+        }];
+      });
+    }
+    return null;
+  }
   function sampleRows(result) {
+    const projected = sourceRows(result);
+    if (projected) return projected;
     if (Array.isArray(result.derivatives)) return result.derivatives.map((b, i) => ({ x:i,y:b.midpoint,path:'derivatives['+i+']',value:b,axes:'도함수 차수 / heat H 도함수 · 인증 구간',error:result.certificate }));
     const pointField = result.results?.extensionField?.affinePoints ? 'extensionField' : 'primeField', points = result.results?.[pointField]?.affinePoints;
     if (points) return points.slice(0,64).map((p,i)=>({x:numeric(p.x),y:numeric(p.y),path:'results.'+pointField+'.affinePoints['+i+']',value:p,axes:'유한체 잉여 대표 x / y · 연속 곡선으로 해석하지 않음'}));
     if (Array.isArray(result.results?.cohomology)) return result.results.cohomology.map((p,i)=>({x:numeric(p.degree),y:numeric(p.frobeniusEigenvalue),path:'results.cohomology['+i+']',value:p,axes:'상동 차수 / Frobenius 고유값 · 화면은 Float64, 정확 값은 JSON'})).filter((_,i)=>result.results.cohomology[i].rank>0);
-    if (Array.isArray(result.comparison)) return result.comparison.map((p,i)=>({x:numeric(p.delta),y:numeric(p.physicalDensity?.actionDensity??p.physicalDensity),path:'comparison['+i+'].physicalDensity.actionDensity',value:p,axes:'Δ / 지정 probe의 고전적 actionDensity (ell0^-4) · 양자 간극 아님'}));
+    if (Array.isArray(result.comparison)) return result.comparison.map((row, i) => {
+      if (result.familySpec?.mode !== 'CLASSICAL_SCALE') return { x: numeric(row.delta),
+        y: numeric(row.physicalDensity?.actionDensity ?? row.physicalDensity),
+        path: `comparison[${i}].physicalDensity.actionDensity`, value: row,
+        axes: 'Δ / 지정 probe의 고전적 actionDensity (ell0^-4) · 양자 간극 아님' };
+      const matched = row.physicalFieldHash === result.hashes?.physicalField &&
+        row.delta === result.familySpec?.delta && result.verification?.point?.every((x, j) => x === row.probe?.[j]);
+      const base = { x: numeric(row.delta), y: numeric(row.physicalDensity?.actionDensity ?? row.physicalDensity),
+        path: `comparison[${i}].physicalDensity.actionDensity`, value: row.physicalDensity?.actionDensity,
+        axes: 'Δ / 지정 probe의 고전적 actionDensity (ell0^-4)' };
+      const paper = result.references?.find(item => item.id === 'YM-R06');
+      return { ...base, error: { scope: 'FLOAT64_DIAGNOSTICS', certifiedDensityError: null,
+        sameProbe: Boolean(matched), finiteDifference: matched ? result.verification.finiteDifference : null,
+        coordinateCurvature: matched ? result.verification.coordinateCurvature : null,
+        gaugeDensityDifference: matched ? result.verification.gauge?.actionDensityDifference : null },
+        trace: { generatorId: 'Y5-01/CLASSICAL_SCALE', formula: result.stateFamilySpec?.delta?.role,
+          generatorPath: matched ? 'stateFamilySpec.fieldConstruction.parameters' : null, family: result.familySpec,
+          selected: { delta: row.delta, rho: row.rho, trialLength: row.trialLength, probe: row.probe,
+            physicalFieldHash: row.physicalFieldHash, assumptionHash: row.assumptionHash },
+          sourceIds: paper ? [paper.id] : [], paper, assumptionRefs: result.stateFamilySpec?.assumptionRefs,
+          interpretation: result.stateFamilySpec?.energyInterpretation },
+      };
+    });
     if (Array.isArray(result.points) && result.points.length) return result.points.slice(0,64).map((p,i)=>({x:numeric(p.r) || (Array.isArray(p.position)?Math.hypot(...p.position.slice(0,2).map(numeric)):NaN),y:p.speed===undefined?(Array.isArray(p.velocity)?Math.hypot(...p.velocity.map(numeric)):NaN):numeric(p.speed),path:'points['+i+']',value:p,axes:'물리 반경 / 속도 크기 · 전체 K 에너지 아님',error:result.errorBudget}));
     const viz = result.visualization || result.values?.visualization;
     if (viz?.points?.length) return viz.points.slice(0,64).map((p,i)=>({x:numeric(p.pos?.[0]),y:numeric(p.value?.value??p.value),path:'visualization.points['+i+']',value:p,axes:viz.description||'실제 source 표본 · 첫 좌표 / 원래 관측값'}));
@@ -34,8 +96,11 @@
   }
   function inspect(index) {
     const j = last ? lab.job(last) : null, s = rows[index], boundItem = catalog.find(x=>x.id===j?.fixtureId) || item();
-    q('inspect').textContent = JSON.stringify({claimId:boundItem.claimId,formula:boundItem.formula,source:boundItem.source,jobId:j?.id,state:j?.stale?'STALE':j?.state,inputHash:j?.inputHash,sourceWorkerSHA256:j?.workerSHA256,environmentHash:j?.environmentHash,resultHash:j?.resultHash,selectedPath:s?.path??null,rawValue:s?.value??j?.result,error:s?.error??j?.result?.errorBudget??j?.result?.precisionLedger??null,formalPass:false},null,2);
+    q('inspect').textContent = JSON.stringify({claimId:boundItem.claimId,formula:boundItem.formula,source:boundItem.source,jobId:j?.id,state:j?.stale?'STALE':j?.state,inputHash:j?.inputHash,sourceWorkerSHA256:j?.workerSHA256,environmentHash:j?.environmentHash,resultHash:j?.resultHash,selectedPath:s?.path??null,sampleTrace:s?.trace??null,rawValue:s?.value??j?.result,error:s?.error??j?.result?.errorBudget??j?.result?.precisionLedger??null,formalPass:false},null,2);
     q('source').href = boundItem.source.url;
+    const paper = s?.trace?.paper, paperUrl = boundItem.source.paperUrl || (Array.isArray(paper) ? paper[0]?.url : paper?.url);
+    q('paper').hidden = !s?.trace || !paperUrl;
+    if (s?.trace && paperUrl) q('paper').href = paperUrl;
   }
   function draw(job) {
     rows = sampleRows(job.result || {}).filter(p=>Number.isFinite(p.x)&&Number.isFinite(p.y));
@@ -52,6 +117,7 @@
     });inspect(0);
   }
   function choose(id) {
+    q('paper').hidden = true;
     selected=id;q('input').value=JSON.stringify(lab.request(id),null,2);last=lab.jobs(id).at(-1)?.id||null;
     if(last)draw(lab.job(last));else{rows=[];q('chart').replaceChildren();q('rows').replaceChildren();q('inspect').textContent=JSON.stringify({claimId:item().claimId,formula:item().formula,source:item().source,request:lab.request(id)},null,2);q('source').href=item().source.url;q('axes').textContent='실행 전 · 표본이 아직 없습니다.';root.dataset.state='READY';root.dataset.inputHash='';}
     const url=new URL(location.href);url.searchParams.set('r1',id);history.replaceState(null,'',url);

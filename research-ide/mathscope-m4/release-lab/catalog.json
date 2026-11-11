@@ -741,5 +741,30 @@
       "boundType": "DETERMINISTIC_DISPLAY_SAMPLING_ONLY",
       "sourceScope": "Classical grid observations, not Monte Carlo confidence intervals"
     }
+  ],
+  "provenanceFixtures": [
+    {
+      "id": "ns-coefficient",
+      "label": "NS 원문 1차 보정 · 축 생성 계수",
+      "engine": "M2",
+      "request": {
+        "kind": "ns.actual-background",
+        "input": {
+          "sourceProfile": "same-profile-2026-10-10.3",
+          "radialDegree": 3,
+          "tailBits": 128
+        }
+      },
+      "claimId": "R1-03/N4-03",
+      "formula": "2(XU₁,XX + U₁,X) = 원문 (5.4)의 축방향 우변",
+      "source": {
+        "repoPath": "research-ide/mathscope-m2/navier/actual-background-jets.mjs",
+        "page": 46,
+        "equation": "(5.4), Lemma 5.2",
+        "url": "https://github.com/leegahuyn/MathScopeCompute/blob/9595b4de5a1065b694d225c0ad2a14d5aa4435a9/research-ide/mathscope-m2/navier/actual-background-jets.mjs",
+        "paperUrl": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf#page=46",
+        "pageDocument": "N00 166-page pinned paper"
+      }
+    }
   ]
 }
