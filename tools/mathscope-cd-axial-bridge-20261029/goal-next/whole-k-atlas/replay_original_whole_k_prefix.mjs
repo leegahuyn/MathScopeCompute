@@ -1,7 +1,8 @@
 import assert from 'node:assert/strict';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { prepareGlobalSourceBand, assertGlobalSourceBand } from '../navier/source-global-band.mjs';
+import { attachGlobalSourceBand, prepareGlobalSourceBand, assertGlobalSourceBand } from '../navier/source-global-band.mjs';
+import { prepareActualCommonAdmissibleFamily, assertActualCommonAdmissibleFamily } from '../../mathscope-m2/navier/actual-common-admissible-family.mjs';
 import { attachGlobalFixedRepresentative, assertGlobalFixedRepresentative } from '../navier/source-global-representative.mjs';
 import { attachGlobalCurrentState, assertGlobalCurrentState } from '../navier/source-global-current.mjs';
 import { attachGlobalCurrentPressure, assertGlobalCurrentPressure } from '../navier/source-global-pressure.mjs';
@@ -13,11 +14,15 @@ const executingCommit = process.env.GITHUB_SHA;
 const N = Number(request);
 const maxMinutes = 105;
 const maxRss = Number(process.env.MATHSCOPE_PREFIX_MAX_RSS_BYTES ?? 6 * 1024 ** 3);
-assert.ok([6, 9].some(gib => maxRss === gib * 1024 ** 3));
+assert.ok([6, 9, 11].some(gib => maxRss === gib * 1024 ** 3));
 assert.ok(directory && /^[a-f0-9]{40}$/.test(sourceCommit));
 assert.ok(/^[a-f0-9]{40}$/.test(executingCommit ?? ''));
 assert.ok(request === String(N) && [0, 3, 4].includes(N));
 mkdirSync(directory, { recursive: true });
+
+const upstreamMaxNodes = Number(process.env.MATHSCOPE_PREFIX_FAMILY_MAX_NODES ?? 5000000);
+assert.ok(upstreamMaxNodes === 5000000 || (upstreamMaxNodes === 8000000 && N === 4));
+const exportMaxNodes = upstreamMaxNodes === 8000000 ? 10000000 : 6000000;
 
 const started = Date.now();
 const gcIntervalMs = 20_000;
@@ -25,7 +30,7 @@ let lastGC = 0;
 const receipt = {
   schema: 'MathScope.M3.OriginalWholeKHigherPrefix/1',
   sourceCommit, executingCommit, requestedPrefix: N, stages: [],
-  maxMinutes, maxRss, maxRssObserved: 0, memoryCheckpoints: [], finalJets: 0, release: 'HOLD',
+  maxMinutes, maxRss, upstreamMaxNodes, exportMaxNodes, maxRssObserved: 0, memoryCheckpoints: [], finalJets: 0, release: 'HOLD',
 };
 const save = () => writeFileSync(join(directory, 'original-whole-k-prefix.json'), JSON.stringify(receipt, null, 2) + '\n');
 function measure() {
@@ -90,14 +95,26 @@ function stage(name, build, authenticate) {
 }
 
 try {
-  const band = stage('sealed-original-band',
-    () => prepareGlobalSourceBand({ coefficientOrder: N, maxNodes: 4000000 }, context),
-    assertGlobalSourceBand);
-  const { G, family, window } = band;
   const through = Math.max(2, N+1);
+  const derivativeOrder = Math.max(3, N+1);
+  const request = { coefficientOrder: N, maxNodes: 4000000 };
+  const upstream = upstreamMaxNodes > 5000000
+    ? stage('sealed-original-common-family',
+      () => prepareActualCommonAdmissibleFamily({
+        throughOrder: through, derivativeOrder, maxNodes: upstreamMaxNodes,
+        maxProfileJets: 60000, maxJetRequests: 600000,
+      }, context), assertActualCommonAdmissibleFamily)
+    : null;
+  const band = stage('sealed-original-band',
+    () => upstream ? attachGlobalSourceBand(upstream, request, context) : prepareGlobalSourceBand(request, context),
+    assertGlobalSourceBand);
+
+  const { G, family, window } = band;
   const rows = family.selector.rows;
   assert.equal(family.request.throughOrder, through);
-  assert.equal(family.request.derivativeOrder, Math.max(3, N+1));
+  assert.equal(family.request.derivativeOrder, derivativeOrder);
+  assert.equal(family.request.maxNodes, upstreamMaxNodes);
+  if (upstream) assert.equal(family, upstream);
   assert.equal(family.selector.sourceAuthenticated, true);
   assert.deepEqual(rows.map(row => row.order), Array.from({ length: through }, (_, i) => i+1));
   assert.deepEqual(rows.map(row => row.constraints.length),
@@ -164,7 +181,7 @@ try {
     sourceCommit: executingCommit,
     pr30Commit: 'a9b3a5b317525f6d0a71e2e356b054c9d25d2e60',
     scope: 'ORIGINAL_WHOLE_K_N' + N + '_CURRENT_PRESSURE_PREFIX',
-    maxNodes: 6000000,
+    maxNodes: exportMaxNodes,
   });
   receipt.currentStage = 'COMPLETE';
   save();

@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        prefix: ${{ fromJSON(github.event_name == 'push' && '[3]' || '[0,3,4]') }}
+        prefix: ${{ fromJSON(github.event_name == 'push' && '[4]' || '[0,3,4]') }}
     env:
       NODE_OPTIONS: --max-old-space-size=6100
       ORIGINAL_SOURCE_COMMIT: f8cb4034e86d7b669d52a6f2248aebba156b51b5
@@ -47,6 +47,7 @@ jobs:
           free -b
           limits="$(python3 - <<'PY'
           from pathlib import Path
+          from os import environ
           gib = 1024**3
           mem = dict(line.split(":", 1) for line in Path("/proc/meminfo").read_text().splitlines())
           available = int(mem["MemAvailable"].split()[0]) * 1024
@@ -58,13 +59,17 @@ jobs:
                   cap = limit.read_text().strip()
                   if cap != "max":
                       available = min(available, int(cap) - int(usage.read_text()))
+          fourth = environ["ORIGINAL_PREFIX"] == "4"
           roomy = available >= 11 * gib
-          print((9 if roomy else 6) * gib, 8100 if roomy else 6100)
+          more_room = fourth and available >= 13 * gib
+          print((11 if more_room else 9 if roomy else 6) * gib,
+                9800 if more_room else 8100 if roomy else 6100,
+                8000000 if more_room else 5000000)
           PY
           )"
-          read -r MATHSCOPE_PREFIX_MAX_RSS_BYTES heap_mb <<< "$limits"
-          export MATHSCOPE_PREFIX_MAX_RSS_BYTES
-          printf 'runner RSS cap=%s bytes; V8 old-space=%s MiB\n' "$MATHSCOPE_PREFIX_MAX_RSS_BYTES" "$heap_mb"
+          read -r MATHSCOPE_PREFIX_MAX_RSS_BYTES heap_mb MATHSCOPE_PREFIX_FAMILY_MAX_NODES <<< "$limits"
+          export MATHSCOPE_PREFIX_MAX_RSS_BYTES MATHSCOPE_PREFIX_FAMILY_MAX_NODES
+          printf 'runner RSS cap=%s bytes; V8 old-space=%s MiB; original family node budget=%s\n' "$MATHSCOPE_PREFIX_MAX_RSS_BYTES" "$heap_mb" "$MATHSCOPE_PREFIX_FAMILY_MAX_NODES"
           node --check "$target"
           node --max-old-space-size="$heap_mb" --expose-gc "$target" "$RUNNER_TEMP/mathscope-whole-k" "$ORIGINAL_SOURCE_COMMIT" "$ORIGINAL_PREFIX"
       - uses: actions/upload-artifact@v4
