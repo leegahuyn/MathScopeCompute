@@ -179,12 +179,13 @@ def guarded_edges_and_masks(nodes, body_edges, registry, scope, ids, actual_chil
     return unindexed,indexed,len(rows)
 
 
-def axial_face_integrability(nodes, direct, discharged):
+def axial_face_integrability(nodes, direct, discharged, *, finite_x=FINITE_X,
+                            stress_sites=REACHED_EXPECTED):
     """Check the exact 672 face integrands using the proved closed hulls."""
     xa, inv_xa = 3617, 3679
     assert nodes[inv_xa] == {"op":"inverse","args":[xa]}
     assert nodes[3612] == {"op":"source_parameter","args":["t1"]}
-    fixed = {xa,3612,LEFT,RIGHT,XB,FINITE_X}
+    fixed = {xa,3612,LEFT,RIGHT,XB,finite_x}
     face_ids = {i for i,_ in discharged}
     nested = {nodes[i]["args"][0] for i in face_ids} & face_ids
     visited, positive_logs, divisions, square_roots, integrals, stress_calls = (
@@ -205,7 +206,7 @@ def axial_face_integrability(nodes, direct, discharged):
             value = Fraction(*map(int,a))
             return 2 if value > 0 else -2 if value < 0 else 1
         if op == "actual_expression_partial":
-            assert i in direct and i in REACHED_EXPECTED and a[0] == 672
+            assert i in direct and i in stress_sites and a[0] == 672
             x,eta = a[1]
             assert radial_point(x,environment) and (eta == 20 or environment.get(eta) == "eta")
             stress_calls.add(i)
@@ -213,7 +214,7 @@ def axial_face_integrability(nodes, direct, discharged):
         if op == "definite_integral":
             body,binder,lo,hi = a
             assert i in face_ids
-            assert [lo,hi] in ([LEFT,FINITE_X],[20,1])
+            assert [lo,hi] in ([LEFT,finite_x],[20,1])
             integrals.add(i)
             sign(lo,environment)
             sign(hi,environment)

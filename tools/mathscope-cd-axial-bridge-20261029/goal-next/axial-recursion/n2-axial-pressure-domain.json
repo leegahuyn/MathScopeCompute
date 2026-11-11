@@ -1,0 +1,287 @@
+{
+  "scope": "Exact direct N2 axial stress assembly and actual positive radial pressure binder domains under the explicit N2 reference ingress, with an exact axis countercheck.",
+  "sourceChart": {
+    "R": 1451871,
+    "Z": 1451872,
+    "T": 1451873,
+    "ell": 1451860,
+    "s": 1451889,
+    "q": 1451899,
+    "X": 1451893,
+    "eta": 1451898,
+    "inverseSystem": 2,
+    "referenceInputBracket": [
+      "1/2",
+      "2"
+    ]
+  },
+  "axialStress": {
+    "root": 1463050,
+    "scale": 1462869,
+    "originalLeadingSource": 1452884,
+    "template": 1451972,
+    "actualPositiveTerms": [
+      {
+        "order": 1,
+        "formal": {
+          "source": 117069,
+          "integral": 117057,
+          "binder": 117055,
+          "actualEta": 2,
+          "densitySystem": 1
+        },
+        "actual": {
+          "source": 1463046,
+          "integral": 1463043,
+          "binder": 117055,
+          "actualEta": 1451898,
+          "densitySystem": 1
+        },
+        "actualWeight": 1462930,
+        "cutoffSystem": 680,
+        "actualWeightedTerm": 1463047
+      },
+      {
+        "order": 2,
+        "formal": {
+          "source": 120807,
+          "integral": 120804,
+          "binder": 120801,
+          "actualEta": 2,
+          "densitySystem": 34
+        },
+        "actual": {
+          "source": 1463040,
+          "integral": 1463037,
+          "binder": 120801,
+          "actualEta": 1451898,
+          "densitySystem": 34
+        },
+        "actualWeight": 1462924,
+        "cutoffSystem": 680,
+        "actualWeightedTerm": 1463041
+      }
+    ]
+  },
+  "indexedRows": {
+    "checked": 1458,
+    "threeRelativeCharts": {
+      "1461288": [
+        1461293,
+        1461295,
+        1461299,
+        1461300,
+        1454263
+      ],
+      "1461285": [
+        1461327,
+        1461329,
+        1461333,
+        1461334,
+        1454263
+      ],
+      "1461357": [
+        1461362,
+        1461364,
+        1461368,
+        1461369,
+        1454263
+      ]
+    },
+    "shell": [
+      1451893,
+      3617,
+      28826
+    ],
+    "allShellMeshAndBandOperandsExact": true
+  },
+  "shiftedPressureBinders": {
+    "1471536": {
+      "name": "n6_shifted_radial_whole_global_pressure$48943",
+      "integrals": [
+        1471708,
+        1471709
+      ],
+      "body": 1471707,
+      "fixedEnvelope": [
+        1462816,
+        1462818
+      ],
+      "sampleIndexedCall": 1471689,
+      "shiftedActuals": [
+        1471536,
+        1451872,
+        1451873,
+        1451860,
+        1471544,
+        1471546
+      ],
+      "shift": 1471543,
+      "originalRadialPrimitive": 1463485
+    },
+    "1471733": {
+      "name": "n6_shifted_radial_whole_global_pressure_L$48947",
+      "integrals": [
+        1471984,
+        1471985
+      ],
+      "body": 1471983,
+      "fixedEnvelope": [
+        1462816,
+        1462818
+      ],
+      "sampleIndexedCall": 1471947,
+      "shiftedActuals": [
+        1471733,
+        1451872,
+        1451873,
+        1451860,
+        1471740,
+        1471742
+      ],
+      "shift": 1471739,
+      "originalRadialPrimitive": 1463485
+    },
+    "1472021": {
+      "name": "n6_shifted_radial_whole_global_pressure_Z$48951",
+      "integrals": [
+        1472232,
+        1472233
+      ],
+      "body": 1472231,
+      "fixedEnvelope": [
+        1462816,
+        1462818
+      ],
+      "sampleIndexedCall": 1472213,
+      "shiftedActuals": [
+        1472021,
+        1451872,
+        1451873,
+        1451860,
+        1472028,
+        1472030
+      ],
+      "shift": 1472027,
+      "originalRadialPrimitive": 1463485
+    }
+  },
+  "positiveMeanBumpMass": {
+    "root": 1462830,
+    "inverse": 1462831,
+    "binder": 1462815,
+    "mass": "(1/10)*integral_[0,1] exp(-1/(u*(1-u))) du > 0",
+    "support": "X0Imean*exp(1)*(1+u/10)^2, u in [0,1], inside the fixed envelope"
+  },
+  "fixedRadialEnvelope": [
+    1462816,
+    1462818
+  ],
+  "envelopeImageOverWholeSBracket": [
+    "Xa/4",
+    "4*Xb"
+  ],
+  "activeIndexedBodyImage": [
+    "Xa",
+    "Xb"
+  ],
+  "strictPositiveRadialArgumentsInShiftedBodies": true,
+  "requiredPathsToOuterInverseR": {
+    "radialPressureGradient": [
+      1472269,
+      1472264,
+      1472263,
+      1472262,
+      1471514,
+      1471460,
+      1471458,
+      1452232
+    ],
+    "radialResidual": [
+      1472311,
+      1472310,
+      1471460,
+      1471458,
+      1452232
+    ],
+    "angularResidual": [
+      1472294,
+      1463090,
+      1463089,
+      1463088,
+      1452232
+    ],
+    "axialResidual": [
+      1472309,
+      1463198,
+      1463197,
+      1463196,
+      1452232
+    ]
+  },
+  "requiredPathsToOuterRadialLog": {
+    "radialPressureGradient": [
+      1472269,
+      1472268,
+      1463486,
+      1454259,
+      1453167,
+      1453166,
+      1453165
+    ],
+    "radialResidual": [
+      1472311,
+      1472269,
+      1472268,
+      1463486,
+      1454259,
+      1453167,
+      1453166,
+      1453165
+    ],
+    "angularResidual": [
+      1472294,
+      1472293,
+      1472290,
+      1472287,
+      1472286,
+      1463486,
+      1454259,
+      1453167,
+      1453166,
+      1453165
+    ],
+    "axialResidual": [
+      1472309,
+      1472308,
+      1472307,
+      1472303,
+      1472301,
+      1472300,
+      1463486,
+      1454259,
+      1453167,
+      1453166,
+      1453165
+    ]
+  },
+  "axisCountercheck": {
+    "R": 0,
+    "eta": 0,
+    "Z": 0,
+    "T": "the admitted strict interior s>0",
+    "referenceInverseRemainsAdmissible": true,
+    "outerInverseRHasZeroDenominator": true,
+    "ordinaryCartesianExtensionIndependentlyCertified": false
+  },
+  "fullPhysicalDomainClosureAudited": false,
+  "schema": "MathScope.OriginalN2AxialPressureScopedDomain/1",
+  "stageSha256": "0fd39aaf8627851be058915be09b5434161753b2d06a82e1bd46033165e8409f",
+  "graphAuthentication": {
+    "graphNodeCount": 2852905,
+    "graphNodeSha256": "75db9fddc311fb7ce8d7968fbde4a52a07521cf8d47feb0b8f302d6bed108987",
+    "registrySha256": "6859cded252d523a0868656b0b98c8699d6289782f057e2931419ceae3cabe8f",
+    "first117100NodeSha256": "d125d121e115ea2e3c4b67a37c72a30c1dbcbca705007ca5c02412c1bf5c2116",
+    "graphManifestSha256": "47da10ecf95c04c826364cb2d10709321dcb914aa92cde3bd6e5c0d4cd28fda4"
+  }
+}

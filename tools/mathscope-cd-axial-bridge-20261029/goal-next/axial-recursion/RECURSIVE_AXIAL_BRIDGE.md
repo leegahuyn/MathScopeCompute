@@ -221,14 +221,15 @@ window floor arithmetic, the singleton-window countermodel
 and the reciprocal-weight constants. Its rational cases
 support the written arbitrary-real-log proof.
 
-The conditional mathematical source bridge applies at each
-fixed N. Actual execution of the first new physical window
-still needs the same private selector through 3, its
-original N=2 band and the authenticated physical roots and
-native definitions under that band. The original finite
-compiler restricts `coefficientOrder` to 0–32 and a node
-budget. That implementation restriction is separate from
-the arbitrary-order mathematical implication.
+The conditional mathematical source bridge applies at each fixed N.
+GitHub run 43020929929 executed the first new physical window.
+Its independent readback authenticated the original selector through 3,
+the N=2 band and its current/pressure graph and native definitions.
+The N2 axial pressure/domain report records the scope of the verified
+subexpressions, the shifted radial binder range and the axis obligation.
+The original finite compiler restricts `coefficientOrder` to 0–32 and a node
+budget. That implementation restriction is separate from the
+arbitrary-order mathematical implication.
 
 Run from this directory with the research-ide tree at the original Git
 commit f8cb4034e86d7b669d52a6f2248aebba156b51b5.

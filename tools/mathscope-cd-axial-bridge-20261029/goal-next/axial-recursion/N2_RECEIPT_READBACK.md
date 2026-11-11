@@ -23,20 +23,23 @@ window floor, interior chart formulas and active axial stress and
 cutoff roots. A smaller JSON dictionary of exact nodes can be
 supplied with `--anchors` instead.
 
-Run from the workspace root:
+Run from this evidence directory:
 
-    python work/goal-next/axial-recursion/check_n2_selector_receipt.py <artifact>/original-n2-prefix.json <output>/n2-selector-readback.json --executing-commit <workflow-HEAD>
+    python check_n2_selector_receipt.py ARTIFACT/original-n2-prefix.json n2-selector-readback.json --executing-commit 65fda3014857997255fe0b839847d627921b1348
 
 For a completed graph append:
 
-    --graph-dir <artifact>/original-n2-current-pressure-graph
+    --graph-dir ARTIFACT/original-n2-current-pressure-graph
 
 The in-memory stage and AST controls verify schema handling and
 reject an omitted diagonal clause and a window built from `b2`
 instead of `b3`. The independent gzip-reader control authenticated
 the existing original N=1 export with 4,420,257 nodes and checked
 the stored axial support and window anchors. These controls
-validate the checker. The new N=2 artifact is a separate input.
-A successful readback does not by itself certify the entire
-physical root semantic closure or terminal numerical jets.
+validate the checker. The official run 43020929929 produced
+a separate N=2 artifact and the independent readback passed.
+The paired original pressure/domain and normalization-face
+replays use the same exported graph:
 
+    python check_n2_axial_pressure_domain.py ARTIFACT n2-axial-pressure-domain.json --executing-commit 65fda3014857997255fe0b839847d627921b1348
+    python check_n2_order_one_faces.py --artifact ARTIFACT --github-metadata github-run-43020929929.json --selector-readback n2-selector-readback.json --out n2-order-one-faces.json
