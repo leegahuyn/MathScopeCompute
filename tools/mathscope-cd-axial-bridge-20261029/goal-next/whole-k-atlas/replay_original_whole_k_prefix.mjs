@@ -12,7 +12,9 @@ import { exportOriginalSourceGraph } from '../post-signed-20261023/export_origin
 const [directory, sourceCommit, request] = process.argv.slice(2);
 const executingCommit = process.env.GITHUB_SHA;
 const N = Number(request);
-const primaryC3 = process.env.MATHSCOPE_WHOLE_K_PRIMARY_C3 === '1';
+const primaryOrder = Number(process.env.MATHSCOPE_WHOLE_K_PRIMARY_ORDER ?? 0);
+assert.ok([0, 2, 3].includes(primaryOrder));
+const primaryC3 = primaryOrder !== 0;
 const selectorDiagonalOnly = process.env.MATHSCOPE_PREFIX_DIAGONAL_ONLY === '1';
 const maxMinutes = 105;
 const maxRss = Number(process.env.MATHSCOPE_PREFIX_MAX_RSS_BYTES ?? 6 * 1024 ** 3);
@@ -35,7 +37,7 @@ const gcIntervalMs = 20_000;
 let lastGC = 0;
 const receipt = {
   schema: 'MathScope.M3.OriginalWholeKHigherPrefix/1',
-  sourceCommit, executingCommit, requestedPrefix: N, selectorDiagonalOnly, primaryC3, stages: [],
+  sourceCommit, executingCommit, requestedPrefix: N, selectorDiagonalOnly, primaryC3, primaryOrder, stages: [],
   maxMinutes, maxRss, upstreamMaxNodes, bandMaxNodes, exportMaxNodes, maxRssObserved: 0, memoryCheckpoints: [], finalJets: 0, release: 'HOLD',
 };
 const save = () => writeFileSync(join(directory, 'original-whole-k-prefix.json'), JSON.stringify(receipt, null, 2) + '\n');
@@ -110,7 +112,7 @@ function stage(name, build, authenticate) {
 
 try {
   const through = Math.max(2, N+1);
-  const derivativeOrder = primaryC3 ? 6 : Math.max(3, N+1);
+  const derivativeOrder = primaryC3 ? primaryOrder+3 : Math.max(3, N+1);
   const request = { coefficientOrder: N, maxNodes: bandMaxNodes };
   const upstream = selectorDiagonalOnly || bandMaxNodes > 4000000 || upstreamMaxNodes > 5000000
     ? stage('sealed-original-common-family',

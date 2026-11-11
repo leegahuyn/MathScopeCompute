@@ -21,18 +21,20 @@ def digest(stream):
 def verify(directory):
     receipt = read(directory / "original-whole-k-prefix.json")
     prefix = receipt["requestedPrefix"]
+    order = receipt.get("primaryOrder", 3)
+    assert order in (2, 3)
     assert prefix in (2, 3, 4) and receipt["primaryC3"] and receipt["selectorDiagonalOnly"]
     assert receipt["sourceCommit"] == "f8cb4034e86d7b669d52a6f2248aebba156b51b5"
     assert receipt["currentStage"] == "COMPLETE" and receipt["release"] == "HOLD"
     assert receipt["finalJets"] == 0
     data = receipt["primaryC3Result"]
     assert data["originalCurrentPrivateSeal"] and data["finalJets"] == 0
-    assert receipt["selector"]["familyRequest"]["derivativeOrder"] == 6
-    assert data["backgroundRow"]["derivativeOrder"] == 4
-    assert data["backgroundRow"]["backgroundDerivativeOrder"] == 6
+    assert receipt["selector"]["familyRequest"]["derivativeOrder"] == order+3
+    assert data["backgroundRow"]["derivativeOrder"] == order+1
+    assert data["backgroundRow"]["backgroundDerivativeOrder"] == order+3
     assert data["referenceWindow"]["coefficientOrder"] == prefix
-    assert [row["pole"] for row in data["targetRows"]] == [3, 6, 9, 12, 15]
-    assert data["nativeScope"]["actualFiniteDerivativeOrder"] == 3
+    assert [row["pole"] for row in data["targetRows"]] == [3*(i+1) for i in range(order+2)]
+    assert data["nativeScope"]["actualFiniteDerivativeOrder"] == order
     assert data["nativeScope"]["actualOriginalPotentialWOneClassCertified"] is True
     assert data["nativeScope"]["actualOriginalPrimaryPressureWOneClassCertified"] is True
     assert data["nativeScope"]["actualForcedInputWClassCertified"] is False
@@ -48,7 +50,12 @@ def verify(directory):
     add = read(directory / "primary-C3-additive-program.json")
     assert cert["scope"] == add["record"]["scope"] == data["nativeScope"]
     assert cert["checks"] == add["record"]["checks"] == data["nativeChecks"]
-    assert add["record"]["request"]["order"] == 3
+    assert add["record"]["request"]["order"] == order
+    weighted = cert["bounds"]["degreeProgram"]["weighted"]
+    assert weighted["potential"][3] == {"power": 1283, "pole": 18}
+    assert weighted["curlRows"][2]["fastTerms"][0] == {"power": 1284, "pole": 18}
+    assert data["potentialOrderThree"]["originalKRoot"] == cert["bounds"]["K"]
+    assert data["potentialOrderThree"]["power"] == 1283 and data["potentialOrderThree"]["pole"] == 18
     assert cert["graph"]["sha256"] == data["files"]["primary-C3-additive-program.json"]["sha256"]
     assert add["targetBase"] == cert["sourceTarget"]["graph"]
     assert add["currentBase"] == cert["sourceCurrent"]["graph"]
@@ -80,8 +87,10 @@ def verify(directory):
     assert node_count == manifest["node_count"]
     assert (hasher.hexdigest(), byte_count) == (manifest["node_stream_sha256"], manifest["node_stream_uncompressed_bytes"])
     result = {
-        "status": "VERIFIED_ORIGINAL_PRIMARY_C3_ON_ADMITTED_PREFIX",
+        "status": "VERIFIED_ORIGINAL_PRIMARY_POTENTIAL_C3_ON_ADMITTED_PREFIX",
         "prefix": prefix,
+        "nativePrimaryClassOrder": order,
+        "potentialOrderThree": data["potentialOrderThree"],
         "executingCommit": receipt["executingCommit"],
         "currentNodes": manifest["node_count"],
         "currentGraphSHA256": manifest["node_stream_sha256"],
@@ -91,7 +100,7 @@ def verify(directory):
         "release": "HOLD",
     }
     (directory / "primary-C3-independent-readback.json").write_bytes((json.dumps(result, indent=2)+"\n").encode())
-    print(f"PASS original C6/C4/Primary C3 source and parent links on N{prefix}")
+    print(f"PASS original C{order+3}/C{order+1}/Primary C{order} and potential C3 source on N{prefix}")
 
 
 if __name__ == "__main__":

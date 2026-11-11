@@ -14,11 +14,13 @@ import {
 } from '../navier/source-primary-class-majorants.mjs';
 
 export async function replayPrimaryC3({ directory, receipt, save, stage, context, current, family, bandMaxNodes }) {
-  const N = receipt.requestedPrefix;
+  const N = receipt.requestedPrefix, order = receipt.primaryOrder;
+  assert.ok([2, 3].includes(order));
+  const targetOrder = order+1, backgroundOrder = order+3;
   assert.strictEqual(current.band.family, family);
-  assert.equal(family.request.derivativeOrder, 6);
-  const gaussian = family.source.backgroundNorms.gaussianRows.find(row => row.derivativeOrder === 4);
-  assert.equal(gaussian.backgroundDerivativeOrder, 6);
+  assert.equal(family.request.derivativeOrder, backgroundOrder);
+  const gaussian = family.source.backgroundNorms.gaussianRows.find(row => row.derivativeOrder === targetOrder);
+  assert.equal(gaussian.backgroundDerivativeOrder, backgroundOrder);
   receipt.primaryC3Result = {
     originalCurrentPrivateSeal: true,
     backgroundRow: gaussian,
@@ -28,29 +30,41 @@ export async function replayPrimaryC3({ directory, receipt, save, stage, context
   };
   save();
 
-  const target = stage('sealed-original-target-C4', () => family.constructTargetWeightedNorms({
-    derivativeOrder: 4, maxNodes: bandMaxNodes, maxJetRequests: 600000,
+  const target = stage('sealed-original-target-C'+targetOrder, () => family.constructTargetWeightedNorms({
+    derivativeOrder: targetOrder, maxNodes: bandMaxNodes, maxJetRequests: 600000,
   }, context), assertActualCommonTargetWeightedNorms);
   assert.strictEqual(target.family, family);
-  assert.equal(target.request.derivativeOrder, 4);
+  assert.equal(target.request.derivativeOrder, targetOrder);
   receipt.primaryC3Result.targetRows = target.rows.map(row => ({
     derivativeOrder: row.derivativeOrder, pole: row.pole, N_m: row.N_m,
   }));
   save();
 
-  const primary = stage('sealed-original-primary-C3',
-    () => attachGlobalPrimaryClassOperator(current, target, { order: 3, maxWork: 200000 }, context),
+  const primary = stage('sealed-original-primary-C'+order,
+    () => attachGlobalPrimaryClassOperator(current, target, { order, maxWork: 200000 }, context),
     assertGlobalPrimaryClassOperator);
   assert.strictEqual(primary.current, current);
   assert.strictEqual(primary.target, target);
-  assert.equal(primary.bounds.backgroundRow.backgroundDerivativeOrder, 6);
+  assert.equal(primary.bounds.backgroundRow.backgroundDerivativeOrder, backgroundOrder);
   assert.deepEqual(primary.bounds.targetRows.map(row => [row.derivativeOrder, row.pole]),
-    [[0, 3], [1, 6], [2, 9], [3, 12], [4, 15]]);
-  assert.equal(primary.scope.actualFiniteDerivativeOrder, 3);
+    Array.from({length: targetOrder+1}, (_, j) => [j, 3*(j+1)]));
+  assert.equal(primary.scope.actualFiniteDerivativeOrder, order);
   assert.equal(primary.scope.actualOriginalPotentialWOneClassCertified, true);
   assert.equal(primary.scope.actualForcedInputWClassCertified, false);
   assert.equal(primary.scope.completeN6, false);
   assert.ok(primary.checks.length > 0 && primary.checks.every(row => row.pass));
+  const weighted = primary.bounds.degreeProgram.weighted;
+  const potential = weighted.potential[3];
+  assert.deepEqual(potential, { power: 1283, pole: 18 });
+  assert.deepEqual(weighted.curlRows[2].fastTerms[0], { power: potential.power+1, pole: potential.pole });
+  receipt.primaryC3Result.potentialOrderThree = {
+    nativePrimaryClassOrder: order,
+    originalKRoot: primary.bounds.K,
+    power: potential.power,
+    pole: potential.pole,
+    bound: 'K^1283*S^1283*epsilon*sqrt(zeta)*delta^(-18)*P(v)',
+    source: 'Original potential third derivative in the full curl order-two Leibniz bound.',
+  };
   receipt.primaryC3Result.nativeScope = primary.scope;
   receipt.primaryC3Result.nativeChecks = primary.checks;
   receipt.currentStage = 'export-original-primary-C3';

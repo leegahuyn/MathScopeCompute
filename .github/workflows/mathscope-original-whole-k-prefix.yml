@@ -12,7 +12,7 @@ on:
       phase:
         description: Source construction to replay
         type: choice
-        options: [prefix, primary-c3, primary-c3-order4]
+        options: [prefix, primary-potential-c3, primary-c3, primary-c3-order4]
         default: prefix
 permissions:
   contents: read
@@ -23,7 +23,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        prefix: ${{ fromJSON((github.event_name == 'push' || inputs.phase == 'primary-c3') && '[2,3]' || inputs.phase == 'primary-c3-order4' && '[4]' || '[0,2,3,4]') }}
+        prefix: ${{ fromJSON((github.event_name == 'push' || inputs.phase == 'primary-potential-c3' || inputs.phase == 'primary-c3') && '[2,3]' || inputs.phase == 'primary-c3-order4' && '[4]' || '[0,2,3,4]') }}
     env:
       NODE_OPTIONS: --max-old-space-size=6100
       ORIGINAL_SOURCE_COMMIT: f8cb4034e86d7b669d52a6f2248aebba156b51b5
@@ -45,7 +45,7 @@ jobs:
         working-directory: original
         env:
           ORIGINAL_PREFIX: ${{ matrix.prefix }}
-          ORIGINAL_PHASE: ${{ github.event_name == 'push' && 'primary-c3' || inputs.phase }}
+          ORIGINAL_PHASE: ${{ github.event_name == 'push' && 'primary-potential-c3' || inputs.phase }}
         run: |
           set -euo pipefail
           test "$(git rev-parse HEAD)" = "$ORIGINAL_SOURCE_COMMIT"
@@ -56,7 +56,10 @@ jobs:
           out="$RUNNER_TEMP/mathscope-whole-k"
           mkdir -p "$out"
           if [ "$ORIGINAL_PHASE" != prefix ]; then
-            export MATHSCOPE_WHOLE_K_PRIMARY_C3=1
+            export MATHSCOPE_WHOLE_K_PRIMARY_ORDER=3
+            if [ "$ORIGINAL_PHASE" = primary-potential-c3 ]; then
+              export MATHSCOPE_WHOLE_K_PRIMARY_ORDER=2
+            fi
             helper=../evidence/tools/mathscope-cd-axial-bridge-20261029/goal-next/whole-k-atlas
             cp "$helper/replay_whole_k_primary_c3.mjs" "$(dirname "$target")/"
             python3 "$helper/prepare_iterative_norm_import.py" . "$out/iterative-norm-import-overlay.json"
@@ -82,7 +85,7 @@ jobs:
                   if cap != "max":
                       available = min(available, int(cap) - int(usage.read_text()))
           fourth = environ["ORIGINAL_PREFIX"] == "4"
-          primary = environ.get("MATHSCOPE_WHOLE_K_PRIMARY_C3") == "1"
+          primary = environ.get("MATHSCOPE_WHOLE_K_PRIMARY_ORDER") in {"2", "3"}
           roomy = available >= 11 * gib
           prefix = int(environ["ORIGINAL_PREFIX"])
           more_room = (prefix >= 3 or primary) and available >= 14 * gib
