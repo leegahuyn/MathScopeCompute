@@ -16,6 +16,7 @@ def generate(raw):
  s=replace_one(s,"schema:'MathScope.M3.SourceBoundOriginalPipeline/1'","schema:'MathScope.M3.LiveSameFamilyForcedPrimary/1'")
  s=replace_one(s,"M3_original_accepted:62,M4_original_accepted:0,release:'HOLD'","progress_counts_not_asserted:true,release:'HOLD'")
  s=replace_one(s,"receipt.status='BLOCKED';receipt.failed_at_stage=receipt.stage;","receipt.status='BLOCKED';receipt.failed_rss_bytes=process.memoryUsage().rss;receipt.failed_heap_bytes=process.memoryUsage().heapUsed;receipt.failed_at_stage=receipt.stage;")
+ s=replace_one(s,"}catch(e){receipt.error=", "}catch(e){receipt.error_stack=String(e?.stack??'');receipt.error=")
  s=replace_one(s,"stage:row?.stage??receipt.stage,substage:","rss_bytes:process.memoryUsage().rss,heap_bytes:process.memoryUsage().heapUsed,stage:row?.stage??receipt.stage,substage:")
  s=replace_one(s,"node_count:G?.nodes?.length??null,elapsed_ms:Date.now()-START}","node_count:G?.nodes?.length??null,elapsed_ms:Date.now()-START,rss_bytes:process.memoryUsage().rss,heap_bytes:process.memoryUsage().heapUsed}")
  s=replace_one(s,"let G=null,lastProgress=0;", '''let G=null,lastProgress=0,lastMemoryGC=0;
@@ -79,7 +80,7 @@ import {assertLivePrimaryForcedJoin} from './assert_live_join.mjs';""")
  }""")
  marker=' receipt.real_original_forced_seal_issued=true;save();'
  if s.count(marker)!=1:raise ValueError('forced seal anchor mismatch')
- prefix,tail=s.split(marker);failure='}catch(e){receipt.error='
+ prefix,tail=s.split(marker);failure="}catch(e){receipt.error_stack=String(e?.stack??'');receipt.error="
  if tail.count(failure)!=1:raise ValueError('failure handler anchor mismatch')
  suffix=failure+tail.split(failure,1)[1]
  extension="""

@@ -105,7 +105,9 @@ jobs:
           export M3_MAX_RSS_GB M3_FORCED_MAX_NODES
           printf 'measured available bytes=%s; owned RSS cap=%s GiB; V8 heap cap=%s MiB; Forced graph cap=%s\n' \
             "$available_bytes" "$M3_MAX_RSS_GB" "$heap_mb" "$M3_FORCED_MAX_NODES" | tee "$out/memory-plan.txt"
-          node --max-old-space-size="$heap_mb" --expose-gc research-ide/mathscope-m3/extended-signed-run-20261023/run_primary_forced_live_join.mjs "$out/native-receipt.json" 2>&1 | tee "$out/native-run.log"
+          ulimit -s 16384 || exit 1
+          printf 'OS stack=%s KiB; V8 stack=4096 KiB\n' "$(ulimit -s)" | tee -a "$out/memory-plan.txt"
+          node --max-old-space-size="$heap_mb" --stack-size=4096 --expose-gc research-ide/mathscope-m3/extended-signed-run-20261023/run_primary_forced_live_join.mjs "$out/native-receipt.json" 2>&1 | tee "$out/native-run.log"
           native_result=${PIPESTATUS[0]}
           verify_result=not_run
           if [ "$native_result" -eq 0 ]; then
