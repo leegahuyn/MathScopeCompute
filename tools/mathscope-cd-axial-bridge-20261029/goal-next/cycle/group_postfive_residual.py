@@ -492,9 +492,9 @@ class Source:
                              lambda x, y: tuple(sorted((*x, *y))))
         return {m: j for m, j in result.items() if j}
 
-    def groups(self):
+    def groups(self, residual_roots=ROOTS):
         out = []
-        for root in ROOTS:
+        for root in residual_roots:
             polynomial = self.polynomial(root)
             assert max(map(len, polynomial)) == 2
             contributions = []

@@ -26,6 +26,13 @@ On the original fixed-label, closed-support and flat-join premises, every deriva
 
 ## OPEN
 
+The subsequent [archived reconciliation](../f1-mean/archived-cutoff-reconciliation.json)
+binds every first-Forced input to the raw initialized source. For this
+archived run the Forced principal term already includes the surviving
+Primary cutoff contribution. A separate Primary term belongs to the
+repaired run where the original supported input excludes it before
+solving. Regenerate all four stages for that input.
+
 Proposition 9.3, PDF pp. 103–105, splits the complete physical residual into supported source `G[j]` and additive flat remainder `F[j]`. The latter contains nonzero Gaussian pulse-cutoff tails, even for a homogeneous pulse. Proposition 9.1, pp. 101–102, gives the two terms for an inhomogeneous solve. A full direct projection can contain those terms. The original next function `GroupedSupportedNonzeroResidual` `f_68465a2d86d9ee074ccccd4b` needs the projection of `G[j]`, hence the raw recipes are not a valid source for the next inverse yet.
 
 The earlier `initial.global.oldFlatResidual.local` is a mode-zero base/stress record. Its subtraction cannot supply the missing nonzero cutoffs. The original first-force live records already hold their cutoff expressions. See [next live export](LIVE_EXPORT.md) for the exact predecessor fields to retain and the remaining split proof.

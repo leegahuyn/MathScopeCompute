@@ -1,5 +1,11 @@
 # First-cycle principal flat residual
 
+The earlier three-family composition included one extra standalone Primary
+term on each signed mode-one component of the archived run. Use the
+exact correction in [the archived reconciliation](../f1-mean/archived-cutoff-reconciliation.json).
+The individual source bindings and symbolic recompositions below describe
+the archived inputs. The corrected first Forced generates a new source graph.
+
 The archived first post-FiveMap source is the output of GitHub Actions run
 39988632325. Its 4,420,257-node graph and native definitions are unchanged.
 The older live Forced checkpoint supplies candidate roots. Its numbering
@@ -24,12 +30,15 @@ homogeneous moving-frame equation from Proposition 9.1. The source step has
 flat endpoints. The derivative support lies in the two longitudinal
 transitions, inside the registered original pulse.
 
-The composition binds all three families to the same 10 own-phase cases and
-162 original signed rows. It uses the original half-integer selector, exact
-relative labels and lazy guard order. It subtracts the bound terms in 120
-complex coefficients and checks 240 symbolic recompositions. The three
-subtractions concern the principal cutoff terms. The check retains all
-ordinary derivative and curl remainders and the separate mean.
+The historical composition binds all three families to the same 10
+own-phase cases and 162 original signed rows. Its 240 formal
+recompositions verify the arithmetic for its chosen subtractands. The
+archived physical residual already contains `(1−ψ)P` inside the Forced
+term `(1−ψ)f_raw`, where `P` is the Primary cutoff derivative. The
+reconciliation removes the extra standalone Primary subtractand at 60
+mode-one component positions and keeps the actual Forced and Signed
+cutoff terms. A paper-aligned input excludes `P` before the solve. Its
+new physical residual retains `P` once.
 
 The complete F[1] ledger and uniform derivative estimates are still needed
 for the original next forcing input. The existing proof hypotheses about

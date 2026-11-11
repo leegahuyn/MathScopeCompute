@@ -1,0 +1,161 @@
+{
+  "schema": "MathScope.M3.Final67ExactNumericalRouteReadback/1",
+  "sourceInputs": {
+    "requestSHA256": "93e87aaf51e5c2a9cd87d04e32af3d281c081446a7e42fd3d4bce448ee335c0c",
+    "familySHA256": "b8c2ce18ebdefd2875e83e5f824eb71f77f1c9b7510170d225efce739360bb78",
+    "preFinalExportManifestSHA256": "af597477e3927cca830b1c3211b61b93b64d63e553f7370ea07822528db9ee3c",
+    "reachedSourceSHA256": "5ee0e602a74cbcf766f574ca94f829b7e9e23f5d64d66b6a8197400166ece459",
+    "principalSubtractionSHA256": "6ad8e9a933b88c08088b581e18775c909479906fa38aef93db73d67e8bce8da1",
+    "principalSubtractionVerdict": "VERIFIED_EXACT_PRINCIPAL_FLAT_SUBTRACTION",
+    "completeSecondForcingInput": false
+  },
+  "originalJetRequest": {
+    "fieldCounts": {
+      "A0": 19,
+      "A1": 19,
+      "A2": 19,
+      "b": 6,
+      "p": 4
+    },
+    "cutoffCount": 13,
+    "coordinates": {
+      "A_and_p": [
+        "x",
+        "y",
+        "z",
+        "tau"
+      ],
+      "b_and_C": [
+        "s",
+        "z",
+        "tau"
+      ],
+      "physical_time_derivative": "-partial_tau"
+    },
+    "domain": "Every whole-K spatial quadrature cell and every active physical-time cell; closed-cell enclosures, not center samples"
+  },
+  "actualPreFinalRootInventory": [
+    4419697,
+    4419698,
+    4419699,
+    4419702,
+    4419723,
+    4420035,
+    4420037,
+    4420039,
+    4420249,
+    4420251,
+    4420253
+  ],
+  "genericIntervalCoverageOfPreFinalOnly": {
+    "sourceNodes": 159655,
+    "nativeEntryPoints": 1745,
+    "operationKinds": 31,
+    "syntaxRecognizedOperationKinds": 10,
+    "unimplementedByThisInterpreter": {
+      "actual_background_even_profile": 31,
+      "actual_covariance_volterra": 28,
+      "actual_expression_partial": 973,
+      "actual_monotone_root": 14,
+      "actual_natural_series": 523,
+      "actual_quadratic_root": 13,
+      "ceiling": 216,
+      "cosine": 45,
+      "definite_integral": 4392,
+      "m3_aux_expression_partial": 141,
+      "m3_aux_indexed_partial": 30,
+      "m3_aux_inverse_partial": 30,
+      "m3_coupled_expression_partial": 1883,
+      "m3_coupled_indexed_partial": 150,
+      "m3_coupled_inverse_partial": 15,
+      "m3_forced_pulse_partial": 120,
+      "m3_global_indexed_partial": 4,
+      "maximum": 95,
+      "sine": 55,
+      "smooth_piecewise": 3360,
+      "source_step_derivative": 546
+    },
+    "nodesOfThoseKinds": 12664,
+    "recognizedSyntaxDoesNotDischargeNodeDomains": true,
+    "partialSpecializedNativeKernelsDoNotProvideGlobalDispatcher": true
+  },
+  "earliestMissingInputs": {
+    "secondSupportedResidual": {
+      "id": "f_68465a2d86d9ee074ccccd4b",
+      "operation": "GroupedSupportedNonzeroResidual",
+      "inputs": [
+        "f_c7adfb9f68e4cf20075df353"
+      ],
+      "data": {
+        "full_current": "f_c7adfb9f68e4cf20075df353",
+        "all_generated_harmonics": "0<|m|<=2^2",
+        "all_conjugate_pairs": true,
+        "flat_terms": "retained separately, never sent to supported pulse source",
+        "physical_labels": "all original cover labels with fixed path/copies; no sampling"
+      }
+    },
+    "secondOriginalForcedMap": {
+      "id": "f_a242f88bead89cbf747ec4d4",
+      "operation": "OriginalForcedMap",
+      "inputs": [
+        "f_c7adfb9f68e4cf20075df353",
+        "f_68465a2d86d9ee074ccccd4b",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "input_current": "f_c7adfb9f68e4cf20075df353",
+        "source": "f_68465a2d86d9ee074ccccd4b",
+        "equation": "L_m(t_m,pi_m)=-f_m for EACH nonzero grouped supported source",
+        "initial_data": "zero at entrance to same fixed path",
+        "velocity": "cut off potential then full curl",
+        "pressure": "inhomogeneous coefficient including n dot f",
+        "reference": "Prop7.2, Prop9.6 step1",
+        "norm_theorem": "generic stable forced class recurrence; input seminorm remains that of supported above",
+        "returned_complete_state": "input_current plus the actual realized velocity increment; retain all previous wave/mean components and all previous angular pressure plus actual new angular pressure coefficient",
+        "all_cross_terms": "Form complete updated full auxiliary covariance BEFORE any Haar averaging; do not replace it by its average for pressure or direct PDE.",
+        "next_action": "FullPressureAndResidualRefresh on this complete state before any subsequent source projection"
+      }
+    },
+    "firstScale": {
+      "id": "f_3b700fc1d0d2c77582a0399d",
+      "operation": "ActualShrinkingScale",
+      "inputs": [
+        "f_cb76b8ef5e4490552e0e9b32",
+        "f_5486aa5a7070b99cce5740bb",
+        "f_9f3819cae1476e00bce4e5c9"
+      ],
+      "data": {
+        "j": 1,
+        "gamma": "h*1/20",
+        "previous": "log(1/qbig)",
+        "L": "max(1,1+L_previous,1+log(1/qbig),max_m(2*P_hat/gamma)^2,max_m2*(C_hat+j)/gamma)",
+        "a": "exp(L)",
+        "original_cutoff": "chi=1 on(-infinity,1/2],chi=0 on[1,infinity)",
+        "norm_inputs": [
+          "f_5486aa5a7070b99cce5740bb",
+          "f_9f3819cae1476e00bce4e5c9"
+        ],
+        "every_m_le_j": true,
+        "all_order_rule": "same rule for every finite j; these are source functionals, not supplied dummy values"
+      }
+    },
+    "firstScaleCutoffCurlBoundIDs": [
+      "f_5486aa5a7070b99cce5740bb",
+      "f_9f3819cae1476e00bce4e5c9"
+    ]
+  },
+  "finalCompiler": {
+    "entryPoint": "constructFinalSummationFromRoots",
+    "requiresCompleteActiveStageWindow": true,
+    "operands": "Authentic A0,A1,A2,b,p for base and every active stage with identical graph and original q; source-only scale bounds",
+    "scalarRadialMeanRecovery": "retain b_j(s,z,tau) before Cartesian substitution; sum b0+sum_j chi(a_j*q(z,tau))*b_j(s,z,tau), then recheck pullback to finalDirectMean",
+    "whyPressureAndVelocityAreInsufficient": "Gauge is not fixed by velocity; cutoff localization depends on it. First-cycle p does not include later active pressure increments.",
+    "outputIsNotSourceAuthorityWithoutCallerBindings": true
+  },
+  "finalOriginalGaugeRootInventory": null,
+  "actualFinalJetsCertified": 0,
+  "N7_06": "OPEN",
+  "N8_05": "OPEN",
+  "lastResolvedTau": null,
+  "release": "HOLD"
+}

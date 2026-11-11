@@ -1,0 +1,147 @@
+{
+  "schema": "MathScope.M3.OriginalFirstActualScaleSelectorScope/1",
+  "originalFamilySHA256": "b8c2ce18ebdefd2875e83e5f824eb71f77f1c9b7510170d225efce739360bb78",
+  "originalWholeKChartSHA256": "af17e240150ca11452ccd5dcde5e1d2a21f5872d3a1e29a9247d75e6902e86b9",
+  "firstActualScaleID": "f_3b700fc1d0d2c77582a0399d",
+  "requestedGain": "h/20",
+  "B": "log(1/qBig)",
+  "qDerivativeBounds": [
+    {
+      "derivative": "q_tau",
+      "qExponent": "0",
+      "normalizedFormula": "1/(-2*eta**2*h + 1)",
+      "absoluteBoundCoefficient": "2"
+    },
+    {
+      "derivative": "q_z",
+      "qExponent": "h + 1/2",
+      "normalizedFormula": "2*eta/(-2*eta**2*h + 1)",
+      "absoluteBoundCoefficient": "4"
+    },
+    {
+      "derivative": "q_z_z",
+      "qExponent": "2*h",
+      "normalizedFormula": "-8*eta**4*h*(1 - 2*h)/(-2*eta**2*h + 1)**3 + 16*eta**2*h/(-2*eta**2*h + 1)**2 + 2/(-2*eta**2*h + 1)",
+      "absoluteBoundCoefficient": "12"
+    },
+    {
+      "derivative": "q_z_tau",
+      "qExponent": "h - 1/2",
+      "normalizedFormula": "-4*eta**3*h*(1 - 2*h)/(-2*eta**2*h + 1)**3 + 4*eta*h/(-2*eta**2*h + 1)**2",
+      "absoluteBoundCoefficient": "3"
+    }
+  ],
+  "linearSeedCutoffProof": {
+    "subcells": 256,
+    "outwardBits": 96,
+    "absoluteDerivativeUppers": [
+      "319417900930478389947548459099/79228162514264337593543950336",
+      "3255058732817343016644213095197/79228162514264337593543950336"
+    ],
+    "integerDerivativeUppers": [
+      5,
+      42
+    ],
+    "composedDerivatives": [
+      {
+        "derivative": "chi_z",
+        "boundCoefficient": 20,
+        "qExponent": "-D"
+      },
+      {
+        "derivative": "chi_tau",
+        "boundCoefficient": 10,
+        "qExponent": "-1"
+      },
+      {
+        "derivative": "chi_z_z",
+        "boundCoefficient": 732,
+        "qExponent": "-2D"
+      },
+      {
+        "derivative": "chi_z_tau",
+        "boundCoefficient": 351,
+        "qExponent": "-D-1"
+      }
+    ]
+  },
+  "m0And1": [
+    {
+      "m": 0,
+      "originalCutoffBoundID": "f_5486aa5a7070b99cce5740bb",
+      "originalUncutBoundID": "f_7f7b86cc96191e30cada8cce",
+      "genuineIncrementTriplet": "f_ac81b63855489a21bb407b2d",
+      "uncutDerivativeOrder": 1,
+      "sumOfAbsoluteComponentDerivativeBoundConstant": 84,
+      "cutoffDerivativeWeightLoss": "m+D",
+      "sourceSelectorWeightLoss": "m+1",
+      "spareQPower": "1-D=1/2+h",
+      "P_hat": {
+        "conditionalOnActualUncutClassBound": 0
+      },
+      "S_hatBound": "2*K_m*C*4^P*P!*exp(-B/4)",
+      "C_hatNumeric": null
+    },
+    {
+      "m": 1,
+      "originalCutoffBoundID": "f_9f3819cae1476e00bce4e5c9",
+      "originalUncutBoundID": "f_bb4702458d05209c24aaa649",
+      "genuineIncrementTriplet": "f_ac81b63855489a21bb407b2d",
+      "uncutDerivativeOrder": 2,
+      "sumOfAbsoluteComponentDerivativeBoundConstant": 15460,
+      "cutoffDerivativeWeightLoss": "m+D",
+      "sourceSelectorWeightLoss": "m+1",
+      "spareQPower": "1-D=1/2+h",
+      "P_hat": {
+        "conditionalOnActualUncutClassBound": 0
+      },
+      "S_hatBound": "2*K_m*C*4^P*P!*exp(-B/4)",
+      "C_hatNumeric": null
+    }
+  ],
+  "cutoffCurlIdentity": "T_a Z=(chi U+chi_z*(e_z cross A), chi p); U=curl A+B e_theta",
+  "sparePowerProof": "Use genuine uncut bound through m+1; chi_z commutator always has at least one z derivative. Its m derivatives cost q^(-m-D), because q is independent of x,y and fixed a<=1/q on the transition.",
+  "logAbsorptionProof": "For x=log(1/q)>=B, delta=1-D>1/2. exp(-delta*x)*(1+x)^P <= exp(-B/4)*exp(1/4)*4^P*P! <= 2*exp(-B/4)*4^P*P!, by one term of the positive exp series.",
+  "exactConditionalSelector": {
+    "Cmax": "max(C_hat_1_0,C_hat_1_1)",
+    "C_hat": "1+ceil(S_hat at P_hat=0)",
+    "L1": "max(B+1,40*(Cmax+1)/h)",
+    "a1": "exp(L1)",
+    "normalizedGuardRoot": "h*(L1-B)=max(h,40*(Cmax+1)-h*B)",
+    "physicalCellCondition": "r=q/qBig in [r_lo,r_hi]",
+    "unitPlateau": "normalizedGuardRoot <= h*log(1/(2*r_hi))",
+    "zeroBranch": "normalizedGuardRoot >= h*log(1/r_lo)",
+    "wholeKConservativeRatio": [
+      "1/64",
+      "1/16"
+    ],
+    "wholeKUnitPlateauBound": "h*log(8)",
+    "wholeKZeroBound": "h*log(64)",
+    "actualRootIDsEmitted": false
+  },
+  "sufficientActualPlateauPremise": {
+    "upperSCondition": "For m=0,1 supply genuine finite C,P with 2*K_m*C*4^P*P!*exp(-B/4)<=1.",
+    "then": "Cmax<=2, so h*B>2048/h>120>=40*(Cmax+1). The exact original L1=B+1 and a1*q<=exp(1)/16<1/2 throughout this slab.",
+    "baseThreshold": "ellMinimum>= (64/h)^2; qBig=2^(-(ellMinimum+10)); log(2)>1/2",
+    "actualUncutMajorantsMaterialized": false
+  },
+  "genericHelperScope": {
+    "entry": "shrinkingCutoffThresholdExpression",
+    "helperCoefficient": "1+sqrt(1+coefficientNorm^2)",
+    "actualCoefficient": "1+ceil(S_hat at P_hat=0)",
+    "differentExactExpressions": true,
+    "witnesses": [
+      "S_hat=1 gives actual 2; feeding either S_hat=1 or C_hat=2 to the helper gives >2.",
+      "S_hat=11/10 gives actual 3; feeding S_hat to the helper gives <3, while still majorizing S_hat."
+    ],
+    "mustUseExactSelectorForOriginalGuard": true
+  },
+  "firstUnsatisfiedSourceHypothesis": "The actual first-cycle correction triplet must supply common-domain order-1 and order-2 weighted uncut majorants (or another rigorous bound on its cutoff-curl supremum). Existing harmonic projection and pre-final physical roots do not give these global norms or the original C_hat.",
+  "actualC_hatEvaluated": false,
+  "actualScaleEvaluated": false,
+  "wholeKFinalFieldEvaluated": false,
+  "finalJetsCertified": 0,
+  "N7_06": "OPEN",
+  "N8_05": "OPEN",
+  "release": "HOLD"
+}
