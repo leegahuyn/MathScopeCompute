@@ -172,6 +172,34 @@ theorem axial_cutoff_zero_moment_transfer_finite
   rw [hwhole] at hbridge
   exact hbridge.symm
 
+/-- The full positive radial ray integral exists and equals the cutoff
+integral when the true raw density agrees inside and vanishes on both
+excluded tails. The two endpoints follow the interval-integral convention. -/
+theorem axial_full_ray_integral_of_support
+    (raw supported : ℝ → ℝ) (a b : ℝ) (ha : 0 ≤ a) (hab : a ≤ b)
+    (hint : IntervalIntegrable supported volume a b)
+    (hmiddle : EqOn raw supported (Ioc a b))
+    (htails : ∀ x ∈ Ioi (0 : ℝ) \ Ioc a b, raw x = 0) :
+    IntegrableOn raw (Ioi (0 : ℝ)) volume ∧
+      (∫ x in Ioi (0 : ℝ), raw x) = ∫ x in a..b, supported x := by
+  have hsub : Ioc a b ⊆ Ioi (0 : ℝ) := fun _ hx => lt_of_le_of_lt ha hx.1
+  have heq : EqOn raw ((Ioc a b).indicator supported) (Ioi (0 : ℝ)) := by
+    intro x hx
+    by_cases hm : x ∈ Ioc a b
+    · rw [indicator_of_mem hm]
+      exact hmiddle hm
+    · rw [indicator_of_notMem hm]
+      exact htails x ⟨hx, hm⟩
+  have hi := ((intervalIntegrable_iff_integrableOn_Ioc_of_le hab).mp hint)
+    .integrable_indicator measurableSet_Ioc
+  refine ⟨hi.integrableOn.congr_fun heq.symm measurableSet_Ioi, ?_⟩
+  calc
+    (∫ x in Ioi (0 : ℝ), raw x) = ∫ x in Ioi (0 : ℝ), (Ioc a b).indicator supported x :=
+      setIntegral_congr_fun measurableSet_Ioi heq
+    _ = ∫ x in a..b, supported x := by
+      rw [setIntegral_indicator measurableSet_Ioc, inter_eq_right.mpr hsub,
+        intervalIntegral.integral_of_le hab]
+
 /-- The forward stress is zero at the outer endpoint if the full integral
 vanishes. Its derivative jets still need independent smoothness/support. -/
 theorem axial_outer_value
@@ -292,6 +320,7 @@ end MathScope.M3.CD
 #print axioms MathScope.M3.CD.axial_backward_primitive
 #print axioms MathScope.M3.CD.axial_cutoff_full_residual_bridge_finite
 #print axioms MathScope.M3.CD.axial_cutoff_zero_moment_transfer_finite
+#print axioms MathScope.M3.CD.axial_full_ray_integral_of_support
 #print axioms MathScope.M3.CD.axial_outer_value
 #print axioms MathScope.M3.CD.eta_moment_two_derivatives_zero
 #print axioms MathScope.M3.CD.eta_interior_moment_two_derivatives_zero
