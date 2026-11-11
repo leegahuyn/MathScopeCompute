@@ -30,6 +30,7 @@
 - **두 번째 Forced의 유한 모드.** 모드 3의 순서 있는 두 곱과 모드 4의 한 곱, 고차 모드에 평균 인자가 들어갈 수 없다는 정리 3개를 GitHub에서 컴파일했다. 원본 Node 연산을 사용하는 정확 대조 2개에서 모드 3·4 계수와 부호 오류 거부를 확인했다. [모드 Lean](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43015372545).
 - **두 번째 Forced 실제 후보 실행.** GitHub가 보정 첫 cycle을 그대로 보존한 4,682,006개 노드에서 모드 1–4의 원본 역연산 후보 40개를 생성했다. 독립 검사는 실수·허수 입력 240개와 가드 1,680개, 원본 경로 치환과 투영을 확인했다. 복원 압력 80개 성분 모두에서 법선 힘 \(n\cdot f\)를 누락한 대조를 거부했고, Signed 반진폭 30개를 대조했다. 모드 3·4의 20개 행에서 각 항이 같은 라벨의 속도 두 인자의 곱이며 도함수 차수의 합은 최대 1임을 확인했다. [GitHub 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43015175416) · [독립 검사](first-force-repair/SECOND_FORCED_CANDIDATES.md).
 - **라벨 전환.** 두 번째 Forced 그래프에서 162개 부호 라벨의 바깥 가드 810개와 실제 지지집합의 13,041개 라벨 쌍을 대조했다. 가장 가까운 정수가 바뀔 때 빠지거나 들어오는 행은 가드 외부의 열린 근방에서 0이다. 네 좌표의 동시 전환 조합 15개를 검사했고, 지지 범위와 전환 여유의 Lean 정리 세 개를 GitHub에서 컴파일했다. [실제 행 검사](first-force-repair/live-stencil-support.json) · [Lean 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43032247601).
+- **같은 라벨의 원본 보존형 투영.** 원본 기준 차트의 실제 보존형 잔차 세 성분 중 파동에 의존하는 항과, 후보의 raw 실수·허수 성분 240개를 서로 독립적인 유리수 미분 장부로 재계산했다. 원래 파동의 속도·압력 피연산자 160개, 평균의 1차 도함수 항 120개와 기준↔원래 라벨 치환을 결속했다. 고정 라벨의 원본 통상 미분 정의역에서 공통 배율은 \(\rho^{2A+1/2}\)이고, 배율을 제거하면 실제 raw 후보와 같은 Fourier 계수다. [원본 투영 재현](first-force-repair/RAW_FIXED_ROW_PROJECTION.md) · [Fourier 곱 미분 Lean](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43035073237).
 - **현재 운영 화면.** 공개 버전 137의 데스크톱·모바일에서 R1-08 OPEN과 RELEASE HOLD를 읽었다. 운영 페이지의 기존 작업대는 열렸고 격리 후보의 ProofJob 편집기는 공개본에 없었다. 데스크톱에서 두 런처가 겹쳐 포인터가 다른 버튼에 도달하는 현상을 재현했다. 키보드로 인수 보드를 열어 검사했다. 운영 버전 해시는 검사 전후 `9171eb0c`였다. [공개 화면](https://project29770.websitepublisher.ai/v0.3.1.html).
 
 - **보관 첫 Forced의 원본 입력.** 원본 AST 4,420,257개와 함수 레지스트리의 해시를 확인했다. 20개 양의 모드 시스템의 실수·허수 성분 120개를 원본 초기 비영 잔차부터 고정 경로 \(Y\mapsto H_w(Y)\)까지 연결했다. 첫 Forced가 받은 \(f_{\mathrm{raw}}=G_0+P\)에는 Primary cutoff 항 \(P\)가 들어 있다. 보관 실행의 주 cutoff 잔차 \((1-\psi)f_{\mathrm{raw}}+\psi't\)에 \((1-\psi)P\)가 이미 포함된다. 이전 240개 식의 형식 재합성에서 \(P\)를 따로 더한 60개 위치를 바로잡았다. \(\psi=1/2\), \(P=1\)인 유리수 대조에서 해당 항은 \(1/2\)이고 이전 식의 값은 \(3/2\)다. [첫 FiveMap 원본 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/39988632325).
@@ -63,7 +64,7 @@
 
 ## OPEN
 
-- 실제 역연산 후보 40개에서 가드 적용 전후 동일성, 전체 \(F[1]\)과의 독립적인 전역 투영 일치, 원본 가드 접합과 균일 도함수 상계가 남아 있다. [두 번째 Forced 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43015175416).
+- 같은 라벨의 raw 투영을 전체 \(F[1]\)으로 확장하려면 경계에서 실제 미분의 접합, 뺀 모든 평탄 항의 완전성, 가드 적용 전후 동일성과 균일 상계가 필요하다. 원본 계수 차수 1 창과 동일한 private family에서 C5 배경과 C3 가중 target을 만드는 2차 primary 검사가 GitHub에서 진행 중이다. [원본 2차 primary 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43035074273).
 
 - \(N=2\)의 이동 반경 적분 전체 범위는 \(X\in[X_a/4,4X_b]\)까지 닿는다. indexed 파동은 별도의 원본 shell 가드를 통과한다. raw 압력·잔차의 축 \(R=0\) 평활 확장과 이 전체 반경 구간의 일반 도함수 상계는 남아 있다. 실제 raw 잔차 #1472309에는 \(R^{-1}\)에 이르는 소스 경로가 있다.
 - 첫 보정 차트들의 전역 접합, 양의 차수 경계 도함수, 1·2차 가중 준노름과 최종 닫힌 셀 구간평가가 남아 있다.

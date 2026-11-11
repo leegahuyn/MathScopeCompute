@@ -57,10 +57,12 @@ uses \(g=0\) on the exterior pulse collars. The right-collar ODE
 state may retain memory and the derivative term vanishes there
 because its factor \(\psi'\) is zero.
 
-The exact source and operator readback certifies the candidate
-construction. The complete \(F[1]\), equality of the guarded and
-unclipped source, independent global conservative projection
-equality, and uniform derivative and support bounds remain open.
+The [fixed-row raw projection](RAW_FIXED_ROW_PROJECTION.md)
+independently matches the actual wave-dependent reference residual
+and the 240 live raw coefficients on the admitted ordinary derivative
+domain. The complete \(F[1]\), equality of the guarded and
+unclipped source across all seams, and uniform derivative and support
+bounds remain open.
 
 Run the checks with the extracted, exact GitHub graph directories
 and the checkout of the verification branch.
