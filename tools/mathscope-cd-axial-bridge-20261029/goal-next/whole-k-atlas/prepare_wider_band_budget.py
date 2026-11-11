@@ -6,9 +6,14 @@ import sys
 
 source = Path(sys.argv[1])
 receipt = Path(sys.argv[2])
+original_guards = {
+    "source-global-band.mjs": ("1f1c18a26372c998d8389b6c5138b3c9d3a66f36", b"maxNodes>4000000"),
+    "actual-residual-order-induction-expressions.mjs":
+        ("fc9f5e406eeafaaba58f24ed703417cf5d259df1", b"maxNodes>8000000"),
+}
+blob, old_limit = original_guards[source.name]
 old = source.read_bytes()
-assert sha1(f"blob {len(old)}\0".encode() + old).hexdigest() == "1f1c18a26372c998d8389b6c5138b3c9d3a66f36"
-old_limit = b"maxNodes>4000000"
+assert sha1(f"blob {len(old)}\0".encode() + old).hexdigest() == blob
 new_limit = b"maxNodes>16000000"
 assert old.count(old_limit) == 1 and new_limit not in old
 patched = old.replace(old_limit, new_limit)
