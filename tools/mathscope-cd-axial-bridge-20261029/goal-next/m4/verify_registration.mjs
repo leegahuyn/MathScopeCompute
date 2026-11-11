@@ -1,4 +1,6 @@
 import assert from 'node:assert/strict';
+import { execFileSync } from 'node:child_process';
+import { existsSync } from 'node:fs';
 import { readFile, readdir, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -12,7 +14,11 @@ const prefixes = ['goal-20261111', 'goal-next'].map(day => 'tools/mathscope-cd-a
 const evaluator = await import(pathToFileURL(
   resolve(repo, 'research-ide/mathscope-m4/acceptance.mjs'),
 ).href);
-const artifact = path => readFile(resolve(repo, path));
+const gitBacked = existsSync(resolve(repo, '.git'));
+const artifact = path => gitBacked && path.startsWith('research-ide/')
+  ? execFileSync('git', ['-c', 'core.longpaths=true', '-C', repo, 'show', 'HEAD:' + path],
+    { maxBuffer: 16 * 1024 * 1024 })
+  : readFile(resolve(repo, path));
 const filenames = (await Promise.all(prefixes.map(async prefix => (await readdir(resolve(repo, prefix))).map(name => prefix + name)))).flat().sort();
 assert.equal(new Set(filenames.map(path => path.split("/").at(-1))).size, filenames.length);
 

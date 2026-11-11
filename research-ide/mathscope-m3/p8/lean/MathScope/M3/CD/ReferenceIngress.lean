@@ -59,8 +59,33 @@ theorem zero_axial_time_below_reference_bracket {s T a : ℝ}
   have htime : T = 1 * s := (div_eq_iff hpos.ne').mp hdiv
   linarith
 
+-- The source representative takes the midpoint of the intersection of
+-- the time box with the two axial chart endpoint values.
+theorem representative_midpoint_brackets {F : ℝ → ℝ} {lo hi tLo tHi : ℝ}
+    (hlo : 1 / 2 ≤ lo) (hhi : hi ≤ 2) (hband : lo < hi)
+    (hmono : StrictMonoOn F (Set.Icc (1 / 2) 2))
+    (htime : tLo < tHi) (hleft : F lo < tHi) (hright : tLo < F hi) :
+    let t := (max tLo (F lo) + min tHi (F hi)) / 2
+    F lo < t ∧ t < F hi ∧ F (1 / 2) < t ∧ t < F 2 := by
+  have hloSet : lo ∈ Set.Icc (1 / 2 : ℝ) 2 := ⟨hlo, hband.le.trans hhi⟩
+  have hhiSet : hi ∈ Set.Icc (1 / 2 : ℝ) 2 := ⟨hlo.trans hband.le, hhi⟩
+  have hfirst : (1 / 2 : ℝ) ∈ Set.Icc (1 / 2 : ℝ) 2 := by norm_num
+  have hlast : (2 : ℝ) ∈ Set.Icc (1 / 2 : ℝ) 2 := by norm_num
+  have hf : F lo < F hi := hmono hloSet hhiSet hband
+  have hmid : max tLo (F lo) < min tHi (F hi) :=
+    lt_min (max_lt htime hleft) (max_lt hright hf)
+  have hlow : max tLo (F lo) < (max tLo (F lo) + min tHi (F hi)) / 2 := by
+    linarith
+  have hupp : (max tLo (F lo) + min tHi (F hi)) / 2 < min tHi (F hi) := by
+    linarith
+  have ht₁ := (le_max_right tLo (F lo)).trans_lt hlow
+  have ht₂ := hupp.trans_le (min_le_right tHi (F hi))
+  exact ⟨ht₁, ht₂, (hmono.monotoneOn hfirst hloSet hlo).trans_lt ht₁,
+    ht₂.trans_le (hmono.monotoneOn hhiSet hlast hhi)⟩
+
 #print axioms reference_band_label
 #print axioms positive_reference_root_unique
 #print axioms zero_axial_time_below_reference_bracket
+#print axioms representative_midpoint_brackets
 
 end MathScope.M3.CD
