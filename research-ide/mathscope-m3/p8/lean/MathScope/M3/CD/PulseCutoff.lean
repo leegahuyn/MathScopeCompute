@@ -63,6 +63,46 @@ theorem gaussian_dyadic_flat {ell c M N P : ℝ}
   apply Real.exp_le_exp.mpr
   nlinarith
 
+/-- The original pulse's quarter-width tail yields a fixed Gaussian in
+the band index when the pulse length grows at least quadratically. -/
+theorem pulse_gaussian_tail_exponent {v L ell g Lmin : ℝ}
+    (hL : 0 < L) (hg : 0 ≤ g) (hLength : Lmin * ell ^ 2 ≤ L)
+    (hTail : L / 4 ≤ |v - L / 2|) :
+    (g * Lmin / 16) * ell ^ 2 ≤ g * (v - L / 2) ^ 2 / L := by
+  have hd : (L / 4) ^ 2 ≤ (v - L / 2) ^ 2 := by
+    have hmul := mul_nonneg (sub_nonneg.mpr hTail)
+      (show 0 ≤ |v - L / 2| + L / 4 by positivity)
+    nlinarith [sq_abs (v - L / 2)]
+  calc
+    _ ≤ g * L / 16 := by nlinarith [mul_le_mul_of_nonneg_left hLength hg]
+    _ ≤ _ := (le_div_iff₀ hL).2 (by
+      nlinarith [mul_le_mul_of_nonneg_left hd hg])
+
+/-- Complete the Gaussian square to retain a single constant on the
+entire admitted band range, for every prescribed flatness order. -/
+theorem gaussian_uniform_dyadic_flat {ell c M N P : ℝ}
+    (hell : 1 ≤ ell) (hc : 0 < c) (hP : 0 ≤ P) :
+    Real.exp ((M * Real.log 2) * ell + 2 * P * Real.log ell - c * ell ^ 2) ≤
+      Real.exp (((M + N) * Real.log 2 + 2 * P) ^ 2 / (2 * c)) *
+        Real.exp (-(N * Real.log 2) * ell) := by
+  let K := (M + N) * Real.log 2 + 2 * P
+  have hpos : 0 < ell := by linarith
+  have hlog : Real.log ell ≤ ell := by
+    linarith [Real.log_le_sub_one_of_pos hpos]
+  have hp := mul_le_mul_of_nonneg_left hlog (show 0 ≤ 2 * P by positivity)
+  have hsq :
+      c * ell ^ 2 / 2 + K ^ 2 / (2 * c) - K * ell =
+        (c * ell - K) ^ 2 / (2 * c) := by
+    field_simp
+    <;> ring
+  have hn : 0 ≤ (c * ell - K) ^ 2 / (2 * c) := by positivity
+  have hc' : 0 ≤ c * ell ^ 2 := by positivity
+  have hbound : K * ell - c * ell ^ 2 ≤ K ^ 2 / (2 * c) := by linarith
+  rw [← Real.exp_add]
+  apply Real.exp_le_exp.mpr
+  dsimp [K] at hbound
+  nlinarith
+
 /-- Two translated closed coordinate intervals stay disjoint when the
 center gap exceeds the sum of the two allowed displacements. -/
 theorem strict_gap_excludes_overlap {x y u v r s : ℝ}
@@ -109,6 +149,8 @@ theorem nearest_stencil_switch_sum {α : Type*} [AddCommMonoid α]
 #print axioms forced_principal_cutoff_terms
 #print axioms pulse_cutoff_derivative_outside_transitions
 #print axioms gaussian_dyadic_flat
+#print axioms pulse_gaussian_tail_exponent
+#print axioms gaussian_uniform_dyadic_flat
 #print axioms strict_gap_excludes_overlap
 #print axioms nearest_stencil_covers_closed_support
 #print axioms nearest_stencil_switch_collar
