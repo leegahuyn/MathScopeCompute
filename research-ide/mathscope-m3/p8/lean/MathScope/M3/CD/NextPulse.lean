@@ -85,6 +85,28 @@ theorem repeat_forced_high_mode_has_two_waves (i j : ℤ)
     (h : i + j < -2 ∨ 2 < i + j) : i ≠ 0 ∧ j ≠ 0 := by
   constructor <;> omega
 
+/-- The tangent-propagator contribution fits inside a small part of the
+original cutoff exponent. B is log(1/qBig) in the source application. -/
+theorem first_scale_tangent_log_budget (bnorm L B : ℝ)
+    (hbnorm : 1 ≤ bnorm) (hL : L ≤ 1 / 2 ^ 30)
+    (hB : bnorm ^ 512 / 2 ≤ B) :
+    1024 * (3 * bnorm ^ 256 * L) ≤ B / 128 := by
+  have hpos : 0 ≤ bnorm := by linarith
+  have hpow : bnorm ^ 256 ≤ bnorm ^ 512 := by
+    calc
+      bnorm ^ 256 = bnorm ^ 256 * 1 := by ring
+      _ ≤ bnorm ^ 256 * bnorm ^ 256 :=
+        mul_le_mul_of_nonneg_left (one_le_pow₀ hbnorm) (pow_nonneg hpos _)
+      _ = bnorm ^ 512 := by rw [← pow_add]; norm_num
+  have hsmall : 3072 * L ≤ 1 / 256 := by
+    norm_num at hL ⊢
+    linarith
+  calc
+    _ = (3072 * L) * bnorm ^ 256 := by ring
+    _ ≤ (1 / 256) * bnorm ^ 256 := mul_le_mul_of_nonneg_right hsmall (pow_nonneg hpos _)
+    _ ≤ (1 / 256) * bnorm ^ 512 := mul_le_mul_of_nonneg_left hpow (by norm_num)
+    _ ≤ B / 128 := by linarith
+
 #print axioms fixed_pulse_normal_evolution
 #print axioms fixed_pulse_pressure_component
 #print axioms fixed_pulse_mode_damping
@@ -94,5 +116,6 @@ theorem repeat_forced_high_mode_has_two_waves (i j : ℤ)
 #print axioms repeat_forced_mode_three_pairs
 #print axioms repeat_forced_mode_four_pairs
 #print axioms repeat_forced_high_mode_has_two_waves
+#print axioms first_scale_tangent_log_budget
 
 end MathScope.M3.CD
