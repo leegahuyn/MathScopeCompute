@@ -1,0 +1,74 @@
+name: MathScope corrected first Forced source
+on:
+  push:
+    branches: [mathscope-cd-axial-source-bridge-20261029]
+    paths:
+      - '.github/workflows/mathscope-corrected-first-force.yml'
+      - 'research-ide/mathscope-m3/navier/source-initialized-angular.mjs'
+      - 'research-ide/mathscope-m3/navier/source-global-forced-current.mjs'
+      - 'tools/mathscope-cd-axial-bridge-20261029/goal-next/first-force-repair/**'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  first-forced:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 58
+    env:
+      NODE_OPTIONS: --max-old-space-size=5200
+      M3_MAX_MINUTES: '50'
+      M3_MAX_RSS_GB: '6'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          path: repaired
+          sparse-checkout: |
+            research-ide/mathscope-m3/navier
+            tools/mathscope-cd-axial-bridge-20261029/goal-next/first-force-repair
+      - uses: actions/checkout@v4
+        with:
+          ref: f8cb4034e86d7b669d52a6f2248aebba156b51b5
+          persist-credentials: false
+          path: reference
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Verify and prepare the source-pinned reference
+        working-directory: reference
+        run: |
+          set -euo pipefail
+          m=research-ide/mathscope-m3
+          echo 'd23a2ac3b56412f176c3f86a7303a623fe07931453aff0e55ddf1730e34ee312  research-ide/mathscope-m3/staged-patches-20261023/PR30_Cumulative_Signed162_Cor85_TemporalFrontier.patch' | sha256sum -c
+          git apply "$m/staged-patches-20261023/PR30_Cumulative_Signed162_Cor85_TemporalFrontier.patch"
+          git apply "$m/pin-test-hotfix-20261023/PR30_RealCheckout_PinTest_EnvPortable.patch"
+          git apply "$m/temporal-finite-20261023/PR30_Cor85_SameSeal_NoDuplicate.patch"
+          git apply "$m/temporal-finite-20261023/PR30_Audit_Real81Cover_String_Flatness.patch"
+          git apply "$m/actual-audit-fix-20261023/PR30_NativeCoupledField_Handle_And_ClonedGuard.patch"
+          cp "$m/tangency-proof-20261023/generic-signed-source-kernel.fixed.mjs" "$m/navier/generic-signed-source-kernel.mjs"
+          cp "$m/tangency-proof-20261023/signed-source-frame-tangency.mjs" "$m/navier/signed-source-frame-tangency.mjs"
+          node --input-type=module -e "import {verifyPR30OriginalSourceFiles} from './$m/navier/source-signed-162-pr30-pins.mjs'; const x=await verifyPR30OriginalSourceFiles(); if(x.verifiedFiles.length!==29)process.exit(2); console.log('ORIGINAL_29_GIT_BLOBS_VALIDATED')"
+          git diff --quiet -- "$m/navier/source-initialized-angular.mjs" "$m/navier/source-global-forced-current.mjs"
+          cp "../repaired/$m/navier/source-initialized-angular.mjs" "$m/navier/source-initialized-angular.mjs"
+          cp "../repaired/$m/navier/source-global-forced-current.mjs" "$m/navier/source-global-forced-current.mjs"
+          helper="../repaired/tools/mathscope-cd-axial-bridge-20261029/goal-next/first-force-repair"
+          runner="$m/extended-signed-run-20261023"
+          python "$helper/make_replay.py" "$runner/run_real_original_signed162.mjs" "$helper/record_corrected_first_force.mjs"
+          node --check "$runner/run_repaired_first_force.mjs"
+          node --check "$runner/record_corrected_first_force.mjs"
+      - name: Construct, authenticate and export the repaired first Forced
+        working-directory: reference
+        env:
+          M3_SOURCE_GRAPH_EXPORT_DIR: ${{ runner.temp }}/corrected-first-forced-graph
+        run: |
+          set -euo pipefail
+          node --expose-gc research-ide/mathscope-m3/extended-signed-run-20261023/run_repaired_first_force.mjs "$RUNNER_TEMP/corrected-first-forced-run.json"
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mathscope-corrected-first-forced
+          path: |
+            ${{ runner.temp }}/corrected-first-forced-run.json
+            ${{ runner.temp }}/corrected-first-forced-graph/**
+          if-no-files-found: warn
+          retention-days: 30

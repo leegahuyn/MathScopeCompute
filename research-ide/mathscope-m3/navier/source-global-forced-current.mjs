@@ -158,7 +158,11 @@ function* constructGlobalForcedCurrent(source,context={}){
     const w=G.fresh('actual_forced_source_path_'+old.levelDifference+'_'+old.sign),path=originalFixedLiftPulsePath(G,{lift:old.lift,w}),
       normal=old.sourceFrame.normalBeforePath.map(x=>G.substitute(x,old.sourceFrame.pulseVariable,w)),K=old.principalK,
       psiPath=G.substitute(old.sourceCutoff,old.sourcePathVariable,w),
-      systems=[...new Set(old.waveRows.flatMap(row=>[...row.velocity,row.pressure]).flatMap(z=>parts.flatMap(part=>{
+      // The primary cutoff derivative has the same transverse and slow
+      // envelopes. Its longitudinal transitions lie inside the pulse box.
+      supportCoefficients=[...old.waveRows.flatMap(row=>[...row.velocity,row.pressure]),
+        ...old.primaryFlatResidual.flatMap(row=>row.value)],
+      systems=[...new Set(supportCoefficients.flatMap(z=>parts.flatMap(part=>{
         const n=G.nodes[z[part]];return n.op==='m3_coupled_expression_partial'?[n.args[0]]:[];
       })))],support=exactAngularSourceSupportIdeal(G,{rows:old.nonzeroAngularForcing,waveSystems:systems}),
       forced=[],increment=[],conjugacy=[];
@@ -213,7 +217,9 @@ function* constructGlobalForcedCurrent(source,context={}){
     const waveRows=sumStateRows(G,old.waveRows,increment),covariance=exactAngularWaveCovariance(G,{rows:waveRows,theta}),
       reconstruction=reconstructAngularHarmonics(G,{geometry:old.lift.geometry,phase:old.phase,k,rows:waveRows});
     templates.push({key:old.key,signIndex:old.signIndex,sign:old.sign,levelDifference:old.levelDifference,lift:old.lift,phase:old.phase,k,
-      oldWaveRows:old.waveRows,oldMeanRows:old.previous,oldFlatResidual:old.oldFlatResidual,originalSourceRows:old.nonzeroAngularForcing,
+      oldWaveRows:old.waveRows,oldMeanRows:old.previous,oldFlatResidual:old.oldFlatResidual,
+      rawInitializedWaveResidual:old.waveResidual,primaryFlatResidual:old.primaryFlatResidual,
+      originalSourceRows:old.nonzeroAngularForcing,
       forced,increment,waveRows,covariance,reconstruction,support,conjugacy,
       sourceFiniteInventory:{solved:[-2,-1,1,2],updatedVelocity:[-2,-1,1,2],nextResidual:[-4,-3,-2,-1,0,1,2,3,4],discarded:[]}});
   }

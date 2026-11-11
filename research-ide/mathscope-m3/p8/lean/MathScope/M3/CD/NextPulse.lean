@@ -49,9 +49,23 @@ theorem fixed_pulse_shifted_propagator {s u : ℝ → ℝ} {v a Au : ℝ}
   convert hs.mul hu using 1
   ring
 
+/-- The raw first source already contains the primary cutoff derivative. -/
+theorem first_forced_raw_tail_bookkeeping (g primary ψ tail : ℂ) :
+    (g + primary) - ψ * (g + primary) + tail -
+      ((1 - ψ) * (g + primary) + tail + primary) = -primary := by
+  ring
+
+/-- Solving with the separated forcing keeps the primary tail in the
+physical residual and gives the supported forcing the expected cutoff. -/
+theorem first_forced_separated_tail_bookkeeping (g primary ψ tail : ℂ) :
+    (g + primary) - ψ * g + tail = primary + (1 - ψ) * g + tail := by
+  ring
+
 #print axioms fixed_pulse_normal_evolution
 #print axioms fixed_pulse_pressure_component
 #print axioms fixed_pulse_mode_damping
 #print axioms fixed_pulse_shifted_propagator
+#print axioms first_forced_raw_tail_bookkeeping
+#print axioms first_forced_separated_tail_bookkeeping
 
 end MathScope.M3.CD

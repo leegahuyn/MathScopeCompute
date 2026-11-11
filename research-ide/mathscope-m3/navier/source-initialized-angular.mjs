@@ -146,7 +146,22 @@ export function attachGlobalInitializedAngular(mean,context={}){
         phaseChecks=phaseGradient.map((x,j)=>({id:'initialized-source-normal-'+delta+'-'+prior.sign+'-'+j,...phaseVerifier(G.sub(x,normal[j]))})),
         coefficientVerification=verifyCompleteAngularResidualUpdate(G,update,{prefix:'initialized-complete-update-'+delta+'-'+prior.sign}),
         coefficientChecks=coefficientVerification.checks,
-        checks=[...phaseChecks,...coefficientChecks,
+        primary=current.local.rows[signIndex],psi=band.cutoffs.psi,dpsi=G.derivative(psi,v),
+        uncut=family.t.map(x=>G.mul(current.local.slowCutoff.body,G.sqrt(epsilon),
+          primary.originalFixedPositiveA,band.cutoffs.chi,x)),
+        primaryFactorChecks=uncut.map((x,j)=>({
+          id:'initialized-original-primary-cutoff-factor-'+j,
+          ...phaseVerifier(G.sub(G.mul(psi,x),primary.weightedAmplitude[j]))
+        })),
+        primaryFlatPositive=uncut.map((x,j)=>C.value(shareGlobalScalar(G,
+          localMap(G.mul(G.q(1,2),dpsi,x)),'OriginalPrimaryPrincipalFlat_'+delta+'_'+prior.sign+'_'+j))),
+        primaryFlatResidual=[{m:1,value:primaryFlatPositive},
+          {m:-1,value:primaryFlatPositive.map(C.conjugate)}],
+        nonzeroAngularForcing=subtractVectorRows(G,waveResidual,primaryFlatResidual).filter(row=>row.m!==0),
+        checks=[...phaseChecks,...coefficientChecks,...primaryFactorChecks,
+          {id:'initialized-primary-flat-kept-separately',
+            pass:primaryFlatPositive.some(z=>z.real!==G.zero)&&
+              same(nonzeroAngularForcing.map(r=>r.m),[-2,-1,1,2])},
           {id:'initialized-mean-whole-common-torus-retained-'+delta+'-'+prior.sign,pass:previous[0].velocity.every((z,j)=>z.real===normalizedMeanVelocity[j])&&previous[0].pressure.real===normalizedMeanPressure},
           {id:'initialized-primary-original-pressure-half-pair-'+delta+'-'+prior.sign,pass:waveRows.length===2&&waveRows[0].m===1&&waveRows[1].m===-1&&prior.checks.every(x=>x.pass)},
           {id:'initialized-nonzero-modes-complete-'+delta+'-'+prior.sign,pass:same(waveResidual.map(r=>r.m),[-2,-1,0,1,2])&&update.discardedModes.length===0},
@@ -156,7 +171,8 @@ export function attachGlobalInitializedAngular(mean,context={}){
         sourceFrame:{normalBeforePath:prior.normal.map(atRepresentative),pulseVariable:v,principalK,
           familySystem:family.system,primaryPotential:current.local.rows[signIndex].potential,
           primaryHomogeneousPressure:prior.primaryPressure,actualPrimaryAmplitude:current.local.rows[signIndex].weightedAmplitude.map(atRepresentative)},
-        previous,waveRows,unsharedWaveRows,update,coefficientVerification,waveResidual,nonzeroAngularForcing:waveResidual.filter(r=>r.m!==0),checks,
+        previous,waveRows,unsharedWaveRows,update,coefficientVerification,waveResidual,
+        primaryFlatResidual,nonzeroAngularForcing,checks,
         oldFlatResidual:oldFlat,sourcePulseLength:band.geometry.Ls,sourceCutoff:atRepresentative(band.cutoffs.psi),
         sourcePathVariable:v,completeReferenceMeanBeforeMapping:originalReferenceRoots});
       progress(context,'initialized-actual-complete-angular-source-fixed-lift',G,{delta,sign:prior.sign,modes:5});
