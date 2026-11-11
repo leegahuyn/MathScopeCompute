@@ -38,6 +38,7 @@ EXTRAS = [
     ".github/workflows/mathscope-second-forced-candidates.yml",
     ".github/workflows/mathscope-original-axial-n2.yml",
     ".github/workflows/mathscope-primary-order2.yml",
+    ".github/workflows/mathscope-primary-forced-join.yml",
     "research-ide/mathscope-m3/p8/lean/MathScope/M3/CD/AxialMomentBridge.lean",
     "research-ide/mathscope-m3/p8/lean/MathScope/M3/CD/ReferenceIngress.lean",
     "research-ide/mathscope-m3/p8/lean/MathScope/M3/CD/PulseCutoff.lean",

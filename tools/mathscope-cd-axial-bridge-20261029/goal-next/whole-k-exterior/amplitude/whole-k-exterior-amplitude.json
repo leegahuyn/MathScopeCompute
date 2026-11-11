@@ -1,0 +1,96 @@
+{
+  "schema": "MathScope.N7.ActualExteriorAmplitudeBound/1",
+  "cellReceiptSHA256": "254868bebdad829d656c06cfa903a5b5cdf288d35cf5ec9bdf52461c3a7e008b",
+  "regionReceiptSHA256": "82f4bdcebd43a72451e7523059547dbca37e7a47cc5d66a24e787b0851a4420a",
+  "sourceOuterSchedule": {
+    "commit": "f8cb4034e86d7b669d52a6f2248aebba156b51b5",
+    "path": "research-ide/mathscope-m2/navier/actual-global-source-outer.mjs",
+    "gitBlob": "f8097860af5514eaa0b0dbad6ac2086277047f16",
+    "literalClausesChecked": 16
+  },
+  "amplitudeAlgebra": {
+    "normalizedStageContributions": {
+      "initial": "h + 3/10",
+      "axialDecay": "T*h",
+      "entry": "h - lam/2",
+      "reservedPower": "60*BO*h - 60*BO*lam",
+      "pulse": "13*h/lam - 13",
+      "interpolation": "Tf*h - Tf*lam - log_two",
+      "angular": "30*BO*h - 30*BO*lam",
+      "steepen": "h - lam/2 - 1/2",
+      "steepPower": "-4*h*log_h + 4*log_h",
+      "flatten": "h/2 - 1/2",
+      "wait": "0"
+    },
+    "logAmplitude": "logPstar + A*log(XR) - log(1-co*h) -7/10 + 7*h/2 - lambda + h*T + (h-lambda)*(90*BOuter+13/lambda+Tf) - log(2) + 4*(1-h)*log(h)",
+    "terminalWaitContribution": "0"
+  },
+  "bounds": {
+    "logCSelectedLower": "Lc>=Q^200>=exp(800*T)>123000*T",
+    "logCInfinity": [
+      "4*Lc",
+      "6*Lc"
+    ],
+    "bothStrict": true,
+    "rawAmplitudeFixedDyadicLower": "2^4920000",
+    "rawAmplitudeFixedDyadicUpper": "2^(2^(N+1)), N=2^(2*1048576+26)",
+    "relativeLogAmplitudeUpper": "log(cInfinity)<2^-31*B, B=log(1/qBig)",
+    "M": "tau0^(2*A)*cInfinity^2",
+    "MSourceDyadicLower": "tau0^2=2^(-2*(ellMinimum+15))",
+    "MRelativeUpper": "qBig^(1-2^-30)",
+    "MFixedDyadicUpper": "2^(-8388607)",
+    "sqrtMFixedDyadicUpper": "2^(-4194303)",
+    "absolutePositiveNormalizedLowerFullyNumerical": false,
+    "remainingLowerBoundDependency": "A fixed numerical lower bound for M would require a certified upper bound on the exact original ellMinimum."
+  },
+  "energyForce": {
+    "annularCell": {
+      "endEnergyNormalized": [
+        "M",
+        "2^5*M"
+      ],
+      "transverseDissipationNormalizedUnweighted": [
+        "M",
+        "2^9*M"
+      ],
+      "axialDissipationNormalized": [
+        "0",
+        "0"
+      ],
+      "forceWorkNormalized": [
+        "M",
+        "2^4*M"
+      ],
+      "positiveStrictLowerForEnergyDissipationWork": "tau0^2"
+    },
+    "entireVerifiedExterior": {
+      "endEnergyNormalizedUpper": "2^1060*M < 2^(-8387547)",
+      "velocityNormalizedPointwiseUpper": "2^529*sqrt(M)",
+      "forceNormalizedPointwiseUpper": "2^1573*sqrt(M) < 2^(-4192730)",
+      "forceNormalizedSpatialL2Upper": "2^1574*sqrt(M)",
+      "boundForSquaredTimeIntegralOfExteriorForceL2": "2^3148*M",
+      "CPrimeUpper": "2^6",
+      "CSecondPrimitiveUpper": "2^14",
+      "linearForceExponentBounds": [
+        535,
+        547,
+        547,
+        1051
+      ],
+      "quadraticForceExponentBounds": [
+        1570,
+        1066,
+        1066
+      ]
+    }
+  },
+  "scope": {
+    "originalExteriorSourceTheoremsUsed": true,
+    "centerFieldUnknown": true,
+    "wholeKFinalEnergy": null,
+    "wholeKFinalDefect": null,
+    "N7-06": "OPEN",
+    "wholeKFinalJets": "0/67",
+    "release": "HOLD"
+  }
+}

@@ -12,13 +12,26 @@ The workflow makes a separate `f8cb4034e86d7b669d52a6f2248aebba156b51b5` referen
 
 ## Resource and evidence limits
 
-The previous C5/order-2 primary native run reached checkpointed RSS 6,266,396,672 bytes at a 6,442,450,944-byte cap; the separate C3 corrected first-Forced run had 4,197,115 graph nodes. Neither number predicts the combined build. The 6 GiB RSS ceiling and 145-minute owned deadline are intentional bounded diagnostics, and failure due to resource limits is OPEN, not a mathematical refutation. The larger source-window node budget 6,000,000 is a representation cap, not an estimate or guarantee. The original runner records RSS at progress/stage checkpoints and at caught failures; an OS kill may only leave earlier records.
+The previous C5/order-2 primary native run reached checkpointed RSS
+6,266,396,672 bytes at a 6,442,450,944-byte cap. The separate C3
+corrected first-Forced run had 4,197,115 graph nodes. The combined
+build retains the 6 GiB RSS ceiling and 145-minute owned deadline.
+The first attempt passed C5 family creation and hit the native
+band constructor's argument limit. The second run uses the
+supported 4,000,000-node band budget. The runner records RSS at
+progress and stage checkpoints and at caught failures.
+[First run](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43044574048)
+· [Corrected run](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43046097299).
 
 For memory, the run writes a compact receipt with actual checked IDs and no full graph export. This is independently checkable as a receipt shape and source-pin consistency, but its recorded native equality cannot be separately replayed from numeric IDs without a future graph/definition export. Neither receipt shape nor object identity supplies a mathematical analytic norm. The 20 Forced actual W-alpha input seminorms, uncut-amplitude bounds, common-reference conversions, real operator/source analytic proof, original C/D source identities, further stages and Lean remain OPEN. No accepted progress counters or RELEASE status are promoted.
 
 ## Installation and tests
 
-Copy this directory, excluding `.github`, to `tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-forced-join`. Copy `.github/workflows/mathscope-primary-forced-join.yml` into repository `.github/workflows`. Dispatch only on `mathscope-cd-axial-source-bridge-20261029`; the workflow has read-only permissions and does not edit that branch. Artifacts contain `source-pins.json`, `native-receipt.json`, progress log, readback and exit codes when those stages are reached.
+The workflow runs on the isolated evidence branch when the
+workflow or its two runner sources change. It has read-only
+permissions. Artifacts contain source pins, the compact native
+receipt, progress log, readback and exit codes as each stage
+finishes.
 
 The local small checks are:
 

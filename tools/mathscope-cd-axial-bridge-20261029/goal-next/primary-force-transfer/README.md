@@ -33,4 +33,46 @@ on the transition, extending A_delta by zero outside its compact support. Each A
 
     python check_primary_force_transfer.py --repo <checkout> --binding <independent-primary-half-amplitude.json> --out result.json
 
-The test uses exact integers, checks all ten chart keys and 30 source bindings, source cutoff code, seed-polynomial recurrence and derivative constants. It does not evaluate the actual field or prove the stronger uncut source seminorm. All status counts and RELEASE HOLD stay unchanged.
+The test uses exact integers to check ten chart keys, 30 source
+bindings, the seed-polynomial recurrence and the derivative constants.
+
+## Original hosted uncut amplitude
+
+The [hosted amplitude replay](hosted-uncut-amplitude.json) uses the
+actual 2nd-order primary artifact. It checks the six signed coefficient
+roots and removes the single outer longitudinal factor from
+\(\eta_\beta\sqrt{\epsilon}\sqrt{y}\,\chi\psi t\). The four original
+integrals defining \(H\) keep their internal \(\psi^2\). The actual
+\(y=H^{-1}\overline T\) and its positive square root therefore stay in
+the same current. The replay also reads the actual C5 and C3 norm
+records and the common source-only maximum \(K\) from the separate
+norm graph.
+
+On a fixed own chart, the slow cutoff derivatives of order \(j\)
+are bounded by \(KS^{3j}\). The corresponding transverse cutoff
+derivatives are bounded by \(K\). Since \(K\ge2\) and \(S\ge1\), their
+product is bounded by \(2^jK^2S^{3j}\le(KS)^{3j+3}\).
+The same square-root and normalized pulse derivative recurrences now
+give the following bounds for the uncut product, including the
+unchanged \(\sqrt{\epsilon}\) factor.
+
+| Total derivative order | Power of \(KS\) | Pole in \(\delta\) |
+| --- | ---: | ---: |
+| 0 | 84 | 2 |
+| 1 | 445 | 6 |
+| 2 | 851 | 12 |
+| 3 | 1257 | 18 |
+
+Each row multiplies \(\sqrt{\epsilon\zeta}\,P(v)\).
+The original pulse length \(L_s\ge2r_0 S\), with \(r_0=2^{-34}\),
+and the cutoff derivative bound give a common through-order-three
+bound for \(\psi'A_{\rm uncut}/2\),
+\[
+  2^{95}K^{1257}S^{1256}\sqrt{\epsilon\zeta}\,\delta^{-18}P(v).
+\]
+This is a source-defined fixed-chart bound on the original
+primary. The current and norm graphs use their own namespaces.
+Use for the repaired Forced requires the same live family and
+the actual common-reference transport and remaining raw inputs.
+
+    python check_hosted_uncut_amplitude.py --repo REPO --artifact PRIMARY_RUN --transfer-receipt result.json --out hosted-uncut-amplitude.json

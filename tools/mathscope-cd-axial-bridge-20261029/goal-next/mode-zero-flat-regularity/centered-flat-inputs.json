@@ -1,0 +1,101 @@
+{
+  "schema": "MathScope.N6.CenteredFirstCycleFlatInput/1",
+  "graphSHA256": "ab52a3337591d2c23c82f8ebbd1ef7305b4ecaebc9fa17ae6d700f32c650e4cf",
+  "registrySHA256": "657bc01a51027c0fd5381bbeb5f5d89895ed76d7cf357d297884f045d55a8333",
+  "modeZeroReceiptSHA256": "d0548a8520f7363294fd330aa332a79f32cb7a366c149b03a918ad3966915725",
+  "phaseReceiptSHA256": "3b5a526636b6646b620e7870a676c0f59b27648a8f0aceab5a88d6fc69ef7f91",
+  "originalSourceSHA256": {
+    "research-ide/mathscope-m3/navier/source-forced-class-majorants.mjs": "b609413ea8f86d023d3331c90c2ecaecf139f07de69d8d05ee6feb46c865f053",
+    "research-ide/mathscope-m3/navier/source-global-temporal-class-majorants.mjs": "6c3ed1937b53e18208676ee800abbfb87f40d1f57c0eba1d9433f3cb8650552e",
+    "research-ide/mathscope-m3/navier/source-global-fresh-mean-class-majorants.mjs": "39fba17a71f79ee2bf4de2b87b19ae845c0f0b0dacaace50ee37d2aa13c8e97d",
+    "research-ide/mathscope-m3/navier/source-fresh-mean-class-kernel.mjs": "4f845225c082d3647db390ad2f65f403af214dbbb0741a7bbb15b4d1773ebd26",
+    "research-ide/mathscope-m3/navier/source-initial-residual-class-kernel.mjs": "21c74755ed4e2c13828082f32e4e471dabf070f26ee1a78e3fb2bbf1328a8d86",
+    "research-ide/mathscope-m3/navier/source-radial-class-majorants.mjs": "5f0fc6b8856bbe451f5949c37bd44473cac049b3c7dd714000be9405e8b6cd48"
+  },
+  "operands": {
+    "A0": 4455782,
+    "A0CenteredSourceBody": 4455275,
+    "A0NativeSource": 4455432,
+    "actualPressureMoment": 4455439,
+    "normalizerMass": 633724,
+    "A1": 4454181,
+    "actualTemporalWeightedWhole": 4454051,
+    "F_axCenteredSource": 4229836,
+    "preTemporalRawEz": 4229480,
+    "preTemporalEzPressureZ": 4229476,
+    "meanCutoff": 633733,
+    "meanCutoffR": 633761,
+    "meanCutoffInteriorXInterval": [
+      "exp(1)*X0Imean",
+      "121/100*exp(1)*X0Imean"
+    ],
+    "preFiveFreshTargets": [
+      4454726,
+      4454789,
+      4454848
+    ],
+    "weightedSeamTracesCertified": false
+  },
+  "exactFiveMapDifference": {
+    "preFiveGr": 4454367,
+    "finalGr": 4455275,
+    "beforeMeanVelocity": [
+      4454231,
+      4454232,
+      4454233
+    ],
+    "fiveMapYIndependentVelocity": [
+      4455175,
+      4455153,
+      4455157
+    ],
+    "finalMeanVelocity": [
+      4455176,
+      4455177,
+      4455178
+    ],
+    "fullDifferenceMonomials": 78,
+    "crossMonomials": 60,
+    "discardedYIndependentMonomials": 18,
+    "centeredCrossIdentity": [
+      "-(D_r+1/R)(2*beta_pre^circ*beta_5)",
+      "-D_z(beta_pre^circ*gamma_5+beta_5*gamma_pre^circ)",
+      "+2*v_pre^circ*v_5/R"
+    ]
+  },
+  "identitiesOnCommonDerivativeDomain": [
+    "A0_final=A0[g_r_final^circ]",
+    "F_ax=A1[E_z_beforeTemporal^circ]"
+  ],
+  "finiteAnalyticCriterion": {
+    "weightedWholeInputs": [
+      "f^circ with e=0",
+      "actual E_z^circ with e=1"
+    ],
+    "extraRadialOrdersPerIBP": "p",
+    "extraTorusOrdersPerIBP": "p+1",
+    "totalSufficientRawInputOrder": "m+2*p+1",
+    "frequencyInverseConstant": "(7/18)^p",
+    "fiveMapSufficientSlowOrder": {
+      "betaGamma": "m+p+1",
+      "swirl": "m+p",
+      "freshTargets": "m+p+2"
+    },
+    "minimumPositiveIBPAtOutputOrderZero": {
+      "inputOrder": 3,
+      "p": 1,
+      "fiveBetaGammaSlowOrder": 2,
+      "fiveSwirlSlowOrder": 1,
+      "preFiveFreshTargets": 3,
+      "preFiveVelocityGeneric": 5,
+      "preFiveCommonCovarianceGeneric": 4,
+      "preTemporalPressureForEzDirect": 4,
+      "preTemporalOldMeanVelocityGeneric": 5,
+      "preTemporalCommonCovarianceGeneric": 5
+    },
+    "strictLowerBoundOnSufficientIBPOrderForQ1WithoutPhysicalLossAtAlpha1MinusKappa": 409500001,
+    "numericActualInputSeminormsCertified": false,
+    "allOrderSourceClassCertified": false
+  },
+  "release": "HOLD"
+}
