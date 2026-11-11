@@ -1,0 +1,57 @@
+{
+  "schema": "MathScope.M4.R102SpatialGridMean/1",
+  "sourceCommit": "9595b4de5a1065b694d225c0ad2a14d5aa4435a9",
+  "sourceHashes": [
+    {
+      "path": "research-ide/mathscope-m1/navier/heat.mjs",
+      "pinnedSHA256": "5bb609090a021a2af5bd6a0dac5f6cc398f67bc8b807b5270d649867be021769",
+      "installedSHA256": "5bb609090a021a2af5bd6a0dac5f6cc398f67bc8b807b5270d649867be021769"
+    },
+    {
+      "path": "research-ide/mathscope-m1/navier/numerics.mjs",
+      "pinnedSHA256": "a406401c5a0e024e94d58cce0d7e6bdaa6b35488f22fd0ead4bf87222416c62c",
+      "installedSHA256": "a406401c5a0e024e94d58cce0d7e6bdaa6b35488f22fd0ead4bf87222416c62c"
+    }
+  ],
+  "linkedR102ReceiptSHA256": "f9b987a32ad38d02059becb52bec2e768d80bb9e71dff19753d60dad0a96a25d",
+  "input": {
+    "time": 0.19,
+    "viscosity": 1
+  },
+  "tolerance": 1e-8,
+  "levels": [
+    {
+      "K": 4,
+      "points": 64,
+      "storedVelocityEnergyMeanEnclosure": [
+        0.11691660675247673,
+        0.11691660675247798
+      ],
+      "exactContinuousEnergyMeanEnclosure": [
+        0.11691660675247341,
+        0.116916606752481
+      ],
+      "exactFourierGridQuadratureError": 0,
+      "meanEnergyDiscrepancyUpper": 4.565792188770957e-15,
+      "maximumPointEnergyDiscrepancyUpper": 7.910339050454242e-15
+    },
+    {
+      "K": 8,
+      "points": 512,
+      "storedVelocityEnergyMeanEnclosure": [
+        0.1169166067524716,
+        0.11691660675248103
+      ],
+      "exactContinuousEnergyMeanEnclosure": [
+        0.11691660675247341,
+        0.116916606752481
+      ],
+      "exactFourierGridQuadratureError": 0,
+      "meanEnergyDiscrepancyUpper": 9.395262345890389e-15,
+      "maximumPointEnergyDiscrepancyUpper": 7.910339050454242e-15
+    }
+  ],
+  "scope": "Fixed-time Taylor–Green benchmark. The exact grids are evaluated using rational squared-trigonometric values and the stored binary64 velocities with outward summation.",
+  "theoremFromConvergenceTable": false,
+  "verdict": "PASS_INDEPENDENT_SPATIAL_K_ENERGY_MEAN"
+}

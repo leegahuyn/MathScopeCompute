@@ -9,7 +9,12 @@ const criterionAuthority = new WeakSet();
 const assessmentAuthority = new WeakSet();
 // Update only after independent review of actual criterion execution artifacts.
 // Empty means final M4 acceptance is UNCONFIRMED, not historical zero completion.
-const REVIEWED_CRITERION_DIGESTS = Object.freeze(Object.create(null));
+const REVIEWED_CRITERION_DIGESTS = Object.freeze(Object.assign(Object.create(null), {
+  'I3-01': 'd1cd01985e72af78ceec7ae576a4fed2f4e36c0d6a598369c5478d8aa0fe865b',
+  'R1-01': '1fc2c35a26fabde5508cf9e112ed770284162834a8edac811122a184c1a94782',
+  'R1-02': 'ac091d3ef9bfc7a3a7134d5c11c5ceedaf6d4823eb2208cd29f537ef65f8fe7f',
+  'I3-02': '8a412ba3a4ff9183cca09eb90a7552587a5bccb4d2e5b8545c5e57e332f0aa57',
+}));
 // Digest keys and values must both be independently reviewed exact digests.
 const REVIEWED_M3_COMPLETION_DIGESTS = Object.freeze(Object.create(null));
 const clone = value => JSON.parse(JSON.stringify(value));

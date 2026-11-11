@@ -1,0 +1,38 @@
+MathScope.M4.FiniteAcceptance.delta_two_exact_quotient (x y : Int) : MathScope.M4.FiniteAcceptance.deltaTwo x y = x * y
+'MathScope.M4.FiniteAcceptance.delta_two_exact_quotient' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.M4.FiniteAcceptance.delta_two_input_residues (x y m : Int) :
+  MathScope.M4.FiniteAcceptance.deltaTwo (x % m) (y % m) % m = MathScope.M4.FiniteAcceptance.deltaTwo x y % m
+'MathScope.M4.FiniteAcceptance.delta_two_input_residues' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.M4.FiniteAcceptance.delta_two_precision (x y : Int) (N : Nat) :
+  MathScope.M4.FiniteAcceptance.deltaNumerator x y % (2 * 2 ^ N) / 2 =
+    MathScope.M4.FiniteAcceptance.deltaTwo x y % 2 ^ N
+'MathScope.M4.FiniteAcceptance.delta_two_precision' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.M4.FiniteAcceptance.delta_two_same_width_counterexample :
+  MathScope.M4.FiniteAcceptance.deltaNumerator 3 3 % 16 / 2 ≠ MathScope.M4.FiniteAcceptance.deltaTwo 3 3 % 16
+'MathScope.M4.FiniteAcceptance.delta_two_same_width_counterexample' does not depend on any axioms
+MathScope.M4.FiniteAcceptance.coefficient_swap_nonidentity : MathScope.M4.FiniteAcceptance.swapPair (0, 1) ≠ (0, 1)
+'MathScope.M4.FiniteAcceptance.coefficient_swap_nonidentity' does not depend on any axioms
+MathScope.M4.FiniteAcceptance.nonidentity_semilinear_chain_map (s : MathScope.M4.FiniteAcceptance.Coeff)
+  (x : MathScope.M0.C0 × MathScope.M0.C0) (y : MathScope.M0.C1 × MathScope.M0.C1)
+  (z : MathScope.M0.C2 × MathScope.M0.C2) :
+  MathScope.M4.FiniteAcceptance.swapPair
+        (MathScope.M4.FiniteAcceptance.scalarPair MathScope.M4.FiniteAcceptance.scalarC0 s x) =
+      MathScope.M4.FiniteAcceptance.scalarPair MathScope.M4.FiniteAcceptance.scalarC0
+        (MathScope.M4.FiniteAcceptance.swapPair s) (MathScope.M4.FiniteAcceptance.swapPair x) ∧
+    MathScope.M4.FiniteAcceptance.swapPair
+          (MathScope.M4.FiniteAcceptance.scalarPair MathScope.M4.FiniteAcceptance.scalarC1 s y) =
+        MathScope.M4.FiniteAcceptance.scalarPair MathScope.M4.FiniteAcceptance.scalarC1
+          (MathScope.M4.FiniteAcceptance.swapPair s) (MathScope.M4.FiniteAcceptance.swapPair y) ∧
+      MathScope.M4.FiniteAcceptance.swapPair
+            (MathScope.M4.FiniteAcceptance.scalarPair MathScope.M4.FiniteAcceptance.scalarC2 s z) =
+          MathScope.M4.FiniteAcceptance.scalarPair MathScope.M4.FiniteAcceptance.scalarC2
+            (MathScope.M4.FiniteAcceptance.swapPair s) (MathScope.M4.FiniteAcceptance.swapPair z) ∧
+        MathScope.M4.FiniteAcceptance.pairD0 (MathScope.M4.FiniteAcceptance.swapPair x) =
+            MathScope.M4.FiniteAcceptance.swapPair (MathScope.M4.FiniteAcceptance.pairD0 x) ∧
+          MathScope.M4.FiniteAcceptance.pairD1 (MathScope.M4.FiniteAcceptance.swapPair y) =
+            MathScope.M4.FiniteAcceptance.swapPair (MathScope.M4.FiniteAcceptance.pairD1 y)
+'MathScope.M4.FiniteAcceptance.nonidentity_semilinear_chain_map' does not depend on any axioms
+MathScope.M4.FiniteAcceptance.product_differential_squared_zero (v : MathScope.M0.C0 × MathScope.M0.C0) :
+  MathScope.M4.FiniteAcceptance.pairD1 (MathScope.M4.FiniteAcceptance.pairD0 v) =
+    (MathScope.M0.zeroC2, MathScope.M0.zeroC2)
+'MathScope.M4.FiniteAcceptance.product_differential_squared_zero' depends on axioms: [propext]
