@@ -143,4 +143,72 @@ theorem whole_k_heat_exterior_cutoff_force
 #print axioms whole_k_narrow_q_window_obstruction
 #print axioms whole_k_heat_exterior_cutoff_force
 
+/-- The fifth original selector has a factor-two margin even at the
+smallest physical q in the whole-K slab. -/
+theorem whole_k_fifth_selector_margin {qBig q : ℝ} (b : ℕ → ℝ)
+    (hqBig : 0 < qBig) (hq : qBig / 64 ≤ q)
+    (hb₁ : 1 ≤ b 1 * qBig) (hb₂ : 16 * b 1 ≤ b 2)
+    (hb₃ : 2 * b 2 ≤ b 3) (hb₄ : 2 * b 3 ≤ b 4)
+    (hb₅ : 2 * b 4 ≤ b 5) (hmono : Monotone b) :
+    2 ≤ b 5 * q := by
+  have h4 := whole_k_background_cutoff_argument b hqBig hq hb₁ hb₂ hb₃ hb₄
+    (fun _ hn => hmono hn) (n := 4) (by decide)
+  have hqpos : 0 ≤ q := le_trans (by positivity : 0 ≤ qBig / 64) hq
+  nlinarith [mul_le_mul_of_nonneg_right hb₅ hqpos]
+
+/-- Given the original log-scale growth and fifth margin, select an
+actual integer reference in one of the five finite coefficient windows. -/
+theorem whole_k_margin_prefix_selector (a : ℕ → ℝ) {t : ℝ} {base : ℤ}
+    (hbase : (base : ℝ) ≤ t) (h5 : t + 1 ≤ a 5)
+    (growth : ∀ n, 1 ≤ n → n ≤ 4 → a n + 1 ≤ a (n + 1)) :
+    ∃ n : ℕ, n ≤ 4 ∧ ∃ j : ℤ, base ≤ j ∧
+      (n = 0 ∨ ⌊a n⌋ ≤ j) ∧ j < ⌊a (n + 1)⌋ ∧
+      t - 1 < (j : ℝ) ∧ (j : ℝ) < t + 1 ∧ t + 1 ≤ a (n + 1) := by
+  have floor_lt_of_add {j : ℤ} {x : ℝ} (h : (j : ℝ) + 1 ≤ x) : j < ⌊x⌋ := by
+    by_contra! hle
+    have hcast : (⌊x⌋ : ℝ) ≤ (j : ℝ) := by exact_mod_cast hle
+    linarith [Int.lt_floor_add_one x]
+  have htbase : base ≤ ⌊t⌋ := Int.le_floor.mpr hbase
+  have htleft : t - 1 < (⌊t⌋ : ℝ) := by linarith [Int.lt_floor_add_one t]
+  have htright : (⌊t⌋ : ℝ) < t + 1 := by linarith [Int.floor_le t]
+  have make (n : ℕ) (hn₁ : 1 ≤ n) (hn₄ : n ≤ 4)
+      (hprev : a n < t + 1) (hnext : t + 1 ≤ a (n + 1)) :
+      ∃ j : ℤ, base ≤ j ∧ (n = 0 ∨ ⌊a n⌋ ≤ j) ∧ j < ⌊a (n + 1)⌋ ∧
+        t - 1 < (j : ℝ) ∧ (j : ℝ) < t + 1 ∧ t + 1 ≤ a (n + 1) := by
+    by_cases h : ⌊a n⌋ ≤ ⌊t⌋
+    · exact ⟨⌊t⌋, htbase, Or.inr h, floor_lt_of_add (by linarith [Int.floor_le t]),
+        htleft, htright, hnext⟩
+    · have hge : ⌊t⌋ ≤ ⌊a n⌋ := le_of_lt (lt_of_not_ge h)
+      have hc : (⌊t⌋ : ℝ) ≤ (⌊a n⌋ : ℝ) := by exact_mod_cast hge
+      have hu := floor_lt_of_add
+        (x := a (n + 1)) (j := ⌊a n⌋)
+        (by linarith [growth n hn₁ hn₄, Int.floor_le (a n)])
+      exact ⟨⌊a n⌋, htbase.trans hge, Or.inr le_rfl, hu,
+        lt_of_lt_of_le htleft hc, lt_of_le_of_lt (Int.floor_le _) hprev, hnext⟩
+  by_cases h1 : t + 1 ≤ a 1
+  · exact ⟨0, by decide, ⌊t⌋, htbase, Or.inl rfl,
+      floor_lt_of_add (by linarith [Int.floor_le t]), htleft, htright, h1⟩
+  by_cases h2 : t + 1 ≤ a 2
+  · exact ⟨1, by decide, make 1 (by decide) (by decide) (lt_of_not_ge h1) h2⟩
+  by_cases h3 : t + 1 ≤ a 3
+  · exact ⟨2, by decide, make 2 (by decide) (by decide) (lt_of_not_ge h2) h3⟩
+  by_cases h4 : t + 1 ≤ a 4
+  · exact ⟨3, by decide, make 3 (by decide) (by decide) (lt_of_not_ge h3) h4⟩
+  exact ⟨4, by decide, make 4 (by decide) (by decide) (lt_of_not_ge h4) h5⟩
+
+/-- Only three original integer labels can be active on the whole-K slab. -/
+theorem whole_k_active_labels {c j : ℤ} {t : ℝ}
+    (hlo : (c : ℝ) + 14 < t) (hhi : t ≤ (c : ℝ) + 16)
+    (guard : |t - (j : ℝ)| < 3 / 4) : c + 14 ≤ j ∧ j ≤ c + 16 := by
+  obtain ⟨ha, hb⟩ := abs_lt.mp guard
+  have lower : ((c + 13 : ℤ) : ℝ) < (j : ℝ) := by push_cast; linarith
+  have upper : (j : ℝ) < ((c + 17 : ℤ) : ℝ) := by push_cast; linarith
+  have lowerInt : c + 13 < j := by exact_mod_cast lower
+  have upperInt : j < c + 17 := by exact_mod_cast upper
+  omega
+
+#print axioms whole_k_fifth_selector_margin
+#print axioms whole_k_margin_prefix_selector
+#print axioms whole_k_active_labels
+
 end MathScope.M3.CD
