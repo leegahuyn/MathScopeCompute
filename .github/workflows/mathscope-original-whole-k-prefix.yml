@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        prefix: ${{ fromJSON(github.event_name == 'push' && '[4]' || '[0,3,4]') }}
+        prefix: ${{ fromJSON(github.event_name == 'push' && '[3,4]' || '[0,3,4]') }}
     env:
       NODE_OPTIONS: --max-old-space-size=6100
       ORIGINAL_SOURCE_COMMIT: f8cb4034e86d7b669d52a6f2248aebba156b51b5
@@ -61,15 +61,24 @@ jobs:
                       available = min(available, int(cap) - int(usage.read_text()))
           fourth = environ["ORIGINAL_PREFIX"] == "4"
           roomy = available >= 11 * gib
-          more_room = fourth and available >= 13 * gib
-          print((11 if more_room else 9 if roomy else 6) * gib,
-                9800 if more_room else 8100 if roomy else 6100,
-                8000000 if more_room else 5000000)
+          more_room = fourth and available >= 14 * gib
+          prefix = int(environ["ORIGINAL_PREFIX"])
+          print((12 if more_room else 9 if roomy else 6) * gib,
+                11000 if more_room else 8100 if roomy else 6100,
+                12000000 if more_room else 5000000,
+                16000000 if more_room else 8000000 if roomy and prefix == 3 else 4000000)
           PY
           )"
-          read -r MATHSCOPE_PREFIX_MAX_RSS_BYTES heap_mb MATHSCOPE_PREFIX_FAMILY_MAX_NODES <<< "$limits"
-          export MATHSCOPE_PREFIX_MAX_RSS_BYTES MATHSCOPE_PREFIX_FAMILY_MAX_NODES
-          printf 'runner RSS cap=%s bytes; V8 old-space=%s MiB; original family node budget=%s\n' "$MATHSCOPE_PREFIX_MAX_RSS_BYTES" "$heap_mb" "$MATHSCOPE_PREFIX_FAMILY_MAX_NODES"
+          read -r MATHSCOPE_PREFIX_MAX_RSS_BYTES heap_mb MATHSCOPE_PREFIX_FAMILY_MAX_NODES MATHSCOPE_PREFIX_BAND_MAX_NODES <<< "$limits"
+          export MATHSCOPE_PREFIX_MAX_RSS_BYTES MATHSCOPE_PREFIX_FAMILY_MAX_NODES MATHSCOPE_PREFIX_BAND_MAX_NODES
+          printf 'RSS=%s bytes; V8 old-space=%s MiB; original family nodes=%s; band nodes=%s\n' "$MATHSCOPE_PREFIX_MAX_RSS_BYTES" "$heap_mb" "$MATHSCOPE_PREFIX_FAMILY_MAX_NODES" "$MATHSCOPE_PREFIX_BAND_MAX_NODES"
+          if [ "$MATHSCOPE_PREFIX_BAND_MAX_NODES" -gt 4000000 ]; then
+            out="$RUNNER_TEMP/mathscope-whole-k"
+            mkdir -p "$out"
+            band=research-ide/mathscope-m3/navier/source-global-band.mjs
+            python3 "../evidence/tools/mathscope-cd-axial-bridge-20261029/goal-next/whole-k-atlas/prepare_wider_band_budget.py" "$band" "$out/band-budget-overlay.json"
+            test "$(git diff --name-only HEAD --)" = "$band"
+          fi
           node --check "$target"
           node --max-old-space-size="$heap_mb" --expose-gc "$target" "$RUNNER_TEMP/mathscope-whole-k" "$ORIGINAL_SOURCE_COMMIT" "$ORIGINAL_PREFIX"
       - uses: actions/upload-artifact@v4

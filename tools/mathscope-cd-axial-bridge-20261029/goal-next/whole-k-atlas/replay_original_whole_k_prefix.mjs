@@ -14,15 +14,18 @@ const executingCommit = process.env.GITHUB_SHA;
 const N = Number(request);
 const maxMinutes = 105;
 const maxRss = Number(process.env.MATHSCOPE_PREFIX_MAX_RSS_BYTES ?? 6 * 1024 ** 3);
-assert.ok([6, 9, 11].some(gib => maxRss === gib * 1024 ** 3));
+assert.ok([6, 9, 12].some(gib => maxRss === gib * 1024 ** 3));
 assert.ok(directory && /^[a-f0-9]{40}$/.test(sourceCommit));
 assert.ok(/^[a-f0-9]{40}$/.test(executingCommit ?? ''));
 assert.ok(request === String(N) && [0, 3, 4].includes(N));
 mkdirSync(directory, { recursive: true });
 
 const upstreamMaxNodes = Number(process.env.MATHSCOPE_PREFIX_FAMILY_MAX_NODES ?? 5000000);
-assert.ok(upstreamMaxNodes === 5000000 || (upstreamMaxNodes === 8000000 && N === 4));
-const exportMaxNodes = upstreamMaxNodes === 8000000 ? 10000000 : 6000000;
+assert.ok(upstreamMaxNodes === 5000000 || (upstreamMaxNodes === 12000000 && N === 4));
+const bandMaxNodes = Number(process.env.MATHSCOPE_PREFIX_BAND_MAX_NODES ?? 4000000);
+assert.ok(bandMaxNodes === 4000000 || (bandMaxNodes === 8000000 && N === 3) ||
+  (bandMaxNodes === 16000000 && N === 4));
+const exportMaxNodes = Math.max(bandMaxNodes, 6000000);
 
 const started = Date.now();
 const gcIntervalMs = 20_000;
@@ -30,7 +33,7 @@ let lastGC = 0;
 const receipt = {
   schema: 'MathScope.M3.OriginalWholeKHigherPrefix/1',
   sourceCommit, executingCommit, requestedPrefix: N, stages: [],
-  maxMinutes, maxRss, upstreamMaxNodes, exportMaxNodes, maxRssObserved: 0, memoryCheckpoints: [], finalJets: 0, release: 'HOLD',
+  maxMinutes, maxRss, upstreamMaxNodes, bandMaxNodes, exportMaxNodes, maxRssObserved: 0, memoryCheckpoints: [], finalJets: 0, release: 'HOLD',
 };
 const save = () => writeFileSync(join(directory, 'original-whole-k-prefix.json'), JSON.stringify(receipt, null, 2) + '\n');
 function measure() {
@@ -97,14 +100,23 @@ function stage(name, build, authenticate) {
 try {
   const through = Math.max(2, N+1);
   const derivativeOrder = Math.max(3, N+1);
-  const request = { coefficientOrder: N, maxNodes: 4000000 };
-  const upstream = upstreamMaxNodes > 5000000
+  const request = { coefficientOrder: N, maxNodes: bandMaxNodes };
+  const upstream = bandMaxNodes > 4000000 || upstreamMaxNodes > 5000000
     ? stage('sealed-original-common-family',
       () => prepareActualCommonAdmissibleFamily({
         throughOrder: through, derivativeOrder, maxNodes: upstreamMaxNodes,
         maxProfileJets: 60000, maxJetRequests: 600000,
       }, context), assertActualCommonAdmissibleFamily)
     : null;
+  if (upstream) {
+    receipt.authenticatedUpstream = {
+      order: upstream.prepared.order,
+      selector: upstream.selector.rows,
+      parameterExpressionSHA256: upstream.sourceBinding.parameterExpressionSHA256,
+      nodeCount: upstream.G.nodes.length,
+    };
+    save();
+  }
   const band = stage('sealed-original-band',
     () => upstream ? attachGlobalSourceBand(upstream, request, context) : prepareGlobalSourceBand(request, context),
     assertGlobalSourceBand);
