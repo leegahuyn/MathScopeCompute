@@ -1,0 +1,53 @@
+name: MathScope M4 generated ProofJob rechecks
+on:
+  push:
+    branches: [mathscope-cd-axial-source-bridge-20261029]
+    paths:
+      - '.github/workflows/mathscope-m4-generated-jobs.yml'
+      - 'tools/mathscope-cd-axial-bridge-20261029/m4-generated/**'
+      - 'research-ide/mathscope-m4/proof-jobs.mjs'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  recheck:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      ELAN_TOOLCHAIN: leanprover/lean4:v4.34.1
+      AUDIT: tools/mathscope-cd-axial-bridge-20261029
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: |
+            tools/mathscope-cd-axial-bridge-20261029/m4-closure
+            tools/mathscope-cd-axial-bridge-20261029/m4-finite
+            tools/mathscope-cd-axial-bridge-20261029/m4-generated
+            research-ide/mathscope-m4
+            research-ide/mathscope-m0/lean
+            research-ide/mathscope-m0/proof.mjs
+      - name: Install pinned Lean
+        run: |
+          set -euo pipefail
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
+          "$HOME/.elan/bin/elan" toolchain install "$ELAN_TOOLCHAIN"
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Compile imports and recheck exact generated jobs
+        run: |
+          set -euo pipefail
+          lean_executable="$(lean --print-prefix)/bin/lean"
+          python3 "$AUDIT/m4-closure/run_closure.py" --repo "$GITHUB_WORKSPACE" \
+            --lean "$lean_executable" --out "$RUNNER_TEMP/m4-imports"
+          node "$AUDIT/m4-generated/exercise_jobs.mjs" generate "$GITHUB_WORKSPACE" "$RUNNER_TEMP/generated"
+          python3 "$AUDIT/m4-generated/compile_jobs.py" --repo "$GITHUB_WORKSPACE" \
+            --lean "$lean_executable" --imports "$RUNNER_TEMP/m4-imports/compiled" --jobs "$RUNNER_TEMP/generated"
+          node "$AUDIT/m4-generated/exercise_jobs.mjs" check "$GITHUB_WORKSPACE" "$RUNNER_TEMP/generated"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mathscope-generated-jobs
+          path: |
+            ${{ runner.temp }}/generated/
+            ${{ runner.temp }}/m4-imports/receipt.json
+          if-no-files-found: warn
