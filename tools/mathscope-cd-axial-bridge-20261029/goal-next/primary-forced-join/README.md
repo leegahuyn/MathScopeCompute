@@ -1,0 +1,29 @@
+# Corrected first-Forced and order-two primary: live same-family join
+
+The hosted diagnostic constructs the C5 family and original first window, the same-family C3 target and order-two primary, and the corrected initialized angular and first Forced source in one process. It checks the actual private seals and object identities, plus all 20 mode-one/two inverses and 120 real and imaginary source components.
+
+## Live requirement
+
+The original Forced runner's default `prepareGlobalSourceBand` constructs a separate C3 family. The generated runner uses `prepareActualCommonAdmissibleFamily({throughOrder:2,derivativeOrder:5,...})` and `attachGlobalSourceBand(family,{coefficientOrder:1,...})`. It constructs the C3 target and order-two primary immediately after the current. This keeps the target-construction peak ahead of the larger Forced graph and produces an early checkpoint. The original five-moment, pressure, Temporal, initialized mean and corrected angular/Forced chain follows. The live join runs before downstream stress, Signed, Temporal and FiveMap stages.
+
+The helper checks native seals before and after audit, same family for current and target, same current for primary and Forced, and shared exact current/Forced node array. It checks B3/C5, target orders 0–3 and poles 3,6,9,12, then all 10 chart keys, 20 distinct systems and 120 components: exact `raw-primary=supported=input=pullback`, retained wrapped source and expression-body identities, real mode-one corrections, imaginary preservation, and mode-two preservation. Numeric IDs are recorded only in the shared current/Forced namespace. The primary class itself has a separate target graph namespace. Each scope still marks input W-alpha, complete current and N6 false.
+
+The workflow makes a separate `f8cb4034e86d7b669d52a6f2248aebba156b51b5` reference checkout; applies the existing PR30 stack, verifies 29 original files before overlays, installs the evidence-branch two repairs, then runs the existing `prepare_full_cycle.py` and verifies 27 unchanged files plus the 2 exact repair blobs. `prepare_live_join.py` refuses any original runner other than Git blob `690e1f7a842bafcfcfb768093b8a777656f8ce0d`. The failure receipt identifies stage, elapsed time, current graph count and observed RSS/heap. The upload executes even on failure.
+
+## Resource and evidence limits
+
+The previous C5/order-2 primary native run reached checkpointed RSS 6,266,396,672 bytes at a 6,442,450,944-byte cap; the separate C3 corrected first-Forced run had 4,197,115 graph nodes. Neither number predicts the combined build. The 6 GiB RSS ceiling and 145-minute owned deadline are intentional bounded diagnostics, and failure due to resource limits is OPEN, not a mathematical refutation. The larger source-window node budget 6,000,000 is a representation cap, not an estimate or guarantee. The original runner records RSS at progress/stage checkpoints and at caught failures; an OS kill may only leave earlier records.
+
+For memory, the run writes a compact receipt with actual checked IDs and no full graph export. This is independently checkable as a receipt shape and source-pin consistency, but its recorded native equality cannot be separately replayed from numeric IDs without a future graph/definition export. Neither receipt shape nor object identity supplies a mathematical analytic norm. The 20 Forced actual W-alpha input seminorms, uncut-amplitude bounds, common-reference conversions, real operator/source analytic proof, original C/D source identities, further stages and Lean remain OPEN. No accepted progress counters or RELEASE status are promoted.
+
+## Installation and tests
+
+Copy this directory, excluding `.github`, to `tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-forced-join`. Copy `.github/workflows/mathscope-primary-forced-join.yml` into repository `.github/workflows`. Dispatch only on `mathscope-cd-axial-source-bridge-20261029`; the workflow has read-only permissions and does not edit that branch. Artifacts contain `source-pins.json`, `native-receipt.json`, progress log, readback and exit codes when those stages are reached.
+
+The local small checks are:
+
+    node --test assert_live_join.test.mjs
+    python -m unittest discover -s . -p test_verify_join_receipt.py
+    python -m unittest discover -s . -p test_prepare_live_join.py
+
+They test a synthetic chain and rejection controls, not native private authority. The generator also executes `node --check` on its output during its unit test.

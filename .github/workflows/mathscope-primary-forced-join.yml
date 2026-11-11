@@ -1,0 +1,87 @@
+name: MathScope corrected primary Forced live join
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  corrected-primary-forced-live-join:
+    if: github.ref == 'refs/heads/mathscope-cd-axial-source-bridge-20261029'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 160
+    env:
+      NODE_OPTIONS: --max-old-space-size=6100
+      M3_MAX_MINUTES: '145'
+      M3_MAX_RSS_GB: '6'
+      ORIGINAL_SOURCE_COMMIT: f8cb4034e86d7b669d52a6f2248aebba156b51b5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: evidence
+          persist-credentials: false
+          sparse-checkout: |
+            research-ide/mathscope-m3/navier
+            tools/mathscope-cd-axial-bridge-20261029/goal-next/first-force-repair
+            tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-forced-join
+      - uses: actions/checkout@v4
+        with:
+          ref: f8cb4034e86d7b669d52a6f2248aebba156b51b5
+          path: reference
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Run compact checker controls
+        working-directory: evidence
+        run: |
+          set -euo pipefail
+          helper=tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-forced-join
+          node --check "$helper/assert_live_join.mjs"
+          node --test "$helper/assert_live_join.test.mjs"
+          python -m unittest discover -s "$helper" -p test_verify_join_receipt.py
+          python -m unittest discover -s "$helper" -p test_prepare_live_join.py
+      - name: Prepare authenticated corrected source and live runner
+        working-directory: reference
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$ORIGINAL_SOURCE_COMMIT"
+          git diff --quiet --exit-code HEAD --
+          m=research-ide/mathscope-m3
+          echo 'd23a2ac3b56412f176c3f86a7303a623fe07931453aff0e55ddf1730e34ee312  research-ide/mathscope-m3/staged-patches-20261023/PR30_Cumulative_Signed162_Cor85_TemporalFrontier.patch' | sha256sum -c
+          git apply "$m/staged-patches-20261023/PR30_Cumulative_Signed162_Cor85_TemporalFrontier.patch"
+          git apply "$m/pin-test-hotfix-20261023/PR30_RealCheckout_PinTest_EnvPortable.patch"
+          git apply "$m/temporal-finite-20261023/PR30_Cor85_SameSeal_NoDuplicate.patch"
+          git apply "$m/temporal-finite-20261023/PR30_Audit_Real81Cover_String_Flatness.patch"
+          git apply "$m/actual-audit-fix-20261023/PR30_NativeCoupledField_Handle_And_ClonedGuard.patch"
+          cp "$m/tangency-proof-20261023/generic-signed-source-kernel.fixed.mjs" "$m/navier/generic-signed-source-kernel.mjs"
+          cp "$m/tangency-proof-20261023/signed-source-frame-tangency.mjs" "$m/navier/signed-source-frame-tangency.mjs"
+          node --input-type=module -e "import {verifyPR30OriginalSourceFiles} from './$m/navier/source-signed-162-pr30-pins.mjs'; const x=await verifyPR30OriginalSourceFiles(); if(x.verifiedFiles.length!==29)process.exit(2)"
+          git diff --quiet -- "$m/navier/source-initialized-angular.mjs" "$m/navier/source-global-forced-current.mjs"
+          cp "../evidence/$m/navier/source-initialized-angular.mjs" "$m/navier/source-initialized-angular.mjs"
+          cp "../evidence/$m/navier/source-global-forced-current.mjs" "$m/navier/source-global-forced-current.mjs"
+          evidence=../evidence/tools/mathscope-cd-axial-bridge-20261029/goal-next
+          runner="$m/extended-signed-run-20261023"
+          python "$evidence/first-force-repair/prepare_full_cycle.py" "$m/navier" "$runner/run_real_original_signed162.mjs"
+          mkdir -p "$RUNNER_TEMP/primary-forced-join"
+          node --input-type=module -e "import fs from 'node:fs'; import {verifyPR30OriginalSourceFiles} from './$m/navier/source-signed-162-pr30-pins.mjs'; const x=await verifyPR30OriginalSourceFiles(); if(x.verifiedUnchangedPR30Files!==27||x.verifiedPinnedRepairFiles!==2)process.exit(2); fs.writeFileSync(process.argv[1],JSON.stringify({verifiedUnchangedPR30Files:x.verifiedUnchangedPR30Files,verifiedPinnedRepairFiles:x.verifiedPinnedRepairFiles})+'\n')" "$RUNNER_TEMP/primary-forced-join/source-pins.json"
+          cp "$evidence/primary-forced-join/assert_live_join.mjs" "$runner/assert_live_join.mjs"
+          python "$evidence/primary-forced-join/prepare_live_join.py" "$runner/run_real_original_signed162.mjs" "$runner/run_primary_forced_live_join.mjs"
+          node --check "$runner/run_primary_forced_live_join.mjs"
+      - name: Build and verify exact same-family live join
+        working-directory: reference
+        run: |
+          set -uo pipefail
+          helper=../evidence/tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-forced-join
+          out="$RUNNER_TEMP/primary-forced-join"
+          node --expose-gc research-ide/mathscope-m3/extended-signed-run-20261023/run_primary_forced_live_join.mjs "$out/native-receipt.json" 2>&1 | tee "$out/native-run.log"
+          native_result=${PIPESTATUS[0]}
+          python "$helper/verify_join_receipt.py" "$out/native-receipt.json" "$out/source-pins.json" "$out/independent-readback.json" 2>&1 | tee "$out/independent-readback.log"
+          verify_result=${PIPESTATUS[0]}
+          printf 'native_exit=%s verifier_exit=%s\n' "$native_result" "$verify_result" | tee "$out/exit-status.txt"
+          test "$native_result" -eq 0 && test "$verify_result" -eq 0
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mathscope-primary-forced-live-join
+          path: ${{ runner.temp }}/primary-forced-join/**
+          if-no-files-found: warn
+          retention-days: 30
