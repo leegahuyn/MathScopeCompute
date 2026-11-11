@@ -3,21 +3,25 @@ on:
   push:
     branches: [mathscope-cd-axial-source-bridge-20261029]
     paths:
-      - '.github/workflows/mathscope-corrected-first-force.yml'
       - 'research-ide/mathscope-m3/navier/source-initialized-angular.mjs'
       - 'research-ide/mathscope-m3/navier/source-global-forced-current.mjs'
       - 'tools/mathscope-cd-axial-bridge-20261029/goal-next/first-force-repair/make_replay.py'
       - 'tools/mathscope-cd-axial-bridge-20261029/goal-next/first-force-repair/record_corrected_first_force.mjs'
   workflow_dispatch:
+  workflow_call:
+    inputs:
+      through_five_map:
+        type: boolean
+        default: false
 permissions:
   contents: read
 jobs:
   first-forced:
     runs-on: ubuntu-24.04
-    timeout-minutes: 58
+    timeout-minutes: ${{ inputs.through_five_map && 125 || 58 }}
     env:
       NODE_OPTIONS: --max-old-space-size=5200
-      M3_MAX_MINUTES: '50'
+      M3_MAX_MINUTES: ${{ inputs.through_five_map && '115' || '50' }}
       M3_MAX_RSS_GB: '6'
     steps:
       - uses: actions/checkout@v4
@@ -58,18 +62,43 @@ jobs:
           node --check "$runner/run_repaired_first_force.mjs"
           node --check "$runner/record_corrected_first_force.mjs"
       - name: Construct, authenticate and export the repaired first Forced
+        if: ${{ !inputs.through_five_map }}
         working-directory: reference
         env:
           M3_SOURCE_GRAPH_EXPORT_DIR: ${{ runner.temp }}/corrected-first-forced-graph
         run: |
           set -euo pipefail
           node --expose-gc research-ide/mathscope-m3/extended-signed-run-20261023/run_repaired_first_force.mjs "$RUNNER_TEMP/corrected-first-forced-run.json"
-      - if: always()
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
+        if: ${{ always() && !inputs.through_five_map }}
         with:
           name: mathscope-corrected-first-forced
           path: |
             ${{ runner.temp }}/corrected-first-forced-run.json
             ${{ runner.temp }}/corrected-first-forced-graph/**
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Check the exact repair blobs and run the corrected first cycle
+        if: ${{ inputs.through_five_map }}
+        working-directory: reference
+        env:
+          M3_EXPORT_SOURCE_GRAPH: '1'
+          M3_SOURCE_GRAPH_EXPORT_DIR: ${{ runner.temp }}/corrected-first-cycle-graph
+        run: |
+          set -euo pipefail
+          m=research-ide/mathscope-m3
+          helper="../repaired/tools/mathscope-cd-axial-bridge-20261029/goal-next/first-force-repair"
+          runner="$m/extended-signed-run-20261023"
+          python "$helper/prepare_full_cycle.py" "$m/navier" "$runner/run_real_original_signed162.mjs"
+          node --input-type=module -e "import {verifyPR30OriginalSourceFiles} from './$m/navier/source-signed-162-pr30-pins.mjs'; const x=await verifyPR30OriginalSourceFiles(); if(x.verifiedUnchangedPR30Files!==27||x.verifiedPinnedRepairFiles!==2)process.exit(2); console.log('27 ORIGINAL AND 2 EXACT REPAIR BLOBS VALIDATED')"
+          node --check "$runner/run_repaired_full_cycle.mjs"
+          node --expose-gc "$runner/run_repaired_full_cycle.mjs" "$RUNNER_TEMP/corrected-first-cycle-run.json"
+      - uses: actions/upload-artifact@v4
+        if: ${{ always() && inputs.through_five_map }}
+        with:
+          name: mathscope-corrected-first-cycle
+          path: |
+            ${{ runner.temp }}/corrected-first-cycle-run.json
+            ${{ runner.temp }}/corrected-first-cycle-graph/**
           if-no-files-found: warn
           retention-days: 30

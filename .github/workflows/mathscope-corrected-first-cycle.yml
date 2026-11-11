@@ -1,0 +1,15 @@
+name: MathScope corrected first cycle through FiveMap
+on:
+  push:
+    branches: [mathscope-cd-axial-source-bridge-20261029]
+    paths:
+      - '.github/workflows/mathscope-corrected-first-cycle.yml'
+      - 'tools/mathscope-cd-axial-bridge-20261029/goal-next/first-force-repair/prepare_full_cycle.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  first-cycle:
+    uses: ./.github/workflows/mathscope-corrected-first-force.yml
+    with:
+      through_five_map: true
