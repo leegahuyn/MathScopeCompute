@@ -17,6 +17,10 @@ parser.add_argument("--isolated-candidate", type=Path)
 parser.add_argument("--second-candidate-artifact", type=Path)
 parser.add_argument("--y-replay-dir", type=Path)
 parser.add_argument("--final-functionals", type=Path)
+parser.add_argument("--first-gauge-graph", type=Path)
+parser.add_argument("--localization-source", type=Path)
+parser.add_argument("--r108-deploy-archive", type=Path)
+parser.add_argument("--primary-order2-artifact", type=Path)
 args = parser.parse_args()
 TASK = args.workspace.resolve()
 REPO = TASK / "work/MathScopeCompute-CD"
@@ -199,6 +203,50 @@ with zipfile.ZipFile(DEST, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=
         data = args.final_functionals.read_bytes()
         assert digest(data) == "b8c2ce18ebdefd2875e83e5f824eb71f77f1c9b7510170d225efce739360bb78"
         add("inputs/final-functionals/ACTUAL_RECURSIVE_SOURCE_FUNCTIONALS.json", data)
+    if args.first_gauge_graph:
+        graph = args.first_gauge_graph.resolve()
+        manifest = json.loads((graph / "original-source-export-manifest.json").read_bytes())
+        gauge = json.loads(status)["finalInputSubproofs"]["firstCycleGaugeOperands"]["explicitN1NativeChart"]
+        assert manifest["node_count"] == gauge["graphNodes"]
+        assert manifest["node_stream_sha256"] == gauge["graphSHA256"]
+        assert manifest["definitions_sha256"] == gauge["nativeRegistrySHA256"]
+        for name in ("original-source-export-manifest.json",
+                     "original-source-functions.json", "original-source-nodes.jsonl.gz"):
+            add("inputs/first-gauge-joined/" + name, (graph / name).read_bytes())
+    if args.localization_source:
+        paths = [
+            "research-ide/mathscope-m3/recovery-20261019/outer_cutoff.py",
+            "research-ide/mathscope-m3/navier/source-localization.mjs",
+            "research-ide/mathscope-m3/navier/evidence/source-localization-20261012/attempt1/localization.json",
+        ]
+        recovery = "research-ide/mathscope-m3/evidence/work-recovery-20261018T072604Z_b479c2d1"
+        paths.extend(recovery + "/" + path for path in (
+            "work/prune_recovery/energy/evidence/ACTUAL_ENERGY_OPERATOR_BINDING.json",
+            "recovered/base/work/remaining_chain/evidence/ACTUAL_RECURSIVE_SOURCE_FUNCTIONALS.json",
+        ))
+        for path in paths:
+            add("inputs/localization-source/" + path, (args.localization_source / path).read_bytes())
+    if args.r108_deploy_archive:
+        data = args.r108_deploy_archive.read_bytes()
+        isolated = json.loads(git("show", commit + ":" + CURRENT +
+            "/m4/r108/r108-hosted-screen/isolated-deployment.json"))
+        assert isolated["deployment"]["status"] == "succeeded"
+        assert len(data) == isolated["source"]["archiveBytes"] and digest(data) == isolated["source"]["archiveSHA256"]
+        add("inputs/m4-r108-isolated-candidate/deploy.tar.gz", data)
+    if args.primary_order2_artifact:
+        artifact = args.primary_order2_artifact.resolve()
+        run = json.loads((artifact / "status.json").read_bytes())
+        verify = json.loads((artifact / "independent-readback.json").read_bytes())
+        primary = json.loads(status)["secondCycle"]["primaryOrderTwoNativeClass"]
+        assert run["status"] == verify["status"] == "PASS"
+        assert run["sourceCommit"] == verify["sourceCommit"] == primary["sourceCommit"]
+        assert run["primaryHash"] == verify["primaryHash"] == primary["programSHA256"]
+        for name, entry in sorted(run["files"].items()):
+            data = (artifact / name).read_bytes()
+            assert digest(data) == entry["sha256"] and len(data) == entry["bytes"], name
+            add("inputs/original-primary-order2/" + name, data)
+        for name in ("status.json", "independent-readback.json", "checkpoints.jsonl", "native-run.log"):
+            add("inputs/original-primary-order2/" + name, (artifact / name).read_bytes())
     add("REPORT_KO.md", report)
     add("STATUS.json", status)
     target.writestr("SHA256.json", encode(sha_manifest))

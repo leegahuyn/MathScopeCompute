@@ -3,15 +3,19 @@
 | 항목 | 판정 | 검증 범위 |
 | --- | --- | --- |
 | M3 | **62/64** | N7-06 에너지 수지와 N8-05 수렴·꼬리 검증 OPEN |
-| M4 | **15/16** | I3 8개와 R1-01부터 R1-07까지 기존 수용 평가기로 재검사 |
+| M4 | **16/16** | 제한된 격리 후보의 R1-08 게시 화면을 독립 검토하고 원래 평가기에 등록 |
 | Y | **523/523** | 원본 N=1의 확장된 명시적 자유 좌표 영역. 결속 없이 검사한 식은 519/523 |
 | 최종장 jets | **0/67** | 최종장 (A,b,p)의 닫힌 셀 구간 OPEN |
-| 릴리스 | **HOLD** | 실제 게시 후 화면 영수증 및 전체 검증 OPEN |
+| 릴리스 | **HOLD** | M3 전체 검증과 최종장 구간 OPEN |
 
 첨부 설계도 64·66·68쪽에 근거한 남은 수락 조건과 공통 선행 작업은 [완료 기준 보고](COMPLETION_FOCUS_KO.md)에 정리했다.
 
 ## VERIFIED
 
+- **GitHub 원본 2차 primary.** 같은 family의 C5 배경 1,471,710개 노드, C3 target 1,482,628개 노드, 원본 current 1,483,157개 노드를 생성했다. primary 부가 프로그램의 노름 노드 9,094개와 current 노드 115개를 독립적으로 대조했다. 실행은 원본의 유한 2차 primary 속도·압력·포텐셜 클래스에 도달했고 잘못된 차수와 범위 확대 대조를 거부했다. [GitHub 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43035074273) · [독립 재검사](primary-order2/verified-hosted-43035074273.json).
+- **M4 R1-08 수락.** 별도 소유자 전용 후보를 실제 게시했고, 인증 HTTP 응답의 공급자 삽입분 1,114바이트를 제외한 모든 바이트가 원본 후보와 일치했다. 실제 화면에서 R1-08 및 전역 HOLD를 읽고 M1 `su2`와 M2 `point` 작업을 실행했다. 4개 패치와 역순 rollback을 독립 재현했고 19개 증거를 원래 평가기에 등록했다. 평가기는 16/16, `canFreeze=false`를 반환했다. 후보 화면의 M3 수치는 과거 56/64이다. 격리 정책은 외부 스타일·스크립트와 P7 연결을 차단한다. 인증은 Sites 서비스 접근으로 확인했다. [격리 게시 화면](https://mathscope-r108-validation.mobilestrawberry1.chatgpt.site/v0.3.1.html) · [독립 검토](m4/r108/r108-independent-review/README.md) · [원래 평가기 재검사](m4/assessment-16.json).
+- **전체 \(K\)의 첫 증분.** 시작 단면에서 실제 속도와 바깥 cutoff jet 13개가 모두 0임을 확인했다. 실제 첫 보정의 486개 행에서 물리 각도 모드의 주파수를 결속했다. 원본 \(N=1\) 겹침 영역에서 평균과 비영 각도 모드의 에너지 교차항, 바깥 방사 cutoff의 curl 교차항이 0이다. 서로 다른 라벨에서 물리 주파수가 같으면 먼저 계수를 합친다. [원본 각도·방사 검사](whole-k-angular/README.md).
+- **평균 잔차의 원본 항등식.** 보정 그래프의 각도 평균 세 식, Forced와 Signed의 실제 평균 공분산 60개, 방사 압력의 \(D_rp_m=g_r-\rho P-A_0\)와 Temporal 축속도의 실제 FTC 항을 확인했다. 앞선 압력 노름 보고서의 방사 위상 계수에 들어가는 \(Q\) 지수를 \(-h/100000\)으로 고쳤다. 원본 \(N=1\)에서 위상 계수의 로그가 31보다 커 이전의 단위 상계는 성립하지 않는다. [실제 평균과 위상 검사](first-force-repair/radial-phase-sign.json).
 - **두 번째 Forced의 비영 모드 평탄 항 장부.** 원고 Proposition 9.1·9.3의 분해를 고정 라벨에서 실제 첫 Forced 주연산자 성분 120개와 대조했다. 실제 초기 계수를 \(R_0\), Primary 꼬리를 \(P\)라 두면 첫 보정의 원본 입력은 \(g=R_0-P\)다. 원본의 비영 평탄 항은 이 분해에서 \(P+(1-\psi)g+\psi't_F+\psi't_S\)이고, 두 부호와 차수의 해당 자리 360개를 검사했다. \(R_0\)를 그대로 넣는 두 대조는 각각 \(-P\), \(-\psi P\)를 지원 잔차에 남긴다. 원본 평균·기저·응력의 절단 피연산자 다섯 개는 각도에 독립이다. [실제 원본 장부](first-force-repair/PROP91_93_FLAT_LEDGER.md).
 - **실제 펄스의 절단 영역 감쇠.** 두 원본 봉투 #623389·#623722의 적분 변수와 부호를 확인했다. 실제 \(c_i\le\ell^{-2}\)와 \(\lambda_0\ge R_*^{-31}\)에서 절단 영역의 가우스 인자는 \(\exp(-a\ell^2)\) 이하이며 \(a=r_0R_*^{-31}/(32u)>0\)다. 이를 고정 다항·지수 손실과 비교하는 균일 dyadic 상계를 GitHub에서 컴파일했다. [원본 봉투](first-force-repair/GAUSSIAN_TAILS.md) · [Lean 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43036975763).
 - **원본 N=1 자유 좌표 범위 확장.** 실제 활성 라벨의 창과 frozen 대표점의 엄격한 \(q_{\mathrm{rep}}\) 경계를 확인해 \(Y\)의 마지막 네 식에 적용했다. 원본 가드 행 29,484개와 formal→actual 전이 14개를 확인했다. 기존 기준 라벨에서 역함수 정의역을 벗어나는 양의 시간점 \(Z=0,T=7/16\)은 인접 라벨로 옮기면 \(T'=7/8\)로 들어간다. 유효한 기준 역함수와 전체 활성 라벨의 소속 조건을 구분하는 두 번째 대조도 재현했다. [확장된 원본 조건](y-wider/README.md) · [밴드 경계 Lean](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43037607512).
@@ -51,7 +55,8 @@
 
 - 실제 봉투의 가우스 감쇠로 각 고정 물리 도함수의 평탄 상계를 얻으려면 그 도함수의 실제 \(W_\alpha\) 입력 노름이 필요하다. 배경 \(F,G\)의 원본 2차 상계가 공통 family에 적용된다는 전제에서 두 노름은 \(\mathrm{Bnorm}\) 이하이다. 실제 C3 target의 가운데 영역에서는 \(\zeta^{-1}\le e^{128}<\mathrm{Bnorm}^2\)가 성립한다. C3의 분자 도함수, 면 적분과 양쪽 collar, 첫 Forced의 실제 가중 입력은 OPEN이다. [원본 낮은 차수 노름과 가중치](primary-c2-target/README.md).
 - 첫 cutoff의 원본 척도에서 \(B=\log(1/qBig)=(\ell_{\min}+10)\log2\)임을 확인했다. 원본 접평면 전파자의 \(\log W<B/2^{28}\)와 고정 FiveMap 계수 사상 상계의 로그가 \(B/64\)보다 작음을 정확 계산으로 대조했다. 전파자 지수의 상계도 GitHub Lean에서 컴파일됐다. 실제 보정장의 1·2차 가중 준노름과 모든 기준 밴드의 게이지 접합이 남아 있다. [척도 비교 Lean](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43018627265).
-- 원본 shell에서 \(M=\max(1,2\sqrt{X_b},1/\sqrt{X_a})\)로 두면, 실제 균일 입력 노름에 평균 압력 차의 \(C^3\) 계수 \(2^{108}M^5\)와 Temporal 포텐셜의 \(C^3\) 계수 \(2^{62}M^6\)을 적용할 수 있다. Temporal 축속도의 \(C^2\)는 실제 입력 \(\gamma_d\)의 \(C^2\)로 제어된다. 방사속도에는 \(\partial_Z\gamma_d\)의 \(C^2\)도 필요하다. [입력별 상계](first-pressure-norm-c3/README.md).
+- 원고 (8.9)의 고정 이동변수로 바꾸면 방사 위상의 큰 계수를 미분 상계에 넣지 않고, 실제 입력의 매끄러운 영 연장을 전제로 \(M=\max(1,2\sqrt{X_b},1/\sqrt{X_a})\)에서 평균 압력 차의 \(C^3\) 계수 \(2^{108}M^{11}\)과 Temporal 포텐셜의 \(C^3\) 계수 \(2^{62}M^{15}\)를 얻는다. 방사속도에는 \(\partial_Z\gamma_d\)의 \(C^2\)도 필요하다. [수정된 위상과 고정변수 상계](first-force-repair/radial-phase-sign.json).
+- 첫 Forced의 실제 primary 소거항 30개는 \(\psi'A_{\mathrm{uncut}}/2\)이다. 같은 실제 가중치에 대한 미절단 진폭의 3차 상계 \(N\)이 주어지면 소거항의 상계는 \(2^{62}N/L_s\)이다. 잘린 진폭의 \(C^2\) 상계만으로는 이를 얻을 수 없다는 매끄러운 대조를 확인했다. [원본 소거항 전달](primary-force-transfer/README.md).
 - 원본 밴드 차이 \(j=\lfloor\log_2 b_1\rfloor-\ell_{\min}-10\)가 3이면 위쪽 외부 시간 cutoff 경계, 4이면 아래쪽 경계를 위의 국소 상자가 가로지른다. 각 경우의 정확한 경계점과 인접 전이점을 대조했다. 이 국소 상자와 원본 whole-K 비교 슬랩은 각각의 정의역으로 평가했다. 실제 \(j\)와 첫 단계 스케일 \(a_1\)은 OPEN이다. [원본 cutoff 분기](jet-branch-diagnostic/README.md).
 - 원본 \(b_1\)의 8개 현행 노름과 과거 조건을 실제 노드 5개의 최댓값 \(N\)으로 줄였다. \(j=0\)은 \(N<2^{h(\ell_{\min}+11)-1}\)과 동치다. 남은 실제 압력 조건에는 \(\partial_X\partial_\eta\Pi_1\)이 들어간 이중 적분 #539452의 상계가 포함된다. [원본 선택식 검사](jet-branch-diagnostic/b1-comparison.json).
 
@@ -68,12 +73,12 @@
 
 ## OPEN
 
-- 전체 잔차 \(R[1]=G[1]+F[1]\)의 소스 결속에는 실제 경계 미분의 접합, 가드 적용 전후 동일성, 영 모드 평탄 항과 각 가중 도함수의 균일 상계가 남아 있다. 원본 계수 차수 1 창의 같은 family에서 C5 배경과 C3 가중 target을 만드는 2차 primary 검사가 GitHub에서 진행 중이다. [원본 2차 primary 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43035074273).
+- 전체 잔차 \(R[1]=G[1]+F[1]\)의 소스 결속에는 실제 경계 미분의 접합, 가드 적용 전후 동일성, 영 모드 평탄 항과 각 가중 도함수의 균일 상계가 남아 있다. GitHub에서 생성한 2차 primary를 실제 보정 Forced와 같은 원본 입력에 결속하고, 미절단 진폭과 전체 \(W_\alpha\) 입력의 상계를 확보해야 한다. [원본 2차 primary 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43035074273).
 
 - \(N=2\)의 이동 반경 적분 전체 범위는 \(X\in[X_a/4,4X_b]\)까지 닿는다. indexed 파동은 별도의 원본 shell 가드를 통과한다. raw 압력·잔차의 축 \(R=0\) 평활 확장과 이 전체 반경 구간의 일반 도함수 상계는 남아 있다. 실제 raw 잔차 #1472309에는 \(R^{-1}\)에 이르는 소스 경로가 있다.
 - 첫 보정 차트들의 전역 접합, 양의 차수 경계 도함수, 1·2차 가중 준노름과 최종 닫힌 셀 구간평가가 남아 있다.
 - 원본 두 번째 강제 역연산과 이후 cycle에는 지원 입력 \(G[1]\)의 실제 지지집합과 균일 도함수 상계가 필요하다. 평탄 성분 \(F[1]\)은 잔차에 가산된다. 최종장 \((A,b,p)\), 전체 \(K\)에서의 N7-06 에너지·소산·일·힘, N8-05 네 축 수렴·오차와 최종 jets 67개가 남아 있다.
-- R1-08의 지원 범위, 전역 HOLD 판정, 패치 및 바이트 단위 rollback은 검증했다. 격리 후보의 정확한 HTML을 로컬 HTTP에서 재생해 두 계산의 완료와 외부 요청 시도 0건을 확인했다. 운영 버전 137의 실제 응답은 이전 해시와 일치했다. R1-08에는 별도 환경의 실제 후보 게시 화면 영수증과 독립 검토가 남아 있다. [읽기 전용 대조](m4/r108/remaining/R108_REMAINING_KO.md) · [격리 게시 후보](m4/r108/remaining/private-feasibility/PRIVATE_CANDIDATE_KO.md).
+- 전체 릴리스 동결에는 원래 평가기가 M3 완료와 16개 M4 기준을 함께 요구한다. 격리 M1/M2 후보의 R1-08 수락을 반영한 평가기에서 `canFreeze=false`다.
 
 모든 새 Lean 컴파일은 GitHub Actions에서 실행했다. 원본 HEAD, 작업 상태와 두 기준 브랜치의 SHA를 대조했다. 새 커밋은 mathscope-cd-axial-source-bridge-20261029에 있고, 화면 검사는 격리한 후보에서 수행했다. 운영 웹을 보존했다.
 

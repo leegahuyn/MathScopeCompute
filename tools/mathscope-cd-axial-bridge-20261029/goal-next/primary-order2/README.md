@@ -1,6 +1,6 @@
 # Original primary order-2 hosted construction
 
-This directory is an unexecuted GitHub Actions proposal; the native C5/C3/order-2 construction has NOT run. It builds the first original primary current and native primary class, not the corrected first Forced input, a complete first cycle, or a Lean theorem. All claimed source inputs are kept in one private same-family process. The historical order-0 attempt passed; the saved order-1 artifact from the separate C4 composition attempt was produced before that run timed out, and is not an independent pass.
+GitHub Actions [run 43035074273](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43035074273) completed the native C5/C3/order-2 construction. The offline replay authenticates the four native program hashes and their source attachment. The finite order-2 source class covers the original primary current. Its use for the corrected first Forced input requires the same-source join and actual uniform forcing estimates.
 
 ## Install and dispatch
 
@@ -22,4 +22,4 @@ node --test primary-order2-checks.test.mjs
 python -m unittest discover -s . -p test_verify_primary_order2.py
 ```
 
-The Python verifier has synthetic success, missing/failed status, changed-body and RELEASE-promotion negative controls. The Node checks exercise family mismatch, wrong C5 row, wrong target pole, false source check, scope promotion and bad degree ledger. These do not execute a native source build. `mathscope-primary-order2.yml` parsed as YAML. No local Lean compiler or remote workflow was run.
+The Python verifier has synthetic success, missing/failed status, changed-body and RELEASE-promotion negative controls. The Node checks exercise family mismatch, wrong C5 row, wrong target pole, false source check, scope promotion and bad degree ledger. The separate GitHub workflow ran the actual native build and saved its logs, original programs and source certificates.

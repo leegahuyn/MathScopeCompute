@@ -1,8 +1,13 @@
 # Low-order bounds for the actual first corrected shifted pressure and Temporal potential
 
+The [fixed-translation-variable proof](../first-force-repair/MODE_ZERO_FLAT_LEDGER.md)
+gives uniform replacement constants through order three under smooth zero
+extension of the actual inputs. The fixed-radial-binder calculation below
+gives separate bandwise bounds.
+
 This is an exact operator estimate on the authenticated corrected first-cycle graph from GitHub Actions run 43010593847. The code rereads the two actual \(T_0\) bodies and the actual \(T_1\) realization, including stage-specific pressure normalization, the original radial shifts, and their formal-to-actual arguments. It uses the existing exact exterior proof for these same sources. It does not replace the actual raw radial forcing by an arbitrary family with a supplied estimate.
 
-Let \(R_i=\sqrt{X_a}\), \(R_o=2\sqrt{X_b}\) and \(M=\max(1,R_o,R_i^{-1})\). Norms are the maximum absolute value of every ordinary partial of order at most \(m\) in \(R,Z,T,Y_0,Y_1\), with reference \(\ell\) held fixed and the original admitted chart and common torus. The estimates below apply to \(m=0,1,2\), assuming the displayed input norm is finite and the ordinary derivatives through the given order exist on the shell. Their constants are uniform in the original admitted reference band. Axis and exterior values use the established zero extensions.
+Let \(R_i=\sqrt{X_a}\), \(R_o=2\sqrt{X_b}\) and \(M=\max(1,R_o,R_i^{-1})\). Norms are the maximum absolute value of every ordinary partial of order at most \(m\) in \(R,Z,T,Y_0,Y_1\), with reference \(\ell\) held fixed and the original admitted chart and common torus. The estimates below apply to \(m=0,1,2\), assuming the displayed input norm is finite and the ordinary derivatives through the given order exist on the shell. Each table factor is multiplied by \(\nu_\ell^m\), where \(\nu_\ell\) is the actual band-dependent phase factor defined below. Axis and exterior values use the established zero extensions.
 
 | Actual output | \(m=0\) | \(m=1\) | \(m=2\) | Input seminorm |
 | --- | ---: | ---: | ---: | --- |
@@ -11,14 +16,14 @@ Let \(R_i=\sqrt{X_a}\), \(R_o=2\sqrt{X_b}\) and \(M=\max(1,R_o,R_i^{-1})\). Norm
 
 The source operands in the first row are \(\#4455275-\#3614891\). This is the normalized **mean** component. The angular pressure has its separate actual indexed source fields. The second row is the actual \(T_1\) gauge \(\#4454155\), with its axial source \(\gamma_d=-c_{i_0}^{-1}N^{-1}E_z^\circ\), the actual cutoff term, and the radial division retained.
 
-## Uniform original radial shift
+## Original radial shift on a fixed reference band
 
 The source phase is \(\Phi(R)=\Lambda_g^{i_0}(\sqrt Q R)^{d_r}\). Here \(Q=2^{-\ell}\), \(T_g=4+\sqrt2\), \(\Lambda_g=4-\sqrt2\), \(\rho_g=\log\Lambda_g/\log T_g\), and \(d_r=2((1+h)\rho_g-h/100000)\). Write \(i_0=x-\delta\) where \(x=((1+h)(\ell-2)\log2-2\log(\ell-2))/\log T_g\) and \(0\le\delta<1\). The exact floor/exponent identity is
 \[
  \Phi(R)=\Lambda_g^{-\delta} 2^{-2(1+h)\rho_g}(\ell-2)^{-2\rho_g}
-             Q^{h/100000}R^{d_r}.
+             Q^{-h/100000}R^{d_r}.
 \]
-Its coefficient is positive and at most 1. The comparisons \(\Lambda_g^2>T_g\) and \(\Lambda_g^3<T_g^2\) follow by squaring \(14>9\sqrt2\) and \(70<58\sqrt2\). They give \(1/2<\rho_g<2/3\), and \(0<h<1/64\) gives \(1<d_r<3/2\). Thus \(|\Phi'|\le2M\) and \(|\Phi''|\le M\) on the source shell. There is no \(q\) or \(|\log q|\) loss from this radial phase.
+Define \(\nu_\ell=\max(1,\Lambda_g^{-\delta}2^{-2(1+h)\rho_g}(\ell-2)^{-2\rho_g}Q^{-h/100000})\). The comparisons \(\Lambda_g^2>T_g\) and \(\Lambda_g^3<T_g^2\) follow by squaring \(14>9\sqrt2\) and \(70<58\sqrt2\). They give \(1/2<\rho_g<2/3\), and \(0<h<1/64\) gives \(1<d_r<3/2\). Thus \(|\Phi'|\le2M\nu_\ell\) and \(|\Phi''|\le M\nu_\ell\) on the source shell. The earlier receipt used the opposite sign of the exponent of \(Q\). Each derivative of the shift carries at most one factor \(\nu_\ell\), and a chain-rule term of total order at most \(m\) carries at most \(\nu_\ell^m\).
 
 The original fixed norm parameter \(R_*=\mathrm{C12EnvelopeR}\) dominates \(M\). For \(L_c=\log CSelected\) and original large time parameter \(T_*\), the source tree gives \(L_c>800T_*\), \(R_*=\exp(\exp(25600000L_c))\), \(h=\exp(-8002T_*)\), and \(\lambda=\exp(-1000T_*)\). The initial radius is \(R_i^{-1}=Q_{\rm source}^{32}/2\) and \(\log Q_{\rm source}<L_c\). The terminal tree has \(\log X_b=\log X_R+3+\#218+\#280\) and \(\#218=132+90001T_*+13/\lambda-4\log h\). For its logarithmic correction \(\#280\), the checked numerator \(\#259\) is at most \(2(4+32008T_*+3)<100000T_*\). This uses \(0\le\sigma\le1\) in the positive compact integrals and \(e<3\). The checked denominator \(\#275\) is at least \(h/256\), by \(\int_1^3\sigma'((u-1)/2)\,du/2=1\), the positive exponential factor at least 1, and \(1-h/256<1\). Therefore \(\#280<16200T_*\). Using \(T_*>10\), \(\lambda^{-1}<h^{-1}\), and the exact \(\log X_R=\log110+10L_c+20T_*\) yields \(\log X_b<200L_c+13/h\). The positive exponential series then gives \(\log R_o<\log R_*\). This uses the actual terminal annulus upper endpoint and the actual original fixed normalization constants, without evaluating the nested exponentials numerically.
 
@@ -36,7 +41,7 @@ At each fixed \(r\), the actual shifted integrand for input \(f\) is \(g(r,R,Z,T
 
 For the actual pressure difference set \(f=\Delta g_r-\rho\Delta P\). The bound \(\|\Delta P\|_{C^m(Z,T)}\le M\|\Delta g_r\|_{C^m}\) uses the original normalized two-torus Haar mass one and the same full radial interval. Applying the checked \(\rho\) bounds gives the first table row. For the actual meridional potential use \(\psi=R^{-1}T_0(R\gamma_d)\). Both multipliers are estimated through order two on the shell, using \(3M\) for \(R\) and \(j!M^{j+1}\) for the \(j\)-th derivative of \(R^{-1}\). This gives the second table row, including the exact original cutoff subtraction.
 
-The \(C^2\) pressure and potential transfer factors fit the first cutoff budget \(2^a B_*^b h^{-c}W^d\), since \(M\le R_*\) and the original \(B_*\ge R_*^{4096}\). These estimates still require the actual uniform weighted seminorms of \(\#4455275-\#3614891\) and of the desired inverse axial velocity. The [third-order extension](../first-pressure-norm-c3/README.md) gives the corresponding \(C^3\) transfers and separates the input derivatives required by the realized velocities. The angular wave pressure norms, the common Cartesian correction norm, the actual first \(C,P\) selectors, and final jets remain open. RELEASE HOLD.
+The first cutoff budget still requires the actual uniform weighted seminorms of \(\#4455275-\#3614891\) and of the desired inverse axial velocity. The fixed-binder proof also requires a separate treatment of \(\nu_\ell^2\) for a uniform \(C^2\) conclusion. The [third-order extension](../first-pressure-norm-c3/README.md) gives the corresponding bandwise \(C^3\) transfers and separates the input derivatives required by the realized velocities. The JSON from the original replay records the historical constants before inserting \(\nu_\ell^m\). RELEASE HOLD.
 
 Reproduce from the evidence package with the pinned repository and the extracted GitHub graph.
 

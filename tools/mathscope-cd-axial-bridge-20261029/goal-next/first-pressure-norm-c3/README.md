@@ -1,10 +1,16 @@
 # Actual third-order pressure and Temporal transfers
 
+The [fixed-translation-variable proof](../first-force-repair/MODE_ZERO_FLAT_LEDGER.md)
+gives the uniform pressure and potential transfer factors
+\(2^{108}M^{11}\) and \(2^{62}M^{15}\) under smooth zero extension
+of the actual inputs. The fixed-radial-binder calculation below
+retains the explicit band factor.
+
 This extension uses the same authenticated corrected first cycle from GitHub Actions run 43010593847, the same 4,456,994-node source graph and native registry, and the same admitted original reference chart as the preceding pressure estimate. The replay rereads both actual normalized \(T_0\) pressure bodies, the actual \(T_1\) potential and its derivative branches, and the source definitions of the cutoff and compact normalization. All norm constants below are exact rational or integer upper bounds. Let
 \[
  M=\max(1,2\sqrt{X_b},(\sqrt{X_a})^{-1})\le\mathrm{C12EnvelopeR}.
 \]
-Each \(C^m\) norm is the maximum over the original ordinary chart partials of order at most \(m\) in \((R,Z,T,Y_0,Y_1)\) with the reference band frozen. The operator transfers assume these input derivatives exist with the stated uniform norms on the source shell. Axis and strict exterior values use the established zero extensions.
+Each \(C^m\) norm is the maximum over the original ordinary chart partials of order at most \(m\) in \((R,Z,T,Y_0,Y_1)\) with the reference band frozen. The operator transfers assume these input derivatives exist on the source shell. Let \(\nu_\ell\) be the actual phase factor from the [corrected radial shift](../first-pressure-norm/README.md). Multiply the pressure and potential bounds in the table by \(\nu_\ell^3\), and the radial and axial velocity bounds by \(\nu_\ell^2\). The direct swirl transfer uses no shifted integral. Axis and strict exterior values use the established zero extensions.
 
 | Actual output | Bound |
 | --- | --- |
@@ -35,7 +41,7 @@ For the compact normalizer, the third derivative of the linear seed \(e^{-1/u}\)
 
 ## The third derivative of the actual shifted integrals
 
-The exact phase \(\Phi\) has \(1<d_r<3/2\), a positive coefficient at most one, and \(|\Phi'|\le2M\), \(|\Phi''|\le M\), \(|\Phi'''|\le M^2\) on the original shell. At fixed radial binder \(r\), write the actual translated input as \(g=f(r,Z,T,Y+(\Phi(r)-\Phi(R))v_r)\). The third derivative in the external radial variable has the three terms \(-\Phi'''Lf+3\Phi'\Phi''L^2f-(\Phi')^3L^3f\), where the common radial torus vector has \(\ell^1\) norm below two. Thus the third shifted derivative constant is \(2+24+64=90\) multiplying \(M^3\|f\|_{C^3}\). The other mixed third partials have smaller bounds because the external shift depends only on \(R\).
+The exact phase \(\Phi\) has \(1<d_r<3/2\), and \(|\Phi'|\le2M\nu_\ell\), \(|\Phi''|\le M\nu_\ell\), \(|\Phi'''|\le M^2\nu_\ell\) on the original shell. At fixed radial binder \(r\), write the actual translated input as \(g=f(r,Z,T,Y+(\Phi(r)-\Phi(R))v_r)\). The third derivative in the external radial variable has the three terms \(-\Phi'''Lf+3\Phi'\Phi''L^2f-(\Phi')^3L^3f\), where the common radial torus vector has \(\ell^1\) norm below two. The constants in the following calculation carry at most \(\nu_\ell^m\) at order \(m\) by the same product and chain rules. In particular the third shifted derivative is at most \(90 M^3\nu_\ell^3\|f\|_{C^3}\).
 
 For the actual partial integral \(I(R)=\int_{R_i}^R g(r,R)\,dr\), the two positions of \(R\) at the diagonal endpoint must both be differentiated. The exact third derivative is
 \[
