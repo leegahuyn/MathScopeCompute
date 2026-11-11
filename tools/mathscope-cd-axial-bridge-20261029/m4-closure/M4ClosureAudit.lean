@@ -1,4 +1,5 @@
-import Lean
+import Lean.Elab.Command
+import Lean.Util.CollectAxioms
 
 open Lean Elab Command
 

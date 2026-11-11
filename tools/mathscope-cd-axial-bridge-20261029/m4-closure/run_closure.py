@@ -111,9 +111,10 @@ def run(args):
         extra = ()
         if module.endswith("/Conditional"):
             extra = ("depends on axioms:", "MathScope.M4.Conditional.assumedComplete")
+        memory_mib = 3072 if module == "M4ClosureAudit" else 1536
         execute(
             "compile-" + module.replace("/", "-"),
-            ["--memory=1536", "--threads=1", "-o", str(artifact), source],
+            [f"--memory={memory_mib}", "--threads=1", "-o", str(artifact), source],
             expected_output=extra,
         )
         receipt["executions"][-1]["oleanSHA256"] = sha256(artifact.read_bytes())
@@ -121,8 +122,9 @@ def run(args):
 
     def probe(name, body, expected=0, expected_output=()):
         relative = materialize(name, body.encode("utf-8"))
+        memory_mib = 3072 if "#audit_m4_unconditional" in body else 512
         execute(
-            name, ["--memory=512", "--threads=1", relative],
+            name, [f"--memory={memory_mib}", "--threads=1", relative],
             expected, expected_output,
         )
 
