@@ -1,0 +1,43 @@
+{
+  "streamSHA256": "ab52a3337591d2c23c82f8ebbd1ef7305b4ecaebc9fa17ae6d700f32c650e4cf",
+  "registrySHA256": "657bc01a51027c0fd5381bbeb5f5d89895ed76d7cf357d297884f045d55a8333",
+  "nodes": 4456994,
+  "normM0": [
+    420509,
+    539400,
+    539704,
+    617286
+  ],
+  "normM1": [
+    420518,
+    539403,
+    539705,
+    617287
+  ],
+  "historicalNorm": 137416,
+  "reducedSelector": "log b1=max((C+10)log 2, log(2N)/h), C=ellMinimum, N=max(normM1,historicalNorm)",
+  "smallBandDominance": "N<=2^(h(C+10)-1)",
+  "jZero": "j=0 iff N<2^(h(C+11)-1); equality gives j=1",
+  "strictCountermodel": {
+    "h": "1/128",
+    "C": "2^65536+118",
+    "normRatioOverSmallBandThreshold": "1025/1024",
+    "smallBandDominant": false,
+    "j": 0
+  },
+  "pressureMixedPartial": {
+    "normalizedPressureNorm": 539705,
+    "faceIntegral": 539452,
+    "nativeExpression": 10,
+    "nativeBody": 50558,
+    "integrand": "sqrt(1+(partial_X partial_eta Pi1)^2)",
+    "bounds": [
+      "[0,Xplus]",
+      "[-1,1]"
+    ],
+    "requiredMajorant": "2 Xplus sqrt(1+K_Xeta^2) for uniform K_Xeta"
+  },
+  "actualFiveNormBounds": "OPEN",
+  "actualJ": "OPEN",
+  "release": "HOLD"
+}

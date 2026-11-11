@@ -109,6 +109,10 @@ have the same curl, but their cutoff curls differ by grad(chi)×e_x.
 The required assembly combines the actual Forced and Signed wave
 potentials, Temporal and FiveMap meridional potentials, direct
 azimuthal increments, and exact physical chart rescalings.
+The [native chart extension](../first-gauge/NATIVE_GAUGE_JETS.md)
+performs this assembly at the original explicit N1 label and connects
+the 67 requested symbolic derivative expressions. The source functional
+still requires all-band gluing and actual weighted norms.
 
 The first typed quantitative gap already occurs on the live Forced
 route. Coefficient order 1 requests common background C^3, which
