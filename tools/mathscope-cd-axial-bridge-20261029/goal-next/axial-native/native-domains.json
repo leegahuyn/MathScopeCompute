@@ -1,0 +1,967 @@
+{
+  "schema": "MathScope.OriginalAxialNativeTransport/1",
+  "anchoredPrefix": "d125d121e115ea2e3c4b67a37c72a30c1dbcbca705007ca5c02412c1bf5c2116",
+  "sourceSHA256": {
+    "actual-residual-order-induction-source.mjs": "30e135309b5e0a5866917949d2ded96cce64828b1331400cb8e2260caabdc047",
+    "actual-continuation-exact-stress.mjs": "22d0fe9deae4dd7a5dca687758fb3b8b57a56cba7472c9fb23b76dd360f0bcc2",
+    "actual-background-residual-bridge.mjs": "a0d2823ee658aadff65171441c06c9cb0f52ac7115be948e17600d343fd5788a",
+    "actual-continuation-exact-support.mjs": "0be8fcf8d8a70d98ab339ca1bec727efac998f4763d852b21fb5761f27450b98",
+    "actual-continuation-exact-functions.mjs": "326b94ad5d9dc0b4bfda83a53edb7da06ed4ca30506e1ff952f77a0e59676311",
+    "actual-residual-order-induction-expressions.mjs": "dfa10931c2eee87344dff4c95ecbeaf84d21c5ea5891d6452ea1f5fd4a4d9501"
+  },
+  "geometry": {
+    "schema": "MathScope.ActualBackgroundSupportOrder/1",
+    "profileId": "same-profile-2026-10-10.3",
+    "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+    "parameterChecks": {
+      "samePinnedSource": true,
+      "actualH": true,
+      "actualLambda": true,
+      "actualT": true,
+      "actualTf": true,
+      "actualCo": true,
+      "actualXa": true,
+      "actualT1": true,
+      "actualLambdaScale": true,
+      "actualXR": true,
+      "actualIposLeft": true,
+      "actualIposRight": true
+    },
+    "expressionChecks": {
+      "pulseStart": true,
+      "pulseLength": true,
+      "axialEnd": true,
+      "plus": true,
+      "terminal": true,
+      "interpolationStartsAfterPulse": true,
+      "cutoff": true,
+      "commonInterval": true,
+      "stageOrder": true,
+      "consecutiveStages": true,
+      "allEndpointsIndependentOfEta": true
+    },
+    "arithmeticChecks": {
+      "TLower": true,
+      "hSmallerThanLambda": true,
+      "hDyadicSmall": true,
+      "QbGreaterThanOne": true,
+      "QpLessThanH": true,
+      "nextStageLongerThanOne": true,
+      "positivePulseLength": true,
+      "allIposBumpsBeforeRight": true,
+      "cutoffBelowOne": true,
+      "IposStartsAfterXR": true
+    },
+    "endpoints": {
+      "Xa": 3617,
+      "Xminus": 28814,
+      "Xkeep": 28819,
+      "Xcut": 28823,
+      "aSquared": 24805,
+      "IposLeft": 28987,
+      "IposRight": 28988,
+      "lastU": 29328,
+      "Xv": 3293,
+      "Xplus": 28824,
+      "Xb": 28826
+    },
+    "derivation": {
+      "inner": "0<t1<1; Xa=4/Lambda with Lambda>=2^16640. Hence Xa<Xminus<Xkeep<Xcut<a^2<1<XR<IposLeft.",
+      "bump": "Every normalized radial bump lies below 4. Its physical X endpoint is below 16*X0Ipos < exp(5)*X0Ipos.",
+      "middle": "IposRight/Xv=exp(-9-13/lambda)<1 and Xplus/Xv=exp(1).",
+      "wait": "lambda>h>0 makes Qsteep>0. Qb>(1/3)*(1/2)*4*2048>1, while 0<Qp<27*h/255<h<1. Thus log(Qb/Qp)/(1-h)>0.",
+      "final": "Immediately after the pulse lies an interval of length Tf=128, followed by positive stage lengths. Thus Xplus<Xv*exp(128)<Xb.",
+      "sourceStep": "sigma=exp(-1/s^2)/(exp(-1/s^2)+exp(-1/(1-s)^2)) on (0,1), with flat endpoint jets; integral sigma_prime=1."
+    },
+    "inequalities": [
+      "Xminus<Xkeep<Xcut<a^2<IposLeft<IposRight<Xv<Xplus<Xb",
+      "all five radial bump endpoints<IposRight",
+      "all endpoints are independent of eta"
+    ],
+    "numericalCoordinateComparisonUsed": false,
+    "pass": true,
+    "leadingExterior": {
+      "parameterChecks": {
+        "loopRight": true,
+        "I1Left": true,
+        "I1Right": true,
+        "logGapsPositive": true
+      },
+      "physicalRightEnds": [
+        5089,
+        5093,
+        6258,
+        7982
+      ],
+      "tailLogCoordinate": 5099,
+      "tailLogRight": 103,
+      "rootBumpStepArguments": [
+        9198,
+        9203,
+        9211,
+        9216,
+        9221
+      ],
+      "derivation": "I1Right/IposLeft=exp(-6), decayEnd<IposLeft and loopIRight/IposLeft=exp(15-60000T)<1. X>=Xplus gives log(X/Xp)>=13/lambda+1. For I1 derivative bumps, X/X0I1>=exp(5)>32, beyond every support ending at 13.5."
+    }
+  },
+  "orderResults": [
+    {
+      "n": 1,
+      "nativeDensity": 117047,
+      "raw": 117045,
+      "stress": 117069,
+      "calls": [
+        {
+          "integral": 117057,
+          "integrand": 117056,
+          "binder": 117055,
+          "formalArguments": [
+            4756,
+            2
+          ],
+          "actualArguments": [
+            117055,
+            2
+          ],
+          "sharedSystem": 1,
+          "endpoints": [
+            28814,
+            4756
+          ],
+          "dependencies": {
+            "visited": 565,
+            "pc": 81,
+            "binders": 38,
+            "shared": 1,
+            "allowedPicard": null,
+            "edgeOrders": [
+              1
+            ]
+          }
+        },
+        {
+          "integral": 117066,
+          "integrand": 117065,
+          "binder": 117064,
+          "formalArguments": [
+            4756,
+            2
+          ],
+          "actualArguments": [
+            117064,
+            2
+          ],
+          "sharedSystem": 1,
+          "endpoints": [
+            4756,
+            28824
+          ],
+          "dependencies": {
+            "visited": 565,
+            "pc": 81,
+            "binders": 38,
+            "shared": 1,
+            "allowedPicard": null,
+            "edgeOrders": [
+              1
+            ]
+          }
+        },
+        {
+          "integral": 117075,
+          "integrand": 117074,
+          "binder": 117073,
+          "formalArguments": [
+            4756,
+            2
+          ],
+          "actualArguments": [
+            117073,
+            2
+          ],
+          "sharedSystem": 1,
+          "endpoints": [
+            28814,
+            28824
+          ],
+          "dependencies": {
+            "visited": 565,
+            "pc": 81,
+            "binders": 38,
+            "shared": 1,
+            "allowedPicard": null,
+            "edgeOrders": [
+              1
+            ]
+          }
+        }
+      ],
+      "sourceSystem": 0,
+      "lowerPicardOrders": [],
+      "checkedStressDerivatives": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "endpointJets": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "regularDerivatives": {
+        "radialDerivative": 347644,
+        "evenMaterializer": 350492,
+        "radial": {
+          "visited": 94,
+          "pc": 26,
+          "binders": 1,
+          "shared": 0,
+          "allowedPicard": 2,
+          "edgeOrders": [
+            1
+          ]
+        },
+        "even": {
+          "visited": 96,
+          "pc": 26,
+          "binders": 2,
+          "shared": 0,
+          "allowedPicard": 2,
+          "edgeOrders": [
+            1
+          ]
+        }
+      }
+    },
+    {
+      "n": 2,
+      "nativeDensity": 120791,
+      "raw": 120788,
+      "stress": 120807,
+      "calls": [
+        {
+          "integral": 120804,
+          "integrand": 120803,
+          "binder": 120801,
+          "formalArguments": [
+            4756,
+            2
+          ],
+          "actualArguments": [
+            120801,
+            2
+          ],
+          "sharedSystem": null,
+          "endpoints": [
+            28814,
+            4756
+          ],
+          "dependencies": {
+            "visited": 2303,
+            "pc": 174,
+            "binders": 94,
+            "shared": 81,
+            "allowedPicard": null,
+            "edgeOrders": [
+              1,
+              2
+            ]
+          }
+        },
+        {
+          "integral": 120818,
+          "integrand": 120817,
+          "binder": 120815,
+          "formalArguments": [
+            4756,
+            2
+          ],
+          "actualArguments": [
+            120815,
+            2
+          ],
+          "sharedSystem": null,
+          "endpoints": [
+            4756,
+            28824
+          ],
+          "dependencies": {
+            "visited": 2303,
+            "pc": 174,
+            "binders": 94,
+            "shared": 81,
+            "allowedPicard": null,
+            "edgeOrders": [
+              1,
+              2
+            ]
+          }
+        },
+        {
+          "integral": 350493,
+          "integrand": 120803,
+          "binder": 120801,
+          "formalArguments": [
+            4756,
+            2
+          ],
+          "actualArguments": [
+            120801,
+            2
+          ],
+          "sharedSystem": null,
+          "endpoints": [
+            28814,
+            28824
+          ],
+          "dependencies": {
+            "visited": 2303,
+            "pc": 174,
+            "binders": 94,
+            "shared": 81,
+            "allowedPicard": null,
+            "edgeOrders": [
+              1,
+              2
+            ]
+          }
+        }
+      ],
+      "sourceSystem": 3,
+      "lowerPicardOrders": [
+        1
+      ],
+      "checkedStressDerivatives": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "endpointJets": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "regularDerivatives": {
+        "radialDerivative": 356452,
+        "evenMaterializer": 360444,
+        "radial": {
+          "visited": 968,
+          "pc": 110,
+          "binders": 21,
+          "shared": 0,
+          "allowedPicard": 3,
+          "edgeOrders": [
+            1,
+            2
+          ]
+        },
+        "even": {
+          "visited": 970,
+          "pc": 110,
+          "binders": 22,
+          "shared": 0,
+          "allowedPicard": 3,
+          "edgeOrders": [
+            1,
+            2
+          ]
+        }
+      }
+    },
+    {
+      "n": 3,
+      "nativeDensity": 123841,
+      "raw": 123838,
+      "stress": 123857,
+      "calls": [
+        {
+          "integral": 123854,
+          "integrand": 123853,
+          "binder": 123851,
+          "formalArguments": [
+            4756,
+            2
+          ],
+          "actualArguments": [
+            123851,
+            2
+          ],
+          "sharedSystem": null,
+          "endpoints": [
+            28814,
+            4756
+          ],
+          "dependencies": {
+            "visited": 4578,
+            "pc": 290,
+            "binders": 160,
+            "shared": 190,
+            "allowedPicard": null,
+            "edgeOrders": [
+              1,
+              2,
+              3
+            ]
+          }
+        },
+        {
+          "integral": 123868,
+          "integrand": 123867,
+          "binder": 123865,
+          "formalArguments": [
+            4756,
+            2
+          ],
+          "actualArguments": [
+            123865,
+            2
+          ],
+          "sharedSystem": null,
+          "endpoints": [
+            4756,
+            28824
+          ],
+          "dependencies": {
+            "visited": 4578,
+            "pc": 290,
+            "binders": 160,
+            "shared": 190,
+            "allowedPicard": null,
+            "edgeOrders": [
+              1,
+              2,
+              3
+            ]
+          }
+        },
+        {
+          "integral": 360445,
+          "integrand": 123853,
+          "binder": 123851,
+          "formalArguments": [
+            4756,
+            2
+          ],
+          "actualArguments": [
+            123851,
+            2
+          ],
+          "sharedSystem": null,
+          "endpoints": [
+            28814,
+            28824
+          ],
+          "dependencies": {
+            "visited": 4578,
+            "pc": 290,
+            "binders": 160,
+            "shared": 190,
+            "allowedPicard": null,
+            "edgeOrders": [
+              1,
+              2,
+              3
+            ]
+          }
+        }
+      ],
+      "sourceSystem": 5,
+      "lowerPicardOrders": [
+        1,
+        2
+      ],
+      "checkedStressDerivatives": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "endpointJets": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "regularDerivatives": {
+        "radialDerivative": 415682,
+        "evenMaterializer": 418822,
+        "radial": {
+          "visited": 1882,
+          "pc": 202,
+          "binders": 45,
+          "shared": 0,
+          "allowedPicard": 4,
+          "edgeOrders": [
+            1,
+            2,
+            3
+          ]
+        },
+        "even": {
+          "visited": 1884,
+          "pc": 202,
+          "binders": 46,
+          "shared": 0,
+          "allowedPicard": 4,
+          "edgeOrders": [
+            1,
+            2,
+            3
+          ]
+        }
+      }
+    }
+  ],
+  "separateLeadingDefinitions": {
+    "quadratic": 3,
+    "monotone": 2
+  },
+  "scope": "Picard/even-profile applications and Picard-bearing integral binders reached by the original axial positive stress and its displayed jets. Separately certified leading primitives are inputs.",
+  "negativeControls": {
+    "outOfCore": {
+      "node": 418823,
+      "actualArgument": 28824,
+      "originalBound": 24805,
+      "rejectedByChecker": true
+    },
+    "independentBinder": {
+      "node": 418826,
+      "binder": 418824,
+      "inheritedOuterXBound": 24805,
+      "binderUpper": 28824,
+      "rejectedByChecker": true
+    },
+    "etaOperand": {
+      "node": 418827,
+      "actualEtaArgument": 28824,
+      "rejectedByChecker": true
+    }
+  },
+  "visited": {
+    "states": 62100,
+    "distinctPicardCallNodes": 564,
+    "distinctIntegralNodes": 306,
+    "distinctSharedApplications": 228,
+    "branchContexts": 4215,
+    "disjointBranches": 1228,
+    "irrelevantBranches": 4504
+  },
+  "byContext": {
+    "n1:forward": {
+      "visited": 565,
+      "pc": 81,
+      "binders": 38,
+      "shared": 1,
+      "allowedPicard": null,
+      "edgeOrders": [
+        1
+      ]
+    },
+    "n1:backward": {
+      "visited": 565,
+      "pc": 81,
+      "binders": 38,
+      "shared": 1,
+      "allowedPicard": null,
+      "edgeOrders": [
+        1
+      ]
+    },
+    "n1:whole": {
+      "visited": 565,
+      "pc": 81,
+      "binders": 38,
+      "shared": 1,
+      "allowedPicard": null,
+      "edgeOrders": [
+        1
+      ]
+    },
+    "n1:stress-value": {
+      "visited": 568,
+      "pc": 81,
+      "binders": 38,
+      "shared": 1,
+      "allowedPicard": null,
+      "edgeOrders": [
+        1
+      ]
+    },
+    "n1:stress-eta": {
+      "visited": 1039,
+      "pc": 123,
+      "binders": 60,
+      "shared": 1,
+      "allowedPicard": null,
+      "edgeOrders": [
+        1
+      ]
+    },
+    "n1:stress-X-eta": {
+      "visited": 1042,
+      "pc": 123,
+      "binders": 60,
+      "shared": 2,
+      "allowedPicard": null,
+      "edgeOrders": [
+        1
+      ]
+    },
+    "n1:regular-radial-derivative": {
+      "visited": 94,
+      "pc": 26,
+      "binders": 1,
+      "shared": 0,
+      "allowedPicard": 2,
+      "edgeOrders": [
+        1
+      ]
+    },
+    "n1:regular-even-X-materializer": {
+      "visited": 96,
+      "pc": 26,
+      "binders": 2,
+      "shared": 0,
+      "allowedPicard": 2,
+      "edgeOrders": [
+        1
+      ]
+    },
+    "n2:forward": {
+      "visited": 2303,
+      "pc": 174,
+      "binders": 94,
+      "shared": 81,
+      "allowedPicard": null,
+      "edgeOrders": [
+        1,
+        2
+      ]
+    },
+    "n2:backward": {
+      "visited": 2303,
+      "pc": 174,
+      "binders": 94,
+      "shared": 81,
+      "allowedPicard": null,
+      "edgeOrders": [
+        1,
+        2
+      ]
+    },
+    "n2:whole": {
+      "visited": 2303,
+      "pc": 174,
+      "binders": 94,
+      "shared": 81,
+      "allowedPicard": null,
+      "edgeOrders": [
+        1,
+        2
+      ]
+    },
+    "n2:stress-value": {
+      "visited": 2306,
+      "pc": 174,
+      "binders": 94,
+      "shared": 81,
+      "allowedPicard": null,
+      "edgeOrders": [
+        1,
+        2
+      ]
+    },
+    "n2:stress-eta": {
+      "visited": 3946,
+      "pc": 248,
+      "binders": 135,
+      "shared": 124,
+      "allowedPicard": null,
+      "edgeOrders": [
+        1,
+        2
+      ]
+    },
+    "n2:stress-X-eta": {
+      "visited": 3951,
+      "pc": 248,
+      "binders": 135,
+      "shared": 125,
+      "allowedPicard": null,
+      "edgeOrders": [
+        1,
+        2
+      ]
+    },
+    "n2:source-75": {
+      "visited": 161,
+      "pc": 24,
+      "binders": 7,
+      "shared": 0,
+      "allowedPicard": 2,
+      "edgeOrders": [
+        1
+      ]
+    },
+    "n2:source-76": {
+      "visited": 101,
+      "pc": 18,
+      "binders": 2,
+      "shared": 0,
+      "allowedPicard": 2,
+      "edgeOrders": [
+        1
+      ]
+    },
+    "n2:source-77": {
+      "visited": 220,
+      "pc": 28,
+      "binders": 7,
+      "shared": 0,
+      "allowedPicard": 2,
+      "edgeOrders": [
+        1
+      ]
+    },
+    "n2:regular-radial-derivative": {
+      "visited": 968,
+      "pc": 110,
+      "binders": 21,
+      "shared": 0,
+      "allowedPicard": 3,
+      "edgeOrders": [
+        1,
+        2
+      ]
+    },
+    "n2:regular-even-X-materializer": {
+      "visited": 970,
+      "pc": 110,
+      "binders": 22,
+      "shared": 0,
+      "allowedPicard": 3,
+      "edgeOrders": [
+        1,
+        2
+      ]
+    },
+    "n3:forward": {
+      "visited": 4578,
+      "pc": 290,
+      "binders": 160,
+      "shared": 190,
+      "allowedPicard": null,
+      "edgeOrders": [
+        1,
+        2,
+        3
+      ]
+    },
+    "n3:backward": {
+      "visited": 4578,
+      "pc": 290,
+      "binders": 160,
+      "shared": 190,
+      "allowedPicard": null,
+      "edgeOrders": [
+        1,
+        2,
+        3
+      ]
+    },
+    "n3:whole": {
+      "visited": 4578,
+      "pc": 290,
+      "binders": 160,
+      "shared": 190,
+      "allowedPicard": null,
+      "edgeOrders": [
+        1,
+        2,
+        3
+      ]
+    },
+    "n3:stress-value": {
+      "visited": 4581,
+      "pc": 290,
+      "binders": 160,
+      "shared": 190,
+      "allowedPicard": null,
+      "edgeOrders": [
+        1,
+        2,
+        3
+      ]
+    },
+    "n3:stress-eta": {
+      "visited": 7461,
+      "pc": 392,
+      "binders": 219,
+      "shared": 274,
+      "allowedPicard": null,
+      "edgeOrders": [
+        1,
+        2,
+        3
+      ]
+    },
+    "n3:stress-X-eta": {
+      "visited": 7466,
+      "pc": 392,
+      "binders": 219,
+      "shared": 275,
+      "allowedPicard": null,
+      "edgeOrders": [
+        1,
+        2,
+        3
+      ]
+    },
+    "n3:source-75": {
+      "visited": 400,
+      "pc": 56,
+      "binders": 16,
+      "shared": 0,
+      "allowedPicard": 3,
+      "edgeOrders": [
+        1,
+        2
+      ]
+    },
+    "n3:source-76": {
+      "visited": 150,
+      "pc": 30,
+      "binders": 4,
+      "shared": 0,
+      "allowedPicard": 3,
+      "edgeOrders": [
+        1,
+        2
+      ]
+    },
+    "n3:source-77": {
+      "visited": 472,
+      "pc": 60,
+      "binders": 16,
+      "shared": 0,
+      "allowedPicard": 3,
+      "edgeOrders": [
+        1,
+        2
+      ]
+    },
+    "n3:regular-radial-derivative": {
+      "visited": 1882,
+      "pc": 202,
+      "binders": 45,
+      "shared": 0,
+      "allowedPicard": 4,
+      "edgeOrders": [
+        1,
+        2,
+        3
+      ]
+    },
+    "n3:regular-even-X-materializer": {
+      "visited": 1884,
+      "pc": 202,
+      "binders": 46,
+      "shared": 0,
+      "allowedPicard": 4,
+      "edgeOrders": [
+        1,
+        2,
+        3
+      ]
+    }
+  }
+}

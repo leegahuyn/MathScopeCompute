@@ -1,0 +1,80 @@
+{
+  "schema": "MathScope.N7.IndependentFirstCutoffScaleSourceClosureAudit/1",
+  "referenceCheckoutCommit": "f8cb4034e86d7b669d52a6f2248aebba156b51b5",
+  "localizationReceiptSHA256": "fa2acf400bb1fe8705bdb716d171882a3343562be3c5167e0fcb153d96cbf24e",
+  "actualRoots": {
+    "qBig": 622791,
+    "ellMinimum": 617432,
+    "ell0": 617433,
+    "earlierAdmissibleFamilyQStar": 617437,
+    "Bnorm": 300170,
+    "C12EnvelopeR": 216823,
+    "E": 617292,
+    "Lmax": 300174
+  },
+  "checkedSourceSHA256": {
+    "research-ide/mathscope-m2/navier/actual-common-admissible-family.mjs": "7fd3ec07b567af86f84df7a1b789a5a57366186d4e8c26c2a4a35dc5948c5b75",
+    "research-ide/mathscope-m3/navier/source-localization.mjs": "5f6480f9799a9a83945f696833b9213585572efbe65e9e755b2935726e6f1036",
+    "research-ide/mathscope-m3/navier/source-global-band.mjs": "babe4aceb97d0bdee4084e5f06009e6724128935fffde1647c11e3aab022df60",
+    "research-ide/mathscope-m2/navier/actual-compact-all-band-background-norms.mjs": "62d877ca5d45073c8e95862bc0f5d0d44197f8ace34bd77d885bfbececc69464",
+    "research-ide/mathscope-m3/navier/source-forced-class-majorants.mjs": "b609413ea8f86d023d3331c90c2ecaecf139f07de69d8d05ee6feb46c865f053",
+    "research-ide/mathscope-m3/navier/source-global-moment.mjs": "0d02d55b291db8c55db26810ae4783d62e09ac3d058fd582f4161cb444871e46",
+    "research-ide/mathscope-m3/extended-signed-run-20261023/run_real_original_signed162.mjs": "8bd0f5611843441cbcf57ee7a32bb25e6bf19510fa0f308be10d73907309a4af"
+  },
+  "qBigComparison": {
+    "actual": "qBig=2^(-(ellMinimum+10))",
+    "logInverse": "B=(ellMinimum+10)*log(2)",
+    "strictLowerBounds": [
+      "2048*h^(-2)",
+      "Bnorm^512/2",
+      "C12EnvelopeR^1024/2"
+    ]
+  },
+  "operatorComparisons": {
+    "fixedFiveCoefficientSupOperatorBound": "2^27*C12EnvelopeR*h^(-13)",
+    "fixedFiveLogComparison": "log(2^27*C12EnvelopeR*h^(-13)) < B/64",
+    "matrixOnlyNotActualDerivativeNorm": true,
+    "tangentLogComparison": "log W <= 18*Bnorm^256/2^33 < B/2^28",
+    "conditionalSufficientFactorizedBounds": {
+      "form": "C <= 2^a*Bnorm^b*h^(-c)*W^d",
+      "integerCaps": {
+        "a": 65536,
+        "b": 65536,
+        "c": 65536,
+        "d": 65536,
+        "P": 65536
+      },
+      "result": "2*K_m*C*4^P*P!*exp(-B/4) < 1 for K_m=84,15460",
+      "actualStageNormBoundInThisClassProved": false
+    },
+    "Temporal": {
+      "priorReceiptSHA256": "2a94bacf97494ceb2288d4364da7cd75dba0a96f6469cb2b25d98d509c4f2438",
+      "actualNativeOperatorBound": "5*ell^2 from C^(m+2) to desired C^m",
+      "boundOnBand": "5*ell^2 <= 20*(1+log(1/q))^2 on s=q/2^-ell in [1/2,2]",
+      "actualInputSeminormAvailable": false
+    }
+  },
+  "sourceFunctionals": {
+    "familySHA256": "b8c2ce18ebdefd2875e83e5f824eb71f77f1c9b7510170d225efce739360bb78",
+    "uncutTriplet": "f_ac81b63855489a21bb407b2d",
+    "uncutFunctionalNorms": [
+      "f_7f7b86cc96191e30cada8cce",
+      "f_bb4702458d05209c24aaa649"
+    ],
+    "typedFirstMissingLiveOperation": "ActualCorrectionPotentials",
+    "typedIdentity": "delta u_j=curl A_j+B_j e_theta"
+  },
+  "firstConcreteBackgroundDeficit": "coefficientOrder=1 emits background C^3, hence B_0,B_1 only. First Forced amplitude orders 2/3 need same-family C^4/C^5 and their repaired W_alpha input norms.",
+  "actualWeightedUncutNormsClosed": false,
+  "actualCutoffNormsClosed": false,
+  "qualitativeFinitenessAloneCountermodel": {
+    "scope": "Logic countermodel only, not an alternative actual original current.",
+    "increment": "A=B_swirl=0, pressure is arbitrary positive constant M",
+    "unitCutoffPoint": "a=1, q=qBig/2<1/2",
+    "cutoffSupLower": "M*(qBig/2)^(ellPrime_0-g_1)",
+    "consequence": "Choosing M sufficiently large forces 40*(C_hat_0+1)/h > B+1 despite finite uncut seminorms."
+  },
+  "actualFirstScaleEvaluated": false,
+  "finalJets": 0,
+  "release": "HOLD"
+}

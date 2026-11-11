@@ -1,7 +1,8 @@
 # Independent replay of the corrected first Forced source
 
 GitHub run [43010379487](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43010379487)
-executes the original source pinned at `f8cb4034e86d7b669d52a6f2248aebba156b51b5`
+executes reference checkout `f8cb4034e86d7b669d52a6f2248aebba156b51b5`
+from original PR30 base `a9b3a5b317525f6d0a71e2e356b054c9d25d2e60`,
 with the repaired source and recorder from
 `15582df5e06fa462b29fea01842becd89fb864ac`. Use its artifact
 `mathscope-corrected-first-forced` after the construction job succeeds.
@@ -55,6 +56,35 @@ application, changing the full pressure, and detaching a projected
 forcing component. The optional `exercise_archived_controls.py` separately
 exercises the checker on the earlier uncorrected source snapshots. That
 fixture tests conventions and cannot certify the repaired run.
+
+## Archived positive target weights and all 30 half-amplitudes
+
+`bind_primary_amplitude.py` reads the same GitHub artifact and authenticates
+the first 3,654,073 node records against the archived pre-repair prefix.
+It recovers the three original weighted vector components for each sign
+from their incidence in the two arms of the original potential cross
+products. It then applies the active archived fixed representative
+tuple and the repaired chart's exact transverse and pulse values. The
+result equals the repaired real fundamental coefficient after removing
+its one explicit outer `dψ` factor. The archived weighted coefficient's
+single outer `ψ` factor is removed structurally along multiplication
+nodes, and the independent factor `1/2` is checked. The archived
+potential-to-leading-velocity identification uses the original moving
+frame tangency and vector triple-product source proof.
+
+The formal positive weight roots `#623824` and `#623825` match the actual
+repaired roots `#3625718` and `#3652093`, respectively. The result
+records ten alpha-equivalent whole-integral groups for each sign.
+Every group includes the formal and actual body, binder, lower and
+upper bounds and enclosing binder scope. The two bounds use the
+ambient formal-to-actual substitution, and only the integrand uses
+the integral binder. Every inner cutoff remains in the target-weight
+integrals. Three mutations reject a missing `1/2`, swapped chart
+coordinates, and replacing that inner cutoff by one.
+
+```text
+python bind_primary_amplitude.py --repo REPO --artifact ARTIFACT --out independent-primary-half-amplitude.json
+```
 
 The scope is the first Forced source on its declared pulse domain.
 Uniform class bounds, support and all-order joining, corrected Signed,
