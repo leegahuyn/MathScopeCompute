@@ -10,6 +10,36 @@ theorem reference_band_label (ellZero L M : ℤ)
   · apply max_le <;> omega
   · omega
 
+/-- The original factor-two growth from the third selector row onward
+gives the lower integer label, even when the window has one label. -/
+theorem reference_general_window_lower_label (ellZero : ℤ) (a b : ℝ)
+    (hdeep : (ellZero : ℝ) + 8 ≤ a) (hgrowth : a + 1 ≤ b) :
+    max ellZero ⌊a⌋ = ⌊a⌋ ∧ ⌊a⌋ ≤ ⌊b⌋ - 1 ∧ ellZero + 8 ≤ ⌊a⌋ := by
+  have hL : ellZero + 8 ≤ ⌊a⌋ := by
+    apply Int.le_floor.mpr
+    exact_mod_cast hdeep
+  have hM : ⌊a⌋ + 1 ≤ ⌊b⌋ := by
+    apply Int.le_floor.mpr
+    rw [Int.cast_add, Int.cast_one]
+    exact (add_le_add_right (Int.floor_le a) 1).trans hgrowth
+  exact ⟨max_eq_right (by omega), by omega, hL⟩
+
+/-- An explicit point below the last retained cutoff and strictly past
+the first omitted cutoff in the original factor-two regime. -/
+theorem reference_general_window_strict_point (v growth : ℝ)
+    (hlo : 1 / 2 < v) (hhi : v ≤ 1) (hGrowth : 2 ≤ growth) :
+    let s := (1 / 2 + v) / 2
+    1 / 2 < s ∧ s < 1 ∧ s / v < 1 ∧ 1 < growth * (s / v) := by
+  let s := (1 / 2 + v) / 2
+  change 1 / 2 < s ∧ s < 1 ∧ s / v < 1 ∧ 1 < growth * (s / v)
+  have hv : 0 < v := by linarith
+  have hratio : 1 / 2 < s / v := (lt_div_iff₀ hv).mpr (by dsimp [s]; linarith)
+  have hmul : 2 * (s / v) ≤ growth * (s / v) :=
+    mul_le_mul_of_nonneg_right hGrowth (by linarith)
+  refine ⟨by dsimp [s]; linarith, by dsimp [s]; linarith, (div_lt_iff₀ hv).mpr ?_, by linarith⟩
+  dsimp [s]
+  linarith
+
 /-- Use the normalized chart equation on the positive domain. A strict
 decrease on this domain follows from either a nonzero axial coordinate
 or positive time. -/
@@ -84,6 +114,8 @@ theorem representative_midpoint_brackets {F : ℝ → ℝ} {lo hi tLo tHi : ℝ}
     ht₂.trans_le (hmono.monotoneOn hhiSet hlast hhi)⟩
 
 #print axioms reference_band_label
+#print axioms reference_general_window_lower_label
+#print axioms reference_general_window_strict_point
 #print axioms positive_reference_root_unique
 #print axioms zero_axial_time_below_reference_bracket
 #print axioms representative_midpoint_brackets
