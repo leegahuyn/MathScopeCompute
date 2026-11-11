@@ -1,0 +1,18 @@
+import { pathToFileURL } from 'node:url';
+import { resolve } from 'node:path';
+import { writeFileSync } from 'node:fs';
+import assert from 'node:assert/strict';
+const root=resolve(process.argv[2]);
+const out=process.argv[3];
+assert.ok(root&&out,'usage: node degree-replay.mjs REPO OUTPUT');
+const {originalPrimaryClassDegreeProgram:run}=await import(pathToFileURL(resolve(root,'research-ide/mathscope-m3/navier/source-primary-class-majorants.mjs')));
+const p=run({order:2,targetPoles:[3,6,9,12],maxWork:200000});
+const obj={orders:p.derivativeOrders,amplitude:p.weighted.amplitude,potential:p.weighted.potential,curl:p.weighted.curl,pressure:p.pressure,primaryCovariance:p.primaryCovariance,covarianceRemainder:p.covarianceRemainder,sourceAuthenticated:p.sourceAuthenticated,actualTargetPoleBoundsProvedHere:p.weighted.actualTargetPoleBoundsProvedHere};
+assert.deepEqual(obj.orders,{output:2,amplitudeAndTarget:3,background:5});
+const pairs=a=>a.map(x=>[x.power,x.pole]);
+assert.deepEqual(pairs(obj.amplitude),[[84,2],[445,6],[851,12],[1257,18]]);
+assert.deepEqual(pairs(obj.curl),[[472,6],[881,12],[1287,18]]);
+assert.deepEqual(pairs(obj.pressure),[[111,2],[473,6],[880,12]]);
+assert.equal(obj.sourceAuthenticated,false);assert.equal(obj.actualTargetPoleBoundsProvedHere,false);
+writeFileSync(out,JSON.stringify(obj,null,2)+'\n');
+console.log('PASS source degree recurrence; native C5/target C3 authentication NOT executed');

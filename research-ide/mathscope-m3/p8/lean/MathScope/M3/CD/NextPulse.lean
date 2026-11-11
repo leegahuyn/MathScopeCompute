@@ -85,6 +85,16 @@ theorem repeat_forced_high_mode_has_two_waves (i j : ℤ)
     (h : i + j < -2 ∨ 2 < i + j) : i ≠ 0 ∧ j ≠ 0 := by
   constructor <;> omega
 
+/-- Differentiating a conservative product after selecting its Fourier
+mode gives the sum of the two charged derivatives before convolution.
+The ordinary derivatives of the two amplitudes are df and dg. -/
+theorem repeat_forced_conservative_fourier_product
+    (f g df dg m n κ : ℂ) :
+    (df * g + f * dg) + Complex.I * (m + n) * κ * (f * g) =
+      (df + Complex.I * m * κ * f) * g +
+        f * (dg + Complex.I * n * κ * g) := by
+  ring
+
 /-- The tangent-propagator contribution fits inside a small part of the
 original cutoff exponent. B is log(1/qBig) in the source application. -/
 theorem first_scale_tangent_log_budget (bnorm L B : ℝ)
@@ -116,6 +126,7 @@ theorem first_scale_tangent_log_budget (bnorm L B : ℝ)
 #print axioms repeat_forced_mode_three_pairs
 #print axioms repeat_forced_mode_four_pairs
 #print axioms repeat_forced_high_mode_has_two_waves
+#print axioms repeat_forced_conservative_fourier_product
 #print axioms first_scale_tangent_log_budget
 
 end MathScope.M3.CD

@@ -1,0 +1,67 @@
+name: MathScope original primary order 2
+on:
+  workflow_dispatch:
+  push:
+    branches: [mathscope-cd-axial-source-bridge-20261029]
+    paths:
+      - '.github/workflows/mathscope-primary-order2.yml'
+      - 'tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-order2/run_primary_order2.mjs'
+permissions:
+  contents: read
+jobs:
+  original-primary-order2:
+    if: github.ref == 'refs/heads/mathscope-cd-axial-source-bridge-20261029'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 110
+    env:
+      NODE_OPTIONS: --max-old-space-size=6100
+      M3_PRIMARY_MAX_SECONDS: '6000'
+      M3_PRIMARY_MAX_RSS_BYTES: '6442450944'
+      ORIGINAL_SOURCE_COMMIT: f8cb4034e86d7b669d52a6f2248aebba156b51b5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: evidence
+          persist-credentials: false
+          sparse-checkout: tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-order2
+      - uses: actions/checkout@v4
+        with:
+          ref: f8cb4034e86d7b669d52a6f2248aebba156b51b5
+          path: reference
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Test small fail-closed controls
+        working-directory: evidence
+        run: |
+          set -euo pipefail
+          d=tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-order2
+          node --check "$d/run_primary_order2.mjs"
+          node --test "$d/primary-order2-checks.test.mjs"
+          python -m unittest discover -s "$d" -p test_verify_primary_order2.py
+      - name: Run source-pinned native construction and independent readback
+        working-directory: reference
+        run: |
+          set -uo pipefail
+          helper=../evidence/tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-order2
+          runner=research-ide/mathscope-m3/extended-signed-run-20261023
+          out="$RUNNER_TEMP/primary-order2"
+          mkdir -p "$out"
+          test "$(git rev-parse HEAD)" = "$ORIGINAL_SOURCE_COMMIT" || exit 1
+          git diff --quiet --exit-code HEAD -- || exit 1
+          cp "$helper/run_primary_order2.mjs" "$helper/primary-order2-checks.mjs" "$runner/"
+          timeout 6200s node --expose-gc "$runner/run_primary_order2.mjs" "$out" 2>&1 | tee "$out/native-run.log"
+          native_result=${PIPESTATUS[0]}
+          python "$helper/verify_primary_order2.py" "$out" --out "$out/independent-readback.json" 2>&1 | tee "$out/independent-readback.log"
+          verifier_result=${PIPESTATUS[0]}
+          printf 'native_exit=%s verifier_exit=%s\n' "$native_result" "$verifier_result" | tee "$out/exit-status.txt"
+          test "$native_result" -eq 0 && test "$verifier_result" -eq 0
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mathscope-original-primary-order2
+          path: ${{ runner.temp }}/primary-order2/**
+          if-no-files-found: warn
+          retention-days: 30
+
