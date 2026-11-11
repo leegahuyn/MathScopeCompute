@@ -61,11 +61,38 @@ theorem first_forced_separated_tail_bookkeeping (g primary ψ tail : ℂ) :
     (g + primary) - ψ * g + tail = primary + (1 - ψ) * g + tail := by
   ring
 
+/-- The complete ordered convolution contributes two pairs at mode 3. -/
+theorem repeat_forced_mode_three_pairs (term : ℤ → ℤ → ℂ) :
+    (∑ i ∈ Finset.Icc (-2 : ℤ) 2,
+      if 3 - i ∈ Finset.Icc (-2 : ℤ) 2 then term i (3 - i) else 0) =
+      term 1 2 + term 2 1 := by
+  have h : Finset.Icc (-2 : ℤ) 2 = {-2, -1, 0, 1, 2} := by decide
+  rw [h]
+  norm_num [Finset.sum_insert]
+
+/-- The complete ordered convolution contributes a single pair at mode 4. -/
+theorem repeat_forced_mode_four_pairs (term : ℤ → ℤ → ℂ) :
+    (∑ i ∈ Finset.Icc (-2 : ℤ) 2,
+      if 4 - i ∈ Finset.Icc (-2 : ℤ) 2 then term i (4 - i) else 0) =
+      term 2 2 := by
+  have h : Finset.Icc (-2 : ℤ) 2 = {-2, -1, 0, 1, 2} := by decide
+  rw [h]
+  norm_num [Finset.sum_insert]
+
+/-- A mean factor cannot contribute to either of the new high modes. -/
+theorem repeat_forced_high_mode_has_two_waves (i j : ℤ)
+    (hi : -2 ≤ i ∧ i ≤ 2) (hj : -2 ≤ j ∧ j ≤ 2)
+    (h : i + j < -2 ∨ 2 < i + j) : i ≠ 0 ∧ j ≠ 0 := by
+  constructor <;> omega
+
 #print axioms fixed_pulse_normal_evolution
 #print axioms fixed_pulse_pressure_component
 #print axioms fixed_pulse_mode_damping
 #print axioms fixed_pulse_shifted_propagator
 #print axioms first_forced_raw_tail_bookkeeping
 #print axioms first_forced_separated_tail_bookkeeping
+#print axioms repeat_forced_mode_three_pairs
+#print axioms repeat_forced_mode_four_pairs
+#print axioms repeat_forced_high_mode_has_two_waves
 
 end MathScope.M3.CD
