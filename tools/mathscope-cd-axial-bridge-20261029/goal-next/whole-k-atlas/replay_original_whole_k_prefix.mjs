@@ -12,12 +12,13 @@ import { exportOriginalSourceGraph } from '../post-signed-20261023/export_origin
 const [directory, sourceCommit, request] = process.argv.slice(2);
 const executingCommit = process.env.GITHUB_SHA;
 const N = Number(request);
+const selectorDiagonalOnly = process.env.MATHSCOPE_PREFIX_DIAGONAL_ONLY === '1';
 const maxMinutes = 105;
 const maxRss = Number(process.env.MATHSCOPE_PREFIX_MAX_RSS_BYTES ?? 6 * 1024 ** 3);
 assert.ok([6, 9, 12].some(gib => maxRss === gib * 1024 ** 3));
 assert.ok(directory && /^[a-f0-9]{40}$/.test(sourceCommit));
 assert.ok(/^[a-f0-9]{40}$/.test(executingCommit ?? ''));
-assert.ok(request === String(N) && [0, 3, 4].includes(N));
+assert.ok(request === String(N) && [0, 2, 3, 4].includes(N));
 mkdirSync(directory, { recursive: true });
 
 const upstreamMaxNodes = Number(process.env.MATHSCOPE_PREFIX_FAMILY_MAX_NODES ?? 5000000);
@@ -32,7 +33,7 @@ const gcIntervalMs = 20_000;
 let lastGC = 0;
 const receipt = {
   schema: 'MathScope.M3.OriginalWholeKHigherPrefix/1',
-  sourceCommit, executingCommit, requestedPrefix: N, stages: [],
+  sourceCommit, executingCommit, requestedPrefix: N, selectorDiagonalOnly, stages: [],
   maxMinutes, maxRss, upstreamMaxNodes, bandMaxNodes, exportMaxNodes, maxRssObserved: 0, memoryCheckpoints: [], finalJets: 0, release: 'HOLD',
 };
 const save = () => writeFileSync(join(directory, 'original-whole-k-prefix.json'), JSON.stringify(receipt, null, 2) + '\n');
@@ -56,6 +57,7 @@ function collectAt(label) {
 }
 
 const context = {
+  selectorDiagonalOnly,
   checkCancelled() {
     let { elapsedMs, rssBytes } = measure();
     if (elapsedMs > maxMinutes * 60_000) {
@@ -74,6 +76,13 @@ const context = {
       collectAt(row.stage);
     }
     context.checkCancelled();
+    if (['actual-all-order-velocity-seminorm', 'actual-all-order-pressure-stress-seminorm'].includes(row.phase)) {
+      const item = { phase: row.phase, order: row.order, derivativeOrder: row.derivativeOrder,
+        ftcRows: row.ftcRows, nodes: row.nodes, ...measure() };
+      (receipt.normRowProgress ??= []).push(item);
+      console.log(JSON.stringify(item));
+      save();
+    }
     if (row.stage && row.stage !== receipt.lastProgress?.stage) {
       receipt.lastProgress = { stage: row.stage, nodeCount: row.nodeCount ?? null, ...measure() };
       console.log(JSON.stringify(receipt.lastProgress));
@@ -101,7 +110,7 @@ try {
   const through = Math.max(2, N+1);
   const derivativeOrder = Math.max(3, N+1);
   const request = { coefficientOrder: N, maxNodes: bandMaxNodes };
-  const upstream = bandMaxNodes > 4000000 || upstreamMaxNodes > 5000000
+  const upstream = selectorDiagonalOnly || bandMaxNodes > 4000000 || upstreamMaxNodes > 5000000
     ? stage('sealed-original-common-family',
       () => prepareActualCommonAdmissibleFamily({
         throughOrder: through, derivativeOrder, maxNodes: upstreamMaxNodes,
@@ -109,6 +118,18 @@ try {
       }, context), assertActualCommonAdmissibleFamily)
     : null;
   if (upstream) {
+    if (selectorDiagonalOnly) {
+      const { velocitySeminorms, pressureStressSeminorms } = upstream.source;
+      assert.equal(velocitySeminorms.request.selectorDiagonalOnly, true);
+      assert.equal(pressureStressSeminorms.request.selectorDiagonalOnly, true);
+      const expected = Array.from({ length: through }, (_, i) => i + 2);
+      assert.deepEqual(velocitySeminorms.rows.map(row => row.bounds.length), expected);
+      assert.deepEqual(pressureStressSeminorms.rows.map(row => row.bounds.length), expected);
+      assert.deepEqual(pressureStressSeminorms.normalizedPressure.map(row => row.bounds.length), expected);
+      assert.deepEqual(pressureStressSeminorms.weightedStress.map(row => row.bounds.length), expected.slice(1));
+      assert.deepEqual(pressureStressSeminorms.weightedStress.map(row => row.directWeightedBounds.length), expected.slice(1));
+      assert.equal(pressureStressSeminorms.n1Weighted.bounds.length, 2);
+    }
     receipt.authenticatedUpstream = {
       order: upstream.prepared.order,
       selector: upstream.selector.rows,
@@ -192,7 +213,8 @@ try {
     roots: [...new Set([...Object.values(roots).filter(Number.isSafeInteger), ...roots.selectorScales])],
     sourceCommit: executingCommit,
     pr30Commit: 'a9b3a5b317525f6d0a71e2e356b054c9d25d2e60',
-    scope: 'ORIGINAL_WHOLE_K_N' + N + '_CURRENT_PRESSURE_PREFIX',
+    scope: 'ORIGINAL_WHOLE_K_N' + N + '_CURRENT_PRESSURE_PREFIX' +
+      (selectorDiagonalOnly ? '_DIAGONAL_MATERIALIZATION' : ''),
     maxNodes: exportMaxNodes,
   });
   receipt.currentStage = 'COMPLETE';

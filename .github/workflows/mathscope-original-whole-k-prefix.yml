@@ -5,6 +5,7 @@ on:
     paths:
       - '.github/workflows/mathscope-original-whole-k-prefix.yml'
       - 'tools/mathscope-cd-axial-bridge-20261029/goal-next/whole-k-atlas/replay_original_whole_k_prefix.mjs'
+      - 'tools/mathscope-cd-axial-bridge-20261029/goal-next/whole-k-atlas/prepare_diagonal_materialization.py'
   workflow_dispatch:
 permissions:
   contents: read
@@ -15,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        prefix: ${{ fromJSON(github.event_name == 'push' && '[4]' || '[0,3,4]') }}
+        prefix: ${{ fromJSON(github.event_name == 'push' && '[2,4]' || '[0,2,3,4]') }}
     env:
       NODE_OPTIONS: --max-old-space-size=6100
       ORIGINAL_SOURCE_COMMIT: f8cb4034e86d7b669d52a6f2248aebba156b51b5
@@ -44,6 +45,12 @@ jobs:
           script=replay_original_whole_k_prefix.mjs
           target="research-ide/mathscope-m3/extended-signed-run-20261023/$script"
           cp "../evidence/tools/mathscope-cd-axial-bridge-20261029/goal-next/whole-k-atlas/$script" "$target"
+          out="$RUNNER_TEMP/mathscope-whole-k"
+          mkdir -p "$out"
+          if [ "$ORIGINAL_PREFIX" = 2 ] || [ "$ORIGINAL_PREFIX" = 4 ]; then
+            export MATHSCOPE_PREFIX_DIAGONAL_ONLY=1
+            python3 "../evidence/tools/mathscope-cd-axial-bridge-20261029/goal-next/whole-k-atlas/prepare_diagonal_materialization.py" . "$out/diagonal-overlay.json"
+          fi
           free -b
           limits="$(python3 - <<'PY'
           from pathlib import Path
@@ -73,19 +80,33 @@ jobs:
           export MATHSCOPE_PREFIX_MAX_RSS_BYTES MATHSCOPE_PREFIX_FAMILY_MAX_NODES MATHSCOPE_PREFIX_BAND_MAX_NODES
           printf 'RSS=%s bytes; V8 old-space=%s MiB; original family nodes=%s; band nodes=%s\n' "$MATHSCOPE_PREFIX_MAX_RSS_BYTES" "$heap_mb" "$MATHSCOPE_PREFIX_FAMILY_MAX_NODES" "$MATHSCOPE_PREFIX_BAND_MAX_NODES"
           if [ "$MATHSCOPE_PREFIX_BAND_MAX_NODES" -gt 4000000 ]; then
-            out="$RUNNER_TEMP/mathscope-whole-k"
-            mkdir -p "$out"
             band=research-ide/mathscope-m3/navier/source-global-band.mjs
             guard=../evidence/tools/mathscope-cd-axial-bridge-20261029/goal-next/whole-k-atlas/prepare_wider_band_budget.py
             python3 "$guard" "$band" "$out/band-budget-overlay.json"
             if [ "$MATHSCOPE_PREFIX_BAND_MAX_NODES" -gt 8000000 ]; then
               expressions=research-ide/mathscope-m2/navier/actual-residual-order-induction-expressions.mjs
               python3 "$guard" "$expressions" "$out/graph-copy-budget-overlay.json"
-              test "$(git diff --name-only HEAD --)" = "$(printf '%s\n%s' "$expressions" "$band")"
-            else
-              test "$(git diff --name-only HEAD --)" = "$band"
             fi
           fi
+          python3 - "$out" <<'PY'
+          from pathlib import Path
+          import hashlib, json, subprocess, sys
+          out = Path(sys.argv[1])
+          checked = {}
+          diagonal = out / "diagonal-overlay.json"
+          if diagonal.exists():
+              checked.update({"research-ide/mathscope-m2/navier/" + n: r["patchedSHA256"]
+                              for n, r in json.loads(diagonal.read_bytes())["files"].items()})
+          for file, name in (("band-budget-overlay.json", "mathscope-m3/navier/source-global-band.mjs"),
+                             ("graph-copy-budget-overlay.json", "mathscope-m2/navier/actual-residual-order-induction-expressions.mjs")):
+              receipt = out / file
+              if receipt.exists():
+                  checked["research-ide/" + name] = json.loads(receipt.read_bytes())["newSHA256"]
+          actual = subprocess.check_output(["git", "diff", "--name-only", "HEAD", "--"], text=True).splitlines()
+          assert set(actual) == set(checked)
+          assert all(hashlib.sha256(Path(name).read_bytes()).hexdigest() == digest
+                     for name, digest in checked.items())
+          PY
           node --check "$target"
           node --max-old-space-size="$heap_mb" --expose-gc "$target" "$RUNNER_TEMP/mathscope-whole-k" "$ORIGINAL_SOURCE_COMMIT" "$ORIGINAL_PREFIX"
       - uses: actions/upload-artifact@v4
