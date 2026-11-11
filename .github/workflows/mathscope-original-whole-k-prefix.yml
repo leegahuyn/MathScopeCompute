@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        prefix: [0, 3, 4]
+        prefix: ${{ fromJSON(github.event_name == 'push' && '[3]' || '[0,3,4]') }}
     env:
       NODE_OPTIONS: --max-old-space-size=6100
       ORIGINAL_SOURCE_COMMIT: f8cb4034e86d7b669d52a6f2248aebba156b51b5
@@ -44,6 +44,7 @@ jobs:
           script=replay_original_whole_k_prefix.mjs
           target="research-ide/mathscope-m3/extended-signed-run-20261023/$script"
           cp "../evidence/tools/mathscope-cd-axial-bridge-20261029/goal-next/whole-k-atlas/$script" "$target"
+          free -b
           node --check "$target"
           node --expose-gc "$target" "$RUNNER_TEMP/mathscope-whole-k" "$ORIGINAL_SOURCE_COMMIT" "$ORIGINAL_PREFIX"
       - uses: actions/upload-artifact@v4
