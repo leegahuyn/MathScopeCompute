@@ -59,6 +59,38 @@ theorem whole_k_representative_core_stress {s w r a t : ℝ}
     linarith [Real.add_one_le_exp (t / 128)]
   exact lt_trans hr' (mul_lt_mul_of_pos_left hexp ha)
 
+/-- The fourth selected correction has no support in the outer axial
+transition of the whole-K slab. The normalized bound follows from
+`a4 * qBig ≥ exp 4 > 54` and the original cutoff endpoint at one. -/
+theorem whole_k_fourth_correction_axial_plateau {Q ρ η D : ℝ}
+    (hQ : 0 < Q) (hupper : Q < 16 / 27) (hρ : 1 / 2 ≤ ρ)
+    (hD : 0 < D) (hroot : ρ = Q * (1 - η ^ 2)) :
+    ρ < 16 / 27 ∧ |η * Q ^ D| < 1 / 2 := by
+  have hQ₁ : Q < 1 := by linarith
+  have heta₀ : 0 < 1 - η ^ 2 := by
+    by_contra! h
+    have hprod := mul_nonpos_of_nonneg_of_nonpos hQ.le h
+    linarith
+  have hetaSq : η ^ 2 < 5 / 32 := by
+    have hmul := mul_lt_mul_of_pos_right hupper heta₀
+    linarith
+  have hetaAbs : |η| < 1 / 2 := by
+    by_contra! h
+    have hsq := pow_le_pow_left₀ (show (0 : ℝ) ≤ 1 / 2 by norm_num) h 2
+    rw [sq_abs] at hsq
+    linarith
+  have hpower : Q ^ D < 1 := by
+    simpa only [Real.rpow_zero] using
+      (Real.rpow_lt_rpow_of_exponent_gt hQ hQ₁ hD)
+  have hp : 0 ≤ Q ^ D := Real.rpow_nonneg hQ.le _
+  constructor
+  · have hle := mul_le_mul_of_nonneg_left (show 1 - η ^ 2 ≤ 1 by nlinarith [sq_nonneg η]) hQ.le
+    linarith
+  · rw [abs_mul, abs_of_nonneg hp]
+    calc
+      |η| * Q ^ D ≤ |η| * 1 := mul_le_mul_of_nonneg_left hpower.le (abs_nonneg η)
+      _ < 1 / 2 := by simpa using hetaAbs
+
 /-- Every positive root of the normalized physical chart lies in the
 source bracket on the whole cutoff slab. The root equation is obtained by
 substituting `q = tau0 * Q`, `z = tau0^D * zeta`, `tau = tau0 * rho`,
@@ -291,6 +323,9 @@ theorem whole_k_bottom_strip_selector_margin {qMin w b qRep : ℝ}
     linarith
   exact lt_of_le_of_lt hs (mul_lt_mul_of_pos_left hrep hb)
 
+#print axioms actual_shrinking_log_threshold
+#print axioms whole_k_representative_core_stress
+#print axioms whole_k_fourth_correction_axial_plateau
 #print axioms whole_k_bottom_strip_eta_time
 #print axioms whole_k_time_midpoint_floor
 #print axioms whole_k_bottom_strip_selector_margin
