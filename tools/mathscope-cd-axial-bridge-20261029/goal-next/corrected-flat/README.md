@@ -7,6 +7,30 @@ cycle. The repaired first-Forced check uses GitHub run 43010379487.
 The full corrected check expects the completed artifact and runtime
 receipt from GitHub run 43010593847.
 
+## VERIFIED hosted replay
+
+Run 43010593847 completed successfully. The replay authenticated
+4,456,994 nodes and matched the complete 4,197,115-node repaired
+first-Forced prefix, including its native registry definitions.
+The full receipt SHA-256 is
+2570a6b98bf365e44629c40c4f406a4192b42f63acda67e08e1cd0e101b87181.
+
+| Source check | Actual corrected roots or count |
+| --- | --- |
+| Latest Corollary 8.5 \(\Sigma\) and Signed \(\delta a\) | #4199051/#4199052 and #4199065/#4199066 |
+| Corollary 8.5 raw cutoff | #4197521/#4198320 |
+| Signed mean-pressure \(A_0\) | #4229450 |
+| Temporal native inverses and \(T_1\) cutoff \(A_1\) | #4348626/#4396853 and #4454181 |
+| FiveMap \(\beta,v,\gamma\) increments and refreshed \(A_0\) | #4455175/#4455153/#4455157 and #4455782 |
+| Three direct physical residuals and reference multiplier | #4456772/#4456774/#4456776 and #3859347 |
+| Matched homogeneous leading and Signed pressure rows | 30 leading rows and 10 pressure rows |
+| Fixed palette and harmonic residual | 162 rows, 16 own systems, 13,041 pairs, 100 indexed derivative atoms |
+| Physical angle scope and candidate subtraction | 27 mean roots, 98 additional coefficient leaves, 80 candidate selectors |
+
+The 34, 40, and 40 cross-row quadratic monomials of the three residual
+components remain explicit in the receipt. Their zero-extension
+conditions and the full weighted derivative bounds remain conditional.
+
 ## Repaired input and graph continuity
 
 The historical and repaired first-Forced streams must agree on the
@@ -131,8 +155,7 @@ The axial reconstruction remainder and radial mean cutoff remainders
 on page 110 enter the additive physical mode-zero ledger. These
 citations refer to the 166-page candidate with SHA-256
 0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f.
-The [manuscript provenance](../manuscript-provenance.json) records the
-byte comparison with the uploaded attachment and the public PDF.
+Its byte equivalence to the original upload remains open.
 
 The support of \(\psi'\) lies where \(v/L_s\) is between
 \(1/5\) and \(1/4\), or between \(3/4\) and \(4/5\).

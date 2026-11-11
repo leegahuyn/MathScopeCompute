@@ -91,6 +91,9 @@ jets appearing in the corrected source to a separate proof. The
 repaired first-Forced \(W_\alpha\) seminorm, the full actual
 post-FiveMap derivative joins, and the Signed \(\Sigma\)-to-\(\delta a\)
 weighted derivative estimates need their own matching evidence.
+The companion hosted full-cycle replay now binds the actual Signed
+and post-FiveMap guard branches and coefficient roots. Their
+weighted derivative estimates and boundary jets remain open.
 The scalar shell bound above supplies the implication once those
 estimates are in place.
 
