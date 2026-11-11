@@ -11,7 +11,7 @@ sys.path[:0] = [str(HERE.parent / name) for name in ('cycle', 'corrected-flat')]
 from bind_corrected_flat import (FULL_SCOPE, STREAM,
                                 compare_prefix, same_registry_prefix, verify_manifest)
 from group_replayed_postfive import IndexedGraph
-from verify_repaired_first_force import Exact, PALETTE, PARTS, ZERO, git_blob, read
+from verify_repaired_first_force import Exact, Graph as SourceGraph, PALETTE, PARTS, ZERO, git_blob, read
 
 CANDIDATE_SCOPE = 'POST_FIVE_REPEAT_FORCED_CONDITIONAL_SOURCE'
 CANDIDATE_FILE = 'post-five-repeat-forced-candidate.json'
@@ -25,6 +25,9 @@ FAMILIES = [
 
 
 class Graph(IndexedGraph):
+    children = staticmethod(SourceGraph.children)
+    reach = SourceGraph.reach
+
     def args(self, root, op):
         tag, values = self.node(root)
         assert tag == op, (root, op, tag)
@@ -119,6 +122,34 @@ def verify_inverse(graph, algebra, candidate, previous, old_system, system, sour
     assert candidate['positive']['m'] == m and candidate['negative']['m'] == -m
 
 
+def bind_registered_sources(graph, system, definitions, pullback):
+    """Recover the exact retained-body facade used inside the native projection."""
+    params = [system['variable'], *system['parameters']]
+    reachable = {part: graph.reach([row[part] for row in system['forcing']]) for part in PARTS}
+    wrapped = []
+    for j, row in enumerate(pullback):
+        inputs = {}
+        for part in PARTS:
+            body = row[part]
+            if body == 0:
+                inputs[part] = 0
+                continue
+            matches = []
+            for root in reachable[part]:
+                op, args = graph.node(root)
+                if op != 'm3_coupled_expression_partial':
+                    continue
+                key, actual, orders = args
+                definition = definitions[key]
+                if definition['name'] == f'CoupledForced_source_{j}_{part}' and definition['body'] == body:
+                    assert actual == definition['parameters'] == params
+                    assert orders == [0] * len(params)
+                    matches.append(root)
+            [inputs[part]] = matches
+        wrapped.append(inputs)
+    return wrapped
+
+
 def verify_case(graph, algebra, template, prior_rows, candidate_rows, expected_guards, defs, pulses):
     key = template['key']
     assert key == f"{template['difference']}:{template['sign']}"
@@ -156,11 +187,12 @@ def verify_case(graph, algebra, template, prior_rows, candidate_rows, expected_g
                 assert algebra.of(vals['subtraction']) == sub
                 assert algebra.of(vals['raw']) == algebra.add(algebra.of(vals['supported']), sub)
                 guards += read_guards(graph, vals['guarded'], vals['supported'], expected_guards)
-        source = verify_path_source(graph, row, candidate, previous, defs)
+        pullback = verify_path_source(graph, row, candidate, previous, defs)
+        source = bind_registered_sources(graph, system, defs, pullback)
         verify_inverse(graph, algebra, candidate, previous, pulses[previous['system']], system, source)
         evidence.append({'key': key, 'mode': m, 'system': system['id'],
                          'rawRoots': row['raw'], 'guardedRoots': row['guarded'],
-                         'formalSourceRoots': source, 'guardNodes': guards})
+                         'pathPullbackRoots': pullback, 'formalSourceRoots': source, 'guardNodes': guards})
     return evidence
 
 
