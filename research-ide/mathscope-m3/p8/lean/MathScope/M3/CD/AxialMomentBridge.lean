@@ -199,6 +199,28 @@ theorem eta_interior_moment_two_derivatives_zero
   filter_upwards [isOpen_Ioo.mem_nhds heta] with y hy
   exact hzero y hy
 
+/-- The successive derivatives in the original closed eta interval.
+At its endpoints these use the inward neighborhood. -/
+def etaMomentJet (M : ℝ → ℝ) : ℕ → ℝ → ℝ
+  | 0 => M
+  | k + 1 => derivWithin (etaMomentJet M k) (Icc (-1 : ℝ) 1)
+
+/-- Once the integrated moment is identically zero on the closed eta
+interval, every fixed derivative within it is zero, including at either
+endpoint. Differentiation under the radial integral is a separate premise. -/
+theorem eta_closed_moment_all_jets_zero
+    (M : ℝ → ℝ) (hzero : ∀ eta ∈ Icc (-1 : ℝ) 1, M eta = 0) (k : ℕ) :
+    ∀ eta ∈ Icc (-1 : ℝ) 1, etaMomentJet M k eta = 0 := by
+  induction k with
+  | zero => exact hzero
+  | succ k ih =>
+      intro eta heta
+      have hz : HasDerivWithinAt (fun _ : ℝ => (0 : ℝ)) 0 (Icc (-1 : ℝ) 1) eta :=
+        (hasDerivAt_const eta (0 : ℝ)).hasDerivWithinAt
+      have hd := hz.congr_of_mem ih heta
+      have huniq := (uniqueDiffOn_Icc (by norm_num : (-1 : ℝ) < 1)) eta heta
+      exact hd.derivWithin huniq
+
 /-- Order one uses the leading axial flux; the positive-order induction
 hypothesis alone cannot close this base case. -/
 theorem axial_previous_order_split
@@ -243,6 +265,7 @@ end MathScope.M3.CD
 #print axioms MathScope.M3.CD.axial_outer_value
 #print axioms MathScope.M3.CD.eta_moment_two_derivatives_zero
 #print axioms MathScope.M3.CD.eta_interior_moment_two_derivatives_zero
+#print axioms MathScope.M3.CD.eta_closed_moment_all_jets_zero
 #print axioms MathScope.M3.CD.axial_previous_order_split
 #print axioms MathScope.M3.CD.omitted_pressure_boundary_countermodel
 #print axioms MathScope.M3.CD.pointwise_zero_is_insufficient
