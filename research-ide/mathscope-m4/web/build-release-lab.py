@@ -1,5 +1,5 @@
 """Add the release lab to the observed v103 without rewriting unrelated bytes."""
-import argparse, hashlib, json, re
+import argparse, hashlib, json, re, subprocess
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -7,7 +7,7 @@ ROOT = HERE.parents[1]
 
 def sha(x): return hashlib.sha256(x.encode()).hexdigest()
 
-def build(observed, catalog, verification, kernel, source_refinement=None):
+def build(observed, catalog, verification, kernel, source_refinement=None, formal_claims=None):
     if 'id="ms-r1-lab"' in observed: raise ValueError('Already installed: use an owned replacement')
     candidate, patches, bridges = observed, [], []
     def patch(find, replacement):
@@ -26,12 +26,19 @@ def build(observed, catalog, verification, kernel, source_refinement=None):
             bridges.append(dict(sourcePath=path.relative_to(ROOT.parent).as_posix(),sourceSHA256=hashlib.sha256(raw).hexdigest(),find=find,replace=replacement,scope='Additive release engine constructor and input normalization; computation source and Worker bytes unchanged'))
     style='<style id="ms-r1-style">'+(HERE/'release-lab.css').read_text(encoding='utf-8')+'</style>\n'
     html=(HERE/'release-lab.html').read_text(encoding='utf-8')
+    if formal_claims is not None:
+        start, close, end = html.rpartition('</section>')
+        if not close: raise ValueError('Release-lab section is missing')
+        html = start + (HERE/'formal-claim-view.html').read_text(encoding='utf-8') + close + end
     find='<div class="ms-m4-tools">'
     patch(find,style+html+'\n'+find)
     runtime=(ROOT/'mathscope-m4/release-lab/runtime.mjs').read_text(encoding='utf-8').replace('export function createReleaseLab','function createReleaseLab')
     script=runtime+'\n'+(HERE/'release-lab.js').read_text(encoding='utf-8')
     boundaries=json.loads((HERE.parent/'research-boundaries.json').read_bytes())
     model_object=dict(catalog=catalog,verification=verification,kernel=kernel,sourceRefinement=source_refinement,researchBoundaries=boundaries)
+    if formal_claims is not None:
+        model_object['formalClaims'] = formal_claims
+        script += '\n' + (HERE/'formal-claim-view.js').read_text(encoding='utf-8')
     model=json.dumps(model_object,ensure_ascii=False,separators=(',',':')).replace('<','\\u003c')
     if json.loads(model)!=model_object:raise ValueError('Inline model changed its mathematical values')
     addon='<script id="ms-r1-data" type="application/json">'+model+'</script>\n<script id="ms-r1-js">\n'+re.sub('</script',r'<\\/script',script,flags=re.I)+'\n</script>\n'
@@ -47,7 +54,8 @@ if __name__=='__main__':
     verification=json.loads(args.verification.read_text(encoding='utf-8'))
     if verification.get('pass') is not True: raise ValueError('Fixture verification did not pass')
     kernel=json.loads(args.kernel.read_text(encoding='utf-8'));refinement=json.loads(args.refinement.read_text(encoding='utf-8')) if args.refinement else None
-    patches,candidate,manifest=build(args.baseline.read_bytes().decode('utf-8'),catalog,verification,kernel,refinement)
+    formal_claims=json.loads(subprocess.check_output(['node', str(HERE/'formal-claim-view.mjs')]))
+    patches,candidate,manifest=build(args.baseline.read_bytes().decode('utf-8'),catalog,verification,kernel,refinement,formal_claims)
     args.out.mkdir(parents=True,exist_ok=True)
     (args.out/'patches.json').write_text(json.dumps(patches,ensure_ascii=False),encoding='utf-8')
     (args.out/'candidate.html').write_bytes(candidate.encode('utf-8'))
