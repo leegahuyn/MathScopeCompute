@@ -22,3 +22,13 @@ node "$range/collect_reachable.mjs" inputs/graph inputs/producer/source-profile-
 python "$bridge/goal-next/y/check_reference_source.py" --repo $repo --graph inputs/graph --profile inputs/producer/source-profile-data.mjs --y-replay $range --out verified-reference.json
 python "$bridge/goal-next/cycle/group_postfive_residual.py" --reached "$range/reached.json" --registry inputs/graph/original-source-functions.json --graph inputs/graph/original-source-nodes.jsonl.gz --output verified-postfive.json
 ```
+
+The wider Y replay can use the four archived inputs directly.
+
+```powershell
+python "$bridge/goal-next/y-wider/check_wider_y.py" --repo $repo --graph inputs/graph --profile inputs/producer/source-profile-data.mjs --y-replay inputs/original-y-replay --out verified-wider-y.json
+```
+
+The [nonzero principal residual replay](first-force-repair/PROP91_93_FLAT_LEDGER.md)
+uses the two hosted graphs, the pinned paper under `inputs/paper` and
+`inputs/final-functionals/ACTUAL_RECURSIVE_SOURCE_FUNCTIONALS.json`.

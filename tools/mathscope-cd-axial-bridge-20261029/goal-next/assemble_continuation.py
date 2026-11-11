@@ -10,6 +10,13 @@ import zipfile
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("--workspace", type=Path, default=Path.cwd())
 parser.add_argument("--checkpoint", default="Continuation")
+parser.add_argument("--corrected-first-artifact", type=Path)
+parser.add_argument("--corrected-cycle-artifact", type=Path)
+parser.add_argument("--n2-artifact", type=Path)
+parser.add_argument("--isolated-candidate", type=Path)
+parser.add_argument("--second-candidate-artifact", type=Path)
+parser.add_argument("--y-replay-dir", type=Path)
+parser.add_argument("--final-functionals", type=Path)
 args = parser.parse_args()
 TASK = args.workspace.resolve()
 REPO = TASK / "work/MathScopeCompute-CD"
@@ -22,8 +29,20 @@ AUDITOR = "research-ide/mathscope-m4/acceptance.mjs"
 EXTRAS = [
     AUDITOR, ".github/workflows/mathscope-m4-generated-jobs.yml",
     ".github/workflows/mathscope-cd-axial-bridge-20261029.yml",
+    ".github/workflows/mathscope-corrected-first-force.yml",
+    ".github/workflows/mathscope-corrected-first-cycle.yml",
+    ".github/workflows/mathscope-second-forced-candidates.yml",
+    ".github/workflows/mathscope-original-axial-n2.yml",
+    ".github/workflows/mathscope-primary-order2.yml",
+    "research-ide/mathscope-m3/p8/lean/MathScope/M3/CD/AxialMomentBridge.lean",
     "research-ide/mathscope-m3/p8/lean/MathScope/M3/CD/ReferenceIngress.lean",
     "research-ide/mathscope-m3/p8/lean/MathScope/M3/CD/PulseCutoff.lean",
+    "research-ide/mathscope-m3/p8/lean/MathScope/M3/CD/NextPulse.lean",
+    "research-ide/mathscope-m3/p8/lean/MathScope/M3/CD/CycleOrders.lean",
+    "research-ide/mathscope-m3/navier/source-initialized-angular.mjs",
+    "research-ide/mathscope-m3/navier/source-global-forced-current.mjs",
+    "research-ide/mathscope-m3/post-signed-20261023/source-postfive-repeat-forced.mjs",
+    "research-ide/mathscope-m3/post-signed-20261023/source-postfive-repeat-forced.test.mjs",
     "research-ide/mathscope-m4/research-boundaries.json",
     "research-ide/mathscope-m4/formal-claims.mjs",
     "research-ide/mathscope-m4/release-lab/catalog.json",
@@ -81,6 +100,105 @@ with zipfile.ZipFile(DEST, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=
 
     report = git("show", commit + ":" + CURRENT + "/REPORT_KO.md")
     status = git("show", commit + ":" + CURRENT + "/STATUS.json")
+    if args.corrected_first_artifact:
+        artifact = args.corrected_first_artifact.resolve()
+        run = json.loads((artifact / "corrected-first-forced-run.json").read_bytes())
+        graph = artifact / "corrected-first-forced-graph"
+        manifest = json.loads((graph / "original-source-export-manifest.json").read_bytes())
+        replay = json.loads(git("show", commit + ":" + CURRENT +
+            "/first-force-repair/independent-repaired-first-force.json"))
+        assert run["status"] == "CORRECTED_FIRST_FORCE_VERIFIED"
+        assert manifest["scope"] == "REPAIRED_FIRST_FORCED_ONLY"
+        assert manifest["executing_commit"] == run["executing_commit"]
+        assert replay["snapshot"] == manifest and replay["positiveSystems"] == 20
+        assert replay["exactComplexSourceComponents"] == 120
+        assert run["real_original_forced_seal_issued"] is True
+        assert json.loads(status)["secondCycle"]["correctedFirstForced"]["status"] == "VERIFIED"
+        assert manifest["actual_final_67_jets_certified"] == 0
+        for relative in ("corrected-first-forced-run.json",
+            "corrected-first-forced-graph/corrected-first-force.json",
+            "corrected-first-forced-graph/original-source-export-manifest.json",
+            "corrected-first-forced-graph/original-source-functions.json",
+            "corrected-first-forced-graph/original-source-nodes.jsonl.gz"):
+            add("inputs/corrected-first-forced/" + relative, (artifact / relative).read_bytes())
+    if args.corrected_cycle_artifact:
+        artifact = args.corrected_cycle_artifact.resolve()
+        run = json.loads((artifact / "corrected-first-cycle-run.json").read_bytes())
+        graph = artifact / "corrected-first-cycle-graph"
+        manifest = json.loads((graph / "original-source-export-manifest.json").read_bytes())
+        audit = json.loads(git("show", commit + ":" + CURRENT +
+            "/corrected-flat/corrected-cycle-ledger.json"))["correctedFullCycle"]
+        assert run["post_five_full_three_dimensional_PDE_AST_checked"] is True
+        assert run["first_fivemap_graph_exported"] is True
+        assert manifest["scope"] == "CORRECTED_FIRST_POST_SIGNED_FIVEMAP_3D_DIRECT_SPLIT"
+        assert manifest["node_stream_sha256"] == audit["graphSHA256"]
+        assert audit["verifiedHostedRun"]["conclusion"] == "success"
+        assert manifest["actual_final_67_jets_certified"] == 0
+        for relative in ("corrected-first-cycle-run.json",
+            "corrected-first-cycle-graph/original-source-export-manifest.json",
+            "corrected-first-cycle-graph/original-source-functions.json",
+            "corrected-first-cycle-graph/original-source-nodes.jsonl.gz"):
+            add("inputs/corrected-first-cycle/" + relative, (artifact / relative).read_bytes())
+    if args.n2_artifact:
+        artifact = args.n2_artifact.resolve()
+        run = json.loads((artifact / "original-n2-prefix.json").read_bytes())
+        graph = artifact / "original-n2-current-pressure-graph"
+        manifest = json.loads((graph / "original-source-export-manifest.json").read_bytes())
+        domains = json.loads(git("show", commit + ":" + CURRENT + "/axial-recursion/n2-order-one-faces.json"))
+        selector = json.loads(git("show", commit + ":" + CURRENT + "/axial-recursion/n2-selector-readback.json"))
+        assert run["snapshot"] == manifest and run["currentStage"] == "COMPLETE"
+        assert manifest["scope"] == "ORIGINAL_N2_CURRENT_PRESSURE_PREFIX"
+        assert selector["executingCommit"] == manifest["executing_commit"]
+        assert run["selector"]["rows"][2]["order"] == 3 and len(run["selector"]["rows"][2]["constraints"]) == 20
+        assert manifest["node_stream_sha256"] == domains["graphSHA256"]
+        assert len(domains["reachableDescriptors"]) == 18 and len(domains["binderSiteMaps"]) == 12
+        assert manifest["actual_final_67_jets_certified"] == 0
+        for relative in ("original-n2-prefix.json",
+            "original-n2-current-pressure-graph/original-source-export-manifest.json",
+            "original-n2-current-pressure-graph/original-source-functions.json",
+            "original-n2-current-pressure-graph/original-source-nodes.jsonl.gz"):
+            add("inputs/original-axial-n2/" + relative, (artifact / relative).read_bytes())
+    if args.isolated_candidate:
+        candidate = args.isolated_candidate.read_bytes()
+        current = json.loads(status)["M4"]["publicReadback"]
+        assert len(candidate) == 28_928_002 and digest(candidate) == current["candidateHTMLSHA256"]
+        add("inputs/m4-r108-isolated-candidate/candidate.html", candidate)
+    if args.second_candidate_artifact:
+        artifact = args.second_candidate_artifact.resolve()
+        graph = artifact / "post-five-repeat-forced-graph"
+        metadata = json.loads((artifact / "github-run-43015175416.json").read_bytes())
+        candidate = json.loads((graph / "post-five-repeat-forced-candidate.json").read_bytes())
+        manifest = json.loads((graph / "original-source-export-manifest.json").read_bytes())
+        audit = json.loads(git("show", commit + ":" + CURRENT +
+            "/first-force-repair/independent-second-forced-candidates.json"))
+        assert metadata["databaseId"] == audit["run"] == 43015175416
+        assert metadata["status"] == "completed" and metadata["conclusion"] == "success"
+        assert metadata["headSha"] == candidate["commit"] == manifest["executing_commit"] == audit["commit"]
+        assert candidate["snapshot"] == manifest and manifest["node_stream_sha256"] == audit["graphSHA256"]
+        assert candidate["registeredPositiveSystems"] == len(audit["systems"]) == 40
+        assert candidate["scope"]["completeSecondForcedState"] is False
+        assert audit["checkedRealAndImaginaryCoefficients"] == 240 and audit["finalJets"] == 0
+        for relative in ("github-run-43015175416.json", "repeat-forced-controls.tap",
+            "post-five-repeat-forced-graph/original-source-export-manifest.json",
+            "post-five-repeat-forced-graph/original-source-functions.json",
+            "post-five-repeat-forced-graph/original-source-nodes.jsonl.gz",
+            "post-five-repeat-forced-graph/post-five-repeat-forced-candidate.json"):
+            add("inputs/second-forced-candidates/" + relative, (artifact / relative).read_bytes())
+    if args.y_replay_dir:
+        sources = {
+            "reached.json": "5ee0e602a74cbcf766f574ca94f829b7e9e23f5d64d66b6a8197400166ece459",
+            "range-flow-no-bracket.json": "f1e4832fe0540da6fb8d6f3b27ccb1112b54ad0232d653230232b2d49d9e1e55",
+            "range-flow-transport.json": "124b2741bc0ab7f16b230e35de639cd434d45b3a7d88294f6b214c180c5ce7bf",
+            "reference-inverse-paths.json": "217d2bc9b3e212b947a5dc1e65206924c7c32653bfb320f83acb242e7e563e68",
+        }
+        for name, expected in sources.items():
+            data = (args.y_replay_dir / name).read_bytes()
+            assert digest(data) == expected, name
+            add("inputs/original-y-replay/" + name, data)
+    if args.final_functionals:
+        data = args.final_functionals.read_bytes()
+        assert digest(data) == "b8c2ce18ebdefd2875e83e5f824eb71f77f1c9b7510170d225efce739360bb78"
+        add("inputs/final-functionals/ACTUAL_RECURSIVE_SOURCE_FUNCTIONALS.json", data)
     add("REPORT_KO.md", report)
     add("STATUS.json", status)
     target.writestr("SHA256.json", encode(sha_manifest))

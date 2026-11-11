@@ -71,9 +71,11 @@ preceding original residual for that row after removal of this
 reference multiplier. The stencil readback supplies a zero neighborhood
 for the inactive rows on the valid local chart. In a region where the
 remaining row has the required ordinary derivatives, every
-cross-row term has an identically zero factor. Establishing those
-derivatives at all support seams, the complete flat source
-decomposition, and the actual uniform supported \(F[1]\) remain open.
+cross-row term has an identically zero factor. The
+[principal flat ledger](PROP91_93_FLAT_LEDGER.md) identifies the
+nonzero cutoff terms. Actual derivative gluing at all support seams,
+the mode-zero flat bounds in \(F[1]\), and the uniform weighted
+bounds for the supported \(G[1]\) remain open.
 
 ## Replay
 

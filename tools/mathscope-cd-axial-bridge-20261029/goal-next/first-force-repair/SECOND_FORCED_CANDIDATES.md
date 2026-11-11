@@ -60,9 +60,11 @@ because its factor \(\psi'\) is zero.
 The [fixed-row raw projection](RAW_FIXED_ROW_PROJECTION.md)
 independently matches the actual wave-dependent reference residual
 and the 240 live raw coefficients on the admitted ordinary derivative
-domain. The complete \(F[1]\), equality of the guarded and
-unclipped source across all seams, and uniform derivative and support
-bounds remain open.
+domain. The [principal flat ledger](PROP91_93_FLAT_LEDGER.md) and
+[Gaussian tail proof](GAUSSIAN_TAILS.md) check the nonzero cutoff
+terms. The mode-zero \(F[1]\) bounds, equality of the guarded and
+unclipped \(G[1]\) across all seams, and its uniform derivative
+and support bounds remain open.
 
 Run the checks with the extracted, exact GitHub graph directories
 and the checkout of the verification branch.
