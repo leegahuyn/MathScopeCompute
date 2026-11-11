@@ -1,0 +1,49 @@
+name: MathScope original axial N2 prefix
+on:
+  push:
+    branches: [mathscope-cd-axial-source-bridge-20261029]
+    paths:
+      - '.github/workflows/mathscope-original-axial-n2.yml'
+      - 'tools/mathscope-cd-axial-bridge-20261029/goal-next/axial-recursion/replay_original_n2_prefix.mjs'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  original-axial-n2:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 75
+    env:
+      NODE_OPTIONS: --max-old-space-size=6100
+      ORIGINAL_SOURCE_COMMIT: f8cb4034e86d7b669d52a6f2248aebba156b51b5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: evidence
+          persist-credentials: false
+          sparse-checkout: tools/mathscope-cd-axial-bridge-20261029/goal-next/axial-recursion
+      - uses: actions/checkout@v4
+        with:
+          ref: f8cb4034e86d7b669d52a6f2248aebba156b51b5
+          path: original
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Run the original selector and physical current prefix
+        working-directory: original
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$ORIGINAL_SOURCE_COMMIT"
+          git diff --exit-code
+          script=replay_original_n2_prefix.mjs
+          target="research-ide/mathscope-m3/extended-signed-run-20261023/$script"
+          cp "../evidence/tools/mathscope-cd-axial-bridge-20261029/goal-next/axial-recursion/$script" "$target"
+          node --check "$target"
+          node --expose-gc "$target" "$RUNNER_TEMP/mathscope-original-n2" "$ORIGINAL_SOURCE_COMMIT"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mathscope-original-axial-n2
+          path: ${{ runner.temp }}/mathscope-original-n2/**
+          if-no-files-found: warn
+          retention-days: 30
