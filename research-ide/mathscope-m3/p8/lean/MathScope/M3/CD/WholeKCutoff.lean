@@ -106,6 +106,25 @@ theorem whole_k_narrow_q_window_obstruction {Q a alpha : ℝ}
       simpa only [Real.rpow_one] using
         (Real.rpow_lt_rpow_of_exponent_gt hQ (show Q < 1 by linarith) halpha)
     linarith
+
+/-- At viscosity one, the full outer cutoff on an angle-independent
+heat swirl leaves the displayed time, Laplacian and pressure terms.
+The inputs are the cylindrical product-rule terms in the exterior. -/
+theorem whole_k_heat_exterior_cutoff_force
+    (C Ct Cr Cz lapC K Kr Kt lapK p pr r : ℝ)
+    (heat : Kt = lapK) (centrifugal : pr = K ^ 2 / r) :
+    (Ct * K + C * Kt - (lapC * K + 2 * Cr * Kr + C * lapK),
+      -(C * K) ^ 2 / r + Cr * p + C * pr, Cz * p) =
+    ((Ct - lapC) * K - 2 * Cr * Kr,
+      C * (1 - C) * K ^ 2 / r + Cr * p, Cz * p) := by
+  rw [heat, centrifugal]
+  apply Prod.ext
+  · dsimp
+    ring
+  · apply Prod.ext
+    · dsimp
+      ring
+    · rfl
   have heSquare : (Real.exp (1 / 2)) ^ (2 : ℕ) = Real.exp 1 := by
     rw [pow_two, ← Real.exp_add]
     norm_num
@@ -122,5 +141,6 @@ theorem whole_k_narrow_q_window_obstruction {Q a alpha : ℝ}
 #print axioms whole_k_correction_cutoff_argument
 #print axioms whole_k_background_cutoff_argument
 #print axioms whole_k_narrow_q_window_obstruction
+#print axioms whole_k_heat_exterior_cutoff_force
 
 end MathScope.M3.CD
