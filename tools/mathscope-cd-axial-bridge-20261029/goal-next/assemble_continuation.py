@@ -1,5 +1,6 @@
 """Archive the current branch and verify both evidence checkpoints."""
 import argparse
+import gzip
 import hashlib
 import json
 from pathlib import Path
@@ -24,6 +25,8 @@ parser.add_argument("--primary-order2-artifact", type=Path)
 parser.add_argument("--whole-k-n0-artifact", type=Path)
 parser.add_argument("--core-runtime", type=Path)
 parser.add_argument("--diagonal-n2-artifact", type=Path)
+parser.add_argument("--diagonal-n3-artifact", type=Path)
+parser.add_argument("--diagonal-n4-artifact", type=Path)
 parser.add_argument("--n2-y-reached", type=Path)
 parser.add_argument("--historical-scale-input", type=Path)
 args = parser.parse_args()
@@ -315,7 +318,6 @@ with zipfile.ZipFile(DEST, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=
         original = selector_base + suffix
         data = git("show", selector_receipt["originalCommit"] + ":" + original)
         if suffix.endswith(".gz"):
-            import gzip
             check = gzip.decompress(data)
         else:
             check = data
@@ -341,10 +343,56 @@ with zipfile.ZipFile(DEST, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=
                 (graph / name).read_bytes())
         for name in ("original-whole-k-prefix.json", "diagonal-overlay.json"):
             add("inputs/original-axial-n2-diagonal/" + name, (artifact / name).read_bytes())
+    for prefix, artifact_arg in ((3, args.diagonal_n3_artifact), (4, args.diagonal_n4_artifact)):
+        if artifact_arg is None:
+            continue
+        artifact = artifact_arg.resolve()
+        run = json.loads((artifact / "original-whole-k-prefix.json").read_bytes())
+        evidence_path = commit + ":" + CURRENT + f"/whole-k-atlas/diagonal-n{prefix}/"
+        audit = json.loads(git("show", evidence_path + "independent-hosted-prefix.json"))
+        comparison = json.loads(git("show", evidence_path + f"common-n{prefix-1}-n{prefix}.json"))
+        assert run["currentStage"] == "COMPLETE" and run["requestedPrefix"] == prefix
+        assert audit["executingCommit"] == run["executingCommit"] == comparison["rightExecutingCommit"]
+        expected_clauses = {3: 43, 4: 68}[prefix]
+        assert comparison["matchedClauses"] == expected_clauses
+        assert comparison["typedExpressionPairs"] == 2*expected_clauses
+        snapshots = [("snapshot", "currentPressure", "original-whole-k-current-pressure-graph")]
+        if prefix == 3:
+            snapshots.append(("bandSnapshot", "band", "original-whole-k-selector-band-graph"))
+            assert audit["literalBandPrefixRecords"] == run["bandSnapshot"]["node_count"] == 2088092
+        for receipt_key, audit_key, directory in snapshots:
+            graph = artifact / directory
+            manifest = json.loads((graph / "original-source-export-manifest.json").read_bytes())
+            assert manifest == run[receipt_key] == audit[audit_key]
+            assert manifest["actual_final_67_jets_certified"] == 0
+            assert digest((graph / "original-source-functions.json").read_bytes()) == manifest["definitions_sha256"]
+            node_digest = hashlib.sha256()
+            with gzip.open(graph / "original-source-nodes.jsonl.gz", "rb") as stream:
+                for block in iter(lambda: stream.read(1 << 20), b""):
+                    node_digest.update(block)
+            assert node_digest.hexdigest() == manifest["node_stream_sha256"]
+            for name in ("original-source-export-manifest.json", "original-source-functions.json",
+                         "original-source-nodes.jsonl.gz"):
+                add(f"inputs/original-whole-k-n{prefix}-diagonal/{directory}/{name}", (graph / name).read_bytes())
+        assert comparison["nodeSHA256"][1] == run["snapshot"]["node_stream_sha256"]
+        names = ["original-whole-k-prefix.json", "diagonal-overlay.json", "band-budget-overlay.json"]
+        if prefix == 4:
+            names.append("graph-copy-budget-overlay.json")
+        for name in names:
+            add(f"inputs/original-whole-k-n{prefix}-diagonal/" + name, (artifact / name).read_bytes())
     if args.n2_y_reached:
         data = args.n2_y_reached.read_bytes()
         assert digest(data) == "4779b42d41b9ef8f54484744860f2c6f3da4bde19d5e01bab9af704699f3ee32"
         add("inputs/original-axial-n2/y-reached.json", data)
+        guards = json.loads(git("show", commit + ":" + CURRENT + "/y-n2-lexical/original-source-guards.json"))
+        for path, expected in guards["verifiedBlobsSHA256"].items():
+            raw = git("show", guards["sourceCommit"] + ":" + path)
+            assert digest(raw) == expected
+            name = "inputs/original-core-runtime/" + path
+            if name in sha_manifest:
+                assert sha_manifest[name]["sha256"] == expected
+            else:
+                add(name, raw)
     if args.historical_scale_input:
         data = args.historical_scale_input.read_bytes()
         historical = json.loads(git("show", commit + ":" + CURRENT +

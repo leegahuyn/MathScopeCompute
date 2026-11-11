@@ -1,4 +1,4 @@
-# MathScope 원본 축방향 결속과 보정 첫 cycle 검증
+# MathScope 원본 전체 K 현재장과 환형 보정 검증
 
 | 항목 | 판정 | 검증 범위 |
 | --- | --- | --- |
@@ -12,12 +12,17 @@
 
 ## 현재 이어진 전체장 검증
 
+- **VERIFIED · 원본 현재장과 압력 재생.** GitHub에서 \(N=3\) 3,914,395개 노드와 \(N=4\) 7,358,162개 노드까지 통과했다. 전체 그래프와 native 정의의 해시를 독립 검사했다. 인접 차수에서 공통 selector 조건 43개와 68개의 상계·로그 루트 86개와 136개가 각각 일치했다. [N=3 GitHub](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43057719849) · [N=4 GitHub](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43055678022) · [재현 코드와 범위](whole-k-atlas/diagonal-n3/README.md).
+- **VERIFIED · 환형 초기장 결속.** 초기장 원본 3,615,866개 노드와 해당 native 정의가 보정 GitHub 그래프에 그대로 남아 있다. 실제 초기 압력 #3859821은 배경 #622935, 평균 #3615361, 162행 각도 성분 #3674937의 합이다. **CONDITIONAL** 초기 \(A_0,B_0,p_0\)를 67개 물리 미분 항목으로 옮기는 계수와 원래 가우스 경계 가중치의 상계를 계산했다. 현재 평균장 노름 경로에는 동일 원본 가중 표적 C16, 주파동 포텐셜 C3 경로에는 배경 C6과 가중 표적 C4가 필요하다. [초기장 재현](whole-k-annular-initial/README.md).
+- **VERIFIED · 네 번째 보정의 지지.** \(a_4q_{\mathrm{Big}}\ge e^4>54\)를 이용해 네 번째 보정의 지지를 \(\rho<16/27\)과 \(|z/z_0|<1/2\)로 제한했다. 이 차수는 전체 \(K\) 외력에서 바깥 축방향 cutoff의 포텐셜 교차항을 만들지 않는다. \(N=4\) 대표점의 좁은 예외 영역에서는 실제 점과 frozen 대표점의 양의 차수 느린 응력이 모두 정확히 0이다. 관련 정리 세 개가 GitHub에서 Lean 4.34.1로 통과했다. [cutoff와 외력 상계](final67/CUT_CORRECTION_TAIL.md) · [대표점 독립 검사](whole-k-selector-scales/n4-both-core-stresses.json) · [GitHub Lean](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43061583665).
+- **CONDITIONAL · 외력 꼬리.** 실제 가중 소스 클래스가 성립하면 원래 \(a_j\)가 보정 \(j\ge2\)의 속도·압력 2차까지 직접 제한한다. 그 상계를 외력·에너지·소산·일·힘 제곱의 오차식으로 옮겼다. 첫 보정의 실제 속도 2차, 첫 세 단계의 축방향 전이 구간 및 최종 67개 포텐셜·방위각·압력 jet의 값 구간은 열려 있다. [원본 cutoff 상계 11개](final67/cut-correction-tail.json).
+- **VERIFIED · 공통 스케일 피연산자.** \(b_2,b_3\)의 상위 FTC 10개 조건에 대해 실제 상계와 요구 로그 20개 원본 식을 재구성해 대조했다. 동일 원본 \(n\le3\)의 8차까지 도함수 상계를 이용한 명시적 양의 상계도 만들었다. \(b_2\)의 정규화 압력 조건은 방향 반올림으로 실제 성장 하한보다 작음을 확인했다. 나머지 아홉 수치 비교는 OPEN이다. [실제 FTC 식과 상계](whole-k-selector-scales/higher-ftc/HIGHER_FTC_SOURCE_UPPER_COMPARISON.md) · [\(b_2\) 압력 비교](whole-k-selector-scales/higher-ftc/higher-ftc-pressure-n2-verified.json).
 - **VERIFIED · 원본 정리 적용 범위** 축을 포함한 전체 안쪽 \(0\le X\le X_a\)와 전체 열 외부 \(X\ge X_b\)에서 각각 67개 원본 jet을 유한 구간으로 감쌌다. 안쪽에서는 \(A_z\) 관련 19개가 정확히 0이고, 실제 축 위에는 전체장 입력 47개의 정확한 0이 있다. 열 외부에서는 60개가 정확히 0이다. 양쪽 영역 모두 실제 축방향 cutoff를 포함한 외력, 운동에너지, 소산, 일과 외력 제곱 적분의 상계를 얻었다. 원본 노름과 진폭은 정확한 양의 인수다. [안쪽 jet](whole-k-inner-axis/README.md) · [외력 결속](whole-k-core-force/README.md) · [열 외부](whole-k-exterior/geometric-heat-exterior.json).
 - **VERIFIED · 느린 배경장** 환형 \(X_a\le X\le X_b\)에서도 느린 배경의 원본 jet 67개와 해당 외력식을 결속했다. **OPEN** 초기화와 활성 파동·평균 보정을 동일한 최종장에 더하는 항 및 그 상계가 남아 있다. [환형 느린 배경](whole-k-annular-slow/README.md) · [외력 차이 식](whole-k-core-force/annular-slow-force-energy.json).
 - **VERIFIED · GitHub와 독립 소스 비교** 필요한 미분만 생성한 \(N=2\) 재생은 2,326,849개 노드에서 전체 압력까지 통과했다. 원래 2,852,905개 노드 그래프와 비교해 selector 조건 43개, 실제 상계·로그 86개 루트, 대표 대역 피연산자 5개가 일치했다. 적분 binder와 native 호출을 함께 대조했고 교환·결합법칙의 적용을 기록했다. [GitHub 재생](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43055678022) · [독립 비교](whole-k-atlas/diagonal-n2/diagonal-n2-comparison.json).
 - **VERIFIED · GitHub Lean** 맨 아래 시간·축방향 구간, 실제 대표점 시간 중점, 빠진 차수의 scale 여유를 잇는 정리 3개가 통과했다. 실제 원본 대표점에서 고차 창의 필요성이 남는 영역은 \(\delta=25/(16(\ell_{\min}+16)^6)\) 폭의 좁은 구간 안에 있다. **CONDITIONAL** 실제 \(b_4q_{\rm Big}\ge64/(1-w)\), \(w=3/[4(\ell_{\min}+16)^6]\)이면 그 구간도 \(N\le3\)으로 덮인다. [Lean 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43056871435) · [원본 대표점과 면적](whole-k-selector-scales/n4-bottom-strip.json). 실제 대표점 실패 가능성은 더 좁은 \(q/q_{\min}<1+w,\ X_a<X<X_a(1+w)<X_-\)에 들어간다. 이 영역의 양의 차수 느린 응력은 원본 Picard 항등식으로 0이다. 역사적 \(c_1,c_2,c_3\) 로그도 공통 성장 하한보다 작음을 확인했다. [내부 환형 폭](whole-k-selector-scales/n4-inner-shell.json) · [역사적 스케일](whole-k-selector-scales/historical-scale-arithmetic-result.json).
 - **CONDITIONAL · Y 원본 인자** \(N=2\)의 반경 호출 610개를 원본 적분 변수 182개에 결속했다. \(\eta\) 인자 전달 4,312개는 모두 원래 \([-1,1]\) 적분에 결속됐다. 실제 원본 역함수의 \(\eta^2=1-T/s\)와 행별 스케일 변환을 검사했다. 남은 조건은 활성 행마다 실제 역함수 정의역과 미분 치환을 연결하는 일이다. [반경 인자](y-n2-domain/README.md) · [축방향 인자](y-n2-eta/README.md).
-- **OPEN · 원본 실행 병목** 이전 \(N=3\)은 현재장 4,083,120개 노드까지 인증했고 압력 단계에서 메모리 한도에 도달했다. 필요한 미분만 생성하는 새 \(N=3\) 실행은 대역을 먼저 저장한다. 동일 원본의 C5 Primary–Forced 결속도 측정한 메모리 여유 안에서 재시도 중이다. [N=3 재실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43057719849) · [같은 원본 결속](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43057392190).
+- **CONDITIONAL · 원본 Y 재귀 범위.** 실제 \([0,X]\) 적분 다섯 개의 70,518개 선행 노드는 유한 DAG다. 원본 캡처 회피 치환과 binder를 검사했다. 595개 전달은 binder를 끈 대조에서 전부 실패했다. 원본 활성 guard를 보존하는 1,215행의 스케일 이동은 유효한 기준 역상에서 같은 \(\eta\)와 지역 역함수 구간을 보존한다. 물리 기준 역상 전체와 경계 미분은 OPEN이다. [재귀 범위와 재현](y-n2-lexical/README.md).
 
 ## 이전 검증에서 좁힌 범위
 

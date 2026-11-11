@@ -1,0 +1,23 @@
+import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
+import {readFile} from 'node:fs/promises';
+import {resolve} from 'node:path';
+import {pathToFileURL} from 'node:url';
+const dir=pathToFileURL(resolve(process.env.MATHSCOPE_ORIGINAL_RUNTIME,
+  'research-ide/mathscope-m2/navier')+'/');
+for(const [name,sha] of [['actual-continuation-exact-functions.mjs','326b94ad5d9dc0b4bfda83a53edb7da06ed4ca30506e1ff952f77a0e59676311'],['actual-global-source-expressions.mjs','cd0b5900bba330c5d960bddd84bb695dd275094302dd9bc3cc5fcfee533895a3']]) assert.equal(createHash('sha256').update(await readFile(new URL(name,dir))).digest('hex'),sha);
+const {ActualConvergentExpressions}=await import(new URL('actual-continuation-exact-functions.mjs',dir));
+const G=new ActualConvergentExpressions();
+const X=G.fresh('source_frame_X'), eta=G.fresh('source_frame_eta'), t=G.fresh('source_frame_t');
+const sid=G.defineExpressionFunction({name:'simultaneous_argument_swap',parameters:[X,eta],body:G.sub(X,eta),derivativeLimits:[1,1]});
+assert.equal(G.materializeExpressionFunction(sid,[eta,X],[0,0]),G.sub(eta,X));
+const body=G.integral(G.exp(G.mul(X,t)),t,G.zero,G.one);
+const id=G.defineExpressionFunction({name:'capture_avoidance',parameters:[X],body,derivativeLimits:[1]});
+const value=G.materializeExpressionFunction(id,[t],[0]);
+assert.equal(G.nodes[value].op,'definite_integral');
+const [newBody,newBinder,left,right]=G.nodes[value].args;
+assert.notEqual(newBinder,t);assert.equal(left,G.zero);assert.equal(right,G.one);
+assert.deepEqual([...G.freeCoordinates(value)],[t]);
+assert.equal(newBody,G.exp(G.mul(t,newBinder)));
+const tzero=G.materializeExpressionFunction(id,[G.zero],[0]);assert.equal(tzero,G.one);
+console.log(JSON.stringify({status:'PASS',nodes:G.nodes.length,swapCorrect:true,integralBinderAlphaRenamed:true,freeCallerPreserved:true,zeroBranch:true,scope:'synthetic regression of original source implementation, not full native domain proof'}));

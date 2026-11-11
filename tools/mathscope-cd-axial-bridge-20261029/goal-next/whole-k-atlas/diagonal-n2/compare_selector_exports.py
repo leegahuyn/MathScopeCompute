@@ -38,8 +38,14 @@ def require(condition, reason):
 
 
 class Export:
-    def __init__(self, path, stack):
-        [self.graph] = path.rglob('original-source-nodes.jsonl.gz')
+    def __init__(self, path, stack, *, band=False):
+        if band:
+            graph_path = path/'original-whole-k-selector-band-graph'
+        elif (path/'original-whole-k-current-pressure-graph').is_dir():
+            graph_path = path/'original-whole-k-current-pressure-graph'
+        else:
+            graph_path = path
+        [self.graph] = graph_path.rglob('original-source-nodes.jsonl.gz')
         receipt_candidates = [p for p in (path/'original-n2-prefix.json',path/'original-whole-k-prefix.json') if p.is_file()]
         [receipt_path] = receipt_candidates
         self.receipt = json.loads(receipt_path.read_bytes())
@@ -47,7 +53,7 @@ class Export:
         self.selector = self.receipt['selector']
         assert self.selector['sourceFamilySHA256'] == PROFILE
         self.manifest = json.loads((self.graph.parent/'original-source-export-manifest.json').read_bytes())
-        assert self.receipt['snapshot'] == self.manifest
+        assert self.receipt['bandSnapshot' if band else 'snapshot'] == self.manifest
         assert self.receipt['executingCommit'] == self.manifest['executing_commit']
         assert self.manifest['function_registry_capture_kind'] == 'RAW_BASE_ONLY'
         assert self.receipt['finalJets']==self.manifest['actual_final_67_jets_certified']==0
@@ -55,7 +61,8 @@ class Export:
         raw = (self.graph.parent/'original-source-functions.json').read_bytes()
         assert sha256(raw).hexdigest() == self.manifest['definitions_sha256']
         self.registry = json.loads(raw)
-        self.base = {k:json.loads(v) for k,v in self.registry['base'].items() if isinstance(v,str)}
+        base_registry = self.registry if band else self.registry['base']
+        self.base = {k:json.loads(v) for k,v in base_registry.items() if isinstance(v,str)}
         assert self.base['fixed']['source']['parameterExpressionSHA256'] == PROFILE
         self.spool = stack.enter_context(TemporaryFile())
         self.offsets = array('Q')
@@ -319,6 +326,8 @@ def main():
     for name in ('left','right','out'):
         parser.add_argument('--'+name,type=Path,required=True)
     parser.add_argument('--common-orders',action='store_true',help='Calibration only, compare the shared coefficient orders.')
+    parser.add_argument('--clauses-only',action='store_true',
+                        help='Compare shared diagonal clauses without historical scale or window operands.')
     parser.add_argument('--expected-right-commit')
     parser.add_argument('--require-diagonal',action='store_true')
     args=parser.parse_args()
@@ -353,14 +362,15 @@ def main():
                     comparator.compare(*pair)
                 rows.append({'key':k,**pairs})
                 print('PASS',*k,flush=True)
-            for l,r in zip(lhs.selector['rows'],rhs.selector['rows']):
-                for name in ('historicalLogScale','growth','smallBand','logScale','scale'):
-                    current=(l['order'],name)
-                    comparator.context=current
-                    comparator.compare(l[name],r[name])
             lw,rw=lhs.selector['window'],rhs.selector['window']
             matched_window=[]
-            if lw['coefficientOrder']==rw['coefficientOrder']:
+            if not args.clauses_only:
+                for l,r in zip(lhs.selector['rows'],rhs.selector['rows']):
+                    for name in ('historicalLogScale','growth','smallBand','logScale','scale'):
+                        current=(l['order'],name)
+                        comparator.context=current
+                        comparator.compare(l[name],r[name])
+            if not args.clauses_only and lw['coefficientOrder']==rw['coefficientOrder']:
                 assert lw['exactTail']['firstOmitted']==rw['exactTail']['firstOmitted']
                 for name in ('lower','upper','nextSourceScale','nextSourceLogScale','Q'):
                     current=('window',name)
@@ -393,6 +403,7 @@ def main():
                 'literalSharedRecords':shared,'earlyRegistryDefinitions':early,'matchedClauses':len(rows),
                 'typedExpressionPairs':2*len(rows),'rows':rows,'matchedAssociativeReorders':dict(comparator.normalizations),
                 'matchedReferenceWindowOperands':matched_window,
+                'comparedHistoricalAndFinalScales':not args.clauses_only,
                 'rightDiagonalMaterialization':rhs.receipt.get('selectorDiagonalOnly',False),
                 'firstOrderedMismatch':comparator.first_ordered_difference,'negativeControls':rejected,
                 'firstAcceptedNormalization':comparator.first_normalized_pair,
