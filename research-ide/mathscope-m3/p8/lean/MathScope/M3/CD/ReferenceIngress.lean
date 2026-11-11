@@ -21,7 +21,7 @@ theorem reference_general_window_lower_label (ellZero : ℤ) (a b : ℝ)
   have hM : ⌊a⌋ + 1 ≤ ⌊b⌋ := by
     apply Int.le_floor.mpr
     rw [Int.cast_add, Int.cast_one]
-    exact (add_le_add_right (Int.floor_le a) 1).trans hgrowth
+    linarith [Int.floor_le a]
   exact ⟨max_eq_right (by omega), by omega, hL⟩
 
 /-- An explicit point below the last retained cutoff and strictly past
