@@ -26,6 +26,6 @@
 
 - 두 번째 cycle의 `GroupedSupportedNonzeroResidual`에는 전체 잔차에서 Proposition 9.3의 additive flat 항 `F[1]`을 분리해야 한다. Gaussian cutoff가 만든 비영 Fourier 항이 포함된다. 실제 이전 Forced·Primary·Signed의 대응 항과 같은 라벨의 닫힌 지지 및 평탄 접합을 확인한 뒤에만 다음 역연산을 적용할 수 있다.
 - N7-06의 전체 K 에너지·소산·일·힘 적분, N8-05의 독립 grid·Fourier·차수·정밀도 오차, 실제 최종 `(A,b,p)`와 67개 jet 평가가 남아 있다.
-- M4 남은 기준은 R1-05, R1-06, R1-07, R1-08이다. R1-08에는 실제 배포 후 화면 영수증이 필요하다. RH 전역 연결, 전칭 BSD, 일반 G 연속 양자 Yang–Mills 구성은 연구 의무로 유지했다.
+- M4 남은 기준은 R1-05, R1-06, R1-07, R1-08이다. R1-08의 지원 범위, 전역 HOLD 판정, 패치와 바이트 단위 rollback은 확인했다. 실제 배포 후 화면 영수증이 남아 있다. RH 전역 연결, 전칭 BSD, 일반 G 연속 양자 Yang–Mills 구성은 연구 의무로 유지했다.
 
 모든 새 Lean 컴파일은 GitHub Actions에서 실행했다. 원본 체크아웃의 HEAD, 작업 상태 해시와 두 요청 브랜치의 HEAD를 대조했다. 커밋은 `mathscope-cd-axial-source-bridge-20261029`에서만 만들었고, 운영 웹 검증에는 격리한 후보 화면을 사용했다. 현재 호스트에서 첨부 PDF 경로와 지정 ZIP을 열 수 없어, 앞선 검증과 같은 해시 고정 복구 원고 및 원본 그래프를 사용했다.
