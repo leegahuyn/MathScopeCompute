@@ -57,7 +57,10 @@ jobs:
           mkdir -p "$out"
           if [ "$ORIGINAL_PHASE" != prefix ]; then
             export MATHSCOPE_WHOLE_K_PRIMARY_C3=1
-            cp "../evidence/tools/mathscope-cd-axial-bridge-20261029/goal-next/whole-k-atlas/replay_whole_k_primary_c3.mjs" "$(dirname "$target")/"
+            helper=../evidence/tools/mathscope-cd-axial-bridge-20261029/goal-next/whole-k-atlas
+            cp "$helper/replay_whole_k_primary_c3.mjs" "$(dirname "$target")/"
+            python3 "$helper/prepare_iterative_norm_import.py" . "$out/iterative-norm-import-overlay.json"
+            node "$helper/check_iterative_norm_import.mjs" . | tee "$out/iterative-norm-import-check.log"
           fi
           if [ "$ORIGINAL_PREFIX" != 0 ]; then
             export MATHSCOPE_PREFIX_DIAGONAL_ONLY=1
@@ -112,7 +115,8 @@ jobs:
               checked.update({"research-ide/mathscope-m2/navier/" + n: r["patchedSHA256"]
                               for n, r in json.loads(diagonal.read_bytes())["files"].items()})
           for file, name in (("band-budget-overlay.json", "mathscope-m3/navier/source-global-band.mjs"),
-                             ("graph-copy-budget-overlay.json", "mathscope-m2/navier/actual-residual-order-induction-expressions.mjs")):
+                             ("graph-copy-budget-overlay.json", "mathscope-m2/navier/actual-residual-order-induction-expressions.mjs"),
+                             ("iterative-norm-import-overlay.json", "mathscope-m2/navier/actual-residual-order-induction-norms.mjs")):
               receipt = out / file
               if receipt.exists():
                   checked["research-ide/" + name] = json.loads(receipt.read_bytes())["newSHA256"]
