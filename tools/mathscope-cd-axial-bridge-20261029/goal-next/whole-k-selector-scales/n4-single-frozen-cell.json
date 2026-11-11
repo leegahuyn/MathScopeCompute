@@ -1,0 +1,56 @@
+{
+  "schema": "MathScope.N7.SingleOriginalFrozenN4CellCriterion/1",
+  "sourceCommit": "f8cb4034e86d7b669d52a6f2248aebba156b51b5",
+  "sourceSHA256": {
+    "research-ide/mathscope-m3/navier/source-global-representative.mjs": "f3fbcf74b42c59cbfdd563e0fddcba9fab5cad782a96695930e3445c50373541",
+    "research-ide/mathscope-m3/navier/source-global-current.mjs": "93f86661d67e6bc7b916218cd7af3db72f348ba7fdc876e3618ba3a49edff760",
+    "research-ide/mathscope-m3/navier/global-source-index.mjs": "a3da73e5ad4d853dff04942ea513a3f8ab9fb1abf2b9e30f7eecf3956aaa6a2f",
+    "research-ide/mathscope-m3/navier/source-localization.mjs": "5f6480f9799a9a83945f696833b9213585572efbe65e9e755b2935726e6f1036",
+    "research-ide/mathscope-m2/navier/actual-continuation-exact-support.mjs": "0be8fcf8d8a70d98ab339ca1bec727efac998f4763d852b21fb5761f27450b98"
+  },
+  "higherMaximaSHA256": "a4c58765594add6fe9d5d460d2f5c6861003f7ed9d13f31f3c2828ab3f756d96",
+  "innerShellSHA256": "c92ccaf35e6ffca3697b78d7599e2d45f0df427a33f52eb7d7791262434c6a41",
+  "notation": {
+    "L": "ellMinimum+16",
+    "S": "L^6",
+    "w": "3/(4*S)",
+    "a": "sqrt(2*Xa)",
+    "k0": "floor(a*S-3/4)+1",
+    "Ru": "(k0+3/4)/S",
+    "sUpper": "(Ru/a)^2",
+    "sigma": "64/(b4*qBig)",
+    "F": "F(s)=s-(w^2/4)*s^(2h)"
+  },
+  "checked": {
+    "oneRadialGridCandidate": true,
+    "axialMinimumAtZero": true,
+    "strictRepresentativeLower": "sRep>1-w/2+w^2/16",
+    "sufficientB4Ratio": "b4*qBig>=64/(1-w/2+w^2/16)"
+  },
+  "exactCriterion": {
+    "criticalBand": "ell'=L",
+    "candidateGrid": [
+      "k0",
+      "0",
+      "S"
+    ],
+    "preconditions": [
+      "1<sUpper<1+w",
+      "1-w/2+w^2/16<sigma<=1"
+    ],
+    "strictTest": "F(sUpper)<2*F(sigma)-1+w",
+    "meaning": "If the test passes, this box has an open physical K intersection and its frozen fourth cutoff is positive. If it fails, every physical K box has a zero fourth cutoff at its frozen representative.",
+    "growthFloorSpecialCase": "For b4*qBig=64, sUpper-1<=w-w^2/4 suffices for a positive frozen cutoff, while sUpper-1>=w excludes it."
+  },
+  "proof": [
+    "A positive fourth cutoff implies sRep<1 at the only critical label. The time center is one and 1<sUpper<1+w. The radial upper interval has width a*(sqrt(1+w)-1)<1/S.",
+    "On that unique radial cell, Xb>4*Xa gives sLower=1/2. Both time endpoints before radial clipping are 1-w and 1+w. The lower endpoint stays 1-w.",
+    "The permitted axial absolute upper exceeds sqrt(w/2)>7*w/3. Axial label zero chooses the negative midpoint -w/2. Labels plus or minus one use their full one-sign boxes and have absolute midpoint 4*w/3. Other labels are bounded away from zero by 5*w/3.",
+    "With sUpper fixed, increasing u=ZRep^2 decreases the chosen upper time by at most DeltaU*sUpper^(2h). The original root increases strictly because sRep^(2h)>sUpper^(2h)/2 on 1/2<=sRep<=sUpper<=2.",
+    "At label zero compare the selected time midpoint directly to F(sigma). For sigma<=1 the right-hand upper time is at most 1+w-w^2/2. Thus the minimum with 1+w drops out of the strict comparison.",
+    "If the strict test passes, a point with T=1, Z=0, s=1 and R strictly between max(a,Rl) and Ru is in K, with positive original band and mesh factors. An open neighborhood from the permitted time side has the same label."
+  ],
+  "scope": "Determines existence of a positive fourth cutoff at an original frozen representative, conditional on one exact radial grid phase and the original fourth scale. The complete fast field has separate evidence obligations.",
+  "actualPhaseEvaluated": false,
+  "release": "HOLD"
+}

@@ -18,6 +18,28 @@ def digest(stream):
     return sha.hexdigest(), count
 
 
+def potential_operand(cert, additive):
+    bounds = cert["bounds"]
+    weighted = bounds["degreeProgram"]["weighted"]
+    assert weighted["potential"][3] == {"power": 1283, "pole": 18}
+    assert weighted["curlRows"][2]["fastTerms"][0] == {"power": 1284, "pole": 18}
+    assert weighted["targetPoles"][:4] == [3, 6, 9, 12]
+    norm = additive["norm"]
+    root = bounds["K"]
+    assert norm["start"] <= root < norm["start"]+len(norm["nodes"])
+    node = norm["nodes"][root-norm["start"]]
+    assert node["op"] == "maximum"
+    required = {bounds["backgroundRow"]["B_m"], bounds["coefficientConstants"]["maximum"],
+                *(row["N_m"] for row in bounds["targetRows"][:4])}
+    assert required <= set(node["args"])
+    return {
+        "nativePrimaryClassOrder": cert["request"]["order"],
+        "originalKRoot": root, "power": 1283, "pole": 18,
+        "KRequiredOperands": sorted(required),
+        "bound": "K^1283*S^1283*epsilon*sqrt(zeta)*delta^(-18)*P(v)",
+    }
+
+
 def verify(directory):
     receipt = read(directory / "original-whole-k-prefix.json")
     prefix = receipt["requestedPrefix"]
@@ -51,11 +73,8 @@ def verify(directory):
     assert cert["scope"] == add["record"]["scope"] == data["nativeScope"]
     assert cert["checks"] == add["record"]["checks"] == data["nativeChecks"]
     assert add["record"]["request"]["order"] == order
-    weighted = cert["bounds"]["degreeProgram"]["weighted"]
-    assert weighted["potential"][3] == {"power": 1283, "pole": 18}
-    assert weighted["curlRows"][2]["fastTerms"][0] == {"power": 1284, "pole": 18}
-    assert data["potentialOrderThree"]["originalKRoot"] == cert["bounds"]["K"]
-    assert data["potentialOrderThree"]["power"] == 1283 and data["potentialOrderThree"]["pole"] == 18
+    operand = potential_operand(cert, add)
+    assert all(data["potentialOrderThree"][name] == operand[name] for name in operand if name != "KRequiredOperands")
     assert cert["graph"]["sha256"] == data["files"]["primary-C3-additive-program.json"]["sha256"]
     assert add["targetBase"] == cert["sourceTarget"]["graph"]
     assert add["currentBase"] == cert["sourceCurrent"]["graph"]
@@ -90,7 +109,7 @@ def verify(directory):
         "status": "VERIFIED_ORIGINAL_PRIMARY_POTENTIAL_C3_ON_ADMITTED_PREFIX",
         "prefix": prefix,
         "nativePrimaryClassOrder": order,
-        "potentialOrderThree": data["potentialOrderThree"],
+        "potentialOrderThree": operand,
         "executingCommit": receipt["executingCommit"],
         "currentNodes": manifest["node_count"],
         "currentGraphSHA256": manifest["node_stream_sha256"],
@@ -103,5 +122,37 @@ def verify(directory):
     print(f"PASS original C{order+3}/C{order+1}/Primary C{order} and potential C3 source on N{prefix}")
 
 
+def verify_baseline(directory, output):
+    status = read(directory / "status.json")
+    assert status["sourceCommit"] == "f8cb4034e86d7b669d52a6f2248aebba156b51b5"
+    assert status["status"] == "PASS" and status["release"] == "HOLD"
+    for name in ("primary-certificate.json", "primary-additive-program.json"):
+        with (directory / name).open("rb") as stream:
+            info = status["files"][name]
+            assert digest(stream) == (info["sha256"], info["bytes"])
+    cert = read(directory / "primary-certificate.json")
+    add = read(directory / "primary-additive-program.json")
+    assert cert["graph"]["sha256"] == status["primaryHash"]
+    assert cert["request"]["order"] == 2 and cert["scope"]["actualOriginalPotentialWOneClassCertified"] is True
+    assert cert["bounds"]["backgroundRow"]["backgroundDerivativeOrder"] == 5
+    assert cert["domain"]["actualWindow"]["coefficientOrder"] == 1
+    result = {
+        "schema": "MathScope.N7.ActualC2ProofPotentialC3Operand/1",
+        "originalGitHubRun": 43035074273,
+        "sourceCommit": status["sourceCommit"],
+        "primaryProgramSHA256": status["primaryHash"],
+        "originalCoefficientWindow": 1,
+        "potentialOrderThree": potential_operand(cert, add),
+        "scope": "Original norm operand on its admitted N1 window. Same-source N2/N3 replay and physical transport are required on whole K.",
+        "finalJets": 0,
+        "release": "HOLD",
+    }
+    output.write_bytes((json.dumps(result, indent=2)+"\n").encode())
+    print("PASS actual curl C2 source already contains the potential C3 norm operand")
+
+
 if __name__ == "__main__":
-    verify(Path(sys.argv[1]))
+    if sys.argv[1] == "--baseline":
+        verify_baseline(Path(sys.argv[2]), Path(sys.argv[3]))
+    else:
+        verify(Path(sys.argv[1]))

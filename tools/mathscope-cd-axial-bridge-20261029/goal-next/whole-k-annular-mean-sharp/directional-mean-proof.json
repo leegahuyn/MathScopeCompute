@@ -1,0 +1,249 @@
+{
+  "schema": "MathScope.N7.StageZeroDirectionalMeanOrderReduction/1",
+  "pinnedInputs": {
+    "directional-mean-operands.json": "6dde0a0ad593a6963acb8dc0f3d43ee94c954322461ce6189676066b4e080ef6",
+    "fixed-operators.json": "e0ca526ca37d3697a655a419af9386d1e6e291a228e05f26e30a73225b3e9633"
+  },
+  "correctedHostedGraphSHA256": "ab52a3337591d2c23c82f8ebbd1ef7305b4ecaebc9fa17ae6d700f32c650e4cf",
+  "sameActualInitializedPrefixSHA256": "99dcc6ff6aaa92d4449d6ad5aae5a8ff2037f3e1644ac3ad0fdd2994ca020745",
+  "lineage": {
+    "earlyNonzeroHaarEtheta": 643867,
+    "earlyNonzeroHaarEz": 643882,
+    "exactZeroModeOnlyRoots": [
+      633892,
+      633990,
+      643108
+    ],
+    "earlyPressureZ": 643849,
+    "earlyPressureWrzZZ": 643048,
+    "freshTargets": {
+      "P": 3614334,
+      "Jtheta": 3614376,
+      "Jz": 3614420
+    },
+    "fivePsiUses": [
+      "Jtheta"
+    ],
+    "fiveVUses": [
+      "P",
+      "Jz"
+    ],
+    "lateGr": 3614891,
+    "lateTemporalViscousAxialNativePsiZZZ": 3613979,
+    "latePressure": 3615361
+  },
+  "fourier": {
+    "slope": "sqrt(2)-1",
+    "normalization": "[0,1]^2 and 2*pi",
+    "minimumPairSpacingOnDyadicShell": "1/(16*N)",
+    "inverseSquareShellCoefficient": 1024,
+    "weightedAllShellsSum": "4096/3",
+    "CInfinityByTwoPureTorusDerivatives": "1/4",
+    "CInfinityTailOnDyadicCutoff": "1/(4*N)",
+    "L2ByOnePureTorusDerivative": "1/6"
+  },
+  "fiveKernel": {
+    "kernel": "actual FiveMap separated fixed unit source profiles",
+    "implicitSlowChartComplexRadius": "1/(128*Rstar)",
+    "complexChartContraction": "1/3",
+    "normalizingPrefactorSupWithoutInverseR": 136,
+    "normalizingPrefactorSupWithInverseR": "272*Rstar",
+    "compositionXComplexSup": "4*Rstar",
+    "seedDerivativeRows": [
+      {
+        "order": 0,
+        "polynomial": "1",
+        "powerOfX0Inverse": 1,
+        "seedMultiplier": 1
+      },
+      {
+        "order": 1,
+        "polynomial": "1 - 2*t",
+        "powerOfX0Inverse": 2,
+        "seedMultiplier": 60
+      },
+      {
+        "order": 2,
+        "polynomial": "6*t**4 - 12*t**3 + 12*t**2 - 6*t + 1",
+        "powerOfX0Inverse": 3,
+        "seedMultiplier": 88800
+      },
+      {
+        "order": 3,
+        "polynomial": "-24*t**7 + 84*t**6 - 156*t**5 + 180*t**4 - 128*t**3 + 54*t**2 - 12*t + 1",
+        "powerOfX0Inverse": 4,
+        "seedMultiplier": 460080000
+      }
+    ],
+    "totalBellSetPartitionCountsThroughOrder4": [
+      [
+        1
+      ],
+      [
+        1
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        3,
+        1
+      ],
+      [
+        1,
+        7,
+        6,
+        1
+      ]
+    ],
+    "profileG": [
+      "|G|<=2*mu3",
+      "|G^(j)|<=2*(2*Rstar*eta0Norm[j-1]+(j-1)*eta0Norm[j-2]), j>=1"
+    ],
+    "fixedSourceFactorsRetained": [
+      "K*(2*X0)^(1/2+lambda)",
+      "mu_j",
+      "geometric Vandermonde inverse",
+      "1-exp(-2*d*lambda)"
+    ]
+  },
+  "directionalDemand": {
+    "rows": [
+      {
+        "output": "Temporal azimuthal potential",
+        "temporalInput": "psi_T pointwise",
+        "temporalOrder": 3,
+        "torusLoss": 2,
+        "earlyCovarianceOrderIncrease": 2,
+        "covarianceOrder": 7
+      },
+      {
+        "output": "Temporal direct mean",
+        "temporalInput": "v_T pointwise",
+        "temporalOrder": 2,
+        "torusLoss": 2,
+        "earlyCovarianceOrderIncrease": 1,
+        "covarianceOrder": 5
+      },
+      {
+        "output": "fresh Jtheta -> FiveMap axial/potential",
+        "temporalInput": "gamma_T and v_T slow L2_Y",
+        "temporalOrder": 4,
+        "torusLoss": 1,
+        "earlyCovarianceOrderIncrease": 2,
+        "covarianceOrder": 7
+      },
+      {
+        "output": "fresh P,Jz -> FiveMap direct v",
+        "temporalInput": "psi_T slow L2_Y from beta_T slow C3",
+        "temporalOrder": 4,
+        "torusLoss": 1,
+        "earlyCovarianceOrderIncrease": 2,
+        "covarianceOrder": 7
+      },
+      {
+        "output": "late mean pressure lower products",
+        "temporalInput": "psi_T pointwise from beta_T C2",
+        "temporalOrder": 3,
+        "torusLoss": 2,
+        "earlyCovarianceOrderIncrease": 2,
+        "covarianceOrder": 7
+      },
+      {
+        "output": "late mean pressure temporal axial viscosity",
+        "temporalInput": "pointwise psi_T Z4",
+        "temporalOrder": 4,
+        "torusLoss": 2,
+        "earlyCovarianceOrderIncrease": 2,
+        "covarianceOrder": 8
+      }
+    ],
+    "worstSurvivingPreHaarCovarianceOrder": 8,
+    "strongestExposedMixedJet": "partial_Z^6 partial_Y_i^2 W_rz",
+    "weightedTargetOrderViaOriginalPrimaryAdapter": 9,
+    "backgroundOrderViaOriginalPrimaryAdapter": 11,
+    "highWeightedStressInputNeeded": false,
+    "oldGenericTargetOrder": 16
+  },
+  "fixedRadialUnweightedNorms": [
+    {
+      "weight": 0,
+      "rows": [
+        {
+          "order": 0,
+          "T": 7414,
+          "A": 7415,
+          "inputOrder": 0
+        },
+        {
+          "order": 1,
+          "T": 7421,
+          "A": 7422,
+          "inputOrder": 1
+        },
+        {
+          "order": 2,
+          "T": 7428,
+          "A": 7429,
+          "inputOrder": 2
+        },
+        {
+          "order": 3,
+          "T": 7435,
+          "A": 7436,
+          "inputOrder": 3
+        },
+        {
+          "order": 4,
+          "T": 7443,
+          "A": 7444,
+          "inputOrder": 4
+        }
+      ]
+    },
+    {
+      "weight": 1,
+      "rows": [
+        {
+          "order": 0,
+          "T": 7414,
+          "A": 7415,
+          "inputOrder": 0
+        },
+        {
+          "order": 1,
+          "T": 7421,
+          "A": 7422,
+          "inputOrder": 1
+        },
+        {
+          "order": 2,
+          "T": 7428,
+          "A": 7429,
+          "inputOrder": 2
+        },
+        {
+          "order": 3,
+          "T": 7435,
+          "A": 7436,
+          "inputOrder": 3
+        },
+        {
+          "order": 4,
+          "T": 7443,
+          "A": 7444,
+          "inputOrder": 4
+        }
+      ]
+    }
+  ],
+  "scope": {
+    "fixedFourierAndRadialBoundsVerified": true,
+    "separateAnalyticFixedFiveKernelBound": true,
+    "actualC8CovarianceNormMaterialized": false,
+    "actualFinalJetCoverage": "0/67",
+    "release": "HOLD"
+  }
+}
