@@ -45,8 +45,28 @@ jobs:
           target="research-ide/mathscope-m3/extended-signed-run-20261023/$script"
           cp "../evidence/tools/mathscope-cd-axial-bridge-20261029/goal-next/whole-k-atlas/$script" "$target"
           free -b
+          limits="$(python3 - <<'PY'
+          from pathlib import Path
+          gib = 1024**3
+          mem = dict(line.split(":", 1) for line in Path("/proc/meminfo").read_text().splitlines())
+          available = int(mem["MemAvailable"].split()[0]) * 1024
+          root = Path("/sys/fs/cgroup")
+          for limit_path, usage_path in (("memory.max", "memory.current"),
+                                         ("memory/memory.limit_in_bytes", "memory/memory.usage_in_bytes")):
+              limit, usage = root / limit_path, root / usage_path
+              if limit.exists() and usage.exists():
+                  cap = limit.read_text().strip()
+                  if cap != "max":
+                      available = min(available, int(cap) - int(usage.read_text()))
+          roomy = available >= 11 * gib
+          print((9 if roomy else 6) * gib, 8100 if roomy else 6100)
+          PY
+          )"
+          read -r MATHSCOPE_PREFIX_MAX_RSS_BYTES heap_mb <<< "$limits"
+          export MATHSCOPE_PREFIX_MAX_RSS_BYTES
+          printf 'runner RSS cap=%s bytes; V8 old-space=%s MiB\n' "$MATHSCOPE_PREFIX_MAX_RSS_BYTES" "$heap_mb"
           node --check "$target"
-          node --expose-gc "$target" "$RUNNER_TEMP/mathscope-whole-k" "$ORIGINAL_SOURCE_COMMIT" "$ORIGINAL_PREFIX"
+          node --max-old-space-size="$heap_mb" --expose-gc "$target" "$RUNNER_TEMP/mathscope-whole-k" "$ORIGINAL_SOURCE_COMMIT" "$ORIGINAL_PREFIX"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
