@@ -1,0 +1,1442 @@
+{
+  "schema": "MathScope.M1ReplayBundle/1",
+  "request": {
+    "budget": {
+      "maxBytes": 8388608,
+      "maxItems": 250000,
+      "maxMillis": 30000,
+      "maxMilliseconds": 30000,
+      "maxOperations": 20000000,
+      "maxPoints": 480
+    },
+    "input": {},
+    "kind": "ns.validate",
+    "precision": {
+      "absoluteTolerance": 1e-8,
+      "bits": 53,
+      "relativeTolerance": 1e-8
+    }
+  },
+  "inputHash": "89f9b1bebec67fcabd41e07c3f19cd36578b647579b17677532a116e9e2a8181",
+  "environment": {
+    "schema": "MathScope.M1Environment/1",
+    "version": "1.2.0",
+    "workerSha256": "0526fb1030c328e940c39672e86dfb9d24f09f4622794269c1e0eadbb92cc0ca",
+    "execution": "BROWSER_WEB_WORKER",
+    "server": false,
+    "capabilities": {
+      "domains": {
+        "arithmetic": {
+          "externalTheoremAdapters": [
+            {
+              "accessed": "2026-10-09",
+              "id": "S01",
+              "leanImport": null,
+              "locator": "Definition 1.1; Example 1.3(1); Definition 1.4; Theorem 1.8(1), printed pp.2–4; Theorem 5.2",
+              "role": "Bounded crystalline prism and Frobenius-compatible crystalline comparison",
+              "status": "THEOREM_REFERENCE",
+              "title": "Bhatt–Scholze, Prisms and Prismatic Cohomology",
+              "url": "https://people.mpim-bonn.mpg.de/scholze/prisms.pdf"
+            },
+            {
+              "accessed": "2026-10-09",
+              "id": "S02",
+              "leanImport": null,
+              "locator": "Theorem 3.6 and Corollary 3.8",
+              "role": "De Rham hypercohomology of a proper smooth Z_p lift computes crystalline cohomology of its special fiber.",
+              "status": "THEOREM_REFERENCE",
+              "title": "Bhatt–de Jong, Crystalline cohomology and de Rham cohomology",
+              "url": "https://arxiv.org/html/1110.5001v1"
+            },
+            {
+              "accessed": "2026-10-09",
+              "id": "S07",
+              "leanImport": null,
+              "locator": "(1.5.1)–(1.5.4), printed pp.275–276",
+              "role": "Finite-field trace and alternating determinant convention; not a classical RH bridge.",
+              "status": "THEOREM_REFERENCE",
+              "title": "Deligne, La conjecture de Weil I",
+              "url": "https://www.numdam.org/item/PMIHES_1974__43__273_0.pdf"
+            },
+            {
+              "accessed": "2026-10-09",
+              "id": "S08",
+              "leanImport": null,
+              "locator": "pp.1–2, good elliptic Euler factors and the BSD statement",
+              "role": "Local H1 L-factor and distinction from the scheme zeta factor.",
+              "status": "THEOREM_REFERENCE",
+              "title": "Wiles, The Birch and Swinnerton-Dyer Conjecture",
+              "url": "https://www.claymath.org/wp-content/uploads/2022/05/birchswin.pdf"
+            },
+            {
+              "accessed": "2026-10-09",
+              "id": "S10",
+              "leanImport": null,
+              "locator": "§25.16(i), equations 25.16.1–25.16.4",
+              "role": "Chebyshev psi, prime counting, PNT/RH scope.",
+              "status": "THEOREM_REFERENCE",
+              "title": "NIST DLMF §25.16 Mathematical Applications",
+              "url": "https://dlmf.nist.gov/25.16"
+            },
+            {
+              "accessed": "2026-10-09",
+              "id": "S14",
+              "leanImport": null,
+              "locator": "WeierstrassIsomorphism: explicit (u,r,s,t) coordinate and coefficient transformation formulas",
+              "role": "A displayed singular nonminimal model is distinguished from the reduction of the curve; x=u^2*x_new, y=u^3*y_new rescales short coefficients by u^4 and u^6.",
+              "status": "THEOREM_REFERENCE",
+              "title": "SageMath, Isomorphisms between Weierstrass models",
+              "url": "https://doc.sagemath.org/html/en/reference/arithmetic_curves/sage/schemes/elliptic_curves/weierstrass_morphism.html"
+            }
+          ],
+          "formalComplete": false,
+          "kinds": [
+            "arithmetic.primes",
+            "arithmetic.primeCertificate",
+            "arithmetic.padic",
+            "arithmetic.point",
+            "arithmetic.p1",
+            "arithmetic.localFactors",
+            "arithmetic.verify"
+          ],
+          "limits": {
+            "chartPoints": 20000,
+            "defaultPrimeIntervalWidth": 2097152,
+            "determinantDimension": 32,
+            "maxBasePrime": 2000000,
+            "maxPrimeIntervalWidth": 8388608,
+            "moduleMatrixDimension": 16,
+            "p1FrobeniusTargetD": 256,
+            "p1SourceD": 32,
+            "padicDigits": 256,
+            "primeCertificateIntegerDigits": 256,
+            "segmentIntegers": 1048576
+          },
+          "primeDomain": {
+            "definition": "{ n : Nat | Nat.Prime n }",
+            "enumeration": "Every completed request covers only its stated finite interval.",
+            "kind": "SYMBOLIC_INFINITE_SET",
+            "leanDefinition": "MathScope.M1.Arithmetic.PrimeSet",
+            "schema": "MathScope.PrimeDomain/1"
+          },
+          "schema": "MathScope.ArithmeticCapabilities/1",
+          "supported": [
+            "exact bounded segmented enumeration and Lucas/Pratt certificates",
+            "Z_p observations, guard-digit delta, exact integer division, finite-ring Smith certificates",
+            "point and P1 crystalline/prismatic comparison models with integral all-weight contraction",
+            "explicit P1 chain Frobenius and good finite elliptic point-count Euler factors",
+            "decreasing cochain and de Rham Hodge subcomplexes, quotient and smart truncation"
+          ],
+          "unsupported": [
+            "arbitrary native prismatic-site computation",
+            "general Tate/minimal-model algorithm or complete elliptic L function",
+            "Nygaard descent certificate",
+            "general q/Breuil–Kisin/A_inf arithmetic",
+            "classical RH or general BSD proof"
+          ],
+          "version": "1.0.0"
+        },
+        "gauge": {
+          "boundaries": [
+            "R4_WINDOW:OPEN_RESTRICTION",
+            "PERIODIC_TORUS:PERIODIC (finite Fourier, trivial bundle)"
+          ],
+          "deltaModes": [
+            "ASSUMED_BOUND",
+            "UNITS",
+            "CLASSICAL_SCALE",
+            "EFFECTIVE_MODEL"
+          ],
+          "domain": "gauge",
+          "fieldConstructions": [
+            "EMBEDDED_BPST",
+            "FULL_BASIS_TRIAL",
+            "BPST_PLUS_PERTURBATION"
+          ],
+          "kinds": [
+            "gauge.group",
+            "gauge.field",
+            "gauge.family",
+            "gauge.holonomy",
+            "gauge.spectral"
+          ],
+          "leanAuditPath": "gauge/lean/lean-audit.json",
+          "matrixBounds": {
+            "G2": 7,
+            "SO": [
+              3,
+              5,
+              6,
+              7,
+              8
+            ],
+            "SU": [
+              2,
+              6
+            ],
+            "Sp": [
+              1,
+              3
+            ]
+          },
+          "numericArithmetic": "Float64 with explicit tolerance; BigInt rational finite bracket verification",
+          "observations": [
+            "SLICE",
+            "FINITE_MARGINAL",
+            "BPST_INFINITE_MARGINAL",
+            "LINEAR_PROJECTION"
+          ],
+          "references": [
+            {
+              "authors": "Arthur Jaffe; Edward Witten; Clay Mathematics Institute",
+              "id": "YM-R01",
+              "kernelReceipt": null,
+              "leanImport": null,
+              "locator": "인쇄 p. 6 §4: 존재·스펙트럼 간극 정의; p. 7 §5: 부피에 균일한 간극과 무한 부피 문제",
+              "role": "compact simple G, nontrivial R⁴ quantum theory, QFT axioms, positive spectral gap의 동시 요구. 현재 공식 상태 Unsolved.",
+              "status": "THEOREM_REFERENCE",
+              "title": "Quantum Yang–Mills Theory / Yang–Mills & the Mass Gap",
+              "url": "https://www.claymath.org/wp-content/uploads/2022/06/yangmills.pdf"
+            },
+            {
+              "authors": "Brian Conrad; Aaron Landesman",
+              "id": "YM-R02",
+              "kernelReceipt": null,
+              "leanImport": null,
+              "locator": "§§17–18 pp.75–83; §26 p.114 이하; Appendices K,V,Y",
+              "role": "rank-one subgroup, character/cocharacter lattice, normal subgroup, global group center/fundamental group를 분리하는 구조 설계",
+              "status": "THEOREM_REFERENCE",
+              "title": "Math 210C. Compact Lie Groups",
+              "url": "https://math.stanford.edu/~conrad/210CPage/handouts/lie_groups_notes.pdf"
+            },
+            {
+              "authors": "Mboyo Esole; Monica Jinwoo Kang",
+              "id": "YM-R05",
+              "kernelReceipt": null,
+              "leanImport": null,
+              "locator": "§2.5 pp.15–16(현재 PDF 페이지 16), Dynkin index of an embedding",
+              "role": "기본 불변형의 정규화에 대한 Lie algebra embedding index. 본 설계의 B_G(ιX,ιY)=IιB_SU2(X,Y) convention을 독립 명시.",
+              "status": "THEOREM_REFERENCE",
+              "title": "Matter representations from geometry: under the spell of Dynkin",
+              "url": "https://arxiv.org/pdf/2012.13401"
+            },
+            {
+              "authors": "Stefan Vandoren; Peter van Nieuwenhuizen",
+              "id": "YM-R06",
+              "kernelReceipt": null,
+              "leanImport": null,
+              "locator": "§2 pp.7–13; eqs.(2.12)–(2.15) BPST, eq.(2.20) SU(N) embedding",
+              "role": "anti-Hermitian SU(2) conventions, BPST A/F와 밀도, SU(N) embedding 기준. 정확 marginal 식은 이 밀도를 적분한 설계 계산.",
+              "status": "THEOREM_REFERENCE",
+              "title": "Lectures on instantons",
+              "url": "https://arxiv.org/pdf/0802.1862"
+            },
+            {
+              "authors": "David Tong",
+              "id": "YM-R07",
+              "kernelReceipt": null,
+              "leanImport": null,
+              "locator": "§4.1; 인쇄 p.202 이하; link gauge transform eq.(4.8)",
+              "role": "4D Euclidean lattice, group links, Wilson loops와 작용 및 격자 cutoff의 의미",
+              "status": "THEOREM_REFERENCE",
+              "title": "Gauge Theory — Chapter 4: Lattice Gauge Theory",
+              "url": "https://davidtong.org/pdfs/teaching/gauge-theory/gauge4.pdf"
+            },
+            {
+              "authors": "Martin Lüscher",
+              "id": "YM-R08",
+              "kernelReceipt": null,
+              "leanImport": null,
+              "locator": "출판사 초록과 서지사항; 실제 선택한 모델의 가정 대응은 Y4-06/Y7-06의 후속 작업",
+              "role": "Wilson lattice gauge theory의 physical positivity와 transfer matrix 구성 근거",
+              "status": "THEOREM_REFERENCE",
+              "title": "Construction of a selfadjoint, strictly positive transfer matrix for Euclidean lattice gauge theories",
+              "url": "https://link.springer.com/article/10.1007/BF01614090"
+            },
+            {
+              "authors": "Konrad Osterwalder; Erhard Seiler",
+              "id": "YM-R09",
+              "kernelReceipt": null,
+              "leanImport": null,
+              "locator": "출판사 초록·서지사항; Euclidean lattice construction 및 positivity",
+              "role": "유클리드 격자 gauge theory의 positivity/constructive framework. continuum 존재 증명으로 확장하지 않음.",
+              "status": "THEOREM_REFERENCE",
+              "title": "Gauge field theories on a lattice",
+              "url": "https://www.sciencedirect.com/science/article/abs/pii/0003491678900398"
+            },
+            {
+              "authors": "Lean FRO contributors",
+              "id": "YM-R13",
+              "kernelReceipt": null,
+              "leanImport": null,
+              "locator": "axiom declaration, consistency 및 #print axioms",
+              "role": "사용자 axiom의 논리적 지위·의존성 감사. 기존 Lean 4.34.1 결과는 로컬 source/hash/log로 별도 증빙.",
+              "status": "THEOREM_REFERENCE",
+              "title": "The Lean Language Reference — Axioms",
+              "url": "https://lean-lang.org/doc/reference/latest/Axioms/"
+            },
+            {
+              "authors": "John C. Baez",
+              "id": "YM-R14",
+              "kernelReceipt": null,
+              "leanImport": null,
+              "locator": "§4.1 G2; Theorem 4, compact Der(O) subset so(Im O); 7-dimensional faithful representation and invariant cross product",
+              "role": "Compact G2 as octonion automorphisms/positive 3-form stabilizer, not split G2. The generator uses its explicitly documented equivalent Cayley–Dickson convention.",
+              "status": "THEOREM_REFERENCE",
+              "title": "The Octonions",
+              "url": "https://math.ucr.edu/home/baez/octonions/node14.html"
+            },
+            {
+              "authors": "Brian Conrad",
+              "id": "YM-R15",
+              "kernelReceipt": null,
+              "leanImport": null,
+              "locator": "§§2–5 (8-page PDF), roots/coroots/character lattices for A/B/C/D; use complexification to connect with the separately constructed compact real form",
+              "role": "Classical root and coroot integer data. This split-algebra reference alone is not a proof of the compact form, which is constructed and checked separately.",
+              "status": "THEOREM_REFERENCE",
+              "title": "Math 249B. Root systems for split classical groups",
+              "url": "https://virtualmath1.stanford.edu/~conrad/249BW16Page/handouts/classicalgps.pdf"
+            }
+          ],
+          "supportedGroups": [
+            {
+              "dimension": 3,
+              "id": "SU2",
+              "label": "SU(2)",
+              "matrixDimension": 2,
+              "rank": 1,
+              "spec": {
+                "family": "SU",
+                "globalForm": "SIMPLY_CONNECTED",
+                "parameter": 2,
+                "representation": "DEFINING"
+              }
+            },
+            {
+              "dimension": 8,
+              "id": "SU3",
+              "label": "SU(3)",
+              "matrixDimension": 3,
+              "rank": 2,
+              "spec": {
+                "family": "SU",
+                "globalForm": "SIMPLY_CONNECTED",
+                "parameter": 3,
+                "representation": "DEFINING"
+              }
+            },
+            {
+              "dimension": 15,
+              "id": "SU4",
+              "label": "SU(4)",
+              "matrixDimension": 4,
+              "rank": 3,
+              "spec": {
+                "family": "SU",
+                "globalForm": "SIMPLY_CONNECTED",
+                "parameter": 4,
+                "representation": "DEFINING"
+              }
+            },
+            {
+              "dimension": 24,
+              "id": "SU5",
+              "label": "SU(5)",
+              "matrixDimension": 5,
+              "rank": 4,
+              "spec": {
+                "family": "SU",
+                "globalForm": "SIMPLY_CONNECTED",
+                "parameter": 5,
+                "representation": "DEFINING"
+              }
+            },
+            {
+              "dimension": 35,
+              "id": "SU6",
+              "label": "SU(6)",
+              "matrixDimension": 6,
+              "rank": 5,
+              "spec": {
+                "family": "SU",
+                "globalForm": "SIMPLY_CONNECTED",
+                "parameter": 6,
+                "representation": "DEFINING"
+              }
+            },
+            {
+              "dimension": 3,
+              "id": "SO3",
+              "label": "SO(3)",
+              "matrixDimension": 3,
+              "rank": 1,
+              "spec": {
+                "family": "SO",
+                "globalForm": "ADJOINT",
+                "parameter": 3,
+                "representation": "DEFINING"
+              }
+            },
+            {
+              "dimension": 10,
+              "id": "SO5",
+              "label": "SO(5)",
+              "matrixDimension": 5,
+              "rank": 2,
+              "spec": {
+                "family": "SO",
+                "globalForm": "ADJOINT",
+                "parameter": 5,
+                "representation": "DEFINING"
+              }
+            },
+            {
+              "dimension": 15,
+              "id": "SO6",
+              "label": "SO(6)",
+              "matrixDimension": 6,
+              "rank": 3,
+              "spec": {
+                "family": "SO",
+                "globalForm": "QUOTIENT",
+                "parameter": 6,
+                "representation": "DEFINING"
+              }
+            },
+            {
+              "dimension": 21,
+              "id": "SO7",
+              "label": "SO(7)",
+              "matrixDimension": 7,
+              "rank": 3,
+              "spec": {
+                "family": "SO",
+                "globalForm": "ADJOINT",
+                "parameter": 7,
+                "representation": "DEFINING"
+              }
+            },
+            {
+              "dimension": 28,
+              "id": "SO8",
+              "label": "SO(8)",
+              "matrixDimension": 8,
+              "rank": 4,
+              "spec": {
+                "family": "SO",
+                "globalForm": "QUOTIENT",
+                "parameter": 8,
+                "representation": "DEFINING"
+              }
+            },
+            {
+              "dimension": 3,
+              "id": "Sp1",
+              "label": "Sp(1)",
+              "matrixDimension": 2,
+              "rank": 1,
+              "spec": {
+                "family": "Sp",
+                "globalForm": "SIMPLY_CONNECTED",
+                "parameter": 1,
+                "representation": "DEFINING"
+              }
+            },
+            {
+              "dimension": 10,
+              "id": "Sp2",
+              "label": "Sp(2)",
+              "matrixDimension": 4,
+              "rank": 2,
+              "spec": {
+                "family": "Sp",
+                "globalForm": "SIMPLY_CONNECTED",
+                "parameter": 2,
+                "representation": "DEFINING"
+              }
+            },
+            {
+              "dimension": 21,
+              "id": "Sp3",
+              "label": "Sp(3)",
+              "matrixDimension": 6,
+              "rank": 3,
+              "spec": {
+                "family": "Sp",
+                "globalForm": "SIMPLY_CONNECTED",
+                "parameter": 3,
+                "representation": "DEFINING"
+              }
+            },
+            {
+              "dimension": 14,
+              "id": "G2",
+              "label": "G2",
+              "matrixDimension": 7,
+              "rank": 2,
+              "spec": {
+                "family": "G2",
+                "globalForm": "ADJOINT",
+                "parameter": 2,
+                "representation": "REAL_7"
+              }
+            }
+          ],
+          "unsupported": [
+            {
+              "item": "Spin and nontrivial central quotients",
+              "reason": "No faithful storage adapter/descended representation has been implemented."
+            },
+            {
+              "item": "F4, E6, E7, E8",
+              "reason": "No concrete matrix adapter is shipped; no label-only proxy."
+            },
+            {
+              "item": "SO(4)",
+              "reason": "Its Lie algebra is not simple."
+            },
+            {
+              "item": "Quantum Wilson ensemble / empirical gap estimate",
+              "reason": "M1 constructs deterministic classical links, not a Gibbs sampler or transfer-matrix continuum limit."
+            },
+            {
+              "item": "Continuum quantum Yang-Mills / OS reconstruction / infinite-volume mass gap",
+              "reason": "Separate analytic construction and hypotheses; no existence claim."
+            }
+          ],
+          "version": "m1-1"
+        },
+        "ns": {
+          "budget": {
+            "cancellation": "isCancelled callback checked in bounded numerical loops",
+            "maximumMilliseconds": 120000,
+            "maximumOperations": 50000000,
+            "maximumPoints": 16384
+          },
+          "evidenceGrades": {
+            "EXACT_BOUND_CERTIFICATE_WITH_THEOREM_REFERENCE": "Exact executable local bounds with explicit source-theorem references; no full generated analytic Lean proof or global profile.",
+            "EXACT_RATIONAL_BOUNDS_WITH_ANALYTIC_THEOREM_ARGUMENT": "Exact scalar bounds for the actual A.21 pressure with explicit analytic theorem arguments; generated Lean premise bundle remains open.",
+            "FINITE_NUMERICAL_FIXTURE": "Independent finite numerical consistency checks.",
+            "FORMAL_NONLINEAR_AXIS_COEFFICIENTS": "Actual finite nonlinear recurrence coefficients; invariant ball, radius and tail are not certified.",
+            "FULL_CERTIFIED_PROFILE": "Reserved; no current computation may emit this grade.",
+            "KERNEL_CHECKED_COMPONENTS": "Only exact named imported/local theorem types and their listed axioms pass the local unchanged kernel.",
+            "PARTIAL_CANDIDATE_WITH_BLOCKERS": "Source axis/exterior components and explicitly unverified continuation; full theorem gate remains closed.",
+            "SOURCE_FORMULA": "Direct source expression, evaluated with stated normalization and domain.",
+            "THEOREM_REFERENCE": "Citation and precise statement, no local kernel proof of the full source claim.",
+            "VERIFIED_NUMERICAL_ENCLOSURE": "Finite real interval quadrature/series and explicit error budget, without full PDE theorem."
+          },
+          "id": "navier-m1",
+          "kinds": [
+            "ns.provenance",
+            "ns.coordinates",
+            "ns.heat",
+            "ns.exterior",
+            "ns.benchmark",
+            "ns.axis-series",
+            "ns.moments",
+            "ns.cone",
+            "ns.leading-profile",
+            "ns.validate",
+            "ns.axis-certificate",
+            "ns.source-outer",
+            "ns.controlled-continuation",
+            "ns.admissible-loop",
+            "ns.pressure-certificate",
+            "ns.axis-source-certificate",
+            "ns.radial-modulation",
+            "ns.source-inner-gluing"
+          ],
+          "notImplemented": [
+            "one uniformly certified quantitative parameter selection for the full original datum",
+            "certified identity of the actual A.21 target with repaired outer fields and of finite eta jets with the infinite axis sequence",
+            "uniform interval-Newton five-moment gluing and complete radial/eta cone certification after the computed C.12 operation",
+            "N4-N8 full construction"
+          ],
+          "precision": {
+            "arithmetic": "exact rational axis bounds; outward binary64 heat and scalar intervals; signed-log outer quantities; binary64 candidate jets and ODEs",
+            "bits": 53,
+            "independentFixtures": "separate high-precision and exact rational reference calculations",
+            "minimumAbsoluteTolerance": 2e-14,
+            "unsupportedPrecisionStatus": "PRECISION_REQUIRED"
+          },
+          "scope": [
+            "N1 provenance and exact theorem contract",
+            "N2 coordinates, heat, viscosity and independent PDE checks",
+            "N3 finite nonlinear axis and exact local bounds for an explicit analytic datum",
+            "Source outer repairs, exact A.21 pressure/axis input bounds, B.5 continuation, actual B.34/B.8 cumulative five-moment gluing, C.1 loops and C.12 modulation with nonlinear first-patch correction"
+          ],
+          "version": "1.3.0-m1"
+        }
+      },
+      "evidencePolicy": "FINITE_DOMAIN_RESULTS_DO_NOT_ISSUE_FORMAL_PASS",
+      "execution": "STATIC_BOUNDED_WORKER",
+      "limits": {
+        "maxBytes": 8388608,
+        "maxConcurrent": 1,
+        "maxEvaluations": 50000,
+        "maxInputBytes": 262144,
+        "maxIntegers": 8388608,
+        "maxItems": 1000000,
+        "maxJobs": 32,
+        "maxMatrixDimension": 8,
+        "maxMillis": 60000,
+        "maxMilliseconds": 60000,
+        "maxOperations": 50000000,
+        "maxPoints": 16384,
+        "maxSamples": 5000
+      },
+      "server": false,
+      "version": "1.2.0"
+    },
+    "hash": "fc67a6b29748d52cb295758caf972327655477a1c34283bac207d2b6b8864531"
+  },
+  "result": {
+    "checks": [
+      {
+        "error": 4.846766264089403e-12,
+        "independentPaths": [
+          "paper T_b/Z_b analytic operator",
+          "seven-point physical-coordinate finite difference through inverse root solve"
+        ],
+        "name": "coordinate_chain_0_2_3",
+        "pass": true,
+        "tolerance": 1e-10
+      },
+      {
+        "error": 6.055217988517e-12,
+        "independentPaths": [
+          "paper T_b/Z_b analytic operator",
+          "seven-point physical-coordinate finite difference through inverse root solve"
+        ],
+        "name": "coordinate_chain_0_1_0",
+        "pass": true,
+        "tolerance": 1e-10
+      },
+      {
+        "error": 5.633156905129327e-15,
+        "independentPaths": [
+          "paper T_b/Z_b analytic operator",
+          "seven-point physical-coordinate finite difference through inverse root solve"
+        ],
+        "name": "coordinate_chain_0_0_2",
+        "pass": true,
+        "tolerance": 1e-10
+      },
+      {
+        "error": 6.252011297405594e-12,
+        "independentPaths": [
+          "paper T_b/Z_b analytic operator",
+          "seven-point physical-coordinate finite difference through inverse root solve"
+        ],
+        "name": "coordinate_chain_1_2_3",
+        "pass": true,
+        "tolerance": 1e-10
+      },
+      {
+        "error": 1.6004806012561192e-12,
+        "independentPaths": [
+          "paper T_b/Z_b analytic operator",
+          "seven-point physical-coordinate finite difference through inverse root solve"
+        ],
+        "name": "coordinate_chain_1_1_0",
+        "pass": true,
+        "tolerance": 1e-10
+      },
+      {
+        "error": 2.3584317008504136e-14,
+        "independentPaths": [
+          "paper T_b/Z_b analytic operator",
+          "seven-point physical-coordinate finite difference through inverse root solve"
+        ],
+        "name": "coordinate_chain_1_0_2",
+        "pass": true,
+        "tolerance": 1e-10
+      },
+      {
+        "name": "taylor_green_fd_nu_0.1",
+        "pass": true,
+        "refinedValue": {
+          "derivativeMethod": "seven-point centered physical finite differences; not copied analytic jets",
+          "divergence": 3.8968828164342995e-14,
+          "normalization": "1+||dt u||2+||(u·grad)u||2+nu||lap u||2+||grad p||2",
+          "normalizedResidual": 2.693815308208559e-12,
+          "residual": [
+            -6.485534331801546e-12,
+            -4.41591208044656e-13,
+            5.782411586589357e-16
+          ],
+          "solutionErrorBound": null,
+          "step": 0.003,
+          "terms": {
+            "advection": [
+              0.45814923822725273,
+              0.35119038465590413,
+              0
+            ],
+            "dt": [
+              -0.11408043843989396,
+              0.06087020660767214,
+              0
+            ],
+            "laplacian": [
+              -1.1408043843339049,
+              0.6087020660810359,
+              0
+            ],
+            "pressureGradient": [
+              -0.4581492382272348,
+              -0.35119038465591423,
+              5.782411586589357e-16
+            ]
+          }
+        },
+        "tolerance": 1e-9,
+        "value": {
+          "derivativeMethod": "seven-point centered physical finite differences; not copied analytic jets",
+          "divergence": -2.2537527399890678e-14,
+          "normalization": "1+||dt u||2+||(u·grad)u||2+nu||lap u||2+||grad p||2",
+          "normalizedResidual": 1.8071502785232466e-12,
+          "residual": [
+            -3.707922857643098e-12,
+            -2.295386103412511e-12,
+            8.673617379884035e-16
+          ],
+          "solutionErrorBound": null,
+          "step": 0.002,
+          "terms": {
+            "advection": [
+              0.4581492382272252,
+              0.35119038465590646,
+              0
+            ],
+            "dt": [
+              -0.1140804384399353,
+              0.06087020660770163,
+              0
+            ],
+            "laplacian": [
+              -1.1408043843624558,
+              0.6087020660996241,
+              0
+            ],
+            "pressureGradient": [
+              -0.4581492382272434,
+              -0.3511903846559411,
+              8.673617379884035e-16
+            ]
+          }
+        }
+      },
+      {
+        "name": "negative_pressure_sign_nu_0.1",
+        "negativeControl": true,
+        "observedResidual": 0.4784353254059431,
+        "pass": true
+      },
+      {
+        "name": "taylor_green_fd_nu_1",
+        "pass": true,
+        "refinedValue": {
+          "derivativeMethod": "seven-point centered physical finite differences; not copied analytic jets",
+          "divergence": 2.6867397195928788e-14,
+          "normalization": "1+||dt u||2+||(u·grad)u||2+nu||lap u||2+||grad p||2",
+          "normalizedResidual": 9.83929681484658e-12,
+          "residual": [
+            -2.8411994978938537e-11,
+            -1.8023166292735482e-11,
+            0
+          ],
+          "solutionErrorBound": null,
+          "step": 0.003,
+          "terms": {
+            "advection": [
+              0.23117961874495893,
+              0.17720876181262846,
+              0
+            ],
+            "dt": [
+              -0.8103683463822209,
+              0.43239041984051385,
+              0
+            ],
+            "laplacian": [
+              -0.8103683463538125,
+              0.4323904198585353,
+              0
+            ],
+            "pressureGradient": [
+              -0.23117961874496257,
+              -0.17720876181263015,
+              0
+            ]
+          }
+        },
+        "tolerance": 1e-9,
+        "value": {
+          "derivativeMethod": "seven-point centered physical finite differences; not copied analytic jets",
+          "divergence": 8.659739592076221e-15,
+          "normalization": "1+||dt u||2+||(u·grad)u||2+nu||lap u||2+||grad p||2",
+          "normalizedResidual": 1.995321352675196e-11,
+          "residual": [
+            -3.965236472502909e-11,
+            -5.552713844281243e-11,
+            0
+          ],
+          "solutionErrorBound": null,
+          "step": 0.002,
+          "terms": {
+            "advection": [
+              0.23117961874495235,
+              0.17720876181263528,
+              0
+            ],
+            "dt": [
+              -0.8103683463821896,
+              0.43239041984050325,
+              0
+            ],
+            "laplacian": [
+              -0.8103683463425368,
+              0.43239041989603677,
+              0
+            ],
+            "pressureGradient": [
+              -0.23117961874495205,
+              -0.1772087618126289,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "name": "negative_pressure_sign_nu_1",
+        "negativeControl": true,
+        "observedResidual": 0.1703626613922485,
+        "pass": true
+      },
+      {
+        "name": "taylor_green_fd_nu_3",
+        "pass": true,
+        "refinedValue": {
+          "derivativeMethod": "seven-point centered physical finite differences; not copied analytic jets",
+          "divergence": -2.6645352591003757e-15,
+          "normalization": "1+||dt u||2+||(u·grad)u||2+nu||lap u||2+||grad p||2",
+          "normalizedResidual": 1.4600582499887416e-11,
+          "residual": [
+            4.887533433528546e-11,
+            -2.3175239505235368e-11,
+            -1.264902534566422e-16
+          ],
+          "solutionErrorBound": null,
+          "step": 0.003,
+          "terms": {
+            "advection": [
+              0.0505617306406024,
+              0.03875766268050604,
+              0
+            ],
+            "dt": [
+              -1.1369462073437606,
+              0.606643448160522,
+              0
+            ],
+            "laplacian": [
+              -0.3789820691308788,
+              0.20221448272789888,
+              0
+            ],
+            "pressureGradient": [
+              -0.05056173064060278,
+              -0.03875766268050662,
+              -1.264902534566422e-16
+            ]
+          }
+        },
+        "tolerance": 1e-9,
+        "value": {
+          "derivativeMethod": "seven-point centered physical finite differences; not copied analytic jets",
+          "divergence": 1.8735013540549517e-14,
+          "normalization": "1+||dt u||2+||(u·grad)u||2+nu||lap u||2+||grad p||2",
+          "normalizedResidual": 2.0846996932967573e-11,
+          "residual": [
+            6.372982697122609e-11,
+            -4.3628309298604506e-11,
+            -1.8973538018496328e-16
+          ],
+          "solutionErrorBound": null,
+          "step": 0.002,
+          "terms": {
+            "advection": [
+              0.05056173064060711,
+              0.038757662680505095,
+              0
+            ],
+            "dt": [
+              -1.1369462073435097,
+              0.6066434481603803,
+              0
+            ],
+            "laplacian": [
+              -0.37898206913574567,
+              0.20221448273466913,
+              0
+            ],
+            "pressureGradient": [
+              -0.050561730640604624,
+              -0.038757662680506275,
+              -1.8973538018496328e-16
+            ]
+          }
+        }
+      },
+      {
+        "name": "negative_pressure_sign_nu_3",
+        "negativeControl": true,
+        "observedResidual": 0.0343923390012208,
+        "pass": true
+      },
+      {
+        "name": "heat_ode_independent_integrals",
+        "pass": true,
+        "residual": -2.916937524855001e-15,
+        "tolerance": 1e-10
+      },
+      {
+        "name": "heat_cylindrical_fd",
+        "pass": true,
+        "residual": 6.752812198307367e-11,
+        "tolerance": 1e-9
+      },
+      {
+        "name": "negative_heat_angular_laplacian_sign",
+        "negativeControl": true,
+        "pass": true,
+        "residual": -1.6351915997548498
+      },
+      {
+        "name": "exterior_full_momentum_with_pressure",
+        "pass": true,
+        "tolerance": 1e-9,
+        "value": {
+          "derivativeMethod": "seven-point centered physical finite differences; not copied analytic jets",
+          "divergence": -7.627232179174825e-14,
+          "normalization": "1+||dt u||2+||(u·grad)u||2+nu||lap u||2+||grad p||2",
+          "normalizedResidual": 1.693771588672442e-11,
+          "residual": [
+            3.757749666988275e-11,
+            -4.085032312417525e-11,
+            0
+          ],
+          "solutionErrorBound": null,
+          "step": 0.004,
+          "terms": {
+            "advection": [
+              -1.0299447337445153,
+              -0.46815669715667607,
+              0
+            ],
+            "dt": [
+              -0.0029605728258438185,
+              0.006513260216857268,
+              0
+            ],
+            "laplacian": [
+              -0.0029605728634156878,
+              0.006513260257631957,
+              0
+            ],
+            "pressureGradient": [
+              1.029944733744521,
+              0.4681566971566004,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "name": "negative_missing_exterior_pressure",
+        "negativeControl": true,
+        "pass": true,
+        "value": {
+          "derivativeMethod": "seven-point centered physical finite differences; not copied analytic jets",
+          "divergence": -7.627232179174825e-14,
+          "normalization": "1+||dt u||2+||(u·grad)u||2+nu||lap u||2+||grad p||2",
+          "normalizedResidual": 0.527274273680415,
+          "residual": [
+            -1.0299447337069434,
+            -0.46815669719745073,
+            0
+          ],
+          "solutionErrorBound": null,
+          "step": 0.004,
+          "terms": {
+            "advection": [
+              -1.0299447337445153,
+              -0.46815669715667607,
+              0
+            ],
+            "dt": [
+              -0.0029605728258438185,
+              0.006513260216857268,
+              0
+            ],
+            "laplacian": [
+              -0.0029605728634156878,
+              0.006513260257631957,
+              0
+            ],
+            "pressureGradient": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "name": "negative_inconsistent_viscosity",
+        "negativeControl": true,
+        "pass": true,
+        "value": {
+          "derivativeMethod": "seven-point centered physical finite differences; not copied analytic jets",
+          "divergence": -7.627232179174825e-14,
+          "normalization": "1+||dt u||2+||(u·grad)u||2+nu||lap u||2+||grad p||2",
+          "normalizedResidual": 0.004347522448000191,
+          "residual": [
+            0.0059211457644088306,
+            -0.013026520556114252,
+            0
+          ],
+          "solutionErrorBound": null,
+          "step": 0.004,
+          "terms": {
+            "advection": [
+              -1.0299447337445153,
+              -0.46815669715667607,
+              0
+            ],
+            "dt": [
+              -0.0029605728258438185,
+              0.006513260216857268,
+              0
+            ],
+            "laplacian": [
+              -0.0029605728634156878,
+              0.006513260257631957,
+              0
+            ],
+            "pressureGradient": [
+              1.029944733744521,
+              0.4681566971566004,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "error": 1.0614466625631893e-16,
+        "name": "FFT_vs_direct_convolution",
+        "normalizedError": 9.966635329231825e-17,
+        "pass": true,
+        "tolerance": 1e-11
+      },
+      {
+        "name": "dealiased_energy_cancellation",
+        "pass": true,
+        "value": -4.496050884025826e-18
+      },
+      {
+        "error": 0.02750000000000008,
+        "name": "negative_aliasing_without_padding",
+        "negativeControl": true,
+        "pass": true
+      },
+      {
+        "divergence": -1.9039525511743705e-10,
+        "fullNSResidual": 0.9953256928042429,
+        "fullNSResidualMustVanish": false,
+        "independentPaths": [
+          "source radial integral average reconstruction",
+          "seven-point Cartesian finite difference with separate inverse coordinate solves"
+        ],
+        "name": "actual_core_Cartesian_divergence_FD",
+        "normalizedDivergence": 4.335177944113701e-11,
+        "pass": true,
+        "point": [
+          0.027041254858320662,
+          0.022776534760304286,
+          0
+        ],
+        "reason": "The source leading profile omits axial viscosity from its leading tangential system; this finite truncation is not a full NS solution.",
+        "tolerance": 1e-8
+      },
+      {
+        "axisValue": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "pressure": -44.73027609435782,
+          "velocity": [
+            0,
+            0,
+            0.055102971716136526
+          ]
+        },
+        "name": "actual_core_axis_regular_representation",
+        "pass": true,
+        "representation": "u_xy=VoverX*(x,y)/(2q)+q^(-1-h)F*(-y,x); no division by r on the axis."
+      },
+      {
+        "certifiedNonlinearTail": false,
+        "coarse": {
+          "angular": -0.00041879009926759636,
+          "axial": -0.0000021671951309087945
+        },
+        "name": "nonlinear_axis_recurrence_order_refinement",
+        "nonlinearPhi": 0.899593375705706,
+        "pass": true,
+        "refined": {
+          "angular": -7.322853434743593e-11,
+          "axial": 1.4210854715202004e-14
+        },
+        "scalarComparison": 0.9077247693203689
+      },
+      {
+        "error": 2.220446049250313e-16,
+        "name": "coordinate_330bit_nu_0.1_eta_-0.8",
+        "pass": true,
+        "tolerance": 1e-13
+      },
+      {
+        "error": 5.551115123125783e-17,
+        "name": "coordinate_330bit_nu_0.1_eta_0",
+        "pass": true,
+        "tolerance": 1e-13
+      },
+      {
+        "error": 1.2852870103008777e-17,
+        "name": "coordinate_330bit_nu_0.1_eta_0.62",
+        "pass": true,
+        "tolerance": 1e-13
+      },
+      {
+        "error": 1.169192303809549e-16,
+        "name": "coordinate_330bit_nu_1_eta_-0.8",
+        "pass": true,
+        "tolerance": 1e-13
+      },
+      {
+        "error": 5.551115123125783e-17,
+        "name": "coordinate_330bit_nu_1_eta_0",
+        "pass": true,
+        "tolerance": 1e-13
+      },
+      {
+        "error": 5.551115123125783e-17,
+        "name": "coordinate_330bit_nu_1_eta_0.62",
+        "pass": true,
+        "tolerance": 1e-13
+      },
+      {
+        "error": 2.220446049250313e-16,
+        "name": "coordinate_330bit_nu_3_eta_-0.8",
+        "pass": true,
+        "tolerance": 1e-13
+      },
+      {
+        "error": 4.080592901261576e-17,
+        "name": "coordinate_330bit_nu_3_eta_0",
+        "pass": true,
+        "tolerance": 1e-13
+      },
+      {
+        "error": 5.551115123125783e-17,
+        "name": "coordinate_330bit_nu_3_eta_0.62",
+        "pass": true,
+        "tolerance": 1e-13
+      },
+      {
+        "error": 9.641593079479094e-15,
+        "name": "heat_direct_v_integral_330bit_Z_0",
+        "pass": true,
+        "tolerance": 1e-10
+      },
+      {
+        "error": 5.427082394593441e-15,
+        "name": "heat_direct_v_integral_330bit_Z_0.1",
+        "pass": true,
+        "tolerance": 1e-10
+      },
+      {
+        "error": 2.1094237467877974e-15,
+        "name": "heat_direct_v_integral_330bit_Z_1",
+        "pass": true,
+        "tolerance": 1e-10
+      },
+      {
+        "error": 2.730794241992754e-14,
+        "name": "heat_direct_v_integral_330bit_Z_10",
+        "pass": true,
+        "tolerance": 1e-10
+      },
+      {
+        "error": 1.430490271843329e-16,
+        "mpmathCylindricalResidual": "-8.7203017523366926743757900108744885212090301118682759186945025881014452812708908e-104",
+        "name": "exterior_derivatives_330bit_nu_0.1",
+        "pass": true,
+        "tolerance": 1e-10
+      },
+      {
+        "error": 3.2765389743585208e-15,
+        "mpmathCylindricalResidual": "-6.4739520209347606414565865040732202781455839550510080420387987214065129768155093e-102",
+        "name": "exterior_derivatives_330bit_nu_1",
+        "pass": true,
+        "tolerance": 1e-10
+      },
+      {
+        "error": 6.060488807812053e-14,
+        "mpmathCylindricalResidual": "-2.5895808083739042565826346016292881112582335820204032168155194885626051907262037e-101",
+        "name": "exterior_derivatives_330bit_nu_3",
+        "pass": true,
+        "tolerance": 1e-10
+      },
+      {
+        "name": "entire_comparison_f0_4p1",
+        "observed": {
+          "N": 24,
+          "enclosure": {
+            "lower": 0.2711140554036619,
+            "midpoint": 0.2711140554036645,
+            "precisionBits": 53,
+            "radius": 2.5812685322534894e-15,
+            "rounding": "outward IEEE-754 operations; elementary functions by bounded series",
+            "type": "real-ball",
+            "upper": 0.27111405540366706
+          },
+          "proof": "ratio of successive absolute terms is z/[2(n+1)(n+2)]; geometric tail after N",
+          "radiusOfConvergence": "infinity",
+          "scope": "Scalar comparison f0, not the nonlinear axis profile",
+          "source": {
+            "equation": "B.11",
+            "pages": [
+              146
+            ],
+            "source": "N00"
+          },
+          "tailBound": 9.973599277550476e-45,
+          "value": 0.2711140554036645,
+          "z": 4.1
+        },
+        "pass": true,
+        "reference": "0.27111405540366438410279651499926797189639754554107052643309722382585993975143215"
+      },
+      {
+        "cases": [
+          {
+            "expected": 0.006225579960966994,
+            "normalizedError": 1.0861140996910283e-16,
+            "nu": 0.1,
+            "observed": 0.006225579960967103,
+            "pass": true
+          },
+          {
+            "expected": 1.9687012432157853,
+            "normalizedError": 0,
+            "nu": 1,
+            "observed": 1.9687012432157853,
+            "pass": true
+          },
+          {
+            "expected": 30.689015203563784,
+            "normalizedError": 7.175157510658816e-15,
+            "nu": 3,
+            "observed": 30.689015203563557,
+            "pass": true
+          }
+        ],
+        "domain": "Finite boxes [-6sqrt(nu),6sqrt(nu)]^3; analytic change-of-variable scales the identical domain",
+        "field": "u1(x)=exp(-|x|^2)e1, uNu=sqrt(nu)u1(x/sqrt(nu))",
+        "independentPaths": [
+          "physical-coordinate quadrature at each viscosity",
+          "nu^(5/2) times unit-viscosity energy"
+        ],
+        "name": "viscosity_energy_measure_scaling",
+        "pass": true,
+        "tolerance": 1e-10
+      },
+      {
+        "name": "five_moment_independent_reintegration",
+        "pass": true,
+        "residual": 6.2424589551181135e-9,
+        "tolerance": 1e-8
+      },
+      {
+        "name": "negative_omitted_quadratic_moments",
+        "negativeControl": true,
+        "pass": true,
+        "residual": 0.00008241581253497241
+      },
+      {
+        "name": "negative_overlap_support",
+        "negativeControl": true,
+        "observedStatus": "INVALID_SUPPORT",
+        "pass": true
+      },
+      {
+        "name": "negative_exterior_axis",
+        "negativeControl": true,
+        "observedStatus": "EXCLUDED_DOMAIN",
+        "pass": true
+      },
+      {
+        "name": "negative_viscosity",
+        "negativeControl": true,
+        "observedStatus": "INVALID_INPUT",
+        "pass": true
+      },
+      {
+        "name": "negative_precision_claim",
+        "negativeControl": true,
+        "observedStatus": "PRECISION_REQUIRED",
+        "pass": true
+      },
+      {
+        "certificate": {
+          "Jc": {
+            "lower": -0.1379310344827587,
+            "midpoint": 0,
+            "precisionBits": 53,
+            "radius": 0.13793103448275873,
+            "rounding": "outward IEEE-754 operations; elementary functions by bounded series",
+            "type": "real-ball",
+            "upper": 0.1379310344827587
+          },
+          "Pc": {
+            "lower": 4.899137931034482,
+            "midpoint": 5,
+            "precisionBits": 53,
+            "radius": 0.10086206896551798,
+            "rounding": "outward IEEE-754 operations; elementary functions by bounded series",
+            "type": "real-ball",
+            "upper": 5.100862068965518
+          },
+          "box": {
+            "a": [
+              2.9,
+              3.1
+            ],
+            "bs": [
+              -0.05,
+              0.05
+            ],
+            "p1": [
+              4.9,
+              5.1
+            ],
+            "p2": [
+              -0.05,
+              0.05
+            ]
+          },
+          "fullProfileConeCertified": false,
+          "kappaLower": 0.8165550058301743,
+          "method": "Outward binary64 interval arithmetic, including bounded-series square root via exp(log/2).",
+          "pass": true,
+          "projection": {
+            "lower": 0.8165550058301743,
+            "midpoint": 1.020813543400745,
+            "precisionBits": 53,
+            "radius": 0.2042585375705708,
+            "rounding": "outward IEEE-754 operations; elementary functions by bounded series",
+            "type": "real-ball",
+            "upper": 1.2250720809713158
+          },
+          "quadraticMargin": {
+            "lower": 1.9935234419102472,
+            "midpoint": 2,
+            "precisionBits": 53,
+            "radius": 0.006476558089753005,
+            "rounding": "outward IEEE-754 operations; elementary functions by bounded series",
+            "type": "real-ball",
+            "upper": 2.0064765580897532
+          },
+          "quantifier": "For every real (a,bs,p1,p2) in the stated Cartesian box, inequalities (4.26) hold with any 0<kappa<=kappaLower.",
+          "source": {
+            "equations": [
+              "4.20",
+              "4.25",
+              "4.26"
+            ],
+            "pages": [
+              32,
+              33
+            ],
+            "source": "N00"
+          },
+          "status": "VERIFIED_WHOLE_PARAMETER_BOX",
+          "vs": {
+            "lower": 2.899137931034482,
+            "midpoint": 3,
+            "precisionBits": 53,
+            "radius": 0.10086206896551798,
+            "rounding": "outward IEEE-754 operations; elementary functions by bounded series",
+            "type": "real-ball",
+            "upper": 3.100862068965518
+          }
+        },
+        "name": "whole_parameter_box_cone_certificate",
+        "pass": true
+      },
+      {
+        "name": "negative_zero_stress_division",
+        "negativeControl": true,
+        "pass": true
+      },
+      {
+        "name": "negative_invalid_cone",
+        "negativeControl": true,
+        "pass": true
+      }
+    ],
+    "contract": {
+      "fullCertifiedProfile": false,
+      "fullNavierStokesSolution": false,
+      "precisionOfCandidate": "IEEE754 binary64; only individually labelled intervals are numerical enclosures",
+      "solutionErrorBound": null
+    },
+    "domainStatus": "VALIDATION_PASSED",
+    "evidenceGrade": "FINITE_NUMERICAL_FIXTURE",
+    "executionMetrics": {
+      "elapsedMilliseconds": 930,
+      "operations": 768272
+    },
+    "fullCertifiedProfile": false,
+    "kind": "ns.validate",
+    "moduleVersion": "1.3.0-m1",
+    "parameterHash": "ccc0a863fe53f3a0b322cd9c3247c8c008a4227304df3e68ee24f877feb20f33",
+    "passed": 51,
+    "precision": {
+      "absoluteTolerance": 1e-8,
+      "bits": 53,
+      "relativeTolerance": 1e-8
+    },
+    "scope": "Finite independent consistency checks; not a complete profile or source-theorem certificate.",
+    "sourceLedger": {
+      "attachmentSha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+      "fullOriginalKernelBuild": false,
+      "repositoryCommit": "f9e8bc5b38b6e212696e8a30e3e91517af887bbd",
+      "theoremReference": "Theorem1.1; N3 Theorem4.6"
+    },
+    "status": "COMPLETED",
+    "total": 51
+  },
+  "resultHash": "1df5328e785def81aa733b502d66a8e845bfa27f62d45c46d4a374117a602721",
+  "mathematicalHash": "3cc4964bd6629cd4adb7b6a56505df2b8a16ada921d918a1fb26354d3c2b24cd",
+  "semanticHashPolicy": "EXCLUDES_TOP_LEVEL_EXECUTION_METRICS_ONLY",
+  "checkpoint": null,
+  "resumePolicy": "RECOMPUTE_FROM_ORIGINAL_INPUT",
+  "trust": "UNTRUSTED_WHEN_SERIALIZED",
+  "bundleHash": "b9b92f0050a4de71b81fb0fa83a77512ffb35fee0e43da615967c934831e263c"
+}

@@ -1,0 +1,2257 @@
+{
+  "schema": "MathScope.M4.R105.BrowserAudit/1",
+  "candidateSHA256": "0504482900dbeac2faf992be9a923bc51ab1de6bcec0b82ac058085444669735",
+  "scope": "One exact archived source-observation fixture P7-01 in MathScope candidate 0504482900dbeac2faf992be9a923bc51ab1de6bcec0b82ac058085444669735",
+  "thresholds": {
+    "scope": "One exact archived source-observation fixture P7-01 in MathScope candidate 0504482900dbeac2faf992be9a923bc51ab1de6bcec0b82ac058085444669735",
+    "expectedMarks": {
+      "points": 88,
+      "lines": 88,
+      "lineVertices": 176,
+      "meshes": 0,
+      "triangles": 0,
+      "enclosures": 0
+    },
+    "sourceRendererCaps": {
+      "points": 4096,
+      "lines": 512,
+      "lineVertices": 16384,
+      "meshes": 32,
+      "triangles": 8192,
+      "enclosures": 512,
+      "labels": 18,
+      "tablePage": 40
+    },
+    "desktop": {
+      "width": 1200,
+      "height": 900,
+      "dpr": 1
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "dpr": 2,
+      "hasTouch": true
+    },
+    "latencyP95Milliseconds": 100,
+    "latencySource": "Original 99-page blueprint pp. 18 and 85",
+    "interactionsPerView": 30,
+    "memoryMeasurand": "Maximum of 31 Chrome Runtime.getHeapUsage usedSize + embedderHeapUsedSize + backingStorageSize snapshots after each rendered action",
+    "rendererMemoryBytes": 402653184,
+    "memoryScope": "This isolated candidate fixture, browser renderer measurements. Explicit benchmark budget chosen before the test under original p68 memory requirement.",
+    "latencyMeasurand": "Capture-phase native keydown to next rendered current scene revision, read from original audit DOM mutation before browser paint"
+  },
+  "environment": {
+    "platform": "win32",
+    "release": "10.0.22621",
+    "architecture": "x64",
+    "cpus": 8,
+    "cpuModel": "Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz",
+    "physicalMobileDeviceTested": false,
+    "webGLBackend": "Chrome ANGLE SwiftShader"
+  },
+  "dependencies": {
+    "three": {
+      "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js": "c8211c69345d2e9949dc7a8ac969380497aa0600a5a8ac6a459c8cd02dd9cb8a",
+      "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.core.js": "eb077d2417f61d3e6d9264c317cabc4ea35769ed6b0ab533067292a550784c20",
+      "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/controls/OrbitControls.js": "b97879c748170baadeb3fb84cea1ffdf4674e283dc06042f34e2acb95a76042c"
+    },
+    "archivedPageAssets": {
+      "css/mathscope.css": {
+        "sourceCommit": "e5113446c4d4ede3decd6107e6ab3dd52dce1697",
+        "sourcePath": "research-ide/mathscope-m3/evidence/work-handoff-20261018T052411Z_d9d0106e/work/web_intake/source/css/mathscope.css",
+        "sha256": "9eca6aa37d44d8987a5372534abc6b703242aab4f1ce1277440d84844f7e1b7a",
+        "bytes": 22574
+      },
+      "css/mathscope-stage6.css": {
+        "sourceCommit": "e5113446c4d4ede3decd6107e6ab3dd52dce1697",
+        "sourcePath": "research-ide/mathscope-m3/evidence/work-handoff-20261018T052411Z_d9d0106e/work/web_intake/source/css/mathscope-stage6.css",
+        "sha256": "e4fb71c70293c86d777fabad3ece2cddbfa04518bf5e94bb4fcb6f33fc9771a4",
+        "bytes": 2643
+      },
+      "css/mathscope-stage7.css": {
+        "sourceCommit": "e5113446c4d4ede3decd6107e6ab3dd52dce1697",
+        "sourcePath": "research-ide/mathscope-m3/evidence/work-handoff-20261018T052411Z_d9d0106e/work/web_intake/source/css/mathscope-stage7.css",
+        "sha256": "a17d38a9a4b2d1f7155059d7a6d14381ca851822658a6180a2b04cefa8cad2ad",
+        "bytes": 3737
+      },
+      "js/mathscope-app.js": {
+        "sourceCommit": "e5113446c4d4ede3decd6107e6ab3dd52dce1697",
+        "sourcePath": "research-ide/mathscope-m3/evidence/work-handoff-20261018T052411Z_d9d0106e/work/web_intake/source/js/mathscope-app.js",
+        "sha256": "1d138539ed41ca08c8c15436a3fd313666eed96f623033b17c1a308faa384550",
+        "bytes": 279520
+      },
+      "js/mathscope-stage6.js": {
+        "sourceCommit": "e5113446c4d4ede3decd6107e6ab3dd52dce1697",
+        "sourcePath": "research-ide/mathscope-m3/evidence/work-handoff-20261018T052411Z_d9d0106e/work/web_intake/source/js/mathscope-stage6.js",
+        "sha256": "13db5eb43e26b824cbdaa2dbdc459aef7d6c262d7a19f3686096e467e511ab76",
+        "bytes": 21606
+      },
+      "js/mathscope-stage7.js": {
+        "sourceCommit": "e5113446c4d4ede3decd6107e6ab3dd52dce1697",
+        "sourcePath": "research-ide/mathscope-m3/evidence/work-handoff-20261018T052411Z_d9d0106e/work/web_intake/source/js/mathscope-stage7.js",
+        "sha256": "39b6f3cc3fe8991cc07a9c5d7a7f456746d6457c784e0abcbc8da13df2cf9f5b",
+        "bytes": 37290
+      }
+    }
+  },
+  "views": [
+    {
+      "label": "webgl-desktop",
+      "viewport": {
+        "width": 1200,
+        "height": 900,
+        "dpr": 1
+      },
+      "browserVersion": "157.0.8103.39",
+      "initial": {
+        "criterion": "P7-01",
+        "modelStatus": "RECORDED_EVIDENCE_VISUALIZED",
+        "recordCount": 9,
+        "currentResults": 0,
+        "archivedExamples": 9,
+        "renderer": {
+          "schema": "MathScope.M3.P7.VisualizationAudit/1",
+          "version": "1.1.0",
+          "criterion": "P7-01",
+          "state": "ready",
+          "renderer": "WEBGL",
+          "projection": "ORTHOGRAPHIC",
+          "fallbackReason": null,
+          "frames": 2,
+          "modelRevision": 1,
+          "drawnRevision": 1,
+          "currentModelRendered": true,
+          "webGLRendered": true,
+          "canvasCount": 1,
+          "rendered": {
+            "points": 88,
+            "lines": 88,
+            "lineVertices": 176,
+            "meshes": 0,
+            "triangles": 0,
+            "enclosures": 0
+          },
+          "skipped": 0,
+          "selectedId": null,
+          "reducedMotion": true,
+          "continuousAnimation": false,
+          "sourceModelStatus": "RECORDED_EVIDENCE_VISUALIZED",
+          "criterionStatus": "PARTIAL",
+          "displayDomains": [
+            [
+              2,
+              127
+            ],
+            [
+              -18,
+              18
+            ],
+            [
+              0,
+              2
+            ]
+          ],
+          "camera": {
+            "position": [
+              5.1,
+              3.4999999999999996,
+              5.700000000000001
+            ],
+            "target": [
+              0,
+              0,
+              0
+            ],
+            "up": [
+              0,
+              1,
+              0
+            ],
+            "zoom": 1
+          },
+          "pixelRatio": 1,
+          "drawCalls": 91,
+          "canvasOcclusion": null,
+          "proofStatusPromoted": false,
+          "visualApproximation": true
+        },
+        "proofStatusPromoted": false,
+        "wholeP7Complete": false,
+        "wholeM3Complete": false
+      },
+      "selectedId": "points-1",
+      "selectedJson": {
+        "exact": {
+          "a_p": -3,
+          "conductorExponent": 0,
+          "eulerDegree": 2,
+          "eulerPolynomial": [
+            1,
+            3,
+            3
+          ],
+          "hasseCheck": {
+            "a_p_squared": 9,
+            "four_p": 12,
+            "holds": true
+          },
+          "kodaira": "I0",
+          "localRootNumber": 1,
+          "minimality": {
+            "certified": true,
+            "reason": "unit-discriminant"
+          },
+          "modelHash": "2d8c0c22a75d2848251d071249adca5e92ca18fe463ce71cac59a0ebd4fa2512",
+          "pointCountProof": {
+            "infinityCount": 1,
+            "method": "direct-character-count",
+            "numberOfXWithZeroOneTwoY": [
+              0,
+              0,
+              3
+            ],
+            "quadraticDiscriminant": "(a1*x+a3)^2+4*(x^3+a2*x^2+a4*x+a6)",
+            "xCoordinatesExhausted": 3
+          },
+          "prime": 3,
+          "primeCertificate": {
+            "method": "exact-trial-division",
+            "probablePrimeOnly": false,
+            "through": 1
+          },
+          "projectivePointCount": 7,
+          "reducedAinvs": [
+            0,
+            0,
+            1,
+            2,
+            0
+          ],
+          "reduction": "good",
+          "status": "certified",
+          "tamagawaNumber": 1,
+          "valuationC4": 1,
+          "valuationDelta": 0
+        },
+        "source": {
+          "fieldPath": "result.localRows.1",
+          "inputSHA256": "149241d2ee1e33487766a9a9023b0aa8b4e4bf98ac7e04138bc2a5567c8e020a",
+          "requestSHA256": "149241d2ee1e33487766a9a9023b0aa8b4e4bf98ac7e04138bc2a5567c8e020a",
+          "recordSHA256": "2023533329a44ba2403f5fc2fbdae704ed67c4db1ff597ea92b025c620d32225",
+          "mathematicalSHA256": "d52245a5bd52649303227dd20dcf8fa16f242ecf252fc231d914eba16ea66fe2",
+          "request": {
+            "kind": "p7.elliptic_local",
+            "input": {
+              "model": "37a1",
+              "primes": [
+                2,
+                3,
+                5,
+                7,
+                11,
+                13,
+                37
+              ],
+              "coefficientLimit": 64
+            }
+          },
+          "sourceBinding": {
+            "version": "0.3.0",
+            "files": [
+              {
+                "path": "cli.py",
+                "sha256": "ae992122e1bd26faef09f14524be7e5988aaff027a8342d48b0409fcd806a53f"
+              },
+              {
+                "path": "p7/__init__.py",
+                "sha256": "1b6337c04bbc7110e52727b3d2f6139626f0befdfda67a13fd14113203fcd551"
+              },
+              {
+                "path": "p7/ball_backend.py",
+                "sha256": "33d99161c9f3f5bdb2482e538906a50df80e2f221e8f71da5f4d6d86e410cb7e"
+              },
+              {
+                "path": "p7/elliptic_analytic.py",
+                "sha256": "b77ce56be3ee9ace1f76ec10ea088bccb9a7f1d583b9164542f9816a3ddb007f"
+              },
+              {
+                "path": "p7/elliptic_arithmetic.py",
+                "sha256": "ac29e261acca0ec671cfa0286e201d23b46623671cda6ea735f8e6a27e06e154"
+              },
+              {
+                "path": "p7/elliptic_complex.py",
+                "sha256": "70bd068de7a8a54808be70f85700fc7fdc0f326276477cc49346b94467a06535"
+              },
+              {
+                "path": "p7/elliptic_local.py",
+                "sha256": "85b2a163a76dbb7cd8bee367f66bea0824ab385e164161b4a1f0d2d3da8e03da"
+              },
+              {
+                "path": "p7/euler_product.py",
+                "sha256": "531dadf3e3c06144de66473d0e5c204840e5adc76ebb05f70ae911f456bd051d"
+              },
+              {
+                "path": "p7/explicit_formula.py",
+                "sha256": "a3c7f5a6056156ad3094a54f0000a04e08ee316bf302f445c2b1ee6327216961"
+              },
+              {
+                "path": "p7/height_certificate.py",
+                "sha256": "c02e78fa1fdef0832e062b0e097eda2debf0c20ab833eafbed92b41a222d0aa9"
+              },
+              {
+                "path": "p7/modular_symbols.py",
+                "sha256": "01c810b86ccd6daa496264536af0fd6a61966c4c6d5a56ff4234c855c1ebb7b9"
+              },
+              {
+                "path": "p7/normalization.py",
+                "sha256": "86d8f8dd32fa4cb02926c410b1eca56af8ab75dd0738360659efe2eeb5f50770"
+              },
+              {
+                "path": "p7/operator_candidates.py",
+                "sha256": "7a1b8a8786b726fbf7ac94b2b78d6ca163f45750ac6e465be8a742027ba731c5"
+              },
+              {
+                "path": "p7/operator_registry.py",
+                "sha256": "c7d6bbbc1f46ca1bc3765147b57a3f3e8c13d193fc250a9a0011b2d67ed73026"
+              },
+              {
+                "path": "p7/pari_backend.py",
+                "sha256": "5a446e441830650c792d3ce779cf78b58c2ea0355427003fd991978cc857bac8"
+              },
+              {
+                "path": "p7/period_certificate.py",
+                "sha256": "30da2f2a41a49756b948f9c282a08de0c2d35278ef9b9d2411b424db49d731e8"
+              },
+              {
+                "path": "p7/result_claims.py",
+                "sha256": "808fb7746a579a9ff522d8e17bba30fcf2c92eae5009ce703a3fe6fe3121d4f5"
+              },
+              {
+                "path": "p7/taylor_remainder.py",
+                "sha256": "31f40ce640f773e90ae14b90fa7954135f2525a6c779312fc343c7db18dceb7c"
+              },
+              {
+                "path": "p7/zero_certificate.py",
+                "sha256": "3d0355994605d7203b5f9b35d22ffe3ae97aadd26e65c8b6eb6c20c0a929a1ba"
+              },
+              {
+                "path": "p7/zeta_em.py",
+                "sha256": "1e6c73cda3aedf94e6db4962199d001511782bab2e1ea8ebccf041b6084452d8"
+              },
+              {
+                "path": "p7/pari_runtime/setup.py",
+                "sha256": "f2138107fd1412e7c8937cef10b61915166a5137da08ad1a932a3d35c9a00428"
+              },
+              {
+                "path": "p7/pari_runtime/pyproject.toml",
+                "sha256": "06f8c964337d3f5ee97f50a1425e7cf5ff206b0b5c19022dc45d1eb3e9cc7650"
+              },
+              {
+                "path": "p7/pari_runtime/MANIFEST.in",
+                "sha256": "50596052d86e67a74e9d32a45838809bf628bd7fe46455dbc34dd784dc42bd5b"
+              },
+              {
+                "path": "p7/pari_runtime/src/mathscope_p7_pari/__init__.py",
+                "sha256": "9169b41f67cfc35a345ff5c33fa698a93047c3cc723968725561f563d26ed80a"
+              },
+              {
+                "path": "p7/pari_runtime/src/mathscope_p7_pari/build.py",
+                "sha256": "b4007aea96703232e8916edbc77a0be912d4fffadca7f09ac91536df9d3345fb"
+              }
+            ]
+          },
+          "archiveReference": "https://github.com/leegahuyn/MathScopeCompute/blob/759d1a0b35a6e1952663ee6486e8de534d7fcb66/research-ide/mathscope-m3/p7/evidence/final-all64-20261012/attempt1/elliptic-local.json.gz",
+          "archiveURL": "https://github.com/leegahuyn/MathScopeCompute/blob/759d1a0b35a6e1952663ee6486e8de534d7fcb66/research-ide/mathscope-m3/p7/evidence/final-all64-20261012/attempt1/elliptic-local.json.gz",
+          "origin": "ARCHIVED_EXECUTION_EXAMPLE",
+          "visualSource": {
+            "mode": "ARCHIVED_EXAMPLE",
+            "archiveURL": "https://github.com/leegahuyn/MathScopeCompute/blob/759d1a0b35a6e1952663ee6486e8de534d7fcb66/research-ide/mathscope-m3/p7/evidence/final-all64-20261012/attempt1/elliptic-local.json.gz",
+            "title": "37a1 · 정확한 국소 인자와 유리점",
+            "current": false
+          },
+          "currentServerResult": false,
+          "verification": "NOT_PERFORMED_BY_VISUAL_ADAPTER",
+          "originalRecordHashIsCompactedPayloadHash": false
+        },
+        "displayCoordinates": [
+          3,
+          -3,
+          2
+        ],
+        "visualApproximation": true,
+        "proofStatusPromoted": false
+      },
+      "rawTableSHA256": "0ea89499f3e382f08e2ca0cb88a5bc2b12307e0764c531a9ae013824f6709a18",
+      "selectedValueSHA256": "d974752743f9b45c3722f49af1d78620c45e4de700a5df71e4ce269eb1994056",
+      "renderedPixels": {
+        "width": 592,
+        "height": 437,
+        "distinctColors": 922,
+        "pixelColors": [
+          {
+            "color": "06131cff",
+            "n": 240797
+          },
+          {
+            "color": "55d8d0ff",
+            "n": 2013
+          },
+          {
+            "color": "284755ff",
+            "n": 1420
+          },
+          {
+            "color": "a5f0ddff",
+            "n": 818
+          },
+          {
+            "color": "06141cff",
+            "n": 552
+          },
+          {
+            "color": "07141dff",
+            "n": 468
+          },
+          {
+            "color": "2e7676ff",
+            "n": 425
+          },
+          {
+            "color": "0f2029ff",
+            "n": 255
+          },
+          {
+            "color": "08161fff",
+            "n": 250
+          },
+          {
+            "color": "091720ff",
+            "n": 245
+          }
+        ]
+      },
+      "screenshotSHA256": "e1882fa6bf9d8037af349deac5a2ddfa86b9156a8cbe90676740da579606bbfd",
+      "formulaScreenshotSHA256": "ffda3abbdba0f80098ccdf50a023375d89d8a4255b16eb594f2a09307dfada85",
+      "keyboard": {
+        "interactionCount": 30,
+        "p95Milliseconds": 33.80000000074506,
+        "maxMilliseconds": 58,
+        "samples": [
+          5.699999999254942,
+          27.199999999254942,
+          17,
+          18.100000001490116,
+          33.80000000074506,
+          11.900000002235174,
+          9.5,
+          58,
+          22.699999999254942,
+          13.899999998509884,
+          18.199999999254942,
+          17,
+          26.300000000745058,
+          12,
+          16.600000001490116,
+          14.899999998509884,
+          20.299999997019768,
+          20.099999997764826,
+          18.099999997764826,
+          19.900000002235174,
+          11.299999997019768,
+          13.799999997019768,
+          9.899999998509884,
+          19,
+          20,
+          16.199999999254942,
+          21.199999999254942,
+          29.400000002235174,
+          12.699999999254942,
+          14
+        ],
+        "reset": true,
+        "modalFocusRestored": true
+      },
+      "memory": {
+        "snapshots": 31,
+        "peakBytes": 182865748,
+        "samples": [
+          173113102,
+          173629391,
+          174202460,
+          174711368,
+          175930072,
+          175379840,
+          175734876,
+          176175976,
+          176453708,
+          176735584,
+          177111936,
+          177254384,
+          177623524,
+          177868632,
+          178002160,
+          178252948,
+          178767208,
+          178853008,
+          179393624,
+          179563196,
+          179800652,
+          180175936,
+          180693220,
+          180690316,
+          181072264,
+          181331524,
+          181713612,
+          181984804,
+          182220160,
+          182479736,
+          182865748
+        ]
+      },
+      "longText": {
+        "formulaCharacters": 342,
+        "explanationCharacters": 145,
+        "overflow": {
+          "document": {
+            "client": 1200,
+            "scroll": 1200,
+            "overflow": "visible"
+          },
+          "dialog": {
+            "client": 1174,
+            "scroll": 1174,
+            "overflow": "auto"
+          },
+          "formula": {
+            "parentWidth": 990,
+            "nonWhitespace": 292,
+            "spaces": 50,
+            "outsideGlyphs": [],
+            "hangingSpaces": [],
+            "inside": true
+          }
+        },
+        "clippingChecks": {
+          "document": true,
+          "dialog": true,
+          "formula": true
+        },
+        "geometry": [
+          {
+            "tag": "SPAN",
+            "id": "cloudLeanChip",
+            "classes": "chip warn",
+            "right": 1384.03125,
+            "width": 195.375
+          },
+          {
+            "tag": "SPAN",
+            "id": "",
+            "classes": "dot",
+            "right": 1204.65625,
+            "width": 6
+          }
+        ]
+      },
+      "fallbackErrors": [],
+      "archivedAssetURLsServed": [
+        "https://cdn.websitepublisher.ai/custom/wid29770/css/mathscope-stage6.css",
+        "https://cdn.websitepublisher.ai/custom/wid29770/css/mathscope-stage7.css",
+        "https://cdn.websitepublisher.ai/custom/wid29770/css/mathscope.css",
+        "https://cdn.websitepublisher.ai/custom/wid29770/js/mathscope-app.js",
+        "https://cdn.websitepublisher.ai/custom/wid29770/js/mathscope-stage6.js",
+        "https://cdn.websitepublisher.ai/custom/wid29770/js/mathscope-stage7.js?v=stage8-cloud-diagnostics-20261008"
+      ],
+      "blockedExternalRequestCount": 5,
+      "errors": [],
+      "boundedMemory": true,
+      "boundedLatency": true
+    },
+    {
+      "label": "webgl-mobile",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "dpr": 2,
+        "hasTouch": true
+      },
+      "browserVersion": "157.0.8103.39",
+      "initial": {
+        "criterion": "P7-01",
+        "modelStatus": "RECORDED_EVIDENCE_VISUALIZED",
+        "recordCount": 9,
+        "currentResults": 0,
+        "archivedExamples": 9,
+        "renderer": {
+          "schema": "MathScope.M3.P7.VisualizationAudit/1",
+          "version": "1.1.0",
+          "criterion": "P7-01",
+          "state": "ready",
+          "renderer": "WEBGL",
+          "projection": "ORTHOGRAPHIC",
+          "fallbackReason": null,
+          "frames": 2,
+          "modelRevision": 1,
+          "drawnRevision": 1,
+          "currentModelRendered": true,
+          "webGLRendered": true,
+          "canvasCount": 1,
+          "rendered": {
+            "points": 88,
+            "lines": 88,
+            "lineVertices": 176,
+            "meshes": 0,
+            "triangles": 0,
+            "enclosures": 0
+          },
+          "skipped": 0,
+          "selectedId": null,
+          "reducedMotion": true,
+          "continuousAnimation": false,
+          "sourceModelStatus": "RECORDED_EVIDENCE_VISUALIZED",
+          "criterionStatus": "PARTIAL",
+          "displayDomains": [
+            [
+              2,
+              127
+            ],
+            [
+              -18,
+              18
+            ],
+            [
+              0,
+              2
+            ]
+          ],
+          "camera": {
+            "position": [
+              5.1,
+              3.4999999999999996,
+              5.700000000000001
+            ],
+            "target": [
+              0,
+              0,
+              0
+            ],
+            "up": [
+              0,
+              1,
+              0
+            ],
+            "zoom": 1
+          },
+          "pixelRatio": 1.5,
+          "drawCalls": 91,
+          "canvasOcclusion": null,
+          "proofStatusPromoted": false,
+          "visualApproximation": true
+        },
+        "proofStatusPromoted": false,
+        "wholeP7Complete": false,
+        "wholeM3Complete": false
+      },
+      "selectedId": "points-1",
+      "selectedJson": {
+        "exact": {
+          "a_p": -3,
+          "conductorExponent": 0,
+          "eulerDegree": 2,
+          "eulerPolynomial": [
+            1,
+            3,
+            3
+          ],
+          "hasseCheck": {
+            "a_p_squared": 9,
+            "four_p": 12,
+            "holds": true
+          },
+          "kodaira": "I0",
+          "localRootNumber": 1,
+          "minimality": {
+            "certified": true,
+            "reason": "unit-discriminant"
+          },
+          "modelHash": "2d8c0c22a75d2848251d071249adca5e92ca18fe463ce71cac59a0ebd4fa2512",
+          "pointCountProof": {
+            "infinityCount": 1,
+            "method": "direct-character-count",
+            "numberOfXWithZeroOneTwoY": [
+              0,
+              0,
+              3
+            ],
+            "quadraticDiscriminant": "(a1*x+a3)^2+4*(x^3+a2*x^2+a4*x+a6)",
+            "xCoordinatesExhausted": 3
+          },
+          "prime": 3,
+          "primeCertificate": {
+            "method": "exact-trial-division",
+            "probablePrimeOnly": false,
+            "through": 1
+          },
+          "projectivePointCount": 7,
+          "reducedAinvs": [
+            0,
+            0,
+            1,
+            2,
+            0
+          ],
+          "reduction": "good",
+          "status": "certified",
+          "tamagawaNumber": 1,
+          "valuationC4": 1,
+          "valuationDelta": 0
+        },
+        "source": {
+          "fieldPath": "result.localRows.1",
+          "inputSHA256": "149241d2ee1e33487766a9a9023b0aa8b4e4bf98ac7e04138bc2a5567c8e020a",
+          "requestSHA256": "149241d2ee1e33487766a9a9023b0aa8b4e4bf98ac7e04138bc2a5567c8e020a",
+          "recordSHA256": "2023533329a44ba2403f5fc2fbdae704ed67c4db1ff597ea92b025c620d32225",
+          "mathematicalSHA256": "d52245a5bd52649303227dd20dcf8fa16f242ecf252fc231d914eba16ea66fe2",
+          "request": {
+            "kind": "p7.elliptic_local",
+            "input": {
+              "model": "37a1",
+              "primes": [
+                2,
+                3,
+                5,
+                7,
+                11,
+                13,
+                37
+              ],
+              "coefficientLimit": 64
+            }
+          },
+          "sourceBinding": {
+            "version": "0.3.0",
+            "files": [
+              {
+                "path": "cli.py",
+                "sha256": "ae992122e1bd26faef09f14524be7e5988aaff027a8342d48b0409fcd806a53f"
+              },
+              {
+                "path": "p7/__init__.py",
+                "sha256": "1b6337c04bbc7110e52727b3d2f6139626f0befdfda67a13fd14113203fcd551"
+              },
+              {
+                "path": "p7/ball_backend.py",
+                "sha256": "33d99161c9f3f5bdb2482e538906a50df80e2f221e8f71da5f4d6d86e410cb7e"
+              },
+              {
+                "path": "p7/elliptic_analytic.py",
+                "sha256": "b77ce56be3ee9ace1f76ec10ea088bccb9a7f1d583b9164542f9816a3ddb007f"
+              },
+              {
+                "path": "p7/elliptic_arithmetic.py",
+                "sha256": "ac29e261acca0ec671cfa0286e201d23b46623671cda6ea735f8e6a27e06e154"
+              },
+              {
+                "path": "p7/elliptic_complex.py",
+                "sha256": "70bd068de7a8a54808be70f85700fc7fdc0f326276477cc49346b94467a06535"
+              },
+              {
+                "path": "p7/elliptic_local.py",
+                "sha256": "85b2a163a76dbb7cd8bee367f66bea0824ab385e164161b4a1f0d2d3da8e03da"
+              },
+              {
+                "path": "p7/euler_product.py",
+                "sha256": "531dadf3e3c06144de66473d0e5c204840e5adc76ebb05f70ae911f456bd051d"
+              },
+              {
+                "path": "p7/explicit_formula.py",
+                "sha256": "a3c7f5a6056156ad3094a54f0000a04e08ee316bf302f445c2b1ee6327216961"
+              },
+              {
+                "path": "p7/height_certificate.py",
+                "sha256": "c02e78fa1fdef0832e062b0e097eda2debf0c20ab833eafbed92b41a222d0aa9"
+              },
+              {
+                "path": "p7/modular_symbols.py",
+                "sha256": "01c810b86ccd6daa496264536af0fd6a61966c4c6d5a56ff4234c855c1ebb7b9"
+              },
+              {
+                "path": "p7/normalization.py",
+                "sha256": "86d8f8dd32fa4cb02926c410b1eca56af8ab75dd0738360659efe2eeb5f50770"
+              },
+              {
+                "path": "p7/operator_candidates.py",
+                "sha256": "7a1b8a8786b726fbf7ac94b2b78d6ca163f45750ac6e465be8a742027ba731c5"
+              },
+              {
+                "path": "p7/operator_registry.py",
+                "sha256": "c7d6bbbc1f46ca1bc3765147b57a3f3e8c13d193fc250a9a0011b2d67ed73026"
+              },
+              {
+                "path": "p7/pari_backend.py",
+                "sha256": "5a446e441830650c792d3ce779cf78b58c2ea0355427003fd991978cc857bac8"
+              },
+              {
+                "path": "p7/period_certificate.py",
+                "sha256": "30da2f2a41a49756b948f9c282a08de0c2d35278ef9b9d2411b424db49d731e8"
+              },
+              {
+                "path": "p7/result_claims.py",
+                "sha256": "808fb7746a579a9ff522d8e17bba30fcf2c92eae5009ce703a3fe6fe3121d4f5"
+              },
+              {
+                "path": "p7/taylor_remainder.py",
+                "sha256": "31f40ce640f773e90ae14b90fa7954135f2525a6c779312fc343c7db18dceb7c"
+              },
+              {
+                "path": "p7/zero_certificate.py",
+                "sha256": "3d0355994605d7203b5f9b35d22ffe3ae97aadd26e65c8b6eb6c20c0a929a1ba"
+              },
+              {
+                "path": "p7/zeta_em.py",
+                "sha256": "1e6c73cda3aedf94e6db4962199d001511782bab2e1ea8ebccf041b6084452d8"
+              },
+              {
+                "path": "p7/pari_runtime/setup.py",
+                "sha256": "f2138107fd1412e7c8937cef10b61915166a5137da08ad1a932a3d35c9a00428"
+              },
+              {
+                "path": "p7/pari_runtime/pyproject.toml",
+                "sha256": "06f8c964337d3f5ee97f50a1425e7cf5ff206b0b5c19022dc45d1eb3e9cc7650"
+              },
+              {
+                "path": "p7/pari_runtime/MANIFEST.in",
+                "sha256": "50596052d86e67a74e9d32a45838809bf628bd7fe46455dbc34dd784dc42bd5b"
+              },
+              {
+                "path": "p7/pari_runtime/src/mathscope_p7_pari/__init__.py",
+                "sha256": "9169b41f67cfc35a345ff5c33fa698a93047c3cc723968725561f563d26ed80a"
+              },
+              {
+                "path": "p7/pari_runtime/src/mathscope_p7_pari/build.py",
+                "sha256": "b4007aea96703232e8916edbc77a0be912d4fffadca7f09ac91536df9d3345fb"
+              }
+            ]
+          },
+          "archiveReference": "https://github.com/leegahuyn/MathScopeCompute/blob/759d1a0b35a6e1952663ee6486e8de534d7fcb66/research-ide/mathscope-m3/p7/evidence/final-all64-20261012/attempt1/elliptic-local.json.gz",
+          "archiveURL": "https://github.com/leegahuyn/MathScopeCompute/blob/759d1a0b35a6e1952663ee6486e8de534d7fcb66/research-ide/mathscope-m3/p7/evidence/final-all64-20261012/attempt1/elliptic-local.json.gz",
+          "origin": "ARCHIVED_EXECUTION_EXAMPLE",
+          "visualSource": {
+            "mode": "ARCHIVED_EXAMPLE",
+            "archiveURL": "https://github.com/leegahuyn/MathScopeCompute/blob/759d1a0b35a6e1952663ee6486e8de534d7fcb66/research-ide/mathscope-m3/p7/evidence/final-all64-20261012/attempt1/elliptic-local.json.gz",
+            "title": "37a1 · 정확한 국소 인자와 유리점",
+            "current": false
+          },
+          "currentServerResult": false,
+          "verification": "NOT_PERFORMED_BY_VISUAL_ADAPTER",
+          "originalRecordHashIsCompactedPayloadHash": false
+        },
+        "displayCoordinates": [
+          3,
+          -3,
+          2
+        ],
+        "visualApproximation": true,
+        "proofStatusPromoted": false
+      },
+      "rawTableSHA256": "0ea89499f3e382f08e2ca0cb88a5bc2b12307e0764c531a9ae013824f6709a18",
+      "selectedValueSHA256": "d974752743f9b45c3722f49af1d78620c45e4de700a5df71e4ce269eb1994056",
+      "renderedPixels": {
+        "width": 640,
+        "height": 655,
+        "distinctColors": 1273,
+        "pixelColors": [
+          {
+            "color": "06131cff",
+            "n": 374999
+          },
+          {
+            "color": "55d8d0ff",
+            "n": 9141
+          },
+          {
+            "color": "284755ff",
+            "n": 4382
+          },
+          {
+            "color": "a5f0ddff",
+            "n": 3191
+          },
+          {
+            "color": "2e7676ff",
+            "n": 1279
+          },
+          {
+            "color": "06141cff",
+            "n": 996
+          },
+          {
+            "color": "05131cff",
+            "n": 790
+          },
+          {
+            "color": "07141dff",
+            "n": 565
+          },
+          {
+            "color": "0a1821ff",
+            "n": 495
+          },
+          {
+            "color": "07151eff",
+            "n": 470
+          }
+        ]
+      },
+      "screenshotSHA256": "b7167bc5fd77dec745fa87ee241a72f0e435cf113953cdfbb0022b0ea0fcbb9c",
+      "formulaScreenshotSHA256": "83a3ece45ec7ee675ea224e782dcb50d18ebcd80d484c32a25a3158bcecff039",
+      "keyboard": {
+        "interactionCount": 30,
+        "p95Milliseconds": 25.900000002235174,
+        "maxMilliseconds": 34.600000001490116,
+        "samples": [
+          13.699999999254942,
+          16.399999998509884,
+          34.600000001490116,
+          16.600000001490116,
+          15.199999999254942,
+          7.399999998509884,
+          20,
+          18.100000001490116,
+          18.600000001490116,
+          5.900000002235174,
+          6.5,
+          14.800000000745058,
+          20.199999999254942,
+          25.5,
+          17.300000000745058,
+          17.5,
+          17.899999998509884,
+          18.800000000745058,
+          24.899999998509884,
+          17.300000000745058,
+          16.5,
+          19.700000002980232,
+          16.599999997764826,
+          25.900000002235174,
+          11.299999997019768,
+          15.299999997019768,
+          5.399999998509884,
+          7.599999997764826,
+          11.300000000745058,
+          5.599999997764826
+        ],
+        "reset": true,
+        "modalFocusRestored": true
+      },
+      "memory": {
+        "snapshots": 31,
+        "peakBytes": 124036190,
+        "samples": [
+          114833292,
+          115331069,
+          115842642,
+          116586422,
+          116511002,
+          116898726,
+          117263258,
+          117397998,
+          117735062,
+          118276934,
+          118420062,
+          118719046,
+          118808774,
+          119205346,
+          119698874,
+          119894314,
+          120170102,
+          120304142,
+          120650390,
+          120938062,
+          121200034,
+          121497126,
+          121633906,
+          121996114,
+          122322762,
+          122614690,
+          122866494,
+          123059402,
+          123452826,
+          123580038,
+          124036190
+        ]
+      },
+      "longText": {
+        "formulaCharacters": 342,
+        "explanationCharacters": 145,
+        "overflow": {
+          "document": {
+            "client": 390,
+            "scroll": 390,
+            "overflow": "visible"
+          },
+          "dialog": {
+            "client": 376,
+            "scroll": 376,
+            "overflow": "auto"
+          },
+          "formula": {
+            "parentWidth": 224,
+            "nonWhitespace": 292,
+            "spaces": 50,
+            "outsideGlyphs": [],
+            "hangingSpaces": [
+              {
+                "character": " ",
+                "index": 172,
+                "left": 358,
+                "right": 365
+              },
+              {
+                "character": " ",
+                "index": 291,
+                "left": 358,
+                "right": 365
+              }
+            ],
+            "inside": true
+          }
+        },
+        "clippingChecks": {
+          "document": true,
+          "dialog": true,
+          "formula": true
+        },
+        "geometry": [
+          {
+            "tag": "SPAN",
+            "id": "",
+            "classes": "chip",
+            "right": 424.734375,
+            "width": 151.40625
+          },
+          {
+            "tag": "SPAN",
+            "id": "sessionHash",
+            "classes": "",
+            "right": 414.734375,
+            "width": 97.421875
+          },
+          {
+            "tag": "TABLE",
+            "id": "",
+            "classes": "",
+            "right": 515,
+            "width": 480
+          },
+          {
+            "tag": "CAPTION",
+            "id": "",
+            "classes": "",
+            "right": 515,
+            "width": 480
+          },
+          {
+            "tag": "THEAD",
+            "id": "",
+            "classes": "",
+            "right": 515,
+            "width": 480
+          },
+          {
+            "tag": "TR",
+            "id": "",
+            "classes": "",
+            "right": 515,
+            "width": 480
+          },
+          {
+            "tag": "TH",
+            "id": "",
+            "classes": "",
+            "right": 515,
+            "width": 160
+          },
+          {
+            "tag": "TBODY",
+            "id": "",
+            "classes": "",
+            "right": 515,
+            "width": 480
+          },
+          {
+            "tag": "TR",
+            "id": "",
+            "classes": "",
+            "right": 515,
+            "width": 480
+          },
+          {
+            "tag": "TD",
+            "id": "",
+            "classes": "",
+            "right": 515,
+            "width": 160
+          },
+          {
+            "tag": "PRE",
+            "id": "",
+            "classes": "",
+            "right": 506,
+            "width": 142
+          },
+          {
+            "tag": "TR",
+            "id": "",
+            "classes": "",
+            "right": 515,
+            "width": 480
+          },
+          {
+            "tag": "TD",
+            "id": "",
+            "classes": "",
+            "right": 515,
+            "width": 160
+          },
+          {
+            "tag": "PRE",
+            "id": "",
+            "classes": "",
+            "right": 506,
+            "width": 142
+          },
+          {
+            "tag": "TR",
+            "id": "",
+            "classes": "",
+            "right": 515,
+            "width": 480
+          },
+          {
+            "tag": "TD",
+            "id": "",
+            "classes": "",
+            "right": 515,
+            "width": 160
+          },
+          {
+            "tag": "PRE",
+            "id": "",
+            "classes": "",
+            "right": 506,
+            "width": 142
+          },
+          {
+            "tag": "TR",
+            "id": "",
+            "classes": "",
+            "right": 515,
+            "width": 480
+          }
+        ]
+      },
+      "fallbackErrors": [],
+      "archivedAssetURLsServed": [
+        "https://cdn.websitepublisher.ai/custom/wid29770/css/mathscope-stage6.css",
+        "https://cdn.websitepublisher.ai/custom/wid29770/css/mathscope-stage7.css",
+        "https://cdn.websitepublisher.ai/custom/wid29770/css/mathscope.css",
+        "https://cdn.websitepublisher.ai/custom/wid29770/js/mathscope-app.js",
+        "https://cdn.websitepublisher.ai/custom/wid29770/js/mathscope-stage6.js",
+        "https://cdn.websitepublisher.ai/custom/wid29770/js/mathscope-stage7.js?v=stage8-cloud-diagnostics-20261008"
+      ],
+      "blockedExternalRequestCount": 5,
+      "errors": [],
+      "boundedMemory": true,
+      "boundedLatency": true
+    },
+    {
+      "label": "cpu-desktop",
+      "viewport": {
+        "width": 1200,
+        "height": 900,
+        "dpr": 1
+      },
+      "browserVersion": "157.0.8103.39",
+      "initial": {
+        "criterion": "P7-01",
+        "modelStatus": "RECORDED_EVIDENCE_VISUALIZED",
+        "recordCount": 9,
+        "currentResults": 0,
+        "archivedExamples": 9,
+        "renderer": {
+          "schema": "MathScope.M3.P7.VisualizationAudit/1",
+          "version": "1.1.0",
+          "criterion": "P7-01",
+          "state": "ready",
+          "renderer": "CANVAS2D",
+          "projection": "ORTHOGRAPHIC",
+          "fallbackReason": "WEBGL_UNAVAILABLE",
+          "frames": 2,
+          "modelRevision": 2,
+          "drawnRevision": 2,
+          "currentModelRendered": true,
+          "webGLRendered": false,
+          "canvasCount": 1,
+          "rendered": {
+            "points": 88,
+            "lines": 88,
+            "lineVertices": 176,
+            "meshes": 0,
+            "triangles": 0,
+            "enclosures": 0
+          },
+          "skipped": 0,
+          "selectedId": null,
+          "reducedMotion": true,
+          "continuousAnimation": false,
+          "sourceModelStatus": "RECORDED_EVIDENCE_VISUALIZED",
+          "criterionStatus": "PARTIAL",
+          "displayDomains": [
+            [
+              2,
+              127
+            ],
+            [
+              -18,
+              18
+            ],
+            [
+              0,
+              2
+            ]
+          ],
+          "camera": {
+            "position": [
+              5.1,
+              3.5,
+              5.7
+            ],
+            "target": [
+              0,
+              0,
+              0
+            ],
+            "up": [
+              0,
+              1,
+              0
+            ],
+            "zoom": 1
+          },
+          "pixelRatio": 1,
+          "drawCalls": 189,
+          "canvasOcclusion": "PAINTER_DEPTH_ORDER",
+          "proofStatusPromoted": false,
+          "visualApproximation": true
+        },
+        "proofStatusPromoted": false,
+        "wholeP7Complete": false,
+        "wholeM3Complete": false
+      },
+      "selectedId": "points-1",
+      "selectedJson": {
+        "exact": {
+          "a_p": -3,
+          "conductorExponent": 0,
+          "eulerDegree": 2,
+          "eulerPolynomial": [
+            1,
+            3,
+            3
+          ],
+          "hasseCheck": {
+            "a_p_squared": 9,
+            "four_p": 12,
+            "holds": true
+          },
+          "kodaira": "I0",
+          "localRootNumber": 1,
+          "minimality": {
+            "certified": true,
+            "reason": "unit-discriminant"
+          },
+          "modelHash": "2d8c0c22a75d2848251d071249adca5e92ca18fe463ce71cac59a0ebd4fa2512",
+          "pointCountProof": {
+            "infinityCount": 1,
+            "method": "direct-character-count",
+            "numberOfXWithZeroOneTwoY": [
+              0,
+              0,
+              3
+            ],
+            "quadraticDiscriminant": "(a1*x+a3)^2+4*(x^3+a2*x^2+a4*x+a6)",
+            "xCoordinatesExhausted": 3
+          },
+          "prime": 3,
+          "primeCertificate": {
+            "method": "exact-trial-division",
+            "probablePrimeOnly": false,
+            "through": 1
+          },
+          "projectivePointCount": 7,
+          "reducedAinvs": [
+            0,
+            0,
+            1,
+            2,
+            0
+          ],
+          "reduction": "good",
+          "status": "certified",
+          "tamagawaNumber": 1,
+          "valuationC4": 1,
+          "valuationDelta": 0
+        },
+        "source": {
+          "fieldPath": "result.localRows.1",
+          "inputSHA256": "149241d2ee1e33487766a9a9023b0aa8b4e4bf98ac7e04138bc2a5567c8e020a",
+          "requestSHA256": "149241d2ee1e33487766a9a9023b0aa8b4e4bf98ac7e04138bc2a5567c8e020a",
+          "recordSHA256": "2023533329a44ba2403f5fc2fbdae704ed67c4db1ff597ea92b025c620d32225",
+          "mathematicalSHA256": "d52245a5bd52649303227dd20dcf8fa16f242ecf252fc231d914eba16ea66fe2",
+          "request": {
+            "kind": "p7.elliptic_local",
+            "input": {
+              "model": "37a1",
+              "primes": [
+                2,
+                3,
+                5,
+                7,
+                11,
+                13,
+                37
+              ],
+              "coefficientLimit": 64
+            }
+          },
+          "sourceBinding": {
+            "version": "0.3.0",
+            "files": [
+              {
+                "path": "cli.py",
+                "sha256": "ae992122e1bd26faef09f14524be7e5988aaff027a8342d48b0409fcd806a53f"
+              },
+              {
+                "path": "p7/__init__.py",
+                "sha256": "1b6337c04bbc7110e52727b3d2f6139626f0befdfda67a13fd14113203fcd551"
+              },
+              {
+                "path": "p7/ball_backend.py",
+                "sha256": "33d99161c9f3f5bdb2482e538906a50df80e2f221e8f71da5f4d6d86e410cb7e"
+              },
+              {
+                "path": "p7/elliptic_analytic.py",
+                "sha256": "b77ce56be3ee9ace1f76ec10ea088bccb9a7f1d583b9164542f9816a3ddb007f"
+              },
+              {
+                "path": "p7/elliptic_arithmetic.py",
+                "sha256": "ac29e261acca0ec671cfa0286e201d23b46623671cda6ea735f8e6a27e06e154"
+              },
+              {
+                "path": "p7/elliptic_complex.py",
+                "sha256": "70bd068de7a8a54808be70f85700fc7fdc0f326276477cc49346b94467a06535"
+              },
+              {
+                "path": "p7/elliptic_local.py",
+                "sha256": "85b2a163a76dbb7cd8bee367f66bea0824ab385e164161b4a1f0d2d3da8e03da"
+              },
+              {
+                "path": "p7/euler_product.py",
+                "sha256": "531dadf3e3c06144de66473d0e5c204840e5adc76ebb05f70ae911f456bd051d"
+              },
+              {
+                "path": "p7/explicit_formula.py",
+                "sha256": "a3c7f5a6056156ad3094a54f0000a04e08ee316bf302f445c2b1ee6327216961"
+              },
+              {
+                "path": "p7/height_certificate.py",
+                "sha256": "c02e78fa1fdef0832e062b0e097eda2debf0c20ab833eafbed92b41a222d0aa9"
+              },
+              {
+                "path": "p7/modular_symbols.py",
+                "sha256": "01c810b86ccd6daa496264536af0fd6a61966c4c6d5a56ff4234c855c1ebb7b9"
+              },
+              {
+                "path": "p7/normalization.py",
+                "sha256": "86d8f8dd32fa4cb02926c410b1eca56af8ab75dd0738360659efe2eeb5f50770"
+              },
+              {
+                "path": "p7/operator_candidates.py",
+                "sha256": "7a1b8a8786b726fbf7ac94b2b78d6ca163f45750ac6e465be8a742027ba731c5"
+              },
+              {
+                "path": "p7/operator_registry.py",
+                "sha256": "c7d6bbbc1f46ca1bc3765147b57a3f3e8c13d193fc250a9a0011b2d67ed73026"
+              },
+              {
+                "path": "p7/pari_backend.py",
+                "sha256": "5a446e441830650c792d3ce779cf78b58c2ea0355427003fd991978cc857bac8"
+              },
+              {
+                "path": "p7/period_certificate.py",
+                "sha256": "30da2f2a41a49756b948f9c282a08de0c2d35278ef9b9d2411b424db49d731e8"
+              },
+              {
+                "path": "p7/result_claims.py",
+                "sha256": "808fb7746a579a9ff522d8e17bba30fcf2c92eae5009ce703a3fe6fe3121d4f5"
+              },
+              {
+                "path": "p7/taylor_remainder.py",
+                "sha256": "31f40ce640f773e90ae14b90fa7954135f2525a6c779312fc343c7db18dceb7c"
+              },
+              {
+                "path": "p7/zero_certificate.py",
+                "sha256": "3d0355994605d7203b5f9b35d22ffe3ae97aadd26e65c8b6eb6c20c0a929a1ba"
+              },
+              {
+                "path": "p7/zeta_em.py",
+                "sha256": "1e6c73cda3aedf94e6db4962199d001511782bab2e1ea8ebccf041b6084452d8"
+              },
+              {
+                "path": "p7/pari_runtime/setup.py",
+                "sha256": "f2138107fd1412e7c8937cef10b61915166a5137da08ad1a932a3d35c9a00428"
+              },
+              {
+                "path": "p7/pari_runtime/pyproject.toml",
+                "sha256": "06f8c964337d3f5ee97f50a1425e7cf5ff206b0b5c19022dc45d1eb3e9cc7650"
+              },
+              {
+                "path": "p7/pari_runtime/MANIFEST.in",
+                "sha256": "50596052d86e67a74e9d32a45838809bf628bd7fe46455dbc34dd784dc42bd5b"
+              },
+              {
+                "path": "p7/pari_runtime/src/mathscope_p7_pari/__init__.py",
+                "sha256": "9169b41f67cfc35a345ff5c33fa698a93047c3cc723968725561f563d26ed80a"
+              },
+              {
+                "path": "p7/pari_runtime/src/mathscope_p7_pari/build.py",
+                "sha256": "b4007aea96703232e8916edbc77a0be912d4fffadca7f09ac91536df9d3345fb"
+              }
+            ]
+          },
+          "archiveReference": "https://github.com/leegahuyn/MathScopeCompute/blob/759d1a0b35a6e1952663ee6486e8de534d7fcb66/research-ide/mathscope-m3/p7/evidence/final-all64-20261012/attempt1/elliptic-local.json.gz",
+          "archiveURL": "https://github.com/leegahuyn/MathScopeCompute/blob/759d1a0b35a6e1952663ee6486e8de534d7fcb66/research-ide/mathscope-m3/p7/evidence/final-all64-20261012/attempt1/elliptic-local.json.gz",
+          "origin": "ARCHIVED_EXECUTION_EXAMPLE",
+          "visualSource": {
+            "mode": "ARCHIVED_EXAMPLE",
+            "archiveURL": "https://github.com/leegahuyn/MathScopeCompute/blob/759d1a0b35a6e1952663ee6486e8de534d7fcb66/research-ide/mathscope-m3/p7/evidence/final-all64-20261012/attempt1/elliptic-local.json.gz",
+            "title": "37a1 · 정확한 국소 인자와 유리점",
+            "current": false
+          },
+          "currentServerResult": false,
+          "verification": "NOT_PERFORMED_BY_VISUAL_ADAPTER",
+          "originalRecordHashIsCompactedPayloadHash": false
+        },
+        "displayCoordinates": [
+          3,
+          -3,
+          2
+        ],
+        "visualApproximation": true,
+        "proofStatusPromoted": false
+      },
+      "rawTableSHA256": "0ea89499f3e382f08e2ca0cb88a5bc2b12307e0764c531a9ae013824f6709a18",
+      "selectedValueSHA256": "d974752743f9b45c3722f49af1d78620c45e4de700a5df71e4ce269eb1994056",
+      "renderedPixels": {
+        "width": 592,
+        "height": 437,
+        "distinctColors": 1306,
+        "pixelColors": [
+          {
+            "color": "06131cff",
+            "n": 239871
+          },
+          {
+            "color": "284755ff",
+            "n": 1420
+          },
+          {
+            "color": "55d8d0ff",
+            "n": 1364
+          },
+          {
+            "color": "a5f0ddff",
+            "n": 818
+          },
+          {
+            "color": "07141dff",
+            "n": 551
+          },
+          {
+            "color": "06141cff",
+            "n": 547
+          },
+          {
+            "color": "07151eff",
+            "n": 325
+          },
+          {
+            "color": "0b1f27ff",
+            "n": 277
+          },
+          {
+            "color": "08161fff",
+            "n": 238
+          },
+          {
+            "color": "47616dff",
+            "n": 214
+          }
+        ]
+      },
+      "screenshotSHA256": "619472bfb0a4fd0818dd1c531964125f5ba1a5596184ac30fdc844f3998453c9",
+      "formulaScreenshotSHA256": "d895e0cf365e92fc01d131e74d2984e7e99ab0898f94dfb97722739beaecdca9",
+      "keyboard": {
+        "interactionCount": 30,
+        "p95Milliseconds": 15.200000002980232,
+        "maxMilliseconds": 17.5,
+        "samples": [
+          15.200000002980232,
+          10.899999998509884,
+          5.099999997764826,
+          3,
+          3.300000000745058,
+          4,
+          6.300000000745058,
+          5,
+          7.300000000745058,
+          5.399999998509884,
+          5.899999998509884,
+          8.300000000745058,
+          7.199999999254942,
+          5.299999997019768,
+          9,
+          6.200000002980232,
+          8.400000002235174,
+          6.099999997764826,
+          10.299999997019768,
+          8.699999999254942,
+          5.5,
+          9.599999997764826,
+          5.699999999254942,
+          3.599999997764826,
+          8.700000002980232,
+          6.100000001490116,
+          5.5,
+          6.199999999254942,
+          5.599999997764826,
+          17.5
+        ],
+        "reset": true,
+        "modalFocusRestored": true
+      },
+      "memory": {
+        "snapshots": 31,
+        "peakBytes": 187169590,
+        "samples": [
+          173252900,
+          174179777,
+          174842462,
+          175463314,
+          176238050,
+          177039742,
+          177925702,
+          178404710,
+          179180462,
+          179774686,
+          180495758,
+          181167158,
+          182004942,
+          182677750,
+          183325322,
+          183960118,
+          184743602,
+          185253470,
+          186021486,
+          186663386,
+          187169590,
+          161503298,
+          162202042,
+          162915298,
+          163691346,
+          164195346,
+          164967862,
+          165646630,
+          166285918,
+          166796278,
+          167561846
+        ]
+      },
+      "longText": {
+        "formulaCharacters": 342,
+        "explanationCharacters": 145,
+        "overflow": {
+          "document": {
+            "client": 1200,
+            "scroll": 1200,
+            "overflow": "visible"
+          },
+          "dialog": {
+            "client": 1174,
+            "scroll": 1174,
+            "overflow": "auto"
+          },
+          "formula": {
+            "parentWidth": 990,
+            "nonWhitespace": 292,
+            "spaces": 50,
+            "outsideGlyphs": [],
+            "hangingSpaces": [],
+            "inside": true
+          }
+        },
+        "clippingChecks": {
+          "document": true,
+          "dialog": true,
+          "formula": true
+        },
+        "geometry": [
+          {
+            "tag": "SPAN",
+            "id": "cloudLeanChip",
+            "classes": "chip warn",
+            "right": 1384.03125,
+            "width": 195.375
+          },
+          {
+            "tag": "SPAN",
+            "id": "",
+            "classes": "dot",
+            "right": 1204.65625,
+            "width": 6
+          }
+        ]
+      },
+      "fallbackErrors": [
+        "THREE.WebGLRenderer: A WebGL context could not be created. Reason:  disabled by enterprise policy or commandline switch",
+        "THREE.WebGLRenderer: A WebGL context could not be created. Reason:  disabled by enterprise policy or commandline switch",
+        "THREE.WebGLRenderer: Error creating WebGL context.",
+        "THREE.WebGLRenderer: A WebGL context could not be created. Reason:  disabled by enterprise policy or commandline switch",
+        "THREE.WebGLRenderer: A WebGL context could not be created. Reason:  disabled by enterprise policy or commandline switch",
+        "THREE.WebGLRenderer: Error creating WebGL context."
+      ],
+      "archivedAssetURLsServed": [
+        "https://cdn.websitepublisher.ai/custom/wid29770/css/mathscope-stage6.css",
+        "https://cdn.websitepublisher.ai/custom/wid29770/css/mathscope-stage7.css",
+        "https://cdn.websitepublisher.ai/custom/wid29770/css/mathscope.css",
+        "https://cdn.websitepublisher.ai/custom/wid29770/js/mathscope-app.js",
+        "https://cdn.websitepublisher.ai/custom/wid29770/js/mathscope-stage6.js",
+        "https://cdn.websitepublisher.ai/custom/wid29770/js/mathscope-stage7.js?v=stage8-cloud-diagnostics-20261008"
+      ],
+      "blockedExternalRequestCount": 5,
+      "errors": [],
+      "boundedMemory": true,
+      "boundedLatency": true
+    },
+    {
+      "label": "cpu-mobile",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "dpr": 2,
+        "hasTouch": true
+      },
+      "browserVersion": "157.0.8103.39",
+      "initial": {
+        "criterion": "P7-01",
+        "modelStatus": "RECORDED_EVIDENCE_VISUALIZED",
+        "recordCount": 9,
+        "currentResults": 0,
+        "archivedExamples": 9,
+        "renderer": {
+          "schema": "MathScope.M3.P7.VisualizationAudit/1",
+          "version": "1.1.0",
+          "criterion": "P7-01",
+          "state": "ready",
+          "renderer": "CANVAS2D",
+          "projection": "ORTHOGRAPHIC",
+          "fallbackReason": "WEBGL_UNAVAILABLE",
+          "frames": 2,
+          "modelRevision": 2,
+          "drawnRevision": 2,
+          "currentModelRendered": true,
+          "webGLRendered": false,
+          "canvasCount": 1,
+          "rendered": {
+            "points": 88,
+            "lines": 88,
+            "lineVertices": 176,
+            "meshes": 0,
+            "triangles": 0,
+            "enclosures": 0
+          },
+          "skipped": 0,
+          "selectedId": null,
+          "reducedMotion": true,
+          "continuousAnimation": false,
+          "sourceModelStatus": "RECORDED_EVIDENCE_VISUALIZED",
+          "criterionStatus": "PARTIAL",
+          "displayDomains": [
+            [
+              2,
+              127
+            ],
+            [
+              -18,
+              18
+            ],
+            [
+              0,
+              2
+            ]
+          ],
+          "camera": {
+            "position": [
+              5.1,
+              3.5,
+              5.7
+            ],
+            "target": [
+              0,
+              0,
+              0
+            ],
+            "up": [
+              0,
+              1,
+              0
+            ],
+            "zoom": 1
+          },
+          "pixelRatio": 1.5,
+          "drawCalls": 189,
+          "canvasOcclusion": "PAINTER_DEPTH_ORDER",
+          "proofStatusPromoted": false,
+          "visualApproximation": true
+        },
+        "proofStatusPromoted": false,
+        "wholeP7Complete": false,
+        "wholeM3Complete": false
+      },
+      "selectedId": "points-1",
+      "selectedJson": {
+        "exact": {
+          "a_p": -3,
+          "conductorExponent": 0,
+          "eulerDegree": 2,
+          "eulerPolynomial": [
+            1,
+            3,
+            3
+          ],
+          "hasseCheck": {
+            "a_p_squared": 9,
+            "four_p": 12,
+            "holds": true
+          },
+          "kodaira": "I0",
+          "localRootNumber": 1,
+          "minimality": {
+            "certified": true,
+            "reason": "unit-discriminant"
+          },
+          "modelHash": "2d8c0c22a75d2848251d071249adca5e92ca18fe463ce71cac59a0ebd4fa2512",
+          "pointCountProof": {
+            "infinityCount": 1,
+            "method": "direct-character-count",
+            "numberOfXWithZeroOneTwoY": [
+              0,
+              0,
+              3
+            ],
+            "quadraticDiscriminant": "(a1*x+a3)^2+4*(x^3+a2*x^2+a4*x+a6)",
+            "xCoordinatesExhausted": 3
+          },
+          "prime": 3,
+          "primeCertificate": {
+            "method": "exact-trial-division",
+            "probablePrimeOnly": false,
+            "through": 1
+          },
+          "projectivePointCount": 7,
+          "reducedAinvs": [
+            0,
+            0,
+            1,
+            2,
+            0
+          ],
+          "reduction": "good",
+          "status": "certified",
+          "tamagawaNumber": 1,
+          "valuationC4": 1,
+          "valuationDelta": 0
+        },
+        "source": {
+          "fieldPath": "result.localRows.1",
+          "inputSHA256": "149241d2ee1e33487766a9a9023b0aa8b4e4bf98ac7e04138bc2a5567c8e020a",
+          "requestSHA256": "149241d2ee1e33487766a9a9023b0aa8b4e4bf98ac7e04138bc2a5567c8e020a",
+          "recordSHA256": "2023533329a44ba2403f5fc2fbdae704ed67c4db1ff597ea92b025c620d32225",
+          "mathematicalSHA256": "d52245a5bd52649303227dd20dcf8fa16f242ecf252fc231d914eba16ea66fe2",
+          "request": {
+            "kind": "p7.elliptic_local",
+            "input": {
+              "model": "37a1",
+              "primes": [
+                2,
+                3,
+                5,
+                7,
+                11,
+                13,
+                37
+              ],
+              "coefficientLimit": 64
+            }
+          },
+          "sourceBinding": {
+            "version": "0.3.0",
+            "files": [
+              {
+                "path": "cli.py",
+                "sha256": "ae992122e1bd26faef09f14524be7e5988aaff027a8342d48b0409fcd806a53f"
+              },
+              {
+                "path": "p7/__init__.py",
+                "sha256": "1b6337c04bbc7110e52727b3d2f6139626f0befdfda67a13fd14113203fcd551"
+              },
+              {
+                "path": "p7/ball_backend.py",
+                "sha256": "33d99161c9f3f5bdb2482e538906a50df80e2f221e8f71da5f4d6d86e410cb7e"
+              },
+              {
+                "path": "p7/elliptic_analytic.py",
+                "sha256": "b77ce56be3ee9ace1f76ec10ea088bccb9a7f1d583b9164542f9816a3ddb007f"
+              },
+              {
+                "path": "p7/elliptic_arithmetic.py",
+                "sha256": "ac29e261acca0ec671cfa0286e201d23b46623671cda6ea735f8e6a27e06e154"
+              },
+              {
+                "path": "p7/elliptic_complex.py",
+                "sha256": "70bd068de7a8a54808be70f85700fc7fdc0f326276477cc49346b94467a06535"
+              },
+              {
+                "path": "p7/elliptic_local.py",
+                "sha256": "85b2a163a76dbb7cd8bee367f66bea0824ab385e164161b4a1f0d2d3da8e03da"
+              },
+              {
+                "path": "p7/euler_product.py",
+                "sha256": "531dadf3e3c06144de66473d0e5c204840e5adc76ebb05f70ae911f456bd051d"
+              },
+              {
+                "path": "p7/explicit_formula.py",
+                "sha256": "a3c7f5a6056156ad3094a54f0000a04e08ee316bf302f445c2b1ee6327216961"
+              },
+              {
+                "path": "p7/height_certificate.py",
+                "sha256": "c02e78fa1fdef0832e062b0e097eda2debf0c20ab833eafbed92b41a222d0aa9"
+              },
+              {
+                "path": "p7/modular_symbols.py",
+                "sha256": "01c810b86ccd6daa496264536af0fd6a61966c4c6d5a56ff4234c855c1ebb7b9"
+              },
+              {
+                "path": "p7/normalization.py",
+                "sha256": "86d8f8dd32fa4cb02926c410b1eca56af8ab75dd0738360659efe2eeb5f50770"
+              },
+              {
+                "path": "p7/operator_candidates.py",
+                "sha256": "7a1b8a8786b726fbf7ac94b2b78d6ca163f45750ac6e465be8a742027ba731c5"
+              },
+              {
+                "path": "p7/operator_registry.py",
+                "sha256": "c7d6bbbc1f46ca1bc3765147b57a3f3e8c13d193fc250a9a0011b2d67ed73026"
+              },
+              {
+                "path": "p7/pari_backend.py",
+                "sha256": "5a446e441830650c792d3ce779cf78b58c2ea0355427003fd991978cc857bac8"
+              },
+              {
+                "path": "p7/period_certificate.py",
+                "sha256": "30da2f2a41a49756b948f9c282a08de0c2d35278ef9b9d2411b424db49d731e8"
+              },
+              {
+                "path": "p7/result_claims.py",
+                "sha256": "808fb7746a579a9ff522d8e17bba30fcf2c92eae5009ce703a3fe6fe3121d4f5"
+              },
+              {
+                "path": "p7/taylor_remainder.py",
+                "sha256": "31f40ce640f773e90ae14b90fa7954135f2525a6c779312fc343c7db18dceb7c"
+              },
+              {
+                "path": "p7/zero_certificate.py",
+                "sha256": "3d0355994605d7203b5f9b35d22ffe3ae97aadd26e65c8b6eb6c20c0a929a1ba"
+              },
+              {
+                "path": "p7/zeta_em.py",
+                "sha256": "1e6c73cda3aedf94e6db4962199d001511782bab2e1ea8ebccf041b6084452d8"
+              },
+              {
+                "path": "p7/pari_runtime/setup.py",
+                "sha256": "f2138107fd1412e7c8937cef10b61915166a5137da08ad1a932a3d35c9a00428"
+              },
+              {
+                "path": "p7/pari_runtime/pyproject.toml",
+                "sha256": "06f8c964337d3f5ee97f50a1425e7cf5ff206b0b5c19022dc45d1eb3e9cc7650"
+              },
+              {
+                "path": "p7/pari_runtime/MANIFEST.in",
+                "sha256": "50596052d86e67a74e9d32a45838809bf628bd7fe46455dbc34dd784dc42bd5b"
+              },
+              {
+                "path": "p7/pari_runtime/src/mathscope_p7_pari/__init__.py",
+                "sha256": "9169b41f67cfc35a345ff5c33fa698a93047c3cc723968725561f563d26ed80a"
+              },
+              {
+                "path": "p7/pari_runtime/src/mathscope_p7_pari/build.py",
+                "sha256": "b4007aea96703232e8916edbc77a0be912d4fffadca7f09ac91536df9d3345fb"
+              }
+            ]
+          },
+          "archiveReference": "https://github.com/leegahuyn/MathScopeCompute/blob/759d1a0b35a6e1952663ee6486e8de534d7fcb66/research-ide/mathscope-m3/p7/evidence/final-all64-20261012/attempt1/elliptic-local.json.gz",
+          "archiveURL": "https://github.com/leegahuyn/MathScopeCompute/blob/759d1a0b35a6e1952663ee6486e8de534d7fcb66/research-ide/mathscope-m3/p7/evidence/final-all64-20261012/attempt1/elliptic-local.json.gz",
+          "origin": "ARCHIVED_EXECUTION_EXAMPLE",
+          "visualSource": {
+            "mode": "ARCHIVED_EXAMPLE",
+            "archiveURL": "https://github.com/leegahuyn/MathScopeCompute/blob/759d1a0b35a6e1952663ee6486e8de534d7fcb66/research-ide/mathscope-m3/p7/evidence/final-all64-20261012/attempt1/elliptic-local.json.gz",
+            "title": "37a1 · 정확한 국소 인자와 유리점",
+            "current": false
+          },
+          "currentServerResult": false,
+          "verification": "NOT_PERFORMED_BY_VISUAL_ADAPTER",
+          "originalRecordHashIsCompactedPayloadHash": false
+        },
+        "displayCoordinates": [
+          3,
+          -3,
+          2
+        ],
+        "visualApproximation": true,
+        "proofStatusPromoted": false
+      },
+      "rawTableSHA256": "0ea89499f3e382f08e2ca0cb88a5bc2b12307e0764c531a9ae013824f6709a18",
+      "selectedValueSHA256": "d974752743f9b45c3722f49af1d78620c45e4de700a5df71e4ce269eb1994056",
+      "renderedPixels": {
+        "width": 640,
+        "height": 655,
+        "distinctColors": 1896,
+        "pixelColors": [
+          {
+            "color": "06131cff",
+            "n": 370325
+          },
+          {
+            "color": "55d8d0ff",
+            "n": 6845
+          },
+          {
+            "color": "284755ff",
+            "n": 4382
+          },
+          {
+            "color": "a5f0ddff",
+            "n": 3191
+          },
+          {
+            "color": "07141dff",
+            "n": 816
+          },
+          {
+            "color": "05131cff",
+            "n": 773
+          },
+          {
+            "color": "06141cff",
+            "n": 753
+          },
+          {
+            "color": "08161fff",
+            "n": 606
+          },
+          {
+            "color": "07151eff",
+            "n": 578
+          },
+          {
+            "color": "06141dff",
+            "n": 577
+          }
+        ]
+      },
+      "screenshotSHA256": "f84551cb9ee4d01ddfbca5c374adcfdf677e3fe6b5b3a4d1e9e6e5c8324a8c10",
+      "formulaScreenshotSHA256": "394fac0c98e7251e5d3ea9c774d9fa20a542c30c19ce827184a5a7c3bb643f41",
+      "keyboard": {
+        "interactionCount": 30,
+        "p95Milliseconds": 19.899999998509884,
+        "maxMilliseconds": 20,
+        "samples": [
+          9.399999998509884,
+          8,
+          7.699999999254942,
+          7.300000000745058,
+          20,
+          8.300000000745058,
+          9.299999997019768,
+          8.800000000745058,
+          8.899999998509884,
+          13.700000002980232,
+          19.899999998509884,
+          10.300000000745058,
+          8.699999999254942,
+          14.400000002235174,
+          8.5,
+          9.600000001490116,
+          10.100000001490116,
+          5.100000001490116,
+          5.200000002980232,
+          6.699999999254942,
+          5.100000001490116,
+          3.300000000745058,
+          3.900000002235174,
+          6.600000001490116,
+          5.600000001490116,
+          3.399999998509884,
+          2.7000000029802322,
+          5.700000002980232,
+          8.399999998509884,
+          3.599999997764826
+        ],
+        "reset": true,
+        "modalFocusRestored": true
+      },
+      "memory": {
+        "snapshots": 31,
+        "peakBytes": 122535659,
+        "samples": [
+          102674349,
+          103492326,
+          104187627,
+          104825423,
+          105646271,
+          106165523,
+          106932343,
+          107544759,
+          108300663,
+          109094327,
+          109631819,
+          110342219,
+          111159843,
+          111658771,
+          112403135,
+          113051543,
+          113829835,
+          114289703,
+          115107887,
+          115741591,
+          116351479,
+          116957399,
+          117680967,
+          118258215,
+          119074011,
+          119714175,
+          120532907,
+          121067675,
+          121717711,
+          122535659,
+          96344087
+        ]
+      },
+      "longText": {
+        "formulaCharacters": 342,
+        "explanationCharacters": 145,
+        "overflow": {
+          "document": {
+            "client": 390,
+            "scroll": 390,
+            "overflow": "visible"
+          },
+          "dialog": {
+            "client": 376,
+            "scroll": 376,
+            "overflow": "auto"
+          },
+          "formula": {
+            "parentWidth": 224,
+            "nonWhitespace": 292,
+            "spaces": 50,
+            "outsideGlyphs": [],
+            "hangingSpaces": [
+              {
+                "character": " ",
+                "index": 172,
+                "left": 358,
+                "right": 365
+              },
+              {
+                "character": " ",
+                "index": 291,
+                "left": 358,
+                "right": 365
+              }
+            ],
+            "inside": true
+          }
+        },
+        "clippingChecks": {
+          "document": true,
+          "dialog": true,
+          "formula": true
+        },
+        "geometry": [
+          {
+            "tag": "SPAN",
+            "id": "",
+            "classes": "chip",
+            "right": 423.734375,
+            "width": 150.40625
+          },
+          {
+            "tag": "SPAN",
+            "id": "sessionHash",
+            "classes": "",
+            "right": 413.734375,
+            "width": 96.421875
+          },
+          {
+            "tag": "TABLE",
+            "id": "",
+            "classes": "",
+            "right": 515,
+            "width": 480
+          },
+          {
+            "tag": "CAPTION",
+            "id": "",
+            "classes": "",
+            "right": 515,
+            "width": 480
+          },
+          {
+            "tag": "THEAD",
+            "id": "",
+            "classes": "",
+            "right": 515,
+            "width": 480
+          },
+          {
+            "tag": "TR",
+            "id": "",
+            "classes": "",
+            "right": 515,
+            "width": 480
+          },
+          {
+            "tag": "TH",
+            "id": "",
+            "classes": "",
+            "right": 515,
+            "width": 160
+          },
+          {
+            "tag": "TBODY",
+            "id": "",
+            "classes": "",
+            "right": 515,
+            "width": 480
+          },
+          {
+            "tag": "TR",
+            "id": "",
+            "classes": "",
+            "right": 515,
+            "width": 480
+          },
+          {
+            "tag": "TD",
+            "id": "",
+            "classes": "",
+            "right": 515,
+            "width": 160
+          },
+          {
+            "tag": "PRE",
+            "id": "",
+            "classes": "",
+            "right": 506,
+            "width": 142
+          },
+          {
+            "tag": "TR",
+            "id": "",
+            "classes": "",
+            "right": 515,
+            "width": 480
+          },
+          {
+            "tag": "TD",
+            "id": "",
+            "classes": "",
+            "right": 515,
+            "width": 160
+          },
+          {
+            "tag": "PRE",
+            "id": "",
+            "classes": "",
+            "right": 506,
+            "width": 142
+          },
+          {
+            "tag": "TR",
+            "id": "",
+            "classes": "",
+            "right": 515,
+            "width": 480
+          },
+          {
+            "tag": "TD",
+            "id": "",
+            "classes": "",
+            "right": 515,
+            "width": 160
+          },
+          {
+            "tag": "PRE",
+            "id": "",
+            "classes": "",
+            "right": 506,
+            "width": 142
+          },
+          {
+            "tag": "TR",
+            "id": "",
+            "classes": "",
+            "right": 515,
+            "width": 480
+          }
+        ]
+      },
+      "fallbackErrors": [
+        "THREE.WebGLRenderer: A WebGL context could not be created. Reason:  disabled by enterprise policy or commandline switch",
+        "THREE.WebGLRenderer: A WebGL context could not be created. Reason:  disabled by enterprise policy or commandline switch",
+        "THREE.WebGLRenderer: Error creating WebGL context.",
+        "THREE.WebGLRenderer: A WebGL context could not be created. Reason:  disabled by enterprise policy or commandline switch",
+        "THREE.WebGLRenderer: A WebGL context could not be created. Reason:  disabled by enterprise policy or commandline switch",
+        "THREE.WebGLRenderer: Error creating WebGL context."
+      ],
+      "archivedAssetURLsServed": [
+        "https://cdn.websitepublisher.ai/custom/wid29770/css/mathscope-stage6.css",
+        "https://cdn.websitepublisher.ai/custom/wid29770/css/mathscope-stage7.css",
+        "https://cdn.websitepublisher.ai/custom/wid29770/css/mathscope.css",
+        "https://cdn.websitepublisher.ai/custom/wid29770/js/mathscope-app.js",
+        "https://cdn.websitepublisher.ai/custom/wid29770/js/mathscope-stage6.js",
+        "https://cdn.websitepublisher.ai/custom/wid29770/js/mathscope-stage7.js?v=stage8-cloud-diagnostics-20261008"
+      ],
+      "blockedExternalRequestCount": 5,
+      "errors": [],
+      "boundedMemory": true,
+      "boundedLatency": true
+    }
+  ],
+  "measured": true,
+  "publicationConfirmed": false,
+  "verdict": "PASS_ISOLATED_DESKTOP_MOBILE_WEBGL_CPU_SCOPED_BENCHMARK"
+}

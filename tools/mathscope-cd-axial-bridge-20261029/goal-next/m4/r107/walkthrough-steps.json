@@ -1,0 +1,40 @@
+{
+  "schema": "MathScope.M4.R107.WalkthroughSteps/1",
+  "baseCommit": "e5113446c4d4ede3decd6107e6ab3dd52dce1697",
+  "workflow": [
+    {
+      "id": "field",
+      "steps": [
+        {"name":"p1-f3-n4","fixture":"p1","edits":{"input.p":"3","input.m":1,"precision.N":4}},
+        {"name":"p1-f3-n8","fixture":"p1","edits":{"input.p":"3","input.m":1,"precision.N":8}},
+        {"name":"p1-f5-n8","fixture":"p1","edits":{"input.p":"5","input.m":1,"precision.N":8}}
+      ]
+    },
+    {
+      "id": "frobenius",
+      "steps": [
+        {"name":"elliptic-f5","fixture":"elliptic","edits":{"input.p":"5","input.m":1,"precision.N":4}},
+        {"name":"prism-derham","fixture":"prism","edits":{}}
+      ]
+    },
+    {
+      "id": "delta",
+      "steps": [
+        {"name":"delta1-grid3","fixture":"delta","edits":{"input.family.delta":1,"input.observation.samplesPerAxis":3,"input.probe":[0.2,-0.3,0.4,0.1]},"sampleIndex":0},
+        {"name":"delta2-grid3","fixture":"delta","edits":{"input.family.delta":2,"input.observation.samplesPerAxis":3,"input.probe":[0.1,-0.15,0.2,0.05]},"sampleIndex":1},
+        {"name":"delta2-grid5","fixture":"delta","edits":{"input.family.delta":2,"input.observation.samplesPerAxis":5,"input.probe":[0.1,-0.15,0.2,0.05]},"sampleIndex":1}
+      ]
+    },
+    {
+      "id": "ns",
+      "steps": [
+        {"name":"exterior-r3","fixture":"exterior","edits":{"input.radialCount":3}},
+        {"name":"exterior-r6","fixture":"exterior","edits":{"input.radialCount":6}},
+        {"name":"axis-tail8","fixture":"axis","edits":{"input.tailDegree":8}},
+        {"name":"axis-tail16","fixture":"axis","edits":{"input.tailDegree":16}},
+        {"name":"taylor-green","fixture":"taylor-green","edits":{}},
+        {"name":"ns-residual","m1Example":"ns-independent-checks","edits":{}}
+      ]
+    }
+  ]
+}

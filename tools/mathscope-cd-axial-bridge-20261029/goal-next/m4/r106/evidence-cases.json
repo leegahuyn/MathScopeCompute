@@ -1,0 +1,61 @@
+{
+  "schema": "MathScope.M4.R106.OriginalEvidenceBoundaries/1",
+  "criterionId": "R1-06",
+  "sourceCommit": "e5113446c4d4ede3decd6107e6ab3dd52dce1697",
+  "originalBlueprintPage": 68,
+  "originalCriterion": "조작된 PASS, 잘못된 소스 hash, 원문과 다른 theorem type, 조작된 prime certificate, 잘못된 force/cutoff를 주입한다. 합격: 각 사례가 기대하는 이유로 거부되고 기존 유효 관측은 보존된다. 로그는 사용자가 원인을 이해할 수 있다.",
+  "matrixSHA256": "ef56f18cedfe50618800bbff6e41bed912171bf0df9b8596cc48bc85c401c68b",
+  "checkedSourceFiles": 112,
+  "status": "PASS",
+  "controls": [
+    {
+      "label": "fabricated_serialized_pass",
+      "code": "CRITERION_REVIEW_REQUIRED",
+      "runtimeReason": "Artifact integrity and claimed PASS bits do not establish execution success or original-criterion acceptance. No independently reviewed criterion anchor matches this evidence.",
+      "explanation": "The supplied PASS has a matching checksum but no independently reviewed criterion receipt."
+    },
+    {
+      "label": "wrong_original_source_hash",
+      "code": "ARTIFACT_HASH_MISMATCH",
+      "runtimeReason": "Raw bytes differ from the pinned audit: research-ide/mathscope-m0/lean/MathScope/M0/Defs.lean",
+      "explanation": "One extra byte changes the exact original Lean source hash."
+    },
+    {
+      "label": "theorem_type_changed",
+      "code": "UNTRUSTED_IMPORTED",
+      "runtimeReason": "The audit JSON differs from the immutable shipped audit. Changing its exit code, axioms, type or hash cannot grant verification.",
+      "explanation": "The type was changed to False while the target identifier and original source were retained."
+    },
+    {
+      "label": "forged_prime_witness",
+      "code": "UNKNOWN",
+      "runtimeReason": "Exact integer certificate verification; a failed certificate alone is not a compositeness proof.",
+      "explanation": "The claimed Lucas witness is 1, below the required bound of 2."
+    },
+    {
+      "label": "forged_prime_factorization",
+      "code": "UNKNOWN",
+      "runtimeReason": "Exact integer certificate verification; a failed certificate alone is not a compositeness proof.",
+      "explanation": "The supplied factor powers multiply to 48, while 97 − 1 equals 96."
+    },
+    {
+      "label": "attempted_foreign_force_override",
+      "code": "INVALID_INPUT",
+      "runtimeReason": "This archive has fixed original source inputs. Caller-supplied force, qStar, parameters or proof flags are not accepted.",
+      "explanation": "The fixed source observation cannot be replaced by caller-provided values."
+    },
+    {
+      "label": "attempted_foreign_cutoff_override",
+      "code": "INVALID_INPUT",
+      "runtimeReason": "This archive has fixed original source inputs. Caller-supplied force, qStar, parameters or proof flags are not accepted.",
+      "explanation": "The fixed source observation cannot be replaced by caller-provided values."
+    }
+  ],
+  "preserved": {
+    "exactM0KernelArtifactReceipt": "a5c34574bc1f5041ad9cc1fd7adaf4353c7bedf1c6c42c53b35935a4c10b2ab7",
+    "finitePrimeVerification": "cf3044adde92349cc138a8294af79db142a9a4feae579494491036858bbd9118",
+    "fixedExteriorObservation": "637b95cf3bdca20321b5bf9d7a1162e7326a84885c6b22f5abbe89ea66082ac9",
+    "originalSourceBindingAndObservationBytesUnchanged": true
+  },
+  "publicationConfirmed": false
+}
