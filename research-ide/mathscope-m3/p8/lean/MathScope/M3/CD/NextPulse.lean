@@ -97,7 +97,7 @@ theorem first_scale_tangent_log_budget (bnorm L B : ℝ)
       bnorm ^ 256 = bnorm ^ 256 * 1 := by ring
       _ ≤ bnorm ^ 256 * bnorm ^ 256 :=
         mul_le_mul_of_nonneg_left (one_le_pow₀ hbnorm) (pow_nonneg hpos _)
-      _ = bnorm ^ 512 := by rw [← pow_add]; norm_num
+      _ = bnorm ^ 512 := by rw [← pow_add]
   have hsmall : 3072 * L ≤ 1 / 256 := by
     norm_num at hL ⊢
     linarith
