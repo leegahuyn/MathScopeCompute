@@ -1,0 +1,17 @@
+name: MathScope second Forced source candidates
+on:
+  push:
+    branches: [mathscope-cd-axial-source-bridge-20261029]
+    paths:
+      - '.github/workflows/mathscope-second-forced-candidates.yml'
+      - 'research-ide/mathscope-m3/post-signed-20261023/source-postfive-repeat-forced.mjs'
+      - 'tools/mathscope-cd-axial-bridge-20261029/goal-next/first-force-repair/record_repeat_forced.mjs'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  second-forced:
+    uses: ./.github/workflows/mathscope-corrected-first-force.yml
+    with:
+      through_five_map: true
+      repeat_forced: true

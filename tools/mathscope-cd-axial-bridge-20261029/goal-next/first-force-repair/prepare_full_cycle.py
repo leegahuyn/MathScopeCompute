@@ -1,7 +1,7 @@
 """Prepare the historical downstream runner for the two exact repair overlays."""
+from argparse import ArgumentParser
 import hashlib
 from pathlib import Path
-import sys
 
 
 def blob_sha(data):
@@ -13,7 +13,12 @@ def replace_one(source, old, new):
     return source.replace(old, new)
 
 
-navier, runner = map(Path, sys.argv[1:])
+parser = ArgumentParser(description=__doc__)
+parser.add_argument("navier", type=Path)
+parser.add_argument("runner", type=Path)
+parser.add_argument("--repeat-recorder", type=Path)
+args = parser.parse_args()
+navier, runner = args.navier, args.runner
 pins = navier / "source-signed-162-pr30-pins.mjs"
 source = pins.read_text(encoding="utf-8")
 changes = {
@@ -44,4 +49,18 @@ source = replace_one(source, " receipt.real_original_signed162_seal_issued=true;
    throw Error('Signed used the wrong exact source byte inventory');
  receipt.corrected_first_cycle_source_byte_pins=signed.source.sourceBytePins;
  receipt.real_original_signed162_seal_issued=true;""")
+if args.repeat_recorder is not None:
+    assert args.repeat_recorder.name == "record_repeat_forced.mjs"
+    runner.with_name(args.repeat_recorder.name).write_bytes(args.repeat_recorder.read_bytes())
+    end = " receipt.stage='FOUR_STAGE_ITERATION_ALL_ORDER_ESTIMATES_AND_FINAL67_NUMERIC_OPEN';"
+    source = replace_one(source, end, """
+ const {recordPostFiveRepeatForced}=await import('./record_repeat_forced.mjs');
+ receipt.repeat_forced_candidate=await stage('post_five_repeat_forced_candidate',()=>{
+   global.gc?.();
+   return recordPostFiveRepeatForced({rawGraph:G,full:actualFull3D,context,
+     dir:process.env.M3_REPEAT_GRAPH_EXPORT_DIR,commit:process.env.GITHUB_SHA,
+     pr30Commit:receipt.expected_base_commit});
+ });
+ save();
+""" + end)
 runner.with_name("run_repaired_full_cycle.mjs").write_text(source, encoding="utf-8", newline="\n")

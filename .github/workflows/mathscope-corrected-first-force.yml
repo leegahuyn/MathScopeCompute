@@ -13,15 +13,18 @@ on:
       through_five_map:
         type: boolean
         default: false
+      repeat_forced:
+        type: boolean
+        default: false
 permissions:
   contents: read
 jobs:
   first-forced:
     runs-on: ubuntu-24.04
-    timeout-minutes: ${{ inputs.through_five_map && 125 || 58 }}
+    timeout-minutes: ${{ inputs.repeat_forced && 170 || inputs.through_five_map && 125 || 58 }}
     env:
       NODE_OPTIONS: --max-old-space-size=5200
-      M3_MAX_MINUTES: ${{ inputs.through_five_map && '115' || '50' }}
+      M3_MAX_MINUTES: ${{ inputs.repeat_forced && '155' || inputs.through_five_map && '115' || '50' }}
       M3_MAX_RSS_GB: '6'
     steps:
       - uses: actions/checkout@v4
@@ -30,6 +33,7 @@ jobs:
           path: repaired
           sparse-checkout: |
             research-ide/mathscope-m3/navier
+            research-ide/mathscope-m3/post-signed-20261023
             tools/mathscope-cd-axial-bridge-20261029/goal-next/first-force-repair
       - uses: actions/checkout@v4
         with:
@@ -84,12 +88,21 @@ jobs:
         env:
           M3_EXPORT_SOURCE_GRAPH: '1'
           M3_SOURCE_GRAPH_EXPORT_DIR: ${{ runner.temp }}/corrected-first-cycle-graph
+          M3_REPEAT_FORCED: ${{ inputs.repeat_forced && '1' || '0' }}
+          M3_REPEAT_GRAPH_EXPORT_DIR: ${{ runner.temp }}/post-five-repeat-forced-graph
         run: |
           set -euo pipefail
           m=research-ide/mathscope-m3
           helper="../repaired/tools/mathscope-cd-axial-bridge-20261029/goal-next/first-force-repair"
           runner="$m/extended-signed-run-20261023"
-          python "$helper/prepare_full_cycle.py" "$m/navier" "$runner/run_real_original_signed162.mjs"
+          extra=()
+          if [ "$M3_REPEAT_FORCED" = 1 ]; then
+            cp "../repaired/$m/post-signed-20261023/source-postfive-repeat-forced.mjs" "$m/post-signed-20261023/"
+            cp "../repaired/$m/post-signed-20261023/source-postfive-repeat-forced.test.mjs" "$m/post-signed-20261023/"
+            node --test "$m/post-signed-20261023/source-postfive-repeat-forced.test.mjs" | tee "$RUNNER_TEMP/repeat-forced-controls.tap"
+            extra=(--repeat-recorder "$helper/record_repeat_forced.mjs")
+          fi
+          python "$helper/prepare_full_cycle.py" "$m/navier" "$runner/run_real_original_signed162.mjs" "${extra[@]}"
           node --input-type=module -e "import {verifyPR30OriginalSourceFiles} from './$m/navier/source-signed-162-pr30-pins.mjs'; const x=await verifyPR30OriginalSourceFiles(); if(x.verifiedUnchangedPR30Files!==27||x.verifiedPinnedRepairFiles!==2)process.exit(2); console.log('27 ORIGINAL AND 2 EXACT REPAIR BLOBS VALIDATED')"
           node --check "$runner/run_repaired_full_cycle.mjs"
           node --expose-gc "$runner/run_repaired_full_cycle.mjs" "$RUNNER_TEMP/corrected-first-cycle-run.json"
@@ -100,5 +113,14 @@ jobs:
           path: |
             ${{ runner.temp }}/corrected-first-cycle-run.json
             ${{ runner.temp }}/corrected-first-cycle-graph/**
+          if-no-files-found: warn
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        if: ${{ always() && inputs.repeat_forced }}
+        with:
+          name: mathscope-second-forced-source-candidates
+          path: |
+            ${{ runner.temp }}/repeat-forced-controls.tap
+            ${{ runner.temp }}/post-five-repeat-forced-graph/**
           if-no-files-found: warn
           retention-days: 30
