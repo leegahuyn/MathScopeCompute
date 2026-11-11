@@ -47,7 +47,36 @@ theorem pulse_cutoff_derivative_outside_transitions
   rw [ha, hb]
   ring
 
+/-- For Q=2^(-ell) and S=ell^2, an explicit band threshold absorbs
+Q^(-M) S^P exp(-c S) into Q^N. The actual uniform coefficient estimate is
+the input to this inequality. -/
+theorem gaussian_dyadic_flat {ell c M N P : ℝ}
+    (hell : 1 ≤ ell) (hP : 0 ≤ P)
+    (hthreshold : (M + N) * Real.log 2 + 2 * P ≤ c * ell) :
+    Real.exp ((M * Real.log 2) * ell + 2 * P * Real.log ell - c * ell ^ 2) ≤
+      Real.exp (-(N * Real.log 2) * ell) := by
+  have hpos : 0 < ell := by linarith
+  have hlog : Real.log ell ≤ ell := by
+    linarith [Real.log_le_sub_one_of_pos hpos]
+  have hp := mul_le_mul_of_nonneg_left hlog (show 0 ≤ 2 * P by positivity)
+  have hs := mul_le_mul_of_nonneg_right hthreshold hpos.le
+  apply Real.exp_le_exp.mpr
+  nlinarith
+
+/-- Two translated closed coordinate intervals stay disjoint when the
+center gap exceeds the sum of the two allowed displacements. -/
+theorem strict_gap_excludes_overlap {x y u v r s : ℝ}
+    (hgap : r + s < |x - y|) (hu : |u| ≤ r) (hv : |v| ≤ s) :
+    x + u ≠ y + v := by
+  intro h
+  obtain ⟨hul, huu⟩ := abs_le.mp hu
+  obtain ⟨hvl, hvu⟩ := abs_le.mp hv
+  have bound : |x - y| ≤ r + s := abs_le.mpr ⟨by linarith, by linarith⟩
+  exact (not_lt_of_ge bound) hgap
+
 #print axioms forced_principal_cutoff_terms
 #print axioms pulse_cutoff_derivative_outside_transitions
+#print axioms gaussian_dyadic_flat
+#print axioms strict_gap_excludes_overlap
 
 end MathScope.M3.CD
