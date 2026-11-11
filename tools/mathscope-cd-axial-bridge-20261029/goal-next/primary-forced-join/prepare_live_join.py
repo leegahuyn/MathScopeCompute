@@ -63,6 +63,20 @@ import {assertLivePrimaryForcedJoin} from './assert_live_join.mjs';""")
    const obj=attachInitializedMeanOperatorMajorants(mean,norms);
    if(assertInitializedMeanOperatorMajorants(obj)!==true)throw Error('majorant private authentication failed');return obj;});
 """," collect();\n")
+ s=replace_one(s," receipt.real_original_current_constructed=true;save();", """ receipt.real_original_current_constructed=true;save();
+ const forcedGraphBudget=Number(process.env.M3_FORCED_MAX_NODES??5000000);
+ if(![5000000,6200000].includes(forcedGraphBudget))throw Error('Unexpected isolated Forced graph budget.');
+ if(forcedGraphBudget>5000000){
+   const base=initial.G.baseGraph;
+   const count=initial.G.nodes.length;
+   if(base.maxNodes!==5000000||count>base.maxNodes)throw Error('Unexpected inherited auxiliary graph budget.');
+   base.maxNodes=forcedGraphBudget;
+   if(initial.G.nodes.length!==count||assertGlobalInitializedAngular(initial)!==true)
+     throw Error('The initial source seal changed after updating its resource ceiling.');
+   receipt.forced_graph_budget={previous:5000000,maximum:forcedGraphBudget,sourceNodeCount:count,
+     mathematicalSourceChanged:false,initializedPrivateSealRechecked:true};
+   memoryGC('after-forced-budget-change');bound();save();
+ }""")
  marker=' receipt.real_original_forced_seal_issued=true;save();'
  if s.count(marker)!=1:raise ValueError('forced seal anchor mismatch')
  prefix,tail=s.split(marker);failure='}catch(e){receipt.error='

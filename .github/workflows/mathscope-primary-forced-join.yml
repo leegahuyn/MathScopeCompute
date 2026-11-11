@@ -93,15 +93,18 @@ jobs:
                   if cap != "max":
                       available = min(available, int(cap) - int(usage.read_text()))
           roomy = available >= 11 * gib
-          print(9 if roomy else 6, 8100 if roomy else 6100, available)
+          more_room = available >= 14 * gib
+          print(12 if more_room else 9 if roomy else 6,
+                11000 if more_room else 8100 if roomy else 6100, available,
+                6200000 if roomy else 5000000)
           PY
           )"
           plan_result=$?
           if [ "$plan_result" -ne 0 ]; then exit "$plan_result"; fi
-          read -r M3_MAX_RSS_GB heap_mb available_bytes <<< "$plan"
-          export M3_MAX_RSS_GB
-          printf 'measured available bytes=%s; owned RSS cap=%s GiB; V8 heap cap=%s MiB\n' \
-            "$available_bytes" "$M3_MAX_RSS_GB" "$heap_mb" | tee "$out/memory-plan.txt"
+          read -r M3_MAX_RSS_GB heap_mb available_bytes M3_FORCED_MAX_NODES <<< "$plan"
+          export M3_MAX_RSS_GB M3_FORCED_MAX_NODES
+          printf 'measured available bytes=%s; owned RSS cap=%s GiB; V8 heap cap=%s MiB; Forced graph cap=%s\n' \
+            "$available_bytes" "$M3_MAX_RSS_GB" "$heap_mb" "$M3_FORCED_MAX_NODES" | tee "$out/memory-plan.txt"
           node --max-old-space-size="$heap_mb" --expose-gc research-ide/mathscope-m3/extended-signed-run-20261023/run_primary_forced_live_join.mjs "$out/native-receipt.json" 2>&1 | tee "$out/native-run.log"
           native_result=${PIPESTATUS[0]}
           verify_result=not_run
