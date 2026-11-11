@@ -146,6 +146,41 @@ theorem nearest_stencil_switch_sum {α : Type*} [AddCommMonoid α]
     common + departing = common + entering := by
   rw [hd, he]
 
+/-- A mixed derivative word of length at most three has at most eight
+Leibniz terms. This bounds their half-sum for the uncut amplitude and
+the differentiated longitudinal cutoff with a common pointwise weight. -/
+theorem uncut_pulse_half_product_bound {ι : Type*}
+    (terms : Finset ι) (cutoff amplitude : ι → ℝ) {C L N W : ℝ}
+    (hC : 0 ≤ C) (hL : 0 < L) (hN : 0 ≤ N) (hW : 0 ≤ W)
+    (hcount : terms.card ≤ 8)
+    (hcutoff : ∀ i ∈ terms, |cutoff i| ≤ C / L)
+    (hamp : ∀ i ∈ terms, |amplitude i| ≤ N * W) :
+    |∑ i ∈ terms, cutoff i * amplitude i / 2| ≤ 4 * C * N * W / L := by
+  have hstep : 0 ≤ (C / L) * (N * W) / 2 := by positivity
+  have hterm (i : ι) (hi : i ∈ terms) :
+      |cutoff i * amplitude i / 2| ≤ (C / L) * (N * W) / 2 := by
+    rw [abs_div, abs_mul, abs_of_nonneg (by norm_num : (0 : ℝ) ≤ 2)]
+    exact div_le_div_of_nonneg_right
+      (mul_le_mul (hcutoff i hi) (hamp i hi) (abs_nonneg _)
+        (div_nonneg hC hL.le)) (by norm_num)
+  have hcard : (terms.card : ℝ) ≤ 8 := by exact_mod_cast hcount
+  calc
+    _ ≤ ∑ i ∈ terms, |cutoff i * amplitude i / 2| :=
+      Finset.abs_sum_le_sum_abs _ _
+    _ ≤ ∑ _i ∈ terms, (C / L) * (N * W) / 2 := Finset.sum_le_sum hterm
+    _ = (terms.card : ℝ) * ((C / L) * (N * W) / 2) := by
+      simp [Finset.sum_const, nsmul_eq_mul]
+    _ ≤ 8 * ((C / L) * (N * W) / 2) :=
+      mul_le_mul_of_nonneg_right hcard hstep
+    _ = _ := by ring
+
+/-- The original pulse length lower bound supplies an additional inverse
+band power in a longitudinal cutoff derivative. -/
+theorem pulse_inverse_length_band_gain {L S r : ℝ}
+    (hS : 0 < S) (hr : 0 < r) (hL : 2 * r * S ≤ L) :
+    1 / L ≤ 1 / (2 * r * S) := by
+  exact one_div_le_one_div_of_le (by positivity) hL
+
 #print axioms forced_principal_cutoff_terms
 #print axioms pulse_cutoff_derivative_outside_transitions
 #print axioms gaussian_dyadic_flat
@@ -155,5 +190,7 @@ theorem nearest_stencil_switch_sum {α : Type*} [AddCommMonoid α]
 #print axioms nearest_stencil_covers_closed_support
 #print axioms nearest_stencil_switch_collar
 #print axioms nearest_stencil_switch_sum
+#print axioms uncut_pulse_half_product_bound
+#print axioms pulse_inverse_length_band_gain
 
 end MathScope.M3.CD
