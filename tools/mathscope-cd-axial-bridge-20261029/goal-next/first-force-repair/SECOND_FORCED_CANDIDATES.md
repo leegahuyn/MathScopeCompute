@@ -38,6 +38,25 @@ raw and pre-guard supported rows coincide for these two modes.
 The vanishing of the wave jets on the original support boundaries
 is an analytic premise of the guard-removal implication.
 
+The live stencil replay rechecks eight fields with the same 162
+signed labels, their 810 outer guards, the 13,041 geometric row
+pairs, and all 15 switch masks for four nearest-integer coordinates.
+At a tie an exiting or entering row has one normalized distance
+strictly greater than \(3/4\) in a neighborhood. The common fixed
+labels use the same guards and derivative maps. At most one enlarged
+torus rectangle reaches a point, so an inactive factor of any
+cross-row product is identically zero near that point. The
+ordinary derivatives of the possible active row still need their
+source-specific bounds and joins.
+
+The live [low-mode replay](LOW_FORCED_COLLARS.md) independently
+reads the two first-Forced terms in 240 component slots. On the
+admitted pulse and transverse collars, the original source
+cutoffs prove their vanishing. The support of \((1-\psi)g\)
+uses \(g=0\) on the exterior pulse collars. The right-collar ODE
+state may retain memory and the derivative term vanishes there
+because its factor \(\psi'\) is zero.
+
 The exact source and operator readback certifies the candidate
 construction. The complete \(F[1]\), equality of the guarded and
 unclipped source, independent global conservative projection
@@ -50,6 +69,7 @@ and the checkout of the verification branch.
     python check_repeat_wrapped_readback.py --repo REPO --first-dir FIRST --candidate-dir CANDIDATE --official-receipt independent-second-forced-candidates.json --out supplemental-second-candidates.json
     python check_repeat_raw_support_ideal.py --repo REPO --candidate-dir CANDIDATE --official-receipt independent-second-forced-candidates.json --out actual-raw-support-ideal.json
     python check_repeat_high_mode_ideal.py --repo REPO --full-dir FULL --candidate-dir CANDIDATE --github-metadata GITHUB_JSON --out actual-high-mode-ideal.json
+    python check_repeat_stencil_support.py --candidate-dir CANDIDATE --official-receipt independent-second-forced-candidates.json --out live-stencil-support.json
 
 Here `FIRST` is the corrected first Forced graph directory, `FULL`
 is the corrected first-cycle graph directory, and `CANDIDATE` is
