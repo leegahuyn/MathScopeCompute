@@ -1,0 +1,55 @@
+name: MathScope original whole-K coefficient prefixes
+on:
+  push:
+    branches: [mathscope-cd-axial-source-bridge-20261029]
+    paths:
+      - '.github/workflows/mathscope-original-whole-k-prefix.yml'
+      - 'tools/mathscope-cd-axial-bridge-20261029/goal-next/whole-k-atlas/replay_original_whole_k_prefix.mjs'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  original-whole-k-prefix:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix:
+        prefix: [0, 3, 4]
+    env:
+      NODE_OPTIONS: --max-old-space-size=6100
+      ORIGINAL_SOURCE_COMMIT: f8cb4034e86d7b669d52a6f2248aebba156b51b5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: evidence
+          persist-credentials: false
+          sparse-checkout: tools/mathscope-cd-axial-bridge-20261029/goal-next/whole-k-atlas
+      - uses: actions/checkout@v4
+        with:
+          ref: f8cb4034e86d7b669d52a6f2248aebba156b51b5
+          path: original
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Build the original current and pressure prefix
+        working-directory: original
+        env:
+          ORIGINAL_PREFIX: ${{ matrix.prefix }}
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$ORIGINAL_SOURCE_COMMIT"
+          git diff --quiet --exit-code HEAD --
+          script=replay_original_whole_k_prefix.mjs
+          target="research-ide/mathscope-m3/extended-signed-run-20261023/$script"
+          cp "../evidence/tools/mathscope-cd-axial-bridge-20261029/goal-next/whole-k-atlas/$script" "$target"
+          node --check "$target"
+          node --expose-gc "$target" "$RUNNER_TEMP/mathscope-whole-k" "$ORIGINAL_SOURCE_COMMIT" "$ORIGINAL_PREFIX"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mathscope-whole-k-N${{ matrix.prefix }}
+          path: ${{ runner.temp }}/mathscope-whole-k/**
+          if-no-files-found: warn
+          retention-days: 30
