@@ -190,8 +190,8 @@ theorem axial_full_ray_integral_of_support
       exact hmiddle hm
     · rw [indicator_of_notMem hm]
       exact htails x ⟨hx, hm⟩
-  have hi := ((intervalIntegrable_iff_integrableOn_Ioc_of_le hab).mp hint)
-    .integrable_indicator measurableSet_Ioc
+  have hs := (intervalIntegrable_iff_integrableOn_Ioc_of_le hab).mp hint
+  have hi := hs.integrable_indicator measurableSet_Ioc
   refine ⟨hi.integrableOn.congr_fun heq.symm measurableSet_Ioi, ?_⟩
   calc
     (∫ x in Ioi (0 : ℝ), raw x) = ∫ x in Ioi (0 : ℝ), (Ioc a b).indicator supported x :=
