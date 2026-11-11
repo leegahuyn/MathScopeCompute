@@ -1,0 +1,19 @@
+# Original N4 family resource failure and source-preserving options
+
+GitHub 43049274308 N4 stopped at `sealed-original-band`, `RESOURCE_LIMIT`, elapsed 100,374 ms, observed RSS 5,306,884,096 bytes. The last saved progress was `common-positive-source-identities-ready` at 1,195,498 nodes and 82,648 ms. The exact source error comes from the induction expression graph's `nodes.length>=maxNodes` check. The default `prepareGlobalSourceBand(coefficientOrder=4)` invokes the same common family with `throughOrder=5`, `derivativeOrder=5`, and maxNodes=5,000,000. In that sequence the next operation after the logged checkpoint is `attachActualVelocityPhysicalSeminorms` for throughOrder=5 and derivativeOrder=5; its return/checkpoint was never reached. This identifies the constructor phase, but not the row or derivative where it hit 5 million: its progress event uses `phase`, while the runner records only `stage`.
+
+This is a graph node representation limit, not an observed wall-time or RSS-limit error. Increasing the limit may allow further construction but the 6-GiB RSS ceiling and JavaScript heap are not proven sufficient, and the later pressure/stress norms and seals have not run. A diagnostic retry should log phase, row/order, node count and RSS without printing the graph or modifying mathematical inputs, and fail closed on memory/time. The runner's 4,000,000-node band budget is distinct from the earlier 5,000,000 family budget, and may itself become the next limit once the actual family is built.
+
+## Diagonal computation candidate, not a proven substitute
+
+The current velocity norm constructor requests every derivative 0..5 for every order n=1..5, although the common selector's actual b_n clauses consume only derivatives m<=n. Its own declared upper bound on candidate Cartesian profile jets is `9*5*C(8,3)=2520`; computing only the diagonal demands `9*sum_(n=1)^5 C(n+3,3)=1125`. These are budget formulas, not measurements of actual rows or node reduction. The exact original cutoff-weight prefixes do agree: `audit_weight_prefix.mjs` imports the f8-identical source blob `4c05e4d071378771c9818b5a6dbbafcaa2ab36b1` and checks all 20 weights (ordinary and extra cutoff) for n=1..5 against the first n+1 rows of the m=5 execution; each mutated control is rejected. This proves only this small finite ingredient.
+
+A source-preserving diagonal redesign would need to construct each required `(n,m<=n)` actual velocity, pressure, stress and zeta-bound body on the **same private graph and same primitives**; prove the lower derivative weights, actual FTC/binder expressions, maxima and numerical norm terms are identical in real semantics to the existing full-m5 input; preserve exact original historical norms, order n selector clauses and lazy cutoff behavior; and give an independently authenticated authority rather than relabeling separately sealed serialized receipts. The existing `attachActualCommonAdmissibleFamily` explicitly checks the one shared G, original primitives, private seals and derivative request >=5, so objects generated separately on unrelated graphs cannot simply be spliced into it. The current full-family output may also promise non-diagonal order-5 bounds for earlier coefficients; a diagonal-only variant must have a narrower explicit contract or retain those other outputs if consumers use them.
+
+One possible memory-oriented technique is exact expression sharing with authenticated native bodies and binder-aware materialization, but semantic equivalence, derivative/frame behavior, original norm-bound identity and all affected private-seal checks remain design/proof obligations. No partition, altered source, revised certificate or successful N4 execution is claimed here.
+
+Replay the small independent control:
+
+    node audit_weight_prefix.mjs <checkout-with-f8-identical-kernel> weight-prefix.json
+
+No Lean, remote action or branch mutation was performed.

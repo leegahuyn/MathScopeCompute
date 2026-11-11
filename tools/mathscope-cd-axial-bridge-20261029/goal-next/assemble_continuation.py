@@ -21,6 +21,8 @@ parser.add_argument("--first-gauge-graph", type=Path)
 parser.add_argument("--localization-source", type=Path)
 parser.add_argument("--r108-deploy-archive", type=Path)
 parser.add_argument("--primary-order2-artifact", type=Path)
+parser.add_argument("--whole-k-n0-artifact", type=Path)
+parser.add_argument("--core-runtime", type=Path)
 args = parser.parse_args()
 TASK = args.workspace.resolve()
 REPO = TASK / "work/MathScopeCompute-CD"
@@ -39,6 +41,12 @@ EXTRAS = [
     ".github/workflows/mathscope-original-axial-n2.yml",
     ".github/workflows/mathscope-primary-order2.yml",
     ".github/workflows/mathscope-primary-forced-join.yml",
+    ".github/workflows/mathscope-original-whole-k-prefix.yml",
+    PREFIX + "/axial-exterior/check_source_guards.py",
+    PREFIX + "/goal-20261111/y/exact_original_node_children.mjs",
+    PREFIX + "/goal-20261111/y/original_native_semantic_definitions.mjs",
+    PREFIX + "/goal-20261111/m3/whole-k-chart.json",
+    "research-ide/mathscope-m3/p8/lean/MathScope/M3/CD/WholeKCutoff.lean",
     "research-ide/mathscope-m3/p8/lean/MathScope/M3/CD/AxialMomentBridge.lean",
     "research-ide/mathscope-m3/p8/lean/MathScope/M3/CD/ReferenceIngress.lean",
     "research-ide/mathscope-m3/p8/lean/MathScope/M3/CD/PulseCutoff.lean",
@@ -248,6 +256,46 @@ with zipfile.ZipFile(DEST, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=
             add("inputs/original-primary-order2/" + name, data)
         for name in ("status.json", "independent-readback.json", "checkpoints.jsonl", "native-run.log"):
             add("inputs/original-primary-order2/" + name, (artifact / name).read_bytes())
+    if args.whole_k_n0_artifact:
+        artifact = args.whole_k_n0_artifact.resolve()
+        graph = artifact / "original-whole-k-current-pressure-graph"
+        manifest = json.loads((graph / "original-source-export-manifest.json").read_bytes())
+        run = json.loads((artifact / "original-whole-k-prefix.json").read_bytes())
+        assert run["currentStage"] == "COMPLETE" and run["requestedPrefix"] == 0
+        assert run["snapshot"] == manifest and manifest["node_count"] == 983154
+        assert manifest["executing_commit"] == "fbad12e9331c63b45da8292601a2b0fb6f54731e"
+        assert manifest["scope"] == "ORIGINAL_WHOLE_K_N0_CURRENT_PRESSURE_PREFIX"
+        assert manifest["actual_final_67_jets_certified"] == 0
+        assert manifest["definitions_sha256"] == digest((graph / "original-source-functions.json").read_bytes())
+        for relative in ("original-whole-k-prefix.json",
+                         "original-whole-k-current-pressure-graph/original-source-export-manifest.json",
+                         "original-whole-k-current-pressure-graph/original-source-functions.json",
+                         "original-whole-k-current-pressure-graph/original-source-nodes.jsonl.gz"):
+            add("inputs/original-whole-k-n0/" + relative, (artifact / relative).read_bytes())
+        github_zip = (artifact.parent / "hosted-n0-artifact.zip").read_bytes()
+        assert digest(github_zip) == "83f02c00e2f6dec890a725c740910d5bb48b3c4b9cc153c4f20595e58ed8a4f5"
+        add("inputs/original-whole-k-n0/hosted-n0-artifact.zip", github_zip)
+    if args.core_runtime:
+        sources = [("mathscope-m2/navier/" + name) for name in (
+            "actual-core-evaluator.mjs", "actual-background-data.mjs",
+            "source-profile-data.mjs", "source-profile.mjs",
+        )]
+        sources.append("mathscope-m1/navier/numerics.mjs")
+        for name in sources:
+            relative = "research-ide/" + name
+            source = (args.core_runtime / relative).read_bytes()
+            assert source == git("show", "f8cb4034e86d7b669d52a6f2248aebba156b51b5:" + relative), relative
+            add("inputs/original-core-runtime/" + relative, source)
+        endpoint = json.loads(git("show", commit + ":" + CURRENT + "/whole-k-center-n3/endpoint-third-bound.json"))
+        runtime = endpoint["runtime"]
+        for relative, blob in runtime["runtimeGitBlobs"].items():
+            source = git("show", runtime["sourceCommit"] + ":" + relative)
+            assert hashlib.sha1(f"blob {len(source)}\0".encode() + source).hexdigest() == blob
+            name = "inputs/original-core-runtime/" + relative
+            if name in sha_manifest:
+                assert sha_manifest[name]["sha256"] == digest(source), relative
+            else:
+                add(name, source)
     add("REPORT_KO.md", report)
     add("STATUS.json", status)
     target.writestr("SHA256.json", encode(sha_manifest))

@@ -10,6 +10,14 @@
 
 첨부 설계도 64·66·68쪽에 근거한 남은 수락 조건과 공통 선행 작업은 [완료 기준 보고](COMPLETION_FOCUS_KO.md)에 정리했다.
 
+## 이번 검증에서 좁힌 범위
+
+- **VERIFIED** 전체 \(K\)에서 원래 공통 selector의 성장을 사용하면 차트에는 최대 \(N=4\), 실제 켜질 수 있는 배경 항에는 최대 3차가 필요하다. 활성 라벨은 \(\ell_{\min}+14,+15,+16\) 세 개이고 실제 frozen 대표점에서 빠진 항의 cutoff가 평탄한 0임을 보였다. 새 정리 세 개가 GitHub Lean에서 통과했다. [차트와 증거](whole-k-atlas/README.md) · [Lean 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43048948428).
+- **VERIFIED** 원본 \(N=0\) current·pressure 그래프 983,154개 노드와 후보 상자 81개를 재생했다. \(N=0\)의 실제 적용에는 원본 창 \(b_1q\ge1\)이 필요하다. \(N=3\)은 원본 압력·응력 노름 이후 메모리 한도에, \(N=4\)는 원본 family 500만 노드 한도에 도달했다. \(N=3\)의 첫 재시도도 메모리 회수 후 같은 한도에 도달했다. 여유 메모리를 확인하는 후속 실행을 시작했다. [원본 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43049274308) · [N=3 후속](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43051737499) · [N=4 후속](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43052021873).
+- **VERIFIED** 원고 (9.21)·(10.1)의 중심 지지 조건을 사용해 원본 67개 요청의 식과 \(A_z\) 관련 정확한 0 19개를 검사했다. 공통 \(b_n\)을 사용하는 중심 셀에서는 실제 \(b>0\), \(b_s<0\), 양의 소용돌이 에너지 및 양의 시간 cutoff 일을 확인했다. 원래 3차 계수의 값과 방사 미분 상계를 별도로 재현해 종료 단면의 에너지 하계와 두 부호 구간까지 확보했다. [중심 jet 식](whole-k-core/README.md) · [3차 배경과 종료 단면](whole-k-center-n3/README.md).
+- **CONDITIONAL** 원본 \(N=2\) current·pressure에서 도달 가능한 Y 호출 567개 중 44개가 새로 나타났다. 원본 Picard 반경 및 지연 분기 하에서 새 인자 다섯 개는 \(0\le Y<64/15\)로 제한된다. 실제 formal→actual 전이와 정의역 결속은 남아 있다. [원본 N=2 호출 검사](y-n2/README.md).
+- **VERIFIED** 첫 보정 Forced의 10개 차트에서 실제 계수 120개를 재현했다. 모드 2의 선도 파동은 실제 위상 법선에 직교한다. 모드 1에는 Primary 2차 미분과 초기 평균 1차 미분이 남는다. **CONDITIONAL** 같은 원본의 Primary \(C^2\)는 모드 2의 \(C^1\) 상계에 충분하며, 모드 1의 첫 미확인 입력은 초기 평균 \(C^1\)이다. [계수와 도함수 요구](g0-supported/README.md) · 공통 원본 실행은 압력과 같은 current의 Primary \(C^2\)까지 결속한 뒤 Temporal 메모리 한도에 걸렸다. [공통 원본 GitHub 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43046097299) · [재시도](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43051548675).
+
 ## VERIFIED
 
 - **실제 미절단 primary.** GitHub의 원본 2차 primary에서 두 부호의 진폭 6개를 확인했다. 바깥 시간 cutoff 하나만 제거하고 \(H\)를 정의하는 원본 적분 네 개의 \(\psi^2\)를 유지했다. 같은 원본 \(K,S,\zeta,P(v)\)로 고정 차트의 0–3차 상계를 재계산했다. 길이 \(L_s\ge 2r_0S\)에 따라 \(\psi'A_{\rm uncut}/2\)에는 \(S^{-1}\)이 추가된다. [원본 미절단 상계](primary-force-transfer/README.md) · [Lean 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43043929317).

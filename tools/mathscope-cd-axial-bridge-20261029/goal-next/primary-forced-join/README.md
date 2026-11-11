@@ -18,8 +18,7 @@ corrected first-Forced run had 4,197,115 graph nodes. The combined
 build retains the 6 GiB RSS ceiling and 145-minute owned deadline.
 The first attempt passed C5 family creation and hit the native
 band constructor's argument limit. The second run uses the
-supported 4,000,000-node band budget. The runner records RSS at
-progress and stage checkpoints and at caught failures.
+supported 4,000,000-node band budget. Run 43046097299 authenticated the C5 family, original current, the same-current C2 primary, five moments, and full pressure. It stopped in original Temporal at 2,618,460 nodes and 6,443,962,368 bytes RSS under the 6 GiB guard. [Retry 43051548675](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43051548675) keeps the private seals and the same objects and adds measured GC checkpoints at pressure and Temporal.
 [First run](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43044574048)
 · [Corrected run](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43046097299).
 

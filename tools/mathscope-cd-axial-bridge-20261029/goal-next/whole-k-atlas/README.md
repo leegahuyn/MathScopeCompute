@@ -51,6 +51,10 @@ These inequalities hold uniformly over the entire slab for the selected source p
 
 Actual b1–b5 on one live common family and all needed native class/ODE and cutoff semantics remain separate source obligations. The earlier raw N=1 Y verification remains 519/523 without explicit physical binding; the source-bound N=1 523/523 result does not automatically become a whole-slab all-N Y result. No M3/M4 acceptance or 67-jet progress is promoted. RELEASE HOLD.
 
+## Hosted exact source replays
+
+GitHub Lean run [43048948428](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43048948428) compiled the fifth-margin, prefix-selection and active-label theorems. The 11 compiled files match the Git blobs. The first independent native matrix [43049274308](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43049274308) completed the N=0 current and pressure graph (983,154 nodes, 81 candidate boxes). The replay's exact chart hypotheses still apply to each physical cell. N=3 stopped at the runner RSS cap after 4,065,715 nodes of the common pressure/stress stage. N=4 stopped at the native common-family node cap. The first N=3 retry [43050672204](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43050672204) reproduced the limit after GC at the final common-family seal checkpoint. The measured-headroom N=3 retry [43051737499](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43051737499) and N=4 retry [43052021873](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43052021873) preserve source and private seal checks. N=4 can pass a larger finite budget to the original family constructor when the runner has room.
+
 Replay:
 
     python check_whole_k_atlas.py --repo <repository> --out result.json
