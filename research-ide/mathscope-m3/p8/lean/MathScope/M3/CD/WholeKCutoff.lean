@@ -211,4 +211,40 @@ theorem whole_k_active_labels {c j : ℤ} {t : ℝ}
 #print axioms whole_k_margin_prefix_selector
 #print axioms whole_k_active_labels
 
+/-- A relative-time strip at the bottom of the whole-K slab bounds both slow coordinates. -/
+theorem whole_k_bottom_strip_eta_time {ρ η δ : ℝ}
+    (hρ : 1 / 2 ≤ ρ) (hη : 0 < 1 - η ^ 2) (hδ : 0 ≤ δ)
+    (hstrip : 2 * ρ / (1 - η ^ 2) < 1 + δ) :
+    η ^ 2 < δ / (1 + δ) ∧ ρ < (1 + δ) / 2 := by
+  have hprod := (div_lt_iff₀ hη).mp hstrip
+  have hd : 0 < 1 + δ := by linarith
+  constructor
+  · apply (lt_div_iff₀ hd).mpr
+    nlinarith only [hprod, hρ]
+  · have hnon : 0 ≤ η ^ 2 * (1 + δ) := mul_nonneg (sq_nonneg η) hd.le
+    nlinarith only [hprod, hnon]
+
+/-- Clipping the original time interval can only increase this lower midpoint margin. -/
+theorem whole_k_time_midpoint_floor {w center left right : ℝ}
+    (hc : 1 ≤ center) (hleft : center - w ≤ left) (hopen : left < right) :
+    1 - w < (left + right) / 2 := by
+  linarith
+
+/-- One authenticated lower comparison on the omitted scale closes the representative margin. -/
+theorem whole_k_bottom_strip_selector_margin {qMin w b qRep : ℝ}
+    (hq : 0 < qMin) (hw : w < 1)
+    (hscale : 1 ≤ b * qMin * (1 - w)) (hrep : qMin * (1 - w) < qRep) :
+    1 < b * qRep := by
+  have hf : 0 < qMin * (1 - w) := mul_pos hq (sub_pos.mpr hw)
+  have hs : 1 ≤ b * (qMin * (1 - w)) := by simpa only [mul_assoc] using hscale
+  have hb : 0 < b := by
+    by_contra! h
+    have hn := mul_nonpos_of_nonpos_of_nonneg h hf.le
+    linarith
+  exact lt_of_le_of_lt hs (mul_lt_mul_of_pos_left hrep hb)
+
+#print axioms whole_k_bottom_strip_eta_time
+#print axioms whole_k_time_midpoint_floor
+#print axioms whole_k_bottom_strip_selector_margin
+
 end MathScope.M3.CD
