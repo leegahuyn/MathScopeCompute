@@ -23,6 +23,13 @@ pressure components. The same checker matches the 30 actual Signed
 principal tail components to the original mapped cutoff derivative,
 half-amplitude, source weight, and chart factors.
 
+The all-mode raw support check substitutes zero for 1,760 exact
+own-label wave-jet descriptors while retaining the entire mean and
+the geometric operands. All 240 raw component slots reduce to literal
+zero. Modes 1 and 2 reach velocity derivatives of order at most two
+and pressure derivatives of order at most one. Their subtracted
+flat addends have separate support obligations.
+
 For modes 3 and 4, every raw monomial in the 20 positive-mode rows
 is quadratic in own-label velocity, with modes \((1,2)\) or \((2,2)\),
 respectively, and total derivative order at most one. Neither mean
@@ -41,6 +48,7 @@ and the checkout of the verification branch.
 
     python check_repeat_forced_candidates.py --repo REPO --first-dir FIRST --full-dir FULL --candidate-dir CANDIDATE --github-metadata GITHUB_JSON --out independent-second-forced-candidates.json
     python check_repeat_wrapped_readback.py --repo REPO --first-dir FIRST --candidate-dir CANDIDATE --official-receipt independent-second-forced-candidates.json --out supplemental-second-candidates.json
+    python check_repeat_raw_support_ideal.py --repo REPO --candidate-dir CANDIDATE --official-receipt independent-second-forced-candidates.json --out actual-raw-support-ideal.json
     python check_repeat_high_mode_ideal.py --repo REPO --full-dir FULL --candidate-dir CANDIDATE --github-metadata GITHUB_JSON --out actual-high-mode-ideal.json
 
 Here `FIRST` is the corrected first Forced graph directory, `FULL`
