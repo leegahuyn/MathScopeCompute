@@ -94,9 +94,24 @@ node --max-old-space-size=8192 build_higher_ftc_norm_operands.mjs REPO SOURCE_TR
 python bind_higher_normalized_pressure_ftc.py --original ORIGINAL_N2 --norm-packet higher-ftc-norm-operands.json --prefix higher-ftc-prefix-capture.json --out higher-ftc-pressure-binding.json
 node --max-old-space-size=8192 rebuild_higher_ftc_exact_bodies.mjs REPO SOURCE_TREE higher-ftc-all-upper-operands.json higher-ftc-exact-bodies.json.gz
 python compare_higher_ftc_exact_bodies.py --original ORIGINAL_N2 --rebuilt higher-ftc-exact-bodies.json.gz --prefix higher-ftc-prefix-capture.json --out higher-ftc-exact-binding.json
-node --max-old-space-size=4096 evaluate_higher_ftc_operands.mjs REPO SOURCE_TREE higher-ftc-all-upper-operands.json historical-scale-arithmetic-input.json higher-ftc-all-n2-arithmetic.json 2
-node --max-old-space-size=4096 evaluate_higher_ftc_operands.mjs REPO SOURCE_TREE higher-ftc-all-upper-operands.json historical-scale-arithmetic-input.json higher-ftc-all-n3-arithmetic.json 3
+node --max-old-space-size=4096 evaluate_higher_ftc_operands.mjs REPO SOURCE_TREE higher-ftc-all-upper-operands.json historical-scale-arithmetic-input.json higher-ftc-all-n2-coarse.json 2 coarse-upper
+node --max-old-space-size=4096 evaluate_higher_ftc_operands.mjs REPO SOURCE_TREE higher-ftc-all-upper-operands.json historical-scale-arithmetic-input.json higher-ftc-all-n3-coarse.json 3 coarse-upper
+python close_higher_selector_maxima.py --first ../common-b-scales.json --historical ../historical-scale-arithmetic-result.json --exact higher-ftc-exact-binding.json --upper higher-ftc-all-upper-operands.json --n2 higher-ftc-all-n2-coarse.json --n3 higher-ftc-all-n3-coarse.json --out higher-ftc-maxima-verified.json
 ```
+
+**VERIFIED.** Every one of the ten directed upper endpoints lies below
+the lower endpoint of `(ellMinimum+10)*log(2)`. The Python join
+independently compares their exact rational arguments and exponential
+depths. After stripping the common layers, the remaining positive
+exponential on the lower side is larger than the upper argument by the
+positive quadratic Taylor term. The earlier source arithmetic also
+puts all relevant historical competitors below this threshold. Therefore
+the winning terms are exactly `log b1+log16` and `log b2+log2`:
+`b2*qBig=16` and `b3*qBig=32`.
+
+The physical omitted-order guard for N2 is now equivalent to
+`q>=qBig/32`. It holds for N3 at every point of K. The simultaneous
+frozen-representative guard remains a separate condition.
 
 The current comparison is concerned with the original slow common
 selector. Global wave construction, whole-K integration and all 67

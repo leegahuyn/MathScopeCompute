@@ -7,7 +7,8 @@ import {pathToFileURL} from 'node:url';
 
 const [repo,tree,packetPath,historicalPath,output]=process.argv.slice(2,7).map(s=>resolve(s));
 const order=process.argv[7]===undefined?undefined:Number(process.argv[7]);
-const fast=process.argv[8]==='monotone-products';
+const coarse=process.argv[8]==='coarse-upper';
+const fast=process.argv[8]==='monotone-products'||coarse;
 const revision='f8cb4034e86d7b669d52a6f2248aebba156b51b5';
 const m2='research-ide/mathscope-m2/navier/';
 const pins={};
@@ -35,6 +36,20 @@ function optimizedArithmetic(file){
     if(sign(a.lower)>=0&&sign(b.lower)>=0){
       return {lower:mulPoints(a.lower,b.lower).lower,upper:mulPoints(a.upper,b.upper).upper};
     }`);
+  if(coarse){
+    const marker='    const sa=sign(a),sb=sign(b),aa=absolute(a),bb=absolute(b);let cmp=compare(aa,bb,depth+1);';
+    assert.equal(source.split(marker).length,2);
+    source=source.replace(marker,`${marker}
+    if(sa>0&&sb>0&&cmp!==null){
+      const big=cmp>=0?a:b;
+      // The exact elementary enclosure max(a,b) <= a+b <= e*max(a,b)
+      // avoids a tiny-ratio evaluation at large positive levels.
+      if(big.kind==='exp'&&compare(big.argument,qpoint(Q(32)),depth+1)>0){
+        const upper=addPoints(big.argument,one,depth+1).upper;
+        return {lower:big,upper:expPoint(upper,depth+1)};
+      }
+    }`);
+  }
   source=source.replace(/from\s+(['"])(\.[^'"]+)\1/g,(_,q,dep)=>`from ${q}${pathToFileURL(resolve(dirname(file),dep)).href}${q}`);
   return import('data:text/javascript;base64,'+Buffer.from(source).toString('base64'));
 }
@@ -61,7 +76,8 @@ assert(roots.length===(order===undefined?2:5));
 function save(complete){
   const receipt={schema:'MathScope.N7.HigherFTCArithmeticComparisons/1',sourceCommit:revision,sourcePins:pins,
     sourceNormPacketSHA256:digest(packetBytes),historicalInputSHA256:digest(historicalBytes),thresholds,rows,complete,
-    arithmeticMode:fast?'96 directed bits and monotone nonnegative product corners':'original 256 directed bits',
+    arithmeticMode:coarse?'96 directed bits, monotone nonnegative products and coarse large positive sum intervals':
+      fast?'96 directed bits and monotone nonnegative product corners':'original 256 directed bits',
     arithmetic:N.report(),trace:evaluator.report(),
     scope:'Numerical bounds for the explicit source analytic upper operands. The exact original FTC-to-upper comparison is proved separately.'};
   const raw=JSON.stringify(receipt,null,2)+'\n';
