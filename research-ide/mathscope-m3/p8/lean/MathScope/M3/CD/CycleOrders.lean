@@ -2,8 +2,8 @@ import Mathlib
 
 namespace MathScope.M3.CD
 
-def waveOrder (j : ℕ) : ℝ := 7 / 10 + (j : ℝ) / 10
-def meanOrder (j : ℕ) : ℝ := 6 / 5 + (j : ℝ) / 10
+noncomputable def waveOrder (j : ℕ) : ℝ := 7 / 10 + (j : ℝ) / 10
+noncomputable def meanOrder (j : ℕ) : ℝ := 6 / 5 + (j : ℝ) / 10
 
 /-- The arithmetic needed to lower the initialization estimates to
 the stage-zero orders. The source class estimates are separate premises. -/
