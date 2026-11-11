@@ -36,7 +36,7 @@ jobs:
           lean --version | tee proof-logs/version.txt
           sha256sum MathScope/M3/CD/*.lean | tee proof-logs/source-sha256.txt
           result=0
-          for file in MomentFive InverseChart FrozenMesh OriginalInputContract AxialMomentBridge SourceRowFive WholeKCutoff ReferenceIngress PulseCutoff; do
+          for file in MomentFive InverseChart FrozenMesh OriginalInputContract AxialMomentBridge SourceRowFive WholeKCutoff ReferenceIngress PulseCutoff NextPulse; do
             if lake env lean "MathScope/M3/CD/$file.lean" > "proof-logs/$file.log" 2>&1; then
               echo "$file PASS"
             else
