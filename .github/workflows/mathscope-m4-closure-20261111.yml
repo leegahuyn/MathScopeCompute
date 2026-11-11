@@ -5,6 +5,7 @@ on:
     paths:
       - '.github/workflows/mathscope-m4-closure-20261111.yml'
       - 'tools/mathscope-cd-axial-bridge-20261029/m4-closure/**'
+      - 'tools/mathscope-cd-axial-bridge-20261029/m4-finite/**'
       - 'research-ide/mathscope-m4/lean/**'
       - 'research-ide/mathscope-m0/lean/MathScope/M0/Defs.lean'
       - 'research-ide/mathscope-m0/lean/MathScope/M0/Finite.lean'
@@ -23,6 +24,7 @@ jobs:
           persist-credentials: false
           sparse-checkout: |
             tools/mathscope-cd-axial-bridge-20261029/m4-closure
+            tools/mathscope-cd-axial-bridge-20261029/m4-finite
             research-ide/mathscope-m4/lean
             research-ide/mathscope-m0/lean/MathScope/M0
       - name: Install pinned Lean

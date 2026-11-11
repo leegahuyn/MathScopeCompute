@@ -22,6 +22,7 @@ SOURCE_MODULES = (
 )
 AUDIT_IMPORTS = (
     "import MathScope.M4.Finite\n"
+    "import MathScope.M4.FiniteAcceptance\n"
     "import MathScope.M4.Comparison\n"
     "import M4ClosureAudit\n"
 )
@@ -111,6 +112,15 @@ def run(args):
         extra = ()
         if module.endswith("/Conditional"):
             extra = ("depends on axioms:", "MathScope.M4.Conditional.assumedComplete")
+        elif module.endswith("/FiniteAcceptance"):
+            extra = tuple(
+                f"MathScope.M4.FiniteAcceptance.{name}" for name in (
+                    "delta_two_exact_quotient", "delta_two_input_residues",
+                    "delta_two_precision", "delta_two_same_width_counterexample",
+                    "nonidentity_semilinear_chain_map",
+                    "product_differential_squared_zero",
+                )
+            )
         memory_mib = 3072 if module == "M4ClosureAudit" else 1536
         execute(
             "compile-" + module.replace("/", "-"),
@@ -136,6 +146,12 @@ def run(args):
             path = f"research-ide/{section}/lean/{module}.lean"
             data = subprocess.check_output(git + ["show", f"{commit}:{path}"])
             compile_module(module, data, path)
+
+        finite_path = (
+            "tools/mathscope-cd-axial-bridge-20261029/m4-finite/FiniteAcceptance.lean"
+        )
+        finite_data = subprocess.check_output(git + ["show", f"{commit}:{finite_path}"])
+        compile_module("MathScope/M4/FiniteAcceptance", finite_data, finite_path)
 
         helper_path = Path(__file__).with_name("M4ClosureAudit.lean")
         helper_relative = helper_path.resolve().relative_to(root).as_posix()
@@ -172,8 +188,32 @@ def run(args):
             "NegativeFalseRfl", "import Init\nexample : (0 : Nat) = 1 := by rfl\n",
             1, ("error:", "rfl"),
         )
+        probe(
+            "FiniteFixturePositive",
+            "import MathScope.M4.FiniteAcceptance\n"
+            "open MathScope.M4 MathScope.M4.FiniteAcceptance\n"
+            "example : deltaTwo 3 (-3) = -9 := by decide\n"
+            "example : (deltaNumerator 3 3 % 32) / 2 = 9 := by decide\n"
+            "example : primeTrial 29 = true := by decide\n",
+        )
+        probe(
+            "NegativePrimeCertificate",
+            "import MathScope.M4.Defs\n"
+            "example : MathScope.M4.primeTrial 21 = true := by decide\n",
+            1, ("error:", "decide", "primeTrial 21"),
+        )
+        probe(
+            "NegativeDeltaPrecision",
+            "import MathScope.M4.FiniteAcceptance\n"
+            "open MathScope.M4.FiniteAcceptance\n"
+            "example : (deltaNumerator 3 3 % 16) / 2 = deltaTwo 3 3 % 16 := by decide\n",
+            1, ("error:", "decide", "deltaNumerator 3 3"),
+        )
         receipt["verdict"] = "PASS"
-        receipt["originalCriterionScope"] = "I3-01 core Lean module and axiom closure"
+        receipt["originalCriterionScope"] = [
+            "I3-01 core Lean module and axiom closure",
+            "I3-02 scoped finite algebra, exact p=2 quotient precision, and certificate controls",
+        ]
         receipt["additionalControlScope"] = "I3-06 false rfl control only"
     except Exception as error:
         receipt["error"] = str(error)
