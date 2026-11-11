@@ -3,13 +3,14 @@
 The original acceptance text is recorded at
 `research-ide/mathscope-m4/recovery-20261019/ORIGINAL_M4_CRITERIA.json`
 in commit `9595b4de5a1065b694d225c0ad2a14d5aa4435a9`. These runs cover
-four individual criteria. The finite fixtures and conditional Lean targets
+five individual criteria. The finite fixtures and conditional Lean targets
 retain the mathematical scopes specified in their input and output records.
 
 | Criterion | Observed evidence |
 | --- | --- |
 | I3-01 | Lean compiled the six M4 modules and two inherited M0 modules. The unconditional gate checked the transitive axiom dependencies of 184 exported MathScope declarations. Importing Open or Conditional separately failed the gate. Importing a new theorem that uses a synthetic user axiom failed the same gate and reported the dependency. |
 | I3-02 | Lean checked the original differential, bracket, prime, and holonomy modules together with the new exact `p=2` quotient precision and nonidentity semilinear chain map over `Int × Int`. The finite fixture compiled. An invalid prime claim for 21 and a same-width numerator claim failed. |
+| I3-03 | Six analytic assumptions have explicit domains, norms and quantifiers. The three actual M4 analytic targets are bound to compiled source and logs. Four unused adapter specifications are OPEN. |
 | R1-01 | All 13 prescribed cases ran in fresh Workers and agreed with their corresponding local executions and the immutable fixture manifest. Exact normalized input, Worker, mathematical result, and invariant hashes were matched. For the 96 exterior points the largest Cartesian velocity error upper bound was (4.75087\times10^{-11}), inside the requested (10^{-8}) absolute tolerance. |
 | R1-02 | Separate changes in p-adic precision, exact rational tail degree, spatial grids, lattice spacing and extent, and sample counts produced a finite refinement table. The fixed physical BPST box bounds passed and a deliberately violating row failed. Six pseudorandom SU2 replica runs passed the 12 predeclared conditional Gaussian checks against deterministic Bessel reference intervals. |
 
@@ -101,13 +102,12 @@ mean. Both computed discrepancies are below (10^{-14}).
 ## Remaining criteria
 
 The repository evaluator accepted the reviewed candidates for I3-01, I3-02,
-R1-01 and R1-02. It rejected a one-byte alteration to a raw artifact and a
-scope alteration for each candidate. Serialized copies of the four receipts
+I3-03, R1-01 and R1-02. It rejected a one-byte alteration to a raw artifact and a
+scope alteration for each candidate. Serialized copies of the five receipts
 were also rejected. The exact outcome is in `authoritative-assessment.json`.
 The assessment has `canFreeze=false` and `publicationConfirmed=false`.
 
-I3-03–I3-08 require their analytic statements,
-reference adapters, parameter-specific job rechecks, proof UI audit,
+I3-04–I3-08 require their reference adapters, parameter-specific job rechecks, proof UI audit,
 research-boundary tests and claim presentation evidence. R1-03–R1-07
 require corresponding application paths and independent interaction
 evidence. R1-08 requires its actual post-publication receipt. The observed

@@ -1,0 +1,2534 @@
+{
+  "schema": "MathScope.ActualRecursiveSourceFunctionals/1",
+  "initial_source_application_sha256": "5e32f8e32b95f319b681d4e92b7c01befba54bb2600af9655ace21562de689b9",
+  "representation": "mathematical function/operator term graph; not original numeric SourceExpressions node IDs",
+  "fixed_source": "f_cb76b8ef5e4490552e0e9b32",
+  "actual_stages": [
+    "f_1db258e7c5bbb3108d5dde59",
+    "f_c7adfb9f68e4cf20075df353",
+    "f_38948a0b93f0235e274e9bc7",
+    "f_d90a360388d7fd2abbe0022f",
+    "f_efc91cb09962b2e99aabcf91",
+    "f_efc72b019cc0f2b9eb1f0026"
+  ],
+  "nodes": [
+    {
+      "id": "f_cb76b8ef5e4490552e0e9b32",
+      "operation": "FixedOriginalSource",
+      "inputs": [],
+      "data": {
+        "paper": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+        "parameters": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+        "background_roots": {
+          "b": 622934,
+          "V": 634588,
+          "G": 622933
+        },
+        "stress_roots": [
+          633815,
+          633863
+        ],
+        "original_fixed_data": [
+          "primary positive a_plus/a_minus",
+          "Hcov and its inverse",
+          "primary fundamental propagator",
+          "original path and palette",
+          "rho",
+          "five normalized profiles and their fixed inverse",
+          "Diophantine torus frequency",
+          "original smooth cutoffs and q geometry"
+        ],
+        "source": "same initialized normFamily actualRoots; Definition9.4",
+        "qbig": "2^(-(ellMinimum+10))",
+        "h": "exp(-8002*(exp(1048576)+10))"
+      }
+    },
+    {
+      "id": "f_1db258e7c5bbb3108d5dde59",
+      "operation": "ActualInitializedState",
+      "inputs": [
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "source_application_sha256": "5e32f8e32b95f319b681d4e92b7c01befba54bb2600af9655ace21562de689b9",
+        "actual_tuple": {
+          "velocity": [
+            3825006,
+            3825007,
+            3825008
+          ],
+          "full_pressure": 3825009,
+          "full_pressure_meaning": "p_background+p_mean+p_angular; complete mean pressure is separately root3615361",
+          "mean_velocity": {
+            "beta": 3614790,
+            "v": 3614791,
+            "gamma": 3614792
+          },
+          "full_mean_pressure": 3615361,
+          "assembled_residual": [
+            3825348,
+            3825349,
+            3825350
+          ],
+          "mean_residual": [
+            3614976,
+            3615392
+          ],
+          "defects": {
+            "P": 3615055,
+            "Jtheta": 3615101,
+            "Jz": 3615147
+          }
+        },
+        "potentials": {
+          "base": "original Stokes A_base=(S/r)e_theta, S=sum chi(b_n*q) q^(1-A+2nh) M_n, n0 uncut",
+          "primary": "source-global-current.mjs attachGlobalCurrentState rows[].rawPotential and rows[].potential BEFORE exactCylindricalHarmonicCurl, with original physical scaling/cover",
+          "temporal": "source-global-temporal.mjs attachGlobalTemporalInverse: original realizeOriginalTemporalPotential(...).psi, not a gauge reconstructed from velocity",
+          "five": "source-global-initial-mean.mjs attachGlobalInitializedMean: emitted psi=(int_inner^R Rprime*gammaDesired dRprime)/R, actual root3614778",
+          "actual_five_psi": 3614778,
+          "actual_five_compact_psi": 3614782,
+          "gauge_choice": "Use precisely these emitted physical potentials, with original scalar rescalings and cover. No alternative gauge permitted."
+        },
+        "max_wave_harmonic": 1,
+        "sigma": "1/5",
+        "two_moments": [
+          0,
+          0
+        ],
+        "flat_decomposition": "E_background + actual pulse cutoff + actual modified radial inverse remainders, retained as Prop9.3 prescribes"
+      }
+    },
+    {
+      "id": "f_e041477831ca0e4766e77e43",
+      "operation": "GroupedSupportedNonzeroResidual",
+      "inputs": [
+        "f_1db258e7c5bbb3108d5dde59"
+      ],
+      "data": {
+        "full_current": "f_1db258e7c5bbb3108d5dde59",
+        "all_generated_harmonics": "0<|m|<=2^1",
+        "all_conjugate_pairs": true,
+        "flat_terms": "retained separately, never sent to supported pulse source",
+        "physical_labels": "all original cover labels with fixed path/copies; no sampling"
+      }
+    },
+    {
+      "id": "f_c160bd59720cab4034b667b8",
+      "operation": "OriginalForcedMap",
+      "inputs": [
+        "f_1db258e7c5bbb3108d5dde59",
+        "f_e041477831ca0e4766e77e43",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "input_current": "f_1db258e7c5bbb3108d5dde59",
+        "source": "f_e041477831ca0e4766e77e43",
+        "equation": "L_m(t_m,pi_m)=-f_m for EACH nonzero grouped supported source",
+        "initial_data": "zero at entrance to same fixed path",
+        "velocity": "cut off potential then full curl",
+        "pressure": "inhomogeneous coefficient including n dot f",
+        "reference": "Prop7.2, Prop9.6 step1",
+        "norm_theorem": "generic stable forced class recurrence; input seminorm remains that of supported above",
+        "returned_complete_state": "input_current plus the actual realized velocity increment; retain all previous wave/mean components and all previous angular pressure plus actual new angular pressure coefficient",
+        "all_cross_terms": "Form complete updated full auxiliary covariance BEFORE any Haar averaging; do not replace it by its average for pressure or direct PDE.",
+        "next_action": "FullPressureAndResidualRefresh on this complete state before any subsequent source projection"
+      }
+    },
+    {
+      "id": "f_7fdec058cb7e29074dd435a8",
+      "operation": "FullPressureAndResidualRefresh",
+      "inputs": [
+        "f_c160bd59720cab4034b667b8",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "tag": "cycle0:after-forced",
+        "full_current": "f_c160bd59720cab4034b667b8",
+        "gr": "complete (8.3) from every current wave and beta,v,gamma; no zero-mean-velocity substitution",
+        "P": "whole radial integral of full auxiliary Haar(gr)",
+        "pm": "T0(gr-rho*P), retaining radial cutoff remainder A0",
+        "angular_pressure": "all old + actual new homogeneous/inhomogeneous angular coefficients retained",
+        "full_pressure": "background + latest pm + complete angular pressure",
+        "residual": "direct R(u,p) with same complete latest pressure; supported and flat parts per Prop9.3",
+        "current_defects": "P,Jtheta,Jz of complete updated fields, c_rho*P inside axial derivative",
+        "references": [
+          "(8.3)",
+          "(8.12)",
+          "(8.15)-(8.16)",
+          "Prop9.6 p108"
+        ]
+      }
+    },
+    {
+      "id": "f_d783fdd5563277a76920eb70",
+      "operation": "ActualPhysicalHaarTangentialResidual",
+      "inputs": [
+        "f_7fdec058cb7e29074dd435a8"
+      ],
+      "data": {
+        "full_current": "f_7fdec058cb7e29074dd435a8",
+        "physical_pair": "F2=Q^(-2A-1/2) Haar(Etheta),F1=Q^(-2A-1/2) Haar(Ez)",
+        "moments": "Me=int_0^infinity r^e Fe dr, with z,t fixed",
+        "zero_moment_source": "Fe-be*Me with SAME fixed normalized be",
+        "Sigma": "Q^(2A)*(-r^-2 int_0^r rprime^2(F2-b2*M2), -r^-1 int_0^r rprime(F1-b1*M1))",
+        "support": "zero full weighted moments imply compact outer extension; actual Haar makes source independent of all auxiliary coordinates"
+      }
+    },
+    {
+      "id": "f_dc61095ee80a330844b129a5",
+      "operation": "OriginalSignedMap",
+      "inputs": [
+        "f_7fdec058cb7e29074dd435a8",
+        "f_d783fdd5563277a76920eb70",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "input_current": "f_7fdec058cb7e29074dd435a8",
+        "source": "f_d783fdd5563277a76920eb70",
+        "delta_amplitude": "(Hcov^-1(Sigma/epsilon))/(2*a_primary)",
+        "primary_reselected": false,
+        "velocity": "original signed potentials full curl",
+        "pressure": "homogeneous amplitude coefficient on same fixed background",
+        "covariance": "B(wtan0,ts)+B(w-wtan0,ts)+B(w,rs)+Haar_theta,Y(s tensor s)",
+        "every_remainder_retained": true,
+        "reference": "(7.35)-(7.41), Prop9.6 step2",
+        "returned_complete_state": "input_current plus the actual realized velocity increment; retain all previous wave/mean components and all previous angular pressure plus actual new angular pressure coefficient",
+        "all_cross_terms": "Form complete updated full auxiliary covariance BEFORE any Haar averaging; do not replace it by its average for pressure or direct PDE.",
+        "next_action": "FullPressureAndResidualRefresh on this complete state before any subsequent source projection"
+      }
+    },
+    {
+      "id": "f_84fcbdce4c0bdde2ebf113f7",
+      "operation": "FullPressureAndResidualRefresh",
+      "inputs": [
+        "f_dc61095ee80a330844b129a5",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "tag": "cycle0:after-signed",
+        "full_current": "f_dc61095ee80a330844b129a5",
+        "gr": "complete (8.3) from every current wave and beta,v,gamma; no zero-mean-velocity substitution",
+        "P": "whole radial integral of full auxiliary Haar(gr)",
+        "pm": "T0(gr-rho*P), retaining radial cutoff remainder A0",
+        "angular_pressure": "all old + actual new homogeneous/inhomogeneous angular coefficients retained",
+        "full_pressure": "background + latest pm + complete angular pressure",
+        "residual": "direct R(u,p) with same complete latest pressure; supported and flat parts per Prop9.3",
+        "current_defects": "P,Jtheta,Jz of complete updated fields, c_rho*P inside axial derivative",
+        "references": [
+          "(8.3)",
+          "(8.12)",
+          "(8.15)-(8.16)",
+          "Prop9.6 p108"
+        ]
+      }
+    },
+    {
+      "id": "f_51bce8f7fff391d084b3f055",
+      "operation": "ActualZeroAuxiliaryMeanResidual",
+      "inputs": [
+        "f_84fcbdce4c0bdde2ebf113f7"
+      ],
+      "data": {
+        "full_current": "f_84fcbdce4c0bdde2ebf113f7",
+        "source": "(Etheta-Haar Etheta, Ez-Haar Ez)",
+        "projection": "complete normalized common torus, both columns"
+      }
+    },
+    {
+      "id": "f_a5ae44c07a14ce57f219d351",
+      "operation": "OriginalTemporalMap",
+      "inputs": [
+        "f_84fcbdce4c0bdde2ebf113f7",
+        "f_51bce8f7fff391d084b3f055",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "input_current": "f_84fcbdce4c0bdde2ebf113f7",
+        "source": "f_51bce8f7fff391d084b3f055",
+        "prescribed": "Delta v=-ci^-1 N^-1 Etheta0; gamma_desired=-ci^-1 N^-1 Ez0",
+        "actual_axial": "Psi=T1 gamma_desired; Delta beta=-epsilon partial_Z Psi; Delta gamma=(Dr+1/R)Psi",
+        "flat": "Fax=ci*N(Delta gamma-gamma_desired) retained",
+        "reference": "Lemma8.6,(8.20), Prop9.6 step3",
+        "returned_complete_state": "input_current plus the actual realized velocity increment; retain all previous wave/mean components and all previous angular pressure plus actual new angular pressure coefficient",
+        "all_cross_terms": "Form complete updated full auxiliary covariance BEFORE any Haar averaging; do not replace it by its average for pressure or direct PDE.",
+        "next_action": "FullPressureAndResidualRefresh on this complete state before any subsequent source projection"
+      }
+    },
+    {
+      "id": "f_4a3f3f33e88327b80e831376",
+      "operation": "FullPressureAndResidualRefresh",
+      "inputs": [
+        "f_a5ae44c07a14ce57f219d351",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "tag": "cycle0:after-temporal",
+        "full_current": "f_a5ae44c07a14ce57f219d351",
+        "gr": "complete (8.3) from every current wave and beta,v,gamma; no zero-mean-velocity substitution",
+        "P": "whole radial integral of full auxiliary Haar(gr)",
+        "pm": "T0(gr-rho*P), retaining radial cutoff remainder A0",
+        "angular_pressure": "all old + actual new homogeneous/inhomogeneous angular coefficients retained",
+        "full_pressure": "background + latest pm + complete angular pressure",
+        "residual": "direct R(u,p) with same complete latest pressure; supported and flat parts per Prop9.3",
+        "current_defects": "P,Jtheta,Jz of complete updated fields, c_rho*P inside axial derivative",
+        "references": [
+          "(8.3)",
+          "(8.12)",
+          "(8.15)-(8.16)",
+          "Prop9.6 p108"
+        ]
+      }
+    },
+    {
+      "id": "f_2fdfb5133fc545a023be085a",
+      "operation": "FreshFiveTargets",
+      "inputs": [
+        "f_4a3f3f33e88327b80e831376"
+      ],
+      "data": {
+        "full_current": "f_4a3f3f33e88327b80e831376",
+        "targets": "two homogeneous conservation rows + current P,Jtheta,Jz",
+        "source": "full fresh pressure/defects, never pre-temporal targets"
+      }
+    },
+    {
+      "id": "f_728747055470b2e3e6235f10",
+      "operation": "OriginalFiveMap",
+      "inputs": [
+        "f_4a3f3f33e88327b80e831376",
+        "f_2fdfb5133fc545a023be085a",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "input_current": "f_4a3f3f33e88327b80e831376",
+        "source": "f_2fdfb5133fc545a023be085a",
+        "linear_map": "same fixed original five normalized profiles/inverse",
+        "velocity": "full supported potentials and direct azimuthal mean",
+        "two_moments": [
+          0,
+          0
+        ],
+        "new_defects": "actual nonlinear remainders(8.26)-(8.27), not zero",
+        "reference": "Prop9.6 step4",
+        "returned_complete_state": "input_current plus the actual realized velocity increment; retain all previous wave/mean components and all previous angular pressure plus actual new angular pressure coefficient",
+        "all_cross_terms": "Form complete updated full auxiliary covariance BEFORE any Haar averaging; do not replace it by its average for pressure or direct PDE.",
+        "next_action": "FullPressureAndResidualRefresh on this complete state before any subsequent source projection"
+      }
+    },
+    {
+      "id": "f_e2662e7158d8945549a1e917",
+      "operation": "FullPressureAndResidualRefresh",
+      "inputs": [
+        "f_728747055470b2e3e6235f10",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "tag": "cycle0:after-five",
+        "full_current": "f_728747055470b2e3e6235f10",
+        "gr": "complete (8.3) from every current wave and beta,v,gamma; no zero-mean-velocity substitution",
+        "P": "whole radial integral of full auxiliary Haar(gr)",
+        "pm": "T0(gr-rho*P), retaining radial cutoff remainder A0",
+        "angular_pressure": "all old + actual new homogeneous/inhomogeneous angular coefficients retained",
+        "full_pressure": "background + latest pm + complete angular pressure",
+        "residual": "direct R(u,p) with same complete latest pressure; supported and flat parts per Prop9.3",
+        "current_defects": "P,Jtheta,Jz of complete updated fields, c_rho*P inside axial derivative",
+        "references": [
+          "(8.3)",
+          "(8.12)",
+          "(8.15)-(8.16)",
+          "Prop9.6 p108"
+        ]
+      }
+    },
+    {
+      "id": "f_c7adfb9f68e4cf20075df353",
+      "operation": "CompletedActualStage",
+      "inputs": [
+        "f_e2662e7158d8945549a1e917",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "j": 1,
+        "sigma": "3/10",
+        "max_wave_harmonic": 2,
+        "max_residual_harmonic": 4,
+        "full_refreshed_current": "f_e2662e7158d8945549a1e917",
+        "complete_cycle_predecessor": "f_1db258e7c5bbb3108d5dde59",
+        "Z_increment": "sum of every actual potential/direct swirl increment in this cycle; pressure difference new minus old",
+        "invariant_proof": "Prop9.6 preserves all Definition9.4 clauses; Prop9.3 supplies exact next residual decomposition; Lem9.7 fixed domain",
+        "two_moments": [
+          0,
+          0
+        ],
+        "fixed_source": "f_cb76b8ef5e4490552e0e9b32"
+      }
+    },
+    {
+      "id": "f_68465a2d86d9ee074ccccd4b",
+      "operation": "GroupedSupportedNonzeroResidual",
+      "inputs": [
+        "f_c7adfb9f68e4cf20075df353"
+      ],
+      "data": {
+        "full_current": "f_c7adfb9f68e4cf20075df353",
+        "all_generated_harmonics": "0<|m|<=2^2",
+        "all_conjugate_pairs": true,
+        "flat_terms": "retained separately, never sent to supported pulse source",
+        "physical_labels": "all original cover labels with fixed path/copies; no sampling"
+      }
+    },
+    {
+      "id": "f_a242f88bead89cbf747ec4d4",
+      "operation": "OriginalForcedMap",
+      "inputs": [
+        "f_c7adfb9f68e4cf20075df353",
+        "f_68465a2d86d9ee074ccccd4b",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "input_current": "f_c7adfb9f68e4cf20075df353",
+        "source": "f_68465a2d86d9ee074ccccd4b",
+        "equation": "L_m(t_m,pi_m)=-f_m for EACH nonzero grouped supported source",
+        "initial_data": "zero at entrance to same fixed path",
+        "velocity": "cut off potential then full curl",
+        "pressure": "inhomogeneous coefficient including n dot f",
+        "reference": "Prop7.2, Prop9.6 step1",
+        "norm_theorem": "generic stable forced class recurrence; input seminorm remains that of supported above",
+        "returned_complete_state": "input_current plus the actual realized velocity increment; retain all previous wave/mean components and all previous angular pressure plus actual new angular pressure coefficient",
+        "all_cross_terms": "Form complete updated full auxiliary covariance BEFORE any Haar averaging; do not replace it by its average for pressure or direct PDE.",
+        "next_action": "FullPressureAndResidualRefresh on this complete state before any subsequent source projection"
+      }
+    },
+    {
+      "id": "f_e5c58c317c73d95c46454604",
+      "operation": "FullPressureAndResidualRefresh",
+      "inputs": [
+        "f_a242f88bead89cbf747ec4d4",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "tag": "cycle1:after-forced",
+        "full_current": "f_a242f88bead89cbf747ec4d4",
+        "gr": "complete (8.3) from every current wave and beta,v,gamma; no zero-mean-velocity substitution",
+        "P": "whole radial integral of full auxiliary Haar(gr)",
+        "pm": "T0(gr-rho*P), retaining radial cutoff remainder A0",
+        "angular_pressure": "all old + actual new homogeneous/inhomogeneous angular coefficients retained",
+        "full_pressure": "background + latest pm + complete angular pressure",
+        "residual": "direct R(u,p) with same complete latest pressure; supported and flat parts per Prop9.3",
+        "current_defects": "P,Jtheta,Jz of complete updated fields, c_rho*P inside axial derivative",
+        "references": [
+          "(8.3)",
+          "(8.12)",
+          "(8.15)-(8.16)",
+          "Prop9.6 p108"
+        ]
+      }
+    },
+    {
+      "id": "f_67d2fc5ccce3ced3eb3d52ef",
+      "operation": "ActualPhysicalHaarTangentialResidual",
+      "inputs": [
+        "f_e5c58c317c73d95c46454604"
+      ],
+      "data": {
+        "full_current": "f_e5c58c317c73d95c46454604",
+        "physical_pair": "F2=Q^(-2A-1/2) Haar(Etheta),F1=Q^(-2A-1/2) Haar(Ez)",
+        "moments": "Me=int_0^infinity r^e Fe dr, with z,t fixed",
+        "zero_moment_source": "Fe-be*Me with SAME fixed normalized be",
+        "Sigma": "Q^(2A)*(-r^-2 int_0^r rprime^2(F2-b2*M2), -r^-1 int_0^r rprime(F1-b1*M1))",
+        "support": "zero full weighted moments imply compact outer extension; actual Haar makes source independent of all auxiliary coordinates"
+      }
+    },
+    {
+      "id": "f_7fd85a702b37f8918f69a76b",
+      "operation": "OriginalSignedMap",
+      "inputs": [
+        "f_e5c58c317c73d95c46454604",
+        "f_67d2fc5ccce3ced3eb3d52ef",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "input_current": "f_e5c58c317c73d95c46454604",
+        "source": "f_67d2fc5ccce3ced3eb3d52ef",
+        "delta_amplitude": "(Hcov^-1(Sigma/epsilon))/(2*a_primary)",
+        "primary_reselected": false,
+        "velocity": "original signed potentials full curl",
+        "pressure": "homogeneous amplitude coefficient on same fixed background",
+        "covariance": "B(wtan0,ts)+B(w-wtan0,ts)+B(w,rs)+Haar_theta,Y(s tensor s)",
+        "every_remainder_retained": true,
+        "reference": "(7.35)-(7.41), Prop9.6 step2",
+        "returned_complete_state": "input_current plus the actual realized velocity increment; retain all previous wave/mean components and all previous angular pressure plus actual new angular pressure coefficient",
+        "all_cross_terms": "Form complete updated full auxiliary covariance BEFORE any Haar averaging; do not replace it by its average for pressure or direct PDE.",
+        "next_action": "FullPressureAndResidualRefresh on this complete state before any subsequent source projection"
+      }
+    },
+    {
+      "id": "f_bb279bcdda7bb899a428f208",
+      "operation": "FullPressureAndResidualRefresh",
+      "inputs": [
+        "f_7fd85a702b37f8918f69a76b",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "tag": "cycle1:after-signed",
+        "full_current": "f_7fd85a702b37f8918f69a76b",
+        "gr": "complete (8.3) from every current wave and beta,v,gamma; no zero-mean-velocity substitution",
+        "P": "whole radial integral of full auxiliary Haar(gr)",
+        "pm": "T0(gr-rho*P), retaining radial cutoff remainder A0",
+        "angular_pressure": "all old + actual new homogeneous/inhomogeneous angular coefficients retained",
+        "full_pressure": "background + latest pm + complete angular pressure",
+        "residual": "direct R(u,p) with same complete latest pressure; supported and flat parts per Prop9.3",
+        "current_defects": "P,Jtheta,Jz of complete updated fields, c_rho*P inside axial derivative",
+        "references": [
+          "(8.3)",
+          "(8.12)",
+          "(8.15)-(8.16)",
+          "Prop9.6 p108"
+        ]
+      }
+    },
+    {
+      "id": "f_bb1b69405fad14a9b32b20f9",
+      "operation": "ActualZeroAuxiliaryMeanResidual",
+      "inputs": [
+        "f_bb279bcdda7bb899a428f208"
+      ],
+      "data": {
+        "full_current": "f_bb279bcdda7bb899a428f208",
+        "source": "(Etheta-Haar Etheta, Ez-Haar Ez)",
+        "projection": "complete normalized common torus, both columns"
+      }
+    },
+    {
+      "id": "f_d3cf5cd70b70fe9796741ff4",
+      "operation": "OriginalTemporalMap",
+      "inputs": [
+        "f_bb279bcdda7bb899a428f208",
+        "f_bb1b69405fad14a9b32b20f9",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "input_current": "f_bb279bcdda7bb899a428f208",
+        "source": "f_bb1b69405fad14a9b32b20f9",
+        "prescribed": "Delta v=-ci^-1 N^-1 Etheta0; gamma_desired=-ci^-1 N^-1 Ez0",
+        "actual_axial": "Psi=T1 gamma_desired; Delta beta=-epsilon partial_Z Psi; Delta gamma=(Dr+1/R)Psi",
+        "flat": "Fax=ci*N(Delta gamma-gamma_desired) retained",
+        "reference": "Lemma8.6,(8.20), Prop9.6 step3",
+        "returned_complete_state": "input_current plus the actual realized velocity increment; retain all previous wave/mean components and all previous angular pressure plus actual new angular pressure coefficient",
+        "all_cross_terms": "Form complete updated full auxiliary covariance BEFORE any Haar averaging; do not replace it by its average for pressure or direct PDE.",
+        "next_action": "FullPressureAndResidualRefresh on this complete state before any subsequent source projection"
+      }
+    },
+    {
+      "id": "f_26628a6977b9073e00e679bc",
+      "operation": "FullPressureAndResidualRefresh",
+      "inputs": [
+        "f_d3cf5cd70b70fe9796741ff4",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "tag": "cycle1:after-temporal",
+        "full_current": "f_d3cf5cd70b70fe9796741ff4",
+        "gr": "complete (8.3) from every current wave and beta,v,gamma; no zero-mean-velocity substitution",
+        "P": "whole radial integral of full auxiliary Haar(gr)",
+        "pm": "T0(gr-rho*P), retaining radial cutoff remainder A0",
+        "angular_pressure": "all old + actual new homogeneous/inhomogeneous angular coefficients retained",
+        "full_pressure": "background + latest pm + complete angular pressure",
+        "residual": "direct R(u,p) with same complete latest pressure; supported and flat parts per Prop9.3",
+        "current_defects": "P,Jtheta,Jz of complete updated fields, c_rho*P inside axial derivative",
+        "references": [
+          "(8.3)",
+          "(8.12)",
+          "(8.15)-(8.16)",
+          "Prop9.6 p108"
+        ]
+      }
+    },
+    {
+      "id": "f_7afcd5045eedfa5bf1359a63",
+      "operation": "FreshFiveTargets",
+      "inputs": [
+        "f_26628a6977b9073e00e679bc"
+      ],
+      "data": {
+        "full_current": "f_26628a6977b9073e00e679bc",
+        "targets": "two homogeneous conservation rows + current P,Jtheta,Jz",
+        "source": "full fresh pressure/defects, never pre-temporal targets"
+      }
+    },
+    {
+      "id": "f_8bc820639c9f44b039b066a0",
+      "operation": "OriginalFiveMap",
+      "inputs": [
+        "f_26628a6977b9073e00e679bc",
+        "f_7afcd5045eedfa5bf1359a63",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "input_current": "f_26628a6977b9073e00e679bc",
+        "source": "f_7afcd5045eedfa5bf1359a63",
+        "linear_map": "same fixed original five normalized profiles/inverse",
+        "velocity": "full supported potentials and direct azimuthal mean",
+        "two_moments": [
+          0,
+          0
+        ],
+        "new_defects": "actual nonlinear remainders(8.26)-(8.27), not zero",
+        "reference": "Prop9.6 step4",
+        "returned_complete_state": "input_current plus the actual realized velocity increment; retain all previous wave/mean components and all previous angular pressure plus actual new angular pressure coefficient",
+        "all_cross_terms": "Form complete updated full auxiliary covariance BEFORE any Haar averaging; do not replace it by its average for pressure or direct PDE.",
+        "next_action": "FullPressureAndResidualRefresh on this complete state before any subsequent source projection"
+      }
+    },
+    {
+      "id": "f_917051be137d8fb7c6989d9b",
+      "operation": "FullPressureAndResidualRefresh",
+      "inputs": [
+        "f_8bc820639c9f44b039b066a0",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "tag": "cycle1:after-five",
+        "full_current": "f_8bc820639c9f44b039b066a0",
+        "gr": "complete (8.3) from every current wave and beta,v,gamma; no zero-mean-velocity substitution",
+        "P": "whole radial integral of full auxiliary Haar(gr)",
+        "pm": "T0(gr-rho*P), retaining radial cutoff remainder A0",
+        "angular_pressure": "all old + actual new homogeneous/inhomogeneous angular coefficients retained",
+        "full_pressure": "background + latest pm + complete angular pressure",
+        "residual": "direct R(u,p) with same complete latest pressure; supported and flat parts per Prop9.3",
+        "current_defects": "P,Jtheta,Jz of complete updated fields, c_rho*P inside axial derivative",
+        "references": [
+          "(8.3)",
+          "(8.12)",
+          "(8.15)-(8.16)",
+          "Prop9.6 p108"
+        ]
+      }
+    },
+    {
+      "id": "f_38948a0b93f0235e274e9bc7",
+      "operation": "CompletedActualStage",
+      "inputs": [
+        "f_917051be137d8fb7c6989d9b",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "j": 2,
+        "sigma": "2/5",
+        "max_wave_harmonic": 4,
+        "max_residual_harmonic": 8,
+        "full_refreshed_current": "f_917051be137d8fb7c6989d9b",
+        "complete_cycle_predecessor": "f_c7adfb9f68e4cf20075df353",
+        "Z_increment": "sum of every actual potential/direct swirl increment in this cycle; pressure difference new minus old",
+        "invariant_proof": "Prop9.6 preserves all Definition9.4 clauses; Prop9.3 supplies exact next residual decomposition; Lem9.7 fixed domain",
+        "two_moments": [
+          0,
+          0
+        ],
+        "fixed_source": "f_cb76b8ef5e4490552e0e9b32"
+      }
+    },
+    {
+      "id": "f_4a7f638e1d19725013c01adb",
+      "operation": "GroupedSupportedNonzeroResidual",
+      "inputs": [
+        "f_38948a0b93f0235e274e9bc7"
+      ],
+      "data": {
+        "full_current": "f_38948a0b93f0235e274e9bc7",
+        "all_generated_harmonics": "0<|m|<=2^3",
+        "all_conjugate_pairs": true,
+        "flat_terms": "retained separately, never sent to supported pulse source",
+        "physical_labels": "all original cover labels with fixed path/copies; no sampling"
+      }
+    },
+    {
+      "id": "f_50ba7350c3dcad9b47a4d0d9",
+      "operation": "OriginalForcedMap",
+      "inputs": [
+        "f_38948a0b93f0235e274e9bc7",
+        "f_4a7f638e1d19725013c01adb",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "input_current": "f_38948a0b93f0235e274e9bc7",
+        "source": "f_4a7f638e1d19725013c01adb",
+        "equation": "L_m(t_m,pi_m)=-f_m for EACH nonzero grouped supported source",
+        "initial_data": "zero at entrance to same fixed path",
+        "velocity": "cut off potential then full curl",
+        "pressure": "inhomogeneous coefficient including n dot f",
+        "reference": "Prop7.2, Prop9.6 step1",
+        "norm_theorem": "generic stable forced class recurrence; input seminorm remains that of supported above",
+        "returned_complete_state": "input_current plus the actual realized velocity increment; retain all previous wave/mean components and all previous angular pressure plus actual new angular pressure coefficient",
+        "all_cross_terms": "Form complete updated full auxiliary covariance BEFORE any Haar averaging; do not replace it by its average for pressure or direct PDE.",
+        "next_action": "FullPressureAndResidualRefresh on this complete state before any subsequent source projection"
+      }
+    },
+    {
+      "id": "f_3b415216c333784f73131b5f",
+      "operation": "FullPressureAndResidualRefresh",
+      "inputs": [
+        "f_50ba7350c3dcad9b47a4d0d9",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "tag": "cycle2:after-forced",
+        "full_current": "f_50ba7350c3dcad9b47a4d0d9",
+        "gr": "complete (8.3) from every current wave and beta,v,gamma; no zero-mean-velocity substitution",
+        "P": "whole radial integral of full auxiliary Haar(gr)",
+        "pm": "T0(gr-rho*P), retaining radial cutoff remainder A0",
+        "angular_pressure": "all old + actual new homogeneous/inhomogeneous angular coefficients retained",
+        "full_pressure": "background + latest pm + complete angular pressure",
+        "residual": "direct R(u,p) with same complete latest pressure; supported and flat parts per Prop9.3",
+        "current_defects": "P,Jtheta,Jz of complete updated fields, c_rho*P inside axial derivative",
+        "references": [
+          "(8.3)",
+          "(8.12)",
+          "(8.15)-(8.16)",
+          "Prop9.6 p108"
+        ]
+      }
+    },
+    {
+      "id": "f_1cb2e3a3ce37ce09ac2f0c0d",
+      "operation": "ActualPhysicalHaarTangentialResidual",
+      "inputs": [
+        "f_3b415216c333784f73131b5f"
+      ],
+      "data": {
+        "full_current": "f_3b415216c333784f73131b5f",
+        "physical_pair": "F2=Q^(-2A-1/2) Haar(Etheta),F1=Q^(-2A-1/2) Haar(Ez)",
+        "moments": "Me=int_0^infinity r^e Fe dr, with z,t fixed",
+        "zero_moment_source": "Fe-be*Me with SAME fixed normalized be",
+        "Sigma": "Q^(2A)*(-r^-2 int_0^r rprime^2(F2-b2*M2), -r^-1 int_0^r rprime(F1-b1*M1))",
+        "support": "zero full weighted moments imply compact outer extension; actual Haar makes source independent of all auxiliary coordinates"
+      }
+    },
+    {
+      "id": "f_dc34d9b0e77509b8e012ed70",
+      "operation": "OriginalSignedMap",
+      "inputs": [
+        "f_3b415216c333784f73131b5f",
+        "f_1cb2e3a3ce37ce09ac2f0c0d",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "input_current": "f_3b415216c333784f73131b5f",
+        "source": "f_1cb2e3a3ce37ce09ac2f0c0d",
+        "delta_amplitude": "(Hcov^-1(Sigma/epsilon))/(2*a_primary)",
+        "primary_reselected": false,
+        "velocity": "original signed potentials full curl",
+        "pressure": "homogeneous amplitude coefficient on same fixed background",
+        "covariance": "B(wtan0,ts)+B(w-wtan0,ts)+B(w,rs)+Haar_theta,Y(s tensor s)",
+        "every_remainder_retained": true,
+        "reference": "(7.35)-(7.41), Prop9.6 step2",
+        "returned_complete_state": "input_current plus the actual realized velocity increment; retain all previous wave/mean components and all previous angular pressure plus actual new angular pressure coefficient",
+        "all_cross_terms": "Form complete updated full auxiliary covariance BEFORE any Haar averaging; do not replace it by its average for pressure or direct PDE.",
+        "next_action": "FullPressureAndResidualRefresh on this complete state before any subsequent source projection"
+      }
+    },
+    {
+      "id": "f_9019ef72e8ce466c2b9d8164",
+      "operation": "FullPressureAndResidualRefresh",
+      "inputs": [
+        "f_dc34d9b0e77509b8e012ed70",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "tag": "cycle2:after-signed",
+        "full_current": "f_dc34d9b0e77509b8e012ed70",
+        "gr": "complete (8.3) from every current wave and beta,v,gamma; no zero-mean-velocity substitution",
+        "P": "whole radial integral of full auxiliary Haar(gr)",
+        "pm": "T0(gr-rho*P), retaining radial cutoff remainder A0",
+        "angular_pressure": "all old + actual new homogeneous/inhomogeneous angular coefficients retained",
+        "full_pressure": "background + latest pm + complete angular pressure",
+        "residual": "direct R(u,p) with same complete latest pressure; supported and flat parts per Prop9.3",
+        "current_defects": "P,Jtheta,Jz of complete updated fields, c_rho*P inside axial derivative",
+        "references": [
+          "(8.3)",
+          "(8.12)",
+          "(8.15)-(8.16)",
+          "Prop9.6 p108"
+        ]
+      }
+    },
+    {
+      "id": "f_22f9f7a74250b6ad6e42df24",
+      "operation": "ActualZeroAuxiliaryMeanResidual",
+      "inputs": [
+        "f_9019ef72e8ce466c2b9d8164"
+      ],
+      "data": {
+        "full_current": "f_9019ef72e8ce466c2b9d8164",
+        "source": "(Etheta-Haar Etheta, Ez-Haar Ez)",
+        "projection": "complete normalized common torus, both columns"
+      }
+    },
+    {
+      "id": "f_45dbb21efb8b61f6f7a9f44a",
+      "operation": "OriginalTemporalMap",
+      "inputs": [
+        "f_9019ef72e8ce466c2b9d8164",
+        "f_22f9f7a74250b6ad6e42df24",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "input_current": "f_9019ef72e8ce466c2b9d8164",
+        "source": "f_22f9f7a74250b6ad6e42df24",
+        "prescribed": "Delta v=-ci^-1 N^-1 Etheta0; gamma_desired=-ci^-1 N^-1 Ez0",
+        "actual_axial": "Psi=T1 gamma_desired; Delta beta=-epsilon partial_Z Psi; Delta gamma=(Dr+1/R)Psi",
+        "flat": "Fax=ci*N(Delta gamma-gamma_desired) retained",
+        "reference": "Lemma8.6,(8.20), Prop9.6 step3",
+        "returned_complete_state": "input_current plus the actual realized velocity increment; retain all previous wave/mean components and all previous angular pressure plus actual new angular pressure coefficient",
+        "all_cross_terms": "Form complete updated full auxiliary covariance BEFORE any Haar averaging; do not replace it by its average for pressure or direct PDE.",
+        "next_action": "FullPressureAndResidualRefresh on this complete state before any subsequent source projection"
+      }
+    },
+    {
+      "id": "f_53a3cfa62a97320014a1c866",
+      "operation": "FullPressureAndResidualRefresh",
+      "inputs": [
+        "f_45dbb21efb8b61f6f7a9f44a",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "tag": "cycle2:after-temporal",
+        "full_current": "f_45dbb21efb8b61f6f7a9f44a",
+        "gr": "complete (8.3) from every current wave and beta,v,gamma; no zero-mean-velocity substitution",
+        "P": "whole radial integral of full auxiliary Haar(gr)",
+        "pm": "T0(gr-rho*P), retaining radial cutoff remainder A0",
+        "angular_pressure": "all old + actual new homogeneous/inhomogeneous angular coefficients retained",
+        "full_pressure": "background + latest pm + complete angular pressure",
+        "residual": "direct R(u,p) with same complete latest pressure; supported and flat parts per Prop9.3",
+        "current_defects": "P,Jtheta,Jz of complete updated fields, c_rho*P inside axial derivative",
+        "references": [
+          "(8.3)",
+          "(8.12)",
+          "(8.15)-(8.16)",
+          "Prop9.6 p108"
+        ]
+      }
+    },
+    {
+      "id": "f_6156e7507339d0f60c539a18",
+      "operation": "FreshFiveTargets",
+      "inputs": [
+        "f_53a3cfa62a97320014a1c866"
+      ],
+      "data": {
+        "full_current": "f_53a3cfa62a97320014a1c866",
+        "targets": "two homogeneous conservation rows + current P,Jtheta,Jz",
+        "source": "full fresh pressure/defects, never pre-temporal targets"
+      }
+    },
+    {
+      "id": "f_b2edd656baaac49b98e09e91",
+      "operation": "OriginalFiveMap",
+      "inputs": [
+        "f_53a3cfa62a97320014a1c866",
+        "f_6156e7507339d0f60c539a18",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "input_current": "f_53a3cfa62a97320014a1c866",
+        "source": "f_6156e7507339d0f60c539a18",
+        "linear_map": "same fixed original five normalized profiles/inverse",
+        "velocity": "full supported potentials and direct azimuthal mean",
+        "two_moments": [
+          0,
+          0
+        ],
+        "new_defects": "actual nonlinear remainders(8.26)-(8.27), not zero",
+        "reference": "Prop9.6 step4",
+        "returned_complete_state": "input_current plus the actual realized velocity increment; retain all previous wave/mean components and all previous angular pressure plus actual new angular pressure coefficient",
+        "all_cross_terms": "Form complete updated full auxiliary covariance BEFORE any Haar averaging; do not replace it by its average for pressure or direct PDE.",
+        "next_action": "FullPressureAndResidualRefresh on this complete state before any subsequent source projection"
+      }
+    },
+    {
+      "id": "f_8322010764e980e6a05d957a",
+      "operation": "FullPressureAndResidualRefresh",
+      "inputs": [
+        "f_b2edd656baaac49b98e09e91",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "tag": "cycle2:after-five",
+        "full_current": "f_b2edd656baaac49b98e09e91",
+        "gr": "complete (8.3) from every current wave and beta,v,gamma; no zero-mean-velocity substitution",
+        "P": "whole radial integral of full auxiliary Haar(gr)",
+        "pm": "T0(gr-rho*P), retaining radial cutoff remainder A0",
+        "angular_pressure": "all old + actual new homogeneous/inhomogeneous angular coefficients retained",
+        "full_pressure": "background + latest pm + complete angular pressure",
+        "residual": "direct R(u,p) with same complete latest pressure; supported and flat parts per Prop9.3",
+        "current_defects": "P,Jtheta,Jz of complete updated fields, c_rho*P inside axial derivative",
+        "references": [
+          "(8.3)",
+          "(8.12)",
+          "(8.15)-(8.16)",
+          "Prop9.6 p108"
+        ]
+      }
+    },
+    {
+      "id": "f_d90a360388d7fd2abbe0022f",
+      "operation": "CompletedActualStage",
+      "inputs": [
+        "f_8322010764e980e6a05d957a",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "j": 3,
+        "sigma": "1/2",
+        "max_wave_harmonic": 8,
+        "max_residual_harmonic": 16,
+        "full_refreshed_current": "f_8322010764e980e6a05d957a",
+        "complete_cycle_predecessor": "f_38948a0b93f0235e274e9bc7",
+        "Z_increment": "sum of every actual potential/direct swirl increment in this cycle; pressure difference new minus old",
+        "invariant_proof": "Prop9.6 preserves all Definition9.4 clauses; Prop9.3 supplies exact next residual decomposition; Lem9.7 fixed domain",
+        "two_moments": [
+          0,
+          0
+        ],
+        "fixed_source": "f_cb76b8ef5e4490552e0e9b32"
+      }
+    },
+    {
+      "id": "f_879534a76e85ff94b7ebbd79",
+      "operation": "GroupedSupportedNonzeroResidual",
+      "inputs": [
+        "f_d90a360388d7fd2abbe0022f"
+      ],
+      "data": {
+        "full_current": "f_d90a360388d7fd2abbe0022f",
+        "all_generated_harmonics": "0<|m|<=2^4",
+        "all_conjugate_pairs": true,
+        "flat_terms": "retained separately, never sent to supported pulse source",
+        "physical_labels": "all original cover labels with fixed path/copies; no sampling"
+      }
+    },
+    {
+      "id": "f_4e14ea1549c3a8a81691cf3c",
+      "operation": "OriginalForcedMap",
+      "inputs": [
+        "f_d90a360388d7fd2abbe0022f",
+        "f_879534a76e85ff94b7ebbd79",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "input_current": "f_d90a360388d7fd2abbe0022f",
+        "source": "f_879534a76e85ff94b7ebbd79",
+        "equation": "L_m(t_m,pi_m)=-f_m for EACH nonzero grouped supported source",
+        "initial_data": "zero at entrance to same fixed path",
+        "velocity": "cut off potential then full curl",
+        "pressure": "inhomogeneous coefficient including n dot f",
+        "reference": "Prop7.2, Prop9.6 step1",
+        "norm_theorem": "generic stable forced class recurrence; input seminorm remains that of supported above",
+        "returned_complete_state": "input_current plus the actual realized velocity increment; retain all previous wave/mean components and all previous angular pressure plus actual new angular pressure coefficient",
+        "all_cross_terms": "Form complete updated full auxiliary covariance BEFORE any Haar averaging; do not replace it by its average for pressure or direct PDE.",
+        "next_action": "FullPressureAndResidualRefresh on this complete state before any subsequent source projection"
+      }
+    },
+    {
+      "id": "f_6e3bdfac33d558ffe2132f37",
+      "operation": "FullPressureAndResidualRefresh",
+      "inputs": [
+        "f_4e14ea1549c3a8a81691cf3c",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "tag": "cycle3:after-forced",
+        "full_current": "f_4e14ea1549c3a8a81691cf3c",
+        "gr": "complete (8.3) from every current wave and beta,v,gamma; no zero-mean-velocity substitution",
+        "P": "whole radial integral of full auxiliary Haar(gr)",
+        "pm": "T0(gr-rho*P), retaining radial cutoff remainder A0",
+        "angular_pressure": "all old + actual new homogeneous/inhomogeneous angular coefficients retained",
+        "full_pressure": "background + latest pm + complete angular pressure",
+        "residual": "direct R(u,p) with same complete latest pressure; supported and flat parts per Prop9.3",
+        "current_defects": "P,Jtheta,Jz of complete updated fields, c_rho*P inside axial derivative",
+        "references": [
+          "(8.3)",
+          "(8.12)",
+          "(8.15)-(8.16)",
+          "Prop9.6 p108"
+        ]
+      }
+    },
+    {
+      "id": "f_7e10c331d81dfddf2827ef5d",
+      "operation": "ActualPhysicalHaarTangentialResidual",
+      "inputs": [
+        "f_6e3bdfac33d558ffe2132f37"
+      ],
+      "data": {
+        "full_current": "f_6e3bdfac33d558ffe2132f37",
+        "physical_pair": "F2=Q^(-2A-1/2) Haar(Etheta),F1=Q^(-2A-1/2) Haar(Ez)",
+        "moments": "Me=int_0^infinity r^e Fe dr, with z,t fixed",
+        "zero_moment_source": "Fe-be*Me with SAME fixed normalized be",
+        "Sigma": "Q^(2A)*(-r^-2 int_0^r rprime^2(F2-b2*M2), -r^-1 int_0^r rprime(F1-b1*M1))",
+        "support": "zero full weighted moments imply compact outer extension; actual Haar makes source independent of all auxiliary coordinates"
+      }
+    },
+    {
+      "id": "f_be88d0dcea563cac7a74450f",
+      "operation": "OriginalSignedMap",
+      "inputs": [
+        "f_6e3bdfac33d558ffe2132f37",
+        "f_7e10c331d81dfddf2827ef5d",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "input_current": "f_6e3bdfac33d558ffe2132f37",
+        "source": "f_7e10c331d81dfddf2827ef5d",
+        "delta_amplitude": "(Hcov^-1(Sigma/epsilon))/(2*a_primary)",
+        "primary_reselected": false,
+        "velocity": "original signed potentials full curl",
+        "pressure": "homogeneous amplitude coefficient on same fixed background",
+        "covariance": "B(wtan0,ts)+B(w-wtan0,ts)+B(w,rs)+Haar_theta,Y(s tensor s)",
+        "every_remainder_retained": true,
+        "reference": "(7.35)-(7.41), Prop9.6 step2",
+        "returned_complete_state": "input_current plus the actual realized velocity increment; retain all previous wave/mean components and all previous angular pressure plus actual new angular pressure coefficient",
+        "all_cross_terms": "Form complete updated full auxiliary covariance BEFORE any Haar averaging; do not replace it by its average for pressure or direct PDE.",
+        "next_action": "FullPressureAndResidualRefresh on this complete state before any subsequent source projection"
+      }
+    },
+    {
+      "id": "f_ed226a5efde9bf36812ab9d3",
+      "operation": "FullPressureAndResidualRefresh",
+      "inputs": [
+        "f_be88d0dcea563cac7a74450f",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "tag": "cycle3:after-signed",
+        "full_current": "f_be88d0dcea563cac7a74450f",
+        "gr": "complete (8.3) from every current wave and beta,v,gamma; no zero-mean-velocity substitution",
+        "P": "whole radial integral of full auxiliary Haar(gr)",
+        "pm": "T0(gr-rho*P), retaining radial cutoff remainder A0",
+        "angular_pressure": "all old + actual new homogeneous/inhomogeneous angular coefficients retained",
+        "full_pressure": "background + latest pm + complete angular pressure",
+        "residual": "direct R(u,p) with same complete latest pressure; supported and flat parts per Prop9.3",
+        "current_defects": "P,Jtheta,Jz of complete updated fields, c_rho*P inside axial derivative",
+        "references": [
+          "(8.3)",
+          "(8.12)",
+          "(8.15)-(8.16)",
+          "Prop9.6 p108"
+        ]
+      }
+    },
+    {
+      "id": "f_a5aca5a89c83f37233175336",
+      "operation": "ActualZeroAuxiliaryMeanResidual",
+      "inputs": [
+        "f_ed226a5efde9bf36812ab9d3"
+      ],
+      "data": {
+        "full_current": "f_ed226a5efde9bf36812ab9d3",
+        "source": "(Etheta-Haar Etheta, Ez-Haar Ez)",
+        "projection": "complete normalized common torus, both columns"
+      }
+    },
+    {
+      "id": "f_0699091f69e24324cfc6bcea",
+      "operation": "OriginalTemporalMap",
+      "inputs": [
+        "f_ed226a5efde9bf36812ab9d3",
+        "f_a5aca5a89c83f37233175336",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "input_current": "f_ed226a5efde9bf36812ab9d3",
+        "source": "f_a5aca5a89c83f37233175336",
+        "prescribed": "Delta v=-ci^-1 N^-1 Etheta0; gamma_desired=-ci^-1 N^-1 Ez0",
+        "actual_axial": "Psi=T1 gamma_desired; Delta beta=-epsilon partial_Z Psi; Delta gamma=(Dr+1/R)Psi",
+        "flat": "Fax=ci*N(Delta gamma-gamma_desired) retained",
+        "reference": "Lemma8.6,(8.20), Prop9.6 step3",
+        "returned_complete_state": "input_current plus the actual realized velocity increment; retain all previous wave/mean components and all previous angular pressure plus actual new angular pressure coefficient",
+        "all_cross_terms": "Form complete updated full auxiliary covariance BEFORE any Haar averaging; do not replace it by its average for pressure or direct PDE.",
+        "next_action": "FullPressureAndResidualRefresh on this complete state before any subsequent source projection"
+      }
+    },
+    {
+      "id": "f_7b73698f6435b82d84111038",
+      "operation": "FullPressureAndResidualRefresh",
+      "inputs": [
+        "f_0699091f69e24324cfc6bcea",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "tag": "cycle3:after-temporal",
+        "full_current": "f_0699091f69e24324cfc6bcea",
+        "gr": "complete (8.3) from every current wave and beta,v,gamma; no zero-mean-velocity substitution",
+        "P": "whole radial integral of full auxiliary Haar(gr)",
+        "pm": "T0(gr-rho*P), retaining radial cutoff remainder A0",
+        "angular_pressure": "all old + actual new homogeneous/inhomogeneous angular coefficients retained",
+        "full_pressure": "background + latest pm + complete angular pressure",
+        "residual": "direct R(u,p) with same complete latest pressure; supported and flat parts per Prop9.3",
+        "current_defects": "P,Jtheta,Jz of complete updated fields, c_rho*P inside axial derivative",
+        "references": [
+          "(8.3)",
+          "(8.12)",
+          "(8.15)-(8.16)",
+          "Prop9.6 p108"
+        ]
+      }
+    },
+    {
+      "id": "f_1b1beda48a9211567e3114c4",
+      "operation": "FreshFiveTargets",
+      "inputs": [
+        "f_7b73698f6435b82d84111038"
+      ],
+      "data": {
+        "full_current": "f_7b73698f6435b82d84111038",
+        "targets": "two homogeneous conservation rows + current P,Jtheta,Jz",
+        "source": "full fresh pressure/defects, never pre-temporal targets"
+      }
+    },
+    {
+      "id": "f_1a92057aa7cdc175e1c03557",
+      "operation": "OriginalFiveMap",
+      "inputs": [
+        "f_7b73698f6435b82d84111038",
+        "f_1b1beda48a9211567e3114c4",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "input_current": "f_7b73698f6435b82d84111038",
+        "source": "f_1b1beda48a9211567e3114c4",
+        "linear_map": "same fixed original five normalized profiles/inverse",
+        "velocity": "full supported potentials and direct azimuthal mean",
+        "two_moments": [
+          0,
+          0
+        ],
+        "new_defects": "actual nonlinear remainders(8.26)-(8.27), not zero",
+        "reference": "Prop9.6 step4",
+        "returned_complete_state": "input_current plus the actual realized velocity increment; retain all previous wave/mean components and all previous angular pressure plus actual new angular pressure coefficient",
+        "all_cross_terms": "Form complete updated full auxiliary covariance BEFORE any Haar averaging; do not replace it by its average for pressure or direct PDE.",
+        "next_action": "FullPressureAndResidualRefresh on this complete state before any subsequent source projection"
+      }
+    },
+    {
+      "id": "f_8c0e7bb54db2c6219c0a609f",
+      "operation": "FullPressureAndResidualRefresh",
+      "inputs": [
+        "f_1a92057aa7cdc175e1c03557",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "tag": "cycle3:after-five",
+        "full_current": "f_1a92057aa7cdc175e1c03557",
+        "gr": "complete (8.3) from every current wave and beta,v,gamma; no zero-mean-velocity substitution",
+        "P": "whole radial integral of full auxiliary Haar(gr)",
+        "pm": "T0(gr-rho*P), retaining radial cutoff remainder A0",
+        "angular_pressure": "all old + actual new homogeneous/inhomogeneous angular coefficients retained",
+        "full_pressure": "background + latest pm + complete angular pressure",
+        "residual": "direct R(u,p) with same complete latest pressure; supported and flat parts per Prop9.3",
+        "current_defects": "P,Jtheta,Jz of complete updated fields, c_rho*P inside axial derivative",
+        "references": [
+          "(8.3)",
+          "(8.12)",
+          "(8.15)-(8.16)",
+          "Prop9.6 p108"
+        ]
+      }
+    },
+    {
+      "id": "f_efc91cb09962b2e99aabcf91",
+      "operation": "CompletedActualStage",
+      "inputs": [
+        "f_8c0e7bb54db2c6219c0a609f",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "j": 4,
+        "sigma": "3/5",
+        "max_wave_harmonic": 16,
+        "max_residual_harmonic": 32,
+        "full_refreshed_current": "f_8c0e7bb54db2c6219c0a609f",
+        "complete_cycle_predecessor": "f_d90a360388d7fd2abbe0022f",
+        "Z_increment": "sum of every actual potential/direct swirl increment in this cycle; pressure difference new minus old",
+        "invariant_proof": "Prop9.6 preserves all Definition9.4 clauses; Prop9.3 supplies exact next residual decomposition; Lem9.7 fixed domain",
+        "two_moments": [
+          0,
+          0
+        ],
+        "fixed_source": "f_cb76b8ef5e4490552e0e9b32"
+      }
+    },
+    {
+      "id": "f_f9d9aaa3ac6dfbdefa319bf5",
+      "operation": "GroupedSupportedNonzeroResidual",
+      "inputs": [
+        "f_efc91cb09962b2e99aabcf91"
+      ],
+      "data": {
+        "full_current": "f_efc91cb09962b2e99aabcf91",
+        "all_generated_harmonics": "0<|m|<=2^5",
+        "all_conjugate_pairs": true,
+        "flat_terms": "retained separately, never sent to supported pulse source",
+        "physical_labels": "all original cover labels with fixed path/copies; no sampling"
+      }
+    },
+    {
+      "id": "f_e3c698c4ea4667ce3462583a",
+      "operation": "OriginalForcedMap",
+      "inputs": [
+        "f_efc91cb09962b2e99aabcf91",
+        "f_f9d9aaa3ac6dfbdefa319bf5",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "input_current": "f_efc91cb09962b2e99aabcf91",
+        "source": "f_f9d9aaa3ac6dfbdefa319bf5",
+        "equation": "L_m(t_m,pi_m)=-f_m for EACH nonzero grouped supported source",
+        "initial_data": "zero at entrance to same fixed path",
+        "velocity": "cut off potential then full curl",
+        "pressure": "inhomogeneous coefficient including n dot f",
+        "reference": "Prop7.2, Prop9.6 step1",
+        "norm_theorem": "generic stable forced class recurrence; input seminorm remains that of supported above",
+        "returned_complete_state": "input_current plus the actual realized velocity increment; retain all previous wave/mean components and all previous angular pressure plus actual new angular pressure coefficient",
+        "all_cross_terms": "Form complete updated full auxiliary covariance BEFORE any Haar averaging; do not replace it by its average for pressure or direct PDE.",
+        "next_action": "FullPressureAndResidualRefresh on this complete state before any subsequent source projection"
+      }
+    },
+    {
+      "id": "f_2f212006e86637b04c2b6f60",
+      "operation": "FullPressureAndResidualRefresh",
+      "inputs": [
+        "f_e3c698c4ea4667ce3462583a",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "tag": "cycle4:after-forced",
+        "full_current": "f_e3c698c4ea4667ce3462583a",
+        "gr": "complete (8.3) from every current wave and beta,v,gamma; no zero-mean-velocity substitution",
+        "P": "whole radial integral of full auxiliary Haar(gr)",
+        "pm": "T0(gr-rho*P), retaining radial cutoff remainder A0",
+        "angular_pressure": "all old + actual new homogeneous/inhomogeneous angular coefficients retained",
+        "full_pressure": "background + latest pm + complete angular pressure",
+        "residual": "direct R(u,p) with same complete latest pressure; supported and flat parts per Prop9.3",
+        "current_defects": "P,Jtheta,Jz of complete updated fields, c_rho*P inside axial derivative",
+        "references": [
+          "(8.3)",
+          "(8.12)",
+          "(8.15)-(8.16)",
+          "Prop9.6 p108"
+        ]
+      }
+    },
+    {
+      "id": "f_27c569fda6277966e00dbba9",
+      "operation": "ActualPhysicalHaarTangentialResidual",
+      "inputs": [
+        "f_2f212006e86637b04c2b6f60"
+      ],
+      "data": {
+        "full_current": "f_2f212006e86637b04c2b6f60",
+        "physical_pair": "F2=Q^(-2A-1/2) Haar(Etheta),F1=Q^(-2A-1/2) Haar(Ez)",
+        "moments": "Me=int_0^infinity r^e Fe dr, with z,t fixed",
+        "zero_moment_source": "Fe-be*Me with SAME fixed normalized be",
+        "Sigma": "Q^(2A)*(-r^-2 int_0^r rprime^2(F2-b2*M2), -r^-1 int_0^r rprime(F1-b1*M1))",
+        "support": "zero full weighted moments imply compact outer extension; actual Haar makes source independent of all auxiliary coordinates"
+      }
+    },
+    {
+      "id": "f_4211d2dda4631d264669c150",
+      "operation": "OriginalSignedMap",
+      "inputs": [
+        "f_2f212006e86637b04c2b6f60",
+        "f_27c569fda6277966e00dbba9",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "input_current": "f_2f212006e86637b04c2b6f60",
+        "source": "f_27c569fda6277966e00dbba9",
+        "delta_amplitude": "(Hcov^-1(Sigma/epsilon))/(2*a_primary)",
+        "primary_reselected": false,
+        "velocity": "original signed potentials full curl",
+        "pressure": "homogeneous amplitude coefficient on same fixed background",
+        "covariance": "B(wtan0,ts)+B(w-wtan0,ts)+B(w,rs)+Haar_theta,Y(s tensor s)",
+        "every_remainder_retained": true,
+        "reference": "(7.35)-(7.41), Prop9.6 step2",
+        "returned_complete_state": "input_current plus the actual realized velocity increment; retain all previous wave/mean components and all previous angular pressure plus actual new angular pressure coefficient",
+        "all_cross_terms": "Form complete updated full auxiliary covariance BEFORE any Haar averaging; do not replace it by its average for pressure or direct PDE.",
+        "next_action": "FullPressureAndResidualRefresh on this complete state before any subsequent source projection"
+      }
+    },
+    {
+      "id": "f_2a7d724118c6d07dbbb8569c",
+      "operation": "FullPressureAndResidualRefresh",
+      "inputs": [
+        "f_4211d2dda4631d264669c150",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "tag": "cycle4:after-signed",
+        "full_current": "f_4211d2dda4631d264669c150",
+        "gr": "complete (8.3) from every current wave and beta,v,gamma; no zero-mean-velocity substitution",
+        "P": "whole radial integral of full auxiliary Haar(gr)",
+        "pm": "T0(gr-rho*P), retaining radial cutoff remainder A0",
+        "angular_pressure": "all old + actual new homogeneous/inhomogeneous angular coefficients retained",
+        "full_pressure": "background + latest pm + complete angular pressure",
+        "residual": "direct R(u,p) with same complete latest pressure; supported and flat parts per Prop9.3",
+        "current_defects": "P,Jtheta,Jz of complete updated fields, c_rho*P inside axial derivative",
+        "references": [
+          "(8.3)",
+          "(8.12)",
+          "(8.15)-(8.16)",
+          "Prop9.6 p108"
+        ]
+      }
+    },
+    {
+      "id": "f_6a5a4205d6dbd0fb0e83c1fd",
+      "operation": "ActualZeroAuxiliaryMeanResidual",
+      "inputs": [
+        "f_2a7d724118c6d07dbbb8569c"
+      ],
+      "data": {
+        "full_current": "f_2a7d724118c6d07dbbb8569c",
+        "source": "(Etheta-Haar Etheta, Ez-Haar Ez)",
+        "projection": "complete normalized common torus, both columns"
+      }
+    },
+    {
+      "id": "f_7f781738afa5554a0a2541b4",
+      "operation": "OriginalTemporalMap",
+      "inputs": [
+        "f_2a7d724118c6d07dbbb8569c",
+        "f_6a5a4205d6dbd0fb0e83c1fd",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "input_current": "f_2a7d724118c6d07dbbb8569c",
+        "source": "f_6a5a4205d6dbd0fb0e83c1fd",
+        "prescribed": "Delta v=-ci^-1 N^-1 Etheta0; gamma_desired=-ci^-1 N^-1 Ez0",
+        "actual_axial": "Psi=T1 gamma_desired; Delta beta=-epsilon partial_Z Psi; Delta gamma=(Dr+1/R)Psi",
+        "flat": "Fax=ci*N(Delta gamma-gamma_desired) retained",
+        "reference": "Lemma8.6,(8.20), Prop9.6 step3",
+        "returned_complete_state": "input_current plus the actual realized velocity increment; retain all previous wave/mean components and all previous angular pressure plus actual new angular pressure coefficient",
+        "all_cross_terms": "Form complete updated full auxiliary covariance BEFORE any Haar averaging; do not replace it by its average for pressure or direct PDE.",
+        "next_action": "FullPressureAndResidualRefresh on this complete state before any subsequent source projection"
+      }
+    },
+    {
+      "id": "f_3a65aa7485db62688d8c7124",
+      "operation": "FullPressureAndResidualRefresh",
+      "inputs": [
+        "f_7f781738afa5554a0a2541b4",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "tag": "cycle4:after-temporal",
+        "full_current": "f_7f781738afa5554a0a2541b4",
+        "gr": "complete (8.3) from every current wave and beta,v,gamma; no zero-mean-velocity substitution",
+        "P": "whole radial integral of full auxiliary Haar(gr)",
+        "pm": "T0(gr-rho*P), retaining radial cutoff remainder A0",
+        "angular_pressure": "all old + actual new homogeneous/inhomogeneous angular coefficients retained",
+        "full_pressure": "background + latest pm + complete angular pressure",
+        "residual": "direct R(u,p) with same complete latest pressure; supported and flat parts per Prop9.3",
+        "current_defects": "P,Jtheta,Jz of complete updated fields, c_rho*P inside axial derivative",
+        "references": [
+          "(8.3)",
+          "(8.12)",
+          "(8.15)-(8.16)",
+          "Prop9.6 p108"
+        ]
+      }
+    },
+    {
+      "id": "f_23a40d940264781fd630db92",
+      "operation": "FreshFiveTargets",
+      "inputs": [
+        "f_3a65aa7485db62688d8c7124"
+      ],
+      "data": {
+        "full_current": "f_3a65aa7485db62688d8c7124",
+        "targets": "two homogeneous conservation rows + current P,Jtheta,Jz",
+        "source": "full fresh pressure/defects, never pre-temporal targets"
+      }
+    },
+    {
+      "id": "f_a84de617866a86168d3bb21b",
+      "operation": "OriginalFiveMap",
+      "inputs": [
+        "f_3a65aa7485db62688d8c7124",
+        "f_23a40d940264781fd630db92",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "input_current": "f_3a65aa7485db62688d8c7124",
+        "source": "f_23a40d940264781fd630db92",
+        "linear_map": "same fixed original five normalized profiles/inverse",
+        "velocity": "full supported potentials and direct azimuthal mean",
+        "two_moments": [
+          0,
+          0
+        ],
+        "new_defects": "actual nonlinear remainders(8.26)-(8.27), not zero",
+        "reference": "Prop9.6 step4",
+        "returned_complete_state": "input_current plus the actual realized velocity increment; retain all previous wave/mean components and all previous angular pressure plus actual new angular pressure coefficient",
+        "all_cross_terms": "Form complete updated full auxiliary covariance BEFORE any Haar averaging; do not replace it by its average for pressure or direct PDE.",
+        "next_action": "FullPressureAndResidualRefresh on this complete state before any subsequent source projection"
+      }
+    },
+    {
+      "id": "f_3ed985d7d34dcdcd1740706f",
+      "operation": "FullPressureAndResidualRefresh",
+      "inputs": [
+        "f_a84de617866a86168d3bb21b",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "tag": "cycle4:after-five",
+        "full_current": "f_a84de617866a86168d3bb21b",
+        "gr": "complete (8.3) from every current wave and beta,v,gamma; no zero-mean-velocity substitution",
+        "P": "whole radial integral of full auxiliary Haar(gr)",
+        "pm": "T0(gr-rho*P), retaining radial cutoff remainder A0",
+        "angular_pressure": "all old + actual new homogeneous/inhomogeneous angular coefficients retained",
+        "full_pressure": "background + latest pm + complete angular pressure",
+        "residual": "direct R(u,p) with same complete latest pressure; supported and flat parts per Prop9.3",
+        "current_defects": "P,Jtheta,Jz of complete updated fields, c_rho*P inside axial derivative",
+        "references": [
+          "(8.3)",
+          "(8.12)",
+          "(8.15)-(8.16)",
+          "Prop9.6 p108"
+        ]
+      }
+    },
+    {
+      "id": "f_efc72b019cc0f2b9eb1f0026",
+      "operation": "CompletedActualStage",
+      "inputs": [
+        "f_3ed985d7d34dcdcd1740706f",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "j": 5,
+        "sigma": "7/10",
+        "max_wave_harmonic": 32,
+        "max_residual_harmonic": 64,
+        "full_refreshed_current": "f_3ed985d7d34dcdcd1740706f",
+        "complete_cycle_predecessor": "f_efc91cb09962b2e99aabcf91",
+        "Z_increment": "sum of every actual potential/direct swirl increment in this cycle; pressure difference new minus old",
+        "invariant_proof": "Prop9.6 preserves all Definition9.4 clauses; Prop9.3 supplies exact next residual decomposition; Lem9.7 fixed domain",
+        "two_moments": [
+          0,
+          0
+        ],
+        "fixed_source": "f_cb76b8ef5e4490552e0e9b32"
+      }
+    },
+    {
+      "id": "f_ac81b63855489a21bb407b2d",
+      "operation": "ActualCorrectionPotentials",
+      "inputs": [
+        "f_1db258e7c5bbb3108d5dde59",
+        "f_c7adfb9f68e4cf20075df353"
+      ],
+      "data": {
+        "j": 1,
+        "definition": "A_j,B_j are sums of returned cycle potentials/direct azimuthal increments; p_j is complete pressure difference",
+        "velocity_identity": "delta u_j=curl A_j+B_j e_theta",
+        "original_recipe_retained": true
+      }
+    },
+    {
+      "id": "f_7f7b86cc96191e30cada8cce",
+      "operation": "ExactSourceFunctionalBound",
+      "inputs": [
+        "f_ac81b63855489a21bb407b2d",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "derivative_order": 1,
+        "g_j": "h*1/10",
+        "ell_m": "2A+(1+1)*(1+3h/2)",
+        "domain": "original 0<q<qbig, all physical points on that domain",
+        "weighted_supremum": "S_(j,m,p)=sup_D q^(ell_m-g_j)*(|Z_j|_m+|curl A_j+B_j e_theta|_m)/(1+|log q|)^p",
+        "P_choice": "P_(j,m)=min{p in nonnegative integers:S_(j,m,p)<infinity}",
+        "C_choice": "C_(j,m)=1+ceil(S_(j,m,P_(j,m)))",
+        "nonempty_and_finite_by": "same actual Prop9.6 recursion + Lemma9.8(9.17); integer log power enlargement is valid because Lambda>=1",
+        "source_bound": true,
+        "arbitrary_caller_constant": false,
+        "effective_numerical_evaluation": false,
+        "mathematical_value_unique": true
+      }
+    },
+    {
+      "id": "f_5486aa5a7070b99cce5740bb",
+      "operation": "ActualCutoffCurlBound",
+      "inputs": [
+        "f_7f7b86cc96191e30cada8cce",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "j": 1,
+        "m": 0,
+        "ellPrime": "ell_(1)+1",
+        "increment_operator": "T_a Z_j=(curl(chi(aq)*A_j)+chi(aq)*B_j*e_theta,chi(aq)*p_j)",
+        "uniform_scale_domain": "ALL a>=1 and ALL original physical points with0<q<qbig, BEFORE choosing any a_j",
+        "S_hat": "S_hat_(j,m,p)=sup_(a>=1,(x,t) in D) q^(ellPrime_m-g_j)*|T_a Z_j|_m/(1+|log q|)^p",
+        "P_hat": "min{p in nonnegative integers:S_hat_(j,m,p)<infinity}",
+        "C_hat": "1+ceil(S_hat_(j,m,P_hat_(j,m)))",
+        "finiteness": "Finite product/chain rules use derivatives of Z_j through m+1. On every positive cutoff derivative support aq in[1/2,1], a factors cancel q. Each q derivative costs at most one since0<D<1. With nondecreasing ell, loss ell_(m+1)+(m+1) suffices, uniformly in a. Thus at least the integer P_(j,m+1) is admissible.",
+        "no_scale_selection_cycle": true,
+        "actual_potential_and_cutoff_source_bound": true,
+        "numeric_value": null
+      }
+    },
+    {
+      "id": "f_bb4702458d05209c24aaa649",
+      "operation": "ExactSourceFunctionalBound",
+      "inputs": [
+        "f_ac81b63855489a21bb407b2d",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "derivative_order": 2,
+        "g_j": "h*1/10",
+        "ell_m": "2A+(2+1)*(1+3h/2)",
+        "domain": "original 0<q<qbig, all physical points on that domain",
+        "weighted_supremum": "S_(j,m,p)=sup_D q^(ell_m-g_j)*(|Z_j|_m+|curl A_j+B_j e_theta|_m)/(1+|log q|)^p",
+        "P_choice": "P_(j,m)=min{p in nonnegative integers:S_(j,m,p)<infinity}",
+        "C_choice": "C_(j,m)=1+ceil(S_(j,m,P_(j,m)))",
+        "nonempty_and_finite_by": "same actual Prop9.6 recursion + Lemma9.8(9.17); integer log power enlargement is valid because Lambda>=1",
+        "source_bound": true,
+        "arbitrary_caller_constant": false,
+        "effective_numerical_evaluation": false,
+        "mathematical_value_unique": true
+      }
+    },
+    {
+      "id": "f_9f3819cae1476e00bce4e5c9",
+      "operation": "ActualCutoffCurlBound",
+      "inputs": [
+        "f_bb4702458d05209c24aaa649",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "j": 1,
+        "m": 1,
+        "ellPrime": "ell_(2)+2",
+        "increment_operator": "T_a Z_j=(curl(chi(aq)*A_j)+chi(aq)*B_j*e_theta,chi(aq)*p_j)",
+        "uniform_scale_domain": "ALL a>=1 and ALL original physical points with0<q<qbig, BEFORE choosing any a_j",
+        "S_hat": "S_hat_(j,m,p)=sup_(a>=1,(x,t) in D) q^(ellPrime_m-g_j)*|T_a Z_j|_m/(1+|log q|)^p",
+        "P_hat": "min{p in nonnegative integers:S_hat_(j,m,p)<infinity}",
+        "C_hat": "1+ceil(S_hat_(j,m,P_hat_(j,m)))",
+        "finiteness": "Finite product/chain rules use derivatives of Z_j through m+1. On every positive cutoff derivative support aq in[1/2,1], a factors cancel q. Each q derivative costs at most one since0<D<1. With nondecreasing ell, loss ell_(m+1)+(m+1) suffices, uniformly in a. Thus at least the integer P_(j,m+1) is admissible.",
+        "no_scale_selection_cycle": true,
+        "actual_potential_and_cutoff_source_bound": true,
+        "numeric_value": null
+      }
+    },
+    {
+      "id": "f_3b700fc1d0d2c77582a0399d",
+      "operation": "ActualShrinkingScale",
+      "inputs": [
+        "f_cb76b8ef5e4490552e0e9b32",
+        "f_5486aa5a7070b99cce5740bb",
+        "f_9f3819cae1476e00bce4e5c9"
+      ],
+      "data": {
+        "j": 1,
+        "gamma": "h*1/20",
+        "previous": "log(1/qbig)",
+        "L": "max(1,1+L_previous,1+log(1/qbig),max_m(2*P_hat/gamma)^2,max_m2*(C_hat+j)/gamma)",
+        "a": "exp(L)",
+        "original_cutoff": "chi=1 on(-infinity,1/2],chi=0 on[1,infinity)",
+        "norm_inputs": [
+          "f_5486aa5a7070b99cce5740bb",
+          "f_9f3819cae1476e00bce4e5c9"
+        ],
+        "every_m_le_j": true,
+        "all_order_rule": "same rule for every finite j; these are source functionals, not supplied dummy values"
+      }
+    },
+    {
+      "id": "f_ee3818cfaeb5198c4d1286f9",
+      "operation": "ActualCorrectionPotentials",
+      "inputs": [
+        "f_c7adfb9f68e4cf20075df353",
+        "f_38948a0b93f0235e274e9bc7"
+      ],
+      "data": {
+        "j": 2,
+        "definition": "A_j,B_j are sums of returned cycle potentials/direct azimuthal increments; p_j is complete pressure difference",
+        "velocity_identity": "delta u_j=curl A_j+B_j e_theta",
+        "original_recipe_retained": true
+      }
+    },
+    {
+      "id": "f_3ce6fc000b357717c0d50c40",
+      "operation": "ExactSourceFunctionalBound",
+      "inputs": [
+        "f_ee3818cfaeb5198c4d1286f9",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "derivative_order": 1,
+        "g_j": "h*2/10",
+        "ell_m": "2A+(1+1)*(1+3h/2)",
+        "domain": "original 0<q<qbig, all physical points on that domain",
+        "weighted_supremum": "S_(j,m,p)=sup_D q^(ell_m-g_j)*(|Z_j|_m+|curl A_j+B_j e_theta|_m)/(1+|log q|)^p",
+        "P_choice": "P_(j,m)=min{p in nonnegative integers:S_(j,m,p)<infinity}",
+        "C_choice": "C_(j,m)=1+ceil(S_(j,m,P_(j,m)))",
+        "nonempty_and_finite_by": "same actual Prop9.6 recursion + Lemma9.8(9.17); integer log power enlargement is valid because Lambda>=1",
+        "source_bound": true,
+        "arbitrary_caller_constant": false,
+        "effective_numerical_evaluation": false,
+        "mathematical_value_unique": true
+      }
+    },
+    {
+      "id": "f_b2a025b05d8fbbbbd8ad0d5f",
+      "operation": "ActualCutoffCurlBound",
+      "inputs": [
+        "f_3ce6fc000b357717c0d50c40",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "j": 2,
+        "m": 0,
+        "ellPrime": "ell_(1)+1",
+        "increment_operator": "T_a Z_j=(curl(chi(aq)*A_j)+chi(aq)*B_j*e_theta,chi(aq)*p_j)",
+        "uniform_scale_domain": "ALL a>=1 and ALL original physical points with0<q<qbig, BEFORE choosing any a_j",
+        "S_hat": "S_hat_(j,m,p)=sup_(a>=1,(x,t) in D) q^(ellPrime_m-g_j)*|T_a Z_j|_m/(1+|log q|)^p",
+        "P_hat": "min{p in nonnegative integers:S_hat_(j,m,p)<infinity}",
+        "C_hat": "1+ceil(S_hat_(j,m,P_hat_(j,m)))",
+        "finiteness": "Finite product/chain rules use derivatives of Z_j through m+1. On every positive cutoff derivative support aq in[1/2,1], a factors cancel q. Each q derivative costs at most one since0<D<1. With nondecreasing ell, loss ell_(m+1)+(m+1) suffices, uniformly in a. Thus at least the integer P_(j,m+1) is admissible.",
+        "no_scale_selection_cycle": true,
+        "actual_potential_and_cutoff_source_bound": true,
+        "numeric_value": null
+      }
+    },
+    {
+      "id": "f_e93b1697a7115d2153a27cfd",
+      "operation": "ExactSourceFunctionalBound",
+      "inputs": [
+        "f_ee3818cfaeb5198c4d1286f9",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "derivative_order": 2,
+        "g_j": "h*2/10",
+        "ell_m": "2A+(2+1)*(1+3h/2)",
+        "domain": "original 0<q<qbig, all physical points on that domain",
+        "weighted_supremum": "S_(j,m,p)=sup_D q^(ell_m-g_j)*(|Z_j|_m+|curl A_j+B_j e_theta|_m)/(1+|log q|)^p",
+        "P_choice": "P_(j,m)=min{p in nonnegative integers:S_(j,m,p)<infinity}",
+        "C_choice": "C_(j,m)=1+ceil(S_(j,m,P_(j,m)))",
+        "nonempty_and_finite_by": "same actual Prop9.6 recursion + Lemma9.8(9.17); integer log power enlargement is valid because Lambda>=1",
+        "source_bound": true,
+        "arbitrary_caller_constant": false,
+        "effective_numerical_evaluation": false,
+        "mathematical_value_unique": true
+      }
+    },
+    {
+      "id": "f_dfac5452c6437743b087a44b",
+      "operation": "ActualCutoffCurlBound",
+      "inputs": [
+        "f_e93b1697a7115d2153a27cfd",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "j": 2,
+        "m": 1,
+        "ellPrime": "ell_(2)+2",
+        "increment_operator": "T_a Z_j=(curl(chi(aq)*A_j)+chi(aq)*B_j*e_theta,chi(aq)*p_j)",
+        "uniform_scale_domain": "ALL a>=1 and ALL original physical points with0<q<qbig, BEFORE choosing any a_j",
+        "S_hat": "S_hat_(j,m,p)=sup_(a>=1,(x,t) in D) q^(ellPrime_m-g_j)*|T_a Z_j|_m/(1+|log q|)^p",
+        "P_hat": "min{p in nonnegative integers:S_hat_(j,m,p)<infinity}",
+        "C_hat": "1+ceil(S_hat_(j,m,P_hat_(j,m)))",
+        "finiteness": "Finite product/chain rules use derivatives of Z_j through m+1. On every positive cutoff derivative support aq in[1/2,1], a factors cancel q. Each q derivative costs at most one since0<D<1. With nondecreasing ell, loss ell_(m+1)+(m+1) suffices, uniformly in a. Thus at least the integer P_(j,m+1) is admissible.",
+        "no_scale_selection_cycle": true,
+        "actual_potential_and_cutoff_source_bound": true,
+        "numeric_value": null
+      }
+    },
+    {
+      "id": "f_2bd3a1dd21c30a9113561408",
+      "operation": "ExactSourceFunctionalBound",
+      "inputs": [
+        "f_ee3818cfaeb5198c4d1286f9",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "derivative_order": 3,
+        "g_j": "h*2/10",
+        "ell_m": "2A+(3+1)*(1+3h/2)",
+        "domain": "original 0<q<qbig, all physical points on that domain",
+        "weighted_supremum": "S_(j,m,p)=sup_D q^(ell_m-g_j)*(|Z_j|_m+|curl A_j+B_j e_theta|_m)/(1+|log q|)^p",
+        "P_choice": "P_(j,m)=min{p in nonnegative integers:S_(j,m,p)<infinity}",
+        "C_choice": "C_(j,m)=1+ceil(S_(j,m,P_(j,m)))",
+        "nonempty_and_finite_by": "same actual Prop9.6 recursion + Lemma9.8(9.17); integer log power enlargement is valid because Lambda>=1",
+        "source_bound": true,
+        "arbitrary_caller_constant": false,
+        "effective_numerical_evaluation": false,
+        "mathematical_value_unique": true
+      }
+    },
+    {
+      "id": "f_3a5c9290e659d71d10c84e8d",
+      "operation": "ActualCutoffCurlBound",
+      "inputs": [
+        "f_2bd3a1dd21c30a9113561408",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "j": 2,
+        "m": 2,
+        "ellPrime": "ell_(3)+3",
+        "increment_operator": "T_a Z_j=(curl(chi(aq)*A_j)+chi(aq)*B_j*e_theta,chi(aq)*p_j)",
+        "uniform_scale_domain": "ALL a>=1 and ALL original physical points with0<q<qbig, BEFORE choosing any a_j",
+        "S_hat": "S_hat_(j,m,p)=sup_(a>=1,(x,t) in D) q^(ellPrime_m-g_j)*|T_a Z_j|_m/(1+|log q|)^p",
+        "P_hat": "min{p in nonnegative integers:S_hat_(j,m,p)<infinity}",
+        "C_hat": "1+ceil(S_hat_(j,m,P_hat_(j,m)))",
+        "finiteness": "Finite product/chain rules use derivatives of Z_j through m+1. On every positive cutoff derivative support aq in[1/2,1], a factors cancel q. Each q derivative costs at most one since0<D<1. With nondecreasing ell, loss ell_(m+1)+(m+1) suffices, uniformly in a. Thus at least the integer P_(j,m+1) is admissible.",
+        "no_scale_selection_cycle": true,
+        "actual_potential_and_cutoff_source_bound": true,
+        "numeric_value": null
+      }
+    },
+    {
+      "id": "f_74b782b03adf1a4984b59949",
+      "operation": "ActualShrinkingScale",
+      "inputs": [
+        "f_cb76b8ef5e4490552e0e9b32",
+        "f_3b700fc1d0d2c77582a0399d",
+        "f_b2a025b05d8fbbbbd8ad0d5f",
+        "f_dfac5452c6437743b087a44b",
+        "f_3a5c9290e659d71d10c84e8d"
+      ],
+      "data": {
+        "j": 2,
+        "gamma": "h*2/20",
+        "previous": "L_(j-1)",
+        "L": "max(1,1+L_previous,1+log(1/qbig),max_m(2*P_hat/gamma)^2,max_m2*(C_hat+j)/gamma)",
+        "a": "exp(L)",
+        "original_cutoff": "chi=1 on(-infinity,1/2],chi=0 on[1,infinity)",
+        "norm_inputs": [
+          "f_b2a025b05d8fbbbbd8ad0d5f",
+          "f_dfac5452c6437743b087a44b",
+          "f_3a5c9290e659d71d10c84e8d"
+        ],
+        "every_m_le_j": true,
+        "all_order_rule": "same rule for every finite j; these are source functionals, not supplied dummy values"
+      }
+    },
+    {
+      "id": "f_2da4d431d22cb43aeff654c4",
+      "operation": "ActualCorrectionPotentials",
+      "inputs": [
+        "f_38948a0b93f0235e274e9bc7",
+        "f_d90a360388d7fd2abbe0022f"
+      ],
+      "data": {
+        "j": 3,
+        "definition": "A_j,B_j are sums of returned cycle potentials/direct azimuthal increments; p_j is complete pressure difference",
+        "velocity_identity": "delta u_j=curl A_j+B_j e_theta",
+        "original_recipe_retained": true
+      }
+    },
+    {
+      "id": "f_57a3a1dee55ab670065f64e4",
+      "operation": "ExactSourceFunctionalBound",
+      "inputs": [
+        "f_2da4d431d22cb43aeff654c4",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "derivative_order": 1,
+        "g_j": "h*3/10",
+        "ell_m": "2A+(1+1)*(1+3h/2)",
+        "domain": "original 0<q<qbig, all physical points on that domain",
+        "weighted_supremum": "S_(j,m,p)=sup_D q^(ell_m-g_j)*(|Z_j|_m+|curl A_j+B_j e_theta|_m)/(1+|log q|)^p",
+        "P_choice": "P_(j,m)=min{p in nonnegative integers:S_(j,m,p)<infinity}",
+        "C_choice": "C_(j,m)=1+ceil(S_(j,m,P_(j,m)))",
+        "nonempty_and_finite_by": "same actual Prop9.6 recursion + Lemma9.8(9.17); integer log power enlargement is valid because Lambda>=1",
+        "source_bound": true,
+        "arbitrary_caller_constant": false,
+        "effective_numerical_evaluation": false,
+        "mathematical_value_unique": true
+      }
+    },
+    {
+      "id": "f_9b30644c7a0338819ea74499",
+      "operation": "ActualCutoffCurlBound",
+      "inputs": [
+        "f_57a3a1dee55ab670065f64e4",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "j": 3,
+        "m": 0,
+        "ellPrime": "ell_(1)+1",
+        "increment_operator": "T_a Z_j=(curl(chi(aq)*A_j)+chi(aq)*B_j*e_theta,chi(aq)*p_j)",
+        "uniform_scale_domain": "ALL a>=1 and ALL original physical points with0<q<qbig, BEFORE choosing any a_j",
+        "S_hat": "S_hat_(j,m,p)=sup_(a>=1,(x,t) in D) q^(ellPrime_m-g_j)*|T_a Z_j|_m/(1+|log q|)^p",
+        "P_hat": "min{p in nonnegative integers:S_hat_(j,m,p)<infinity}",
+        "C_hat": "1+ceil(S_hat_(j,m,P_hat_(j,m)))",
+        "finiteness": "Finite product/chain rules use derivatives of Z_j through m+1. On every positive cutoff derivative support aq in[1/2,1], a factors cancel q. Each q derivative costs at most one since0<D<1. With nondecreasing ell, loss ell_(m+1)+(m+1) suffices, uniformly in a. Thus at least the integer P_(j,m+1) is admissible.",
+        "no_scale_selection_cycle": true,
+        "actual_potential_and_cutoff_source_bound": true,
+        "numeric_value": null
+      }
+    },
+    {
+      "id": "f_b41c768bfb0bf9549fff58c9",
+      "operation": "ExactSourceFunctionalBound",
+      "inputs": [
+        "f_2da4d431d22cb43aeff654c4",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "derivative_order": 2,
+        "g_j": "h*3/10",
+        "ell_m": "2A+(2+1)*(1+3h/2)",
+        "domain": "original 0<q<qbig, all physical points on that domain",
+        "weighted_supremum": "S_(j,m,p)=sup_D q^(ell_m-g_j)*(|Z_j|_m+|curl A_j+B_j e_theta|_m)/(1+|log q|)^p",
+        "P_choice": "P_(j,m)=min{p in nonnegative integers:S_(j,m,p)<infinity}",
+        "C_choice": "C_(j,m)=1+ceil(S_(j,m,P_(j,m)))",
+        "nonempty_and_finite_by": "same actual Prop9.6 recursion + Lemma9.8(9.17); integer log power enlargement is valid because Lambda>=1",
+        "source_bound": true,
+        "arbitrary_caller_constant": false,
+        "effective_numerical_evaluation": false,
+        "mathematical_value_unique": true
+      }
+    },
+    {
+      "id": "f_323ed5e81fa618bd3ea74496",
+      "operation": "ActualCutoffCurlBound",
+      "inputs": [
+        "f_b41c768bfb0bf9549fff58c9",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "j": 3,
+        "m": 1,
+        "ellPrime": "ell_(2)+2",
+        "increment_operator": "T_a Z_j=(curl(chi(aq)*A_j)+chi(aq)*B_j*e_theta,chi(aq)*p_j)",
+        "uniform_scale_domain": "ALL a>=1 and ALL original physical points with0<q<qbig, BEFORE choosing any a_j",
+        "S_hat": "S_hat_(j,m,p)=sup_(a>=1,(x,t) in D) q^(ellPrime_m-g_j)*|T_a Z_j|_m/(1+|log q|)^p",
+        "P_hat": "min{p in nonnegative integers:S_hat_(j,m,p)<infinity}",
+        "C_hat": "1+ceil(S_hat_(j,m,P_hat_(j,m)))",
+        "finiteness": "Finite product/chain rules use derivatives of Z_j through m+1. On every positive cutoff derivative support aq in[1/2,1], a factors cancel q. Each q derivative costs at most one since0<D<1. With nondecreasing ell, loss ell_(m+1)+(m+1) suffices, uniformly in a. Thus at least the integer P_(j,m+1) is admissible.",
+        "no_scale_selection_cycle": true,
+        "actual_potential_and_cutoff_source_bound": true,
+        "numeric_value": null
+      }
+    },
+    {
+      "id": "f_0c68085861fd31f26fd7a869",
+      "operation": "ExactSourceFunctionalBound",
+      "inputs": [
+        "f_2da4d431d22cb43aeff654c4",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "derivative_order": 3,
+        "g_j": "h*3/10",
+        "ell_m": "2A+(3+1)*(1+3h/2)",
+        "domain": "original 0<q<qbig, all physical points on that domain",
+        "weighted_supremum": "S_(j,m,p)=sup_D q^(ell_m-g_j)*(|Z_j|_m+|curl A_j+B_j e_theta|_m)/(1+|log q|)^p",
+        "P_choice": "P_(j,m)=min{p in nonnegative integers:S_(j,m,p)<infinity}",
+        "C_choice": "C_(j,m)=1+ceil(S_(j,m,P_(j,m)))",
+        "nonempty_and_finite_by": "same actual Prop9.6 recursion + Lemma9.8(9.17); integer log power enlargement is valid because Lambda>=1",
+        "source_bound": true,
+        "arbitrary_caller_constant": false,
+        "effective_numerical_evaluation": false,
+        "mathematical_value_unique": true
+      }
+    },
+    {
+      "id": "f_04d4eb39de8d6924a1485f0e",
+      "operation": "ActualCutoffCurlBound",
+      "inputs": [
+        "f_0c68085861fd31f26fd7a869",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "j": 3,
+        "m": 2,
+        "ellPrime": "ell_(3)+3",
+        "increment_operator": "T_a Z_j=(curl(chi(aq)*A_j)+chi(aq)*B_j*e_theta,chi(aq)*p_j)",
+        "uniform_scale_domain": "ALL a>=1 and ALL original physical points with0<q<qbig, BEFORE choosing any a_j",
+        "S_hat": "S_hat_(j,m,p)=sup_(a>=1,(x,t) in D) q^(ellPrime_m-g_j)*|T_a Z_j|_m/(1+|log q|)^p",
+        "P_hat": "min{p in nonnegative integers:S_hat_(j,m,p)<infinity}",
+        "C_hat": "1+ceil(S_hat_(j,m,P_hat_(j,m)))",
+        "finiteness": "Finite product/chain rules use derivatives of Z_j through m+1. On every positive cutoff derivative support aq in[1/2,1], a factors cancel q. Each q derivative costs at most one since0<D<1. With nondecreasing ell, loss ell_(m+1)+(m+1) suffices, uniformly in a. Thus at least the integer P_(j,m+1) is admissible.",
+        "no_scale_selection_cycle": true,
+        "actual_potential_and_cutoff_source_bound": true,
+        "numeric_value": null
+      }
+    },
+    {
+      "id": "f_1a9650b2f2deb037d0fd8ce3",
+      "operation": "ExactSourceFunctionalBound",
+      "inputs": [
+        "f_2da4d431d22cb43aeff654c4",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "derivative_order": 4,
+        "g_j": "h*3/10",
+        "ell_m": "2A+(4+1)*(1+3h/2)",
+        "domain": "original 0<q<qbig, all physical points on that domain",
+        "weighted_supremum": "S_(j,m,p)=sup_D q^(ell_m-g_j)*(|Z_j|_m+|curl A_j+B_j e_theta|_m)/(1+|log q|)^p",
+        "P_choice": "P_(j,m)=min{p in nonnegative integers:S_(j,m,p)<infinity}",
+        "C_choice": "C_(j,m)=1+ceil(S_(j,m,P_(j,m)))",
+        "nonempty_and_finite_by": "same actual Prop9.6 recursion + Lemma9.8(9.17); integer log power enlargement is valid because Lambda>=1",
+        "source_bound": true,
+        "arbitrary_caller_constant": false,
+        "effective_numerical_evaluation": false,
+        "mathematical_value_unique": true
+      }
+    },
+    {
+      "id": "f_025485cdafd47d78ea1aa882",
+      "operation": "ActualCutoffCurlBound",
+      "inputs": [
+        "f_1a9650b2f2deb037d0fd8ce3",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "j": 3,
+        "m": 3,
+        "ellPrime": "ell_(4)+4",
+        "increment_operator": "T_a Z_j=(curl(chi(aq)*A_j)+chi(aq)*B_j*e_theta,chi(aq)*p_j)",
+        "uniform_scale_domain": "ALL a>=1 and ALL original physical points with0<q<qbig, BEFORE choosing any a_j",
+        "S_hat": "S_hat_(j,m,p)=sup_(a>=1,(x,t) in D) q^(ellPrime_m-g_j)*|T_a Z_j|_m/(1+|log q|)^p",
+        "P_hat": "min{p in nonnegative integers:S_hat_(j,m,p)<infinity}",
+        "C_hat": "1+ceil(S_hat_(j,m,P_hat_(j,m)))",
+        "finiteness": "Finite product/chain rules use derivatives of Z_j through m+1. On every positive cutoff derivative support aq in[1/2,1], a factors cancel q. Each q derivative costs at most one since0<D<1. With nondecreasing ell, loss ell_(m+1)+(m+1) suffices, uniformly in a. Thus at least the integer P_(j,m+1) is admissible.",
+        "no_scale_selection_cycle": true,
+        "actual_potential_and_cutoff_source_bound": true,
+        "numeric_value": null
+      }
+    },
+    {
+      "id": "f_6de97e1d6c2b0406e8378fde",
+      "operation": "ActualShrinkingScale",
+      "inputs": [
+        "f_cb76b8ef5e4490552e0e9b32",
+        "f_74b782b03adf1a4984b59949",
+        "f_9b30644c7a0338819ea74499",
+        "f_323ed5e81fa618bd3ea74496",
+        "f_04d4eb39de8d6924a1485f0e",
+        "f_025485cdafd47d78ea1aa882"
+      ],
+      "data": {
+        "j": 3,
+        "gamma": "h*3/20",
+        "previous": "L_(j-1)",
+        "L": "max(1,1+L_previous,1+log(1/qbig),max_m(2*P_hat/gamma)^2,max_m2*(C_hat+j)/gamma)",
+        "a": "exp(L)",
+        "original_cutoff": "chi=1 on(-infinity,1/2],chi=0 on[1,infinity)",
+        "norm_inputs": [
+          "f_9b30644c7a0338819ea74499",
+          "f_323ed5e81fa618bd3ea74496",
+          "f_04d4eb39de8d6924a1485f0e",
+          "f_025485cdafd47d78ea1aa882"
+        ],
+        "every_m_le_j": true,
+        "all_order_rule": "same rule for every finite j; these are source functionals, not supplied dummy values"
+      }
+    },
+    {
+      "id": "f_3e01ace5e07046569fbcfca8",
+      "operation": "ActualCorrectionPotentials",
+      "inputs": [
+        "f_d90a360388d7fd2abbe0022f",
+        "f_efc91cb09962b2e99aabcf91"
+      ],
+      "data": {
+        "j": 4,
+        "definition": "A_j,B_j are sums of returned cycle potentials/direct azimuthal increments; p_j is complete pressure difference",
+        "velocity_identity": "delta u_j=curl A_j+B_j e_theta",
+        "original_recipe_retained": true
+      }
+    },
+    {
+      "id": "f_92271a54ee4c40740a0f8796",
+      "operation": "ExactSourceFunctionalBound",
+      "inputs": [
+        "f_3e01ace5e07046569fbcfca8",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "derivative_order": 1,
+        "g_j": "h*4/10",
+        "ell_m": "2A+(1+1)*(1+3h/2)",
+        "domain": "original 0<q<qbig, all physical points on that domain",
+        "weighted_supremum": "S_(j,m,p)=sup_D q^(ell_m-g_j)*(|Z_j|_m+|curl A_j+B_j e_theta|_m)/(1+|log q|)^p",
+        "P_choice": "P_(j,m)=min{p in nonnegative integers:S_(j,m,p)<infinity}",
+        "C_choice": "C_(j,m)=1+ceil(S_(j,m,P_(j,m)))",
+        "nonempty_and_finite_by": "same actual Prop9.6 recursion + Lemma9.8(9.17); integer log power enlargement is valid because Lambda>=1",
+        "source_bound": true,
+        "arbitrary_caller_constant": false,
+        "effective_numerical_evaluation": false,
+        "mathematical_value_unique": true
+      }
+    },
+    {
+      "id": "f_bf28c2df51576c94152738a2",
+      "operation": "ActualCutoffCurlBound",
+      "inputs": [
+        "f_92271a54ee4c40740a0f8796",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "j": 4,
+        "m": 0,
+        "ellPrime": "ell_(1)+1",
+        "increment_operator": "T_a Z_j=(curl(chi(aq)*A_j)+chi(aq)*B_j*e_theta,chi(aq)*p_j)",
+        "uniform_scale_domain": "ALL a>=1 and ALL original physical points with0<q<qbig, BEFORE choosing any a_j",
+        "S_hat": "S_hat_(j,m,p)=sup_(a>=1,(x,t) in D) q^(ellPrime_m-g_j)*|T_a Z_j|_m/(1+|log q|)^p",
+        "P_hat": "min{p in nonnegative integers:S_hat_(j,m,p)<infinity}",
+        "C_hat": "1+ceil(S_hat_(j,m,P_hat_(j,m)))",
+        "finiteness": "Finite product/chain rules use derivatives of Z_j through m+1. On every positive cutoff derivative support aq in[1/2,1], a factors cancel q. Each q derivative costs at most one since0<D<1. With nondecreasing ell, loss ell_(m+1)+(m+1) suffices, uniformly in a. Thus at least the integer P_(j,m+1) is admissible.",
+        "no_scale_selection_cycle": true,
+        "actual_potential_and_cutoff_source_bound": true,
+        "numeric_value": null
+      }
+    },
+    {
+      "id": "f_e6fb0106c9fe089f75d85690",
+      "operation": "ExactSourceFunctionalBound",
+      "inputs": [
+        "f_3e01ace5e07046569fbcfca8",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "derivative_order": 2,
+        "g_j": "h*4/10",
+        "ell_m": "2A+(2+1)*(1+3h/2)",
+        "domain": "original 0<q<qbig, all physical points on that domain",
+        "weighted_supremum": "S_(j,m,p)=sup_D q^(ell_m-g_j)*(|Z_j|_m+|curl A_j+B_j e_theta|_m)/(1+|log q|)^p",
+        "P_choice": "P_(j,m)=min{p in nonnegative integers:S_(j,m,p)<infinity}",
+        "C_choice": "C_(j,m)=1+ceil(S_(j,m,P_(j,m)))",
+        "nonempty_and_finite_by": "same actual Prop9.6 recursion + Lemma9.8(9.17); integer log power enlargement is valid because Lambda>=1",
+        "source_bound": true,
+        "arbitrary_caller_constant": false,
+        "effective_numerical_evaluation": false,
+        "mathematical_value_unique": true
+      }
+    },
+    {
+      "id": "f_83ad93e1d2df7216e45d5ea4",
+      "operation": "ActualCutoffCurlBound",
+      "inputs": [
+        "f_e6fb0106c9fe089f75d85690",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "j": 4,
+        "m": 1,
+        "ellPrime": "ell_(2)+2",
+        "increment_operator": "T_a Z_j=(curl(chi(aq)*A_j)+chi(aq)*B_j*e_theta,chi(aq)*p_j)",
+        "uniform_scale_domain": "ALL a>=1 and ALL original physical points with0<q<qbig, BEFORE choosing any a_j",
+        "S_hat": "S_hat_(j,m,p)=sup_(a>=1,(x,t) in D) q^(ellPrime_m-g_j)*|T_a Z_j|_m/(1+|log q|)^p",
+        "P_hat": "min{p in nonnegative integers:S_hat_(j,m,p)<infinity}",
+        "C_hat": "1+ceil(S_hat_(j,m,P_hat_(j,m)))",
+        "finiteness": "Finite product/chain rules use derivatives of Z_j through m+1. On every positive cutoff derivative support aq in[1/2,1], a factors cancel q. Each q derivative costs at most one since0<D<1. With nondecreasing ell, loss ell_(m+1)+(m+1) suffices, uniformly in a. Thus at least the integer P_(j,m+1) is admissible.",
+        "no_scale_selection_cycle": true,
+        "actual_potential_and_cutoff_source_bound": true,
+        "numeric_value": null
+      }
+    },
+    {
+      "id": "f_7643352673f5aacd11c24645",
+      "operation": "ExactSourceFunctionalBound",
+      "inputs": [
+        "f_3e01ace5e07046569fbcfca8",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "derivative_order": 3,
+        "g_j": "h*4/10",
+        "ell_m": "2A+(3+1)*(1+3h/2)",
+        "domain": "original 0<q<qbig, all physical points on that domain",
+        "weighted_supremum": "S_(j,m,p)=sup_D q^(ell_m-g_j)*(|Z_j|_m+|curl A_j+B_j e_theta|_m)/(1+|log q|)^p",
+        "P_choice": "P_(j,m)=min{p in nonnegative integers:S_(j,m,p)<infinity}",
+        "C_choice": "C_(j,m)=1+ceil(S_(j,m,P_(j,m)))",
+        "nonempty_and_finite_by": "same actual Prop9.6 recursion + Lemma9.8(9.17); integer log power enlargement is valid because Lambda>=1",
+        "source_bound": true,
+        "arbitrary_caller_constant": false,
+        "effective_numerical_evaluation": false,
+        "mathematical_value_unique": true
+      }
+    },
+    {
+      "id": "f_9758fdec16727fe03fe4074f",
+      "operation": "ActualCutoffCurlBound",
+      "inputs": [
+        "f_7643352673f5aacd11c24645",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "j": 4,
+        "m": 2,
+        "ellPrime": "ell_(3)+3",
+        "increment_operator": "T_a Z_j=(curl(chi(aq)*A_j)+chi(aq)*B_j*e_theta,chi(aq)*p_j)",
+        "uniform_scale_domain": "ALL a>=1 and ALL original physical points with0<q<qbig, BEFORE choosing any a_j",
+        "S_hat": "S_hat_(j,m,p)=sup_(a>=1,(x,t) in D) q^(ellPrime_m-g_j)*|T_a Z_j|_m/(1+|log q|)^p",
+        "P_hat": "min{p in nonnegative integers:S_hat_(j,m,p)<infinity}",
+        "C_hat": "1+ceil(S_hat_(j,m,P_hat_(j,m)))",
+        "finiteness": "Finite product/chain rules use derivatives of Z_j through m+1. On every positive cutoff derivative support aq in[1/2,1], a factors cancel q. Each q derivative costs at most one since0<D<1. With nondecreasing ell, loss ell_(m+1)+(m+1) suffices, uniformly in a. Thus at least the integer P_(j,m+1) is admissible.",
+        "no_scale_selection_cycle": true,
+        "actual_potential_and_cutoff_source_bound": true,
+        "numeric_value": null
+      }
+    },
+    {
+      "id": "f_2e8c84885c5b208a572b3107",
+      "operation": "ExactSourceFunctionalBound",
+      "inputs": [
+        "f_3e01ace5e07046569fbcfca8",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "derivative_order": 4,
+        "g_j": "h*4/10",
+        "ell_m": "2A+(4+1)*(1+3h/2)",
+        "domain": "original 0<q<qbig, all physical points on that domain",
+        "weighted_supremum": "S_(j,m,p)=sup_D q^(ell_m-g_j)*(|Z_j|_m+|curl A_j+B_j e_theta|_m)/(1+|log q|)^p",
+        "P_choice": "P_(j,m)=min{p in nonnegative integers:S_(j,m,p)<infinity}",
+        "C_choice": "C_(j,m)=1+ceil(S_(j,m,P_(j,m)))",
+        "nonempty_and_finite_by": "same actual Prop9.6 recursion + Lemma9.8(9.17); integer log power enlargement is valid because Lambda>=1",
+        "source_bound": true,
+        "arbitrary_caller_constant": false,
+        "effective_numerical_evaluation": false,
+        "mathematical_value_unique": true
+      }
+    },
+    {
+      "id": "f_69bc5879d4f068624c7e1274",
+      "operation": "ActualCutoffCurlBound",
+      "inputs": [
+        "f_2e8c84885c5b208a572b3107",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "j": 4,
+        "m": 3,
+        "ellPrime": "ell_(4)+4",
+        "increment_operator": "T_a Z_j=(curl(chi(aq)*A_j)+chi(aq)*B_j*e_theta,chi(aq)*p_j)",
+        "uniform_scale_domain": "ALL a>=1 and ALL original physical points with0<q<qbig, BEFORE choosing any a_j",
+        "S_hat": "S_hat_(j,m,p)=sup_(a>=1,(x,t) in D) q^(ellPrime_m-g_j)*|T_a Z_j|_m/(1+|log q|)^p",
+        "P_hat": "min{p in nonnegative integers:S_hat_(j,m,p)<infinity}",
+        "C_hat": "1+ceil(S_hat_(j,m,P_hat_(j,m)))",
+        "finiteness": "Finite product/chain rules use derivatives of Z_j through m+1. On every positive cutoff derivative support aq in[1/2,1], a factors cancel q. Each q derivative costs at most one since0<D<1. With nondecreasing ell, loss ell_(m+1)+(m+1) suffices, uniformly in a. Thus at least the integer P_(j,m+1) is admissible.",
+        "no_scale_selection_cycle": true,
+        "actual_potential_and_cutoff_source_bound": true,
+        "numeric_value": null
+      }
+    },
+    {
+      "id": "f_91f565609ebe94f1d45155e8",
+      "operation": "ExactSourceFunctionalBound",
+      "inputs": [
+        "f_3e01ace5e07046569fbcfca8",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "derivative_order": 5,
+        "g_j": "h*4/10",
+        "ell_m": "2A+(5+1)*(1+3h/2)",
+        "domain": "original 0<q<qbig, all physical points on that domain",
+        "weighted_supremum": "S_(j,m,p)=sup_D q^(ell_m-g_j)*(|Z_j|_m+|curl A_j+B_j e_theta|_m)/(1+|log q|)^p",
+        "P_choice": "P_(j,m)=min{p in nonnegative integers:S_(j,m,p)<infinity}",
+        "C_choice": "C_(j,m)=1+ceil(S_(j,m,P_(j,m)))",
+        "nonempty_and_finite_by": "same actual Prop9.6 recursion + Lemma9.8(9.17); integer log power enlargement is valid because Lambda>=1",
+        "source_bound": true,
+        "arbitrary_caller_constant": false,
+        "effective_numerical_evaluation": false,
+        "mathematical_value_unique": true
+      }
+    },
+    {
+      "id": "f_2edece70a31de72902c13885",
+      "operation": "ActualCutoffCurlBound",
+      "inputs": [
+        "f_91f565609ebe94f1d45155e8",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "j": 4,
+        "m": 4,
+        "ellPrime": "ell_(5)+5",
+        "increment_operator": "T_a Z_j=(curl(chi(aq)*A_j)+chi(aq)*B_j*e_theta,chi(aq)*p_j)",
+        "uniform_scale_domain": "ALL a>=1 and ALL original physical points with0<q<qbig, BEFORE choosing any a_j",
+        "S_hat": "S_hat_(j,m,p)=sup_(a>=1,(x,t) in D) q^(ellPrime_m-g_j)*|T_a Z_j|_m/(1+|log q|)^p",
+        "P_hat": "min{p in nonnegative integers:S_hat_(j,m,p)<infinity}",
+        "C_hat": "1+ceil(S_hat_(j,m,P_hat_(j,m)))",
+        "finiteness": "Finite product/chain rules use derivatives of Z_j through m+1. On every positive cutoff derivative support aq in[1/2,1], a factors cancel q. Each q derivative costs at most one since0<D<1. With nondecreasing ell, loss ell_(m+1)+(m+1) suffices, uniformly in a. Thus at least the integer P_(j,m+1) is admissible.",
+        "no_scale_selection_cycle": true,
+        "actual_potential_and_cutoff_source_bound": true,
+        "numeric_value": null
+      }
+    },
+    {
+      "id": "f_f04af347097e6fe2f932a058",
+      "operation": "ActualShrinkingScale",
+      "inputs": [
+        "f_cb76b8ef5e4490552e0e9b32",
+        "f_6de97e1d6c2b0406e8378fde",
+        "f_bf28c2df51576c94152738a2",
+        "f_83ad93e1d2df7216e45d5ea4",
+        "f_9758fdec16727fe03fe4074f",
+        "f_69bc5879d4f068624c7e1274",
+        "f_2edece70a31de72902c13885"
+      ],
+      "data": {
+        "j": 4,
+        "gamma": "h*4/20",
+        "previous": "L_(j-1)",
+        "L": "max(1,1+L_previous,1+log(1/qbig),max_m(2*P_hat/gamma)^2,max_m2*(C_hat+j)/gamma)",
+        "a": "exp(L)",
+        "original_cutoff": "chi=1 on(-infinity,1/2],chi=0 on[1,infinity)",
+        "norm_inputs": [
+          "f_bf28c2df51576c94152738a2",
+          "f_83ad93e1d2df7216e45d5ea4",
+          "f_9758fdec16727fe03fe4074f",
+          "f_69bc5879d4f068624c7e1274",
+          "f_2edece70a31de72902c13885"
+        ],
+        "every_m_le_j": true,
+        "all_order_rule": "same rule for every finite j; these are source functionals, not supplied dummy values"
+      }
+    },
+    {
+      "id": "f_77235d47b546355b7febf30d",
+      "operation": "ActualCorrectionPotentials",
+      "inputs": [
+        "f_efc91cb09962b2e99aabcf91",
+        "f_efc72b019cc0f2b9eb1f0026"
+      ],
+      "data": {
+        "j": 5,
+        "definition": "A_j,B_j are sums of returned cycle potentials/direct azimuthal increments; p_j is complete pressure difference",
+        "velocity_identity": "delta u_j=curl A_j+B_j e_theta",
+        "original_recipe_retained": true
+      }
+    },
+    {
+      "id": "f_dd3adb8ab85b67f71cf9710e",
+      "operation": "ExactSourceFunctionalBound",
+      "inputs": [
+        "f_77235d47b546355b7febf30d",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "derivative_order": 1,
+        "g_j": "h*5/10",
+        "ell_m": "2A+(1+1)*(1+3h/2)",
+        "domain": "original 0<q<qbig, all physical points on that domain",
+        "weighted_supremum": "S_(j,m,p)=sup_D q^(ell_m-g_j)*(|Z_j|_m+|curl A_j+B_j e_theta|_m)/(1+|log q|)^p",
+        "P_choice": "P_(j,m)=min{p in nonnegative integers:S_(j,m,p)<infinity}",
+        "C_choice": "C_(j,m)=1+ceil(S_(j,m,P_(j,m)))",
+        "nonempty_and_finite_by": "same actual Prop9.6 recursion + Lemma9.8(9.17); integer log power enlargement is valid because Lambda>=1",
+        "source_bound": true,
+        "arbitrary_caller_constant": false,
+        "effective_numerical_evaluation": false,
+        "mathematical_value_unique": true
+      }
+    },
+    {
+      "id": "f_746d89dbef6e3844f3deecfa",
+      "operation": "ActualCutoffCurlBound",
+      "inputs": [
+        "f_dd3adb8ab85b67f71cf9710e",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "j": 5,
+        "m": 0,
+        "ellPrime": "ell_(1)+1",
+        "increment_operator": "T_a Z_j=(curl(chi(aq)*A_j)+chi(aq)*B_j*e_theta,chi(aq)*p_j)",
+        "uniform_scale_domain": "ALL a>=1 and ALL original physical points with0<q<qbig, BEFORE choosing any a_j",
+        "S_hat": "S_hat_(j,m,p)=sup_(a>=1,(x,t) in D) q^(ellPrime_m-g_j)*|T_a Z_j|_m/(1+|log q|)^p",
+        "P_hat": "min{p in nonnegative integers:S_hat_(j,m,p)<infinity}",
+        "C_hat": "1+ceil(S_hat_(j,m,P_hat_(j,m)))",
+        "finiteness": "Finite product/chain rules use derivatives of Z_j through m+1. On every positive cutoff derivative support aq in[1/2,1], a factors cancel q. Each q derivative costs at most one since0<D<1. With nondecreasing ell, loss ell_(m+1)+(m+1) suffices, uniformly in a. Thus at least the integer P_(j,m+1) is admissible.",
+        "no_scale_selection_cycle": true,
+        "actual_potential_and_cutoff_source_bound": true,
+        "numeric_value": null
+      }
+    },
+    {
+      "id": "f_5027b2ebd9f974172fe7695b",
+      "operation": "ExactSourceFunctionalBound",
+      "inputs": [
+        "f_77235d47b546355b7febf30d",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "derivative_order": 2,
+        "g_j": "h*5/10",
+        "ell_m": "2A+(2+1)*(1+3h/2)",
+        "domain": "original 0<q<qbig, all physical points on that domain",
+        "weighted_supremum": "S_(j,m,p)=sup_D q^(ell_m-g_j)*(|Z_j|_m+|curl A_j+B_j e_theta|_m)/(1+|log q|)^p",
+        "P_choice": "P_(j,m)=min{p in nonnegative integers:S_(j,m,p)<infinity}",
+        "C_choice": "C_(j,m)=1+ceil(S_(j,m,P_(j,m)))",
+        "nonempty_and_finite_by": "same actual Prop9.6 recursion + Lemma9.8(9.17); integer log power enlargement is valid because Lambda>=1",
+        "source_bound": true,
+        "arbitrary_caller_constant": false,
+        "effective_numerical_evaluation": false,
+        "mathematical_value_unique": true
+      }
+    },
+    {
+      "id": "f_5907b77795c2caee2beb40ba",
+      "operation": "ActualCutoffCurlBound",
+      "inputs": [
+        "f_5027b2ebd9f974172fe7695b",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "j": 5,
+        "m": 1,
+        "ellPrime": "ell_(2)+2",
+        "increment_operator": "T_a Z_j=(curl(chi(aq)*A_j)+chi(aq)*B_j*e_theta,chi(aq)*p_j)",
+        "uniform_scale_domain": "ALL a>=1 and ALL original physical points with0<q<qbig, BEFORE choosing any a_j",
+        "S_hat": "S_hat_(j,m,p)=sup_(a>=1,(x,t) in D) q^(ellPrime_m-g_j)*|T_a Z_j|_m/(1+|log q|)^p",
+        "P_hat": "min{p in nonnegative integers:S_hat_(j,m,p)<infinity}",
+        "C_hat": "1+ceil(S_hat_(j,m,P_hat_(j,m)))",
+        "finiteness": "Finite product/chain rules use derivatives of Z_j through m+1. On every positive cutoff derivative support aq in[1/2,1], a factors cancel q. Each q derivative costs at most one since0<D<1. With nondecreasing ell, loss ell_(m+1)+(m+1) suffices, uniformly in a. Thus at least the integer P_(j,m+1) is admissible.",
+        "no_scale_selection_cycle": true,
+        "actual_potential_and_cutoff_source_bound": true,
+        "numeric_value": null
+      }
+    },
+    {
+      "id": "f_59c2d116dea8aa45f1497e8f",
+      "operation": "ExactSourceFunctionalBound",
+      "inputs": [
+        "f_77235d47b546355b7febf30d",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "derivative_order": 3,
+        "g_j": "h*5/10",
+        "ell_m": "2A+(3+1)*(1+3h/2)",
+        "domain": "original 0<q<qbig, all physical points on that domain",
+        "weighted_supremum": "S_(j,m,p)=sup_D q^(ell_m-g_j)*(|Z_j|_m+|curl A_j+B_j e_theta|_m)/(1+|log q|)^p",
+        "P_choice": "P_(j,m)=min{p in nonnegative integers:S_(j,m,p)<infinity}",
+        "C_choice": "C_(j,m)=1+ceil(S_(j,m,P_(j,m)))",
+        "nonempty_and_finite_by": "same actual Prop9.6 recursion + Lemma9.8(9.17); integer log power enlargement is valid because Lambda>=1",
+        "source_bound": true,
+        "arbitrary_caller_constant": false,
+        "effective_numerical_evaluation": false,
+        "mathematical_value_unique": true
+      }
+    },
+    {
+      "id": "f_23ef3f457c0068ee13c51243",
+      "operation": "ActualCutoffCurlBound",
+      "inputs": [
+        "f_59c2d116dea8aa45f1497e8f",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "j": 5,
+        "m": 2,
+        "ellPrime": "ell_(3)+3",
+        "increment_operator": "T_a Z_j=(curl(chi(aq)*A_j)+chi(aq)*B_j*e_theta,chi(aq)*p_j)",
+        "uniform_scale_domain": "ALL a>=1 and ALL original physical points with0<q<qbig, BEFORE choosing any a_j",
+        "S_hat": "S_hat_(j,m,p)=sup_(a>=1,(x,t) in D) q^(ellPrime_m-g_j)*|T_a Z_j|_m/(1+|log q|)^p",
+        "P_hat": "min{p in nonnegative integers:S_hat_(j,m,p)<infinity}",
+        "C_hat": "1+ceil(S_hat_(j,m,P_hat_(j,m)))",
+        "finiteness": "Finite product/chain rules use derivatives of Z_j through m+1. On every positive cutoff derivative support aq in[1/2,1], a factors cancel q. Each q derivative costs at most one since0<D<1. With nondecreasing ell, loss ell_(m+1)+(m+1) suffices, uniformly in a. Thus at least the integer P_(j,m+1) is admissible.",
+        "no_scale_selection_cycle": true,
+        "actual_potential_and_cutoff_source_bound": true,
+        "numeric_value": null
+      }
+    },
+    {
+      "id": "f_b3fe439f59c9757228ab0d2c",
+      "operation": "ExactSourceFunctionalBound",
+      "inputs": [
+        "f_77235d47b546355b7febf30d",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "derivative_order": 4,
+        "g_j": "h*5/10",
+        "ell_m": "2A+(4+1)*(1+3h/2)",
+        "domain": "original 0<q<qbig, all physical points on that domain",
+        "weighted_supremum": "S_(j,m,p)=sup_D q^(ell_m-g_j)*(|Z_j|_m+|curl A_j+B_j e_theta|_m)/(1+|log q|)^p",
+        "P_choice": "P_(j,m)=min{p in nonnegative integers:S_(j,m,p)<infinity}",
+        "C_choice": "C_(j,m)=1+ceil(S_(j,m,P_(j,m)))",
+        "nonempty_and_finite_by": "same actual Prop9.6 recursion + Lemma9.8(9.17); integer log power enlargement is valid because Lambda>=1",
+        "source_bound": true,
+        "arbitrary_caller_constant": false,
+        "effective_numerical_evaluation": false,
+        "mathematical_value_unique": true
+      }
+    },
+    {
+      "id": "f_b6d9dad25ac2f27de4ed06ba",
+      "operation": "ActualCutoffCurlBound",
+      "inputs": [
+        "f_b3fe439f59c9757228ab0d2c",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "j": 5,
+        "m": 3,
+        "ellPrime": "ell_(4)+4",
+        "increment_operator": "T_a Z_j=(curl(chi(aq)*A_j)+chi(aq)*B_j*e_theta,chi(aq)*p_j)",
+        "uniform_scale_domain": "ALL a>=1 and ALL original physical points with0<q<qbig, BEFORE choosing any a_j",
+        "S_hat": "S_hat_(j,m,p)=sup_(a>=1,(x,t) in D) q^(ellPrime_m-g_j)*|T_a Z_j|_m/(1+|log q|)^p",
+        "P_hat": "min{p in nonnegative integers:S_hat_(j,m,p)<infinity}",
+        "C_hat": "1+ceil(S_hat_(j,m,P_hat_(j,m)))",
+        "finiteness": "Finite product/chain rules use derivatives of Z_j through m+1. On every positive cutoff derivative support aq in[1/2,1], a factors cancel q. Each q derivative costs at most one since0<D<1. With nondecreasing ell, loss ell_(m+1)+(m+1) suffices, uniformly in a. Thus at least the integer P_(j,m+1) is admissible.",
+        "no_scale_selection_cycle": true,
+        "actual_potential_and_cutoff_source_bound": true,
+        "numeric_value": null
+      }
+    },
+    {
+      "id": "f_7c9c05ec60ed501e2277895a",
+      "operation": "ExactSourceFunctionalBound",
+      "inputs": [
+        "f_77235d47b546355b7febf30d",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "derivative_order": 5,
+        "g_j": "h*5/10",
+        "ell_m": "2A+(5+1)*(1+3h/2)",
+        "domain": "original 0<q<qbig, all physical points on that domain",
+        "weighted_supremum": "S_(j,m,p)=sup_D q^(ell_m-g_j)*(|Z_j|_m+|curl A_j+B_j e_theta|_m)/(1+|log q|)^p",
+        "P_choice": "P_(j,m)=min{p in nonnegative integers:S_(j,m,p)<infinity}",
+        "C_choice": "C_(j,m)=1+ceil(S_(j,m,P_(j,m)))",
+        "nonempty_and_finite_by": "same actual Prop9.6 recursion + Lemma9.8(9.17); integer log power enlargement is valid because Lambda>=1",
+        "source_bound": true,
+        "arbitrary_caller_constant": false,
+        "effective_numerical_evaluation": false,
+        "mathematical_value_unique": true
+      }
+    },
+    {
+      "id": "f_bb4f18f8c7e1b5255e1c0700",
+      "operation": "ActualCutoffCurlBound",
+      "inputs": [
+        "f_7c9c05ec60ed501e2277895a",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "j": 5,
+        "m": 4,
+        "ellPrime": "ell_(5)+5",
+        "increment_operator": "T_a Z_j=(curl(chi(aq)*A_j)+chi(aq)*B_j*e_theta,chi(aq)*p_j)",
+        "uniform_scale_domain": "ALL a>=1 and ALL original physical points with0<q<qbig, BEFORE choosing any a_j",
+        "S_hat": "S_hat_(j,m,p)=sup_(a>=1,(x,t) in D) q^(ellPrime_m-g_j)*|T_a Z_j|_m/(1+|log q|)^p",
+        "P_hat": "min{p in nonnegative integers:S_hat_(j,m,p)<infinity}",
+        "C_hat": "1+ceil(S_hat_(j,m,P_hat_(j,m)))",
+        "finiteness": "Finite product/chain rules use derivatives of Z_j through m+1. On every positive cutoff derivative support aq in[1/2,1], a factors cancel q. Each q derivative costs at most one since0<D<1. With nondecreasing ell, loss ell_(m+1)+(m+1) suffices, uniformly in a. Thus at least the integer P_(j,m+1) is admissible.",
+        "no_scale_selection_cycle": true,
+        "actual_potential_and_cutoff_source_bound": true,
+        "numeric_value": null
+      }
+    },
+    {
+      "id": "f_42b235123f09e5ffbe2699a0",
+      "operation": "ExactSourceFunctionalBound",
+      "inputs": [
+        "f_77235d47b546355b7febf30d",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "derivative_order": 6,
+        "g_j": "h*5/10",
+        "ell_m": "2A+(6+1)*(1+3h/2)",
+        "domain": "original 0<q<qbig, all physical points on that domain",
+        "weighted_supremum": "S_(j,m,p)=sup_D q^(ell_m-g_j)*(|Z_j|_m+|curl A_j+B_j e_theta|_m)/(1+|log q|)^p",
+        "P_choice": "P_(j,m)=min{p in nonnegative integers:S_(j,m,p)<infinity}",
+        "C_choice": "C_(j,m)=1+ceil(S_(j,m,P_(j,m)))",
+        "nonempty_and_finite_by": "same actual Prop9.6 recursion + Lemma9.8(9.17); integer log power enlargement is valid because Lambda>=1",
+        "source_bound": true,
+        "arbitrary_caller_constant": false,
+        "effective_numerical_evaluation": false,
+        "mathematical_value_unique": true
+      }
+    },
+    {
+      "id": "f_2dfa8713f641ca8c982fe7a7",
+      "operation": "ActualCutoffCurlBound",
+      "inputs": [
+        "f_42b235123f09e5ffbe2699a0",
+        "f_cb76b8ef5e4490552e0e9b32"
+      ],
+      "data": {
+        "j": 5,
+        "m": 5,
+        "ellPrime": "ell_(6)+6",
+        "increment_operator": "T_a Z_j=(curl(chi(aq)*A_j)+chi(aq)*B_j*e_theta,chi(aq)*p_j)",
+        "uniform_scale_domain": "ALL a>=1 and ALL original physical points with0<q<qbig, BEFORE choosing any a_j",
+        "S_hat": "S_hat_(j,m,p)=sup_(a>=1,(x,t) in D) q^(ellPrime_m-g_j)*|T_a Z_j|_m/(1+|log q|)^p",
+        "P_hat": "min{p in nonnegative integers:S_hat_(j,m,p)<infinity}",
+        "C_hat": "1+ceil(S_hat_(j,m,P_hat_(j,m)))",
+        "finiteness": "Finite product/chain rules use derivatives of Z_j through m+1. On every positive cutoff derivative support aq in[1/2,1], a factors cancel q. Each q derivative costs at most one since0<D<1. With nondecreasing ell, loss ell_(m+1)+(m+1) suffices, uniformly in a. Thus at least the integer P_(j,m+1) is admissible.",
+        "no_scale_selection_cycle": true,
+        "actual_potential_and_cutoff_source_bound": true,
+        "numeric_value": null
+      }
+    },
+    {
+      "id": "f_01dc61ab82cf40fc7cbf57dc",
+      "operation": "ActualShrinkingScale",
+      "inputs": [
+        "f_cb76b8ef5e4490552e0e9b32",
+        "f_f04af347097e6fe2f932a058",
+        "f_746d89dbef6e3844f3deecfa",
+        "f_5907b77795c2caee2beb40ba",
+        "f_23ef3f457c0068ee13c51243",
+        "f_b6d9dad25ac2f27de4ed06ba",
+        "f_bb4f18f8c7e1b5255e1c0700",
+        "f_2dfa8713f641ca8c982fe7a7"
+      ],
+      "data": {
+        "j": 5,
+        "gamma": "h*5/20",
+        "previous": "L_(j-1)",
+        "L": "max(1,1+L_previous,1+log(1/qbig),max_m(2*P_hat/gamma)^2,max_m2*(C_hat+j)/gamma)",
+        "a": "exp(L)",
+        "original_cutoff": "chi=1 on(-infinity,1/2],chi=0 on[1,infinity)",
+        "norm_inputs": [
+          "f_746d89dbef6e3844f3deecfa",
+          "f_5907b77795c2caee2beb40ba",
+          "f_23ef3f457c0068ee13c51243",
+          "f_b6d9dad25ac2f27de4ed06ba",
+          "f_bb4f18f8c7e1b5255e1c0700",
+          "f_2dfa8713f641ca8c982fe7a7"
+        ],
+        "every_m_le_j": true,
+        "all_order_rule": "same rule for every finite j; these are source functionals, not supplied dummy values"
+      }
+    }
+  ],
+  "all_finite_rule": "The successor method is the same four original maps for each j; finite prefixes illustrate its serialization, not prove allj by samples.",
+  "induction_theorem": "Prop9.6 plus Lem9.7 on actual State0; exponent proof and full Definition9.4 invariants carried separately",
+  "numerical_field_evaluator": false,
+  "numerical_supremum_evaluator": false,
+  "private_original_seals_reused": false,
+  "proof_status": "SOURCE_BOUND_ANALYTIC_CONSTRUCTION_CANDIDATE",
+  "concrete_window_scale_nodes": [
+    "f_3b700fc1d0d2c77582a0399d",
+    "f_74b782b03adf1a4984b59949",
+    "f_6de97e1d6c2b0406e8378fde",
+    "f_f04af347097e6fe2f932a058",
+    "f_01dc61ab82cf40fc7cbf57dc"
+  ],
+  "source_norm_family": {
+    "path": "analysis/base/PR30-primary67-continuation/MathScopeCompute/research-ide/mathscope-m3/navier/evidence/saved-initialized-norm-family-20261012/attempt1/saved-initialized-norm-family.json",
+    "sha256": "d98a245f1fc563ba44c48d21c59a43d6787fc3895d922472bb3f3ab6e04d9a6d",
+    "bytes": 5286543
+  }
+}

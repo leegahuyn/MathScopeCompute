@@ -1,0 +1,101 @@
+{
+  "schema": "MathScope.M4.ExactAnalyticObligations/2",
+  "originalCriterion": "I3-03",
+  "obligations": [
+    {
+      "id": "M4.HYP.COMPLETE_PRECISION_SPACE",
+      "kind": "completeness",
+      "status": "EXPLICIT_LEAN_DEFINITION",
+      "domain": "X : Type with supplied m : PrecisionMetric X. Sequences u : ℕ → X and precisions k : ℕ.",
+      "normOrMetric": "m.close k x y is the declared ball relation. The PrecisionMetric structure supplies reflexivity, symmetry, the two-input triangle law at k+1→k, and finer-ball inclusion k+1→k.",
+      "quantifiers": "For every u, if ∀k ∃N ∀n,p≥N, close k (u n) (u p), then ∃x∈X ∀k ∃N ∀n≥N, close k (u n) x.",
+      "statement": "Complete m := ∀ u : ℕ → X, Cauchy m u → ∃ x : X, Converges m u x.",
+      "leanDeclaration": "MathScope.M4.Complete",
+      "consumedBy": ["MathScope.M4.Conditional.assumed_cauchy_limit"],
+      "boundary": "The conditional demonstration assumes Complete m through its printed user axiom assumedComplete."
+    },
+    {
+      "id": "M4.HYP.UNIFORM_CONVERGENCE_ALL_DOMAIN",
+      "kind": "uniform_convergence",
+      "status": "EXPLICIT_LEAN_PARAMETER",
+      "domain": "X,Y : Type; mx : PrecisionMetric X and my : PrecisionMetric Y; u : ℕ → X → Y and f : X → Y.",
+      "normOrMetric": "my.close for approximation in Y and mx.close for the input continuity modulus. The proof uses my.symmetric, my.triangle and my.finer.",
+      "quantifiers": "Uniform convergence is ∀k ∃N ∀n≥N ∀x∈X, my.close k (u n x) (f x). Every approximant is uniformly continuous: ∀n ∀k ∃l ∀x,y∈X, mx.close l x y → my.close k (u n x) (u n y).",
+      "statement": "Under those two premises, ∀k ∃l ∀x,y∈X, mx.close l x y → my.close k (f x) (f y). The same N applies to all x in the convergence premise.",
+      "leanDeclaration": "MathScope.M4.UniformConverges",
+      "consumedBy": ["MathScope.M4.Analytic.uniform_limit_uniformly_continuous", "MathScope.M4.Comparison.uniform_continuity_adapter"],
+      "boundary": "The assertion transfers uniform continuity in the specified precision spaces."
+    },
+    {
+      "id": "M4.OPEN.REAL_DERIVATIVE_LIMIT_INTERCHANGE",
+      "kind": "derivative_and_limit_interchange",
+      "status": "OPEN_SPECIFICATION",
+      "domain": "E is a Banach space over ℝ. Every f_n : ℝ → E is C¹, v ∈ E, and g : ℝ → E. For the infinite-series version set S_n(x)=∑_{j=0}^{n-1} a_j(x) with every a_j C¹ and set f_n=S_n.",
+      "normOrMetric": "The norm of E, real Fréchet derivative in a one-dimensional domain, and supremum norm on each K_R=[−R,R] for R>0.",
+      "quantifiers": "Assume ∀ε>0 ∃N ∀n≥N, ‖f_n(0)−v‖<ε. Also assume ∀R>0 ∀ε>0 ∃N ∀n≥N ∀x∈K_R, ‖f'_n(x)−g(x)‖<ε.",
+      "statement": "Conclude ∃f:ℝ→E C¹ with f(0)=v and ∀x∈ℝ, f'(x)=g(x), such that ∀R>0 ∀ε>0 ∃N ∀n≥N ∀x∈K_R, ‖f_n(x)−f(x)‖<ε. For f_n=S_n the differentiated partial sum is ∑_{j<n} a'_j.",
+      "leanDeclaration": null,
+      "consumedBy": [],
+      "boundary": "Application requires a specific Banach-space and source-series binding with independent convergence bounds."
+    },
+    {
+      "id": "M4.OPEN.STRONGLY_CONTINUOUS_SEMIGROUP_BOUND",
+      "kind": "semigroup_bound",
+      "status": "OPEN_SPECIFICATION",
+      "domain": "A Banach space E over ℝ or ℂ. T(t) is a bounded linear map E→E for each t∈[0,∞). Fixed M≥1 and ω∈ℝ.",
+      "normOrMetric": "The norm on E and operator norm on bounded linear maps.",
+      "quantifiers": "T(0)=Id; ∀s,t≥0, T(s+t)=T(s)∘T(t). ∀x∈E ∀ε>0 ∃δ>0 ∀t∈[0,δ), ‖T(t)x−x‖<ε. ∀t≥0, ‖T(t)‖op≤M exp(ωt).",
+      "statement": "A source application supplies the semigroup identities, strong continuity, and the bound for its specified E and M,ω.",
+      "leanDeclaration": null,
+      "consumedBy": [],
+      "boundary": "The norm bound is an explicit premise for the stability specification below."
+    },
+    {
+      "id": "M4.OPEN.SELF_ADJOINT_SPECTRAL_MEASURE",
+      "kind": "spectral_measure",
+      "status": "OPEN_SPECIFICATION",
+      "domain": "H is a complex Hilbert space and A:D(A)⊂H→H is densely defined and self-adjoint. B,C and B_j are Borel subsets of ℝ.",
+      "normOrMetric": "Hilbert norm for vector convergence, strong operator topology for P, and positive scalar measure μ_x(B)=⟨P(B)x,x⟩.",
+      "quantifiers": "For each B, P(B) is an orthogonal projection; P(∅)=0 and P(ℝ)=Id; for every B,C, P(B∩C)=P(B)P(C); for every pairwise-disjoint sequence (B_j) and every x∈H, lim_N ‖P(∪_j B_j)x−∑_{j<N} P(B_j)x‖_H=0.",
+      "statement": "A spectral adapter supplies such P, D(A)={x∈H:∫ℝ λ² dμ_x(λ)<∞}, and ∀x∈D(A), lim_R→∞ ‖Ax−∫_{[-R,R]} λ dP(λ)x‖_H=0. The truncated integrals are the bounded spectral integrals of λ·1_[−R,R](λ).",
+      "leanDeclaration": null,
+      "consumedBy": [],
+      "boundary": "The inherited GapAt predicate assumes a set of real energies and does not construct this PVM."
+    },
+    {
+      "id": "M4.OPEN.STABILITY_CONSTANTS",
+      "kind": "stability_constants",
+      "status": "OPEN_SPECIFICATION",
+      "domain": "The same E and T as in the strongly continuous semigroup specification. Fixed T_max≥0, M≥1 and ω∈ℝ.",
+      "normOrMetric": "E norm and the same T(t) operator norm; M,ω,T_max are part of the application input.",
+      "quantifiers": "For every t∈[0,T_max] and every x,y∈E.",
+      "statement": "Linearity and ‖T(t)‖op≤M exp(ωt) give ‖T(t)x−T(t)y‖≤M exp(ωt)‖x−y‖.",
+      "leanDeclaration": null,
+      "consumedBy": [],
+      "boundary": "The inequality is the requested consequence of an independently supplied operator bound."
+    }
+  ],
+  "actualAnalyticTargets": [
+    {
+      "target": "MathScope.M4.Analytic.uniform_limit_uniformly_continuous",
+      "module": "MathScope/M4/Analytic",
+      "obligations": ["M4.HYP.UNIFORM_CONVERGENCE_ALL_DOMAIN"],
+      "uses": ["UNIFORM_LIMIT_IN_EXPLICIT_PRECISION_METRIC"],
+      "kernelAxiomBoundary": "No user axioms."
+    },
+    {
+      "target": "MathScope.M4.Comparison.uniform_continuity_adapter",
+      "module": "MathScope/M4/Comparison",
+      "obligations": ["M4.HYP.UNIFORM_CONVERGENCE_ALL_DOMAIN"],
+      "uses": ["EXACT_UPSTREAM_UNIFORM_LIMIT_TARGET"],
+      "kernelAxiomBoundary": "Exact imported M4.Analytic theorem with the same inputs and premises."
+    },
+    {
+      "target": "MathScope.M4.Conditional.assumed_cauchy_limit",
+      "module": "MathScope/M4/Conditional",
+      "obligations": ["M4.HYP.COMPLETE_PRECISION_SPACE"],
+      "uses": ["CONDITIONAL_SEQUENCE_CONVERGENCE"],
+      "kernelAxiomBoundary": "Printed dependency MathScope.M4.Conditional.assumedComplete."
+    }
+  ]
+}

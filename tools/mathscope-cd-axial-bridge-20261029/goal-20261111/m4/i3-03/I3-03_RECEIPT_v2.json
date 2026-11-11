@@ -1,0 +1,204 @@
+{
+  "schema": "MathScope.M4.AnalyticScopeAudit/1",
+  "originalCriterion": "I3-03",
+  "currentSourceCommit": "5c9a4852d00eec50c7100a033831056e54dde209",
+  "githubCompilerSourceCommit": "325a5ff7b57e4d3b6de9e9927fee5425321b097f",
+  "githubCompilerRunId": "42996997312",
+  "githubCompilerReceiptSHA256": "812e8aaad5f7d4fb9d0cdc055265be6f244404206b5a3bfe00a3516cf290a9e3",
+  "originalSpecSHA256": "78f6211710583ecee490ab6548e41a90024040815612838402f14a11f56f6679",
+  "explicitSpecSHA256": "53b6220522ec62615d87c7f21cfd532c5ea8fff26bc8feb43e1501534537bfc0",
+  "coveredObligationKinds": [
+    "completeness",
+    "derivative_and_limit_interchange",
+    "semigroup_bound",
+    "spectral_measure",
+    "stability_constants",
+    "uniform_convergence"
+  ],
+  "currentM4Modules": [
+    {
+      "repoPath": "research-ide/mathscope-m4/lean/MathScope/M4/Defs.lean",
+      "sourceSHA256": "6f4e450a25322939c00a3684fbd052ecabc14d3c1c8ad587fb6d1f99cf5f0f49",
+      "theorems": [],
+      "axioms": [],
+      "scope": "FINITE_OR_REGISTRY_DATA"
+    },
+    {
+      "repoPath": "research-ide/mathscope-m4/lean/MathScope/M4/Finite.lean",
+      "sourceSHA256": "0fb67cdd8ba09cadd6d12d1e89c15a03b36e902bf28bd6e77f7f6b9598861b3e",
+      "theorems": [
+        "delta_two_numerator",
+        "differential_squared_zero",
+        "scalar_chain_map",
+        "prime_interval_fixture",
+        "bracket_antisymmetric",
+        "bracket_jacobi",
+        "shear_plaquette"
+      ],
+      "axioms": [],
+      "scope": "FINITE_OR_REGISTRY_DATA"
+    },
+    {
+      "repoPath": "research-ide/mathscope-m4/lean/MathScope/M4/Analytic.lean",
+      "sourceSHA256": "8cbd276dca0dc5d5267a615107a6ba6c1f796769dbbaaa0212c331b71b3806e0",
+      "theorems": [
+        "uniform_limit_uniformly_continuous"
+      ],
+      "axioms": [],
+      "scope": "ANALYTIC_ANNOTATIONS_REQUIRED"
+    },
+    {
+      "repoPath": "research-ide/mathscope-m4/lean/MathScope/M4/Comparison.lean",
+      "sourceSHA256": "e1acc6c6359e4c805f910aa4d707b74ae5cbcfdc8e2e3c41194583e71339cca0",
+      "theorems": [
+        "uniform_continuity_adapter"
+      ],
+      "axioms": [],
+      "scope": "ANALYTIC_ANNOTATIONS_REQUIRED"
+    },
+    {
+      "repoPath": "research-ide/mathscope-m4/lean/MathScope/M4/Conditional.lean",
+      "sourceSHA256": "bef1701760da5abb50b3786e0a8af0d0a44022ce14ed706bddd1f79466b413b8",
+      "theorems": [
+        "assumed_cauchy_limit"
+      ],
+      "axioms": [
+        "assumedComplete"
+      ],
+      "scope": "ANALYTIC_ANNOTATIONS_REQUIRED"
+    },
+    {
+      "repoPath": "research-ide/mathscope-m4/lean/MathScope/M4/Open.lean",
+      "sourceSHA256": "e976529a4946eb203009fe8b738b1e9f6aeb96a6c9acf89f2a7cbf6c64613a50",
+      "theorems": [],
+      "axioms": [],
+      "scope": "FINITE_OR_REGISTRY_DATA"
+    },
+    {
+      "repoPath": "tools/mathscope-cd-axial-bridge-20261029/m4-finite/FiniteAcceptance.lean",
+      "sourceSHA256": "7c41fe9be49468a90c97a70d40243d215baa8be5e9e79f7931fbba84a1452d52",
+      "theorems": [
+        "delta_numerator_factor",
+        "delta_two_exact_quotient",
+        "delta_two_input_residues",
+        "delta_two_quotient_from_wider_numerator",
+        "delta_two_precision",
+        "delta_two_same_width_counterexample",
+        "coefficient_swap_is_involutive",
+        "coefficient_swap_preserves_add_mul",
+        "coefficient_swap_preserves_one",
+        "coefficient_swap_nonidentity",
+        "swap_additive",
+        "product_differential_squared_zero",
+        "nonidentity_semilinear_chain_map"
+      ],
+      "axioms": [],
+      "scope": "FINITE_OR_REGISTRY_DATA"
+    }
+  ],
+  "actualM4AnalyticTargets": [
+    {
+      "target": "MathScope.M4.Analytic.uniform_limit_uniformly_continuous",
+      "module": "MathScope/M4/Analytic",
+      "obligations": [
+        "M4.HYP.UNIFORM_CONVERGENCE_ALL_DOMAIN"
+      ],
+      "uses": [
+        "UNIFORM_LIMIT_IN_EXPLICIT_PRECISION_METRIC"
+      ],
+      "kernelAxiomBoundary": "No user axioms.",
+      "compileLogSHA256": "414bcdd1a84e8fd6907d18b8a33d06330e6608c57fd24e2f32a253c3825905f2"
+    },
+    {
+      "target": "MathScope.M4.Comparison.uniform_continuity_adapter",
+      "module": "MathScope/M4/Comparison",
+      "obligations": [
+        "M4.HYP.UNIFORM_CONVERGENCE_ALL_DOMAIN"
+      ],
+      "uses": [
+        "EXACT_UPSTREAM_UNIFORM_LIMIT_TARGET"
+      ],
+      "kernelAxiomBoundary": "Exact imported M4.Analytic theorem with the same inputs and premises.",
+      "compileLogSHA256": "2d282c7abd158426f4c4848f68c1afaa5ddadeff1818603ca341230e50b5aabd"
+    },
+    {
+      "target": "MathScope.M4.Conditional.assumed_cauchy_limit",
+      "module": "MathScope/M4/Conditional",
+      "obligations": [
+        "M4.HYP.COMPLETE_PRECISION_SPACE"
+      ],
+      "uses": [
+        "CONDITIONAL_SEQUENCE_CONVERGENCE"
+      ],
+      "kernelAxiomBoundary": "Printed dependency MathScope.M4.Conditional.assumedComplete.",
+      "compileLogSHA256": "c3731b025fc2369273877d9ca2f97d3cb3f361043ce5b549f16533a6d102c306"
+    }
+  ],
+  "inheritedM0ModulesSourceScope": [
+    {
+      "repoPath": "research-ide/mathscope-m0/lean/MathScope/M0/Defs.lean",
+      "sourceSHA256": "b00496552d9de1c5271fc319670902785af5a0785aa1fe31451985aa1f2bbe37",
+      "theorems": [],
+      "axioms": [],
+      "scope": "FINITE_OR_REGISTRY_DATA"
+    },
+    {
+      "repoPath": "research-ide/mathscope-m0/lean/MathScope/M0/Finite.lean",
+      "sourceSHA256": "07b6309d8b638c13924c63ce3c0d4a4b2023211e56ec68c95210ffdcf88b5713",
+      "theorems": [
+        "matrix_product_zero",
+        "differential_squared_zero",
+        "integer_fixture"
+      ],
+      "axioms": [],
+      "scope": "FINITE_OR_REGISTRY_DATA"
+    },
+    {
+      "repoPath": "research-ide/mathscope-m0/lean/MathScope/M0/Analytic.lean",
+      "sourceSHA256": "5b1e099473e7a4b23eee0ab7b9132e07a8c093e0249e2ccb7a74189811ae7313",
+      "theorems": [
+        "gap_excludes_interval",
+        "smaller_positive_gap",
+        "gap_transfer"
+      ],
+      "axioms": [],
+      "scope": "SUPPLIED_REAL_SPECTRUM_SET"
+    },
+    {
+      "repoPath": "research-ide/mathscope-m0/lean/MathScope/M0/Comparison.lean",
+      "sourceSHA256": "c5629d6c17cde5f67e50c577a2a7b71dd0b7223db657fdb27527312c2d02a2af",
+      "theorems": [
+        "transport_gap"
+      ],
+      "axioms": [],
+      "scope": "SUPPLIED_REAL_SPECTRUM_SET"
+    },
+    {
+      "repoPath": "research-ide/mathscope-m0/lean/MathScope/M0/Conditional.lean",
+      "sourceSHA256": "79c3fd19000b46cecb1181dfb89a16d81b49735446fa7cafaf82a0434d51c917",
+      "theorems": [
+        "selected_gap_excludes_interval"
+      ],
+      "axioms": [
+        "selectedSpectrum",
+        "userAssumedGapAtOne"
+      ],
+      "scope": "SUPPLIED_REAL_SPECTRUM_SET"
+    },
+    {
+      "repoPath": "research-ide/mathscope-m0/lean/MathScope/M0/Open.lean",
+      "sourceSHA256": "a7f8ce7e6d117339fd5fc6b9a2ff79397b4c254852744ef81c3600d836e0015c",
+      "theorems": [],
+      "axioms": [],
+      "scope": "FINITE_OR_REGISTRY_DATA"
+    }
+  ],
+  "openSpecifications": [
+    "M4.OPEN.REAL_DERIVATIVE_LIMIT_INTERCHANGE",
+    "M4.OPEN.STRONGLY_CONTINUOUS_SEMIGROUP_BOUND",
+    "M4.OPEN.SELF_ADJOINT_SPECTRAL_MEASURE",
+    "M4.OPEN.STABILITY_CONSTANTS"
+  ],
+  "proofOfNewOpenAdapters": false,
+  "verdict": "PASS_EXACT_ANALYTIC_SPECIFICATIONS_AND_ACTUAL_TARGET_COVERAGE"
+}

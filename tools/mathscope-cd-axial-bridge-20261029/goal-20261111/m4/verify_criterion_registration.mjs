@@ -14,7 +14,7 @@ const evaluator = await import(pathToFileURL(
 ).href);
 const artifact = path => readFile(resolve(repo, path));
 const filenames = (await readdir(resolve(repo, prefix))).sort();
-assert.deepEqual(filenames, ['I3-01.json', 'I3-02.json', 'R1-01.json', 'R1-02.json']);
+assert.deepEqual(filenames, ['I3-01.json', 'I3-02.json', 'I3-03.json', 'R1-01.json', 'R1-02.json']);
 
 const receipts = [];
 const controls = [];
@@ -44,14 +44,14 @@ for (const filename of filenames) {
 }
 
 const assessment = await evaluator.assessM4Acceptance({ criterionReceipts: receipts });
-assert.equal(assessment.newlyAcceptedCriteriaInThisAudit, 4);
+assert.equal(assessment.newlyAcceptedCriteriaInThisAudit, filenames.length);
 assert.equal(assessment.originalCriteriaEnumerated, 16);
 assert.equal(assessment.canFreeze, false);
 assert.equal(assessment.publicationConfirmed, false);
 const fromJSON = JSON.parse(JSON.stringify(receipts));
 const forged = await evaluator.assessM4Acceptance({ criterionReceipts: fromJSON });
 assert.equal(forged.newlyAcceptedCriteriaInThisAudit, 0);
-assert.equal(forged.rejectedSerializedCriterionReceipts, 4);
+assert.equal(forged.rejectedSerializedCriterionReceipts, filenames.length);
 const report = {
   schema: 'MathScope.M4.ReviewedCriterionReadback/1',
   accepted: receipts.map(({ criterionId, digest }) => ({ criterionId, digest })),
