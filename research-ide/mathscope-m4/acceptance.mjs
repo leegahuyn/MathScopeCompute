@@ -3,6 +3,7 @@ import {
   proofSha256, auditDependencyGraph,
 } from '../mathscope-m0/proof.mjs';
 import { M4_CRITERIA, HANDOFF_BASELINE } from './criteria.mjs';
+import researchBoundaries from './research-boundaries.json' with { type: 'json' };
 
 const kernelArtifactAuthority = new WeakSet();
 const criterionAuthority = new WeakSet();
@@ -30,6 +31,8 @@ const freeze = value => {
   }
   return value;
 };
+const boundaries = freeze(clone(researchBoundaries));
+const boundaryById = new Map(boundaries.map(row => [row.id, row]));
 const failure = (code, reason, extra = {}) => freeze({ verified: false, code, reason, ...extra });
 const shaPattern = /^[0-9a-f]{64}$/;
 
@@ -159,7 +162,8 @@ export async function assessM4Acceptance({ criterionReceipts = [], kernelReceipt
     canFreeze, canDeclareM4Complete: canFreeze,
     status: canFreeze ? 'CURRENT_SCOPE_ACCEPTED' : 'M4_FINAL_ACCEPTANCE_UNCONFIRMED',
     pendingOriginalM3: currentM3CompletionVerified ? [] : [...HANDOFF_BASELINE.pendingOriginalM3],
-    openResearch: ['RH_GLOBAL_BRIDGE', 'BSD_UNIVERSAL', 'GENERAL_G_CONTINUUM_QUANTUM_YM', 'WHOLE_ORIGINAL_NS_RECONSTRUCTION'],
+    openResearch: boundaries.filter(row => row.releaseOpen).map(row => row.id),
+    researchBoundaries: boundaries,
     rejectedSerializedCriterionReceipts: criterionReceipts.filter(receipt => !isVerifiedM4CriterionReceipt(receipt)).length,
     publicationConfirmed: false,
     limitation: 'M0 kernel prerequisites are inherited at their original scopes. This audit does not assign historical M4 a zero percentage, rerun Lean, accept all analytic/refinement/force obligations, or confirm deployment.',
@@ -180,6 +184,7 @@ export function buildM4ChecklistView(report) {
     })) })),
     predecessorKernelScopes: clone(report.historicalKernelScopes),
     pendingOriginalM3: [...report.pendingOriginalM3], openResearch: [...report.openResearch],
+    researchBoundaries: report.researchBoundaries,
   });
 }
 
@@ -188,6 +193,24 @@ export function exportM4Assessment(report) {
   return { schemaVersion: 'mathscope.m4.assessment-export/1', report: clone(report), importedTrust: 'REASSESSMENT_REQUIRED' };
 }
 
-export function auditM4ResearchDependency(graph, targetId, requestedGrade = 'UNCONDITIONAL_FORMAL') {
-  return auditDependencyGraph(graph, targetId, { requestedGrade, closeResearchGate: true });
+export function auditM4ResearchDependency(graph, targetId, requestedGrade = 'UNCONDITIONAL_FORMAL', { kernelReceipts = [] } = {}) {
+  const audit = auditDependencyGraph(graph, targetId, { requestedGrade, closeResearchGate: true });
+  if (!audit.ok) return audit;
+  const closure = new Set(audit.closure);
+  const issues = [];
+  const imports = kernelReceipts.filter(isVerifiedKernelArtifactReceipt);
+  for (const node of graph.nodes.filter(node => closure.has(node.id))) {
+    const boundary = boundaryById.get(node.id);
+    if (boundary) {
+      const code = boundary.status === 'RESEARCH OPEN' ? 'RESEARCH_OPEN' : 'MODEL_DEVELOPMENT_ONLY';
+      issues.push({ code, node: node.id, message: boundary.scope });
+    }
+    if (String(node.kind).toLowerCase().replaceAll('-', '_') !== 'imported_theorem') continue;
+    const matched = imports.some(receipt => receipt.claimId === node.id && receipt.target === node.target &&
+      receipt.targetType === node.statement &&
+      (receipt.grade !== 'CONDITIONAL_FORMAL' || requestedGrade === 'CONDITIONAL_FORMAL'));
+    if (!matched) issues.push({ code: 'SEMANTIC_ADAPTER_EVIDENCE_REQUIRED', node: node.id,
+      message: 'An imported theorem requires an exact target and type bound by a freshly rechecked kernel artifact receipt.' });
+  }
+  return issues.length ? freeze({ ...audit, ok: false, status: 'DEPENDENCY_REJECTED', issues }) : audit;
 }

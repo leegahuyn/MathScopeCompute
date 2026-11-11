@@ -30,7 +30,8 @@ def build(observed, catalog, verification, kernel, source_refinement=None):
     patch(find,style+html+'\n'+find)
     runtime=(ROOT/'mathscope-m4/release-lab/runtime.mjs').read_text(encoding='utf-8').replace('export function createReleaseLab','function createReleaseLab')
     script=runtime+'\n'+(HERE/'release-lab.js').read_text(encoding='utf-8')
-    model_object=dict(catalog=catalog,verification=verification,kernel=kernel,sourceRefinement=source_refinement)
+    boundaries=json.loads((HERE.parent/'research-boundaries.json').read_bytes())
+    model_object=dict(catalog=catalog,verification=verification,kernel=kernel,sourceRefinement=source_refinement,researchBoundaries=boundaries)
     model=json.dumps(model_object,ensure_ascii=False,separators=(',',':')).replace('<','\\u003c')
     if json.loads(model)!=model_object:raise ValueError('Inline model changed its mathematical values')
     addon='<script id="ms-r1-data" type="application/json">'+model+'</script>\n<script id="ms-r1-js">\n'+re.sub('</script',r'<\\/script',script,flags=re.I)+'\n</script>\n'

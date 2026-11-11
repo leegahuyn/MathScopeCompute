@@ -75,6 +75,13 @@
     tr.append(make('td',r.axis),make('td',JSON.stringify(r.values??r.inputs??r.requestChanges??r.levels)),detail);q('refinements').append(tr);
   }
   q('kernel').textContent=JSON.stringify(data.kernel,null,2);
+  const boundaries = q('research-boundaries');
+  for (const row of data.researchBoundaries || []) {
+    const item = make('li');
+    item.dataset.researchClaim = row.id;
+    item.append(make('strong', row.label), make('p', row.status), make('p', row.scope));
+    boundaries.append(item);
+  }
   q('m3-source').textContent=JSON.stringify(data.sourceRefinement,null,2);
   const tailRows=data.sourceRefinement?.table||[];
   for(const row of tailRows){const tr=make('tr'),pick=make('button',`${row.component} / C${row.derivativeOrder}`);pick.type='button';pick.addEventListener('click',()=>{q('m3-source').textContent=JSON.stringify({source:data.sourceRefinement.source,selected:row,scope:'PRE_TEMPORAL_SOURCE_BOUND; ORIGINAL N8-05 PENDING'},null,2);});const td=make('td');td.append(pick);tr.append(td,make('td',`${row.K} · ${row.relativeToK1Exact}`),make('td',row.omittedBoundScalar));q('m3-tail-rows').append(tr);}
