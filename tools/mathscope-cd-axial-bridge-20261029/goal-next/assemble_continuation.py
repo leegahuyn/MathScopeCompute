@@ -25,6 +25,7 @@ parser.add_argument("--whole-k-n0-artifact", type=Path)
 parser.add_argument("--core-runtime", type=Path)
 parser.add_argument("--diagonal-n2-artifact", type=Path)
 parser.add_argument("--n2-y-reached", type=Path)
+parser.add_argument("--historical-scale-input", type=Path)
 args = parser.parse_args()
 TASK = args.workspace.resolve()
 REPO = TASK / "work/MathScopeCompute-CD"
@@ -344,6 +345,20 @@ with zipfile.ZipFile(DEST, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=
         data = args.n2_y_reached.read_bytes()
         assert digest(data) == "4779b42d41b9ef8f54484744860f2c6f3da4bde19d5e01bab9af704699f3ee32"
         add("inputs/original-axial-n2/y-reached.json", data)
+    if args.historical_scale_input:
+        data = args.historical_scale_input.read_bytes()
+        historical = json.loads(git("show", commit + ":" + CURRENT +
+                                    "/whole-k-selector-scales/historical-scale-arithmetic-result.json"))
+        assert historical["complete"] and digest(data) == historical["inputSHA256"]
+        add("inputs/original-selector-scales/historical-scale-arithmetic-input.json", data)
+        for relative, expected in historical["sourcePins"].items():
+            raw = git("show", historical["sourceRevision"] + ":" + relative)
+            assert digest(raw) == expected, relative
+            name = "inputs/original-core-runtime/" + relative
+            if name in sha_manifest:
+                assert sha_manifest[name]["sha256"] == expected
+            else:
+                add(name, raw)
     add("REPORT_KO.md", report)
     add("STATUS.json", status)
     target.writestr("SHA256.json", encode(sha_manifest))

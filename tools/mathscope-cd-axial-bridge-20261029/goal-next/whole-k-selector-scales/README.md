@@ -8,3 +8,11 @@
       --n1 <corrected-first-forced> --n2 <original-axial-n2> --out common-b-scales.json
 
 repo에는 f8cb4034e86d7b669d52a6f2248aebba156b51b5 원본 Git 객체가 필요하다. 검증한 원본 성공 기록, scale 구간, FTC 상계와 trace를 증거 ZIP에도 넣었다. RELEASE HOLD.
+
+원본 대표점의 시간 중점을 사용하면 가능한 실패 영역은 \(1\le q/q_{\min}<1+w\) 및 \(X_a<X<X_a(1+w)<X_-\) 안에 들어간다. 양의 배경 차수의 느린 응력은 이 영역에서 원본 Picard 식으로 0이다. 실제 frozen 대표점과 파동·평균장에는 별도 결속이 남아 있다.
+
+원본 directed arithmetic에서 역사적 \(\log c_1,\log c_2,\log c_3\)는 모두 \((\ell_{\min}+10)\log 2\)보다 작았다. \(b_2,b_3\)의 실제 최대값을 정하려면 각각 다섯 FTC 조건의 상계 비교가 더 필요하다.
+
+    python check_n4_inner_shell.py --repo <repo> --strip n4-bottom-strip.json --out n4-inner-shell.json
+    node evaluate_historical_b_scales.mjs <repo> <inputs/original-core-runtime> \
+      <inputs/original-selector-scales/historical-scale-arithmetic-input.json> historical-scale-arithmetic-result.json
