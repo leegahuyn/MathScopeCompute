@@ -34,8 +34,10 @@ extension of the actual first correction assembled from the
 verified operands. The raw original cylindrical \(N=2\) current
 and pressure expressions have their own axis obligation.
 
-The global Cartesian gauge graph, positive-order interior seam
-jets and uniform uncut derivative constants remain open.
+The [native chart extension](NATIVE_GAUGE_JETS.md) emits the Cartesian
+first correction on the original explicit N1 chart. Global gluing,
+positive-order interior seam jets, and uniform uncut derivative
+constants remain open.
 
 - [Forced potential](../final67/first-forced-gauge.json)
 - [Signed and mean gauge replay](corrected-gauge-replay.json)

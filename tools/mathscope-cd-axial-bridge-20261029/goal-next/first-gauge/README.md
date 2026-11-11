@@ -128,6 +128,8 @@ manifest. The reproduced corrected files here are
 `corrected-gauge-replay.json` and `corrected-five-whole.json`, with
 the corresponding execution logs. Historical results remain calibration.
 
-The replay binds exact gauge operands and a global assembly recipe.
-It creates no new globally assembled Cartesian gauge AST, all-domain
-derivative seminorm, first summation scale, or final jets.
+The replay binds exact gauge operands and a global assembly recipe. The
+[native chart extension](NATIVE_GAUGE_JETS.md) uses these operands for
+the original explicit N1 reference chart. Global assembly across bands,
+all-domain derivative seminorms, the first summation scale, and final jets
+remain open.

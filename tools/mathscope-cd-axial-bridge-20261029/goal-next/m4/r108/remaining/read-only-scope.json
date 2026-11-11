@@ -1,0 +1,70 @@
+{
+  "schema": "MathScope.M4.R108.RemainingPublicationReadOnly/1",
+  "criterion": {
+    "id": "R1-08",
+    "title": "범위별 릴리스 판정",
+    "page": 68,
+    "requirement": "명시된 지원 기능만 후보로 묶고 기존 전체 RELEASE HOLD와 모듈 상태를 구분한다. 패치, 테스트, rollback 자료를 준비하고 실제 게시 후 화면을 확인한 시점에만 배포 완료를 기록한다.",
+    "checks": [
+      "DECLARED_CAPABILITIES_SCOPE",
+      "MODULE_STATUS_GLOBAL_HOLD_DISTINCTION",
+      "PATCH_TEST_ROLLBACK",
+      "ACTUAL_POST_PUBLICATION_SCREEN_RECEIPT"
+    ]
+  },
+  "status": {
+    "M3": {
+      "accepted": 62,
+      "total": 64,
+      "open": [
+        "N7-06",
+        "N8-05"
+      ],
+      "last_resolved_tau": null
+    },
+    "M4": {
+      "accepted": 15,
+      "total": 16,
+      "open": [
+        "R1-08"
+      ]
+    },
+    "jets": {
+      "accepted": 0,
+      "total": 67
+    },
+    "globalRelease": "HOLD",
+    "canFreeze": false,
+    "evaluatorPublicationConfirmed": false
+  },
+  "isolatedCandidate": {
+    "htmlSha256": "0504482900dbeac2faf992be9a923bc51ab1de6bcec0b82ac058085444669735",
+    "bytes": 28928002,
+    "patchReadbackSha256": "2ec01be3bc4afec7c55ab76c776e996a3328842c2b1f077e61881f809d2ef052",
+    "matchesReviewedBrowserFixture": true,
+    "actualPublishedCandidateReadbackAvailable": false
+  },
+  "operatingReadback": {
+    "project": 29770,
+    "slug": "v0.3.1.html",
+    "version": 137,
+    "providerVersionHash": "9171eb0c",
+    "httpBodySha256": "a945831236caa965dd96f986fb3f8311d6a236afed8235c0a69e135f51febe48",
+    "bytes": 30707818,
+    "matchesPriorOperatingBody": true,
+    "matchesIsolatedCandidate": false
+  },
+  "inScopeDestinationEvidence": {
+    "connectedWebsitePublisherProjectCount": 1,
+    "projectPageCount": 5,
+    "githubVisibleDeploymentCount": 0,
+    "githubPagesSettingsReadback": "HTTP_404"
+  },
+  "evaluatorControls": {
+    "singleFullCandidateHtml": "CRITERION_ARTIFACT_INVALID",
+    "reason": "Artifact exceeds the 16 MiB audit budget.",
+    "boundedIntegrityOnlyEvidence": "CRITERION_REVIEW_REQUIRED",
+    "reviewedAnchorMissing": true
+  },
+  "conclusion": "R1-08 remains open at the actual candidate publication screen receipt. Scoped publication and global release remain distinct."
+}
