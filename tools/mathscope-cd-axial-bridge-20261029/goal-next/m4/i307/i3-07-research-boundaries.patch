@@ -1,0 +1,156 @@
+diff --git a/research-ide/mathscope-m4/acceptance.mjs b/research-ide/mathscope-m4/acceptance.mjs
+--- a/research-ide/mathscope-m4/acceptance.mjs
++++ b/research-ide/mathscope-m4/acceptance.mjs
+@@ -3,6 +3,7 @@
+   proofSha256, auditDependencyGraph,
+ } from '../mathscope-m0/proof.mjs';
+ import { M4_CRITERIA, HANDOFF_BASELINE } from './criteria.mjs';
++import researchBoundaries from './research-boundaries.json' with { type: 'json' };
+ 
+ const kernelArtifactAuthority = new WeakSet();
+ const criterionAuthority = new WeakSet();
+@@ -29,6 +30,8 @@
+   }
+   return value;
+ };
++const boundaries = freeze(clone(researchBoundaries));
++const boundaryById = new Map(boundaries.map(row => [row.id, row]));
+ const failure = (code, reason, extra = {}) => freeze({ verified: false, code, reason, ...extra });
+ const shaPattern = /^[0-9a-f]{64}$/;
+ 
+@@ -158,7 +161,8 @@
+     canFreeze, canDeclareM4Complete: canFreeze,
+     status: canFreeze ? 'CURRENT_SCOPE_ACCEPTED' : 'M4_FINAL_ACCEPTANCE_UNCONFIRMED',
+     pendingOriginalM3: currentM3CompletionVerified ? [] : [...HANDOFF_BASELINE.pendingOriginalM3],
+-    openResearch: ['RH_GLOBAL_BRIDGE', 'BSD_UNIVERSAL', 'GENERAL_G_CONTINUUM_QUANTUM_YM', 'WHOLE_ORIGINAL_NS_RECONSTRUCTION'],
++    openResearch: boundaries.filter(row => row.releaseOpen).map(row => row.id),
++    researchBoundaries: boundaries,
+     rejectedSerializedCriterionReceipts: criterionReceipts.filter(receipt => !isVerifiedM4CriterionReceipt(receipt)).length,
+     publicationConfirmed: false,
+     limitation: 'M0 kernel prerequisites are inherited at their original scopes. This audit does not assign historical M4 a zero percentage, rerun Lean, accept all analytic/refinement/force obligations, or confirm deployment.',
+@@ -179,6 +183,7 @@
+     })) })),
+     predecessorKernelScopes: clone(report.historicalKernelScopes),
+     pendingOriginalM3: [...report.pendingOriginalM3], openResearch: [...report.openResearch],
++    researchBoundaries: report.researchBoundaries,
+   });
+ }
+ 
+@@ -187,6 +192,24 @@
+   return { schemaVersion: 'mathscope.m4.assessment-export/1', report: clone(report), importedTrust: 'REASSESSMENT_REQUIRED' };
+ }
+ 
+-export function auditM4ResearchDependency(graph, targetId, requestedGrade = 'UNCONDITIONAL_FORMAL') {
+-  return auditDependencyGraph(graph, targetId, { requestedGrade, closeResearchGate: true });
+-}
++export function auditM4ResearchDependency(graph, targetId, requestedGrade = 'UNCONDITIONAL_FORMAL', { kernelReceipts = [] } = {}) {
++  const audit = auditDependencyGraph(graph, targetId, { requestedGrade, closeResearchGate: true });
++  if (!audit.ok) return audit;
++  const closure = new Set(audit.closure);
++  const issues = [];
++  const imports = kernelReceipts.filter(isVerifiedKernelArtifactReceipt);
++  for (const node of graph.nodes.filter(node => closure.has(node.id))) {
++    const boundary = boundaryById.get(node.id);
++    if (boundary) {
++      const code = boundary.status === 'RESEARCH OPEN' ? 'RESEARCH_OPEN' : 'MODEL_DEVELOPMENT_ONLY';
++      issues.push({ code, node: node.id, message: boundary.scope });
++    }
++    if (String(node.kind).toLowerCase().replaceAll('-', '_') !== 'imported_theorem') continue;
++    const matched = imports.some(receipt => receipt.claimId === node.id && receipt.target === node.target &&
++      receipt.targetType === node.statement &&
++      (receipt.grade !== 'CONDITIONAL_FORMAL' || requestedGrade === 'CONDITIONAL_FORMAL'));
++    if (!matched) issues.push({ code: 'SEMANTIC_ADAPTER_EVIDENCE_REQUIRED', node: node.id,
++      message: 'An imported theorem requires an exact target and type bound by a freshly rechecked kernel artifact receipt.' });
++  }
++  return issues.length ? freeze({ ...audit, ok: false, status: 'DEPENDENCY_REJECTED', issues }) : audit;
++}
+diff --git a/research-ide/mathscope-m4/web/build-release-lab.py b/research-ide/mathscope-m4/web/build-release-lab.py
+--- a/research-ide/mathscope-m4/web/build-release-lab.py
++++ b/research-ide/mathscope-m4/web/build-release-lab.py
+@@ -30,7 +30,8 @@
+     patch(find,style+html+'\n'+find)
+     runtime=(ROOT/'mathscope-m4/release-lab/runtime.mjs').read_text(encoding='utf-8').replace('export function createReleaseLab','function createReleaseLab')
+     script=runtime+'\n'+(HERE/'release-lab.js').read_text(encoding='utf-8')
+-    model_object=dict(catalog=catalog,verification=verification,kernel=kernel,sourceRefinement=source_refinement)
++    boundaries=json.loads((HERE.parent/'research-boundaries.json').read_bytes())
++    model_object=dict(catalog=catalog,verification=verification,kernel=kernel,sourceRefinement=source_refinement,researchBoundaries=boundaries)
+     model=json.dumps(model_object,ensure_ascii=False,separators=(',',':')).replace('<','\\u003c')
+     if json.loads(model)!=model_object:raise ValueError('Inline model changed its mathematical values')
+     addon='<script id="ms-r1-data" type="application/json">'+model+'</script>\n<script id="ms-r1-js">\n'+re.sub('</script',r'<\\/script',script,flags=re.I)+'\n</script>\n'
+diff --git a/research-ide/mathscope-m4/web/release-lab.html b/research-ide/mathscope-m4/web/release-lab.html
+--- a/research-ide/mathscope-m4/web/release-lab.html
++++ b/research-ide/mathscope-m4/web/release-lab.html
+@@ -8,6 +8,7 @@
+   <div class="ms-r1-layout"><div><h4>실제 계산 표본</h4><p data-r1="axes"></p><svg data-r1="chart" viewBox="0 0 600 230" role="img" aria-label="실제 계산 표본의 2차원 관측"></svg><div class="ms-r1-table"><table><thead><tr><th>선택</th><th>원래 값/좌표</th><th>출처</th></tr></thead><tbody data-r1="rows"></tbody></table></div></div><div><h4>그림 → 값 → 소스 → 작업</h4><pre data-r1="inspect">실행 결과를 기다립니다.</pre><a data-r1="source" target="_blank" rel="noopener noreferrer">실제 계산 소스 열기</a></div></div>
+   <details><summary>독립 정밀도·해상도 비교 · 실행 영수증</summary><p>p-adic M, 급수 J, 공간 K, lattice a/L, 표본 수를 각각 변경한 기록입니다. 유한 근사와 인증된 경계를 구분합니다.</p><div class="ms-r1-table"><table><thead><tr><th>축</th><th>독립 입력</th><th>관측·오차·범위</th></tr></thead><tbody data-r1="refinements"></tbody></table></div></details>
+   <details><summary>새 Lean 커널 실행 및 오류 대조</summary><pre data-r1="kernel"></pre></details>
++  <details><summary>연구 관문과 프리즘 비교 구현</summary><ul data-r1="research-boundaries"></ul></details>
+   <details><summary>M3 실제 소스의 유한 Fourier 꼬리 비교 · 원래 전역 의무와 별도</summary><p>temporal 보정 전 동일 원본 잔차의 꼬리 상계입니다. 세로축은 K=1 상계에 대한 정확한 비율 1/K이며, 미평가 source scalar의 절대 수치가 아닙니다.</p><div data-r1="m3-tail-chart"></div><div class="ms-r1-table"><table><thead><tr><th>성분/차수</th><th>K · 상대 상계</th><th>원본 scalar</th></tr></thead><tbody data-r1="m3-tail-rows"></tbody></table></div><pre data-r1="m3-source"></pre></details>
+   <label>실행 가져오기 <input type="file" data-r1="import" accept="application/json,.json"></label>
+   <p class="ms-r1-note">가져온 결과는 다시 계산하여 비교합니다. 다른 입력·소스·정리·force/cutoff의 증거는 연결되지 않습니다. 화면의 유한 실행 성공은 원래 NS 전역 구성이나 M3 64/64 완료를 뜻하지 않습니다.</p>
+diff --git a/research-ide/mathscope-m4/web/release-lab.js b/research-ide/mathscope-m4/web/release-lab.js
+--- a/research-ide/mathscope-m4/web/release-lab.js
++++ b/research-ide/mathscope-m4/web/release-lab.js
+@@ -75,6 +75,13 @@
+     tr.append(make('td',r.axis),make('td',JSON.stringify(r.values??r.inputs??r.requestChanges??r.levels)),detail);q('refinements').append(tr);
+   }
+   q('kernel').textContent=JSON.stringify(data.kernel,null,2);
++  const boundaries = q('research-boundaries');
++  for (const row of data.researchBoundaries || []) {
++    const item = make('li');
++    item.dataset.researchClaim = row.id;
++    item.append(make('strong', row.label), make('p', row.status), make('p', row.scope));
++    boundaries.append(item);
++  }
+   q('m3-source').textContent=JSON.stringify(data.sourceRefinement,null,2);
+   const tailRows=data.sourceRefinement?.table||[];
+   for(const row of tailRows){const tr=make('tr'),pick=make('button',`${row.component} / C${row.derivativeOrder}`);pick.type='button';pick.addEventListener('click',()=>{q('m3-source').textContent=JSON.stringify({source:data.sourceRefinement.source,selected:row,scope:'PRE_TEMPORAL_SOURCE_BOUND; ORIGINAL N8-05 PENDING'},null,2);});const td=make('td');td.append(pick);tr.append(td,make('td',`${row.K} · ${row.relativeToK1Exact}`),make('td',row.omittedBoundScalar));q('m3-tail-rows').append(tr);}
+diff --git a/research-ide/mathscope-m4/research-boundaries.json b/research-ide/mathscope-m4/research-boundaries.json
+new file mode 100644
+--- /dev/null
++++ b/research-ide/mathscope-m4/research-boundaries.json
+@@ -0,0 +1,44 @@
++[
++  {
++    "id": "RH_GLOBAL_BRIDGE",
++    "label": "RH 전역 연결",
++    "status": "RESEARCH OPEN",
++    "scope": "유한체 trace 비교의 범위를 고전적 RH 전역 명제로 확장하는 연결",
++    "releaseOpen": true
++  },
++  {
++    "id": "BSD_UNIVERSAL",
++    "label": "전칭 BSD",
++    "status": "RESEARCH OPEN",
++    "scope": "알려진 해석적 랭크의 범위를 넘어서는 BSD 전칭 명제",
++    "releaseOpen": true
++  },
++  {
++    "id": "GENERAL_G_CONTINUUM_QUANTUM_YM",
++    "label": "일반 G 연속 양자 Yang–Mills 구성",
++    "status": "RESEARCH OPEN",
++    "scope": "일반 G의 연속 이론 구성과 전체 스펙트럼의 양의 간극",
++    "releaseOpen": true
++  },
++  {
++    "id": "WHOLE_ORIGINAL_NS_RECONSTRUCTION",
++    "label": "NS 원본 전 구간 재구성",
++    "status": "RESEARCH OPEN",
++    "scope": "원본 전 구간의 최종장과 오차 경계",
++    "releaseOpen": true
++  },
++  {
++    "id": "KNOWN_PRISM_COMPARISON_IMPLEMENTATION",
++    "label": "알려진 프리즘 비교 구현",
++    "status": "MODEL DEVELOPMENT",
++    "scope": "선택된 base, ring, 가정, 연산 순서를 원본 M2 경로에서 재검사",
++    "releaseOpen": false
++  },
++  {
++    "id": "NEW_PRISM_COMPARISON",
++    "label": "새 프리즘 비교 정리",
++    "status": "RESEARCH OPEN",
++    "scope": "등록된 비교 정리의 가정 밖에 있는 새로운 비교 정리",
++    "releaseOpen": false
++  }
++]

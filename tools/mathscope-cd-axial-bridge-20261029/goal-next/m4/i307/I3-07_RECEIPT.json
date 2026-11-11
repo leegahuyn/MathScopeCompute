@@ -1,0 +1,533 @@
+{
+  "schema": "MathScope.M4.I307.ResearchBoundaryReadback/1",
+  "criterionId": "I3-07",
+  "originalBlueprintPage": 20,
+  "originalCriterionText": "RH global bridge, 전칭 BSD, 일반 G continuum quantum construction은 RESEARCH OPEN으로 관리한다. 알려진 prism 비교의 구현은 MODEL DEVELOPMENT로, 새로운 비교정리가 필요한 경우는 RESEARCH OPEN으로 구분한다. 합 격: 가정 자체를 결론으로 다시 쓰는 순환 증명과 대수적 이름만 붙인 의미 인터페이스가 연구 관문을 닫지 못한다.",
+  "originalMatrixSHA256": "ef56f18cedfe50618800bbff6e41bed912171bf0df9b8596cc48bc85c401c68b",
+  "requiredChecks": [
+    "OPEN_RESEARCH_PRESERVATION",
+    "MODEL_RESEARCH_BOUNDARY",
+    "CIRCULAR_ASSUMPTION_REJECTION",
+    "SEMANTIC_ADAPTER_VALIDATION"
+  ],
+  "checks": {
+    "OPEN_RESEARCH_PRESERVATION": "PASS",
+    "CIRCULAR_ASSUMPTION_REJECTION": "PASS",
+    "MODEL_RESEARCH_BOUNDARY": "PASS",
+    "SEMANTIC_ADAPTER_VALIDATION": "PASS"
+  },
+  "researchBoundaries": [
+    {
+      "id": "RH_GLOBAL_BRIDGE",
+      "label": "RH 전역 연결",
+      "status": "RESEARCH OPEN",
+      "scope": "유한체 trace 비교의 범위를 고전적 RH 전역 명제로 확장하는 연결",
+      "releaseOpen": true
+    },
+    {
+      "id": "BSD_UNIVERSAL",
+      "label": "전칭 BSD",
+      "status": "RESEARCH OPEN",
+      "scope": "알려진 해석적 랭크의 범위를 넘어서는 BSD 전칭 명제",
+      "releaseOpen": true
+    },
+    {
+      "id": "GENERAL_G_CONTINUUM_QUANTUM_YM",
+      "label": "일반 G 연속 양자 Yang–Mills 구성",
+      "status": "RESEARCH OPEN",
+      "scope": "일반 G의 연속 이론 구성과 전체 스펙트럼의 양의 간극",
+      "releaseOpen": true
+    },
+    {
+      "id": "WHOLE_ORIGINAL_NS_RECONSTRUCTION",
+      "label": "NS 원본 전 구간 재구성",
+      "status": "RESEARCH OPEN",
+      "scope": "원본 전 구간의 최종장과 오차 경계",
+      "releaseOpen": true
+    },
+    {
+      "id": "KNOWN_PRISM_COMPARISON_IMPLEMENTATION",
+      "label": "알려진 프리즘 비교 구현",
+      "status": "MODEL DEVELOPMENT",
+      "scope": "선택된 base, ring, 가정, 연산 순서를 원본 M2 경로에서 재검사",
+      "releaseOpen": false
+    },
+    {
+      "id": "NEW_PRISM_COMPARISON",
+      "label": "새 프리즘 비교 정리",
+      "status": "RESEARCH OPEN",
+      "scope": "등록된 비교 정리의 가정 밖에 있는 새로운 비교 정리",
+      "releaseOpen": false
+    }
+  ],
+  "routeControls": [
+    {
+      "name": "RH_GLOBAL_BRIDGE cannot close by relabeling its node as theorem",
+      "status": "DEPENDENCY_REJECTED",
+      "issues": [
+        {
+          "code": "RESEARCH_OPEN",
+          "node": "RH_GLOBAL_BRIDGE",
+          "message": "유한체 trace 비교의 범위를 고전적 RH 전역 명제로 확장하는 연결"
+        }
+      ]
+    },
+    {
+      "name": "BSD_UNIVERSAL cannot close by relabeling its node as theorem",
+      "status": "DEPENDENCY_REJECTED",
+      "issues": [
+        {
+          "code": "RESEARCH_OPEN",
+          "node": "BSD_UNIVERSAL",
+          "message": "알려진 해석적 랭크의 범위를 넘어서는 BSD 전칭 명제"
+        }
+      ]
+    },
+    {
+      "name": "GENERAL_G_CONTINUUM_QUANTUM_YM cannot close by relabeling its node as theorem",
+      "status": "DEPENDENCY_REJECTED",
+      "issues": [
+        {
+          "code": "RESEARCH_OPEN",
+          "node": "GENERAL_G_CONTINUUM_QUANTUM_YM",
+          "message": "일반 G의 연속 이론 구성과 전체 스펙트럼의 양의 간극"
+        }
+      ]
+    },
+    {
+      "name": "WHOLE_ORIGINAL_NS_RECONSTRUCTION cannot close by relabeling its node as theorem",
+      "status": "DEPENDENCY_REJECTED",
+      "issues": [
+        {
+          "code": "RESEARCH_OPEN",
+          "node": "WHOLE_ORIGINAL_NS_RECONSTRUCTION",
+          "message": "원본 전 구간의 최종장과 오차 경계"
+        }
+      ]
+    },
+    {
+      "name": "KNOWN_PRISM_COMPARISON_IMPLEMENTATION cannot close by relabeling its node as theorem",
+      "status": "DEPENDENCY_REJECTED",
+      "issues": [
+        {
+          "code": "MODEL_DEVELOPMENT_ONLY",
+          "node": "KNOWN_PRISM_COMPARISON_IMPLEMENTATION",
+          "message": "선택된 base, ring, 가정, 연산 순서를 원본 M2 경로에서 재검사"
+        }
+      ]
+    },
+    {
+      "name": "NEW_PRISM_COMPARISON cannot close by relabeling its node as theorem",
+      "status": "DEPENDENCY_REJECTED",
+      "issues": [
+        {
+          "code": "RESEARCH_OPEN",
+          "node": "NEW_PRISM_COMPARISON",
+          "message": "등록된 비교 정리의 가정 밖에 있는 새로운 비교 정리"
+        }
+      ]
+    },
+    {
+      "name": "Restated target as hypothesis",
+      "status": "DEPENDENCY_REJECTED",
+      "issues": [
+        {
+          "code": "GOAL_ASSUMED_AS_PREMISE",
+          "message": "Restating the desired conclusion as an assumption does not close the research gate.",
+          "nodes": [
+            "premise"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Restated target as user_axiom",
+      "status": "DEPENDENCY_REJECTED",
+      "issues": [
+        {
+          "code": "GOAL_ASSUMED_AS_PREMISE",
+          "message": "Restating the desired conclusion as an assumption does not close the research gate.",
+          "nodes": [
+            "premise"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Transitive dependency cycle",
+      "status": "DEPENDENCY_REJECTED",
+      "issues": [
+        {
+          "code": "DEPENDENCY_CYCLE",
+          "message": "A dependency cycle cannot close a research gate.",
+          "cycle": [
+            "claim",
+            "helper",
+            "claim"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Algebraic name only",
+      "status": "DEPENDENCY_REJECTED",
+      "issues": [
+        {
+          "code": "SEMANTIC_ADAPTER_EVIDENCE_REQUIRED",
+          "node": "comparison",
+          "message": "An imported theorem requires an exact target and type bound by a freshly rechecked kernel artifact receipt."
+        }
+      ]
+    },
+    {
+      "name": "Exact target text without live receipt",
+      "status": "DEPENDENCY_REJECTED",
+      "issues": [
+        {
+          "code": "SEMANTIC_ADAPTER_EVIDENCE_REQUIRED",
+          "node": "M0.FINITE.D_SQUARED_ZERO",
+          "message": "An imported theorem requires an exact target and type bound by a freshly rechecked kernel artifact receipt."
+        }
+      ]
+    },
+    {
+      "name": "Serialized receipt, exact claimed target",
+      "status": "DEPENDENCY_REJECTED",
+      "issues": [
+        {
+          "code": "SEMANTIC_ADAPTER_EVIDENCE_REQUIRED",
+          "node": "M0.FINITE.D_SQUARED_ZERO",
+          "message": "An imported theorem requires an exact target and type bound by a freshly rechecked kernel artifact receipt."
+        }
+      ]
+    },
+    {
+      "name": "Live receipt, mutated target type",
+      "status": "DEPENDENCY_REJECTED",
+      "issues": [
+        {
+          "code": "SEMANTIC_ADAPTER_EVIDENCE_REQUIRED",
+          "node": "M0.FINITE.D_SQUARED_ZERO",
+          "message": "An imported theorem requires an exact target and type bound by a freshly rechecked kernel artifact receipt."
+        }
+      ]
+    },
+    {
+      "name": "Live receipt, different target name",
+      "status": "DEPENDENCY_REJECTED",
+      "issues": [
+        {
+          "code": "SEMANTIC_ADAPTER_EVIDENCE_REQUIRED",
+          "node": "M0.FINITE.D_SQUARED_ZERO",
+          "message": "An imported theorem requires an exact target and type bound by a freshly rechecked kernel artifact receipt."
+        }
+      ]
+    },
+    {
+      "name": "Live receipt, different claim ID",
+      "status": "DEPENDENCY_REJECTED",
+      "issues": [
+        {
+          "code": "SEMANTIC_ADAPTER_EVIDENCE_REQUIRED",
+          "node": "relabeled-claim",
+          "message": "An imported theorem requires an exact target and type bound by a freshly rechecked kernel artifact receipt."
+        }
+      ]
+    }
+  ],
+  "exactHistoricalImport": {
+    "target": "MathScope.M0.Finite.differential_squared_zero",
+    "targetType": "MathScope.M0.Finite.differential_squared_zero (v : MathScope.M0.C0) :\n  MathScope.M0.d1 (MathScope.M0.d0 v) = MathScope.M0.zeroC2",
+    "grade": "EXACT_FINITE",
+    "artifactDigest": "a5c34574bc1f5041ad9cc1fd7adaf4353c7bedf1c6c42c53b35935a4c10b2ab7",
+    "structuralAuthority": "STRUCTURAL_GUARD_ONLY"
+  },
+  "modelRoutes": {
+    "etale": {
+      "source": {
+        "schema": "MathScope.M2.ArithmeticResult/1",
+        "adapterVersion": "0.2.0-m2",
+        "kind": "arithmetic.comparison",
+        "inputHash": "accadab3bb9978a248ba9f25e6e6773566374d21401f5f417d2f239743379be2",
+        "resultHash": "50d1066e6bc0d66c702b9950d36e2adc579745a658a20c160cdc8d637fd501af",
+        "sourceHash": "8aef2ff1dedc8d666d6488e131383e66db9c0704951f103c394ad433a4902c83",
+        "verification": "FRESH_M2_RECOMPUTATION",
+        "serializedAuthority": "UNTRUSTED_REQUIRES_REEXECUTION"
+      },
+      "binding": {
+        "sha256": "29cf6e414025f8067cb66503f5928b34816f25455bb1678185a1e18913b88db9",
+        "routeSha256": "c23d8706a3efd7df647c158d2ed591e21baa108dcbfbb7384685beca2ad531be",
+        "sourceSha256": "1d953f72d4743c563f2517b56d792a21ac89e27f34d150c4094cc85b6f12d496"
+      },
+      "operations": [
+        "DERIVED_REDUCTION_MOD_PN",
+        "INVERT_PRISM_IDEAL",
+        "DERIVED_FROBENIUS_FIXED_POINTS"
+      ],
+      "originalGrade": "APPLIED_EXTERNAL_THEOREM",
+      "adapterStatus": "SUPPORTED_EXTERNAL_COMPARISON",
+      "formalComplete": false,
+      "modelStatus": "MODEL DEVELOPMENT",
+      "changed": {
+        "ok": false,
+        "status": "COMPARISON_REJECTED",
+        "issues": [
+          {
+            "code": "COMPARISON_EDGE_CHANGED",
+            "edgeId": "edge:0",
+            "message": "The edge no longer has its required source, base map, ordered operation and conditions."
+          },
+          {
+            "code": "COMPARISON_DATA_CHANGED",
+            "field": "edges",
+            "message": "The edges differ from the fresh supported M2 route."
+          },
+          {
+            "code": "COMPARISON_BINDING_MISMATCH",
+            "field": "binding",
+            "message": "The binding differ from the fresh supported M2 route."
+          }
+        ],
+        "invalidEdgeIds": [
+          "edge:0"
+        ],
+        "source": {
+          "schema": "MathScope.M2.ArithmeticResult/1",
+          "adapterVersion": "0.2.0-m2",
+          "kind": "arithmetic.comparison",
+          "inputHash": "accadab3bb9978a248ba9f25e6e6773566374d21401f5f417d2f239743379be2",
+          "resultHash": "50d1066e6bc0d66c702b9950d36e2adc579745a658a20c160cdc8d637fd501af",
+          "sourceHash": "8aef2ff1dedc8d666d6488e131383e66db9c0704951f103c394ad433a4902c83",
+          "verification": "FRESH_M2_RECOMPUTATION",
+          "serializedAuthority": "UNTRUSTED_REQUIRES_REEXECUTION"
+        },
+        "binding": {
+          "sha256": "29cf6e414025f8067cb66503f5928b34816f25455bb1678185a1e18913b88db9",
+          "routeSha256": "c23d8706a3efd7df647c158d2ed591e21baa108dcbfbb7384685beca2ad531be",
+          "sourceSha256": "1d953f72d4743c563f2517b56d792a21ac89e27f34d150c4094cc85b6f12d496"
+        },
+        "authority": "ROUTE_AND_DATA_CONSISTENCY_ONLY",
+        "certificateIssued": false,
+        "formalComplete": false,
+        "wholeP8Complete": false,
+        "wholeM3Complete": false
+      }
+    },
+    "etaleZp": {
+      "source": {
+        "schema": "MathScope.M2.ArithmeticResult/1",
+        "adapterVersion": "0.2.0-m2",
+        "kind": "arithmetic.comparison",
+        "inputHash": "10d681f0f29309feb09af783110c802def0cb4ab6f009e34cc8cf45d9fe0f9d6",
+        "resultHash": "ae9c897921fa13a1764d51394c44371c177abb92e925b85720b8f112d4d568d8",
+        "sourceHash": "744bb0a2f7402d7ac98ac120a906db4ac262e3ce51e7cdba4b144d92b0b60bbd",
+        "verification": "FRESH_M2_RECOMPUTATION",
+        "serializedAuthority": "UNTRUSTED_REQUIRES_REEXECUTION"
+      },
+      "binding": {
+        "sha256": "42ebd83a9fa78054332345bbdd0beeeba71d438ec4803299251869a669f39908",
+        "routeSha256": "b698df16ba5af131448314b90238c8b4e50db2b24f3be782b47fd7064cebd86e",
+        "sourceSha256": "9d5c3bbde6701c877bd4887127562f08bac7f348e5b67ffb3d5fffd20d38c3e1"
+      },
+      "operations": [
+        "DERIVED_REDUCTION_MOD_PN",
+        "INVERT_PRISM_IDEAL",
+        "DERIVED_FROBENIUS_FIXED_POINTS",
+        "DERIVED_INVERSE_LIMIT_OVER_N"
+      ],
+      "originalGrade": "APPLIED_EXTERNAL_THEOREM",
+      "adapterStatus": "SUPPORTED_EXTERNAL_COMPARISON",
+      "formalComplete": false,
+      "modelStatus": "MODEL DEVELOPMENT",
+      "changed": {
+        "ok": false,
+        "status": "COMPARISON_REJECTED",
+        "issues": [
+          {
+            "code": "COMPARISON_EDGE_CHANGED",
+            "edgeId": "edge:0",
+            "message": "The edge no longer has its required source, base map, ordered operation and conditions."
+          },
+          {
+            "code": "COMPARISON_DATA_CHANGED",
+            "field": "edges",
+            "message": "The edges differ from the fresh supported M2 route."
+          },
+          {
+            "code": "COMPARISON_BINDING_MISMATCH",
+            "field": "binding",
+            "message": "The binding differ from the fresh supported M2 route."
+          }
+        ],
+        "invalidEdgeIds": [
+          "edge:0"
+        ],
+        "source": {
+          "schema": "MathScope.M2.ArithmeticResult/1",
+          "adapterVersion": "0.2.0-m2",
+          "kind": "arithmetic.comparison",
+          "inputHash": "10d681f0f29309feb09af783110c802def0cb4ab6f009e34cc8cf45d9fe0f9d6",
+          "resultHash": "ae9c897921fa13a1764d51394c44371c177abb92e925b85720b8f112d4d568d8",
+          "sourceHash": "744bb0a2f7402d7ac98ac120a906db4ac262e3ce51e7cdba4b144d92b0b60bbd",
+          "verification": "FRESH_M2_RECOMPUTATION",
+          "serializedAuthority": "UNTRUSTED_REQUIRES_REEXECUTION"
+        },
+        "binding": {
+          "sha256": "42ebd83a9fa78054332345bbdd0beeeba71d438ec4803299251869a669f39908",
+          "routeSha256": "b698df16ba5af131448314b90238c8b4e50db2b24f3be782b47fd7064cebd86e",
+          "sourceSha256": "9d5c3bbde6701c877bd4887127562f08bac7f348e5b67ffb3d5fffd20d38c3e1"
+        },
+        "authority": "ROUTE_AND_DATA_CONSISTENCY_ONLY",
+        "certificateIssued": false,
+        "formalComplete": false,
+        "wholeP8Complete": false,
+        "wholeM3Complete": false
+      }
+    },
+    "deRham": {
+      "source": {
+        "schema": "MathScope.M2.ArithmeticResult/1",
+        "adapterVersion": "0.2.0-m2",
+        "kind": "arithmetic.comparison",
+        "inputHash": "8d4a77209e8f55383da56ed2dc5a460d5b09103cb6c0b0e92e1093bd71b8407f",
+        "resultHash": "618730e9df3b4268b8a2157a062db856924bf558bd7793851cd6bdbf424e38f7",
+        "sourceHash": "404a6447f1dd3d17a5c4d8dc4e5e27342d1293c6cf8a702d331ed18c20f5503e",
+        "verification": "FRESH_M2_RECOMPUTATION",
+        "serializedAuthority": "UNTRUSTED_REQUIRES_REEXECUTION"
+      },
+      "binding": {
+        "sha256": "d0294ddd7a71bc6c7b27ce5983549dd4d8ca6760c9897dee2377d74268830322",
+        "routeSha256": "beb6d4f7cf1a819281e455cee37868fd302659754f1281e45bf89e5f7b65f943",
+        "sourceSha256": "2043da7baa987ed1d845c404a2abb85a2b1d7d9235caf83e6edc9df8c2b5fd80"
+      },
+      "operations": [
+        "FROBENIUS_TWISTED_DERIVED_BASE_CHANGE_THETA",
+        "DERIVED_P_COMPLETION"
+      ],
+      "originalGrade": "APPLIED_EXTERNAL_THEOREM",
+      "adapterStatus": "SUPPORTED_EXTERNAL_COMPARISON",
+      "formalComplete": false,
+      "modelStatus": "MODEL DEVELOPMENT",
+      "changed": {
+        "ok": false,
+        "status": "COMPARISON_REJECTED",
+        "issues": [
+          {
+            "code": "COMPARISON_EDGE_CHANGED",
+            "edgeId": "edge:0",
+            "message": "The edge no longer has its required source, base map, ordered operation and conditions."
+          },
+          {
+            "code": "COMPARISON_DATA_CHANGED",
+            "field": "edges",
+            "message": "The edges differ from the fresh supported M2 route."
+          },
+          {
+            "code": "COMPARISON_BINDING_MISMATCH",
+            "field": "binding",
+            "message": "The binding differ from the fresh supported M2 route."
+          }
+        ],
+        "invalidEdgeIds": [
+          "edge:0"
+        ],
+        "source": {
+          "schema": "MathScope.M2.ArithmeticResult/1",
+          "adapterVersion": "0.2.0-m2",
+          "kind": "arithmetic.comparison",
+          "inputHash": "8d4a77209e8f55383da56ed2dc5a460d5b09103cb6c0b0e92e1093bd71b8407f",
+          "resultHash": "618730e9df3b4268b8a2157a062db856924bf558bd7793851cd6bdbf424e38f7",
+          "sourceHash": "404a6447f1dd3d17a5c4d8dc4e5e27342d1293c6cf8a702d331ed18c20f5503e",
+          "verification": "FRESH_M2_RECOMPUTATION",
+          "serializedAuthority": "UNTRUSTED_REQUIRES_REEXECUTION"
+        },
+        "binding": {
+          "sha256": "d0294ddd7a71bc6c7b27ce5983549dd4d8ca6760c9897dee2377d74268830322",
+          "routeSha256": "beb6d4f7cf1a819281e455cee37868fd302659754f1281e45bf89e5f7b65f943",
+          "sourceSha256": "2043da7baa987ed1d845c404a2abb85a2b1d7d9235caf83e6edc9df8c2b5fd80"
+        },
+        "authority": "ROUTE_AND_DATA_CONSISTENCY_ONLY",
+        "certificateIssued": false,
+        "formalComplete": false,
+        "wholeP8Complete": false,
+        "wholeM3Complete": false
+      }
+    },
+    "crystalline": {
+      "source": {
+        "schema": "MathScope.M2.ArithmeticResult/1",
+        "adapterVersion": "0.2.0-m2",
+        "kind": "arithmetic.comparison",
+        "inputHash": "a19733e76d223b9eaede29fc9e9bcb307005209c14aec6858f338fe837d0a9c1",
+        "resultHash": "19061690cb52cf12aada8eab109c9a12c3e149d2411c299cafb4d583decfcc09",
+        "sourceHash": "226038e77d03f5930d5c1c897625a2f5018813108876ff8102fff01941647d9d",
+        "verification": "FRESH_M2_RECOMPUTATION",
+        "serializedAuthority": "UNTRUSTED_REQUIRES_REEXECUTION"
+      },
+      "binding": {
+        "sha256": "3bac2df1f45c456f02f0eb2d574fd07c41e57a0eca8a4efcbc6db717b181f1a0",
+        "routeSha256": "7b6ac8256b324277c2512eb6a20fef907c94229c24a54175f1b0e59d5f6d99c7",
+        "sourceSha256": "2e7fa29421aac26e0d64ca00582f35e03c2efd3b8421555e86956dfca15cf5dd"
+      },
+      "operations": [
+        "PRISM_MAP_TO_W_K",
+        "DERIVED_P_COMPLETED_BASE_CHANGE",
+        "CRYSTALLINE_COMPARISON"
+      ],
+      "originalGrade": "APPLIED_EXTERNAL_THEOREM",
+      "adapterStatus": "SUPPORTED_EXTERNAL_COMPARISON",
+      "formalComplete": false,
+      "modelStatus": "MODEL DEVELOPMENT",
+      "changed": {
+        "ok": false,
+        "status": "COMPARISON_REJECTED",
+        "issues": [
+          {
+            "code": "COMPARISON_EDGE_CHANGED",
+            "edgeId": "edge:0",
+            "message": "The edge no longer has its required source, base map, ordered operation and conditions."
+          },
+          {
+            "code": "COMPARISON_DATA_CHANGED",
+            "field": "edges",
+            "message": "The edges differ from the fresh supported M2 route."
+          },
+          {
+            "code": "COMPARISON_BINDING_MISMATCH",
+            "field": "binding",
+            "message": "The binding differ from the fresh supported M2 route."
+          }
+        ],
+        "invalidEdgeIds": [
+          "edge:0"
+        ],
+        "source": {
+          "schema": "MathScope.M2.ArithmeticResult/1",
+          "adapterVersion": "0.2.0-m2",
+          "kind": "arithmetic.comparison",
+          "inputHash": "a19733e76d223b9eaede29fc9e9bcb307005209c14aec6858f338fe837d0a9c1",
+          "resultHash": "19061690cb52cf12aada8eab109c9a12c3e149d2411c299cafb4d583decfcc09",
+          "sourceHash": "226038e77d03f5930d5c1c897625a2f5018813108876ff8102fff01941647d9d",
+          "verification": "FRESH_M2_RECOMPUTATION",
+          "serializedAuthority": "UNTRUSTED_REQUIRES_REEXECUTION"
+        },
+        "binding": {
+          "sha256": "3bac2df1f45c456f02f0eb2d574fd07c41e57a0eca8a4efcbc6db717b181f1a0",
+          "routeSha256": "7b6ac8256b324277c2512eb6a20fef907c94229c24a54175f1b0e59d5f6d99c7",
+          "sourceSha256": "2e7fa29421aac26e0d64ca00582f35e03c2efd3b8421555e86956dfca15cf5dd"
+        },
+        "authority": "ROUTE_AND_DATA_CONSISTENCY_ONLY",
+        "certificateIssued": false,
+        "formalComplete": false,
+        "wholeP8Complete": false,
+        "wholeM3Complete": false
+      }
+    }
+  },
+  "result": {
+    "gate": "HOLD",
+    "canFreeze": false,
+    "publicationConfirmed": false
+  },
+  "verdict": "PASS_RESEARCH_SCOPE_AND_ADAPTER_GUARDS"
+}
