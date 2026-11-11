@@ -1,0 +1,140 @@
+{
+  "schema": "MathScope.N7.ActualAnnularLeadingC2Bound/1",
+  "sourceParameterSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+  "graph": {
+    "count": 1687,
+    "sha256": "ee629c030bd6e2e3d5cb3b10101b90c954ab5532396e16ca8bb858eb328efd08"
+  },
+  "sourceChecks": {
+    "actualFiniteLeadingProducer": true,
+    "actualClosedAnnulusProducer": true,
+    "exactFieldBoundMatched": true,
+    "actualHeatExteriorEtaIndependent": true,
+    "exactHeatExteriorStartsAtXb": true,
+    "actualHeatTailNotTruncated": true,
+    "sourceParameterIdentity": true,
+    "exactHeatC2Chain": true
+  },
+  "allRoots": {
+    "F0OrdinaryC2": 1679,
+    "U0OrdinaryC2": 1686,
+    "F0ActiveOrdinaryC2": 1668,
+    "F0ClosedAnnulusLogC2": 1669,
+    "F0ExteriorLogC2": 1671,
+    "physicalXConversionFactor": 1675,
+    "actualSourceR": 2,
+    "actualSourceXa": 4
+  },
+  "domain": {
+    "X": [
+      "Xa/2",
+      "2*Xb"
+    ],
+    "eta": [
+      "-1",
+      "1"
+    ]
+  },
+  "middle": {
+    "interval": [
+      "Xa",
+      "Xb"
+    ],
+    "producer": "actualStressDirectionBounds.middle.fieldRows:entire_annulus_F_mixed2",
+    "root": 1676,
+    "logNorm": "R^70",
+    "originalFastNSecondDerivativeRetained": true
+  },
+  "exterior": {
+    "definition": "After the terminal stage fo=1 and the heat cutoff=1. No B8, C12, I1 or I2 bump remains. The actual field is amplitude*X^b*H(2*(1-eta^2)/X).",
+    "originalStartRoot": 25340,
+    "originalAmplitudeRoot": 25349,
+    "originalExponentRoot": 25342,
+    "originalHeatArgumentRoot": 25304,
+    "heightMeaning": "The bound 2*C^2 applies to Aext*X^(-1-h), not to Aext alone.",
+    "heightProof": "Aext*X^(-1-h)=Etail/(sqrt(2X)*(1-rho))*(X/Xtail)^(-A). Etail<=Pstar<C, X>=Xb>=Xtail>1 and rho<1/2 imply the stated bound.",
+    "implementation": "actual-continuation-exact-heat.mjs:prepareActualFullLeadingProgram",
+    "positiveEtaIndependentAmplitude": true
+  },
+  "middleNodes": {
+    "1": {
+      "op": "rational",
+      "args": [
+        "1",
+        "1"
+      ]
+    },
+    "2": {
+      "op": "source_parameter",
+      "args": [
+        "C12EnvelopeR"
+      ]
+    },
+    "4": {
+      "op": "source_parameter",
+      "args": [
+        "Xa"
+      ]
+    },
+    "18": {
+      "op": "rational",
+      "args": [
+        "8",
+        "1"
+      ]
+    },
+    "1669": {
+      "op": "integer_power",
+      "args": [
+        2,
+        70
+      ]
+    },
+    "1672": {
+      "op": "inverse",
+      "args": [
+        4
+      ]
+    },
+    "1673": {
+      "op": "add",
+      "args": [
+        1,
+        1672
+      ]
+    },
+    "1674": {
+      "op": "integer_power",
+      "args": [
+        1673,
+        2
+      ]
+    },
+    "1675": {
+      "op": "multiply",
+      "args": [
+        18,
+        1674
+      ]
+    },
+    "1676": {
+      "op": "multiply",
+      "args": [
+        1669,
+        1675
+      ]
+    }
+  },
+  "scope": {
+    "actualEnlargedAnnulusLeadingC2Bounded": true,
+    "actualFiniteDerivativesAndGammaTail": true,
+    "fieldSampleUsedAsWholeDomainBound": false,
+    "arbitraryGlobalF0AllOrders": false,
+    "completedPositiveOrderBackgroundBoundedHere": false,
+    "actualGeneralProjectedODEBuiltHere": false,
+    "actualUniformHColumnsCertified": false,
+    "sourceUniformQStarCertified": false,
+    "originalN506Complete": false,
+    "newLeanKernelProof": false
+  }
+}

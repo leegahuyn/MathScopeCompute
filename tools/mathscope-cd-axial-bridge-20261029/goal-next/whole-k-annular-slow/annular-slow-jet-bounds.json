@@ -1,0 +1,5182 @@
+{
+  "schema": "MathScope.N7.ActualAnnularSlowFieldAtomBounds/1",
+  "pins": {
+    "atoms": "1f342570c0ac63a919441ed999860c835574299b73a2c36fb1b1c658b386876f",
+    "leading": "48b451ef4a8d95af26a5658dfd9245fb6aa955e79fc43198092644ee39466c74",
+    "envelope": "68c70a831a219b9fbf5e6202c55c8f6f27c7bca252aab3669c6125054e392117",
+    "stress3": "26bbd0d14f0218dfe0a6be2494845e6de86bb8cb23f782bccb695ba2abfee2c7",
+    "high": "091007ee09d78be9405c5b8c62dc994aa5b6dd1e6cbcbc57a0f2fb89ff06db7b",
+    "endpoint": "de578dd4f456e8ad698f33baa8302bd65af8550d53e4317589946aacc85be28f",
+    "wholeK": "af17e240150ca11452ccd5dcde5e1d2a21f5872d3a1e29a9247d75e6902e86b9"
+  },
+  "sourceRuntimeGitBlobs": {
+    "research-ide/mathscope-m2/navier/actual-leading-enlarged-c2.mjs": "fd6cde8281b2a9d76d6912db6171a04048b1c0ce",
+    "research-ide/mathscope-m2/navier/actual-continuation-arithmetic.mjs": "f3ca561413d42465b35049d6aa77a62b1497d84e",
+    "research-ide/mathscope-m1/navier/numerics.mjs": "f58ac2b0ceb55cc5d7b154f5ee692bf7b1c7197f",
+    "research-ide/mathscope-m2/navier/source-profile.mjs": "84cbf606cab6510ab61f0446f0a6fdc7a89ec006",
+    "research-ide/mathscope-m2/navier/source-profile-data.mjs": "f1559221145b5d4ce051bbdb9cb84254045c8696",
+    "research-ide/mathscope-m2/navier/actual-global-source-expressions.mjs": "854bb862276d03c236b2df73ba1bb9a61373c4df",
+    "research-ide/mathscope-m2/navier/actual-continuation-exact-heat.mjs": "c71e6ce317afddd93718e41130a454ac219f8dec",
+    "research-ide/mathscope-m2/navier/actual-continuation-exact-global.mjs": "8e8fa0c5d43bdb91be166941417e8d396e9c13f3",
+    "research-ide/mathscope-m2/navier/actual-continuation-exact-loop.mjs": "26269d0d0b7b8870f649ae124584a4f66b680025",
+    "research-ide/mathscope-m2/navier/actual-continuation-exact-b8.mjs": "725fcfdd01108295af0f53f01bf54b8823aaaedb",
+    "research-ide/mathscope-m2/navier/actual-continuation-exact-b8-data.mjs": "054fb691d4ea2a3c70c27ab384fdc40137ee86f4",
+    "research-ide/mathscope-m2/navier/actual-continuation-exact-pregluing.mjs": "4cf5974a107e746c03dea103e6832767027fcaed",
+    "research-ide/mathscope-m2/navier/actual-continuation-exact-functions.mjs": "1684bc230b42b766821c633ee3fb961198aa616c",
+    "research-ide/mathscope-m2/navier/actual-continuation-exact-tail.mjs": "b490d2528927775e8ceb543d6d76388d8226f4fa",
+    "research-ide/mathscope-m2/navier/actual-continuation-exact-core.mjs": "b877d5962a6051cf4fe48eef575c8ad31fb5de1a",
+    "research-ide/mathscope-m2/navier/actual-global-source-outer.mjs": "f8097860af5514eaa0b0dbad6ac2086277047f16",
+    "research-ide/mathscope-m2/navier/actual-mean-stress.mjs": "08169700aef1f2c221c24e83914b99f3d1dd7dba",
+    "research-ide/mathscope-m2/navier/actual-stress-direction-bounds.mjs": "33f65ad39a1feabbaaddab6da6bcc60de0d1b840",
+    "research-ide/mathscope-m2/navier/actual-stress-direction-program.mjs": "e049a0a233587f4af305f3937c692735351078d0",
+    "research-ide/mathscope-m2/navier/actual-leading-high-jets.mjs": "db9516b944d5ec35c146903c3ee4a98b05f8d696",
+    "research-ide/mathscope-m2/navier/actual-leading-high-jets-arithmetic.mjs": "852506d0b7ccbc498d0da2216c1b746790c850ae",
+    "research-ide/mathscope-m2/navier/actual-leading-all-order-jets.mjs": "221e1923bd615dddfa2d32b161d000feb57de2b6",
+    "research-ide/mathscope-m2/navier/actual-leading-all-order-jets-arithmetic.mjs": "c5219fdcb1aef4a4794314f990b8e0cd65cf2742",
+    "research-ide/mathscope-m2/navier/actual-residual-order-induction-kernels.mjs": "4c05e4d071378771c9818b5a6dbbafcaa2ab36b1"
+  },
+  "domain": "original whole K, Xa<=X<=Xb, |eta|<=3/4, 1/2<=rho<=1, all theta",
+  "operatorTransfer": {
+    "verifiedEntries": 9,
+    "coordinates": [
+      "s",
+      "z",
+      "tau"
+    ],
+    "profile": [
+      "log(q)",
+      "X",
+      "eta"
+    ],
+    "radialCoordinateSpecialization": "set Lambda=1 in the checked chart identity s=2*q*Y/Lambda",
+    "jacobianLowerBound": "503/512"
+  },
+  "radialTransfer": "formal Laurent bound |X^k|<=Rstar^(2*abs(k)), (2*X)^-1/2<=Rstar, r<=Rstar*sqrt(tau0)",
+  "sourceFields": "actual axisymmetric slow/background gauge and pressure; wave/mean corrections excluded",
+  "leadingSource": {
+    "sourceBlobs": {
+      "actual-covariance-sensitivity.mjs": "e7e3d31bd83f321bb3006121059e5bfc842ad378",
+      "actual-leading-all-order-jets.mjs": "221e1923bd615dddfa2d32b161d000feb57de2b6",
+      "actual-continuation-exact-core.mjs": "b877d5962a6051cf4fe48eef575c8ad31fb5de1a"
+    },
+    "graphNodesChecked": 34,
+    "F0": 117100,
+    "U0": 117101,
+    "M0": 9239,
+    "pressure": 617757,
+    "axisDatumP0": 3451,
+    "pressurePrefix": 617756,
+    "pressureBinder": 617752,
+    "pressureIntegrand": "(actual F0 at [binder,eta])^2",
+    "pressureNormalization": "original A.21 datum plus exact radial prefix, no adjustable constant",
+    "F0AnnularOrdinaryBound": "32*Rstar^74",
+    "middleNativeRoot": 1676,
+    "physicalConversionRoot": 1675,
+    "Rstar": "C12EnvelopeR",
+    "annularBounds": [
+      "Xa^-1<=Rstar^2",
+      "4*Xb<=Rstar^2"
+    ],
+    "sourceLeadingStream": {
+      "actualIntegral": 136746,
+      "sourceU": 9236,
+      "sourceM": 9239,
+      "massExterior": {
+        "source": 9239,
+        "endpoint": 3293,
+        "reduced": {
+          "source": 9239,
+          "value": 0,
+          "trace": [
+            {
+              "node": 5148,
+              "selectedBranch": 5,
+              "sourceBranch": 0,
+              "value": 0
+            },
+            {
+              "node": 5173,
+              "selectedBranch": 5,
+              "sourceBranch": 5148,
+              "value": 0
+            },
+            {
+              "node": 5293,
+              "selectedBranch": 5,
+              "sourceBranch": 5173,
+              "value": 0
+            },
+            {
+              "node": 9239,
+              "selectedBranch": 5,
+              "sourceBranch": 5293,
+              "value": 0
+            }
+          ],
+          "visits": 4,
+          "literalIntegralBodiesPreserved": true,
+          "branchInequalitiesAuthenticated": false,
+          "sourceAuthenticated": false
+        },
+        "zero": {
+          "original": 0,
+          "value": 0,
+          "trace": [],
+          "nonzeroCompactPrimitiveReplaced": false
+        },
+        "reason": "All selected source endpoints are earlier by the private original ordering proof. Integrals keep their accumulated value unless the original source already supplies a moment-closed zero branch.",
+        "pass": true
+      },
+      "axis": "The source-bound leading M0 proof retains M0=X*(Ustar+natural_average/Lambda) at the regular axis, so M0(0)=0 without evaluating M0/X there.",
+      "theorem": "The actual global M0_X=U0 and its checked original zero exterior give integral_0^Xv U0 dX=M0(Xv)-M0(0)=0.",
+      "pass": true
+    },
+    "normalizedPressureBounds": {
+      "value": "5*K + Rstar^2*L_F^2 + 2^10*Rstar^150",
+      "X": "2^10*Rstar^148",
+      "eta": "160*K + 2*Rstar^2*L_F^2 + 2^11*Rstar^150"
+    }
+  },
+  "sourceNormFactors": {
+    "L_U": 197828,
+    "L_F": 80391,
+    "L_FGraphSHA256": "5e58852fc00d6161eeefdbc2b0881d1dc87c2bcc58c2f17333114c01cc5769d1",
+    "K": "original Pstar^2",
+    "canonical": {
+      "1,0": 137401,
+      "1,1": 137416,
+      "2,0": 163558,
+      "2,1": 163574,
+      "2,2": 163605,
+      "3,0": 212757,
+      "3,1": 212775,
+      "3,2": 212806,
+      "3,3": 212860
+    },
+    "unabsorbed": {
+      "1,2,StreamOverR": 212882,
+      "1,2,E": 212886,
+      "1,3,StreamOverR": 212893,
+      "2,3,StreamOverR": 212905
+    }
+  },
+  "scalarIntervals": {
+    "a@0,0,0": {
+      "tau0ReciprocalPower": "h + 1/2",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 0,
+          "coefficient": "1"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 1,
+          "coefficient": "2"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "1"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 1,
+          "coefficient": "1/2"
+        }
+      ]
+    },
+    "a@0,0,1": {
+      "tau0ReciprocalPower": "h + 3/2",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 0,
+          "coefficient": "912/503"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 2,
+          "coefficient": "512/503"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 1,
+          "coefficient": "2848/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 3,
+          "coefficient": "2048/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "1424/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "1024/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 1,
+          "coefficient": "712/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 3,
+          "coefficient": "512/503"
+        }
+      ]
+    },
+    "a@0,1,0": {
+      "tau0ReciprocalPower": "1",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 0,
+          "coefficient": "1964/503"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 2,
+          "coefficient": "384/503"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 1,
+          "coefficient": "4696/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 3,
+          "coefficient": "1536/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "2348/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "768/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 1,
+          "coefficient": "1174/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 3,
+          "coefficient": "384/503"
+        }
+      ]
+    },
+    "a@0,1,1": {
+      "tau0ReciprocalPower": "2",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 0,
+          "coefficient": "891424768/127263527"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 2,
+          "coefficient": "738156032/127263527"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 4,
+          "coefficient": "262144/253009"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "7688192/253009"
+        },
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "8425472/253009"
+        },
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "3145728/253009"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 1,
+          "coefficient": "1136690176/127263527"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 3,
+          "coefficient": "1610612736/127263527"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "1535135232/127263527"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "1864809472/127263527"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "786432/253009"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 1,
+          "coefficient": "767567616/127263527"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 3,
+          "coefficient": "932404736/127263527"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 5,
+          "coefficient": "393216/253009"
+        }
+      ]
+    },
+    "a@0,2,0": {
+      "tau0ReciprocalPower": "3/2 - h",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 0,
+          "coefficient": "5840616448/127263527"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 2,
+          "coefficient": "1848983552/127263527"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 4,
+          "coefficient": "393216/253009"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "43655168/253009"
+        },
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "28704768/253009"
+        },
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "4718592/253009"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 1,
+          "coefficient": "4790521856/127263527"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 3,
+          "coefficient": "1342177280/127263527"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "7884898304/127263527"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "4280713216/127263527"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "1179648/253009"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 1,
+          "coefficient": "3942449152/127263527"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 3,
+          "coefficient": "2140356608/127263527"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 5,
+          "coefficient": "589824/253009"
+        }
+      ]
+    },
+    "a@0,3,0": {
+      "tau0ReciprocalPower": "2 - 2*h",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 0,
+          "coefficient": "10991006647386112/32198817702743"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 2,
+          "coefficient": "4998617784692736/32198817702743"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 4,
+          "coefficient": "1677717405696/64013554081"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 6,
+          "coefficient": "226492416/127263527"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "58147951607808/64013554081"
+        },
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "39841324597248/64013554081"
+        },
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "6184752906240/64013554081"
+        },
+        {
+          "factor": "H_212893*tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "101978472448/127263527"
+        },
+        {
+          "factor": "H_212893*tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "100581507072/127263527"
+        },
+        {
+          "factor": "H_212893*tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "33067892736/127263527"
+        },
+        {
+          "factor": "H_212893*tau0^(2*h)",
+          "RstarPower": 7,
+          "coefficient": "3623878656/127263527"
+        },
+        {
+          "factor": "H_212905*tau0^(4*h)",
+          "RstarPower": 1,
+          "coefficient": "101978472448/127263527"
+        },
+        {
+          "factor": "H_212905*tau0^(4*h)",
+          "RstarPower": 3,
+          "coefficient": "100581507072/127263527"
+        },
+        {
+          "factor": "H_212905*tau0^(4*h)",
+          "RstarPower": 5,
+          "coefficient": "33067892736/127263527"
+        },
+        {
+          "factor": "H_212905*tau0^(4*h)",
+          "RstarPower": 7,
+          "coefficient": "3623878656/127263527"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 1,
+          "coefficient": "3678225383866368/32198817702743"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 3,
+          "coefficient": "2611202712846336/32198817702743"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "9151217606615040/32198817702743"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "6315647924527104/32198817702743"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "1546188226560/64013554081"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 1,
+          "coefficient": "7800792720257024/32198817702743"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 3,
+          "coefficient": "6338827277611008/32198817702743"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 5,
+          "coefficient": "2852237869056/64013554081"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 7,
+          "coefficient": "452984832/127263527"
+        }
+      ]
+    },
+    "a@1,0,0": {
+      "tau0ReciprocalPower": "h + 3/2",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 0,
+          "coefficient": "1/2"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 1,
+          "coefficient": "2"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 3,
+          "coefficient": "1"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "1"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "1/2"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 1,
+          "coefficient": "1/2"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 3,
+          "coefficient": "1/4"
+        }
+      ]
+    },
+    "a@1,0,1": {
+      "tau0ReciprocalPower": "h + 5/2",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 0,
+          "coefficient": "968/503"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 2,
+          "coefficient": "1024/1509"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "5632/503"
+        },
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "4096/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 1,
+          "coefficient": "1056/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 3,
+          "coefficient": "1424/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "1936/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "1736/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 1,
+          "coefficient": "968/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 3,
+          "coefficient": "868/503"
+        }
+      ]
+    },
+    "a@1,1,0": {
+      "tau0ReciprocalPower": "2",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 0,
+          "coefficient": "1366/503"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 2,
+          "coefficient": "256/503"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "9344/503"
+        },
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "3072/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 1,
+          "coefficient": "792/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 3,
+          "coefficient": "2348/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "2732/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "1942/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 1,
+          "coefficient": "1366/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 3,
+          "coefficient": "971/503"
+        }
+      ]
+    },
+    "a@1,2,0": {
+      "tau0ReciprocalPower": "5/2 - h",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 0,
+          "coefficient": "4748631040/127263527"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 2,
+          "coefficient": "4905926656/381790581"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 4,
+          "coefficient": "294912/253009"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "15015608320/127263527"
+        },
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "17287507968/127263527"
+        },
+        {
+          "factor": "H_212893*tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "43655168/253009"
+        },
+        {
+          "factor": "H_212893*tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "28704768/253009"
+        },
+        {
+          "factor": "H_212893*tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "4718592/253009"
+        },
+        {
+          "factor": "H_212905*tau0^(4*h)",
+          "RstarPower": 1,
+          "coefficient": "43655168/253009"
+        },
+        {
+          "factor": "H_212905*tau0^(4*h)",
+          "RstarPower": 3,
+          "coefficient": "28704768/253009"
+        },
+        {
+          "factor": "H_212905*tau0^(4*h)",
+          "RstarPower": 5,
+          "coefficient": "4718592/253009"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 1,
+          "coefficient": "689963008/127263527"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 3,
+          "coefficient": "2395260928/127263527"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "4098883584/127263527"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "5519507456/127263527"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 1,
+          "coefficient": "4794260480/127263527"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 3,
+          "coefficient": "4564566016/127263527"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 5,
+          "coefficient": "589824/253009"
+        }
+      ]
+    },
+    "a@2,0,0": {
+      "tau0ReciprocalPower": "h + 5/2",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 0,
+          "coefficient": "1/3"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "4"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 3,
+          "coefficient": "2"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 5,
+          "coefficient": "3/2"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "1"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "1"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "3/4"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 1,
+          "coefficient": "1/2"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 3,
+          "coefficient": "1/2"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 5,
+          "coefficient": "3/8"
+        }
+      ]
+    },
+    "a@2,1,0": {
+      "tau0ReciprocalPower": "3",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 0,
+          "coefficient": "3500/1509"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 2,
+          "coefficient": "192/503"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "3120/503"
+        },
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "9344/503"
+        },
+        {
+          "factor": "H_212893*tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "9344/503"
+        },
+        {
+          "factor": "H_212893*tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "3072/503"
+        },
+        {
+          "factor": "H_212905*tau0^(4*h)",
+          "RstarPower": 1,
+          "coefficient": "9344/503"
+        },
+        {
+          "factor": "H_212905*tau0^(4*h)",
+          "RstarPower": 3,
+          "coefficient": "3072/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 3,
+          "coefficient": "408/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 5,
+          "coefficient": "3522/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "780/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "2540/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "1761/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 1,
+          "coefficient": "1558/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 3,
+          "coefficient": "1654/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 5,
+          "coefficient": "1761/1006"
+        }
+      ]
+    },
+    "a@3,0,0": {
+      "tau0ReciprocalPower": "h + 7/2",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 0,
+          "coefficient": "1/4"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "6"
+        },
+        {
+          "factor": "H_212893*tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "4"
+        },
+        {
+          "factor": "H_212905*tau0^(4*h)",
+          "RstarPower": 1,
+          "coefficient": "4"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 5,
+          "coefficient": "9/2"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 7,
+          "coefficient": "15/4"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "3/2"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "9/4"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 7,
+          "coefficient": "15/8"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 1,
+          "coefficient": "1/2"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 3,
+          "coefficient": "3/4"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 5,
+          "coefficient": "9/8"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 7,
+          "coefficient": "15/16"
+        }
+      ]
+    },
+    "b@0,0,0": {
+      "tau0ReciprocalPower": "h + 1",
+      "leadingTerms": [
+        {
+          "factor": "1",
+          "RstarPower": 74,
+          "coefficient": "128"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 1,
+          "coefficient": "4"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "2"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 1,
+          "coefficient": "1"
+        }
+      ]
+    },
+    "b@0,0,1": {
+      "tau0ReciprocalPower": "h + 2",
+      "leadingTerms": [
+        {
+          "factor": "1",
+          "RstarPower": 74,
+          "coefficient": "182272/503"
+        },
+        {
+          "factor": "1",
+          "RstarPower": 76,
+          "coefficient": "131072/503"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 1,
+          "coefficient": "7744/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 3,
+          "coefficient": "4096/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "3872/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "2048/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 1,
+          "coefficient": "1936/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 3,
+          "coefficient": "1024/503"
+        }
+      ]
+    },
+    "b@0,1,0": {
+      "tau0ReciprocalPower": "3/2",
+      "leadingTerms": [
+        {
+          "factor": "1",
+          "RstarPower": 74,
+          "coefficient": "300544/503"
+        },
+        {
+          "factor": "1",
+          "RstarPower": 76,
+          "coefficient": "98304/503"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 1,
+          "coefficient": "10928/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 3,
+          "coefficient": "3072/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "5464/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "1536/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 1,
+          "coefficient": "2732/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 3,
+          "coefficient": "768/503"
+        }
+      ]
+    },
+    "b@0,2,0": {
+      "tau0ReciprocalPower": "2 - h",
+      "leadingTerms": [
+        {
+          "factor": "1",
+          "RstarPower": 74,
+          "coefficient": "478136893440/127263527"
+        },
+        {
+          "factor": "1",
+          "RstarPower": 76,
+          "coefficient": "275324600320/127263527"
+        },
+        {
+          "factor": "1",
+          "RstarPower": 78,
+          "coefficient": "75497472/253009"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "H_212886*tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "43655168/253009"
+        },
+        {
+          "factor": "H_212886*tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "28704768/253009"
+        },
+        {
+          "factor": "H_212886*tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "4718592/253009"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 1,
+          "coefficient": "8076658688/127263527"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 3,
+          "coefficient": "2550136832/127263527"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "9527966720/127263527"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "4884692992/127263527"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "1179648/253009"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 1,
+          "coefficient": "4763983360/127263527"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 3,
+          "coefficient": "2442346496/127263527"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 5,
+          "coefficient": "589824/253009"
+        }
+      ]
+    },
+    "b@1,0,0": {
+      "tau0ReciprocalPower": "h + 2",
+      "leadingTerms": [
+        {
+          "factor": "1",
+          "RstarPower": 74,
+          "coefficient": "128"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 1,
+          "coefficient": "4"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 3,
+          "coefficient": "2"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "2"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "1"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 1,
+          "coefficient": "1"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 3,
+          "coefficient": "1/2"
+        }
+      ]
+    },
+    "b@2,0,0": {
+      "tau0ReciprocalPower": "h + 3",
+      "leadingTerms": [
+        {
+          "factor": "1",
+          "RstarPower": 74,
+          "coefficient": "128"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "H_212886*tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "8"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 3,
+          "coefficient": "4"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 5,
+          "coefficient": "3"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "2"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "2"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "3/2"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 1,
+          "coefficient": "1"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 3,
+          "coefficient": "1"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 5,
+          "coefficient": "3/4"
+        }
+      ]
+    },
+    "p_loc@0,0,0": {
+      "tau0ReciprocalPower": "2*h + 1",
+      "leadingTerms": [
+        {
+          "factor": "1",
+          "RstarPower": 150,
+          "coefficient": "4096"
+        },
+        {
+          "factor": "K",
+          "RstarPower": 0,
+          "coefficient": "20"
+        },
+        {
+          "factor": "L_F^2",
+          "RstarPower": 2,
+          "coefficient": "4"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 0,
+          "coefficient": "4"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 0,
+          "coefficient": "2"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 0,
+          "coefficient": "1"
+        }
+      ]
+    },
+    "p_loc@0,1,0": {
+      "tau0ReciprocalPower": "h + 3/2",
+      "leadingTerms": [
+        {
+          "factor": "1",
+          "RstarPower": 150,
+          "coefficient": "19234816/503"
+        },
+        {
+          "factor": "K",
+          "RstarPower": 0,
+          "coefficient": "1019360/503"
+        },
+        {
+          "factor": "L_F^2",
+          "RstarPower": 2,
+          "coefficient": "15712/503"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 0,
+          "coefficient": "12512/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 2,
+          "coefficient": "3072/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 0,
+          "coefficient": "6256/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 2,
+          "coefficient": "1536/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 0,
+          "coefficient": "3128/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 2,
+          "coefficient": "768/503"
+        }
+      ]
+    },
+    "p_loc@1,0,0": {
+      "tau0ReciprocalPower": "2*h + 2",
+      "leadingTerms": [
+        {
+          "factor": "1",
+          "RstarPower": 148,
+          "coefficient": "4096"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 0,
+          "coefficient": "4"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 0,
+          "coefficient": "2"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 0,
+          "coefficient": "1"
+        }
+      ]
+    }
+  },
+  "slowFieldAtomIntervals": {
+    "A0@0,0,0,0": {
+      "tau0ReciprocalPower": "h",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 1,
+          "coefficient": "1"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 2,
+          "coefficient": "2"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 2,
+          "coefficient": "1"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 2,
+          "coefficient": "1/2"
+        }
+      ]
+    },
+    "A0@0,0,0,1": {
+      "tau0ReciprocalPower": "h + 1",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 1,
+          "coefficient": "912/503"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 3,
+          "coefficient": "512/503"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 2,
+          "coefficient": "2848/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 4,
+          "coefficient": "2048/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 2,
+          "coefficient": "1424/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 4,
+          "coefficient": "1024/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 2,
+          "coefficient": "712/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 4,
+          "coefficient": "512/503"
+        }
+      ]
+    },
+    "A0@0,0,1,0": {
+      "tau0ReciprocalPower": "1/2",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 1,
+          "coefficient": "1964/503"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 3,
+          "coefficient": "384/503"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 2,
+          "coefficient": "4696/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 4,
+          "coefficient": "1536/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 2,
+          "coefficient": "2348/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 4,
+          "coefficient": "768/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 2,
+          "coefficient": "1174/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 4,
+          "coefficient": "384/503"
+        }
+      ]
+    },
+    "A0@0,0,1,1": {
+      "tau0ReciprocalPower": "3/2",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 1,
+          "coefficient": "891424768/127263527"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 3,
+          "coefficient": "738156032/127263527"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 5,
+          "coefficient": "262144/253009"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 2,
+          "coefficient": "7688192/253009"
+        },
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 4,
+          "coefficient": "8425472/253009"
+        },
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 6,
+          "coefficient": "3145728/253009"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 2,
+          "coefficient": "1136690176/127263527"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 4,
+          "coefficient": "1610612736/127263527"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 2,
+          "coefficient": "1535135232/127263527"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 4,
+          "coefficient": "1864809472/127263527"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 6,
+          "coefficient": "786432/253009"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 2,
+          "coefficient": "767567616/127263527"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 4,
+          "coefficient": "932404736/127263527"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 6,
+          "coefficient": "393216/253009"
+        }
+      ]
+    },
+    "A0@0,0,2,0": {
+      "tau0ReciprocalPower": "1 - h",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 1,
+          "coefficient": "5840616448/127263527"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 3,
+          "coefficient": "1848983552/127263527"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 5,
+          "coefficient": "393216/253009"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 2,
+          "coefficient": "43655168/253009"
+        },
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 4,
+          "coefficient": "28704768/253009"
+        },
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 6,
+          "coefficient": "4718592/253009"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 2,
+          "coefficient": "4790521856/127263527"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 4,
+          "coefficient": "1342177280/127263527"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 2,
+          "coefficient": "7884898304/127263527"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 4,
+          "coefficient": "4280713216/127263527"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 6,
+          "coefficient": "1179648/253009"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 2,
+          "coefficient": "3942449152/127263527"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 4,
+          "coefficient": "2140356608/127263527"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 6,
+          "coefficient": "589824/253009"
+        }
+      ]
+    },
+    "A0@0,0,3,0": {
+      "tau0ReciprocalPower": "3/2 - 2*h",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 1,
+          "coefficient": "10991006647386112/32198817702743"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 3,
+          "coefficient": "4998617784692736/32198817702743"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 5,
+          "coefficient": "1677717405696/64013554081"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 7,
+          "coefficient": "226492416/127263527"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 2,
+          "coefficient": "58147951607808/64013554081"
+        },
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 4,
+          "coefficient": "39841324597248/64013554081"
+        },
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 6,
+          "coefficient": "6184752906240/64013554081"
+        },
+        {
+          "factor": "H_212893*tau0^(2*h)",
+          "RstarPower": 2,
+          "coefficient": "101978472448/127263527"
+        },
+        {
+          "factor": "H_212893*tau0^(2*h)",
+          "RstarPower": 4,
+          "coefficient": "100581507072/127263527"
+        },
+        {
+          "factor": "H_212893*tau0^(2*h)",
+          "RstarPower": 6,
+          "coefficient": "33067892736/127263527"
+        },
+        {
+          "factor": "H_212893*tau0^(2*h)",
+          "RstarPower": 8,
+          "coefficient": "3623878656/127263527"
+        },
+        {
+          "factor": "H_212905*tau0^(4*h)",
+          "RstarPower": 2,
+          "coefficient": "101978472448/127263527"
+        },
+        {
+          "factor": "H_212905*tau0^(4*h)",
+          "RstarPower": 4,
+          "coefficient": "100581507072/127263527"
+        },
+        {
+          "factor": "H_212905*tau0^(4*h)",
+          "RstarPower": 6,
+          "coefficient": "33067892736/127263527"
+        },
+        {
+          "factor": "H_212905*tau0^(4*h)",
+          "RstarPower": 8,
+          "coefficient": "3623878656/127263527"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 2,
+          "coefficient": "3678225383866368/32198817702743"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 4,
+          "coefficient": "2611202712846336/32198817702743"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 2,
+          "coefficient": "9151217606615040/32198817702743"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 4,
+          "coefficient": "6315647924527104/32198817702743"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 6,
+          "coefficient": "1546188226560/64013554081"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 2,
+          "coefficient": "7800792720257024/32198817702743"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 4,
+          "coefficient": "6338827277611008/32198817702743"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 6,
+          "coefficient": "2852237869056/64013554081"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 8,
+          "coefficient": "452984832/127263527"
+        }
+      ]
+    },
+    "A0@0,1,0,0": {
+      "tau0ReciprocalPower": "h + 1/2",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 0,
+          "coefficient": "1"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 2,
+          "coefficient": "1"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 1,
+          "coefficient": "2"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 3,
+          "coefficient": "4"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 5,
+          "coefficient": "2"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "1"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "2"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "1"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 1,
+          "coefficient": "1/2"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 3,
+          "coefficient": "1"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 5,
+          "coefficient": "1/2"
+        }
+      ]
+    },
+    "A0@0,1,0,1": {
+      "tau0ReciprocalPower": "h + 3/2",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 0,
+          "coefficient": "912/503"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 2,
+          "coefficient": "2448/503"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 4,
+          "coefficient": "2048/1509"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "11264/503"
+        },
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "8192/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 1,
+          "coefficient": "2848/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 3,
+          "coefficient": "4160/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 5,
+          "coefficient": "2848/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "1424/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "4896/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "3472/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 1,
+          "coefficient": "712/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 3,
+          "coefficient": "2448/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 5,
+          "coefficient": "1736/503"
+        }
+      ]
+    },
+    "A0@0,1,1,0": {
+      "tau0ReciprocalPower": "1",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 0,
+          "coefficient": "1964/503"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 2,
+          "coefficient": "3116/503"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 4,
+          "coefficient": "512/503"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "18688/503"
+        },
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "6144/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 1,
+          "coefficient": "4696/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 3,
+          "coefficient": "3120/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 5,
+          "coefficient": "4696/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "2348/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "6232/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "3884/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 1,
+          "coefficient": "1174/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 3,
+          "coefficient": "3116/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 5,
+          "coefficient": "1942/503"
+        }
+      ]
+    },
+    "A0@0,1,2,0": {
+      "tau0ReciprocalPower": "3/2 - h",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 0,
+          "coefficient": "5840616448/127263527"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 2,
+          "coefficient": "11346245632/127263527"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 4,
+          "coefficient": "10405216256/381790581"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 6,
+          "coefficient": "589824/253009"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "43655168/253009"
+        },
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "44469714944/127263527"
+        },
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "36948467712/127263527"
+        },
+        {
+          "factor": "H_212893*tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "87310336/253009"
+        },
+        {
+          "factor": "H_212893*tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "57409536/253009"
+        },
+        {
+          "factor": "H_212893*tau0^(2*h)",
+          "RstarPower": 7,
+          "coefficient": "9437184/253009"
+        },
+        {
+          "factor": "H_212905*tau0^(4*h)",
+          "RstarPower": 3,
+          "coefficient": "87310336/253009"
+        },
+        {
+          "factor": "H_212905*tau0^(4*h)",
+          "RstarPower": 5,
+          "coefficient": "57409536/253009"
+        },
+        {
+          "factor": "H_212905*tau0^(4*h)",
+          "RstarPower": 7,
+          "coefficient": "9437184/253009"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 1,
+          "coefficient": "4790521856/127263527"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 3,
+          "coefficient": "2722103296/127263527"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 5,
+          "coefficient": "4790521856/127263527"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "7884898304/127263527"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "12478480384/127263527"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "11632377856/127263527"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 1,
+          "coefficient": "3942449152/127263527"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 3,
+          "coefficient": "11728877568/127263527"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 5,
+          "coefficient": "9425813504/127263527"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 7,
+          "coefficient": "1179648/253009"
+        }
+      ]
+    },
+    "A0@0,2,0,0": {
+      "tau0ReciprocalPower": "h + 1",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 1,
+          "coefficient": "3"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 3,
+          "coefficient": "4/3"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 4,
+          "coefficient": "16"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 2,
+          "coefficient": "12"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 4,
+          "coefficient": "6"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 6,
+          "coefficient": "8"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 8,
+          "coefficient": "6"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 2,
+          "coefficient": "6"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 4,
+          "coefficient": "7"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 6,
+          "coefficient": "4"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 8,
+          "coefficient": "3"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 2,
+          "coefficient": "3"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 4,
+          "coefficient": "7/2"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 6,
+          "coefficient": "2"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 8,
+          "coefficient": "3/2"
+        }
+      ]
+    },
+    "A0@0,2,1,0": {
+      "tau0ReciprocalPower": "3/2",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 1,
+          "coefficient": "8196/503"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 3,
+          "coefficient": "18608/1509"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 5,
+          "coefficient": "768/503"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 2,
+          "coefficient": "56064/503"
+        },
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 4,
+          "coefficient": "30912/503"
+        },
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 6,
+          "coefficient": "37376/503"
+        },
+        {
+          "factor": "H_212893*tau0^(2*h)",
+          "RstarPower": 4,
+          "coefficient": "37376/503"
+        },
+        {
+          "factor": "H_212893*tau0^(2*h)",
+          "RstarPower": 6,
+          "coefficient": "12288/503"
+        },
+        {
+          "factor": "H_212905*tau0^(4*h)",
+          "RstarPower": 4,
+          "coefficient": "37376/503"
+        },
+        {
+          "factor": "H_212905*tau0^(4*h)",
+          "RstarPower": 6,
+          "coefficient": "12288/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 2,
+          "coefficient": "4752/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 4,
+          "coefficient": "14088/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 6,
+          "coefficient": "1632/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 8,
+          "coefficient": "14088/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 2,
+          "coefficient": "16392/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 4,
+          "coefficient": "14772/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 6,
+          "coefficient": "10160/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 8,
+          "coefficient": "7044/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 2,
+          "coefficient": "8196/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 4,
+          "coefficient": "12058/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 6,
+          "coefficient": "6616/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 8,
+          "coefficient": "3522/503"
+        }
+      ]
+    },
+    "A0@0,3,0,0": {
+      "tau0ReciprocalPower": "h + 3/2",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 0,
+          "coefficient": "3"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 2,
+          "coefficient": "8"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 4,
+          "coefficient": "2"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "96"
+        },
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 7,
+          "coefficient": "48"
+        },
+        {
+          "factor": "H_212893*tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "32"
+        },
+        {
+          "factor": "H_212905*tau0^(4*h)",
+          "RstarPower": 5,
+          "coefficient": "32"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 1,
+          "coefficient": "12"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 3,
+          "coefficient": "6"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 5,
+          "coefficient": "48"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 7,
+          "coefficient": "36"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 9,
+          "coefficient": "36"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 11,
+          "coefficient": "30"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "6"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "27"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "24"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 7,
+          "coefficient": "30"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 9,
+          "coefficient": "18"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 11,
+          "coefficient": "15"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 1,
+          "coefficient": "3"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 3,
+          "coefficient": "27/2"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 5,
+          "coefficient": "16"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 7,
+          "coefficient": "15"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 9,
+          "coefficient": "9"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 11,
+          "coefficient": "15/2"
+        }
+      ]
+    },
+    "A0@1,0,0,0": {
+      "tau0ReciprocalPower": "h + 1/2",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 2,
+          "coefficient": "1"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 3,
+          "coefficient": "4"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 5,
+          "coefficient": "2"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "2"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "1"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 3,
+          "coefficient": "1"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 5,
+          "coefficient": "1/2"
+        }
+      ]
+    },
+    "A0@1,0,1,0": {
+      "tau0ReciprocalPower": "1",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 2,
+          "coefficient": "2732/503"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 4,
+          "coefficient": "512/503"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "18688/503"
+        },
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "6144/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 3,
+          "coefficient": "1584/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 5,
+          "coefficient": "4696/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "5464/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "3884/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 3,
+          "coefficient": "2732/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 5,
+          "coefficient": "1942/503"
+        }
+      ]
+    },
+    "A0@1,1,0,0": {
+      "tau0ReciprocalPower": "h + 1",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 1,
+          "coefficient": "1"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 3,
+          "coefficient": "4/3"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 4,
+          "coefficient": "16"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 2,
+          "coefficient": "4"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 4,
+          "coefficient": "2"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 6,
+          "coefficient": "8"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 8,
+          "coefficient": "6"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 2,
+          "coefficient": "2"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 4,
+          "coefficient": "5"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 6,
+          "coefficient": "4"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 8,
+          "coefficient": "3"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 2,
+          "coefficient": "1"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 4,
+          "coefficient": "5/2"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 6,
+          "coefficient": "2"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 8,
+          "coefficient": "3/2"
+        }
+      ]
+    },
+    "A0@2,0,0,0": {
+      "tau0ReciprocalPower": "h + 1",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 1,
+          "coefficient": "1"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 3,
+          "coefficient": "4/3"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 4,
+          "coefficient": "16"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 2,
+          "coefficient": "4"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 4,
+          "coefficient": "2"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 6,
+          "coefficient": "8"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 8,
+          "coefficient": "6"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 2,
+          "coefficient": "2"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 4,
+          "coefficient": "5"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 6,
+          "coefficient": "4"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 8,
+          "coefficient": "3"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 2,
+          "coefficient": "1"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 4,
+          "coefficient": "5/2"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 6,
+          "coefficient": "2"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 8,
+          "coefficient": "3/2"
+        }
+      ]
+    },
+    "A0@2,0,1,0": {
+      "tau0ReciprocalPower": "3/2",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 1,
+          "coefficient": "2732/503"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 3,
+          "coefficient": "15536/1509"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 5,
+          "coefficient": "768/503"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 2,
+          "coefficient": "18688/503"
+        },
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 4,
+          "coefficient": "18624/503"
+        },
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 6,
+          "coefficient": "37376/503"
+        },
+        {
+          "factor": "H_212893*tau0^(2*h)",
+          "RstarPower": 4,
+          "coefficient": "37376/503"
+        },
+        {
+          "factor": "H_212893*tau0^(2*h)",
+          "RstarPower": 6,
+          "coefficient": "12288/503"
+        },
+        {
+          "factor": "H_212905*tau0^(4*h)",
+          "RstarPower": 4,
+          "coefficient": "37376/503"
+        },
+        {
+          "factor": "H_212905*tau0^(4*h)",
+          "RstarPower": 6,
+          "coefficient": "12288/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 2,
+          "coefficient": "1584/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 4,
+          "coefficient": "4696/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 6,
+          "coefficient": "1632/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 8,
+          "coefficient": "14088/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 2,
+          "coefficient": "5464/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 4,
+          "coefficient": "7004/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 6,
+          "coefficient": "10160/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 8,
+          "coefficient": "7044/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 2,
+          "coefficient": "2732/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 4,
+          "coefficient": "8174/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 6,
+          "coefficient": "6616/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 8,
+          "coefficient": "3522/503"
+        }
+      ]
+    },
+    "A0@2,1,0,0": {
+      "tau0ReciprocalPower": "h + 3/2",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 0,
+          "coefficient": "1"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 2,
+          "coefficient": "8/3"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 4,
+          "coefficient": "2"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "32"
+        },
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 7,
+          "coefficient": "48"
+        },
+        {
+          "factor": "H_212893*tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "32"
+        },
+        {
+          "factor": "H_212905*tau0^(4*h)",
+          "RstarPower": 5,
+          "coefficient": "32"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 1,
+          "coefficient": "4"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 3,
+          "coefficient": "2"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 5,
+          "coefficient": "16"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 7,
+          "coefficient": "12"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 9,
+          "coefficient": "36"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 11,
+          "coefficient": "30"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "2"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "9"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "8"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 7,
+          "coefficient": "18"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 9,
+          "coefficient": "18"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 11,
+          "coefficient": "15"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 1,
+          "coefficient": "1"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 3,
+          "coefficient": "9/2"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 5,
+          "coefficient": "8"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 7,
+          "coefficient": "9"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 9,
+          "coefficient": "9"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 11,
+          "coefficient": "15/2"
+        }
+      ]
+    },
+    "A1@0,0,0,0": {
+      "tau0ReciprocalPower": "h",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 1,
+          "coefficient": "1"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 2,
+          "coefficient": "2"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 2,
+          "coefficient": "1"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 2,
+          "coefficient": "1/2"
+        }
+      ]
+    },
+    "A1@0,0,0,1": {
+      "tau0ReciprocalPower": "h + 1",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 1,
+          "coefficient": "912/503"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 3,
+          "coefficient": "512/503"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 2,
+          "coefficient": "2848/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 4,
+          "coefficient": "2048/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 2,
+          "coefficient": "1424/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 4,
+          "coefficient": "1024/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 2,
+          "coefficient": "712/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 4,
+          "coefficient": "512/503"
+        }
+      ]
+    },
+    "A1@0,0,1,0": {
+      "tau0ReciprocalPower": "1/2",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 1,
+          "coefficient": "1964/503"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 3,
+          "coefficient": "384/503"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 2,
+          "coefficient": "4696/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 4,
+          "coefficient": "1536/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 2,
+          "coefficient": "2348/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 4,
+          "coefficient": "768/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 2,
+          "coefficient": "1174/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 4,
+          "coefficient": "384/503"
+        }
+      ]
+    },
+    "A1@0,0,1,1": {
+      "tau0ReciprocalPower": "3/2",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 1,
+          "coefficient": "891424768/127263527"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 3,
+          "coefficient": "738156032/127263527"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 5,
+          "coefficient": "262144/253009"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 2,
+          "coefficient": "7688192/253009"
+        },
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 4,
+          "coefficient": "8425472/253009"
+        },
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 6,
+          "coefficient": "3145728/253009"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 2,
+          "coefficient": "1136690176/127263527"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 4,
+          "coefficient": "1610612736/127263527"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 2,
+          "coefficient": "1535135232/127263527"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 4,
+          "coefficient": "1864809472/127263527"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 6,
+          "coefficient": "786432/253009"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 2,
+          "coefficient": "767567616/127263527"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 4,
+          "coefficient": "932404736/127263527"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 6,
+          "coefficient": "393216/253009"
+        }
+      ]
+    },
+    "A1@0,0,2,0": {
+      "tau0ReciprocalPower": "1 - h",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 1,
+          "coefficient": "5840616448/127263527"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 3,
+          "coefficient": "1848983552/127263527"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 5,
+          "coefficient": "393216/253009"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 2,
+          "coefficient": "43655168/253009"
+        },
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 4,
+          "coefficient": "28704768/253009"
+        },
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 6,
+          "coefficient": "4718592/253009"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 2,
+          "coefficient": "4790521856/127263527"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 4,
+          "coefficient": "1342177280/127263527"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 2,
+          "coefficient": "7884898304/127263527"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 4,
+          "coefficient": "4280713216/127263527"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 6,
+          "coefficient": "1179648/253009"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 2,
+          "coefficient": "3942449152/127263527"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 4,
+          "coefficient": "2140356608/127263527"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 6,
+          "coefficient": "589824/253009"
+        }
+      ]
+    },
+    "A1@0,0,3,0": {
+      "tau0ReciprocalPower": "3/2 - 2*h",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 1,
+          "coefficient": "10991006647386112/32198817702743"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 3,
+          "coefficient": "4998617784692736/32198817702743"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 5,
+          "coefficient": "1677717405696/64013554081"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 7,
+          "coefficient": "226492416/127263527"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 2,
+          "coefficient": "58147951607808/64013554081"
+        },
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 4,
+          "coefficient": "39841324597248/64013554081"
+        },
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 6,
+          "coefficient": "6184752906240/64013554081"
+        },
+        {
+          "factor": "H_212893*tau0^(2*h)",
+          "RstarPower": 2,
+          "coefficient": "101978472448/127263527"
+        },
+        {
+          "factor": "H_212893*tau0^(2*h)",
+          "RstarPower": 4,
+          "coefficient": "100581507072/127263527"
+        },
+        {
+          "factor": "H_212893*tau0^(2*h)",
+          "RstarPower": 6,
+          "coefficient": "33067892736/127263527"
+        },
+        {
+          "factor": "H_212893*tau0^(2*h)",
+          "RstarPower": 8,
+          "coefficient": "3623878656/127263527"
+        },
+        {
+          "factor": "H_212905*tau0^(4*h)",
+          "RstarPower": 2,
+          "coefficient": "101978472448/127263527"
+        },
+        {
+          "factor": "H_212905*tau0^(4*h)",
+          "RstarPower": 4,
+          "coefficient": "100581507072/127263527"
+        },
+        {
+          "factor": "H_212905*tau0^(4*h)",
+          "RstarPower": 6,
+          "coefficient": "33067892736/127263527"
+        },
+        {
+          "factor": "H_212905*tau0^(4*h)",
+          "RstarPower": 8,
+          "coefficient": "3623878656/127263527"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 2,
+          "coefficient": "3678225383866368/32198817702743"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 4,
+          "coefficient": "2611202712846336/32198817702743"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 2,
+          "coefficient": "9151217606615040/32198817702743"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 4,
+          "coefficient": "6315647924527104/32198817702743"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 6,
+          "coefficient": "1546188226560/64013554081"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 2,
+          "coefficient": "7800792720257024/32198817702743"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 4,
+          "coefficient": "6338827277611008/32198817702743"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 6,
+          "coefficient": "2852237869056/64013554081"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 8,
+          "coefficient": "452984832/127263527"
+        }
+      ]
+    },
+    "A1@0,1,0,0": {
+      "tau0ReciprocalPower": "h + 1/2",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 2,
+          "coefficient": "1"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 3,
+          "coefficient": "4"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 5,
+          "coefficient": "2"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "2"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "1"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 3,
+          "coefficient": "1"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 5,
+          "coefficient": "1/2"
+        }
+      ]
+    },
+    "A1@0,1,1,0": {
+      "tau0ReciprocalPower": "1",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 2,
+          "coefficient": "2732/503"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 4,
+          "coefficient": "512/503"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "18688/503"
+        },
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "6144/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 3,
+          "coefficient": "1584/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 5,
+          "coefficient": "4696/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "5464/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "3884/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 3,
+          "coefficient": "2732/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 5,
+          "coefficient": "1942/503"
+        }
+      ]
+    },
+    "A1@0,2,0,0": {
+      "tau0ReciprocalPower": "h + 1",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 1,
+          "coefficient": "1"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 3,
+          "coefficient": "4/3"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 4,
+          "coefficient": "16"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 2,
+          "coefficient": "4"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 4,
+          "coefficient": "2"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 6,
+          "coefficient": "8"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 8,
+          "coefficient": "6"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 2,
+          "coefficient": "2"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 4,
+          "coefficient": "5"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 6,
+          "coefficient": "4"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 8,
+          "coefficient": "3"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 2,
+          "coefficient": "1"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 4,
+          "coefficient": "5/2"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 6,
+          "coefficient": "2"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 8,
+          "coefficient": "3/2"
+        }
+      ]
+    },
+    "A1@0,2,1,0": {
+      "tau0ReciprocalPower": "3/2",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 1,
+          "coefficient": "2732/503"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 3,
+          "coefficient": "15536/1509"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 5,
+          "coefficient": "768/503"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 2,
+          "coefficient": "18688/503"
+        },
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 4,
+          "coefficient": "18624/503"
+        },
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 6,
+          "coefficient": "37376/503"
+        },
+        {
+          "factor": "H_212893*tau0^(2*h)",
+          "RstarPower": 4,
+          "coefficient": "37376/503"
+        },
+        {
+          "factor": "H_212893*tau0^(2*h)",
+          "RstarPower": 6,
+          "coefficient": "12288/503"
+        },
+        {
+          "factor": "H_212905*tau0^(4*h)",
+          "RstarPower": 4,
+          "coefficient": "37376/503"
+        },
+        {
+          "factor": "H_212905*tau0^(4*h)",
+          "RstarPower": 6,
+          "coefficient": "12288/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 2,
+          "coefficient": "1584/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 4,
+          "coefficient": "4696/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 6,
+          "coefficient": "1632/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 8,
+          "coefficient": "14088/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 2,
+          "coefficient": "5464/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 4,
+          "coefficient": "7004/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 6,
+          "coefficient": "10160/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 8,
+          "coefficient": "7044/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 2,
+          "coefficient": "2732/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 4,
+          "coefficient": "8174/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 6,
+          "coefficient": "6616/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 8,
+          "coefficient": "3522/503"
+        }
+      ]
+    },
+    "A1@1,0,0,0": {
+      "tau0ReciprocalPower": "h + 1/2",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 0,
+          "coefficient": "1"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 2,
+          "coefficient": "1"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 1,
+          "coefficient": "2"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 3,
+          "coefficient": "4"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 5,
+          "coefficient": "2"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "1"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "2"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "1"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 1,
+          "coefficient": "1/2"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 3,
+          "coefficient": "1"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 5,
+          "coefficient": "1/2"
+        }
+      ]
+    },
+    "A1@1,0,0,1": {
+      "tau0ReciprocalPower": "h + 3/2",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 0,
+          "coefficient": "912/503"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 2,
+          "coefficient": "2448/503"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 4,
+          "coefficient": "2048/1509"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "11264/503"
+        },
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "8192/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 1,
+          "coefficient": "2848/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 3,
+          "coefficient": "4160/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 5,
+          "coefficient": "2848/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "1424/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "4896/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "3472/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 1,
+          "coefficient": "712/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 3,
+          "coefficient": "2448/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 5,
+          "coefficient": "1736/503"
+        }
+      ]
+    },
+    "A1@1,0,1,0": {
+      "tau0ReciprocalPower": "1",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 0,
+          "coefficient": "1964/503"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 2,
+          "coefficient": "3116/503"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 4,
+          "coefficient": "512/503"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "18688/503"
+        },
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "6144/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 1,
+          "coefficient": "4696/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 3,
+          "coefficient": "3120/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 5,
+          "coefficient": "4696/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "2348/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "6232/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "3884/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 1,
+          "coefficient": "1174/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 3,
+          "coefficient": "3116/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 5,
+          "coefficient": "1942/503"
+        }
+      ]
+    },
+    "A1@1,0,2,0": {
+      "tau0ReciprocalPower": "3/2 - h",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 0,
+          "coefficient": "5840616448/127263527"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 2,
+          "coefficient": "11346245632/127263527"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 4,
+          "coefficient": "10405216256/381790581"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 6,
+          "coefficient": "589824/253009"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "43655168/253009"
+        },
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "44469714944/127263527"
+        },
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "36948467712/127263527"
+        },
+        {
+          "factor": "H_212893*tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "87310336/253009"
+        },
+        {
+          "factor": "H_212893*tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "57409536/253009"
+        },
+        {
+          "factor": "H_212893*tau0^(2*h)",
+          "RstarPower": 7,
+          "coefficient": "9437184/253009"
+        },
+        {
+          "factor": "H_212905*tau0^(4*h)",
+          "RstarPower": 3,
+          "coefficient": "87310336/253009"
+        },
+        {
+          "factor": "H_212905*tau0^(4*h)",
+          "RstarPower": 5,
+          "coefficient": "57409536/253009"
+        },
+        {
+          "factor": "H_212905*tau0^(4*h)",
+          "RstarPower": 7,
+          "coefficient": "9437184/253009"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 1,
+          "coefficient": "4790521856/127263527"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 3,
+          "coefficient": "2722103296/127263527"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 5,
+          "coefficient": "4790521856/127263527"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "7884898304/127263527"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "12478480384/127263527"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "11632377856/127263527"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 1,
+          "coefficient": "3942449152/127263527"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 3,
+          "coefficient": "11728877568/127263527"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 5,
+          "coefficient": "9425813504/127263527"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 7,
+          "coefficient": "1179648/253009"
+        }
+      ]
+    },
+    "A1@1,1,0,0": {
+      "tau0ReciprocalPower": "h + 1",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 1,
+          "coefficient": "1"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 3,
+          "coefficient": "4/3"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 4,
+          "coefficient": "16"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 2,
+          "coefficient": "4"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 4,
+          "coefficient": "2"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 6,
+          "coefficient": "8"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 8,
+          "coefficient": "6"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 2,
+          "coefficient": "2"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 4,
+          "coefficient": "5"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 6,
+          "coefficient": "4"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 8,
+          "coefficient": "3"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 2,
+          "coefficient": "1"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 4,
+          "coefficient": "5/2"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 6,
+          "coefficient": "2"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 8,
+          "coefficient": "3/2"
+        }
+      ]
+    },
+    "A1@1,2,0,0": {
+      "tau0ReciprocalPower": "h + 3/2",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 0,
+          "coefficient": "1"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 2,
+          "coefficient": "8/3"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 4,
+          "coefficient": "2"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "32"
+        },
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 7,
+          "coefficient": "48"
+        },
+        {
+          "factor": "H_212893*tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "32"
+        },
+        {
+          "factor": "H_212905*tau0^(4*h)",
+          "RstarPower": 5,
+          "coefficient": "32"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 1,
+          "coefficient": "4"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 3,
+          "coefficient": "2"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 5,
+          "coefficient": "16"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 7,
+          "coefficient": "12"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 9,
+          "coefficient": "36"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 11,
+          "coefficient": "30"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "2"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "9"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "8"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 7,
+          "coefficient": "18"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 9,
+          "coefficient": "18"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 11,
+          "coefficient": "15"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 1,
+          "coefficient": "1"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 3,
+          "coefficient": "9/2"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 5,
+          "coefficient": "8"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 7,
+          "coefficient": "9"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 9,
+          "coefficient": "9"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 11,
+          "coefficient": "15/2"
+        }
+      ]
+    },
+    "A1@2,0,0,0": {
+      "tau0ReciprocalPower": "h + 1",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 1,
+          "coefficient": "3"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 3,
+          "coefficient": "4/3"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 4,
+          "coefficient": "16"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 2,
+          "coefficient": "12"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 4,
+          "coefficient": "6"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 6,
+          "coefficient": "8"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 8,
+          "coefficient": "6"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 2,
+          "coefficient": "6"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 4,
+          "coefficient": "7"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 6,
+          "coefficient": "4"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 8,
+          "coefficient": "3"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 2,
+          "coefficient": "3"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 4,
+          "coefficient": "7/2"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 6,
+          "coefficient": "2"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 8,
+          "coefficient": "3/2"
+        }
+      ]
+    },
+    "A1@2,0,1,0": {
+      "tau0ReciprocalPower": "3/2",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 1,
+          "coefficient": "8196/503"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 3,
+          "coefficient": "18608/1509"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 5,
+          "coefficient": "768/503"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 2,
+          "coefficient": "56064/503"
+        },
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 4,
+          "coefficient": "30912/503"
+        },
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 6,
+          "coefficient": "37376/503"
+        },
+        {
+          "factor": "H_212893*tau0^(2*h)",
+          "RstarPower": 4,
+          "coefficient": "37376/503"
+        },
+        {
+          "factor": "H_212893*tau0^(2*h)",
+          "RstarPower": 6,
+          "coefficient": "12288/503"
+        },
+        {
+          "factor": "H_212905*tau0^(4*h)",
+          "RstarPower": 4,
+          "coefficient": "37376/503"
+        },
+        {
+          "factor": "H_212905*tau0^(4*h)",
+          "RstarPower": 6,
+          "coefficient": "12288/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 2,
+          "coefficient": "4752/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 4,
+          "coefficient": "14088/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 6,
+          "coefficient": "1632/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 8,
+          "coefficient": "14088/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 2,
+          "coefficient": "16392/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 4,
+          "coefficient": "14772/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 6,
+          "coefficient": "10160/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 8,
+          "coefficient": "7044/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 2,
+          "coefficient": "8196/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 4,
+          "coefficient": "12058/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 6,
+          "coefficient": "6616/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 8,
+          "coefficient": "3522/503"
+        }
+      ]
+    },
+    "A1@3,0,0,0": {
+      "tau0ReciprocalPower": "h + 3/2",
+      "leadingTerms": [
+        {
+          "factor": "L_U",
+          "RstarPower": 0,
+          "coefficient": "3"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 2,
+          "coefficient": "8"
+        },
+        {
+          "factor": "L_U",
+          "RstarPower": 4,
+          "coefficient": "2"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "96"
+        },
+        {
+          "factor": "H_212882*tau0^(2*h)",
+          "RstarPower": 7,
+          "coefficient": "48"
+        },
+        {
+          "factor": "H_212893*tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "32"
+        },
+        {
+          "factor": "H_212905*tau0^(4*h)",
+          "RstarPower": 5,
+          "coefficient": "32"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 1,
+          "coefficient": "12"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 3,
+          "coefficient": "6"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 5,
+          "coefficient": "48"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 7,
+          "coefficient": "36"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 9,
+          "coefficient": "36"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 11,
+          "coefficient": "30"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "6"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "27"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "24"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 7,
+          "coefficient": "30"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 9,
+          "coefficient": "18"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 11,
+          "coefficient": "15"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 1,
+          "coefficient": "3"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 3,
+          "coefficient": "27/2"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 5,
+          "coefficient": "16"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 7,
+          "coefficient": "15"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 9,
+          "coefficient": "9"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 11,
+          "coefficient": "15/2"
+        }
+      ]
+    },
+    "A2@0,0,0,0": {
+      "exactInterval": [
+        "0",
+        "0"
+      ]
+    },
+    "A2@0,0,0,1": {
+      "exactInterval": [
+        "0",
+        "0"
+      ]
+    },
+    "A2@0,0,1,0": {
+      "exactInterval": [
+        "0",
+        "0"
+      ]
+    },
+    "A2@0,0,2,0": {
+      "exactInterval": [
+        "0",
+        "0"
+      ]
+    },
+    "A2@0,1,0,0": {
+      "exactInterval": [
+        "0",
+        "0"
+      ]
+    },
+    "A2@0,1,0,1": {
+      "exactInterval": [
+        "0",
+        "0"
+      ]
+    },
+    "A2@0,1,1,0": {
+      "exactInterval": [
+        "0",
+        "0"
+      ]
+    },
+    "A2@0,1,2,0": {
+      "exactInterval": [
+        "0",
+        "0"
+      ]
+    },
+    "A2@0,2,0,0": {
+      "exactInterval": [
+        "0",
+        "0"
+      ]
+    },
+    "A2@0,3,0,0": {
+      "exactInterval": [
+        "0",
+        "0"
+      ]
+    },
+    "A2@1,0,0,0": {
+      "exactInterval": [
+        "0",
+        "0"
+      ]
+    },
+    "A2@1,0,0,1": {
+      "exactInterval": [
+        "0",
+        "0"
+      ]
+    },
+    "A2@1,0,1,0": {
+      "exactInterval": [
+        "0",
+        "0"
+      ]
+    },
+    "A2@1,0,2,0": {
+      "exactInterval": [
+        "0",
+        "0"
+      ]
+    },
+    "A2@1,1,0,0": {
+      "exactInterval": [
+        "0",
+        "0"
+      ]
+    },
+    "A2@1,2,0,0": {
+      "exactInterval": [
+        "0",
+        "0"
+      ]
+    },
+    "A2@2,0,0,0": {
+      "exactInterval": [
+        "0",
+        "0"
+      ]
+    },
+    "A2@2,1,0,0": {
+      "exactInterval": [
+        "0",
+        "0"
+      ]
+    },
+    "A2@3,0,0,0": {
+      "exactInterval": [
+        "0",
+        "0"
+      ]
+    },
+    "b@0,0,0": {
+      "tau0ReciprocalPower": "h + 1",
+      "leadingTerms": [
+        {
+          "factor": "1",
+          "RstarPower": 74,
+          "coefficient": "128"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 1,
+          "coefficient": "4"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "2"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 1,
+          "coefficient": "1"
+        }
+      ]
+    },
+    "b@0,0,1": {
+      "tau0ReciprocalPower": "h + 2",
+      "leadingTerms": [
+        {
+          "factor": "1",
+          "RstarPower": 74,
+          "coefficient": "182272/503"
+        },
+        {
+          "factor": "1",
+          "RstarPower": 76,
+          "coefficient": "131072/503"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 1,
+          "coefficient": "7744/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 3,
+          "coefficient": "4096/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "3872/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "2048/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 1,
+          "coefficient": "1936/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 3,
+          "coefficient": "1024/503"
+        }
+      ]
+    },
+    "b@0,1,0": {
+      "tau0ReciprocalPower": "3/2",
+      "leadingTerms": [
+        {
+          "factor": "1",
+          "RstarPower": 74,
+          "coefficient": "300544/503"
+        },
+        {
+          "factor": "1",
+          "RstarPower": 76,
+          "coefficient": "98304/503"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 1,
+          "coefficient": "10928/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 3,
+          "coefficient": "3072/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "5464/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "1536/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 1,
+          "coefficient": "2732/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 3,
+          "coefficient": "768/503"
+        }
+      ]
+    },
+    "b@0,2,0": {
+      "tau0ReciprocalPower": "2 - h",
+      "leadingTerms": [
+        {
+          "factor": "1",
+          "RstarPower": 74,
+          "coefficient": "478136893440/127263527"
+        },
+        {
+          "factor": "1",
+          "RstarPower": 76,
+          "coefficient": "275324600320/127263527"
+        },
+        {
+          "factor": "1",
+          "RstarPower": 78,
+          "coefficient": "75497472/253009"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "H_212886*tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "43655168/253009"
+        },
+        {
+          "factor": "H_212886*tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "28704768/253009"
+        },
+        {
+          "factor": "H_212886*tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "4718592/253009"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 1,
+          "coefficient": "8076658688/127263527"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 3,
+          "coefficient": "2550136832/127263527"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "9527966720/127263527"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "4884692992/127263527"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "1179648/253009"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 1,
+          "coefficient": "4763983360/127263527"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 3,
+          "coefficient": "2442346496/127263527"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 5,
+          "coefficient": "589824/253009"
+        }
+      ]
+    },
+    "b@1,0,0": {
+      "tau0ReciprocalPower": "h + 2",
+      "leadingTerms": [
+        {
+          "factor": "1",
+          "RstarPower": 74,
+          "coefficient": "128"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 1,
+          "coefficient": "4"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 3,
+          "coefficient": "2"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "2"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "1"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 1,
+          "coefficient": "1"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 3,
+          "coefficient": "1/2"
+        }
+      ]
+    },
+    "b@2,0,0": {
+      "tau0ReciprocalPower": "h + 3",
+      "leadingTerms": [
+        {
+          "factor": "1",
+          "RstarPower": 74,
+          "coefficient": "128"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "H_212886*tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "8"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 3,
+          "coefficient": "4"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 5,
+          "coefficient": "3"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "2"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 3,
+          "coefficient": "2"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 5,
+          "coefficient": "3/2"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 1,
+          "coefficient": "1"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 3,
+          "coefficient": "1"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 5,
+          "coefficient": "3/4"
+        }
+      ]
+    },
+    "p@0,0,0,0": {
+      "tau0ReciprocalPower": "2*h + 1",
+      "leadingTerms": [
+        {
+          "factor": "1",
+          "RstarPower": 150,
+          "coefficient": "4096"
+        },
+        {
+          "factor": "K",
+          "RstarPower": 0,
+          "coefficient": "20"
+        },
+        {
+          "factor": "L_F^2",
+          "RstarPower": 2,
+          "coefficient": "4"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 0,
+          "coefficient": "4"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 0,
+          "coefficient": "2"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 0,
+          "coefficient": "1"
+        }
+      ]
+    },
+    "p@0,0,1,0": {
+      "tau0ReciprocalPower": "h + 3/2",
+      "leadingTerms": [
+        {
+          "factor": "1",
+          "RstarPower": 150,
+          "coefficient": "19234816/503"
+        },
+        {
+          "factor": "K",
+          "RstarPower": 0,
+          "coefficient": "1019360/503"
+        },
+        {
+          "factor": "L_F^2",
+          "RstarPower": 2,
+          "coefficient": "15712/503"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 0,
+          "coefficient": "12512/503"
+        },
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 2,
+          "coefficient": "3072/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 0,
+          "coefficient": "6256/503"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 2,
+          "coefficient": "1536/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 0,
+          "coefficient": "3128/503"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 2,
+          "coefficient": "768/503"
+        }
+      ]
+    },
+    "p@0,1,0,0": {
+      "tau0ReciprocalPower": "2*h + 3/2",
+      "leadingTerms": [
+        {
+          "factor": "1",
+          "RstarPower": 149,
+          "coefficient": "8192"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 1,
+          "coefficient": "8"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "4"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 1,
+          "coefficient": "2"
+        }
+      ]
+    },
+    "p@1,0,0,0": {
+      "tau0ReciprocalPower": "2*h + 3/2",
+      "leadingTerms": [
+        {
+          "factor": "1",
+          "RstarPower": 149,
+          "coefficient": "8192"
+        }
+      ],
+      "positiveTerms": [
+        {
+          "factor": "tau0^(1*h)",
+          "RstarPower": 1,
+          "coefficient": "8"
+        },
+        {
+          "factor": "tau0^(2*h)",
+          "RstarPower": 1,
+          "coefficient": "4"
+        },
+        {
+          "factor": "tau0^(3*h)",
+          "RstarPower": 1,
+          "coefficient": "2"
+        }
+      ]
+    }
+  },
+  "intervalConvention": "nonzero rows are [-R,R] with R=tau0^-tau0ReciprocalPower times sum(coefficient*Rstar^RstarPower*factor)",
+  "scope": {
+    "localSlowAtoms": 67,
+    "exactSlowZeros": 19,
+    "fullAnnularAtoms": 0,
+    "waveAndMeanCorrectionsEnclosed": false,
+    "globalJets": "0/67",
+    "N7-06": "OPEN",
+    "N8-05": "OPEN",
+    "release": "HOLD"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "schema": "MathScope.N7.ActualRepresentativeBottomStripArea/1",
+  "sourceCommit": "f8cb4034e86d7b669d52a6f2248aebba156b51b5",
+  "sourceSHA256": {
+    "research-ide/mathscope-m3/navier/source-global-representative.mjs": "f3fbcf74b42c59cbfdd563e0fddcba9fab5cad782a96695930e3445c50373541",
+    "research-ide/mathscope-m3/navier/source-global-band.mjs": "babe4aceb97d0bdee4084e5f06009e6724128935fffde1647c11e3aab022df60",
+    "research-ide/mathscope-m3/navier/source-localization.mjs": "5f6480f9799a9a83945f696833b9213585572efbe65e9e755b2935726e6f1036",
+    "research-ide/mathscope-m3/navier/global-source-index.mjs": "a3da73e5ad4d853dff04942ea513a3f8ab9fb1abf2b9e30f7eecf3956aaa6a2f"
+  },
+  "selectorResultSHA256": "6873cf394c0d70cdef4a4a9a7e6b50780832be87d7c48ca7dcdc88938a3a5c97",
+  "geometry": {
+    "qMin": "qBig/64",
+    "tau0": "2*qMin",
+    "criticalLabel": "L=ellMinimum+16",
+    "timeHalfWidth": "w=3/(4*L^6)",
+    "literalCondition": "sRep<1 requires integer time center 1, T<1+w and ZRep^2<w",
+    "oneSidedRepresentativeFloor": "sRep>1-w at the critical label",
+    "possibleBottomStrip": "1<=q/qMin<1+delta and 1/2<=rho<(1+delta)*(1-eta^2)/2",
+    "etaCut": "abs(eta)<sqrt(delta/(1+delta))"
+  },
+  "areas": {
+    "etaRhoArea": "2*delta^(3/2)/(3*sqrt(1+delta))",
+    "zetaRhoArea": "((1+delta)/2)^D * 2*delta^(3/2)/(3*sqrt(1+delta))",
+    "strictWidthMajorant": "delta=25/(16*L^6)",
+    "rationalWidthComparison": [
+      "1035293195/679477248",
+      "25/16"
+    ],
+    "additionalActualMeshRectangleEtaRhoArea": "w*(sqrt(w)+2*w)",
+    "additionalActualMeshRectangleZetaRhoArea": "2^(-D)*w*(sqrt(w)+2*w)"
+  },
+  "oneSufficientAuthenticatedComparator": [
+    "b4*qBig>=64/(1-w)",
+    "b3*qBig>=32/(1-w)",
+    "b2*qBig>=16/(1-w)"
+  ],
+  "actualComparatorStatus": "OPEN",
+  "scope": "Geometric upper envelope of points where N4 may still be needed. Actual N4 use is not asserted.",
+  "release": "HOLD"
+}

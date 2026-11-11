@@ -1,0 +1,796 @@
+{
+  "schema": "MathScope.N7.InnerOriginalForceEnergy/1",
+  "region": "strictCore",
+  "status": "SOURCE_THEOREM_BOUND_FACTORED_CELL_INTERVALS",
+  "inputSHA256": {
+    "intervals": "8b967ea80d1fb815925950f7cbf5ff4fe020226abc6e3dd3a38e3f7ccbb4441f",
+    "inner": "4422bdae491795b5582ff4f1be09d2c58734fcbfc26749f2921c535050842638",
+    "annularSlow": "8bd881fa744e09843dc3f258bc7650b4f6691a4d9073bffaf2dcac4a24595a75",
+    "heatCell": "254868bebdad829d656c06cfa903a5b5cdf288d35cf5ec9bdf52461c3a7e008b",
+    "gauge": "1f342570c0ac63a919441ed999860c835574299b73a2c36fb1b1c658b386876f",
+    "chart": "af17e240150ca11452ccd5dcde5e1d2a21f5872d3a1e29a9247d75e6902e86b9",
+    "cutoff": "0f2ef1dff821d7d936a9c254a5e846f6557445e2d3ccf97f3201915a6a949298",
+    "timeCutoffDerivative": "0f2ef1dff821d7d936a9c254a5e846f6557445e2d3ccf97f3201915a6a949298"
+  },
+  "geometry": {
+    "sliceMap": {
+      "zeta": "eta*Q^D",
+      "rSquared": "2*tau0*Q*Y/Lambda",
+      "Q": "rho/(1-eta^2)"
+    },
+    "volumeDensity": "tau0/Lambda * Q^(D+1) * (1-2*h*eta^2)/(1-eta^2)",
+    "coordinateDomain": "2<=Y<=5/2, |eta|<=1/4, 1/2<=rho<=1, all theta",
+    "outerCutoffSpatialDerivatives": "zero on strict spatial plateau",
+    "factors": {
+      "R": "4*sqrt(tau0/Lambda)",
+      "C_tau": "5/tau0",
+      "I_field@orders": "exact absolute radius in the pinned scalarIntervals"
+    },
+    "directedCutoffDerivativeMaxima": null,
+    "sliceNormalizedMeasureUpper": "2*tau0/Lambda",
+    "slabNormalizedMeasureUpper": "tau0/Lambda",
+    "startSliceEnergy": "[0,0], flat original time cutoff at rho=1"
+  },
+  "originalOperators": {
+    "exactSourceTermCounts": {
+      "velocity": [
+        5,
+        5,
+        4
+      ],
+      "velocityGradient": [
+        [
+          10,
+          11,
+          9
+        ],
+        [
+          11,
+          10,
+          9
+        ],
+        [
+          8,
+          8,
+          8
+        ]
+      ],
+      "directForce": [
+        155,
+        155,
+        131
+      ]
+    },
+    "verifiedRestrictedIdentities": 16,
+    "divergence": "exact zero",
+    "negativeControls": [
+      "reversed physical time sign",
+      "dropped spatial pressure gradient"
+    ],
+    "componentUpperPrograms": {
+      "velocity": [
+        [
+          {
+            "coefficient": "1",
+            "factors": [
+              "I_a@0,1,0",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "1",
+            "factors": [
+              "I_b@0,0,0",
+              "R"
+            ]
+          }
+        ],
+        [
+          {
+            "coefficient": "1",
+            "factors": [
+              "I_a@0,1,0",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "1",
+            "factors": [
+              "I_b@0,0,0",
+              "R"
+            ]
+          }
+        ],
+        [
+          {
+            "coefficient": "2",
+            "factors": [
+              "I_a@0,0,0"
+            ]
+          },
+          {
+            "coefficient": "4",
+            "factors": [
+              "I_a@1,0,0",
+              "R",
+              "R"
+            ]
+          }
+        ]
+      ],
+      "gradient": [
+        [
+          [
+            {
+              "coefficient": "1",
+              "factors": [
+                "I_a@0,1,0"
+              ]
+            },
+            {
+              "coefficient": "2",
+              "factors": [
+                "I_a@1,1,0",
+                "R",
+                "R"
+              ]
+            },
+            {
+              "coefficient": "2",
+              "factors": [
+                "I_b@1,0,0",
+                "R",
+                "R"
+              ]
+            }
+          ],
+          [
+            {
+              "coefficient": "2",
+              "factors": [
+                "I_a@1,1,0",
+                "R",
+                "R"
+              ]
+            },
+            {
+              "coefficient": "1",
+              "factors": [
+                "I_b@0,0,0"
+              ]
+            },
+            {
+              "coefficient": "2",
+              "factors": [
+                "I_b@1,0,0",
+                "R",
+                "R"
+              ]
+            }
+          ],
+          [
+            {
+              "coefficient": "1",
+              "factors": [
+                "I_a@0,2,0",
+                "R"
+              ]
+            },
+            {
+              "coefficient": "1",
+              "factors": [
+                "I_b@0,1,0",
+                "R"
+              ]
+            }
+          ]
+        ],
+        [
+          [
+            {
+              "coefficient": "2",
+              "factors": [
+                "I_a@1,1,0",
+                "R",
+                "R"
+              ]
+            },
+            {
+              "coefficient": "1",
+              "factors": [
+                "I_b@0,0,0"
+              ]
+            },
+            {
+              "coefficient": "2",
+              "factors": [
+                "I_b@1,0,0",
+                "R",
+                "R"
+              ]
+            }
+          ],
+          [
+            {
+              "coefficient": "1",
+              "factors": [
+                "I_a@0,1,0"
+              ]
+            },
+            {
+              "coefficient": "2",
+              "factors": [
+                "I_a@1,1,0",
+                "R",
+                "R"
+              ]
+            },
+            {
+              "coefficient": "2",
+              "factors": [
+                "I_b@1,0,0",
+                "R",
+                "R"
+              ]
+            }
+          ],
+          [
+            {
+              "coefficient": "1",
+              "factors": [
+                "I_a@0,2,0",
+                "R"
+              ]
+            },
+            {
+              "coefficient": "1",
+              "factors": [
+                "I_b@0,1,0",
+                "R"
+              ]
+            }
+          ]
+        ],
+        [
+          [
+            {
+              "coefficient": "8",
+              "factors": [
+                "I_a@1,0,0",
+                "R"
+              ]
+            },
+            {
+              "coefficient": "8",
+              "factors": [
+                "I_a@2,0,0",
+                "R",
+                "R",
+                "R"
+              ]
+            }
+          ],
+          [
+            {
+              "coefficient": "8",
+              "factors": [
+                "I_a@1,0,0",
+                "R"
+              ]
+            },
+            {
+              "coefficient": "8",
+              "factors": [
+                "I_a@2,0,0",
+                "R",
+                "R",
+                "R"
+              ]
+            }
+          ],
+          [
+            {
+              "coefficient": "2",
+              "factors": [
+                "I_a@0,1,0"
+              ]
+            },
+            {
+              "coefficient": "4",
+              "factors": [
+                "I_a@1,1,0",
+                "R",
+                "R"
+              ]
+            }
+          ]
+        ]
+      ],
+      "pressure": [
+        {
+          "coefficient": "1",
+          "factors": [
+            "I_p_loc@0,0,0"
+          ]
+        }
+      ],
+      "directForce": [
+        [
+          {
+            "coefficient": "1",
+            "factors": [
+              "C_tau",
+              "I_a@0,1,0",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "1",
+            "factors": [
+              "C_tau",
+              "I_b@0,0,0",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "2",
+            "factors": [
+              "I_a@0,0,0",
+              "I_a@0,2,0",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "2",
+            "factors": [
+              "I_a@0,0,0",
+              "I_b@0,1,0",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "1",
+            "factors": [
+              "I_a@0,1,0",
+              "I_a@0,1,0",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "4",
+            "factors": [
+              "I_a@0,1,0",
+              "I_a@1,1,0",
+              "R",
+              "R",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "2",
+            "factors": [
+              "I_a@0,1,0",
+              "I_b@0,0,0",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "4",
+            "factors": [
+              "I_a@0,1,0",
+              "I_b@1,0,0",
+              "R",
+              "R",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "1",
+            "factors": [
+              "I_a@0,1,1",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "4",
+            "factors": [
+              "I_a@0,2,0",
+              "I_a@1,0,0",
+              "R",
+              "R",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "1",
+            "factors": [
+              "I_a@0,3,0",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "4",
+            "factors": [
+              "I_a@1,0,0",
+              "I_b@0,1,0",
+              "R",
+              "R",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "8",
+            "factors": [
+              "I_a@1,1,0",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "8",
+            "factors": [
+              "I_a@2,1,0",
+              "R",
+              "R",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "1",
+            "factors": [
+              "I_b@0,0,0",
+              "I_b@0,0,0",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "1",
+            "factors": [
+              "I_b@0,0,1",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "1",
+            "factors": [
+              "I_b@0,2,0",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "8",
+            "factors": [
+              "I_b@1,0,0",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "8",
+            "factors": [
+              "I_b@2,0,0",
+              "R",
+              "R",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "2",
+            "factors": [
+              "I_p_loc@1,0,0",
+              "R"
+            ]
+          }
+        ],
+        [
+          {
+            "coefficient": "1",
+            "factors": [
+              "C_tau",
+              "I_a@0,1,0",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "1",
+            "factors": [
+              "C_tau",
+              "I_b@0,0,0",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "2",
+            "factors": [
+              "I_a@0,0,0",
+              "I_a@0,2,0",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "2",
+            "factors": [
+              "I_a@0,0,0",
+              "I_b@0,1,0",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "1",
+            "factors": [
+              "I_a@0,1,0",
+              "I_a@0,1,0",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "4",
+            "factors": [
+              "I_a@0,1,0",
+              "I_a@1,1,0",
+              "R",
+              "R",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "2",
+            "factors": [
+              "I_a@0,1,0",
+              "I_b@0,0,0",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "4",
+            "factors": [
+              "I_a@0,1,0",
+              "I_b@1,0,0",
+              "R",
+              "R",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "1",
+            "factors": [
+              "I_a@0,1,1",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "4",
+            "factors": [
+              "I_a@0,2,0",
+              "I_a@1,0,0",
+              "R",
+              "R",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "1",
+            "factors": [
+              "I_a@0,3,0",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "4",
+            "factors": [
+              "I_a@1,0,0",
+              "I_b@0,1,0",
+              "R",
+              "R",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "8",
+            "factors": [
+              "I_a@1,1,0",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "8",
+            "factors": [
+              "I_a@2,1,0",
+              "R",
+              "R",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "1",
+            "factors": [
+              "I_b@0,0,0",
+              "I_b@0,0,0",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "1",
+            "factors": [
+              "I_b@0,0,1",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "1",
+            "factors": [
+              "I_b@0,2,0",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "8",
+            "factors": [
+              "I_b@1,0,0",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "8",
+            "factors": [
+              "I_b@2,0,0",
+              "R",
+              "R",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "2",
+            "factors": [
+              "I_p_loc@1,0,0",
+              "R"
+            ]
+          }
+        ],
+        [
+          {
+            "coefficient": "2",
+            "factors": [
+              "C_tau",
+              "I_a@0,0,0"
+            ]
+          },
+          {
+            "coefficient": "4",
+            "factors": [
+              "C_tau",
+              "I_a@1,0,0",
+              "R",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "4",
+            "factors": [
+              "I_a@0,0,0",
+              "I_a@0,1,0"
+            ]
+          },
+          {
+            "coefficient": "8",
+            "factors": [
+              "I_a@0,0,0",
+              "I_a@1,1,0",
+              "R",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "2",
+            "factors": [
+              "I_a@0,0,1"
+            ]
+          },
+          {
+            "coefficient": "8",
+            "factors": [
+              "I_a@0,1,0",
+              "I_a@1,0,0",
+              "R",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "16",
+            "factors": [
+              "I_a@0,1,0",
+              "I_a@2,0,0",
+              "R",
+              "R",
+              "R",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "2",
+            "factors": [
+              "I_a@0,2,0"
+            ]
+          },
+          {
+            "coefficient": "16",
+            "factors": [
+              "I_a@1,0,0"
+            ]
+          },
+          {
+            "coefficient": "16",
+            "factors": [
+              "I_a@1,0,0",
+              "I_a@1,1,0",
+              "R",
+              "R",
+              "R",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "4",
+            "factors": [
+              "I_a@1,0,1",
+              "R",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "4",
+            "factors": [
+              "I_a@1,2,0",
+              "R",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "64",
+            "factors": [
+              "I_a@2,0,0",
+              "R",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "32",
+            "factors": [
+              "I_a@3,0,0",
+              "R",
+              "R",
+              "R",
+              "R"
+            ]
+          },
+          {
+            "coefficient": "1",
+            "factors": [
+              "I_p_loc@0,1,0"
+            ]
+          }
+        ]
+      ]
+    }
+  },
+  "energyAndWork": {
+    "normalization": "velocity=tau0^A*u, force=tau0^(A+1)*f; normalized spatial dx dy dzeta, time d rho",
+    "rangeConvention": "nonnegative energy, dissipation and norm squared in [0, upper]; signed work in [-upper, upper]",
+    "endpointEnergyUpper": "sliceNormalizedMeasureUpper * tau0^(2*A)*sum_i U_i^2",
+    "transverseDissipationWithTimeWeightUpper": "slabNormalizedMeasureUpper * tau0^(2*A+1)*sum_i,j=0,1 G_ij^2",
+    "axialDissipationWithTimeWeightUpper": "slabNormalizedMeasureUpper * tau0^(2*A+1)*sum_i G_i2^2",
+    "normalizedForceSquaredSpacetimeUpper": "slabNormalizedMeasureUpper * tau0^(2*A+2)*sum_i F_i^2",
+    "normalizedAbsoluteWorkUpper": "slabNormalizedMeasureUpper * tau0^(2*A+1)*sum_i U_i*F_i",
+    "localFluxNote": "The moving restricted region has spatial boundary and moving-boundary flux; no closed local energy balance claimed."
+  },
+  "scope": {
+    "sameOriginalCommonBField": true,
+    "fullPointwiseForceOnCell": true,
+    "pureSlowBackgroundForce": false,
+    "originalNormFactorsNumericallyEvaluated": false,
+    "integralsOnWholeK": false,
+    "independentWholeKRefinements": false,
+    "N7-06": "OPEN",
+    "N8-05": "OPEN",
+    "wholeKJets": "0/67",
+    "release": "HOLD"
+  }
+}

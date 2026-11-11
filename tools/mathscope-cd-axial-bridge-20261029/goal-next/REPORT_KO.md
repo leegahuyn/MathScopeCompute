@@ -10,7 +10,16 @@
 
 첨부 설계도 64·66·68쪽에 근거한 남은 수락 조건과 공통 선행 작업은 [완료 기준 보고](COMPLETION_FOCUS_KO.md)에 정리했다.
 
-## 이번 검증에서 좁힌 범위
+## 현재 이어진 전체장 검증
+
+- **VERIFIED · 원본 정리 적용 범위** 축을 포함한 전체 안쪽 \(0\le X\le X_a\)와 전체 열 외부 \(X\ge X_b\)에서 각각 67개 원본 jet을 유한 구간으로 감쌌다. 안쪽에서는 \(A_z\) 관련 19개가 정확히 0이고, 실제 축 위에는 전체장 입력 47개의 정확한 0이 있다. 열 외부에서는 60개가 정확히 0이다. 양쪽 영역 모두 실제 축방향 cutoff를 포함한 외력, 운동에너지, 소산, 일과 외력 제곱 적분의 상계를 얻었다. 원본 노름과 진폭은 정확한 양의 인수다. [안쪽 jet](whole-k-inner-axis/README.md) · [외력 결속](whole-k-core-force/README.md) · [열 외부](whole-k-exterior/geometric-heat-exterior.json).
+- **VERIFIED · 느린 배경장** 환형 \(X_a\le X\le X_b\)에서도 느린 배경의 원본 jet 67개와 해당 외력식을 결속했다. **OPEN** 초기화와 활성 파동·평균 보정을 동일한 최종장에 더하는 항 및 그 상계가 남아 있다. [환형 느린 배경](whole-k-annular-slow/README.md) · [외력 차이 식](whole-k-core-force/annular-slow-force-energy.json).
+- **VERIFIED · GitHub와 독립 소스 비교** 필요한 미분만 생성한 \(N=2\) 재생은 2,326,849개 노드에서 전체 압력까지 통과했다. 원래 2,852,905개 노드 그래프와 비교해 selector 조건 43개, 실제 상계·로그 86개 루트, 대표 대역 피연산자 5개가 일치했다. 적분 binder와 native 호출을 함께 대조했고 교환·결합법칙의 적용을 기록했다. [GitHub 재생](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43055678022) · [독립 비교](whole-k-atlas/diagonal-n2/diagonal-n2-comparison.json).
+- **VERIFIED · GitHub Lean** 맨 아래 시간·축방향 구간, 실제 대표점 시간 중점, 빠진 차수의 scale 여유를 잇는 정리 3개가 통과했다. 실제 원본 대표점에서 고차 창의 필요성이 남는 영역은 \(\delta=25/(16(\ell_{\min}+16)^6)\) 폭의 좁은 구간 안에 있다. **CONDITIONAL** 실제 \(b_4q_{\rm Big}\ge64/(1-w)\), \(w=3/[4(\ell_{\min}+16)^6]\)이면 그 구간도 \(N\le3\)으로 덮인다. [Lean 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43056871435) · [원본 대표점과 면적](whole-k-selector-scales/n4-bottom-strip.json).
+- **CONDITIONAL · Y 원본 인자** \(N=2\)의 반경 호출 610개를 원본 적분 변수 182개에 결속했다. \(\eta\) 인자 전달 4,312개는 모두 원래 \([-1,1]\) 적분에 결속됐다. 실제 원본 역함수의 \(\eta^2=1-T/s\)와 행별 스케일 변환을 검사했다. 남은 조건은 활성 행마다 실제 역함수 정의역과 미분 치환을 연결하는 일이다. [반경 인자](y-n2-domain/README.md) · [축방향 인자](y-n2-eta/README.md).
+- **OPEN · 원본 실행 병목** 이전 \(N=3\)은 현재장 4,083,120개 노드까지 인증했고 압력 단계에서 메모리 한도에 도달했다. 필요한 미분만 생성하는 새 \(N=3\) 실행은 대역을 먼저 저장한다. 동일 원본의 C5 Primary–Forced 결속도 측정한 메모리 여유 안에서 재시도 중이다. [N=3 재실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43057719849) · [같은 원본 결속](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43057392190).
+
+## 이전 검증에서 좁힌 범위
 
 - **VERIFIED** 전체 \(K\)에서 원래 공통 selector의 성장을 사용하면 차트에는 최대 \(N=4\), 실제 켜질 수 있는 배경 항에는 최대 3차가 필요하다. 활성 라벨은 \(\ell_{\min}+14,+15,+16\) 세 개이고 실제 frozen 대표점에서 빠진 항의 cutoff가 평탄한 0임을 보였다. 새 정리 세 개가 GitHub Lean에서 통과했다. [차트와 증거](whole-k-atlas/README.md) · [Lean 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43048948428).
 - **VERIFIED** 원본 \(N=0\) current·pressure 그래프 983,154개 노드와 후보 상자 81개를 재생했다. 원본 selector의 보존된 상계와 일치하는 노드 617,521개에서 \(b_1q_{\mathrm{Big}}=1\)을 확인했다. 따라서 이 \(N=0\) 창의 \(b_1q\ge1\)은 전체 \(K\)에서 성립하지 않는다. [실제 selector 최대값](whole-k-selector-scales/common-b-scales.json). \(N=3\)은 원본 압력·응력 노름 이후 메모리 한도에, \(N=4\)는 원본 family 500만 노드 한도에 도달했다. \(N=3\)의 메모리 여유를 확인한 후 \(N=3\)의 공통 family는 4,071,347개 노드에서 seal 단계에 도달했고 M3 대역의 400만 노드 한도에 막혔다. \(N=4\)는 실제 속도 노름 5,527,646개를 넘겨 압력·응력 단계의 800만 노드 한도에 도달했다. 별도 GitHub checkout에서 자원 한도 비교 한 곳만 바꾸는 검증을 시작했다. [원본 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43049274308) · [격리 재시도](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43053046839).

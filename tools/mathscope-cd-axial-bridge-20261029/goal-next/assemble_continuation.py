@@ -23,6 +23,8 @@ parser.add_argument("--r108-deploy-archive", type=Path)
 parser.add_argument("--primary-order2-artifact", type=Path)
 parser.add_argument("--whole-k-n0-artifact", type=Path)
 parser.add_argument("--core-runtime", type=Path)
+parser.add_argument("--diagonal-n2-artifact", type=Path)
+parser.add_argument("--n2-y-reached", type=Path)
 args = parser.parse_args()
 TASK = args.workspace.resolve()
 REPO = TASK / "work/MathScopeCompute-CD"
@@ -288,7 +290,13 @@ with zipfile.ZipFile(DEST, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=
             add("inputs/original-core-runtime/" + relative, source)
         endpoint = json.loads(git("show", commit + ":" + CURRENT + "/whole-k-center-n3/endpoint-third-bound.json"))
         runtime = endpoint["runtime"]
-        for relative, blob in runtime["runtimeGitBlobs"].items():
+        annular = json.loads(git("show", commit + ":" + CURRENT + "/whole-k-annular-slow/annular-slow-jet-bounds.json"))
+        inner = json.loads(git("show", commit + ":" + CURRENT + "/whole-k-inner-axis/inner-axis-jet-bounds.json"))
+        runtime_blobs = dict(runtime["runtimeGitBlobs"])
+        for sources in (inner["originalRuntime"]["runtimeGitBlobs"], annular["sourceRuntimeGitBlobs"]):
+            assert all(runtime_blobs.get(name, blob) == blob for name, blob in sources.items())
+            runtime_blobs.update(sources)
+        for relative, blob in runtime_blobs.items():
             source = git("show", runtime["sourceCommit"] + ":" + relative)
             assert hashlib.sha1(f"blob {len(source)}\0".encode() + source).hexdigest() == blob
             name = "inputs/original-core-runtime/" + relative
@@ -312,6 +320,30 @@ with zipfile.ZipFile(DEST, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=
             check = data
         assert digest(check) == exact_archive_hashes[key], original
         add("inputs/original-selector-scales/" + Path(original).name, data)
+    if args.diagonal_n2_artifact:
+        artifact = args.diagonal_n2_artifact.resolve()
+        graph = artifact / "original-whole-k-current-pressure-graph"
+        manifest = json.loads((graph / "original-source-export-manifest.json").read_bytes())
+        run = json.loads((artifact / "original-whole-k-prefix.json").read_bytes())
+        comparison = json.loads(git("show", commit + ":" + CURRENT +
+                                   "/whole-k-atlas/diagonal-n2/diagonal-n2-comparison.json"))
+        assert run["currentStage"] == "COMPLETE" and run["requestedPrefix"] == 2
+        assert run["selectorDiagonalOnly"] is True and run["snapshot"] == manifest
+        assert manifest["node_count"] == 2326849 and manifest["actual_final_67_jets_certified"] == 0
+        assert manifest["executing_commit"] == comparison["rightExecutingCommit"]
+        assert comparison["matchedClauses"] == 43 and comparison["typedExpressionPairs"] == 86
+        assert manifest["node_stream_sha256"] == comparison["nodeSHA256"][1]
+        assert manifest["definitions_sha256"] == comparison["registrySHA256"][1]
+        for name in ("original-source-export-manifest.json", "original-source-functions.json",
+                     "original-source-nodes.jsonl.gz"):
+            add("inputs/original-axial-n2-diagonal/original-whole-k-current-pressure-graph/" + name,
+                (graph / name).read_bytes())
+        for name in ("original-whole-k-prefix.json", "diagonal-overlay.json"):
+            add("inputs/original-axial-n2-diagonal/" + name, (artifact / name).read_bytes())
+    if args.n2_y_reached:
+        data = args.n2_y_reached.read_bytes()
+        assert digest(data) == "4779b42d41b9ef8f54484744860f2c6f3da4bde19d5e01bab9af704699f3ee32"
+        add("inputs/original-axial-n2/y-reached.json", data)
     add("REPORT_KO.md", report)
     add("STATUS.json", status)
     target.writestr("SHA256.json", encode(sha_manifest))

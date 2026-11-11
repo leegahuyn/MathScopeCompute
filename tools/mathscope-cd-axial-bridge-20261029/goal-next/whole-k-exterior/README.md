@@ -68,6 +68,12 @@ which is positive because \(K_{\rm heat}(1/4,\tau)>2K_{\rm heat}(1/2,\tau)\) and
 
 The intervals are closed-cell statements with exact positive factors. They leave the global 67-jet coverage count at 0/67. The use of the manuscript's exterior theorems is explicit and supplies no independent proof of the all-order \(\#672\) source bridge. RELEASE HOLD.
 
+## Entire geometric heat exterior
+
+The source theorem identifies the exterior at \(X\ge X_b\), including the closed seam. The moving lower face has \(r^2\ge2qX_b\ge\tau_0 X_b\). The exact Laplace kernel has \(0<H\le1\), \(0\le -ZH'/H\le h\), \(0\le Z^2H''/H\le h(1+h)\) for all \(Z\ge0\). This yields all 67 factored jet intervals down to \(X=X_b\), with 60 exact zeros. The same original radial heat identity supplies the fully localized force, endpoint energy, dissipation, work and force-square integral bounds there. The prior fixed-radius region retains its sharper small-amplitude bounds.
+
+    python check_geometric_heat_exterior.py --localization-source <inputs/localization-source> --chart <whole-k-chart.json>
+
 ## Replay
 
     python check_whole_k_exterior_cell.py --repo REPO --paper PAPER --localization-source SOURCE
