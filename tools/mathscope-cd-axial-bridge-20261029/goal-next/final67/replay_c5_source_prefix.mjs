@@ -32,17 +32,20 @@ assert.equal(family.request.derivativeOrder, 5);
 const { G } = family;
 const norms = family.source.backgroundNorms;
 assert.equal(norms.request.derivativeOrder, 5);
-assert.ok(norms.gaussianRows.length >= 4);
+assert.deepEqual(norms.rows.map(row => row.derivativeOrder), [0, 1, 2, 3, 4, 5]);
+assert.equal(norms.gaussianRows.length, 4);
 for (const [index, row] of norms.gaussianRows.entries()) {
-  assert.equal(row.order, index);
+  assert.equal(row.derivativeOrder, index);
   assert.equal(row.backgroundDerivativeOrder, index + 2);
   assert.equal(G.freeCoordinates(row.B_m).size, 0);
 }
+assert.ok(norms.checks.every(check => check.pass));
 const receipt = {
   schema: 'MathScope.M3.OriginalCommonBackgroundC5Prefix/1',
   request: family.request, graphNodes: G.nodes.length,
   moduleSHA256: createHash('sha256').update(readFileSync(modulePath)).digest('hex'),
   fixedSourceOnlyBackgroundGaussianRows: norms.gaussianRows,
+  fixedSourceOnlyBackgroundChecks: norms.checks,
   commonConstants: family.constants, constructionStages: history,
   proofPrefixOnly: true, actualCurrentUncutSeminormCertified: false, actualScaleSelected: false,
   finalJets: 0, release: 'HOLD'

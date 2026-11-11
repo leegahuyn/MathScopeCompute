@@ -221,6 +221,36 @@ theorem eta_closed_moment_all_jets_zero
       have huniq := (uniqueDiffOn_Icc (by norm_num : (-1 : ℝ) < 1)) eta heta
       exact hd.derivWithin huniq
 
+/-- Agreement on the full parameter interval gives agreement of the
+successive within-interval derivatives, with the inward convention at
+both endpoints. -/
+theorem eta_closed_congr_all_jets
+    (F G : ℝ → ℝ) (h : EqOn F G (Icc (-1 : ℝ) 1)) (k : ℕ) :
+    EqOn (etaMomentJet F k) (etaMomentJet G k) (Icc (-1 : ℝ) 1) := by
+  induction k with
+  | zero => exact h
+  | succ k ih =>
+      intro eta heta
+      change derivWithin (etaMomentJet F k) (Icc (-1 : ℝ) 1) eta =
+        derivWithin (etaMomentJet G k) (Icc (-1 : ℝ) 1) eta
+      exact derivWithin_congr ih (ih heta)
+
+/-- The two signed axial primitives have the same successive eta
+derivatives at each fixed radial point if the full supported moment
+vanishes for every eta and both partial integrals exist. -/
+theorem axial_forward_backward_eta_jets
+    (density : ℝ → ℝ → ℝ) (a x b : ℝ)
+    (hleft : ∀ eta ∈ Icc (-1 : ℝ) 1, IntervalIntegrable (density eta) volume a x)
+    (hright : ∀ eta ∈ Icc (-1 : ℝ) 1, IntervalIntegrable (density eta) volume x b)
+    (hzero : ∀ eta ∈ Icc (-1 : ℝ) 1, (∫ y in a..b, density eta y) = 0)
+    (k : ℕ) :
+    EqOn (etaMomentJet (fun eta => -(∫ y in a..x, density eta y)) k)
+      (etaMomentJet (fun eta => ∫ y in x..b, density eta y) k) (Icc (-1 : ℝ) 1) := by
+  apply eta_closed_congr_all_jets
+  intro eta heta
+  exact axial_backward_primitive (density eta) a x b
+    (hleft eta heta) (hright eta heta) (hzero eta heta)
+
 /-- Order one uses the leading axial flux; the positive-order induction
 hypothesis alone cannot close this base case. -/
 theorem axial_previous_order_split
@@ -266,6 +296,8 @@ end MathScope.M3.CD
 #print axioms MathScope.M3.CD.eta_moment_two_derivatives_zero
 #print axioms MathScope.M3.CD.eta_interior_moment_two_derivatives_zero
 #print axioms MathScope.M3.CD.eta_closed_moment_all_jets_zero
+#print axioms MathScope.M3.CD.eta_closed_congr_all_jets
+#print axioms MathScope.M3.CD.axial_forward_backward_eta_jets
 #print axioms MathScope.M3.CD.axial_previous_order_split
 #print axioms MathScope.M3.CD.omitted_pressure_boundary_countermodel
 #print axioms MathScope.M3.CD.pointwise_zero_is_insufficient
