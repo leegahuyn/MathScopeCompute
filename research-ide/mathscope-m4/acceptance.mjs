@@ -15,6 +15,9 @@ const REVIEWED_CRITERION_DIGESTS = Object.freeze(Object.assign(Object.create(nul
   'R1-02': 'ac091d3ef9bfc7a3a7134d5c11c5ceedaf6d4823eb2208cd29f537ef65f8fe7f',
   'I3-02': '8a412ba3a4ff9183cca09eb90a7552587a5bccb4d2e5b8545c5e57e332f0aa57',
   'I3-03': '84791c3ae78a6a5cb31c74b22b04ff5b7311ab9e32163f6f4561dfe44fb14b61',
+  'I3-05': '805b0a554de4181b5fbfde53c4c5c3c5c9308c729ce56c93b392416a572f7eaf',
+  'I3-06': 'ac075f45f0e2cd9faa729a947fc9394d3776810bd7bde7c0c23aba7620100cb3',
+  'R1-04': 'ed0b42402e1731b76a867c602883c0d5d8e63acf34afab491a763c1230194a4d',
 }));
 // Digest keys and values must both be independently reviewed exact digests.
 const REVIEWED_M3_COMPLETION_DIGESTS = Object.freeze(Object.create(null));

@@ -1,0 +1,980 @@
+{
+  "criterion": "R1-04",
+  "sourcePin": "9595b4de5a1065b694d225c0ad2a14d5aa4435a9",
+  "runtime": "v24.18.0",
+  "dependencies": {
+    "research-ide/mathscope-m0/contracts.mjs": {
+      "installed": "cd32d97bdbfbbcf33375cd01f3fe98cd5a202ec63a01f145c9626d0995b3a111",
+      "pinned": "cd32d97bdbfbbcf33375cd01f3fe98cd5a202ec63a01f145c9626d0995b3a111"
+    },
+    "research-ide/mathscope-m1/arithmetic/complex.mjs": {
+      "installed": "098850a65c78f0abce330de0f665548733854a54b4f42f15fb0a02314ce3b6ce",
+      "pinned": "098850a65c78f0abce330de0f665548733854a54b4f42f15fb0a02314ce3b6ce"
+    },
+    "research-ide/mathscope-m1/arithmetic/exact.mjs": {
+      "installed": "f73ff3dfc762423a78d8ab733e1a67e26a76fc0c068b86b6984438ba13781ae8",
+      "pinned": "f73ff3dfc762423a78d8ab733e1a67e26a76fc0c068b86b6984438ba13781ae8"
+    },
+    "research-ide/mathscope-m1/arithmetic/index.mjs": {
+      "installed": "3007a775e6bf09cfa593b48eb571fae8a52742632cb6d0b6711af4d56f9c62e2",
+      "pinned": "3007a775e6bf09cfa593b48eb571fae8a52742632cb6d0b6711af4d56f9c62e2"
+    },
+    "research-ide/mathscope-m1/arithmetic/local-factors.mjs": {
+      "installed": "14accb9e63c717feefc8d98f86b4b148a71c287683a5f123637ea34ac512d9b0",
+      "pinned": "14accb9e63c717feefc8d98f86b4b148a71c287683a5f123637ea34ac512d9b0"
+    },
+    "research-ide/mathscope-m1/arithmetic/padic.mjs": {
+      "installed": "50bfbb9fb19a120e00ecdcec785c2292a1e752d50e96af6c1a387cc1469f5ccf",
+      "pinned": "50bfbb9fb19a120e00ecdcec785c2292a1e752d50e96af6c1a387cc1469f5ccf"
+    },
+    "research-ide/mathscope-m1/arithmetic/primes.mjs": {
+      "installed": "d00a6d871842ca17567dc226890af24a7fad97a0bc2bfba99acf42374eb53cb0",
+      "pinned": "d00a6d871842ca17567dc226890af24a7fad97a0bc2bfba99acf42374eb53cb0"
+    },
+    "research-ide/mathscope-m1/arithmetic/sources.mjs": {
+      "installed": "a33231945440170bad4a76fa1bb2c5a249ec97e3e43dede1a8f19face2aedbf6",
+      "pinned": "a33231945440170bad4a76fa1bb2c5a249ec97e3e43dede1a8f19face2aedbf6"
+    },
+    "research-ide/mathscope-m1/core/engine.mjs": {
+      "installed": "6aec83047c0fea9cb2af184e876097e7d1599b228ab047fc4d7945e4536bb28f",
+      "pinned": "6aec83047c0fea9cb2af184e876097e7d1599b228ab047fc4d7945e4536bb28f"
+    },
+    "research-ide/mathscope-m1/core/registry.mjs": {
+      "installed": "0fc5f40ff59b2357f022a2d946fd5e9c316a3be1dcb8620ba526b1fa4a66597e",
+      "pinned": "0fc5f40ff59b2357f022a2d946fd5e9c316a3be1dcb8620ba526b1fa4a66597e"
+    },
+    "research-ide/mathscope-m1/core/worker-data.mjs": {
+      "installed": "2fe5a61dd6928f4c1898d9d57ade82e24c750d815afacb02373419350f269cb8",
+      "pinned": "2fe5a61dd6928f4c1898d9d57ade82e24c750d815afacb02373419350f269cb8"
+    },
+    "research-ide/mathscope-m1/gauge/exact.mjs": {
+      "installed": "0d0c2d1fc5ef529bbe48bd5fb38020336d0041293b3b008c6e0a4d252fb49d31",
+      "pinned": "0d0c2d1fc5ef529bbe48bd5fb38020336d0041293b3b008c6e0a4d252fb49d31"
+    },
+    "research-ide/mathscope-m1/gauge/family.mjs": {
+      "installed": "e1008deb11424bde74025446ed1dbde90e04b6bcee198a965a7e121521bd423c",
+      "pinned": "e1008deb11424bde74025446ed1dbde90e04b6bcee198a965a7e121521bd423c"
+    },
+    "research-ide/mathscope-m1/gauge/fields.mjs": {
+      "installed": "5335fb6307b70cc31b24d3ca8fb00f936f79fe9aac1139c88861337040b1f288",
+      "pinned": "5335fb6307b70cc31b24d3ca8fb00f936f79fe9aac1139c88861337040b1f288"
+    },
+    "research-ide/mathscope-m1/gauge/group-data.mjs": {
+      "installed": "8118ac12fa778535a3955324ed7d3b62f2f7cfe6dc6cf500e1347d3d1101d0bd",
+      "pinned": "8118ac12fa778535a3955324ed7d3b62f2f7cfe6dc6cf500e1347d3d1101d0bd"
+    },
+    "research-ide/mathscope-m1/gauge/groups.mjs": {
+      "installed": "3e37c6b7b53ff9dbcfde5017735c72df5889dd3fd0522159ea54a9be1ea8d68f",
+      "pinned": "3e37c6b7b53ff9dbcfde5017735c72df5889dd3fd0522159ea54a9be1ea8d68f"
+    },
+    "research-ide/mathscope-m1/gauge/holonomy.mjs": {
+      "installed": "25c6b36e74b29d6753b1c1d70a47d7c00086252288260110f2e956469442c3c2",
+      "pinned": "25c6b36e74b29d6753b1c1d70a47d7c00086252288260110f2e956469442c3c2"
+    },
+    "research-ide/mathscope-m1/gauge/index.mjs": {
+      "installed": "04457510781f1e1ae9a7c617a8fb713412070f70f8de4d903a43f18d429a1421",
+      "pinned": "04457510781f1e1ae9a7c617a8fb713412070f70f8de4d903a43f18d429a1421"
+    },
+    "research-ide/mathscope-m1/gauge/matrix.mjs": {
+      "installed": "b64936bab882ddaed9849112110a6114a19bf7d6c8105c59d311b542b18fced5",
+      "pinned": "b64936bab882ddaed9849112110a6114a19bf7d6c8105c59d311b542b18fced5"
+    },
+    "research-ide/mathscope-m1/gauge/observations.mjs": {
+      "installed": "f0632cef031958d45a96362a74491ef3ebb1da857756e65966fc04a701bf656e",
+      "pinned": "f0632cef031958d45a96362a74491ef3ebb1da857756e65966fc04a701bf656e"
+    },
+    "research-ide/mathscope-m1/navier/axis-series.mjs": {
+      "installed": "2b8b29f2200811e74ff396af9da332fec68d27679a3cf5c74af9a563dff3ac1e",
+      "pinned": "2b8b29f2200811e74ff396af9da332fec68d27679a3cf5c74af9a563dff3ac1e"
+    },
+    "research-ide/mathscope-m1/navier/checks.mjs": {
+      "installed": "9f69f84c187623d5b342b7bc3321345144652db1c402853ae0f7d0e20124a2ae",
+      "pinned": "9f69f84c187623d5b342b7bc3321345144652db1c402853ae0f7d0e20124a2ae"
+    },
+    "research-ide/mathscope-m1/navier/coordinates.mjs": {
+      "installed": "aaf25139e73440f5a365ec627d33ba8f4f66b34f2d15c3f25966fecce4c5eddd",
+      "pinned": "aaf25139e73440f5a365ec627d33ba8f4f66b34f2d15c3f25966fecce4c5eddd"
+    },
+    "research-ide/mathscope-m1/navier/fixtures.generated.mjs": {
+      "installed": "7059d9d7744deef0a7b58ee65b3b14ff99b804a02f0a3903bb9bcb08ad893b0e",
+      "pinned": "7059d9d7744deef0a7b58ee65b3b14ff99b804a02f0a3903bb9bcb08ad893b0e"
+    },
+    "research-ide/mathscope-m1/navier/followup-construction/admissible-loop.mjs": {
+      "installed": "64467537166ccc4b8e11fc9d26f29d970e0fea37c479ee23d3724462bef6232a",
+      "pinned": "64467537166ccc4b8e11fc9d26f29d970e0fea37c479ee23d3724462bef6232a"
+    },
+    "research-ide/mathscope-m1/navier/followup-construction/axis-certificates.mjs": {
+      "installed": "7bff5106ded0223d0e7ff14d4431a240de160bdcc6be17c1072189206312495d",
+      "pinned": "7bff5106ded0223d0e7ff14d4431a240de160bdcc6be17c1072189206312495d"
+    },
+    "research-ide/mathscope-m1/navier/followup-construction/axis-source-certificate.mjs": {
+      "installed": "d6344dc0fbf38579c0f63334984a9e44d5b9b00d91f4eda7cdab7bf02e9b5d0c",
+      "pinned": "d6344dc0fbf38579c0f63334984a9e44d5b9b00d91f4eda7cdab7bf02e9b5d0c"
+    },
+    "research-ide/mathscope-m1/navier/followup-construction/controlled-continuation.mjs": {
+      "installed": "8cc936ec00f8720123f964e8489be97e7273c42da278c08ca88cc6baef661d92",
+      "pinned": "8cc936ec00f8720123f964e8489be97e7273c42da278c08ca88cc6baef661d92"
+    },
+    "research-ide/mathscope-m1/navier/followup-construction/index.mjs": {
+      "installed": "af6e20832aedb1a2db94f8b534caecf864f44c161facc279a31e16ee1afc8cdd",
+      "pinned": "af6e20832aedb1a2db94f8b534caecf864f44c161facc279a31e16ee1afc8cdd"
+    },
+    "research-ide/mathscope-m1/navier/followup-construction/outer.mjs": {
+      "installed": "4c0213f892a32611c79655fbe065cebbaca0fc9acdd0cf2dd057d2506a10c087",
+      "pinned": "4c0213f892a32611c79655fbe065cebbaca0fc9acdd0cf2dd057d2506a10c087"
+    },
+    "research-ide/mathscope-m1/navier/followup-construction/pressure-analytic.mjs": {
+      "installed": "3481258e834a6220476eac870568becf4cb9aa88e16a0c67f7057ad54634e59e",
+      "pinned": "3481258e834a6220476eac870568becf4cb9aa88e16a0c67f7057ad54634e59e"
+    },
+    "research-ide/mathscope-m1/navier/followup-construction/source-inner-gluing.mjs": {
+      "installed": "48dbd97ae3110f69260282c9a954f33bad80f87c497b7f3107b5c844addc1ed2",
+      "pinned": "48dbd97ae3110f69260282c9a954f33bad80f87c497b7f3107b5c844addc1ed2"
+    },
+    "research-ide/mathscope-m1/navier/followup-construction/source-radial-modulation.mjs": {
+      "installed": "4db08935854063f75a7422288339110364d00e0173da24e0cac7fef6d857864c",
+      "pinned": "4db08935854063f75a7422288339110364d00e0173da24e0cac7fef6d857864c"
+    },
+    "research-ide/mathscope-m1/navier/heat.mjs": {
+      "installed": "5bb609090a021a2af5bd6a0dac5f6cc398f67bc8b807b5270d649867be021769",
+      "pinned": "5bb609090a021a2af5bd6a0dac5f6cc398f67bc8b807b5270d649867be021769"
+    },
+    "research-ide/mathscope-m1/navier/index.mjs": {
+      "installed": "ec055972892168bfb41ffaa6114d2ed11931053f939cb274c30170bea3645f14",
+      "pinned": "ec055972892168bfb41ffaa6114d2ed11931053f939cb274c30170bea3645f14"
+    },
+    "research-ide/mathscope-m1/navier/lean.generated.mjs": {
+      "installed": "2ba00798d8421f06c713c6e994f28f78e3e9a8a4b5a517290e09ba70441a58ca",
+      "pinned": "2ba00798d8421f06c713c6e994f28f78e3e9a8a4b5a517290e09ba70441a58ca"
+    },
+    "research-ide/mathscope-m1/navier/numerics.mjs": {
+      "installed": "a406401c5a0e024e94d58cce0d7e6bdaa6b35488f22fd0ead4bf87222416c62c",
+      "pinned": "a406401c5a0e024e94d58cce0d7e6bdaa6b35488f22fd0ead4bf87222416c62c"
+    },
+    "research-ide/mathscope-m1/navier/profile.mjs": {
+      "installed": "d5a007cbcb141e728fc4bf9b3bdca08e8be74a6f6bb18a88c1a5e8389b4a99ab",
+      "pinned": "d5a007cbcb141e728fc4bf9b3bdca08e8be74a6f6bb18a88c1a5e8389b4a99ab"
+    },
+    "research-ide/mathscope-m1/navier/provenance.generated.mjs": {
+      "installed": "a99bea75ab84b85d0f2be846b715e922fc931ed01bc6f3886ee8d9530b3526da",
+      "pinned": "a99bea75ab84b85d0f2be846b715e922fc931ed01bc6f3886ee8d9530b3526da"
+    },
+    "research-ide/mathscope-m1/navier/radial.mjs": {
+      "installed": "b058419e28c4f029e19422ec26e9a39ac35d7f71ea60480d2768a956c8844208",
+      "pinned": "b058419e28c4f029e19422ec26e9a39ac35d7f71ea60480d2768a956c8844208"
+    },
+    "research-ide/mathscope-m2/arithmetic/checklist.mjs": {
+      "installed": "acb72512334a0b32aed6817001021c3d1cac5bc5dc5467fc75bfdecf78b77815",
+      "pinned": "acb72512334a0b32aed6817001021c3d1cac5bc5dc5467fc75bfdecf78b77815"
+    },
+    "research-ide/mathscope-m2/arithmetic/finite-fields.mjs": {
+      "installed": "cb2027025c91f484625520d6d4709f6c346ed697f6a6aee39fcfbfeb54b33687",
+      "pinned": "cb2027025c91f484625520d6d4709f6c346ed697f6a6aee39fcfbfeb54b33687"
+    },
+    "research-ide/mathscope-m2/arithmetic/geometric-comparisons.mjs": {
+      "installed": "d600deba745d629efc6c2d54c438943a4c823e13a32657e048bebf59c3ed0097",
+      "pinned": "d600deba745d629efc6c2d54c438943a4c823e13a32657e048bebf59c3ed0097"
+    },
+    "research-ide/mathscope-m2/arithmetic/index.mjs": {
+      "installed": "8fc52b9810dac164ba409409ac691f9ecad00b7d63d62cbdd91f590b8921dfd8",
+      "pinned": "8fc52b9810dac164ba409409ac691f9ecad00b7d63d62cbdd91f590b8921dfd8"
+    },
+    "research-ide/mathscope-m2/arithmetic/mw-frobenius.mjs": {
+      "installed": "d0d204f548e334c029c72e3b6b284255fd48cc21a9ae4fee1c4a70d00e6d9281",
+      "pinned": "d0d204f548e334c029c72e3b6b284255fd48cc21a9ae4fee1c4a70d00e6d9281"
+    },
+    "research-ide/mathscope-m2/arithmetic/perfectoid-comparisons.mjs": {
+      "installed": "e52375faafe587fce71bdb452df5bf5e144284e85e6b47d164fe0c20d1600e78",
+      "pinned": "e52375faafe587fce71bdb452df5bf5e144284e85e6b47d164fe0c20d1600e78"
+    },
+    "research-ide/mathscope-m2/arithmetic/perfectoid.mjs": {
+      "installed": "dbd8b933d6b17111af88705d40eaf090ec7df40ae2ef7a6f33fc2f0aa29193b0",
+      "pinned": "dbd8b933d6b17111af88705d40eaf090ec7df40ae2ef7a6f33fc2f0aa29193b0"
+    },
+    "research-ide/mathscope-m2/arithmetic/projective.mjs": {
+      "installed": "ee8e6d864366e21ed6d0290cba7c97e793480c1b0deaee2c655af7d4eca99a94",
+      "pinned": "ee8e6d864366e21ed6d0290cba7c97e793480c1b0deaee2c655af7d4eca99a94"
+    },
+    "research-ide/mathscope-m2/arithmetic/q-bk.mjs": {
+      "installed": "e752d23b942e71246756b5dc9bbe09ad11b92544ebe12885a505040068939671",
+      "pinned": "e752d23b942e71246756b5dc9bbe09ad11b92544ebe12885a505040068939671"
+    },
+    "research-ide/mathscope-m2/arithmetic/q-comparisons.mjs": {
+      "installed": "10b73d7cc6ed626dfd91c9d8c2594b5ed262a276b55ef8049bbc2f943aed192c",
+      "pinned": "10b73d7cc6ed626dfd91c9d8c2594b5ed262a276b55ef8049bbc2f943aed192c"
+    },
+    "research-ide/mathscope-m2/arithmetic/q-polynomial.mjs": {
+      "installed": "3a7bace0882cc18379b7a7b78ba776e20a8425c82d1906ed9f86f2914a41198d",
+      "pinned": "3a7bace0882cc18379b7a7b78ba776e20a8425c82d1906ed9f86f2914a41198d"
+    },
+    "research-ide/mathscope-m2/arithmetic/qpd-nerve.mjs": {
+      "installed": "4fedf76a88562186a40d1b772913bda59fb344498d587f55af19b962119008bb",
+      "pinned": "4fedf76a88562186a40d1b772913bda59fb344498d587f55af19b962119008bb"
+    },
+    "research-ide/mathscope-m2/arithmetic/rational.mjs": {
+      "installed": "aad88bcdee3647c3326e30ac88bf70e7a597cb46c447c13bd54bfa92f954fccd",
+      "pinned": "aad88bcdee3647c3326e30ac88bf70e7a597cb46c447c13bd54bfa92f954fccd"
+    },
+    "research-ide/mathscope-m2/arithmetic/tilt-arithmetic.mjs": {
+      "installed": "588257274571466351e90439ec2619754a690fff43789ab02da967a9f906e7c8",
+      "pinned": "588257274571466351e90439ec2619754a690fff43789ab02da967a9f906e7c8"
+    },
+    "research-ide/mathscope-m2/arithmetic/unramified-frobenius.mjs": {
+      "installed": "5fe9c7116c3d2d928b4feb21eb97d9634127b203e9db7cd6f1543a40c6402cf8",
+      "pinned": "5fe9c7116c3d2d928b4feb21eb97d9634127b203e9db7cd6f1543a40c6402cf8"
+    },
+    "research-ide/mathscope-m2/core/engine.mjs": {
+      "installed": "742d5da6826f85b7dc08c3d93c45c129fd8797161e0d5a2eee13b27995981518",
+      "pinned": "742d5da6826f85b7dc08c3d93c45c129fd8797161e0d5a2eee13b27995981518"
+    },
+    "research-ide/mathscope-m2/core/registry.mjs": {
+      "installed": "e208e3d9ca41f96bee099daef6835f418e9bb62492c3f1bd86070d1796478417",
+      "pinned": "e208e3d9ca41f96bee099daef6835f418e9bb62492c3f1bd86070d1796478417"
+    },
+    "research-ide/mathscope-m2/core/replay-import.mjs": {
+      "installed": "4c51c8507949fa9a843567707c9898cd3557f261b2231bc052633fbb096a945a",
+      "pinned": "4c51c8507949fa9a843567707c9898cd3557f261b2231bc052633fbb096a945a"
+    },
+    "research-ide/mathscope-m2/core/worker-data.mjs": {
+      "installed": "234c59a017d223b1648df20ff52bbc491630675d778a9f51eed1056e028d8a62",
+      "pinned": "234c59a017d223b1648df20ff52bbc491630675d778a9f51eed1056e028d8a62"
+    },
+    "research-ide/mathscope-m2/gauge/contracts.mjs": {
+      "installed": "700e462ff3731899daa98f6453a04188d990b81e09c11e2ebb639fd1bd86e24c",
+      "pinned": "700e462ff3731899daa98f6453a04188d990b81e09c11e2ebb639fd1bd86e24c"
+    },
+    "research-ide/mathscope-m2/gauge/enclosures.mjs": {
+      "installed": "52d48aa5e0a8f9db6d1a5c36fb6f70e29affa6b09d8d57c9f2efba7ae68d40fc",
+      "pinned": "52d48aa5e0a8f9db6d1a5c36fb6f70e29affa6b09d8d57c9f2efba7ae68d40fc"
+    },
+    "research-ide/mathscope-m2/gauge/ensemble.mjs": {
+      "installed": "b51e4c23b82fdfca7affa125e6a4f4971f519526190f956a39f42fc812d645bf",
+      "pinned": "b51e4c23b82fdfca7affa125e6a4f4971f519526190f956a39f42fc812d645bf"
+    },
+    "research-ide/mathscope-m2/gauge/index.mjs": {
+      "installed": "1206c1408596f1f237c27be8037aa3b221337da7e83805e34ac77fe6c23a3554",
+      "pinned": "1206c1408596f1f237c27be8037aa3b221337da7e83805e34ac77fe6c23a3554"
+    },
+    "research-ide/mathscope-m2/gauge/lattice.mjs": {
+      "installed": "6e6b31ad5fefd945630e8aebf5e42a5b41c0b05154a2cb3a514cb162f0a10e30",
+      "pinned": "6e6b31ad5fefd945630e8aebf5e42a5b41c0b05154a2cb3a514cb162f0a10e30"
+    },
+    "research-ide/mathscope-m2/gauge/quaternion-oracle.mjs": {
+      "installed": "5af716b7e3161fcdf775b7c80f0d92a6b52736a30fa560ece9458f9276fbf20e",
+      "pinned": "5af716b7e3161fcdf775b7c80f0d92a6b52736a30fa560ece9458f9276fbf20e"
+    },
+    "research-ide/mathscope-m2/gauge/reference.mjs": {
+      "installed": "d81516d5a3a7626ecf0ea257fcc930603522de3ed9a0b9d562e30450f3110548",
+      "pinned": "d81516d5a3a7626ecf0ea257fcc930603522de3ed9a0b9d562e30450f3110548"
+    },
+    "research-ide/mathscope-m2/gauge/refinement.mjs": {
+      "installed": "fa1c19703786e196f36032d22e321203a0da3c226808621e0fd21c914f98388b",
+      "pinned": "fa1c19703786e196f36032d22e321203a0da3c226808621e0fd21c914f98388b"
+    },
+    "research-ide/mathscope-m2/gauge/reflection.mjs": {
+      "installed": "7bc702e3adfdd6588fced7776aba9f66c09ac96d82ec71e47645901caadc7c4e",
+      "pinned": "7bc702e3adfdd6588fced7776aba9f66c09ac96d82ec71e47645901caadc7c4e"
+    },
+    "research-ide/mathscope-m2/gauge/statistics.mjs": {
+      "installed": "9d6b45fca7a05039fa70bd53d7f50f289f9a8b8cdf8ae3d6bf20a67ad2b986b7",
+      "pinned": "9d6b45fca7a05039fa70bd53d7f50f289f9a8b8cdf8ae3d6bf20a67ad2b986b7"
+    },
+    "research-ide/mathscope-m2/gauge/transfer.mjs": {
+      "installed": "7fd64613e4b95d880e15c733e343227ce0239a9e7edab7805d4fa520c0217f9b",
+      "pinned": "7fd64613e4b95d880e15c733e343227ce0239a9e7edab7805d4fa520c0217f9b"
+    },
+    "research-ide/mathscope-m2/gauge/transport-certificates.mjs": {
+      "installed": "eccb7b03c70af33bf1ade84b0ba085e7dc24d32133711159f55551b66de4af1e",
+      "pinned": "eccb7b03c70af33bf1ade84b0ba085e7dc24d32133711159f55551b66de4af1e"
+    },
+    "research-ide/mathscope-m2/gauge/volume.mjs": {
+      "installed": "10bc387f8a3eb330e43a5f94fad53cc8cb1358ad5a517b15f247ced461b7ac20",
+      "pinned": "10bc387f8a3eb330e43a5f94fad53cc8cb1358ad5a517b15f247ced461b7ac20"
+    },
+    "research-ide/mathscope-m2/navier/actual-adiabatic-pulse-center-kernel.mjs": {
+      "installed": "7401a2edc03d01420e685ed35197ff67fa42ad02ec19ac086e95096ba57b6875",
+      "pinned": "7401a2edc03d01420e685ed35197ff67fa42ad02ec19ac086e95096ba57b6875"
+    },
+    "research-ide/mathscope-m2/navier/actual-background-data.mjs": {
+      "installed": "f1d4d5da1b3489bd237c20deab6f2d5b05b7b47855cf9a1d1b071b7e1c57f112",
+      "pinned": "f1d4d5da1b3489bd237c20deab6f2d5b05b7b47855cf9a1d1b071b7e1c57f112"
+    },
+    "research-ide/mathscope-m2/navier/actual-background-jets.mjs": {
+      "installed": "0f96de9291df0f0c92cad12240f7397f52982eb3bcd8c00f99a512afe322c78f",
+      "pinned": "0f96de9291df0f0c92cad12240f7397f52982eb3bcd8c00f99a512afe322c78f"
+    },
+    "research-ide/mathscope-m2/navier/actual-background-majorant.mjs": {
+      "installed": "e741d1cd144481c205874d05842b7961807c923f92155a662347dbcd48785b52",
+      "pinned": "e741d1cd144481c205874d05842b7961807c923f92155a662347dbcd48785b52"
+    },
+    "research-ide/mathscope-m2/navier/actual-background-moments.mjs": {
+      "installed": "4e405b410586c9992a4d6346cb050c57fdcc981e0f8a24e2c4310669e6e0bb03",
+      "pinned": "4e405b410586c9992a4d6346cb050c57fdcc981e0f8a24e2c4310669e6e0bb03"
+    },
+    "research-ide/mathscope-m2/navier/actual-background-observations.mjs": {
+      "installed": "fdba06c71759e49e4da61e0bf8396cc08f8481bbe2e1cff061ddf19c32b11b4e",
+      "pinned": "fdba06c71759e49e4da61e0bf8396cc08f8481bbe2e1cff061ddf19c32b11b4e"
+    },
+    "research-ide/mathscope-m2/navier/actual-background-points.mjs": {
+      "installed": "e03dd1eefbd97b40405a71285e2a37a42a90a3b4b0738179828693e736bc50ba",
+      "pinned": "e03dd1eefbd97b40405a71285e2a37a42a90a3b4b0738179828693e736bc50ba"
+    },
+    "research-ide/mathscope-m2/navier/actual-background.mjs": {
+      "installed": "c703bf0f812e890d9df9061c4540d87e9e81d79c605dc8a379a25aca617f6da7",
+      "pinned": "c703bf0f812e890d9df9061c4540d87e9e81d79c605dc8a379a25aca617f6da7"
+    },
+    "research-ide/mathscope-m2/navier/actual-centered-fast-jet-enclosure-kernel.mjs": {
+      "installed": "962f6d50ce6fe01c50ba780fe134e3033a09e35c88fea94c3a2afb6ad1652b70",
+      "pinned": "962f6d50ce6fe01c50ba780fe134e3033a09e35c88fea94c3a2afb6ad1652b70"
+    },
+    "research-ide/mathscope-m2/navier/actual-centered-pulse-enclosure-kernel.mjs": {
+      "installed": "cdcecae99bd3b543e4649ca19823a69dce4f365ca2fdd2b342970e16de936553",
+      "pinned": "cdcecae99bd3b543e4649ca19823a69dce4f365ca2fdd2b342970e16de936553"
+    },
+    "research-ide/mathscope-m2/navier/actual-centered-slow-jet-enclosure-kernel.mjs": {
+      "installed": "5380b3b9857cb3df1e185675647337f9da12308ebaff260c57c3076d577449ab",
+      "pinned": "5380b3b9857cb3df1e185675647337f9da12308ebaff260c57c3076d577449ab"
+    },
+    "research-ide/mathscope-m2/navier/actual-centered-slow-jet-source-bounds.mjs": {
+      "installed": "b459a15cf3efdc21588f77f25573a7fabf5f05a8bc03b02865e0503f7265011b",
+      "pinned": "b459a15cf3efdc21588f77f25573a7fabf5f05a8bc03b02865e0503f7265011b"
+    },
+    "research-ide/mathscope-m2/navier/actual-continuation-a2-program.mjs": {
+      "installed": "1c08074483d11c5e0e4a3d61350efdf26f57b03b082adad12c59b2ba30ce386d",
+      "pinned": "1c08074483d11c5e0e4a3d61350efdf26f57b03b082adad12c59b2ba30ce386d"
+    },
+    "research-ide/mathscope-m2/navier/actual-continuation-arithmetic.mjs": {
+      "installed": "5b889de71fdb464e1ad0b1b17a4d5d0a7d6fb9a17a9a3e57379fd566cfd8fbea",
+      "pinned": "5b889de71fdb464e1ad0b1b17a4d5d0a7d6fb9a17a9a3e57379fd566cfd8fbea"
+    },
+    "research-ide/mathscope-m2/navier/actual-continuation-comparison.mjs": {
+      "installed": "f3ba342c8053cfe5945f45b506e18050b71be33c4abccd37515e2f627dd54e2e",
+      "pinned": "f3ba342c8053cfe5945f45b506e18050b71be33c4abccd37515e2f627dd54e2e"
+    },
+    "research-ide/mathscope-m2/navier/actual-continuation-construction.mjs": {
+      "installed": "c2b732e1b7346a893eb4db009c09c7c39a86c9cf9207d704860a7370108c3970",
+      "pinned": "c2b732e1b7346a893eb4db009c09c7c39a86c9cf9207d704860a7370108c3970"
+    },
+    "research-ide/mathscope-m2/navier/actual-continuation-exact-b8-data.mjs": {
+      "installed": "733ecee70b95d39212d0a85bebbd7c46357cca308fbaf5f54b95564066c4bf1b",
+      "pinned": "733ecee70b95d39212d0a85bebbd7c46357cca308fbaf5f54b95564066c4bf1b"
+    },
+    "research-ide/mathscope-m2/navier/actual-continuation-exact-b8.mjs": {
+      "installed": "1e0d6586a60ee5aa3d5315c40f624ebb9e8a4925a00117818d41d6697fc67baf",
+      "pinned": "1e0d6586a60ee5aa3d5315c40f624ebb9e8a4925a00117818d41d6697fc67baf"
+    },
+    "research-ide/mathscope-m2/navier/actual-continuation-exact-certificate.mjs": {
+      "installed": "7d3ec9326a77ee0f96ae291b314ec1bf798a32019bd2323c5716a95aae55d070",
+      "pinned": "7d3ec9326a77ee0f96ae291b314ec1bf798a32019bd2323c5716a95aae55d070"
+    },
+    "research-ide/mathscope-m2/navier/actual-continuation-exact-conservation.mjs": {
+      "installed": "dcc6faf08a03e991d0bbdfc3714fe65897e17d877cc83672c19ad5d91a9b08b8",
+      "pinned": "dcc6faf08a03e991d0bbdfc3714fe65897e17d877cc83672c19ad5d91a9b08b8"
+    },
+    "research-ide/mathscope-m2/navier/actual-continuation-exact-core.mjs": {
+      "installed": "d657bc94665ccc6b373fe951d76998f60b52869c2e7e19d5713f8ba0ccb96815",
+      "pinned": "d657bc94665ccc6b373fe951d76998f60b52869c2e7e19d5713f8ba0ccb96815"
+    },
+    "research-ide/mathscope-m2/navier/actual-continuation-exact-functions.mjs": {
+      "installed": "326b94ad5d9dc0b4bfda83a53edb7da06ed4ca30506e1ff952f77a0e59676311",
+      "pinned": "326b94ad5d9dc0b4bfda83a53edb7da06ed4ca30506e1ff952f77a0e59676311"
+    },
+    "research-ide/mathscope-m2/navier/actual-continuation-exact-global.mjs": {
+      "installed": "497e18fc52c10b9eb482bdb6cc18b406c02f453dc19663ba5535c13a41ec015f",
+      "pinned": "497e18fc52c10b9eb482bdb6cc18b406c02f453dc19663ba5535c13a41ec015f"
+    },
+    "research-ide/mathscope-m2/navier/actual-continuation-exact-heat.mjs": {
+      "installed": "c999b45a6d1e18226c80fb9866b6743553f1859c67dffa39490cd25f7e13d172",
+      "pinned": "c999b45a6d1e18226c80fb9866b6743553f1859c67dffa39490cd25f7e13d172"
+    },
+    "research-ide/mathscope-m2/navier/actual-continuation-exact-identities.mjs": {
+      "installed": "bf7ba32a83fc5297de59cc620e24488d56a1e4c718e5b297373e78dbaf22b712",
+      "pinned": "bf7ba32a83fc5297de59cc620e24488d56a1e4c718e5b297373e78dbaf22b712"
+    },
+    "research-ide/mathscope-m2/navier/actual-continuation-exact-inner.mjs": {
+      "installed": "3deb02f1f7c9dfd0d0fc7936050eead9514f0e11e44ecb5bd4053073c2518ad8",
+      "pinned": "3deb02f1f7c9dfd0d0fc7936050eead9514f0e11e44ecb5bd4053073c2518ad8"
+    },
+    "research-ide/mathscope-m2/navier/actual-continuation-exact-leading-conservation.mjs": {
+      "installed": "48650f7a1ad5515dc24cf26395bb3b6435ca11c602bfcf8fb09446012a21474b",
+      "pinned": "48650f7a1ad5515dc24cf26395bb3b6435ca11c602bfcf8fb09446012a21474b"
+    },
+    "research-ide/mathscope-m2/navier/actual-continuation-exact-linear.mjs": {
+      "installed": "0d6363d8df494e72d83d619c15548de43233e1f776c0a22a156635b46b0d4ff3",
+      "pinned": "0d6363d8df494e72d83d619c15548de43233e1f776c0a22a156635b46b0d4ff3"
+    },
+    "research-ide/mathscope-m2/navier/actual-continuation-exact-loop.mjs": {
+      "installed": "07ee5caa8ce45a9d8a910cab7243ae3e351965a8602a38030917f69114d8902d",
+      "pinned": "07ee5caa8ce45a9d8a910cab7243ae3e351965a8602a38030917f69114d8902d"
+    },
+    "research-ide/mathscope-m2/navier/actual-continuation-exact-order-one.mjs": {
+      "installed": "bdfa6fa313b09893850a567623135df699568d05f788c98c00fc9f31c6d41c72",
+      "pinned": "bdfa6fa313b09893850a567623135df699568d05f788c98c00fc9f31c6d41c72"
+    },
+    "research-ide/mathscope-m2/navier/actual-continuation-exact-order-two-source.mjs": {
+      "installed": "1ebf8b2b6f1df054a06309c5dc8695f2f3a867733544ab012f206bfed2969dd0",
+      "pinned": "1ebf8b2b6f1df054a06309c5dc8695f2f3a867733544ab012f206bfed2969dd0"
+    },
+    "research-ide/mathscope-m2/navier/actual-continuation-exact-order-two-stress.mjs": {
+      "installed": "747a289d9d358323326860645b3ce68ed766ba4c949e6038b663bebdd66d91b1",
+      "pinned": "747a289d9d358323326860645b3ce68ed766ba4c949e6038b663bebdd66d91b1"
+    },
+    "research-ide/mathscope-m2/navier/actual-continuation-exact-order-two.mjs": {
+      "installed": "cbaf95a6ea5221fe496ecb355bc94401cf2b84f04ab7e8254478d71e584772d8",
+      "pinned": "cbaf95a6ea5221fe496ecb355bc94401cf2b84f04ab7e8254478d71e584772d8"
+    },
+    "research-ide/mathscope-m2/navier/actual-continuation-exact-pde-proof.mjs": {
+      "installed": "816bd419d6b09545c18d2629c405fe91391f502b467409adecf6eed07c43c547",
+      "pinned": "816bd419d6b09545c18d2629c405fe91391f502b467409adecf6eed07c43c547"
+    },
+    "research-ide/mathscope-m2/navier/actual-continuation-exact-pregluing.mjs": {
+      "installed": "7fd65f8e2519e4bab3fe017e6349ae98d700592548bc0e5a28aee431080ff2c3",
+      "pinned": "7fd65f8e2519e4bab3fe017e6349ae98d700592548bc0e5a28aee431080ff2c3"
+    },
+    "research-ide/mathscope-m2/navier/actual-continuation-exact-stress.mjs": {
+      "installed": "22d0fe9deae4dd7a5dca687758fb3b8b57a56cba7472c9fb23b76dd360f0bcc2",
+      "pinned": "22d0fe9deae4dd7a5dca687758fb3b8b57a56cba7472c9fb23b76dd360f0bcc2"
+    },
+    "research-ide/mathscope-m2/navier/actual-continuation-exact-support.mjs": {
+      "installed": "0be8fcf8d8a70d98ab339ca1bec727efac998f4763d852b21fb5761f27450b98",
+      "pinned": "0be8fcf8d8a70d98ab339ca1bec727efac998f4763d852b21fb5761f27450b98"
+    },
+    "research-ide/mathscope-m2/navier/actual-continuation-exact-tail.mjs": {
+      "installed": "fa569df96f7950e4c1d908405d8a30bcb73088b1e2d3af7a0baa047d4b2a3df0",
+      "pinned": "fa569df96f7950e4c1d908405d8a30bcb73088b1e2d3af7a0baa047d4b2a3df0"
+    },
+    "research-ide/mathscope-m2/navier/actual-continuation-moments.mjs": {
+      "installed": "f9036da746c9ae87e7b4ad7f7ded83f180f78acfca1224acf895ff6826dfc598",
+      "pinned": "f9036da746c9ae87e7b4ad7f7ded83f180f78acfca1224acf895ff6826dfc598"
+    },
+    "research-ide/mathscope-m2/navier/actual-continuation-reference.mjs": {
+      "installed": "0bf220fb843fa83076c1af13e05cfe23b63c56fe76face82fd46c4a55cff0598",
+      "pinned": "0bf220fb843fa83076c1af13e05cfe23b63c56fe76face82fd46c4a55cff0598"
+    },
+    "research-ide/mathscope-m2/navier/actual-core-evaluator.mjs": {
+      "installed": "670952e4d28f1f6f81830e90a784192de3b387fc097db2576f9fd5716dc6d2a9",
+      "pinned": "670952e4d28f1f6f81830e90a784192de3b387fc097db2576f9fd5716dc6d2a9"
+    },
+    "research-ide/mathscope-m2/navier/actual-covariance-band-admissibility.mjs": {
+      "installed": "bec5a2cf72971baa8e276b308bd5b63bf369afa92313887cc088ff54f879e9a3",
+      "pinned": "bec5a2cf72971baa8e276b308bd5b63bf369afa92313887cc088ff54f879e9a3"
+    },
+    "research-ide/mathscope-m2/navier/actual-covariance-concentration.mjs": {
+      "installed": "154460fb7d11eee113a2bd7f4d5a0f839824331f955775923291d4ab14104934",
+      "pinned": "154460fb7d11eee113a2bd7f4d5a0f839824331f955775923291d4ab14104934"
+    },
+    "research-ide/mathscope-m2/navier/actual-covariance-ell-one-obstruction.mjs": {
+      "installed": "305fb60d757d6e4b1963bb6be73a73e25ab14c04c6a6a23aaa74b99ee48eb96f",
+      "pinned": "305fb60d757d6e4b1963bb6be73a73e25ab14c04c6a6a23aaa74b99ee48eb96f"
+    },
+    "research-ide/mathscope-m2/navier/actual-covariance-global-assembly.mjs": {
+      "installed": "bd0f09f78a2f93cad9fdb679ba25509ecb2891ba86eee1bc3e57df6da74e37cc",
+      "pinned": "bd0f09f78a2f93cad9fdb679ba25509ecb2891ba86eee1bc3e57df6da74e37cc"
+    },
+    "research-ide/mathscope-m2/navier/actual-covariance-matrix.mjs": {
+      "installed": "7419cc0aa5e08fb57c11264013f661f85a82fb481fb69e4610029d806c1efd26",
+      "pinned": "7419cc0aa5e08fb57c11264013f661f85a82fb481fb69e4610029d806c1efd26"
+    },
+    "research-ide/mathscope-m2/navier/actual-covariance-operator-bounds.mjs": {
+      "installed": "b5e96a01ba3a64c2d8b07c4562cccc3bf5c062180a1b0fb8cae9bd799e896d88",
+      "pinned": "b5e96a01ba3a64c2d8b07c4562cccc3bf5c062180a1b0fb8cae9bd799e896d88"
+    },
+    "research-ide/mathscope-m2/navier/actual-covariance-sensitivity.mjs": {
+      "installed": "f27ed95c3a1e40a4dfa4a38340d170aa92c7ec6102b277c952e1dc2dc91ac27c",
+      "pinned": "f27ed95c3a1e40a4dfa4a38340d170aa92c7ec6102b277c952e1dc2dc91ac27c"
+    },
+    "research-ide/mathscope-m2/navier/actual-covariance-source-certificate.mjs": {
+      "installed": "c5b619ac5b4377c93daefefc65f6ddc4336a7ffac3a9118981a32969890a0681",
+      "pinned": "c5b619ac5b4377c93daefefc65f6ddc4336a7ffac3a9118981a32969890a0681"
+    },
+    "research-ide/mathscope-m2/navier/actual-covariance-source-integrals.mjs": {
+      "installed": "7afcf40245266ad2d7f5f07f6124a588c177db1f0d4561bb9da774d5b2e2cbd0",
+      "pinned": "7afcf40245266ad2d7f5f07f6124a588c177db1f0d4561bb9da774d5b2e2cbd0"
+    },
+    "research-ide/mathscope-m2/navier/actual-covariance-source-operator.mjs": {
+      "installed": "8de6b94b5819ec7b7cdbf8312de32e0c7f8556d9e2d78fa250542f1d6ee3b759",
+      "pinned": "8de6b94b5819ec7b7cdbf8312de32e0c7f8556d9e2d78fa250542f1d6ee3b759"
+    },
+    "research-ide/mathscope-m2/navier/actual-covariance-source-target.mjs": {
+      "installed": "c79f67ef6310d398703629782f3bf8ec41743443f108123593018810bf8f2885",
+      "pinned": "c79f67ef6310d398703629782f3bf8ec41743443f108123593018810bf8f2885"
+    },
+    "research-ide/mathscope-m2/navier/actual-covariance-uniform.mjs": {
+      "installed": "93d714749420aff4d5fbb4ab4db2b373fd5ff447fc70202e6ba0b9b11f6670ad",
+      "pinned": "93d714749420aff4d5fbb4ab4db2b373fd5ff447fc70202e6ba0b9b11f6670ad"
+    },
+    "research-ide/mathscope-m2/navier/actual-covariance-volterra.mjs": {
+      "installed": "b5f4b9f6e7eb4dde5259bd2df319c8c56882748b2a41a353a5627c7b91ccbdc7",
+      "pinned": "b5f4b9f6e7eb4dde5259bd2df319c8c56882748b2a41a353a5627c7b91ccbdc7"
+    },
+    "research-ide/mathscope-m2/navier/actual-cutoff-mass-enclosure.mjs": {
+      "installed": "320936a36cebe07828333a39b1620fdec182ec5e5a2a84be174bbb151a7abca8",
+      "pinned": "320936a36cebe07828333a39b1620fdec182ec5e5a2a84be174bbb151a7abca8"
+    },
+    "research-ide/mathscope-m2/navier/actual-full-curl.mjs": {
+      "installed": "4276a850dbff4b5c357c47e1827eb7785b19c7e7c395c94ee4f22ef0c96d58d2",
+      "pinned": "4276a850dbff4b5c357c47e1827eb7785b19c7e7c395c94ee4f22ef0c96d58d2"
+    },
+    "research-ide/mathscope-m2/navier/actual-global-source-expressions.mjs": {
+      "installed": "cd0b5900bba330c5d960bddd84bb695dd275094302dd9bc3cc5fcfee533895a3",
+      "pinned": "cd0b5900bba330c5d960bddd84bb695dd275094302dd9bc3cc5fcfee533895a3"
+    },
+    "research-ide/mathscope-m2/navier/actual-global-source-moments.mjs": {
+      "installed": "faeb9ac3ce0190f6b8964fe640a63f3d8b4e45d5e16e5fa2a851928f114be856",
+      "pinned": "faeb9ac3ce0190f6b8964fe640a63f3d8b4e45d5e16e5fa2a851928f114be856"
+    },
+    "research-ide/mathscope-m2/navier/actual-global-source-observations.mjs": {
+      "installed": "509120b7aeae303f940918c460cfb4af5665625032337e0d9d31f3c43ef38210",
+      "pinned": "509120b7aeae303f940918c460cfb4af5665625032337e0d9d31f3c43ef38210"
+    },
+    "research-ide/mathscope-m2/navier/actual-global-source-outer.mjs": {
+      "installed": "5a46c11ebe8ba3ef26eaf6d632ed7bba03ab98cd5e4354b32f989ae6adb367e9",
+      "pinned": "5a46c11ebe8ba3ef26eaf6d632ed7bba03ab98cd5e4354b32f989ae6adb367e9"
+    },
+    "research-ide/mathscope-m2/navier/actual-global-source.mjs": {
+      "installed": "ae1934e3cb0c923139ce263b9e70a514fbfb1d7a49d79b8cda2c1176fb525821",
+      "pinned": "ae1934e3cb0c923139ce263b9e70a514fbfb1d7a49d79b8cda2c1176fb525821"
+    },
+    "research-ide/mathscope-m2/navier/actual-heat-scaled-enclosure.mjs": {
+      "installed": "965f2e8eeb7b0735ab9cb1ec50a1c9fb41874e0fc805daf15e3ca2da84f7b7d2",
+      "pinned": "965f2e8eeb7b0735ab9cb1ec50a1c9fb41874e0fc805daf15e3ca2da84f7b7d2"
+    },
+    "research-ide/mathscope-m2/navier/actual-leading-all-order-jets-arithmetic.mjs": {
+      "installed": "99c66508b58b46a3e22053bee1eb8f6963c46abde88bdcb54ada5a3f62ba4d7f",
+      "pinned": "99c66508b58b46a3e22053bee1eb8f6963c46abde88bdcb54ada5a3f62ba4d7f"
+    },
+    "research-ide/mathscope-m2/navier/actual-leading-all-order-jets.mjs": {
+      "installed": "d3af156118671a3e582c19a82064aab884a09d6ce81f51a6b2d64d35444cd29d",
+      "pinned": "d3af156118671a3e582c19a82064aab884a09d6ce81f51a6b2d64d35444cd29d"
+    },
+    "research-ide/mathscope-m2/navier/actual-leading-enlarged-c2.mjs": {
+      "installed": "96d9ab3f064aff348ca9b1a489b56060b529827ab288b144358ff54438829529",
+      "pinned": "96d9ab3f064aff348ca9b1a489b56060b529827ab288b144358ff54438829529"
+    },
+    "research-ide/mathscope-m2/navier/actual-leading-high-jets-arithmetic.mjs": {
+      "installed": "fcd064c1d467f50bb98b1903f33ef139ca0ac3b895a80b12ea3a0b1b4b1e4a09",
+      "pinned": "fcd064c1d467f50bb98b1903f33ef139ca0ac3b895a80b12ea3a0b1b4b1e4a09"
+    },
+    "research-ide/mathscope-m2/navier/actual-leading-high-jets.mjs": {
+      "installed": "c1af950944adeecc10e4248da77cddc4970a7fede935b462aea1f4006be6fa2e",
+      "pinned": "c1af950944adeecc10e4248da77cddc4970a7fede935b462aea1f4006be6fa2e"
+    },
+    "research-ide/mathscope-m2/navier/actual-mean-stress.mjs": {
+      "installed": "7dc194a8a33ff5a3882c1bedf82cf1d26efe3220f0bd66a1e550482369ccad71",
+      "pinned": "7dc194a8a33ff5a3882c1bedf82cf1d26efe3220f0bd66a1e550482369ccad71"
+    },
+    "research-ide/mathscope-m2/navier/actual-numerical-exponential-arithmetic.mjs": {
+      "installed": "30262671984e587f659de63e96a7bb9ab0132b4ec029772d25362ed3b7444a94",
+      "pinned": "30262671984e587f659de63e96a7bb9ab0132b4ec029772d25362ed3b7444a94"
+    },
+    "research-ide/mathscope-m2/navier/actual-physical-center-certified-numerics.mjs": {
+      "installed": "b15478599637eb80a98f119c64f12df762283d6261e5139e8a511055f0e38cb5",
+      "pinned": "b15478599637eb80a98f119c64f12df762283d6261e5139e8a511055f0e38cb5"
+    },
+    "research-ide/mathscope-m2/navier/actual-physical-center-full-curl-jet-kernel.mjs": {
+      "installed": "852ae90fdbb9bdd58a22fb32dcf0f9aad80b186775a4de452e044000b625bc1e",
+      "pinned": "852ae90fdbb9bdd58a22fb32dcf0f9aad80b186775a4de452e044000b625bc1e"
+    },
+    "research-ide/mathscope-m2/navier/actual-physical-center-installed-evidence.mjs": {
+      "installed": "9cb871870dc8ea9ade0d64e4d7a50eacdacb795a56152337251ae399a942d3c4",
+      "pinned": "9cb871870dc8ea9ade0d64e4d7a50eacdacb795a56152337251ae399a942d3c4"
+    },
+    "research-ide/mathscope-m2/navier/actual-physical-center-jet-conditioning.mjs": {
+      "installed": "9563fe388e3c5f21ae0d473d3697d5d1ce33668589944a0d95ea00f82adabbaf",
+      "pinned": "9563fe388e3c5f21ae0d473d3697d5d1ce33668589944a0d95ea00f82adabbaf"
+    },
+    "research-ide/mathscope-m2/navier/actual-physical-center-kernel.mjs": {
+      "installed": "8f65b781a5b68eb993db4789943e2c09bd05957543749a9582adbab4274b7e08",
+      "pinned": "8f65b781a5b68eb993db4789943e2c09bd05957543749a9582adbab4274b7e08"
+    },
+    "research-ide/mathscope-m2/navier/actual-physical-center-negative-mode-value-kernel.mjs": {
+      "installed": "87db7de6038f6f5fff26027fc08d46c231634512693a4add213ed44ebd39affa",
+      "pinned": "87db7de6038f6f5fff26027fc08d46c231634512693a4add213ed44ebd39affa"
+    },
+    "research-ide/mathscope-m2/navier/actual-physical-center-positive-scale-kernel.mjs": {
+      "installed": "88be189eb7f2a23f191cfda2ba134e1a5f0e37d7021effe0770b2e38757b1973",
+      "pinned": "88be189eb7f2a23f191cfda2ba134e1a5f0e37d7021effe0770b2e38757b1973"
+    },
+    "research-ide/mathscope-m2/navier/actual-physical-center-runtime-numerics.mjs": {
+      "installed": "c2c6a9066e36e7df4ae1e5e478e2f6f01544fd678c3517da35fb6e70f183eb57",
+      "pinned": "c2c6a9066e36e7df4ae1e5e478e2f6f01544fd678c3517da35fb6e70f183eb57"
+    },
+    "research-ide/mathscope-m2/navier/actual-physical-center-slow-slope-kernel.mjs": {
+      "installed": "362be9f5d3f6c804c470502ab4009a3dcf49335270254e101c02b80d29fc8b6e",
+      "pinned": "362be9f5d3f6c804c470502ab4009a3dcf49335270254e101c02b80d29fc8b6e"
+    },
+    "research-ide/mathscope-m2/navier/actual-physical-center-unscaled-numerics.mjs": {
+      "installed": "d946ca075ec205c6ea2bf55cd776603a97fa6d222c73921f30ce8ec5cdadad20",
+      "pinned": "d946ca075ec205c6ea2bf55cd776603a97fa6d222c73921f30ce8ec5cdadad20"
+    },
+    "research-ide/mathscope-m2/navier/actual-picard-acceptance.mjs": {
+      "installed": "d7a14594d22a91f50e64adbca147288ea8ffda32d5693d0116ca3aeacf7a319f",
+      "pinned": "d7a14594d22a91f50e64adbca147288ea8ffda32d5693d0116ca3aeacf7a319f"
+    },
+    "research-ide/mathscope-m2/navier/actual-positive-profile-log-enclosure.mjs": {
+      "installed": "ea92817e914260fbe21dfd1a14a90d32ceaa217c95a8edfa9bdb8ee67a1374ae",
+      "pinned": "ea92817e914260fbe21dfd1a14a90d32ceaa217c95a8edfa9bdb8ee67a1374ae"
+    },
+    "research-ide/mathscope-m2/navier/actual-pulse-amplitude-integrator.mjs": {
+      "installed": "096eea803e7c17481c4926b4a8b811ddf54ddc4df615253477092780c3d1b60d",
+      "pinned": "096eea803e7c17481c4926b4a8b811ddf54ddc4df615253477092780c3d1b60d"
+    },
+    "research-ide/mathscope-m2/navier/actual-pulse-amplitude-phase.mjs": {
+      "installed": "0ed21e490d93a59caa578d91a4dd3df3791a0e9a07a845740a15cd7578c98224",
+      "pinned": "0ed21e490d93a59caa578d91a4dd3df3791a0e9a07a845740a15cd7578c98224"
+    },
+    "research-ide/mathscope-m2/navier/actual-pulse-construction.mjs": {
+      "installed": "7387b50e8d0538383c76072c2dc3cacfc0ea3b8eab072b79b177bf3dedef18ac",
+      "pinned": "7387b50e8d0538383c76072c2dc3cacfc0ea3b8eab072b79b177bf3dedef18ac"
+    },
+    "research-ide/mathscope-m2/navier/actual-pulse-covariance-integrals.mjs": {
+      "installed": "6690a62a744195fa733f8a3b3f61f90b291a88c9cbb490e94e96d4963e3065c5",
+      "pinned": "6690a62a744195fa733f8a3b3f61f90b291a88c9cbb490e94e96d4963e3065c5"
+    },
+    "research-ide/mathscope-m2/navier/actual-pulse-covariance-matching.mjs": {
+      "installed": "924db93cd676a7f4ae4babe2a2a3687d78cf86cd8dbfec2931fe9c3dc2f08348",
+      "pinned": "924db93cd676a7f4ae4babe2a2a3687d78cf86cd8dbfec2931fe9c3dc2f08348"
+    },
+    "research-ide/mathscope-m2/navier/actual-pulse-covariance-partition.mjs": {
+      "installed": "3b1a04bca5e969fb3f331d9d04d320f21326f786099a232202cb1e75b2d67329",
+      "pinned": "3b1a04bca5e969fb3f331d9d04d320f21326f786099a232202cb1e75b2d67329"
+    },
+    "research-ide/mathscope-m2/navier/actual-pulse-jet-kernel.mjs": {
+      "installed": "5c9ff736284cae2d6cbfaf5b52d343a5cf3574228b6711c83686bc6e901f020e",
+      "pinned": "5c9ff736284cae2d6cbfaf5b52d343a5cf3574228b6711c83686bc6e901f020e"
+    },
+    "research-ide/mathscope-m2/navier/actual-pulse-jet-source.mjs": {
+      "installed": "dfdec0ab6ae752080bc919822b917a2e8720ccaa889d35d524318211be01739d",
+      "pinned": "dfdec0ab6ae752080bc919822b917a2e8720ccaa889d35d524318211be01739d"
+    },
+    "research-ide/mathscope-m2/navier/actual-pulse-meanpatch.mjs": {
+      "installed": "4e2930c8c89596c11f0db8ce72c417b52d01393f8d760920a197f6139bcb0e32",
+      "pinned": "4e2930c8c89596c11f0db8ce72c417b52d01393f8d760920a197f6139bcb0e32"
+    },
+    "research-ide/mathscope-m2/navier/actual-pulse-sensitivity-bounds.mjs": {
+      "installed": "3afdf6bb13505883ee4e0d2f8eb3c93878012d734b5f7b1734f160a8813c7976",
+      "pinned": "3afdf6bb13505883ee4e0d2f8eb3c93878012d734b5f7b1734f160a8813c7976"
+    },
+    "research-ide/mathscope-m2/navier/actual-pulse-sensitivity-kernel.mjs": {
+      "installed": "4752ca6470761ab921237bbad273fd39e891e665260af0ddeafdf3673e63069a",
+      "pinned": "4752ca6470761ab921237bbad273fd39e891e665260af0ddeafdf3673e63069a"
+    },
+    "research-ide/mathscope-m2/navier/actual-pulse-sensitivity.mjs": {
+      "installed": "cfe98cc6dd43b4fc4615a9dcbd74a66df5c3ca4ca5878ca08b68a13b7bbd6939",
+      "pinned": "cfe98cc6dd43b4fc4615a9dcbd74a66df5c3ca4ca5878ca08b68a13b7bbd6939"
+    },
+    "research-ide/mathscope-m2/navier/actual-pulse-source.mjs": {
+      "installed": "4ed3dab683af1dce82c85c8d50ffaede2d9235789d1efb61233cbaacff818bf6",
+      "pinned": "4ed3dab683af1dce82c85c8d50ffaede2d9235789d1efb61233cbaacff818bf6"
+    },
+    "research-ide/mathscope-m2/navier/actual-pulse-third-jet-kernel.mjs": {
+      "installed": "9a48702c72a6ed5ac9c4604b7a21ee942eaf7319d09f9ec5c83184d10b9d23d1",
+      "pinned": "9a48702c72a6ed5ac9c4604b7a21ee942eaf7319d09f9ec5c83184d10b9d23d1"
+    },
+    "research-ide/mathscope-m2/navier/actual-residual-order-algebra.mjs": {
+      "installed": "d674e5586be3b948429041e4c9630d86872958db98b41702ae98174f4742ba49",
+      "pinned": "d674e5586be3b948429041e4c9630d86872958db98b41702ae98174f4742ba49"
+    },
+    "research-ide/mathscope-m2/navier/actual-residual-order-bounds.mjs": {
+      "installed": "0a024661a53690c55e864a7ecdfb5666555a32abd4819d3c81371d78774f36e6",
+      "pinned": "0a024661a53690c55e864a7ecdfb5666555a32abd4819d3c81371d78774f36e6"
+    },
+    "research-ide/mathscope-m2/navier/actual-residual-order-induction-background.mjs": {
+      "installed": "e04a02a8878168d673fd7deed45de6bbfb2591ec58f3abc9eb8f08e1d2770879",
+      "pinned": "e04a02a8878168d673fd7deed45de6bbfb2591ec58f3abc9eb8f08e1d2770879"
+    },
+    "research-ide/mathscope-m2/navier/actual-residual-order-induction-cutoffs.mjs": {
+      "installed": "be8c7dbe6a7bc78ace2e87dc5e205640a06237e3db0670f9388aab4c0c0772f5",
+      "pinned": "be8c7dbe6a7bc78ace2e87dc5e205640a06237e3db0670f9388aab4c0c0772f5"
+    },
+    "research-ide/mathscope-m2/navier/actual-residual-order-induction-expressions.mjs": {
+      "installed": "dfa10931c2eee87344dff4c95ecbeaf84d21c5ea5891d6452ea1f5fd4a4d9501",
+      "pinned": "dfa10931c2eee87344dff4c95ecbeaf84d21c5ea5891d6452ea1f5fd4a4d9501"
+    },
+    "research-ide/mathscope-m2/navier/actual-residual-order-induction-kernels.mjs": {
+      "installed": "97f8bbc5927ee2b2ac5b41851ba5bc2c800fd4cad6b85c7a1039095c066f7fef",
+      "pinned": "97f8bbc5927ee2b2ac5b41851ba5bc2c800fd4cad6b85c7a1039095c066f7fef"
+    },
+    "research-ide/mathscope-m2/navier/actual-residual-order-induction-norms.mjs": {
+      "installed": "0387335a081650c4a6ffed6e213215d32a363350c2a156a7163e82f4c0234634",
+      "pinned": "0387335a081650c4a6ffed6e213215d32a363350c2a156a7163e82f4c0234634"
+    },
+    "research-ide/mathscope-m2/navier/actual-residual-order-induction-proof.mjs": {
+      "installed": "ca7149281d52e609664f90dea14c2ca2009ac982fc3087ec8714f0152de831f7",
+      "pinned": "ca7149281d52e609664f90dea14c2ca2009ac982fc3087ec8714f0152de831f7"
+    },
+    "research-ide/mathscope-m2/navier/actual-residual-order-induction-source.mjs": {
+      "installed": "30e135309b5e0a5866917949d2ded96cce64828b1331400cb8e2260caabdc047",
+      "pinned": "30e135309b5e0a5866917949d2ded96cce64828b1331400cb8e2260caabdc047"
+    },
+    "research-ide/mathscope-m2/navier/actual-residual-order-rational.mjs": {
+      "installed": "4e4239c9114b9051179c7900e42fcf797102bf0865814d5a4dfaec3dff1fb5bc",
+      "pinned": "4e4239c9114b9051179c7900e42fcf797102bf0865814d5a4dfaec3dff1fb5bc"
+    },
+    "research-ide/mathscope-m2/navier/actual-residual-order.mjs": {
+      "installed": "c79cfbeb587f522e398eeb2353a1a3e95937273791762058d2d4233ec33cc49b",
+      "pinned": "c79cfbeb587f522e398eeb2353a1a3e95937273791762058d2d4233ec33cc49b"
+    },
+    "research-ide/mathscope-m2/navier/actual-stress-direction-bounds.mjs": {
+      "installed": "42a3870cb4cc177333d7fa5ae32be988b2fb43c00fe1cb89c8ee614f70ff23f4",
+      "pinned": "42a3870cb4cc177333d7fa5ae32be988b2fb43c00fe1cb89c8ee614f70ff23f4"
+    },
+    "research-ide/mathscope-m2/navier/actual-stress-direction-program.mjs": {
+      "installed": "b3567c39a9381ef16c3d94f0a24a88571a87dee7a61b9fe782d2076732b165f5",
+      "pinned": "b3567c39a9381ef16c3d94f0a24a88571a87dee7a61b9fe782d2076732b165f5"
+    },
+    "research-ide/mathscope-m2/navier/actual-terminal-field-scaled-enclosure.mjs": {
+      "installed": "c2a0fc4c57f07cd63533f981163bfb4e516ac66c81d9a6fac753f98fcbff11f7",
+      "pinned": "c2a0fc4c57f07cd63533f981163bfb4e516ac66c81d9a6fac753f98fcbff11f7"
+    },
+    "research-ide/mathscope-m2/navier/actual-terminal-target-coefficient-kernel.mjs": {
+      "installed": "6306a2e9161864c0b24378412a450d0604570e0391506f3c6c160850da69668b",
+      "pinned": "6306a2e9161864c0b24378412a450d0604570e0391506f3c6c160850da69668b"
+    },
+    "research-ide/mathscope-m2/navier/actual-third-jet-algebra.mjs": {
+      "installed": "e72a436a20ceff7dc0969eac4ac8d65c9d94ee38751ecbcd6c2b87253c18beef",
+      "pinned": "e72a436a20ceff7dc0969eac4ac8d65c9d94ee38751ecbcd6c2b87253c18beef"
+    },
+    "research-ide/mathscope-m2/navier/actual-third-jet-ftc.mjs": {
+      "installed": "f9395c275e954d352bc159d8005a2c20adef3fe6023cf95cea90dcc3b166d98b",
+      "pinned": "f9395c275e954d352bc159d8005a2c20adef3fe6023cf95cea90dcc3b166d98b"
+    },
+    "research-ide/mathscope-m2/navier/checklist.mjs": {
+      "installed": "cf408d91e19e0380aa13b1d43eda097a8d395e77cef820a9a4ca0ddaafa8d641",
+      "pinned": "cf408d91e19e0380aa13b1d43eda097a8d395e77cef820a9a4ca0ddaafa8d641"
+    },
+    "research-ide/mathscope-m2/navier/index.mjs": {
+      "installed": "7b09f68b8a7ee6ab1749a9c7c4c216b9cbb12b30c9586780e864f273d6058cbb",
+      "pinned": "7b09f68b8a7ee6ab1749a9c7c4c216b9cbb12b30c9586780e864f273d6058cbb"
+    },
+    "research-ide/mathscope-m2/navier/pulse-ode.mjs": {
+      "installed": "3bfd092a4d99760949b3ee2ff810401e8d4a2d91af639aa756264bd09413a387",
+      "pinned": "3bfd092a4d99760949b3ee2ff810401e8d4a2d91af639aa756264bd09413a387"
+    },
+    "research-ide/mathscope-m2/navier/source-algebra.mjs": {
+      "installed": "afda4d8058c04b75ffef239475fdc79aa4ab0985de4d58d3c6bf544d3c3c26fb",
+      "pinned": "afda4d8058c04b75ffef239475fdc79aa4ab0985de4d58d3c6bf544d3c3c26fb"
+    },
+    "research-ide/mathscope-m2/navier/source-background.mjs": {
+      "installed": "7e9b5c45cd6740dfff1005ce6dd877920f0d43d0d426a6c85c15345faecd6349",
+      "pinned": "7e9b5c45cd6740dfff1005ce6dd877920f0d43d0d426a6c85c15345faecd6349"
+    },
+    "research-ide/mathscope-m2/navier/source-core-data.mjs": {
+      "installed": "bc42fb9d5e7978180acab2835a5cadd8ec7295fe4f0af4532723503dc9ed6d20",
+      "pinned": "bc42fb9d5e7978180acab2835a5cadd8ec7295fe4f0af4532723503dc9ed6d20"
+    },
+    "research-ide/mathscope-m2/navier/source-core-observations.mjs": {
+      "installed": "61c01dc4680a88cbd7f6a8ae0731e4e09ed96b524148a0a8eb23eee4b7041dd9",
+      "pinned": "61c01dc4680a88cbd7f6a8ae0731e4e09ed96b524148a0a8eb23eee4b7041dd9"
+    },
+    "research-ide/mathscope-m2/navier/source-envelope.mjs": {
+      "installed": "fcbc6b76a058ecd0b9cd32d16d3dee4e5c718dae41deada11ff0a2d5f25935e1",
+      "pinned": "fcbc6b76a058ecd0b9cd32d16d3dee4e5c718dae41deada11ff0a2d5f25935e1"
+    },
+    "research-ide/mathscope-m2/navier/source-geometry.mjs": {
+      "installed": "89de4b4b52ee666462f64a6139383abac077cec16acea01b3945d0d505a4836a",
+      "pinned": "89de4b4b52ee666462f64a6139383abac077cec16acea01b3945d0d505a4836a"
+    },
+    "research-ide/mathscope-m2/navier/source-gluing.mjs": {
+      "installed": "669daa3eec7c9a6901cd937b5f657ff2e671bd41384dfcb5c3cd29033a30b4df",
+      "pinned": "669daa3eec7c9a6901cd937b5f657ff2e671bd41384dfcb5c3cd29033a30b4df"
+    },
+    "research-ide/mathscope-m2/navier/source-profile-data.mjs": {
+      "installed": "df33560d2b9369ba32cf9f50877e355824ed1e7fdb84ef6b145d941c80db8e4a",
+      "pinned": "df33560d2b9369ba32cf9f50877e355824ed1e7fdb84ef6b145d941c80db8e4a"
+    },
+    "research-ide/mathscope-m2/navier/source-profile.mjs": {
+      "installed": "4578d632c3da8c6994557bcb4e78babf4dcede1e4893252c6a8ae2e342426133",
+      "pinned": "4578d632c3da8c6994557bcb4e78babf4dcede1e4893252c6a8ae2e342426133"
+    },
+    "research-ide/mathscope-m2/navier/source-pulse-curl.mjs": {
+      "installed": "ef026acbf748b752263b0dc98b48c6cb9da9b74f09c5e94f0818e1f2e6db7fd0",
+      "pinned": "ef026acbf748b752263b0dc98b48c6cb9da9b74f09c5e94f0818e1f2e6db7fd0"
+    },
+    "research-ide/mathscope-m2/navier/source-radial-phase-exponent.mjs": {
+      "installed": "09ffa7aca344391d39de50f38a9a4c67f175d6d500e4514ac6a86e591768ab7c",
+      "pinned": "09ffa7aca344391d39de50f38a9a4c67f175d6d500e4514ac6a86e591768ab7c"
+    },
+    "research-ide/mathscope-m2/navier/source-support.mjs": {
+      "installed": "3cc1397c28894bcabc8f78705b1774e5785f75c6317f4c5d9af56a6ccea66ed9",
+      "pinned": "3cc1397c28894bcabc8f78705b1774e5785f75c6317f4c5d9af56a6ccea66ed9"
+    },
+    "research-ide/mathscope-m2/navier/source-tail.mjs": {
+      "installed": "de2efbc65cb3ec129196b18ed22441a5305d4ccbacfee77e5d60adc8f77e21b0",
+      "pinned": "de2efbc65cb3ec129196b18ed22441a5305d4ccbacfee77e5d60adc8f77e21b0"
+    },
+    "research-ide/mathscope-m2/observatory/complex-basis.mjs": {
+      "installed": "5144325224545211aae0e46cb186c11a5b91a86ca136857e5cd75a075b75a060",
+      "pinned": "5144325224545211aae0e46cb186c11a5b91a86ca136857e5cd75a075b75a060"
+    },
+    "research-ide/mathscope-m2/observatory/index.mjs": {
+      "installed": "b52d5143fca71dcb0330ea200153f3440f274ccc504315e91d7c3256bd735ada",
+      "pinned": "b52d5143fca71dcb0330ea200153f3440f274ccc504315e91d7c3256bd735ada"
+    },
+    "research-ide/mathscope-m4/release-lab/catalog.json": {
+      "installed": "b39870801d64196a1f35cfcf6386ad06c5f99f4c9e3f69fe8680852f0147c9da",
+      "pinned": "1d7dc292a72355bf8167bfba31ec41e7f1ac7aa32993e83cac71dc0ea5dc52dd"
+    },
+    "research-ide/mathscope-m4/release-lab/runtime.mjs": {
+      "installed": "647fdf80fe682942198d711d569b69d653e171b158280a1a64954cb3f9675963",
+      "pinned": "647fdf80fe682942198d711d569b69d653e171b158280a1a64954cb3f9675963"
+    },
+    "research-ide/mathscope-m4/release-lab/verify-fixtures.mjs": {
+      "installed": "e8abd53fbb1e5ec6e8b3fbd05b276ec9531714c0bbc4a40201e11263161fd994",
+      "pinned": "e8abd53fbb1e5ec6e8b3fbd05b276ec9531714c0bbc4a40201e11263161fd994"
+    }
+  },
+  "dispatchedWorkers": 16,
+  "edits": [
+    {
+      "key": "p",
+      "id": "p1",
+      "invalidated": [
+        "r1-1"
+      ],
+      "prior": {
+        "id": "r1-1",
+        "inputHash": "26201c115586b3b164d8a9876c0ad660cf87e746bbae90eb7a555cb4293496ef",
+        "resultHash": "84733affbbcb4e20f04635e6b6c227a7e815f8648f18f16aaa0f572db4340d96",
+        "workerSHA256": "c34ab138ca5e088a4bb0a4564b8401b3caf384af4801d47eeb16088d8c4f8bb8"
+      },
+      "fresh": {
+        "id": "r1-8",
+        "inputHash": "62519e60292280d9108582afe6f267b79bd6d78f890b2ad8d292799453d7e483",
+        "resultHash": "74ca1a8108cb756611e7bab484d324e40e035ad76384a9ad8a8c46b0a333b527",
+        "workerSHA256": "c34ab138ca5e088a4bb0a4564b8401b3caf384af4801d47eeb16088d8c4f8bb8"
+      },
+      "observed": null
+    },
+    {
+      "key": "G",
+      "id": "su2",
+      "invalidated": [
+        "r1-2"
+      ],
+      "prior": {
+        "id": "r1-2",
+        "inputHash": "26d62ff0b4c26ff92eeb38ce33f62a906c94aaa1f882132801da61701cb06b5e",
+        "resultHash": "6e8f2203086373f1d1f260001b1cf2bd12d8434fd83dd62b47759d5fa845cee5",
+        "workerSHA256": "0526fb1030c328e940c39672e86dfb9d24f09f4622794269c1e0eadbb92cc0ca"
+      },
+      "fresh": {
+        "id": "r1-9",
+        "inputHash": "3f7eab74678fe010474816b740a07130075c6f93317a625fb0cc0643f5ef2492",
+        "resultHash": "e1f7a1c8dca4d0ef06c61720f1cbbff6f7885b2188fdf3e3c98e56cceee701ec",
+        "workerSHA256": "0526fb1030c328e940c39672e86dfb9d24f09f4622794269c1e0eadbb92cc0ca"
+      },
+      "observed": null
+    },
+    {
+      "key": "delta",
+      "id": "delta",
+      "invalidated": [
+        "r1-3"
+      ],
+      "prior": {
+        "id": "r1-3",
+        "inputHash": "7eae5879956878b3a73b569c62b83fd09c6c40d2115ea6924b8bce33ef6814ef",
+        "resultHash": "ecbfb3616b59db6e7a2f44c90287f60f34c64abbe7a44843f92673df998a845e",
+        "workerSHA256": "0526fb1030c328e940c39672e86dfb9d24f09f4622794269c1e0eadbb92cc0ca"
+      },
+      "fresh": {
+        "id": "r1-10",
+        "inputHash": "889c4dd8827311c9e016434d738defb56cd109b638f183294d4f1813d9ef1fcd",
+        "resultHash": "a6445453ab52cf4f7f873fbbff28b46f505e65a293677611052eaf262de51e4a",
+        "workerSHA256": "0526fb1030c328e940c39672e86dfb9d24f09f4622794269c1e0eadbb92cc0ca"
+      },
+      "observed": null
+    },
+    {
+      "key": "tau",
+      "id": "exterior",
+      "invalidated": [
+        "r1-4"
+      ],
+      "prior": {
+        "id": "r1-4",
+        "inputHash": "05bd23f4d6da17a5896d0e2d2664b3c2d975036e9f897fb9b463aff06b1a9b96",
+        "resultHash": "7330b51f0583ede40cbd18355dc8f32f9a6f98a84f4bb03e1e10ec26d7dff42a",
+        "workerSHA256": "0526fb1030c328e940c39672e86dfb9d24f09f4622794269c1e0eadbb92cc0ca"
+      },
+      "fresh": {
+        "id": "r1-11",
+        "inputHash": "19ffd90927fdbb4d7be20fe225bb74a349a281ac6223b2968aaa029cc05b51f6",
+        "resultHash": "cfcd55b332f57f1ec476c3eeed59458cf13cc3e3a5beb0847aa897838f83e9bb",
+        "workerSHA256": "0526fb1030c328e940c39672e86dfb9d24f09f4622794269c1e0eadbb92cc0ca"
+      },
+      "observed": null
+    },
+    {
+      "key": "cutoff",
+      "id": "axis",
+      "invalidated": [
+        "r1-5"
+      ],
+      "prior": {
+        "id": "r1-5",
+        "inputHash": "27e5bde0817222b4dc1d622c038e99efdfadb91572bff95c52658b6746604f6c",
+        "resultHash": "e89cd6b7e6771872936d79ca16c2b8080726622303619c505bbb260de6c1af47",
+        "workerSHA256": "0526fb1030c328e940c39672e86dfb9d24f09f4622794269c1e0eadbb92cc0ca"
+      },
+      "fresh": {
+        "id": "r1-12",
+        "inputHash": "ca013e6b4118bee1e653c9ec701143fdb92b1351f8aa4e7af63257e5e4e443cd",
+        "resultHash": "ac2e7555b5ca53cb07856145206bb4768d64c736ab30c3bb50e7b8c0a6f345ea",
+        "workerSHA256": "0526fb1030c328e940c39672e86dfb9d24f09f4622794269c1e0eadbb92cc0ca"
+      },
+      "observed": [
+        "1701858529809/219902325555200000",
+        "608825954529/219902325555200000"
+      ]
+    },
+    {
+      "key": "coefficientField",
+      "id": "elliptic",
+      "invalidated": [
+        "r1-7"
+      ],
+      "prior": {
+        "id": "r1-7",
+        "inputHash": "ab3eeba776abdd18337dc8baff9cb2eea680c64565fb639e633ddee41182c760",
+        "resultHash": "395c3146161208aba6069439d6a0c0fa72bbe2f03ff1a49ded3441d9e21a9183",
+        "workerSHA256": "c34ab138ca5e088a4bb0a4564b8401b3caf384af4801d47eeb16088d8c4f8bb8"
+      },
+      "fresh": {
+        "id": "r1-13",
+        "inputHash": "c4970a8449a92bff9840aba10142754954e3ffdb48bef2dcb45d0c4073ec0a44",
+        "resultHash": "7d81ae42afcf0544ae2d35bfb5b36a29ebe59584e60d6a38197f82f5753b9721",
+        "workerSHA256": "c34ab138ca5e088a4bb0a4564b8401b3caf384af4801d47eeb16088d8c4f8bb8"
+      },
+      "observed": [
+        "4",
+        "16"
+      ]
+    }
+  ],
+  "unrelated": {
+    "id": "r1-6",
+    "inputHash": "92170bc6d82906eb1bcf7935a97a8f54358082166d43777c01fdbb089610eef4",
+    "resultHash": "1d042781d05c2bb6bd3d20f16ede0d5e000f365c1be55beb728816b96419f9de",
+    "workerSHA256": "0526fb1030c328e940c39672e86dfb9d24f09f4622794269c1e0eadbb92cc0ca"
+  },
+  "inFlight": {
+    "cancelled": "r1-14",
+    "state": "CANCELLED",
+    "resumed": {
+      "id": "r1-15",
+      "inputHash": "62519e60292280d9108582afe6f267b79bd6d78f890b2ad8d292799453d7e483",
+      "resultHash": "74ca1a8108cb756611e7bab484d324e40e035ad76384a9ad8a8c46b0a333b527",
+      "workerSHA256": "c34ab138ca5e088a4bb0a4564b8401b3caf384af4801d47eeb16088d8c4f8bb8"
+    },
+    "stale": true
+  },
+  "importReplay": {
+    "status": "MATCH",
+    "stale": true,
+    "serializedPassRejected": true
+  },
+  "scope": "Actual isolated release-lab session and installed Worker. Cutoff edit uses the local axis selector input j0.",
+  "verdict": "PASS_RELEASE_SESSION_BINDING_AND_LIFECYCLE"
+}

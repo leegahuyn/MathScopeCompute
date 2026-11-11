@@ -1,0 +1,54 @@
+{
+  "verdict": "PASS_VISIBLE_USER_AXIOMS",
+  "runId": 42998472759,
+  "candidateSHA256": "4e89bf5409576a7c6fa3fe8fbf2f00acdddfaf5d50358bd70541264fbebac0ea",
+  "chromiumVersion": "157.0.8103.39",
+  "title": "MathScope v0.3.1 — M1 / M2 Research IDE",
+  "visible": true,
+  "pinned": {
+    "claimId": "M0.CONDITIONAL.SELECTED_GAP",
+    "target": "MathScope.M0.Conditional.selected_gap_excludes_interval",
+    "targetType": "MathScope.M0.Conditional.selected_gap_excludes_interval (energy : ℝ) :\n  0 < energy → energy < 1 → energy ∉ MathScope.M0.Conditional.selectedSpectrum",
+    "axioms": [
+      "Classical.choice",
+      "MathScope.M0.Conditional.selectedSpectrum",
+      "MathScope.M0.Conditional.userAssumedGapAtOne",
+      "Quot.sound",
+      "propext"
+    ],
+    "grade": "CONDITIONAL_FORMAL",
+    "assumptions": [
+      {
+        "id": "M0.AXIOM.SELECTED_SPECTRUM",
+        "kind": "USER_AXIOM",
+        "declaration": "MathScope.M0.Conditional.selectedSpectrum",
+        "statement": "selectedSpectrum : Set Real (uninterpreted spectrum object)",
+        "source": "MathScope/M0/Conditional.lean",
+        "status": "ASSUMED"
+      },
+      {
+        "id": "M0.AXIOM.GAP_ONE",
+        "kind": "USER_AXIOM",
+        "declaration": "MathScope.M0.Conditional.userAssumedGapAtOne",
+        "statement": "userAssumedGapAtOne : GapAt selectedSpectrum 1",
+        "source": "MathScope/M0/Conditional.lean",
+        "status": "ASSUMED"
+      }
+    ],
+    "scope": "Consequence of two named custom axioms about one uninterpreted real spectrum and a gap at 1. It does not identify this spectrum with any Yang–Mills Hamiltonian."
+  },
+  "core": {
+    "target": "MathScope.M4.Conditional.assumed_cauchy_limit",
+    "targetType": "MathScope.M4.Conditional.assumed_cauchy_limit {X : Type} (m : MathScope.M4.PrecisionMetric X) (u : Nat → X)\n  (hCauchy : MathScope.M4.Cauchy m u) : ∃ x, MathScope.M4.Converges m u x",
+    "axioms": [
+      "MathScope.M4.Conditional.assumedComplete"
+    ],
+    "userAxioms": [
+      "MathScope.M4.Conditional.assumedComplete"
+    ],
+    "grade": "USER_AXIOM_CONDITIONAL",
+    "logPath": "compile-MathScope-M4-Conditional.log"
+  },
+  "errors": [],
+  "scope": "Reversible release-lab candidate based on the archived v103 page."
+}

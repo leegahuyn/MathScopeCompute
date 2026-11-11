@@ -1,0 +1,11 @@
+MathScope.M0.Analytic.gap_excludes_interval (spectrum : Set ℝ) (delta : ℝ)
+  (hGap : MathScope.M0.Analytic.GapAt spectrum delta) (energy : ℝ) : 0 < energy → energy < delta → energy ∉ spectrum
+'MathScope.M0.Analytic.gap_excludes_interval' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.M0.Analytic.smaller_positive_gap (spectrum : Set ℝ) (delta epsilon : ℝ)
+  (hGap : MathScope.M0.Analytic.GapAt spectrum delta) (hPositive : 0 < epsilon) (hSmaller : epsilon ≤ delta) :
+  MathScope.M0.Analytic.GapAt spectrum epsilon
+'MathScope.M0.Analytic.smaller_positive_gap' depends on axioms: [propext, Classical.choice, Quot.sound]
+MathScope.M0.Analytic.gap_transfer (original observed : Set ℝ) (delta : ℝ)
+  (hObserved : MathScope.M0.Analytic.GapAt observed delta) (hInclusion : original ⊆ observed) :
+  MathScope.M0.Analytic.GapAt original delta
+'MathScope.M0.Analytic.gap_transfer' depends on axioms: [propext, Classical.choice, Quot.sound]
