@@ -5,8 +5,15 @@ on:
     paths:
       - '.github/workflows/mathscope-original-whole-k-prefix.yml'
       - 'tools/mathscope-cd-axial-bridge-20261029/goal-next/whole-k-atlas/replay_original_whole_k_prefix.mjs'
+      - 'tools/mathscope-cd-axial-bridge-20261029/goal-next/whole-k-atlas/replay_whole_k_primary_c3.mjs'
       - 'tools/mathscope-cd-axial-bridge-20261029/goal-next/whole-k-atlas/prepare_diagonal_materialization.py'
   workflow_dispatch:
+    inputs:
+      phase:
+        description: Source construction to replay
+        type: choice
+        options: [prefix, primary-c3, primary-c3-order4]
+        default: prefix
 permissions:
   contents: read
 jobs:
@@ -16,7 +23,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        prefix: ${{ fromJSON(github.event_name == 'push' && '[3]' || '[0,2,3,4]') }}
+        prefix: ${{ fromJSON((github.event_name == 'push' || inputs.phase == 'primary-c3') && '[2,3]' || inputs.phase == 'primary-c3-order4' && '[4]' || '[0,2,3,4]') }}
     env:
       NODE_OPTIONS: --max-old-space-size=6100
       ORIGINAL_SOURCE_COMMIT: f8cb4034e86d7b669d52a6f2248aebba156b51b5
@@ -34,10 +41,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
-      - name: Build the original current and pressure prefix
+      - name: Build the original finite source family
         working-directory: original
         env:
           ORIGINAL_PREFIX: ${{ matrix.prefix }}
+          ORIGINAL_PHASE: ${{ github.event_name == 'push' && 'primary-c3' || inputs.phase }}
         run: |
           set -euo pipefail
           test "$(git rev-parse HEAD)" = "$ORIGINAL_SOURCE_COMMIT"
@@ -47,6 +55,10 @@ jobs:
           cp "../evidence/tools/mathscope-cd-axial-bridge-20261029/goal-next/whole-k-atlas/$script" "$target"
           out="$RUNNER_TEMP/mathscope-whole-k"
           mkdir -p "$out"
+          if [ "$ORIGINAL_PHASE" != prefix ]; then
+            export MATHSCOPE_WHOLE_K_PRIMARY_C3=1
+            cp "../evidence/tools/mathscope-cd-axial-bridge-20261029/goal-next/whole-k-atlas/replay_whole_k_primary_c3.mjs" "$(dirname "$target")/"
+          fi
           if [ "$ORIGINAL_PREFIX" != 0 ]; then
             export MATHSCOPE_PREFIX_DIAGONAL_ONLY=1
             python3 "../evidence/tools/mathscope-cd-axial-bridge-20261029/goal-next/whole-k-atlas/prepare_diagonal_materialization.py" . "$out/diagonal-overlay.json"
@@ -67,13 +79,15 @@ jobs:
                   if cap != "max":
                       available = min(available, int(cap) - int(usage.read_text()))
           fourth = environ["ORIGINAL_PREFIX"] == "4"
+          primary = environ.get("MATHSCOPE_WHOLE_K_PRIMARY_C3") == "1"
           roomy = available >= 11 * gib
           prefix = int(environ["ORIGINAL_PREFIX"])
-          more_room = prefix >= 3 and available >= 14 * gib
+          more_room = (prefix >= 3 or primary) and available >= 14 * gib
           print((12 if more_room else 9 if roomy else 6) * gib,
                 11000 if more_room else 8100 if roomy else 6100,
-                12000000 if more_room and fourth else 5000000,
-                16000000 if more_room and fourth else 8000000 if roomy and prefix == 3 else 4000000)
+                12000000 if more_room and (fourth or primary) else 5000000,
+                16000000 if more_room and (fourth or primary) else
+                8000000 if roomy and (prefix == 3 or primary) else 4000000)
           PY
           )"
           read -r MATHSCOPE_PREFIX_MAX_RSS_BYTES heap_mb MATHSCOPE_PREFIX_FAMILY_MAX_NODES MATHSCOPE_PREFIX_BAND_MAX_NODES <<< "$limits"
@@ -108,11 +122,17 @@ jobs:
                      for name, digest in checked.items())
           PY
           node --check "$target"
-          node --max-old-space-size="$heap_mb" --expose-gc "$target" "$RUNNER_TEMP/mathscope-whole-k" "$ORIGINAL_SOURCE_COMMIT" "$ORIGINAL_PREFIX"
+          if [ "$ORIGINAL_PHASE" != prefix ]; then
+            node --check "$(dirname "$target")/replay_whole_k_primary_c3.mjs"
+          fi
+          node --max-old-space-size="$heap_mb" --expose-gc "$target" "$out" "$ORIGINAL_SOURCE_COMMIT" "$ORIGINAL_PREFIX"
+          if [ "$ORIGINAL_PHASE" != prefix ]; then
+            python3 ../evidence/tools/mathscope-cd-axial-bridge-20261029/goal-next/whole-k-atlas/verify_primary_c3.py "$out"
+          fi
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: mathscope-whole-k-N${{ matrix.prefix }}
+          name: mathscope-whole-k-${{ (github.event_name == 'push' || inputs.phase != 'prefix') && 'primary-C3-' || '' }}N${{ matrix.prefix }}
           path: ${{ runner.temp }}/mathscope-whole-k/**
           if-no-files-found: warn
           retention-days: 30

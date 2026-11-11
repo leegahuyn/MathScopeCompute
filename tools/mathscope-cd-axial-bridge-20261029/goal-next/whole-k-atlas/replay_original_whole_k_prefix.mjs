@@ -12,6 +12,7 @@ import { exportOriginalSourceGraph } from '../post-signed-20261023/export_origin
 const [directory, sourceCommit, request] = process.argv.slice(2);
 const executingCommit = process.env.GITHUB_SHA;
 const N = Number(request);
+const primaryC3 = process.env.MATHSCOPE_WHOLE_K_PRIMARY_C3 === '1';
 const selectorDiagonalOnly = process.env.MATHSCOPE_PREFIX_DIAGONAL_ONLY === '1';
 const maxMinutes = 105;
 const maxRss = Number(process.env.MATHSCOPE_PREFIX_MAX_RSS_BYTES ?? 6 * 1024 ** 3);
@@ -19,13 +20,14 @@ assert.ok([6, 9, 12].some(gib => maxRss === gib * 1024 ** 3));
 assert.ok(directory && /^[a-f0-9]{40}$/.test(sourceCommit));
 assert.ok(/^[a-f0-9]{40}$/.test(executingCommit ?? ''));
 assert.ok(request === String(N) && [0, 2, 3, 4].includes(N));
+assert.ok(!primaryC3 || (selectorDiagonalOnly && [2, 3, 4].includes(N)));
 mkdirSync(directory, { recursive: true });
 
 const upstreamMaxNodes = Number(process.env.MATHSCOPE_PREFIX_FAMILY_MAX_NODES ?? 5000000);
-assert.ok(upstreamMaxNodes === 5000000 || (upstreamMaxNodes === 12000000 && N === 4));
+assert.ok(upstreamMaxNodes === 5000000 || (upstreamMaxNodes === 12000000 && (N === 4 || primaryC3)));
 const bandMaxNodes = Number(process.env.MATHSCOPE_PREFIX_BAND_MAX_NODES ?? 4000000);
-assert.ok(bandMaxNodes === 4000000 || (bandMaxNodes === 8000000 && N === 3) ||
-  (bandMaxNodes === 16000000 && N === 4));
+assert.ok(bandMaxNodes === 4000000 || (bandMaxNodes === 8000000 && (N === 3 || primaryC3)) ||
+  (bandMaxNodes === 16000000 && (N === 4 || primaryC3)));
 const exportMaxNodes = Math.max(bandMaxNodes, 6000000);
 
 const started = Date.now();
@@ -33,7 +35,7 @@ const gcIntervalMs = 20_000;
 let lastGC = 0;
 const receipt = {
   schema: 'MathScope.M3.OriginalWholeKHigherPrefix/1',
-  sourceCommit, executingCommit, requestedPrefix: N, selectorDiagonalOnly, stages: [],
+  sourceCommit, executingCommit, requestedPrefix: N, selectorDiagonalOnly, primaryC3, stages: [],
   maxMinutes, maxRss, upstreamMaxNodes, bandMaxNodes, exportMaxNodes, maxRssObserved: 0, memoryCheckpoints: [], finalJets: 0, release: 'HOLD',
 };
 const save = () => writeFileSync(join(directory, 'original-whole-k-prefix.json'), JSON.stringify(receipt, null, 2) + '\n');
@@ -108,7 +110,7 @@ function stage(name, build, authenticate) {
 
 try {
   const through = Math.max(2, N+1);
-  const derivativeOrder = Math.max(3, N+1);
+  const derivativeOrder = primaryC3 ? 6 : Math.max(3, N+1);
   const request = { coefficientOrder: N, maxNodes: bandMaxNodes };
   const upstream = selectorDiagonalOnly || bandMaxNodes > 4000000 || upstreamMaxNodes > 5000000
     ? stage('sealed-original-common-family',
@@ -173,7 +175,7 @@ try {
     sourceFamilySHA256: family.sourceBinding.parameterExpressionSHA256,
   };
   save();
-  if (N === 3 && selectorDiagonalOnly) {
+  if (N === 3 && selectorDiagonalOnly && !primaryC3) {
     receipt.currentStage = 'export-authenticated-selector-band';
     save();
     receipt.bandSnapshot = await exportOriginalSourceGraph(G, {
@@ -193,45 +195,50 @@ try {
     () => attachGlobalFixedRepresentative(band, context), assertGlobalFixedRepresentative);
   const current = stage('sealed-original-current',
     () => attachGlobalCurrentState(representative, context), assertGlobalCurrentState);
-  const pressure = stage('sealed-original-pressure',
-    () => attachGlobalCurrentPressure(current, context), assertGlobalCurrentPressure);
   assert.equal(current.domain.prefixOrder, N);
   assert.equal(current.domain.nextScale, rows[N].scale);
   assert.equal(current.domain.prefixSharedByAllCoverLabels, true);
   assert.equal(current.domain.prefixSharedByWholeRadialIntegral, true);
 
-  const roots = {
-    pressure: pressure.pressure.value,
-    radialPressureGradient: pressure.pressure.fullRadialDerivative,
-    axialPressureGradient: pressure.pressure.slowZDerivative,
-    radialResidual: pressure.residual.radial,
-    angularResidual: pressure.residual.Etheta,
-    axialResidual: pressure.residual.Ez,
-    axialStress: pressure.residual.fullOriginalStress[1],
-    referenceTime: current.domain.q,
-    omittedScaleTimesTime: current.domain.nextScaleTimesQ,
-    selectorScales: rows.map(row => row.scale),
-  };
-  receipt.scope = {
-    originalCurrentPressurePrivateSeals: true,
-    exactPrefixDomain: current.domain,
-    roots,
-    candidateBoxes: pressure.cover.rows.length,
-    instantiatedAllPhysicalCells: false,
-    nativeReachableNaturalSeriesRangeAudited: false,
-    completeAllCycleFinalField: false,
-  };
-  receipt.currentStage = 'export-original-graph';
-  save();
-  receipt.snapshot = await exportOriginalSourceGraph(pressure.G, {
-    dir: join(directory, 'original-whole-k-current-pressure-graph'),
-    roots: [...new Set([...Object.values(roots).filter(Number.isSafeInteger), ...roots.selectorScales])],
-    sourceCommit: executingCommit,
-    pr30Commit: 'a9b3a5b317525f6d0a71e2e356b054c9d25d2e60',
-    scope: 'ORIGINAL_WHOLE_K_N' + N + '_CURRENT_PRESSURE_PREFIX' +
-      (selectorDiagonalOnly ? '_DIAGONAL_MATERIALIZATION' : ''),
-    maxNodes: exportMaxNodes,
-  });
+  if (primaryC3) {
+    const { replayPrimaryC3 } = await import('./replay_whole_k_primary_c3.mjs');
+    await replayPrimaryC3({ directory, receipt, save, stage, context, current, family, bandMaxNodes });
+  } else {
+    const pressure = stage('sealed-original-pressure',
+      () => attachGlobalCurrentPressure(current, context), assertGlobalCurrentPressure);
+    const roots = {
+      pressure: pressure.pressure.value,
+      radialPressureGradient: pressure.pressure.fullRadialDerivative,
+      axialPressureGradient: pressure.pressure.slowZDerivative,
+      radialResidual: pressure.residual.radial,
+      angularResidual: pressure.residual.Etheta,
+      axialResidual: pressure.residual.Ez,
+      axialStress: pressure.residual.fullOriginalStress[1],
+      referenceTime: current.domain.q,
+      omittedScaleTimesTime: current.domain.nextScaleTimesQ,
+      selectorScales: rows.map(row => row.scale),
+    };
+    receipt.scope = {
+      originalCurrentPressurePrivateSeals: true,
+      exactPrefixDomain: current.domain,
+      roots,
+      candidateBoxes: pressure.cover.rows.length,
+      instantiatedAllPhysicalCells: false,
+      nativeReachableNaturalSeriesRangeAudited: false,
+      completeAllCycleFinalField: false,
+    };
+    receipt.currentStage = 'export-original-graph';
+    save();
+    receipt.snapshot = await exportOriginalSourceGraph(pressure.G, {
+      dir: join(directory, 'original-whole-k-current-pressure-graph'),
+      roots: [...new Set([...Object.values(roots).filter(Number.isSafeInteger), ...roots.selectorScales])],
+      sourceCommit: executingCommit,
+      pr30Commit: 'a9b3a5b317525f6d0a71e2e356b054c9d25d2e60',
+      scope: 'ORIGINAL_WHOLE_K_N' + N + '_CURRENT_PRESSURE_PREFIX' +
+        (selectorDiagonalOnly ? '_DIAGONAL_MATERIALIZATION' : ''),
+      maxNodes: exportMaxNodes,
+    });
+  }
   receipt.currentStage = 'COMPLETE';
   save();
 } catch (error) {

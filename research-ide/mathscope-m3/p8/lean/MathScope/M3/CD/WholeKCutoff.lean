@@ -330,4 +330,44 @@ theorem whole_k_bottom_strip_selector_margin {qMin w b qRep : ℝ}
 #print axioms whole_k_time_midpoint_floor
 #print axioms whole_k_bottom_strip_selector_margin
 
+/-- The exact third-scale seam has a direct physical-coordinate test.
+The monotonicity is supplied by the original inverse on its admitted bracket. -/
+theorem whole_k_third_background_physical_split {Q ρ ζ h : ℝ}
+    (hQ : Q ∈ Set.Icc (1 / 2 : ℝ) 2)
+    (hmono : StrictMonoOn (fun x : ℝ => x - ζ ^ 2 * x ^ (2 * h))
+      (Set.Icc (1 / 2 : ℝ) 2))
+    (hroot : Q - ζ ^ 2 * Q ^ (2 * h) = ρ) :
+    (Q < 1 ↔ ρ + ζ ^ 2 < 1) ∧
+      (Q = 1 ↔ ρ + ζ ^ 2 = 1) := by
+  have hOne : (1 : ℝ) ∈ Set.Icc (1 / 2 : ℝ) 2 := ⟨by norm_num, by norm_num⟩
+  have hforward : Q < 1 → ρ + ζ ^ 2 < 1 := by
+    intro hlt
+    have hs := hmono hQ hOne hlt
+    simp only [Real.one_rpow] at hs
+    linarith
+  have hbackward : 1 < Q → 1 < ρ + ζ ^ 2 := by
+    intro hlt
+    have hs := hmono hOne hQ hlt
+    simp only [Real.one_rpow] at hs
+    linarith
+  have hseam : Q = 1 → ρ + ζ ^ 2 = 1 := by
+    intro hEq
+    rw [hEq, Real.one_rpow] at hroot
+    linarith
+  constructor
+  · refine ⟨hforward, ?_⟩
+    intro hlt
+    rcases lt_trichotomy Q 1 with h | h | h
+    · exact h
+    · linarith [hseam h]
+    · linarith [hbackward h]
+  · refine ⟨hseam, ?_⟩
+    intro hEq
+    rcases lt_trichotomy Q 1 with h | h | h
+    · linarith [hforward h]
+    · exact h
+    · linarith [hbackward h]
+
+#print axioms whole_k_third_background_physical_split
+
 end MathScope.M3.CD
