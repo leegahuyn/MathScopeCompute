@@ -18,6 +18,25 @@ def generate(raw):
  s=replace_one(s,"receipt.status='BLOCKED';receipt.failed_at_stage=receipt.stage;","receipt.status='BLOCKED';receipt.failed_rss_bytes=process.memoryUsage().rss;receipt.failed_heap_bytes=process.memoryUsage().heapUsed;receipt.failed_at_stage=receipt.stage;")
  s=replace_one(s,"stage:row?.stage??receipt.stage,substage:","rss_bytes:process.memoryUsage().rss,heap_bytes:process.memoryUsage().heapUsed,stage:row?.stage??receipt.stage,substage:")
  s=replace_one(s,"node_count:G?.nodes?.length??null,elapsed_ms:Date.now()-START}","node_count:G?.nodes?.length??null,elapsed_ms:Date.now()-START,rss_bytes:process.memoryUsage().rss,heap_bytes:process.memoryUsage().heapUsed}")
+ s=replace_one(s,"let G=null,lastProgress=0;", '''let G=null,lastProgress=0,lastMemoryGC=0;
+receipt.memory_gc=[];
+function memoryGC(label){
+    if(!global.gc)return;
+    const before=process.memoryUsage();
+    global.gc();
+    const after=process.memoryUsage();
+    lastMemoryGC=Date.now();
+    receipt.memory_gc.push({label,stage:receipt.stage,at_ms:lastMemoryGC-START,before,after});
+    save();
+}''')
+ s=replace_one(s,"    if(process.memoryUsage().rss>MAX_RSS)throw",'''    if(process.memoryUsage.rss()>=MAX_RSS*0.94&&Date.now()-lastMemoryGC>30000)
+       memoryGC('near-RSS-limit');
+    if(process.memoryUsage.rss()>MAX_RSS)throw''')
+ s=replace_one(s," const temporal=await stage('original_temporal_inverse',",''' for(const graph of new Set([family.G,cur.G,target.G,pres.G]))clearDisposableThirdJetCaches(graph);
+ memoryGC('after-authenticated-pressure');bound();
+ const temporal=await stage('original_temporal_inverse',''')
+ s=replace_one(s," const mean=await stage('original_initialized_mean',",''' memoryGC('after-authenticated-temporal');bound();
+ const mean=await stage('original_initialized_mean',''')
  s=replace_one(s,"import {prepareGlobalSourceBand} from '../navier/source-global-band.mjs';", """import {prepareActualCommonAdmissibleFamily,assertActualCommonAdmissibleFamily} from '../../mathscope-m2/navier/actual-common-admissible-family.mjs';
 import {assertActualCommonTargetWeightedNorms} from '../../mathscope-m2/navier/actual-common-target-weighted-norms.mjs';
 import {clearDisposableThirdJetCaches} from '../../mathscope-m2/navier/actual-third-jet-ftc.mjs';
