@@ -4,6 +4,8 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { M4_CRITERIA, HANDOFF_BASELINE } from '../criteria.mjs';
 import { assessM4Acceptance, buildM4ChecklistView } from '../acceptance.mjs';
+import { verifyCoreKernelReplay } from '../kernel-evidence.mjs';
+import { buildM4ComparisonView } from '../comparison-claims.mjs';
 
 const own = dirname(fileURLToPath(import.meta.url));
 const args = process.argv.slice(2);
@@ -11,6 +13,7 @@ const arg = name => { const index = args.indexOf(name); return index < 0 ? null 
 const sha = data => createHash('sha256').update(data).digest('hex');
 const catalog = JSON.parse(await readFile(resolve(own, 'original-criteria.json'), 'utf8'));
 const checklist = buildM4ChecklistView(await assessM4Acceptance());
+const comparisonClaims = buildM4ComparisonView(await verifyCoreKernelReplay());
 const branchRoot = 'https://github.com/leegahuyn/MathScopeCompute/blob/mathscope-m3-resume-20261013/';
 const pinnedRoot = `https://github.com/leegahuyn/MathScopeCompute/blob/${HANDOFF_BASELINE.historicalResumeHead}/`;
 const observedReceipts = [];
@@ -87,7 +90,7 @@ if (catalog.sourceSha256 !== HANDOFF_BASELINE.blueprintSha256) throw new Error('
 const model = {
   schemaVersion: 'mathscope.m4.web-panel/1', blueprintSha256: catalog.sourceSha256,
   publicBaselineSha256: HANDOFF_BASELINE.publicHtmlSha256, m3Accepted: 56, m3Total: 64,
-  m4FinalAcceptance: 'UNCONFIRMED', criteria, observedReceipts,
+  m4FinalAcceptance: 'UNCONFIRMED', criteria, observedReceipts, comparisonClaims,
   groups: [
     { label: 'M3 · 남은 원래 수학 의무 8개', ids: HANDOFF_BASELINE.pendingOriginalM3 },
     { label: 'M4 · I3 형식화·증거 관문', ids: M4_CRITERIA.filter(x => x.id.startsWith('I3')).map(x => x.id) },
@@ -123,6 +126,7 @@ const fragment = `\n<!-- MathScope owned additive evidence panel: mathscope-m4-e
         <p class="ms-m4-original" data-detail-original></p>
         <dl><dt>원문 위치</dt><dd data-detail-page></dd><dt>원 설계도 SHA</dt><dd><code data-detail-sha></code></dd><dt>선행 조건</dt><dd data-detail-deps></dd><dt>증거 범위</dt><dd data-detail-evidence></dd></dl>
         <details><summary>필요한 검증 증거</summary><ul class="ms-m4-checks" data-detail-checks></ul></details><div class="ms-m4-links" data-detail-links></div>
+        <section data-comparison-view hidden aria-label="비교 정리의 출처와 커널 근거"><ul class="ms-m4-checks" data-comparison-claims></ul></section>
       </section>
     </div>
     <div class="ms-m4-tools"><button type="button" data-export>기준·선택 내보내기</button><label class="ms-m4-import-label">보기 가져오기 <input type="file" accept="application/json,.json" data-import aria-label="검토 대기 상태로 보기 가져오기"></label></div>

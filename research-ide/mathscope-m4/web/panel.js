@@ -20,6 +20,26 @@
     node.href = href; node.target = '_blank'; node.rel = 'noopener noreferrer';
     return node;
   };
+  const comparisonView = q('[data-comparison-view]');
+  if (comparisonView) {
+    for (const claim of model.comparisonClaims || []) {
+      const row = make('li'); row.dataset.comparisonClaim = claim.id;
+      row.append(make('strong', claim.label), make('p', claim.classification));
+      if (claim.reference) {
+        row.append(link(claim.reference.locator, claim.reference.url), make('p', claim.reference.scope));
+      }
+      if (claim.kernel) {
+        const details = make('details'); details.append(make('summary', 'Lean 정리와 가져온 원 정리'));
+        details.append(make('code', claim.kernel.targetType, 'ms-m4-comparison-type'),
+          make('code', claim.kernel.upstreamTargetType, 'ms-m4-comparison-type'),
+          make('p', '공리 ' + (claim.kernel.axioms.join(', ') || '없음')),
+          make('p', '보존된 Lean 실행 ' + claim.kernel.executedAt),
+          make('code', claim.kernel.receiptSha256, 'ms-m4-comparison-type'));
+        row.append(details);
+      }
+      q('[data-comparison-claims]').append(row);
+    }
+  }
   for (const receipt of model.observedReceipts || []) {
     const paragraph = make('p');
     paragraph.append(make('strong', `${receipt.label}: `), make('span', receipt.result));
@@ -42,6 +62,7 @@
     item.requiredChecks.forEach(check => checks.append(make('li', check)));
     const links = q('[data-detail-links]'); links.replaceChildren();
     item.links.forEach(value => links.append(link(value.label, value.url)));
+    if (comparisonView) comparisonView.hidden = id !== 'I3-04';
     q('[data-inspector]').dataset.selectedCriterion = id;
     if (focusDetail) { q('[data-detail-title]').focus({ preventScroll: true }); q('[data-inspector]').scrollIntoView({ block: 'nearest', behavior: 'auto' }); }
   }
