@@ -11,6 +11,54 @@ functions to supply the stated recurrences and do not construct their fields.
 
 namespace MathScope.M3.CD
 
+/-- The two terms in the exact log-scale maximum absorb the source
+logarithmic factor and the positive cutoff-curl coefficient. -/
+theorem actual_shrinking_log_threshold {x γ P C j : ℝ}
+    (hx : 0 ≤ x) (hγ : 0 < γ) (hP : 0 ≤ P) (hC : 0 < C)
+    (hlog : Real.log (1 + x) ≤ Real.sqrt x)
+    (hPscale : (2 * P / γ) ^ 2 ≤ x)
+    (hCscale : 2 * (C + j) / γ ≤ x) :
+    Real.exp (Real.log C + P * Real.log (1 + x) - γ * x) ≤ Real.exp (-j) := by
+  have ht : 2 * P / γ ≤ Real.sqrt x := by
+    have hsq := Real.sq_sqrt hx
+    have hp : 0 ≤ 2 * P / γ := by positivity
+    have hr : 0 ≤ Real.sqrt x := Real.sqrt_nonneg _
+    by_contra! h
+    have hpos := mul_pos (sub_pos.mpr h) (show 0 < 2 * P / γ + Real.sqrt x by linarith)
+    nlinarith
+  have hmul : 2 * P ≤ γ * Real.sqrt x := by
+    simpa only [mul_comm] using (div_le_iff₀ hγ).mp ht
+  have hlogMul := mul_le_mul_of_nonneg_left hlog hP
+  have hhalf := mul_le_mul_of_nonneg_right hmul (Real.sqrt_nonneg x)
+  have hsq := Real.sq_sqrt hx
+  have hhalf' : 2 * (P * Real.sqrt x) ≤ γ * x := by
+    calc
+      2 * (P * Real.sqrt x) = (2 * P) * Real.sqrt x := by ring
+      _ ≤ (γ * Real.sqrt x) * Real.sqrt x := hhalf
+      _ = γ * x := by rw [mul_assoc, ← pow_two, hsq]
+  have hc := (div_le_iff₀ hγ).mp hCscale
+  exact Real.exp_le_exp.mpr (by linarith [Real.log_le_sub_one_of_pos hC])
+
+/-- The same literal core stress branch applies at the clipped
+representative even when its normalized time is slightly below one. -/
+theorem whole_k_representative_core_stress {s w r a t : ℝ}
+    (ha : 0 < a) (hw : 0 < w) (hwHalf : w < 1 / 2)
+    (hwt : 4 * w < t / 128) (hs : 1 - w < s)
+    (hr : r ^ 2 < 2 * a * (1 + w)) :
+    r ^ 2 / (2 * s) < a * Real.exp (t / 128) := by
+  have hstep : 1 + w < (1 + 4 * w) * (1 - w) := by
+    nlinarith [mul_pos hw (show 0 < 2 - 4 * w by linarith)]
+  have hbound : 1 + w < (1 + 4 * w) * s :=
+    lt_trans hstep (mul_lt_mul_of_pos_left hs (by positivity))
+  have hs' : 0 < 2 * s := by linarith
+  have hr' : r ^ 2 / (2 * s) < a * (1 + 4 * w) := by
+    apply (div_lt_iff₀ hs').mpr
+    have hm := mul_lt_mul_of_pos_left hbound (show 0 < 2 * a by positivity)
+    nlinarith
+  have hexp : 1 + 4 * w < Real.exp (t / 128) := by
+    linarith [Real.add_one_le_exp (t / 128)]
+  exact lt_trans hr' (mul_lt_mul_of_pos_left hexp ha)
+
 /-- Every positive root of the normalized physical chart lies in the
 source bracket on the whole cutoff slab. The root equation is obtained by
 substituting `q = tau0 * Q`, `z = tau0^D * zeta`, `tau = tau0 * rho`,
