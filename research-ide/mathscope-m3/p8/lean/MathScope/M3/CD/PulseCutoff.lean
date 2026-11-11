@@ -74,9 +74,44 @@ theorem strict_gap_excludes_overlap {x y u v r s : ℝ}
   have bound : |x - y| ≤ r + s := abs_le.mpr ⟨by linarith, by linarith⟩
   exact (not_lt_of_ge bound) hgap
 
+/-- Every centre whose closed bump support can reach x belongs to the
+three-centre stencil of any nearest integer, including either tie choice. -/
+theorem nearest_stencil_covers_closed_support {x : ℝ} {j n : ℤ}
+    (hj : |x - (j : ℝ)| ≤ 3 / 4)
+    (hn : |x - (n : ℝ)| ≤ 1 / 2) :
+    n - 1 ≤ j ∧ j ≤ n + 1 := by
+  obtain ⟨hjl, hju⟩ := abs_le.mp hj
+  obtain ⟨hnl, hnu⟩ := abs_le.mp hn
+  have lo : (n : ℝ) - 2 < (j : ℝ) := by linarith
+  have hi : (j : ℝ) < (n : ℝ) + 2 := by linarith
+  have loInt : n - 2 < j := by exact_mod_cast lo
+  have hiInt : j < n + 2 := by exact_mod_cast hi
+  omega
+
+/-- The dropped and inserted centres on a nearest-integer switch both
+have a strict collar around the switch, beyond the closed bump support. -/
+theorem nearest_stencil_switch_collar {x : ℝ} (n : ℤ)
+    (hx : |x - ((n : ℝ) + 1 / 2)| < 3 / 4) :
+    3 / 4 < |x - ((n : ℝ) - 1)| ∧ 3 / 4 < |x - ((n : ℝ) + 2)| := by
+  obtain ⟨hl, hu⟩ := abs_lt.mp hx
+  have hp : 0 ≤ x - ((n : ℝ) - 1) := by linarith
+  have hq : x - ((n : ℝ) + 2) ≤ 0 := by linarith
+  rw [abs_of_nonneg hp, abs_of_nonpos hq]
+  constructor <;> linarith
+
+/-- A partitioned residual agrees locally across a stencil switch if
+the exiting and entering rows vanish on their support collars. -/
+theorem nearest_stencil_switch_sum {α : Type*} [AddCommMonoid α]
+    (common departing entering : α) (hd : departing = 0) (he : entering = 0) :
+    common + departing = common + entering := by
+  rw [hd, he]
+
 #print axioms forced_principal_cutoff_terms
 #print axioms pulse_cutoff_derivative_outside_transitions
 #print axioms gaussian_dyadic_flat
 #print axioms strict_gap_excludes_overlap
+#print axioms nearest_stencil_covers_closed_support
+#print axioms nearest_stencil_switch_collar
+#print axioms nearest_stencil_switch_sum
 
 end MathScope.M3.CD
