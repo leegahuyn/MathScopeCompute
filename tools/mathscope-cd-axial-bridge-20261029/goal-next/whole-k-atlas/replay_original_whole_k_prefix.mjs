@@ -173,6 +173,21 @@ try {
     sourceFamilySHA256: family.sourceBinding.parameterExpressionSHA256,
   };
   save();
+  if (N === 3 && selectorDiagonalOnly) {
+    receipt.currentStage = 'export-authenticated-selector-band';
+    save();
+    receipt.bandSnapshot = await exportOriginalSourceGraph(G, {
+      dir: join(directory, 'original-whole-k-selector-band-graph'),
+      roots: [...new Set([window.lower, window.upper, window.ell, window.Q,
+        ...rows.map(row => row.scale), ...band.background.rows.flatMap(row => Object.values(row.sourceRoots))])],
+      sourceCommit: executingCommit,
+      pr30Commit: 'a9b3a5b317525f6d0a71e2e356b054c9d25d2e60',
+      scope: 'ORIGINAL_WHOLE_K_N3_SELECTOR_BAND_DIAGONAL_MATERIALIZATION',
+      maxNodes: exportMaxNodes,
+    });
+    save();
+    collectAt('after-authenticated-selector-band-export');
+  }
 
   const representative = stage('sealed-original-representative',
     () => attachGlobalFixedRepresentative(band, context), assertGlobalFixedRepresentative);
