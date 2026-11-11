@@ -40,6 +40,25 @@ theorem reference_general_window_strict_point (v growth : ℝ)
   dsimp [s]
   linarith
 
+/-- Original angular carriers use an integer winding. A different
+polar lift preserves both coefficients of each harmonic. -/
+theorem integer_carrier_angle_shift (offset theta : ℝ) (winding lift : ℤ) :
+    Real.cos (offset + (winding : ℝ) * (theta + (lift : ℝ) * (2 * Real.pi))) =
+      Real.cos (offset + (winding : ℝ) * theta) ∧
+    Real.sin (offset + (winding : ℝ) * (theta + (lift : ℝ) * (2 * Real.pi))) =
+      Real.sin (offset + (winding : ℝ) * theta) := by
+  have h : offset + (winding : ℝ) * (theta + (lift : ℝ) * (2 * Real.pi)) =
+      (offset + (winding : ℝ) * theta) + (↑(winding * lift) : ℝ) * (2 * Real.pi) := by
+    push_cast
+    ring
+  exact ⟨by rw [h, Real.cos_add_int_mul_two_pi], by rw [h, Real.sin_add_int_mul_two_pi]⟩
+
+/-- The original physical time is (t=1-\tau).
+The fast coefficient has a positive sign after multiplication by `-eps`. -/
+theorem reference_torus_fast_time_sign (eps Q cover derivative : ℝ) :
+    -eps * (cover * (-Q) * derivative) = (eps * Q * cover) * derivative := by
+  ring
+
 /-- Use the normalized chart equation on the positive domain. A strict
 decrease on this domain follows from either a nonzero axial coordinate
 or positive time. -/
@@ -116,6 +135,8 @@ theorem representative_midpoint_brackets {F : ℝ → ℝ} {lo hi tLo tHi : ℝ}
 #print axioms reference_band_label
 #print axioms reference_general_window_lower_label
 #print axioms reference_general_window_strict_point
+#print axioms integer_carrier_angle_shift
+#print axioms reference_torus_fast_time_sign
 #print axioms positive_reference_root_unique
 #print axioms zero_axial_time_below_reference_bracket
 #print axioms representative_midpoint_brackets
