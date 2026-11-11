@@ -1,0 +1,45 @@
+name: MathScope M4 unconditional Lean closure
+on:
+  push:
+    branches: [mathscope-cd-axial-source-bridge-20261029]
+    paths:
+      - '.github/workflows/mathscope-m4-closure-20261111.yml'
+      - 'tools/mathscope-cd-axial-bridge-20261029/m4-closure/**'
+      - 'research-ide/mathscope-m4/lean/**'
+      - 'research-ide/mathscope-m0/lean/MathScope/M0/Defs.lean'
+      - 'research-ide/mathscope-m0/lean/MathScope/M0/Finite.lean'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  unconditional-closure:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      ELAN_TOOLCHAIN: leanprover/lean4:v4.34.1
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: |
+            tools/mathscope-cd-axial-bridge-20261029/m4-closure
+            research-ide/mathscope-m4/lean
+            research-ide/mathscope-m0/lean/MathScope/M0
+      - name: Install pinned Lean
+        run: |
+          set -euo pipefail
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
+          "$HOME/.elan/bin/elan" toolchain install "$ELAN_TOOLCHAIN"
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Run unconditional closure and negative controls
+        run: |
+          set -euo pipefail
+          lean_executable="$(lean --print-prefix)/bin/lean"
+          python3 tools/mathscope-cd-axial-bridge-20261029/m4-closure/run_closure.py \
+            --repo "$GITHUB_WORKSPACE" --lean "$lean_executable" --out "$RUNNER_TEMP/m4-closure"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mathscope-m4-closure
+          path: ${{ runner.temp }}/m4-closure/
+          if-no-files-found: warn
