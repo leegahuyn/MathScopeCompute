@@ -59,4 +59,16 @@ theorem mean_and_defect_cycle_arithmetic (j : ℕ) (κ : ℝ)
 #print axioms signed_stress_remainder_arithmetic
 #print axioms mean_and_defect_cycle_arithmetic
 
+/-- The centered axial cutoff contribution uses the raw centered source
+once the cutoff operator commutes with the torus derivative. -/
+theorem centered_axial_cutoff_cancels_inverse
+    {V : Type*} [AddCommGroup V] [Module ℝ V]
+    (N A : V →ₗ[ℝ] V) (c : ℝ) (gamma f : V)
+    (commute : ∀ x, N (A x) = A (N x))
+    (source : (-c) • N gamma = f) :
+    (-c) • N (A gamma) = A f := by
+  rw [commute, ← A.map_smul, source]
+
+#print axioms centered_axial_cutoff_cancels_inverse
+
 end MathScope.M3.CD
