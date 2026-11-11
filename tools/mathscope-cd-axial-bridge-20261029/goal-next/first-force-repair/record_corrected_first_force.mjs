@@ -24,12 +24,14 @@ export async function recordCorrectedFirstForce({ rawGraph, initial, forced, dir
       let changed = 0;
       const components = raw.flatMap((z, j) => parts.map(part => {
         const primaryRoot = primary?.[j][part] ?? G.zero;
-        const sourceRoot = G.sub(z[part], primaryRoot);
+        const sourceRoot = G.add(z[part], G.mul(G.q(-1), primaryRoot));
         const pullback = f.pullback[j][part];
         assert.equal(sourceRoot, supported[j][part]);
         assert.equal(sourceRoot, f.inputRoots[j][part]);
         assert.equal(sourceRoot, pullback.body);
-        assert.equal(pullback.mapped, f.signedSolutions[0].pathSource[j][part]);
+        const formalPathSource = f.bound.wrappedSource[j][part];
+        assert.equal(pullback.mapped, f.bound.originalSource[j][part]);
+        assert.equal(formalPathSource, f.signedSolutions[0].pathSource[j][part]);
         assert.ok(pullback.check.pass);
         if (pullback.system !== undefined) {
           assert.equal(G.expressionSystem(pullback.system).body, sourceRoot);
@@ -38,13 +40,18 @@ export async function recordCorrectedFirstForce({ rawGraph, initial, forced, dir
         }
         changed += Number(z[part] !== sourceRoot);
         return { j, part, raw: z[part], primary: primaryRoot, supported: sourceRoot,
-          mapped: pullback.mapped, system: pullback.system ?? null };
+          mapped: pullback.mapped, formalPathSource, system: pullback.system ?? null };
       }));
       assert.ok(f.m === 1 ? changed > 0 : changed === 0);
       assert.ok(f.checks.every(check => check.pass));
       assert.ok(t.support.checks.every(check => check.pass));
+      const { Y, Hw, w, pulse, ci, Tg, vt, levelDifference } = f.path;
+      const { normal, K, k, epsilon, projectedSource } = f.inverse;
       rows.push({ key: t.key, m: f.m, changed, components,
-        system: f.inverse.system, output: f.inverse.velocity, pressure: f.inverse.pressure });
+        path: { Y, Hw, w, pulse, ci, Tg, vt, levelDifference },
+        normal, K, k, epsilon, projectedSource, length: f.inverse.input.length,
+        system: f.inverse.system, output: f.inverse.velocity, pressure: f.inverse.pressure,
+        mappedCutoff: f.mapped.cutoff.mapped });
     }
   }
   assert.equal(rows.length, 20);
@@ -53,7 +60,7 @@ export async function recordCorrectedFirstForce({ rawGraph, initial, forced, dir
   const roots = new Set(physicalResidual);
   for (const row of rows) {
     for (const c of row.components) {
-      for (const k of ['raw', 'primary', 'supported', 'mapped']) roots.add(c[k]);
+      for (const k of ['raw', 'primary', 'supported', 'mapped', 'formalPathSource']) roots.add(c[k]);
     }
     for (const z of [...row.output, row.pressure]) {
       for (const part of parts) roots.add(z[part]);
