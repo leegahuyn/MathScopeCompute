@@ -107,7 +107,7 @@ theorem chart_source_image_exists_unique {s η h : ℝ}
   have hm : StrictMonoOn (fun x => originalChartF x Z T h) (Set.Icc (1 / 2) 2) := by
     apply strictMonoOn_of_deriv_pos (convex_Icc (1 / 2) 2) hf
     intro x hx
-    have hd := chart_bracket_derivative h₀ h₁ hZ₂ (interior_subset hx)
+    have hd := chart_bracket_derivative (T := T) h₀ h₁ hZ₂ (interior_subset hx)
     rw [hd.1.deriv]
     exact lt_trans (by norm_num) hd.2.1
   have hr : originalChartF s Z T h = 0 := chart_full_source_image s η h hs₀
