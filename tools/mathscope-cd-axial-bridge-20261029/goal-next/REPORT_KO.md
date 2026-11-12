@@ -8,7 +8,14 @@
 | 최종장 jets | **0/67** | 환대 초기장 67/67 수치 구간. 모든 활성 보정을 포함하는 최종장 구간 OPEN |
 | 릴리스 | **HOLD** | M3 전체 검증과 최종장 구간 OPEN |
 
-첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–27을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
+첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
+
+## Continuation28
+
+- **VERIFIED · 원본 고정 환형 구간의 배경 C9와 가중 표적 C8.** 원본 프로파일의 수치 상계와 안쪽·가운데·바깥의 실제 표적을 사용했다. \(R,Z,T\) 혼합 미분을 포함하고 표적의 \(\zeta\delta_*^{-27}\)를 유지한다. [수치 재현](primary-forced-weights/slow-nine/README.md).
+- **VERIFIED / CONDITIONAL · 완전 curl을 포함한 평균장 미분.** 원본 노드 4,456,994개 중 고차 경로의 72개 기록을 Python으로 대조했다. 기존 환형 차트와 펄스 경로 가정 아래 \(W_{rz}\)의 7차, \(L^2W_{rz}\)의 느린 7차, 초기 직접 평균장 \(v\)의 느린 3차를 수치화했다. 보관된 평균–파동 C2가 요구하는 평균장 미분은 성분마다 52개, 총 156개를 연결했다. 동일 원본 경로의 파동 C3와 전체 Forced C2에 필요한 파동 C4, 새 계열 결속과 활성 보정은 OPEN이다. [평균장 입력](primary-forced-weights/slow-nine/README.md).
+- **VERIFIED · 가우스 인자의 경계 차수 흡수.** 원본 두 로그 거리와 1의 최솟값으로 나눈 짝수 차수를 지수함수의 Taylor 하계로 상계했다. 이 단계는 비가중 공분산 노름에 쓰인다. [GitHub Lean](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43268765834).
+- **VERIFIED / OPEN · 원본 전역 C8 실행.** 원본 4,456,994개 노드의 ID와 삽입 순서, 실제 C2 발행자의 봉인과 변조 거부를 압축 저장 전후 대조했다. GitHub 재실행에서 계수 FTC 31,713개와 그래프 14,220,509개 노드를 생성했다. 약 8.19GB RSS에서 원본 전체 프로그램을 한 JSON 문자열로 만드는 단계가 JavaScript 문자열 한계에 걸렸다. 전역 C8의 최종 증명서와 같은 계열 C5는 OPEN이다. [원본 대조](primary-forced-weights/live-c5/compact-lookup/README.md) · [GitHub 재실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43268418167).
 
 ## Continuation27
 

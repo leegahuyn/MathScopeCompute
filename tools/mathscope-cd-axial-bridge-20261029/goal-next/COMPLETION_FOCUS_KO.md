@@ -9,7 +9,7 @@
 
 원본 초기 환형 영역의 운동에너지·소산·외력 일과 움직이는 경계 유량에 수치 상계를 얻었다. 초기장 속도의 각도 Fourier 꼬리도 확보했다. 최종장 입력이 갖춰지면 같은 적분과 꼬리 검사를 실행할 수 있다. 최종장 통과 건수는 여전히 N7-06/N8-05 0/2 및 jets 0/67이다. [에너지 적분](whole-k-annular-initial/energy/README.md) · [Fourier 꼬리](final67/initial-fourier/README.md).
 
-초기 평균장의 종방향 수치 상계 57개와 원본 방사 연산자의 5차를 재현했다. 현재 평균–파동 C2 경로에는 순수 느린 3차 직접 속도 성분에 들어가는 Wrz의 7차 및 L² 상계가 남는다. 첫 Forced 모드 1의 가중 C3 경로에는 원본 파동 C5, 각방향 압력과 평균 고차 입력이 필요하다. 이 입력을 활성 보정에 연결한 뒤 각 환형 셀에서 67개를 닫고 두 M3 수치 실험에 전달한다. [고차 평균 입력](primary-forced-weights/higher-mean/README.md) · [Primary C5](primary-forced-weights/live-c5/README.md).
+원본 고정 환형 구간에서 \(W_{rz}\)의 느린 7차와 \(L^2W_{rz}\)의 느린 7차를 수치화해 초기 평균장 \(v\)의 느린 3차 상계를 얻었다. 보관된 평균–파동 C2의 평균장 입력 156개를 연결했다. 그 경로의 파동 C3, 전체 Forced C2의 파동 C4, 전체 Forced C3의 파동 C5와 각방향 압력, 새 계열 결속이 남는다. 이 입력을 활성 보정에 연결한 뒤 각 환형 셀에서 67개를 닫고 두 M3 수치 실험에 전달한다. [고차 평균 입력](primary-forced-weights/slow-nine/README.md) · [Primary C5](primary-forced-weights/live-c5/README.md).
 
 원본 초기장 수치 입력은 108/108이다. 같은 계열의 GitHub 계산에서 Temporal과 초기 평균장을 통과했고, 각방향 초기화가 기존 500만 노드 한도를 적용해 중단됐다. 해당 단계의 수치 한도를 기존 680만에 맞춘 재실행이 시작됐다. 이후에도 가중 Forced, 활성 증분, 동일 최종장 적분과 세분화가 남는다. 이 증명 의무의 완료 시간은 아직 추정할 수 없다. [초기장 구간](whole-k-annular-initial/numerical/STAGE_ZERO_NUMERICAL.md) · [새 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43256030290).
 

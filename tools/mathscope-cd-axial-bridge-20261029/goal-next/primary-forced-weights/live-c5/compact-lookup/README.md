@@ -1,6 +1,6 @@
 # Compact intern-table experiment
 
-This scratch-only experiment replaces neither source code nor a workflow.
+This experiment measures the storage used by original graph intern and derivative maps.
 `CompactLookup` is a `Map` subclass whose public keys remain the original
 `JSON.stringify([op,args])` strings. Only `add` and `multiply` keys with two
 nonnegative integer node IDs below `2^25` are stored as exactly representable
@@ -45,18 +45,17 @@ background norm issuer was separately run with each table and passed its
 private `WeakMap` seal and twelve source checks in both cases. Its full graph,
 program, source rows and roots are byte-identical; mutations to a graph node
 and a norm row are rejected by the original seal. This does not test the
-actual C8 sealed constructor or a live source family.
-Replacing an intern table is not permission to change the native source body,
-cache key meaning, append order, mutation checks or resource limits. Validate
-all of those separately before any hosted retry. No Lean theorem, M3 gate or
-final jet is established here.
+actual C8 sealed constructor or a live source family. The hosted retry applies
+the reversible instrumentation after the leading FTC checkpoint. The patched
+issuer preserved the original C2 graph, program and private seal with the
+callback enabled and disabled.
 
 Replay with Node and the pinned original runtime:
 
 ```sh
-p=work/goal-next/continuation28/compact-lookup
-runtime=work/goal-next/continuation27/original-primary-degree-runtime
-graph=work/goal-next/corrected-flat/hosted-43010593847/corrected-first-cycle-graph/original-source-nodes.jsonl.gz
+p=tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-forced-weights/live-c5/compact-lookup
+runtime=inputs/original-primary-degree-runtime
+graph=inputs/corrected-first-cycle/corrected-first-cycle-graph/original-source-nodes.jsonl.gz
 node --expose-gc --max-old-space-size=4096 "$p/replay_lookup.mjs" differential "$graph" 4456994
 node --max-old-space-size=2048 "$p/native_constructor_parity.mjs" "$runtime"
 node --expose-gc --max-old-space-size=4096 "$p/chart_parity.mjs" baseline "$runtime" 8

@@ -341,3 +341,12 @@ give the separate integer and source-pin controls. [The three GitHub C5
 logs](primary-forced-weights/live-c5/README.md) record the original
 computation limits. [The operating M4 rehearsal](m4/r108/operational-replay-audit/README.md)
 reverses the exact public HTTP bytes locally.
+
+## Continuation28
+
+Use the [pointwise and covariance replay](primary-forced-weights/slow-nine/README.md)
+to rebuild the two C9 background and two weighted C8 target endpoints,
+the archived mean C3, and all 156 mean-side bindings for mean–wave C2.
+The independent Python pass compares the exact shifted and unshifted
+original records. [The compact graph controls](primary-forced-weights/live-c5/compact-lookup/README.md)
+replay the C2 seal and the separate order-eight chart calculation.

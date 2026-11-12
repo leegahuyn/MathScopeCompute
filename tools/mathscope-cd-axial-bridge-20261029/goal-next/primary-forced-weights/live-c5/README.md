@@ -28,6 +28,11 @@ on failure.
   It then exhausted the 11,000 MiB V8 heap while building the C8 background.
   The last compact receipt identifies the unfinished stage. It has no
   completed same-family C8, target C6 or Primary C5 entry.
+- [43268418167](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43268418167)
+  completed the four coefficient expansions and all 31,713 coefficient FTC
+  records. It reached program packing with 14,220,509 nodes and
+  8,187,076,608 bytes RSS. The original single canonical JSON string failed
+  with V8's “Invalid string length.” The native final seals are still open.
 
 The local evidence does not supply the live class, the Forced input
 class, later active increments or any final-field jet. Whole-K jets
