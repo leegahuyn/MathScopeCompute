@@ -370,4 +370,41 @@ theorem whole_k_third_background_physical_split {Q ρ ζ h : ℝ}
 
 #print axioms whole_k_third_background_physical_split
 
+/-- The original fourth selector's finite-frequency exponential may use
+two exponential layers at this intermediate step. -/
+theorem fourth_selector_frequency_atom {R N A B : ℝ} {k : ℕ}
+    (hR : 2 < R) (hN : 1 ≤ N) (hk : k ≤ 72)
+    (hfreq : 1 + N ≤ R ^ 51) (hA : A ≤ Real.exp R)
+    (hB : R ^ 4096 ≤ B) :
+    Real.exp ((1 + N) ^ k * A / N) ≤ Real.exp (Real.exp B) := by
+  have hR₀ : 0 ≤ R := by linarith
+  have hR₁ : 1 ≤ R := by linarith
+  have hN₀ : 0 < N := by linarith
+  have hP : (1 + N) ^ k ≤ R ^ 3672 := by
+    calc
+      _ ≤ (1 + N) ^ 72 := pow_le_pow_right₀ (by linarith) hk
+      _ ≤ (R ^ 51) ^ 72 := pow_le_pow_left₀ (by linarith) hfreq 72
+      _ = R ^ 3672 := by simpa only [← pow_mul]
+  have hpower : R ^ 3672 + R ≤ R ^ 4096 := by
+    have hbase : R ≤ R ^ 3672 := by
+      simpa only [pow_one] using (pow_le_pow_right₀ hR₁ (show 1 ≤ 3672 by decide))
+    calc
+      _ ≤ R ^ 3672 + R ^ 3672 := add_le_add_left hbase _
+      _ = R ^ 3672 * 2 := by rw [mul_two]
+      _ ≤ R ^ 3672 * R := mul_le_mul_of_nonneg_left hR.le (pow_nonneg hR₀ _)
+      _ = R ^ 3673 := (pow_succ R 3672).symm
+      _ ≤ R ^ 4096 := pow_le_pow_right₀ hR₁ (by decide)
+  apply Real.exp_le_exp.mpr
+  calc
+    (1 + N) ^ k * A / N ≤ (1 + N) ^ k * Real.exp R / N :=
+      div_le_div_of_nonneg_right (mul_le_mul_of_nonneg_left hA (by positivity)) hN₀.le
+    _ ≤ (1 + N) ^ k * Real.exp R := div_le_self (by positivity) hN
+    _ ≤ R ^ 3672 * Real.exp R := mul_le_mul_of_nonneg_right hP (Real.exp_pos R).le
+    _ ≤ Real.exp (R ^ 3672) * Real.exp R :=
+      mul_le_mul_of_nonneg_right (by linarith [Real.add_one_le_exp (R ^ 3672)]) (Real.exp_pos R).le
+    _ = Real.exp (R ^ 3672 + R) := (Real.exp_add _ _).symm
+    _ ≤ Real.exp B := Real.exp_le_exp.mpr (hpower.trans hB)
+
+#print axioms fourth_selector_frequency_atom
+
 end MathScope.M3.CD
