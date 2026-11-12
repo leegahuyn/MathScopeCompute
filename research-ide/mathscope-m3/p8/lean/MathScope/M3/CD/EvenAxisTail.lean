@@ -28,9 +28,10 @@ theorem evenAxisFirstDerivativeAverage
   have hFTC := intervalIntegral.integral_eq_sub_of_hasDerivAt hscaled hint
   rw [intervalIntegral.integral_mul_const] at hFTC
   simp only [one_mul, zero_mul, hzero, sub_zero] at hFTC
-  set average : ℝ := (∫ t in (0 : ℝ)..1, second (t * x)) at hFTC ⊢
+  set average : ℝ := (∫ t in (0 : ℝ)..1, second (t * x))
   rw [← hFTC]
-  field_simp <;> ring
+  apply (div_eq_iff (mul_ne_zero (by norm_num : (2 : ℝ) ≠ 0) hx)).2
+  ring
 
 /-- A pointwise bound on the integrand gives the same bound divided by two
 for its normalized average, including the constant integrand at the axis. -/
