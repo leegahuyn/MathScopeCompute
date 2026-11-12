@@ -25,15 +25,98 @@ export function decodeKey(key) {
   return JSON.stringify([op, [a, b]]);
 }
 
-export class CompactLookup extends Map {
-  has(k) { return super.has(encodeKey(k)); }
-  get(k) { return super.get(encodeKey(k)); }
-  set(k, v) { super.set(encodeKey(k), v); return this; }
-  delete(k) { return super.delete(encodeKey(k)); }
-  *entries() { for (const [k,v] of super.entries()) yield [decodeKey(k),v]; }
-  *keys() { for (const k of super.keys()) yield decodeKey(k); }
+const SEGMENT_LIMIT = 2 ** 23;
+
+/** Each segment contains consecutive insertions. Updating an existing key
+ * keeps its position, and reinserting a deleted key goes at the end. */
+class PackedLookup extends Map {
+  #segments = [new Map()];
+  #count = 0;
+  #limit;
+  #encode;
+  #decode;
+
+  constructor(encode, decode, entries, limit) {
+    super();
+    if (!Number.isSafeInteger(limit) || limit < 1 || limit > SEGMENT_LIMIT)
+      throw new RangeError('Invalid intern segment limit');
+    this.#encode = encode;
+    this.#decode = decode;
+    this.#limit = limit;
+    if (entries != null) for (const [key, value] of entries) this.set(key, value);
+  }
+
+  get size() { return this.#count; }
+
+  #find(key) {
+    for (let i = this.#segments.length - 1; i >= 0; i--) {
+      const segment = this.#segments[i];
+      if (segment.has(key)) return segment;
+    }
+  }
+
+  has(key) { return this.#find(this.#encode(key)) !== undefined; }
+
+  get(key) {
+    const encoded = this.#encode(key);
+    for (let i = this.#segments.length - 1; i >= 0; i--) {
+      const value = this.#segments[i].get(encoded);
+      if (value !== undefined) return value;
+    }
+  }
+
+  set(key, value) {
+    const encoded = this.#encode(key);
+    let segment = this.#find(encoded);
+    if (!segment) {
+      segment = this.#segments.at(-1);
+      if (segment.size === this.#limit) {
+        segment = new Map();
+        this.#segments.push(segment);
+      }
+      this.#count++;
+    }
+    segment.set(encoded, value);
+    return this;
+  }
+
+  delete(key) {
+    const encoded = this.#encode(key);
+    const segment = this.#find(encoded);
+    if (!segment) return false;
+    segment.delete(encoded);
+    this.#count--;
+    return true;
+  }
+
+  clear() {
+    for (const segment of this.#segments) segment.clear();
+    this.#count = 0;
+  }
+
+  *entries() {
+    for (const segment of this.#segments)
+      for (const [key, value] of segment) yield [this.#decode(key), value];
+  }
+
+  *keys() {
+    for (const segment of this.#segments)
+      for (const key of segment.keys()) yield this.#decode(key);
+  }
+
+  *values() {
+    for (const segment of this.#segments) yield* segment.values();
+  }
+
   [Symbol.iterator]() { return this.entries(); }
-  forEach(callback, thisArg) { for (const [k,v] of this) callback.call(thisArg,v,k,this); }
+  forEach(callback, thisArg) {
+    if (typeof callback !== 'function') throw new TypeError('Expected a callback');
+    for (const [key, value] of this) callback.call(thisArg, value, key, this);
+  }
+}
+
+export class CompactLookup extends PackedLookup {
+  constructor(entries, limit = SEGMENT_LIMIT) { super(encodeKey, decodeKey, entries, limit); }
 }
 
 /** Preserve every legacy key/value and insertion order. The caller may
@@ -61,15 +144,8 @@ function decodePair(k) {
   if(!Number.isSafeInteger(k)||k<0||k>=BASE**2)throw Error('Invalid derivative key');
   return Math.floor(k/BASE)+':'+(k%BASE);
 }
-export class CompactDerivativeLookup extends Map {
-  has(k){return super.has(encodePair(k));}
-  get(k){return super.get(encodePair(k));}
-  set(k,v){super.set(encodePair(k),v);return this;}
-  delete(k){return super.delete(encodePair(k));}
-  *entries(){for(const [k,v]of super.entries())yield [decodePair(k),v];}
-  *keys(){for(const k of super.keys())yield decodePair(k);}
-  [Symbol.iterator](){return this.entries();}
-  forEach(callback,thisArg){for(const [k,v]of this)callback.call(thisArg,v,k,this);}
+export class CompactDerivativeLookup extends PackedLookup {
+  constructor(entries, limit = SEGMENT_LIMIT) { super(encodePair, decodePair, entries, limit); }
 }
 export function compactDerivativesFromLegacy(legacy){
   if(!(legacy instanceof Map))throw TypeError('Expected source derivative Map');
