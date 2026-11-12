@@ -26,6 +26,8 @@ INDUCTION = M2 + "actual-residual-order-induction-expressions.mjs"
 INDUCTION_PINS = (
     "dfa10931c2eee87344dff4c95ecbeaf84d21c5ea5891d6452ea1f5fd4a4d9501",
     "495197014413f796ecc4563122ca8b75e9a4844fadb6ddda0ff305711eee2fc8",
+    "6ac4b997740f549ced7205fb8f47025012c8a4426b25acffd51dbb9d85e4729a",
+    "fdcd5ff773875e287f5fa3c54fcea63f78792bff67dd1fe1dda4b5a08d7c5d99",
 )
 GLOBAL = M3 + "source-global-expressions.mjs"
 GLOBAL_PIN = "89904bd7441a57cf634ff7b4c579e9ee7688868d14eafd999e44f41f74f0c2d1"

@@ -19,12 +19,17 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        prefix: [3, 4]
+        include:
+          - prefix: 3
+            nodes: 20000000
+          - prefix: 4
+            nodes: 24000000
     runs-on: ubuntu-24.04
     timeout-minutes: 135
     env:
       ORIGINAL_SOURCE_COMMIT: f8cb4034e86d7b669d52a6f2248aebba156b51b5
       SOURCE_PREFIX: ${{ matrix.prefix }}
+      SOURCE_NODE_BUDGET: ${{ matrix.nodes }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -68,8 +73,8 @@ jobs:
           PY
           atlas=../evidence/tools/mathscope-cd-axial-bridge-20261029/goal-next/whole-k-atlas
           python3 "$atlas/prepare_iterative_norm_import.py" . "$out/iterative-norm-import-overlay.json"
-          python3 "$atlas/prepare_wider_band_budget.py" research-ide/mathscope-m3/navier/source-global-band.mjs "$out/band-budget-overlay.json"
-          python3 "$atlas/prepare_wider_band_budget.py" research-ide/mathscope-m2/navier/actual-residual-order-induction-expressions.mjs "$out/graph-copy-budget-overlay.json"
+          python3 "$atlas/prepare_wider_band_budget.py" research-ide/mathscope-m3/navier/source-global-band.mjs "$out/band-budget-overlay.json" "$SOURCE_NODE_BUDGET"
+          python3 "$atlas/prepare_wider_band_budget.py" research-ide/mathscope-m2/navier/actual-residual-order-induction-expressions.mjs "$out/graph-copy-budget-overlay.json" "$SOURCE_NODE_BUDGET"
           live=../evidence/tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-forced-weights/live-c5
           python3 "$live/prepare_leading_budget.py" . "$out/leading-budget-overlay.json"
           issuer=research-ide/mathscope-m2/navier/actual-compact-all-band-background-norms.mjs

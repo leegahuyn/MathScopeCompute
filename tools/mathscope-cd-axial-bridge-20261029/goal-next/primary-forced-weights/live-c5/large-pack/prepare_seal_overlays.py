@@ -18,7 +18,10 @@ def main():
   m2+'actual-common-admissible-family.mjs':{'7fd3ec07b567af86f84df7a1b789a5a57366186d4e8c26c2a4a35dc5948c5b75'},
   m2+'actual-common-admissible-band.mjs':{'41a1fb93ec6384a3999761913ede62d374bce077810c366cbb6c2a065c71d28a'},
   m2+'actual-common-target-weighted-norms.mjs':{'6fca53620e45a839868d094a1425ee0071ec4ca21c16bff77476d8be2f32e38a'},
-  m3+'source-global-band.mjs':{'babe4aceb97d0bdee4084e5f06009e6724128935fffde1647c11e3aab022df60','085f21f84de6c0dcb3739fc6e8d51b3c88cf3bf20b43a14c308fe924a34b0c41'},
+  m3+'source-global-band.mjs':{'babe4aceb97d0bdee4084e5f06009e6724128935fffde1647c11e3aab022df60',
+   '085f21f84de6c0dcb3739fc6e8d51b3c88cf3bf20b43a14c308fe924a34b0c41',
+   '059f48db7d0b2a9661c93024c9482a02aefed33b979b23fab0524c334a550354',
+   'c06d6937e0cc3b318aca07fab78b0483701fddc9d6265d62578809b77f85bb70'},
   m3+'source-global-representative.mjs':{'f3fbcf74b42c59cbfdd563e0fddcba9fab5cad782a96695930e3445c50373541'},
   m3+'source-global-current.mjs':{'93f86661d67e6bc7b916218cd7af3db72f348ba7fdc876e3618ba3a49edff760'}}
  if a.owned:
