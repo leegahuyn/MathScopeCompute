@@ -2,6 +2,7 @@
 import assert from 'node:assert/strict';
 import {mkdirSync, writeFileSync} from 'node:fs';
 import {join} from 'node:path';
+import {compactFromLegacy, compactDerivativesFromLegacy} from './compact_lookup.mjs';
 import {
   assertActualCommonAdmissibleFamily,
   prepareActualCommonAdmissibleFamily,
@@ -35,6 +36,21 @@ function measured() {
   return {elapsedMs: Date.now() - started, rssBytes, heapBytes};
 }
 const context = {
+  compactNormCaches(graph) {
+    assert.equal(receipt.cacheStorage, undefined);
+    global.gc();
+    const before = measured();
+    const internEntries = graph.lookup.size;
+    const derivativeEntries = graph.derivatives.size;
+    graph.lookup = compactFromLegacy(graph.lookup);
+    global.gc();
+    graph.derivatives = compactDerivativesFromLegacy(graph.derivatives);
+    global.gc();
+    receipt.cacheStorage = {internEntries, derivativeEntries, before, after: measured()};
+    console.log(JSON.stringify({name: 'original-cache-storage-conversion', ...receipt.cacheStorage}));
+    save();
+    context.checkCancelled();
+  },
   checkCancelled() {
     let stats = measured();
     if (stats.rssBytes > limits.rssBytes * 0.93 && Date.now() - lastGC > 20_000) {
@@ -52,8 +68,13 @@ const context = {
   onProgress(row) {
     context.checkCancelled();
     const name = row.stage ?? row.phase;
-    if (!name || name === receipt.progress.at(-1)?.name) return;
-    const progress = {name, nodeCount: row.nodeCount ?? row.nodes ?? null, ...measured()};
+    if (!name) return;
+    const latest = receipt.progress.at(-1);
+    const nodeCount = row.nodeCount ?? row.nodes ?? null;
+    if (latest?.name === name && latest.nodeCount === nodeCount &&
+        latest.coefficientFTCCount === row.coefficientFTCCount) return;
+    const progress = {name, field: row.field, coefficientFTCCount: row.coefficientFTCCount,
+      nodeCount, ...measured()};
     receipt.progress.push(progress);
     if (receipt.progress.length > 100) receipt.progress.shift();
     console.log(JSON.stringify(progress));
@@ -82,6 +103,7 @@ try {
     maxProfileJets: 60_000, maxJetRequests: 600_000,
   }, context), assertActualCommonAdmissibleFamily);
   assert.equal(family.request.derivativeOrder, 8);
+  assert(receipt.cacheStorage);
   assert.equal(family.prepared.order, 8);
   const gaussian = family.source.backgroundNorms.gaussianRows.find(row => row.derivativeOrder === 6);
   assert.equal(gaussian.backgroundDerivativeOrder, 8);
