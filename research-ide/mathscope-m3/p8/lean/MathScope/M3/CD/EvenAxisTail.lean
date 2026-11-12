@@ -20,11 +20,15 @@ theorem evenAxisFirstDerivativeAverage
     (hderiv : ∀ t ∈ Set.uIcc (0 : ℝ) 1, HasDerivAt first (second (t * x)) (t * x))
     (hint : IntervalIntegrable (fun t => second (t * x) * x) volume 0 1) :
     first x / (2 * x) = (1 / 2 : ℝ) * (∫ t in (0 : ℝ)..1, second (t * x)) := by
-  have hFTC := intervalIntegral.integral_eq_sub_of_hasDerivAt
-    (f := fun t => first (t * x)) (f' := fun t => second (t * x) * x)
-    (fun t ht => (hderiv t ht).comp t ((hasDerivAt_id t).mul_const x)) hint
+  have hscaled (t : ℝ) (ht : t ∈ Set.uIcc (0 : ℝ) 1) :
+      HasDerivAt (fun u => first (u * x)) (second (t * x) * x) t := by
+    have hlinear : HasDerivAt (fun u : ℝ => u * x) x t := by
+      simpa only [id_eq, one_mul] using (hasDerivAt_id t).mul_const x
+    exact (hderiv t ht).comp t hlinear
+  have hFTC := intervalIntegral.integral_eq_sub_of_hasDerivAt hscaled hint
   rw [intervalIntegral.integral_mul_const] at hFTC
   simp only [one_mul, zero_mul, hzero, sub_zero] at hFTC
+  set average : ℝ := (∫ t in (0 : ℝ)..1, second (t * x)) at hFTC ⊢
   rw [← hFTC]
   field_simp <;> ring
 
