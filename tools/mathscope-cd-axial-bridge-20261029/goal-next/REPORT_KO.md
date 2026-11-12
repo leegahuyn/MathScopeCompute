@@ -3,12 +3,20 @@
 | 항목 | 판정 | 검증 범위 |
 | --- | --- | --- |
 | M3 | **62/64** | N7-06 에너지 수지와 N8-05 수렴·꼬리 검증 OPEN |
-| M4 | **격리 후보 16/16** | 원래 평가기에 R1-08 등록. 운영 웹의 R1-08은 OPEN |
-| Y | **523/523** | 원본 N=1의 확장된 명시적 자유 좌표 영역. 결속 없이 검사한 식은 519/523 |
+| M4 | **격리 후보 16/16** | 원래 평가기에 R1-08 등록. 운영 웹의 R1-08은 OPEN이며 공개 판정은 유지 |
+| Y | **N1 명시적 좌표 523/523** | 결속 없이 검사한 식은 519/523. 원본 일반 재귀와 native 극한 OPEN |
 | 최종장 jets | **0/67** | 환대 초기장 67/67 수치 구간. 모든 활성 보정을 포함하는 최종장 구간 OPEN |
 | 릴리스 | **HOLD** | M3 전체 검증과 최종장 구간 OPEN |
 
-첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
+첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
+
+## Continuation29–30
+
+- **VERIFIED · 원본 전역 C8 배경 검사.** 14,220,509개 원본 노드에서 C8 배경 증명서를 발행하고 비공개 원본 검사기로 다시 검증했다. 12개 검사가 모두 통과했다. 1–8차 양의 원시함수, 양의 압력·응력 원본 항등식, 2차 속도 및 압력·응력 노름 계산까지 진행했다. 원본 계수 노름의 전체 JSON 저장 한계를 해결한 뒤 같은 압력·응력 계열의 cutoff 발행 단계까지 갔다. cutoff 발행자의 별도 전체 문자열 변환에서 14,535,728개 노드로 중단됐다. 같은 계열의 최종 C6 표적과 Primary C5는 OPEN이다. [C8 원본 증거](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43276022455) · [cutoff 중단](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43277740099) · [cutoff 재실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43279539851).
+- **VERIFIED · 저장 변경의 낮은 차수 원본 대조.** 배경 C3, 가중 표적 C2, Primary 0차의 전체 여섯 발행 단계를 원본과 조각 저장 버전으로 실행했다. 단계별 원본 노드, 함수 정의, 루트와 검사 결과가 같고 그래프와 프로그램의 변조를 각각 거부했다. 압력 단계의 추가 저장 변경은 파일 해시와 바이트 복원을 별도로 검사했다. [저장 방식과 재현](primary-forced-weights/live-c5/large-pack/README.md).
+- **CONDITIONAL · 보관된 N1 첫 Forced의 모드별 상계.** 파동 C4의 126개 혼합 미분 지수와 315개 수치 상계, 평균–파동 C2의 10개 원본 경로와 21개 지수, 방사 배경 \(b/\epsilon\)의 3차 지수 20개를 결속했다. 원본 60개 모드 1 계수의 지원식에서 21개 지수와 3성분의 실수·허수 총 126개 C2 상계를 계산했다. 모드 2는 56개 C3 지수에 대해 입력, 영 초기값 역연산, 게이지·압력·cutoff를 계산했다. 보관된 N1의 \(q\ge q_{\rm Big}/16\)은 실제 whole-K 내부 \(q<q_{\rm Big}/16\)과 겹치지 않는다. 활성 N3/N4의 원본 보정으로 연결하는 증거와 모드 1 역연산·접합·최종 구간은 OPEN이다. [모드 1](primary-forced-weights/mixed-wave/README.md) · [모드 2](primary-forced-weights/archived-mode-two/README.md).
+- **CONDITIONAL · 원본 N4의 Picard 호출 정의역 전달.** Python으로 원본 7,358,162개 노드의 해시를 확인했다. 원본 14개 루트에서 도달한 259개 실제 even-profile 호출에 대해 하위 163개와 나머지 96개의 cutoff 및 적분 결속을 확인했다. 각 입력 프레임의 \(X\ge0\)와 원본 `eta` 범위, 원본의 지연 분기와 변수 치환을 전제로 한다. 동적 미분 호출과 native 무한 극한은 OPEN이다. [N4 원본 호출 재현](y-higher-flow/y-picard-callers/README.md) · [N2 원본 3단 적분](y-higher-flow/fixed-n-limit/README.md).
+- **OPEN · 같은 원본 첫 Forced C3 봉인.** 각방향 초기화 후 원본 10개 조립 비교가 모두 통과했다. 이후 6,417,572개 노드를 기록한 상태에서 최종 봉인 전 메모리 한계에 도달했다. [GitHub 계산](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43256030290).
 
 ## Continuation28
 

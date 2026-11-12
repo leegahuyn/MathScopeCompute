@@ -9,9 +9,9 @@
 
 원본 초기 환형 영역의 운동에너지·소산·외력 일과 움직이는 경계 유량에 수치 상계를 얻었다. 초기장 속도의 각도 Fourier 꼬리도 확보했다. 최종장 입력이 갖춰지면 같은 적분과 꼬리 검사를 실행할 수 있다. 최종장 통과 건수는 여전히 N7-06/N8-05 0/2 및 jets 0/67이다. [에너지 적분](whole-k-annular-initial/energy/README.md) · [Fourier 꼬리](final67/initial-fourier/README.md).
 
-원본 고정 환형 구간에서 \(W_{rz}\)의 느린 7차와 \(L^2W_{rz}\)의 느린 7차를 수치화해 초기 평균장 \(v\)의 느린 3차 상계를 얻었다. 보관된 평균–파동 C2의 평균장 입력 156개를 연결했다. 그 경로의 파동 C3, 전체 Forced C2의 파동 C4, 전체 Forced C3의 파동 C5와 각방향 압력, 새 계열 결속이 남는다. 이 입력을 활성 보정에 연결한 뒤 각 환형 셀에서 67개를 닫고 두 M3 수치 실험에 전달한다. [고차 평균 입력](primary-forced-weights/slow-nine/README.md) · [Primary C5](primary-forced-weights/live-c5/README.md).
+원본 고정 환형 구간에서 \(W_{rz}\)와 \(L^2W_{rz}\)의 느린 7차를 수치화해 초기 평균장 \(v\)의 느린 3차 상계를 얻었다. 보관된 N1의 평균–파동 C2와 모드 1 전체 C2, 모드 2 입력·역연산·게이지·압력·cutoff C3까지 결속했다. 원본 N1 조건은 실제 whole-K 내부에서 성립하지 않는다. 활성 N3/N4 입력과 새 계열을 결속하고 보정의 역연산·압력·cutoff를 적용해야 최종 환형 셀 67개와 두 M3 수치 실험으로 전달할 수 있다. [모드 1](primary-forced-weights/mixed-wave/README.md) · [모드 2](primary-forced-weights/archived-mode-two/README.md).
 
-원본 초기장 수치 입력은 108/108이다. 같은 계열의 GitHub 계산에서 Temporal과 초기 평균장을 통과했고, 각방향 초기화가 기존 500만 노드 한도를 적용해 중단됐다. 해당 단계의 수치 한도를 기존 680만에 맞춘 재실행이 시작됐다. 이후에도 가중 Forced, 활성 증분, 동일 최종장 적분과 세분화가 남는다. 이 증명 의무의 완료 시간은 아직 추정할 수 없다. [초기장 구간](whole-k-annular-initial/numerical/STAGE_ZERO_NUMERICAL.md) · [새 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43256030290).
+원본 초기장 수치 입력은 108/108이다. 같은 계열의 GitHub 계산에서 초기 Temporal, 평균장, 각방향 장과 Forced 조립 비교 10개를 통과했다. 최종 봉인 전 메모리 한계가 발생했다. 별도의 Primary C5 계산은 C8 배경 검사와 양의 원시함수 1–8차를 통과하고 압력·응력 단계에 도달했다. [초기장 구간](whole-k-annular-initial/numerical/STAGE_ZERO_NUMERICAL.md) · [Forced 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43256030290) · [Primary 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43276022455).
 
 M3 두 항목과 최종 jet은 동일한 최종장에 의존한다. 이미 검사한 원본 접합 구간에서는 배경 차수가 최대 3, 보정 단계는 최대 4다. 실제 스케일이 일부 단계의 소거를 보장할 수 있다. 첫 보정은 원본 \(N=1\) 차트에 결속했다. 두 번째 단계의 후보 40개에 대해 역연산·압력과 고정 라벨의 원본 보존형 raw 계수 일치를 확인했다. 원고 분해의 비영 모드 평탄 항은 실제 성분 120개와 절단 자리 360개로 확인했다. 원본의 영 모드 평탄 항 \(F[1]\), 지원 입력 \(G[1]\)의 실제 가중 도함수 상계와 접합, cutoff 스케일 결속이 이어지는 증명 의무다. 최종 jet은 0/67이며, 남은 정칙성과 후속 단계의 실제 활성 여부가 확정되어야 완료 시점을 추정할 수 있다.
 

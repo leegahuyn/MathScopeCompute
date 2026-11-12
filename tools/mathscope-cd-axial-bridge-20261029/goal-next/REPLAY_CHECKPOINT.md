@@ -4,6 +4,15 @@ Extract Continuation17, the cumulative Continuation20 delta, Continuation21,
 Continuation22, Continuation23, Continuation24, Continuation25 and Continuation26 to the same directory in that order. The latest
 checkpoint lists the parent checksums and the replaced files.
 
+## Continuation29–30
+
+- [Original C8 bounded replay and differential checks](primary-forced-weights/live-c5/large-pack/README.md)
+- [Archived original wave C4, mean–wave C2 and supported mode-one C2](primary-forced-weights/mixed-wave/README.md)
+- [Archived original radial background C3](primary-forced-weights/radial-background/README.md)
+- [Archived original mode-two input, inverse and mapped output C3](primary-forced-weights/archived-mode-two/README.md)
+- [Actual N4 Picard caller and binder checks](y-higher-flow/y-picard-callers/README.md)
+- [Actual N2 original finite Picard witness and fixed-n analytic reduction](y-higher-flow/fixed-n-limit/README.md)
+
 ## Continuation26
 
 Run from the combined package root.

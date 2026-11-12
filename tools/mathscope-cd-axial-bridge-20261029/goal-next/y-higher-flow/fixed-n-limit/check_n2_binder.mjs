@@ -1,0 +1,19 @@
+/** Source-authenticated actual N2 moment: the same three Picard binders. */
+import assert from 'node:assert/strict';
+import {writeFile} from 'node:fs/promises';
+import {makeNativeBinderFixture} from './native-binder-fixture.mjs';
+const [graphDir,runtimeRoot,outPath]=process.argv.slice(2);assert(graphDir&&runtimeRoot&&outPath,'usage: GRAPH_DIR RUNTIME_ROOT WITNESS_JSON');
+const {G,refs,displayed,momentFinite,dynamic,momentNatural,runtimePins}=await makeNativeBinderFixture(graphDir,runtimeRoot);
+const expect = (id,op,args)=>assert.deepEqual(G.nodes[id],{op,args});
+assert.equal(displayed.count,3);assert.equal(displayed.finitePartialSumIsExactSolution,false);
+assert.equal(G.picardSystems[3].order,2);assert.equal(G.picardSystems[3].eta,2);assert.deepEqual(G.picardSystems[3].radialDomain,[0,24806]);
+expect(150912,'actual_natural_series',['Phi',150564,2,0,0]);
+expect(150564,'multiply',[3454,150563]);expect(150563,'multiply',[3617,150562]);expect(150562,'exp',[150344]);expect(150344,'log_positive',[150343]);expect(150343,'multiply',[3679,150341]);expect(3679,'inverse',[3617]);expect(150341,'integer_power',[150340,2]);expect(150340,'multiply',[121768,148594]);expect(148594,'multiply',[125935,148593]);expect(148593,'multiply',[120290,130663]);expect(120290,'sqrt_positive',[120276]);
+expect(151124,'smooth_piecewise',[150341,3617,24805,150877,151123,151123]);expect(151063,'smooth_piecewise',[150563,3624,3627,151053,151058,151062]);
+const agenda=[{id:momentFinite,binders:[],path:[]}],visited=new Set();let witness;
+while(agenda.length){const z=agenda.pop(),key=z.id+':'+z.binders.map(x=>x.binder).join(',');if(visited.has(key))continue;visited.add(key);const node=G.nodes[z.id],path=[...z.path,z.id];if(z.id===150912&&z.binders.length){witness={path,binders:z.binders};break;}if(node.op==='definite_integral'){const [body,binder,left,right]=node.args;agenda.push({id:body,binders:[...z.binders,{integral:z.id,binder,left,right}],path});for(const child of [left,right])agenda.push({id:child,binders:z.binders,path});}else for(const child of refs(node))agenda.push({id:child,binders:z.binders,path});}
+assert(witness);assert.deepEqual(witness.binders.map(x=>x.binder),[130663,125935,121768]);
+const snapshotIds=new Set([...witness.path,150912,150564,150563,150562,150344,150343,3679,150341,150340,148594,148593,120290,120276,151124,151063,151123,151053,3617,24805,3624,3627,...witness.binders.map(x=>x.binder)]);
+const dynamicSnapshot=Object.fromEntries([...snapshotIds].sort((a,b)=>a-b).map(id=>[id,G.nodes[id]]));
+const out={schema:'MathScope.Y.FixedN.SourceN2ThreeBinder/1',status:'PASS',sourceGraphSHA256:'75db9fddc311fb7ce8d7968fbde4a52a07521cf8d47feb0b8f302d6bed108987',sourceRegistrySHA256:'6859cded252d523a0868656b0b98c8699d6289782f057e2931419ceae3cabe8f',runtimePins,sourceMoment:120279,momentBinder:120276,sourcePicardSystem:3,sourceOrder:2,displayedIterates:displayed.count,finitePartialSumIsExactSolution:false,momentFinite,generatedNaturalCalls:momentNatural.length,generatedDynamicNaturalCalls:dynamic.length,witness,dynamicSnapshot,example:{call:150912,eta:2,y:150564,logArmGuard:151124,nestedArmGuard:151063,volterraBinders:[130663,125935,121768],momentRadialSqrt:120290},claim:'The source fixture verifies these exact three binders each use [0,1], the original moment binder [0,Xcut], the selected strict log branch and the literal substituted input. With those exact binder domains, xi=sqrt(X)*t1*t2*t3 and the guarded log Y equals Lambda*xi^2 <= Lambda*Xcut = 4 exp(t1Source/32).',scope:'One source-authenticated exact finite Picard partial-sum path; not a native infinite-limit evaluator, arbitrary generated path proof, complex eta proof or gate promotion.',release:'HOLD'};
+await writeFile(outPath,JSON.stringify(out,null,2)+'\n');console.log(JSON.stringify({status:out.status,generatedNaturalCalls:out.generatedNaturalCalls,generatedDynamicNaturalCalls:out.generatedDynamicNaturalCalls,binders:3}));

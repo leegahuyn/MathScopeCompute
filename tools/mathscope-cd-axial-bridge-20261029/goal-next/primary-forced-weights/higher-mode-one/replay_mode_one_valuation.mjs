@@ -4,8 +4,9 @@ import {createHash} from 'node:crypto';
 import {readFile, writeFile} from 'node:fs/promises';
 import {resolve} from 'node:path';
 
-const [goal, runtime, out] = process.argv.slice(2);
-assert.equal(process.argv.length, 5, 'Use GOAL_NEXT, ORIGINAL_RUNTIME, OUTPUT.');
+const [goal, runtime, out, regularOutput] = process.argv.slice(2);
+assert([5, 6].includes(process.argv.length), 'Use GOAL_NEXT, ORIGINAL_RUNTIME, OUTPUT, [REGULAR_C2_OUTPUT].');
+if (regularOutput) assert.notEqual(resolve(out), resolve(regularOutput));
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 async function load(root, file, pin) {
   const bytes = await readFile(resolve(root, file));
@@ -230,6 +231,7 @@ function evaluate(table) {
 }
 const tables = {meanWave, reduced};
 const jets = [];
+const regularC2 = [];
 function collect(orders, remaining, current) {
   const total = orders.reduce((a, b) => a + b, 0);
   const summary = Object.fromEntries(Object.entries(current).map(([name, rows]) => [name, rows.map(row => [evaluate(Re(row)), evaluate(Im(row))])]));
@@ -246,6 +248,11 @@ function collect(orders, remaining, current) {
     assert.equal(Im(current.reduced[j]).get(`J${j}@${zz.join('')}*eps*eps*eps`)?.[0], -1n);
   }
   jets.push({orders, total, ...summary});
+  if (regularOutput && total <= 2) {
+    const rows = current.reduced.map((row, j) => sub(row, current.meanWave[j]));
+    regularC2.push({orders, components: rows.map(row => [...row].sort(([a], [b]) => a < b ? -1 : Number(a > b))
+      .map(([monomial, [real, imaginary]]) => [factors(monomial), String(real), String(imaginary)]))});
+  }
   if (remaining === 0) return;
   const start = Math.max(0, orders.findLastIndex(x => x > 0));
   for (let direction = start; direction < axes.length; direction++) {
@@ -304,4 +311,15 @@ const receipt = {
   finalJets: '0/67', release: 'HOLD',
 };
 await writeFile(out, JSON.stringify(receipt, null, 2) + '\n');
+if (regularOutput) {
+  assert.equal(regularC2.length, 21);
+  const regularReceipt = {
+    schema: 'MathScope.ArchivedForcedModeOneRegularC2/1',
+    source: receipt.archive,
+    epsilonUnits: unit,
+    axes,
+    rows: regularC2,
+  };
+  await writeFile(regularOutput, JSON.stringify(regularReceipt) + '\n');
+}
 console.log(`PASS ${archived.length * 6} archived fundamental coefficient identities and ${jets.length} ordinary jet index rows through C3.`);
