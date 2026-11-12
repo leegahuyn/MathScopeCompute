@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import {mkdirSync, writeFileSync} from 'node:fs';
 import {join} from 'node:path';
-import {compactFromLegacy, compactDerivativesFromLegacy} from './compact_lookup.mjs';
+import {compactOwnedLookup, compactDerivativesFromLegacy} from '../../mathscope-m2/navier/mathscope-owned-lookup.mjs';
 import {
   assertActualCommonAdmissibleFamily,
   prepareActualCommonAdmissibleFamily,
@@ -22,6 +22,7 @@ mkdirSync(out, {recursive: true});
 const limits = {rssBytes: 12 * 1024 ** 3, durationMinutes: 120, familyNodes: 16_000_000, bandNodes: 16_000_000};
 const started = Date.now();
 let lastGC = 0;
+let ownedBackgroundGraph;
 const receipt = {
   schema: 'MathScope.N7.OriginalLivePrimaryC5/1',
   status: 'RUNNING', originalCommit, executingCommit: process.env.GITHUB_SHA,
@@ -42,11 +43,12 @@ const context = {
     const before = measured();
     const internEntries = graph.lookup.size;
     const derivativeEntries = graph.derivatives.size;
-    graph.lookup = compactFromLegacy(graph.lookup);
+    graph.lookup = compactOwnedLookup(graph.lookup, graph.nodes.length);
     global.gc();
     graph.derivatives = compactDerivativesFromLegacy(graph.derivatives);
     global.gc();
     receipt.cacheStorage = {internEntries, derivativeEntries, before, after: measured()};
+    ownedBackgroundGraph = graph;
     console.log(JSON.stringify({name: 'original-cache-storage-conversion', ...receipt.cacheStorage}));
     save();
     context.checkCancelled();
@@ -69,6 +71,13 @@ const context = {
     context.checkCancelled();
     const name = row.stage ?? row.phase;
     if (!name) return;
+    if (name === 'all-band-background-before-pack') {
+      assert.equal(ownedBackgroundGraph.nodes.length, row.nodeCount);
+      const before = measured();
+      const discarded = clearDisposableThirdJetCaches(ownedBackgroundGraph);
+      global.gc();
+      receipt.cacheAtPack = {before, discarded, after: measured()};
+    }
     const latest = receipt.progress.at(-1);
     const nodeCount = row.nodeCount ?? row.nodes ?? null;
     if (latest?.name === name && latest.nodeCount === nodeCount &&
@@ -104,6 +113,7 @@ try {
   }, context), assertActualCommonAdmissibleFamily);
   assert.equal(family.request.derivativeOrder, 8);
   assert(receipt.cacheStorage);
+  assert(receipt.cacheAtPack);
   assert.equal(family.prepared.order, 8);
   const gaussian = family.source.backgroundNorms.gaussianRows.find(row => row.derivativeOrder === 6);
   assert.equal(gaussian.backgroundDerivativeOrder, 8);

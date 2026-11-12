@@ -8,6 +8,9 @@ on:
       - 'tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-forced-weights/live-c5/prepare_leading_budget.py'
       - 'tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-forced-weights/live-c5/compact-lookup/prepare_background_overlay.py'
       - 'tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-forced-weights/live-c5/compact-lookup/compact_lookup.mjs'
+      - 'tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-forced-weights/live-c5/large-pack/*.py'
+      - 'tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-forced-weights/live-c5/large-pack/large_pack.mjs'
+      - 'tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-forced-weights/live-c5/large-pack/owned_lookup.mjs'
 permissions:
   contents: read
 jobs:
@@ -68,6 +71,12 @@ jobs:
             --source "$issuer" --out "$out/instrumented-background.mjs" --receipt "$out/background-cache-overlay.json"
           cp "$out/instrumented-background.mjs" "$issuer"
           rm "$out/instrumented-background.mjs"
+          python3 "$live/large-pack/prepare_seal_overlays.py" --owned --runtime . \
+            --helper "$live/large-pack/large_pack.mjs" --receipt "$out/bounded-seal-overlays.json"
+          python3 "$live/large-pack/prepare_large_lower_and_forks.py" . "$out/bounded-lower-overlays.json"
+          navier=research-ide/mathscope-m2/navier
+          cp "$live/compact-lookup/compact_lookup.mjs" "$navier/mathscope-compact-lookup.mjs"
+          cp "$live/large-pack/owned_lookup.mjs" "$navier/mathscope-owned-lookup.mjs"
           node --check research-ide/mathscope-m2/navier/actual-global-source-expressions.mjs
           python3 - "$out" <<'PY'
           import hashlib
@@ -83,17 +92,35 @@ jobs:
               "research-ide/mathscope-m2/navier/actual-global-source-expressions.mjs": "leading-budget-overlay.json",
               "research-ide/mathscope-m2/navier/actual-compact-all-band-background-norms.mjs": "background-cache-overlay.json",
           }
-          modified = subprocess.check_output(["git", "diff", "--name-only", "HEAD", "--"], text=True).splitlines()
-          assert set(modified) == set(overlays), modified
+          def digest(data):
+              return hashlib.sha256(data).hexdigest()
+
+          expected = {}
           for path, proof in overlays.items():
               receipt = json.loads((root / proof).read_bytes())
-              assert hashlib.sha256(Path(path).read_bytes()).hexdigest() == receipt.get("newSHA256", receipt.get("patchedSHA256"))
+              original = subprocess.check_output(["git", "show", "HEAD:" + path])
+              assert digest(original) == receipt["oldSHA256" if "oldSHA256" in receipt else "originalSHA256"]
+              expected[path] = receipt.get("newSHA256", receipt.get("patchedSHA256"))
+          for row in json.loads((root / "bounded-seal-overlays.json").read_bytes())["files"]:
+              path = row["file"]
+              original = expected.get(path) or digest(subprocess.check_output(["git", "show", "HEAD:" + path]))
+              assert row["inputSHA256"] == original and row["exactByteReversal"]
+              expected[path] = row["overlaySHA256"]
+          for path, row in json.loads((root / "bounded-lower-overlays.json").read_bytes())["files"].items():
+              original = expected.get(path) or digest(subprocess.check_output(["git", "show", "HEAD:" + path]))
+              assert row["beforeSHA256"] == original and row["reversedToExactInput"]
+              expected[path] = row["afterSHA256"]
+          modified = subprocess.check_output(["git", "diff", "--name-only", "HEAD", "--"], text=True).splitlines()
+          assert set(modified) == set(expected), modified
+          for path, pin in expected.items():
+              assert digest(Path(path).read_bytes()) == pin
           PY
           runner=research-ide/mathscope-m3/extended-signed-run-20261023/run_live_primary_c5.mjs
           cp "$live/run_live_primary_c5.mjs" "$runner"
-          cp "$live/compact-lookup/compact_lookup.mjs" "$(dirname "$runner")/compact_lookup.mjs"
           node --check "$runner"
           node --check "$issuer"
+          node --check "$navier/mathscope-large-seal.mjs"
+          node --check "$navier/mathscope-owned-lookup.mjs"
       - name: Build the same-family original C8, weighted C6 and Primary C5
         working-directory: original
         run: |
