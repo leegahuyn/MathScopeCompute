@@ -58,7 +58,7 @@ jobs:
           git diff --quiet --exit-code HEAD --
           out="$RUNNER_TEMP/mathscope-primary-c5"
           mkdir -p "$out"
-          python3 - "$out/memory.json" <<'PY'
+          python3 - "$out/memory.json" "${{ inputs.with_forced && '13824' || '14336' }}" <<'PY'
           import json
           from pathlib import Path
           import sys
@@ -71,7 +71,8 @@ jobs:
                   cap = (root / limit).read_text().strip()
                   if cap != "max":
                       available = min(available, int(cap) - int((root / usage).read_text()))
-          receipt = {"availableBytes": available, "requiredAvailableBytes": 14 * 1024**3}
+          required = int(sys.argv[2]) * 1024**2
+          receipt = {"availableBytes": available, "requiredAvailableBytes": required}
           Path(sys.argv[1]).write_text(json.dumps(receipt) + "\n")
           assert available >= receipt["requiredAvailableBytes"], receipt
           PY
