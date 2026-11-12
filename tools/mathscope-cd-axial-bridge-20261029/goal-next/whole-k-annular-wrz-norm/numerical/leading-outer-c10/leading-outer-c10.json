@@ -1,0 +1,3477 @@
+{
+  "schema": "MathScope.N7.ActualOuterLeadingNumericalC10/1",
+  "source": {
+    "gitBlobPinsFrom": "b14e309",
+    "pins": {
+      "actual-continuation-exact-core.mjs": "b877d5962a6051cf4fe48eef575c8ad31fb5de1a",
+      "actual-continuation-exact-global.mjs": "8e8fa0c5d43bdb91be166941417e8d396e9c13f3",
+      "actual-continuation-exact-heat.mjs": "c71e6ce317afddd93718e41130a454ac219f8dec",
+      "actual-continuation-exact-loop.mjs": "26269d0d0b7b8870f649ae124584a4f66b680025",
+      "actual-global-source-expressions.mjs": "854bb862276d03c236b2df73ba1bb9a61373c4df",
+      "actual-global-source-outer.mjs": "f8097860af5514eaa0b0dbad6ac2086277047f16",
+      "actual-leading-high-jets.mjs": "db9516b944d5ec35c146903c3ee4a98b05f8d696",
+      "actual-leading-high-jets-arithmetic.mjs": "852506d0b7ccbc498d0da2216c1b746790c850ae",
+      "actual-mean-stress.mjs": "08169700aef1f2c221c24e83914b99f3d1dd7dba",
+      "actual-residual-order-induction-kernels.mjs": "4c05e4d071378771c9818b5a6dbbafcaa2ab36b1",
+      "source-profile-data.mjs": "f1559221145b5d4ce051bbdb9cb84254045c8696",
+      "source-profile.mjs": "84cbf606cab6510ab61f0446f0a6fdc7a89ec006"
+    },
+    "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+    "programGraph": {
+      "nodes": 25406,
+      "sha256": "40880c977ea31ab27bbe09de87b1ff7883a84edbdb2ca1f363ff867b81a82d41"
+    },
+    "terminalStartAlphaSHA256": "c8e3fa4d8d52b262de23c46a94018b03251b3e90162483b17cf099bd177a46da",
+    "terminalAmplitudeAlphaSHA256": "132e62d34ec96a2329adb2915a8dd09846f2b38afcee025e5f5c14a8e29e7f7f",
+    "roots": {
+      "originalF0": 25338,
+      "X": 4756,
+      "eta": 2,
+      "Xp": 613,
+      "Xv": 3293,
+      "Xplus": 25405,
+      "Xtail": 24856,
+      "Xb": 25340,
+      "XK": 25051,
+      "heatLoss": 25327,
+      "heatGamma": 24895,
+      "heatCutoff": 25330,
+      "terminalExteriorF0": 25362,
+      "Iright": 6258,
+      "I1Right": 7982,
+      "I2Right": 25057
+    },
+    "stageFields": [
+      {
+        "id": "interpolation",
+        "start": 114,
+        "end": 139,
+        "value": 25232,
+        "entryBranch": 25233,
+        "sourcePressureDensity": 3370
+      },
+      {
+        "id": "angular",
+        "start": 139,
+        "end": 158,
+        "value": 25214,
+        "entryBranch": 25215,
+        "sourcePressureDensity": 3376
+      },
+      {
+        "id": "steepen",
+        "start": 158,
+        "end": 179,
+        "value": 25188,
+        "entryBranch": 25189,
+        "sourcePressureDensity": 3388
+      },
+      {
+        "id": "steepPower",
+        "start": 179,
+        "end": 199,
+        "value": 25175,
+        "entryBranch": 25176,
+        "sourcePressureDensity": 3394
+      },
+      {
+        "id": "flatten",
+        "start": 199,
+        "end": 218,
+        "value": 25166,
+        "entryBranch": 25167,
+        "sourcePressureDensity": 3405
+      },
+      {
+        "id": "wait",
+        "start": 218,
+        "end": 294,
+        "value": 25154,
+        "entryBranch": 25155,
+        "sourcePressureDensity": 3411
+      },
+      {
+        "id": "terminal",
+        "start": 294,
+        "end": 319,
+        "value": 25145,
+        "entryBranch": 25146,
+        "sourcePressureDensity": 3428
+      }
+    ],
+    "angularCoefficients": [
+      487,
+      484
+    ]
+  },
+  "domain": {
+    "X": [
+      "Xplus=Xv*exp(1)",
+      "infinity"
+    ],
+    "eta": [
+      "-1",
+      "1"
+    ],
+    "endpointEtaConvention": "continuous one-sided derivatives"
+  },
+  "physicalBound": "abs(dX^r dEta^e F0) < 2^(-65343) Xv / X^(r+1), r+e<=10",
+  "normalizedMaximum": "2^(-65343)",
+  "outerFTC": {
+    "Xintegrals": "For r>=1, each exterior X-integral is < 2^(-65343)/r",
+    "etaWidth": 2,
+    "combineWithActive": "If M bounds active C10 then the four-face FTC for (r,e), r+e<=8, is <=3(1+Xplus)M+3*2^(-65343)/(r+1)."
+  },
+  "gammaDerivativeBounds": [
+    "1",
+    "2",
+    "12",
+    "144",
+    "2880",
+    "86400",
+    "3628800",
+    "203212800",
+    "14631321600",
+    "1316818944000",
+    "144850083840000"
+  ],
+  "maxBits": 193,
+  "branches": {
+    "interpolation": [
+      "1",
+      "132100",
+      "17723254293",
+      "2378129939463284",
+      "319101812235538648966",
+      "42817669682774886567397394",
+      "5745353931992334760527488138616",
+      "770922193201698707150702305827749280",
+      "103443762564528050655425555659285109123756",
+      "13880274958867297276080391165100379320126104536",
+      "1862480909021606430331236137818992082192005928508024"
+    ],
+    "angular": [
+      "528385",
+      "4368678914",
+      "54126443790340",
+      "894319754716446728",
+      "18472322565633396572176",
+      "457877148655687206211682336",
+      "13241379905844044072889679872064",
+      "437638711407557192398043961860554880",
+      "16272523646942214972272792778271591760128",
+      "672286675651034757561846070840613243229045248",
+      "30552651478243056920274887868349097429664207471616"
+    ],
+    "steepen": [
+      "1",
+      "3",
+      "66057",
+      "136752411",
+      "427703863377",
+      "1766251424627187",
+      "9100664637281402073",
+      "56273078505458609163147",
+      "406148435480367343230253473",
+      "3351712596967351553364258472419",
+      "31128705073236571996154855845668009"
+    ],
+    "steepPower": [
+      "1",
+      "2",
+      "4",
+      "8",
+      "16",
+      "32",
+      "64",
+      "128",
+      "256",
+      "512",
+      "1024"
+    ],
+    "flatten": [
+      "1",
+      "3",
+      "66057",
+      "136752411",
+      "427703863377",
+      "1766251424627187",
+      "9100664637281402073",
+      "56273078505458609163147",
+      "406148435480367343230253473",
+      "3351712596967351553364258472419",
+      "31128705073236571996154855845668009"
+    ],
+    "wait": [
+      "1",
+      "2",
+      "4",
+      "8",
+      "16",
+      "32",
+      "64",
+      "128",
+      "256",
+      "512",
+      "1024"
+    ],
+    "terminalWithHeatAndExterior": [
+      "4",
+      "792608",
+      "39817037328",
+      "416568954102080",
+      "5296873221367681824",
+      "87746391773167960979168",
+      "1835717686443205770063070560",
+      "46552295803660575479386487539040",
+      "1385151126138048644388124562498519136",
+      "47229223007205075200310701626863774331232",
+      "1813582799156968896931300822587535242048892512"
+    ]
+  },
+  "physicalRows": [
+    {
+      "branch": "interpolation",
+      "radialOrder": 0,
+      "etaOrder": 0,
+      "coefficient": "1",
+      "binaryDigits": 1
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 0,
+      "etaOrder": 1,
+      "coefficient": "132101",
+      "binaryDigits": 18
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 0,
+      "etaOrder": 2,
+      "coefficient": "35446772788",
+      "binaryDigits": 36
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 0,
+      "etaOrder": 3,
+      "coefficient": "14268885977098068",
+      "binaryDigits": 54
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 0,
+      "etaOrder": 4,
+      "coefficient": "7658500569196835967456",
+      "binaryDigits": 73
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 0,
+      "etaOrder": 5,
+      "coefficient": "5138158654435832372267524560",
+      "binaryDigits": 93
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 0,
+      "etaOrder": 6,
+      "coefficient": "4136685659986407642574025064950880",
+      "binaryDigits": 112
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 0,
+      "etaOrder": 7,
+      "coefficient": "3885476810536181388893037639547311027360",
+      "binaryDigits": 132
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 0,
+      "etaOrder": 8,
+      "coefficient": "4170883590416255291877869548483491978358060800",
+      "binaryDigits": 152
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 0,
+      "etaOrder": 9,
+      "coefficient": "5036911715026078581841679246817561999115166036570880",
+      "binaryDigits": 172
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 0,
+      "etaOrder": 10,
+      "coefficient": "6758621091774755675171808113710026643478342265030283200000",
+      "binaryDigits": 193
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 1,
+      "etaOrder": 0,
+      "coefficient": "132101",
+      "binaryDigits": 18
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 1,
+      "etaOrder": 1,
+      "coefficient": "17723386394",
+      "binaryDigits": 35
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 1,
+      "etaOrder": 2,
+      "coefficient": "4756295325699356",
+      "binaryDigits": 53
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 1,
+      "etaOrder": 3,
+      "coefficient": "1914625142299208991864",
+      "binaryDigits": 71
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 1,
+      "etaOrder": 4,
+      "coefficient": "1027631730887166474453504912",
+      "binaryDigits": 90
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 1,
+      "etaOrder": 5,
+      "coefficient": "689447609997734607095670844158480",
+      "binaryDigits": 110
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 1,
+      "etaOrder": 6,
+      "coefficient": "555068115790883055556148234221044432480",
+      "binaryDigits": 129
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 1,
+      "etaOrder": 7,
+      "coefficient": "521360448802031911484733693560436497294757600",
+      "binaryDigits": 149
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 1,
+      "etaOrder": 8,
+      "coefficient": "559656857225119842426853249646395777679462892952320",
+      "binaryDigits": 169
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 1,
+      "etaOrder": 9,
+      "coefficient": "675862109177475567517180811371002664347834226503028320000",
+      "binaryDigits": 189
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 2,
+      "etaOrder": 0,
+      "coefficient": "35446904889",
+      "binaryDigits": 36
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 2,
+      "etaOrder": 1,
+      "coefficient": "4756313049085750",
+      "binaryDigits": 53
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 2,
+      "etaOrder": 2,
+      "coefficient": "1276421517828131693932",
+      "binaryDigits": 71
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 2,
+      "etaOrder": 3,
+      "coefficient": "513817780068725536435744320",
+      "binaryDigits": 89
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 2,
+      "etaOrder": 4,
+      "coefficient": "275780071630824730004742791168304",
+      "binaryDigits": 108
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 2,
+      "etaOrder": 5,
+      "coefficient": "185023394711237682919989840411192302640",
+      "binaryDigits": 128
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 2,
+      "etaOrder": 6,
+      "coefficient": "148960683297267765592979468594073220271506080",
+      "binaryDigits": 147
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 2,
+      "etaOrder": 7,
+      "coefficient": "139914735666728762638624797145292504856363017995680",
+      "binaryDigits": 167
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 2,
+      "etaOrder": 8,
+      "coefficient": "150192139474074017901438162713472460695296396463565912320",
+      "binaryDigits": 187
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 3,
+      "etaOrder": 0,
+      "coefficient": "14268992317680634",
+      "binaryDigits": 54
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 3,
+      "etaOrder": 1,
+      "coefficient": "1914639411220632862720",
+      "binaryDigits": 71
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 3,
+      "etaOrder": 2,
+      "coefficient": "513819694703380426296134896",
+      "binaryDigits": 89
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 3,
+      "etaOrder": 3,
+      "coefficient": "206835824450745963163011351488640",
+      "binaryDigits": 108
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 3,
+      "etaOrder": 4,
+      "coefficient": "111014450497363871854532494598128886496",
+      "binaryDigits": 127
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 3,
+      "etaOrder": 5,
+      "coefficient": "74480619184070673458012981585345062346286240",
+      "binaryDigits": 146
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 3,
+      "etaOrder": 6,
+      "coefficient": "59963681584186235376097315487820610165382222902080",
+      "binaryDigits": 166
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 3,
+      "etaOrder": 7,
+      "coefficient": "56322262175141937030584284910490257546273651467011589440",
+      "binaryDigits": 186
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 4,
+      "etaOrder": 0,
+      "coefficient": "7658586182902613849138",
+      "binaryDigits": 73
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 4,
+      "etaOrder": 1,
+      "coefficient": "1027643218690339624630467376",
+      "binaryDigits": 90
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 4,
+      "etaOrder": 2,
+      "coefficient": "275782126908327117252324518314600",
+      "binaryDigits": 108
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 4,
+      "etaOrder": 3,
+      "coefficient": "111014864169526593041152688456476599960",
+      "binaryDigits": 127
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 4,
+      "etaOrder": 4,
+      "coefficient": "59584717376433314593416649950436463379475200",
+      "binaryDigits": 146
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 4,
+      "etaOrder": 5,
+      "coefficient": "39975936684214215809570640698498174403128210968320",
+      "binaryDigits": 165
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 4,
+      "etaOrder": 6,
+      "coefficient": "32184269741878950771170012842815729263833296186911222400",
+      "binaryDigits": 185
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 5,
+      "etaOrder": 0,
+      "coefficient": "5138235239940937122167441324",
+      "binaryDigits": 93
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 5,
+      "etaOrder": 1,
+      "coefficient": "689457886382055596556079340164096",
+      "binaryDigits": 110
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 5,
+      "etaOrder": 2,
+      "coefficient": "185025463072051295235288768454777627384",
+      "binaryDigits": 128
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 5,
+      "etaOrder": 3,
+      "coefficient": "74481174258046794716888505076469527919493336",
+      "binaryDigits": 146
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 5,
+      "etaOrder": 4,
+      "coefficient": "39976085646192681666472830604090239024309621820128",
+      "binaryDigits": 165
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 5,
+      "etaOrder": 5,
+      "coefficient": "26820324724864971006048655780237409060836400399184508320",
+      "binaryDigits": 185
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 6,
+      "etaOrder": 0,
+      "coefficient": "4136762733017199938950397413714372",
+      "binaryDigits": 112
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 6,
+      "etaOrder": 1,
+      "coefficient": "555078457592382149492624063980325887424",
+      "binaryDigits": 129
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 6,
+      "etaOrder": 2,
+      "coefficient": "148962903593172263474044133397906717096363464",
+      "binaryDigits": 147
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 6,
+      "etaOrder": 3,
+      "coefficient": "59964351913089334834701216602741377794881601114504",
+      "binaryDigits": 166
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 6,
+      "etaOrder": 4,
+      "coefficient": "32184509598243866133819342052633125243171110018618406048",
+      "binaryDigits": 185
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 7,
+      "etaOrder": 0,
+      "coefficient": "3885563681834224497000893452249937447184",
+      "binaryDigits": 132
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 7,
+      "etaOrder": 1,
+      "coefficient": "521372105353117607090935490603667891056338800",
+      "binaryDigits": 149
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 7,
+      "etaOrder": 2,
+      "coefficient": "139917342501351948917748844272259744549399123561728",
+      "binaryDigits": 167
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 7,
+      "etaOrder": 3,
+      "coefficient": "56323101672419146628143580196286230318780937326401503200",
+      "binaryDigits": 186
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 8,
+      "etaOrder": 0,
+      "coefficient": "4170992385098973158315185086410052271337269104",
+      "binaryDigits": 152
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 8,
+      "etaOrder": 1,
+      "coefficient": "559671455496419583929310825968019862730848366561824",
+      "binaryDigits": 169
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 8,
+      "etaOrder": 2,
+      "coefficient": "150195497463182892556648731496105293693221070864022505088",
+      "binaryDigits": 187
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 9,
+      "etaOrder": 0,
+      "coefficient": "5037061868956822669706442625731640472333421465743808",
+      "binaryDigits": 172
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 9,
+      "etaOrder": 1,
+      "coefficient": "675882257109000994681868307744433222876542756599128776048",
+      "binaryDigits": 189
+    },
+    {
+      "branch": "interpolation",
+      "radialOrder": 10,
+      "etaOrder": 0,
+      "coefficient": "6758847756430637290387734555728446877278849480098330816288",
+      "binaryDigits": 193
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 0,
+      "etaOrder": 0,
+      "coefficient": "528385",
+      "binaryDigits": 20
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 0,
+      "etaOrder": 1,
+      "coefficient": "4369207299",
+      "binaryDigits": 33
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 0,
+      "etaOrder": 2,
+      "coefficient": "108261625995278",
+      "binaryDigits": 47
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 0,
+      "etaOrder": 3,
+      "coefficient": "5366243313176666202",
+      "binaryDigits": 63
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 0,
+      "etaOrder": 4,
+      "coefficient": "443357206548454224397032",
+      "binaryDigits": 79
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 0,
+      "etaOrder": 5,
+      "coefficient": "54947474624715207016523865480",
+      "binaryDigits": 96
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 0,
+      "etaOrder": 6,
+      "coefficient": "9534123217055460023722668651078960",
+      "binaryDigits": 113
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 0,
+      "etaOrder": 7,
+      "coefficient": "2205765844356607637906307626457754147920",
+      "binaryDigits": 131
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 0,
+      "etaOrder": 8,
+      "coefficient": "656125799571464960543142255280922241801544320",
+      "binaryDigits": 149
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 0,
+      "etaOrder": 9,
+      "coefficient": "243965293992443636008687590466939262003132153493120",
+      "binaryDigits": 168
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 0,
+      "etaOrder": 10,
+      "coefficient": "110871901337188329388653599972569874145385507394535072000",
+      "binaryDigits": 187
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 1,
+      "etaOrder": 0,
+      "coefficient": "4369207299",
+      "binaryDigits": 33
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 1,
+      "etaOrder": 1,
+      "coefficient": "54130812997639",
+      "binaryDigits": 46
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 1,
+      "etaOrder": 2,
+      "coefficient": "1788747771058888734",
+      "binaryDigits": 61
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 1,
+      "etaOrder": 3,
+      "coefficient": "110839301637113556099258",
+      "binaryDigits": 77
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 1,
+      "etaOrder": 4,
+      "coefficient": "10989494924943041403304773096",
+      "binaryDigits": 94
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 1,
+      "etaOrder": 5,
+      "coefficient": "1589020536175910003953778108513160",
+      "binaryDigits": 111
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 1,
+      "etaOrder": 6,
+      "coefficient": "315109406336658233986615375208250592560",
+      "binaryDigits": 128
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 1,
+      "etaOrder": 7,
+      "coefficient": "82015724946433120067892781910115280225193040",
+      "binaryDigits": 146
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 1,
+      "etaOrder": 8,
+      "coefficient": "27107254888049292889854176718548806889236905943680",
+      "binaryDigits": 165
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 1,
+      "etaOrder": 9,
+      "coefficient": "11087190133718832938865359997256987414538550739453507200",
+      "binaryDigits": 183
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 2,
+      "etaOrder": 0,
+      "coefficient": "108265995202577",
+      "binaryDigits": 47
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 2,
+      "etaOrder": 1,
+      "coefficient": "1788801901871886373",
+      "binaryDigits": 61
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 2,
+      "etaOrder": 2,
+      "coefficient": "73894656505846762954906",
+      "binaryDigits": 76
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 2,
+      "etaOrder": 3,
+      "coefficient": "5494858301773157815208485806",
+      "binaryDigits": 93
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 2,
+      "etaOrder": 4,
+      "coefficient": "635619203965288944622914548178360",
+      "binaryDigits": 109
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 2,
+      "etaOrder": 5,
+      "coefficient": "105038057799422253905542412180858710680",
+      "binaryDigits": 127
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 2,
+      "etaOrder": 6,
+      "coefficient": "23433379379815799534774781446836716886362000",
+      "binaryDigits": 145
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 2,
+      "etaOrder": 7,
+      "coefficient": "6776895737737269655583612072419111837589451678960",
+      "binaryDigits": 163
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 2,
+      "etaOrder": 8,
+      "coefficient": "2463847136970184257929636520233826863148789401228945280",
+      "binaryDigits": 181
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 3,
+      "etaOrder": 0,
+      "coefficient": "5366568106793066634",
+      "binaryDigits": 63
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 3,
+      "etaOrder": 1,
+      "coefficient": "110844667988688358760738",
+      "binaryDigits": 77
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 3,
+      "etaOrder": 2,
+      "coefficient": "5494969144652290470882362532",
+      "binaryDigits": 93
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 3,
+      "etaOrder": 3,
+      "coefficient": "476722645316839019022465501912108",
+      "binaryDigits": 109
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 3,
+      "etaOrder": 4,
+      "coefficient": "63023788113954047739213902381989880496",
+      "binaryDigits": 126
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 3,
+      "etaOrder": 5,
+      "coefficient": "11716847247789109168856204039013518785503600",
+      "binaryDigits": 144
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 3,
+      "etaOrder": 6,
+      "coefficient": "2904419037828311422117750738773668730217791273120",
+      "binaryDigits": 161
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 3,
+      "etaOrder": 7,
+      "coefficient": "923952841748433565101313630539740093303610049750969440",
+      "binaryDigits": 180
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 4,
+      "etaOrder": 0,
+      "coefficient": "443389405199237385586096",
+      "binaryDigits": 79
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 4,
+      "etaOrder": 1,
+      "coefficient": "10990159980429414351167130552",
+      "binaryDigits": 94
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 4,
+      "etaOrder": 2,
+      "coefficient": "635641183767971108531180255784848",
+      "binaryDigits": 109
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 4,
+      "etaOrder": 3,
+      "coefficient": "63024741564739650558326742241758289776",
+      "binaryDigits": 126
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 4,
+      "etaOrder": 4,
+      "coefficient": "9373603846443145436640655546679896861115328",
+      "binaryDigits": 143
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 4,
+      "etaOrder": 5,
+      "coefficient": "1936302792351742839783463301406070213141732413120",
+      "binaryDigits": 161
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 4,
+      "etaOrder": 6,
+      "coefficient": "527978861289185674027102732002909225858878103434340480",
+      "binaryDigits": 179
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 5,
+      "etaOrder": 0,
+      "coefficient": "54951908384604620706111891946",
+      "binaryDigits": 96
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 5,
+      "etaOrder": 1,
+      "coefficient": "1589130435004624430354478076098186",
+      "binaryDigits": 111
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 5,
+      "etaOrder": 2,
+      "coefficient": "105042825053350637508375348363634417556",
+      "binaryDigits": 127
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 5,
+      "etaOrder": 3,
+      "coefficient": "11717162370702395124618692503321648924167612",
+      "binaryDigits": 144
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 5,
+      "etaOrder": 4,
+      "coefficient": "1936326226466400183586454963094974605250703896304",
+      "binaryDigits": 161
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 5,
+      "etaOrder": 5,
+      "coefficient": "439987225184163949059509980862296688991504554659224240",
+      "binaryDigits": 179
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 6,
+      "etaOrder": 0,
+      "coefficient": "9534947466861400742856200160286382",
+      "binaryDigits": 113
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 6,
+      "etaOrder": 1,
+      "coefficient": "315133242578832880589824936678601565966",
+      "binaryDigits": 128
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 6,
+      "etaOrder": 2,
+      "coefficient": "23434639871469080736117584550369147345932188",
+      "binaryDigits": 145
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 6,
+      "etaOrder": 3,
+      "coefficient": "2904524491344276620142334661508300941032221587412",
+      "binaryDigits": 161
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 6,
+      "etaOrder": 4,
+      "coefficient": "527990479223110462813049700557337378354809502627080016",
+      "binaryDigits": 179
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 7,
+      "etaOrder": 0,
+      "coefficient": "2205966070560299738153750261499025921320",
+      "binaryDigits": 131
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 7,
+      "etaOrder": 1,
+      "coefficient": "82022342522052861180366765909051999828887208",
+      "binaryDigits": 146
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 7,
+      "etaOrder": 2,
+      "coefficient": "6777305834743851038450251130449428305423613449040",
+      "binaryDigits": 163
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 7,
+      "etaOrder": 3,
+      "coefficient": "923993504517173634665522160165979383774271132795379184",
+      "binaryDigits": 180
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 8,
+      "etaOrder": 0,
+      "coefficient": "656187564085202321500281603387374981576606136",
+      "binaryDigits": 149
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 8,
+      "etaOrder": 1,
+      "coefficient": "27109551429816136412260280555764364864916358566072",
+      "binaryDigits": 165
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 8,
+      "etaOrder": 2,
+      "coefficient": "2464009788045165124540133469992357460965603137055841648",
+      "binaryDigits": 181
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 9,
+      "etaOrder": 0,
+      "coefficient": "243988915725619607782433166782052022826620677362208",
+      "binaryDigits": 168
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 9,
+      "etaOrder": 1,
+      "coefficient": "11088166039676817906101682833320188615108295410072234912",
+      "binaryDigits": 183
+    },
+    {
+      "branch": "angular",
+      "radialOrder": 10,
+      "etaOrder": 0,
+      "coefficient": "110882880346268280069945053891061322957441251189045474288",
+      "binaryDigits": 187
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 0,
+      "etaOrder": 0,
+      "coefficient": "1",
+      "binaryDigits": 1
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 0,
+      "etaOrder": 1,
+      "coefficient": "4",
+      "binaryDigits": 3
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 0,
+      "etaOrder": 2,
+      "coefficient": "132122",
+      "binaryDigits": 18
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 0,
+      "etaOrder": 3,
+      "coefficient": "820910832",
+      "binaryDigits": 30
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 0,
+      "etaOrder": 4,
+      "coefficient": "10268176364376",
+      "binaryDigits": 44
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 0,
+      "etaOrder": 5,
+      "coefficient": "212001511837084320",
+      "binaryDigits": 58
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 0,
+      "etaOrder": 6,
+      "coefficient": "6553750547913631998480",
+      "binaryDigits": 73
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 0,
+      "etaOrder": 7,
+      "coefficient": "283662191921346785606250240",
+      "binaryDigits": 88
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 0,
+      "etaOrder": 8,
+      "coefficient": "16378174216103782053328670033280",
+      "binaryDigits": 104
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 0,
+      "etaOrder": 9,
+      "coefficient": "1216416870755457465723302072501706240",
+      "binaryDigits": 120
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 0,
+      "etaOrder": 10,
+      "coefficient": "112972009138468427034303973913485088121600",
+      "binaryDigits": 137
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 1,
+      "etaOrder": 0,
+      "coefficient": "4",
+      "binaryDigits": 3
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 1,
+      "etaOrder": 1,
+      "coefficient": "66061",
+      "binaryDigits": 17
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 1,
+      "etaOrder": 2,
+      "coefficient": "273636944",
+      "binaryDigits": 29
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 1,
+      "etaOrder": 3,
+      "coefficient": "2567044091094",
+      "binaryDigits": 42
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 1,
+      "etaOrder": 4,
+      "coefficient": "42400302367416864",
+      "binaryDigits": 56
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 1,
+      "etaOrder": 5,
+      "coefficient": "1092291757985605333080",
+      "binaryDigits": 70
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 1,
+      "etaOrder": 6,
+      "coefficient": "40523170274478112229464320",
+      "binaryDigits": 86
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 1,
+      "etaOrder": 7,
+      "coefficient": "2047271777012972756666083754160",
+      "binaryDigits": 101
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 1,
+      "etaOrder": 8,
+      "coefficient": "135157430083939718413700230277967360",
+      "binaryDigits": 117
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 1,
+      "etaOrder": 9,
+      "coefficient": "11297200913846842703430397391348508812160",
+      "binaryDigits": 134
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 2,
+      "etaOrder": 0,
+      "coefficient": "132126",
+      "binaryDigits": 18
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 2,
+      "etaOrder": 1,
+      "coefficient": "273703005",
+      "binaryDigits": 29
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 2,
+      "etaOrder": 2,
+      "coefficient": "1711636364340",
+      "binaryDigits": 41
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 2,
+      "etaOrder": 3,
+      "coefficient": "21202718227799526",
+      "binaryDigits": 55
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 2,
+      "etaOrder": 4,
+      "coefficient": "436959103496609550096",
+      "binaryDigits": 69
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 2,
+      "etaOrder": 5,
+      "coefficient": "13508815716584023015154520",
+      "binaryDigits": 84
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 2,
+      "etaOrder": 6,
+      "coefficient": "584975316602552408588253394080",
+      "binaryDigits": 99
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 2,
+      "etaOrder": 7,
+      "coefficient": "33791404792761942576181723653246000",
+      "binaryDigits": 115
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 2,
+      "etaOrder": 8,
+      "coefficient": "2510624249396048984925168676085502147840",
+      "binaryDigits": 131
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 3,
+      "etaOrder": 0,
+      "coefficient": "821307206",
+      "binaryDigits": 30
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 3,
+      "etaOrder": 1,
+      "coefficient": "2567865134048",
+      "binaryDigits": 42
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 3,
+      "etaOrder": 2,
+      "coefficient": "21205285819164508",
+      "binaryDigits": 55
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 3,
+      "etaOrder": 3,
+      "coefficient": "327751132983320907408",
+      "binaryDigits": 69
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 3,
+      "etaOrder": 4,
+      "coefficient": "8105944889805809907126288",
+      "binaryDigits": 83
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 3,
+      "etaOrder": 5,
+      "coefficient": "292507922070996959321452095360",
+      "binaryDigits": 98
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 3,
+      "etaOrder": 6,
+      "coefficient": "14482908108705892927072677203357280",
+      "binaryDigits": 114
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 3,
+      "etaOrder": 7,
+      "coefficient": "941534781654343400767288904450585051520",
+      "binaryDigits": 130
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 4,
+      "etaOrder": 0,
+      "coefficient": "10273103282734",
+      "binaryDigits": 44
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 4,
+      "etaOrder": 1,
+      "coefficient": "42415707642366178",
+      "binaryDigits": 56
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 4,
+      "etaOrder": 2,
+      "coefficient": "437043922927976206844",
+      "binaryDigits": 69
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 4,
+      "etaOrder": 3,
+      "coefficient": "8106600413277061820831724",
+      "binaryDigits": 83
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 4,
+      "etaOrder": 4,
+      "coefficient": "234022549983578682875952895824",
+      "binaryDigits": 98
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 4,
+      "etaOrder": 5,
+      "coefficient": "9655857101824645286975769660249840",
+      "binaryDigits": 113
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 4,
+      "etaOrder": 6,
+      "coefficient": "538048841632286623425703263169509602400",
+      "binaryDigits": 129
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 5,
+      "etaOrder": 0,
+      "coefficient": "212104222339213396",
+      "binaryDigits": 58
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 5,
+      "etaOrder": 1,
+      "coefficient": "1092715850869506122674",
+      "binaryDigits": 70
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 5,
+      "etaOrder": 2,
+      "coefficient": "13512093333948845964605336",
+      "binaryDigits": 84
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 5,
+      "etaOrder": 3,
+      "coefficient": "292548454526811449479570498716",
+      "binaryDigits": 98
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 5,
+      "etaOrder": 4,
+      "coefficient": "9656442171710604915385675075061856",
+      "binaryDigits": 113
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 5,
+      "etaOrder": 5,
+      "coefficient": "448398174823873726751180451279783559920",
+      "binaryDigits": 129
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 6,
+      "etaOrder": 0,
+      "coefficient": "6556931443570920374348",
+      "binaryDigits": 73
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 6,
+      "etaOrder": 1,
+      "coefficient": "40539558255451257444840086",
+      "binaryDigits": 86
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 6,
+      "etaOrder": 2,
+      "coefficient": "585137446426340595510310713064",
+      "binaryDigits": 99
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 6,
+      "etaOrder": 3,
+      "coefficient": "14485540923197627797745000740030548",
+      "binaryDigits": 114
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 6,
+      "etaOrder": 4,
+      "coefficient": "538106779700260512751242322100134182048",
+      "binaryDigits": 129
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 7,
+      "etaOrder": 0,
+      "coefficient": "283799857790665986388047936",
+      "binaryDigits": 88
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 7,
+      "etaOrder": 1,
+      "coefficient": "2048122954770962836106234258712",
+      "binaryDigits": 101
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 7,
+      "etaOrder": 2,
+      "coefficient": "33801643515819774993433931970914112",
+      "binaryDigits": 115
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 7,
+      "etaOrder": 3,
+      "coefficient": "941737564892677619875574546160385141584",
+      "binaryDigits": 130
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 8,
+      "etaOrder": 0,
+      "coefficient": "16386118868200848670783571915184",
+      "binaryDigits": 104
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 8,
+      "etaOrder": 1,
+      "coefficient": "135214766744298088919851529232962136",
+      "binaryDigits": 117
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 8,
+      "etaOrder": 2,
+      "coefficient": "2511435382352034204109390196706836142240",
+      "binaryDigits": 131
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 9,
+      "etaOrder": 0,
+      "coefficient": "1217006639936526563330823273336952800",
+      "binaryDigits": 120
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 9,
+      "etaOrder": 1,
+      "coefficient": "11302067699324092406452288679241604992768",
+      "binaryDigits": 134
+    },
+    {
+      "branch": "steepen",
+      "radialOrder": 10,
+      "etaOrder": 0,
+      "coefficient": "113026762149345013076771793178118971968912",
+      "binaryDigits": 137
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 0,
+      "etaOrder": 0,
+      "coefficient": "1",
+      "binaryDigits": 1
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 0,
+      "etaOrder": 1,
+      "coefficient": "3",
+      "binaryDigits": 2
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 0,
+      "etaOrder": 2,
+      "coefficient": "14",
+      "binaryDigits": 4
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 0,
+      "etaOrder": 3,
+      "coefficient": "90",
+      "binaryDigits": 7
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 0,
+      "etaOrder": 4,
+      "coefficient": "744",
+      "binaryDigits": 10
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 0,
+      "etaOrder": 5,
+      "coefficient": "7560",
+      "binaryDigits": 13
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 0,
+      "etaOrder": 6,
+      "coefficient": "91440",
+      "binaryDigits": 17
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 0,
+      "etaOrder": 7,
+      "coefficient": "1285200",
+      "binaryDigits": 21
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 0,
+      "etaOrder": 8,
+      "coefficient": "20603520",
+      "binaryDigits": 25
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 0,
+      "etaOrder": 9,
+      "coefficient": "371226240",
+      "binaryDigits": 29
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 0,
+      "etaOrder": 10,
+      "coefficient": "7428153600",
+      "binaryDigits": 33
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 1,
+      "etaOrder": 0,
+      "coefficient": "3",
+      "binaryDigits": 2
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 1,
+      "etaOrder": 1,
+      "coefficient": "7",
+      "binaryDigits": 3
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 1,
+      "etaOrder": 2,
+      "coefficient": "30",
+      "binaryDigits": 5
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 1,
+      "etaOrder": 3,
+      "coefficient": "186",
+      "binaryDigits": 8
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 1,
+      "etaOrder": 4,
+      "coefficient": "1512",
+      "binaryDigits": 11
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 1,
+      "etaOrder": 5,
+      "coefficient": "15240",
+      "binaryDigits": 14
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 1,
+      "etaOrder": 6,
+      "coefficient": "183600",
+      "binaryDigits": 18
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 1,
+      "etaOrder": 7,
+      "coefficient": "2575440",
+      "binaryDigits": 22
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 1,
+      "etaOrder": 8,
+      "coefficient": "41247360",
+      "binaryDigits": 26
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 1,
+      "etaOrder": 9,
+      "coefficient": "742815360",
+      "binaryDigits": 30
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 2,
+      "etaOrder": 0,
+      "coefficient": "17",
+      "binaryDigits": 5
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 2,
+      "etaOrder": 1,
+      "coefficient": "37",
+      "binaryDigits": 6
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 2,
+      "etaOrder": 2,
+      "coefficient": "154",
+      "binaryDigits": 8
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 2,
+      "etaOrder": 3,
+      "coefficient": "942",
+      "binaryDigits": 10
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 2,
+      "etaOrder": 4,
+      "coefficient": "7608",
+      "binaryDigits": 13
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 2,
+      "etaOrder": 5,
+      "coefficient": "76440",
+      "binaryDigits": 17
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 2,
+      "etaOrder": 6,
+      "coefficient": "919440",
+      "binaryDigits": 20
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 2,
+      "etaOrder": 7,
+      "coefficient": "12887280",
+      "binaryDigits": 24
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 2,
+      "etaOrder": 8,
+      "coefficient": "206317440",
+      "binaryDigits": 28
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 3,
+      "etaOrder": 0,
+      "coefficient": "138",
+      "binaryDigits": 8
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 3,
+      "etaOrder": 1,
+      "coefficient": "290",
+      "binaryDigits": 9
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 3,
+      "etaOrder": 2,
+      "coefficient": "1188",
+      "binaryDigits": 11
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 3,
+      "etaOrder": 3,
+      "coefficient": "7212",
+      "binaryDigits": 13
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 3,
+      "etaOrder": 4,
+      "coefficient": "58032",
+      "binaryDigits": 16
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 3,
+      "etaOrder": 5,
+      "coefficient": "582000",
+      "binaryDigits": 20
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 3,
+      "etaOrder": 6,
+      "coefficient": "6994080",
+      "binaryDigits": 23
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 3,
+      "etaOrder": 7,
+      "coefficient": "97987680",
+      "binaryDigits": 27
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 4,
+      "etaOrder": 0,
+      "coefficient": "1456",
+      "binaryDigits": 11
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 4,
+      "etaOrder": 1,
+      "coefficient": "3000",
+      "binaryDigits": 12
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 4,
+      "etaOrder": 2,
+      "coefficient": "12176",
+      "binaryDigits": 14
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 4,
+      "etaOrder": 3,
+      "coefficient": "73584",
+      "binaryDigits": 17
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 4,
+      "etaOrder": 4,
+      "coefficient": "590784",
+      "binaryDigits": 20
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 4,
+      "etaOrder": 5,
+      "coefficient": "5918400",
+      "binaryDigits": 23
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 4,
+      "etaOrder": 6,
+      "coefficient": "71084160",
+      "binaryDigits": 27
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 5,
+      "etaOrder": 0,
+      "coefficient": "18922",
+      "binaryDigits": 15
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 5,
+      "etaOrder": 1,
+      "coefficient": "38538",
+      "binaryDigits": 16
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 5,
+      "etaOrder": 2,
+      "coefficient": "155540",
+      "binaryDigits": 18
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 5,
+      "etaOrder": 3,
+      "coefficient": "937404",
+      "binaryDigits": 20
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 5,
+      "etaOrder": 4,
+      "coefficient": "7515888",
+      "binaryDigits": 23
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 5,
+      "etaOrder": 5,
+      "coefficient": "75242160",
+      "binaryDigits": 27
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 6,
+      "etaOrder": 0,
+      "coefficient": "292526",
+      "binaryDigits": 19
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 6,
+      "etaOrder": 1,
+      "coefficient": "591630",
+      "binaryDigits": 20
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 6,
+      "etaOrder": 2,
+      "coefficient": "2379676",
+      "binaryDigits": 22
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 6,
+      "etaOrder": 3,
+      "coefficient": "14317524",
+      "binaryDigits": 24
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 6,
+      "etaOrder": 4,
+      "coefficient": "114698064",
+      "binaryDigits": 27
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 7,
+      "etaOrder": 0,
+      "coefficient": "5248296",
+      "binaryDigits": 23
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 7,
+      "etaOrder": 1,
+      "coefficient": "10569384",
+      "binaryDigits": 24
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 7,
+      "etaOrder": 2,
+      "coefficient": "42423120",
+      "binaryDigits": 26
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 7,
+      "etaOrder": 3,
+      "coefficient": "254975472",
+      "binaryDigits": 28
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 8,
+      "etaOrder": 0,
+      "coefficient": "107266488",
+      "binaryDigits": 27
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 8,
+      "etaOrder": 1,
+      "coefficient": "215453880",
+      "binaryDigits": 28
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 8,
+      "etaOrder": 2,
+      "coefficient": "863657328",
+      "binaryDigits": 30
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 9,
+      "etaOrder": 0,
+      "coefficient": "2461504032",
+      "binaryDigits": 32
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 9,
+      "etaOrder": 1,
+      "coefficient": "4936117152",
+      "binaryDigits": 33
+    },
+    {
+      "branch": "steepPower",
+      "radialOrder": 10,
+      "etaOrder": 0,
+      "coefficient": "62684738544",
+      "binaryDigits": 36
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 0,
+      "etaOrder": 0,
+      "coefficient": "1",
+      "binaryDigits": 1
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 0,
+      "etaOrder": 1,
+      "coefficient": "4",
+      "binaryDigits": 3
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 0,
+      "etaOrder": 2,
+      "coefficient": "132122",
+      "binaryDigits": 18
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 0,
+      "etaOrder": 3,
+      "coefficient": "820910832",
+      "binaryDigits": 30
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 0,
+      "etaOrder": 4,
+      "coefficient": "10268176364376",
+      "binaryDigits": 44
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 0,
+      "etaOrder": 5,
+      "coefficient": "212001511837084320",
+      "binaryDigits": 58
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 0,
+      "etaOrder": 6,
+      "coefficient": "6553750547913631998480",
+      "binaryDigits": 73
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 0,
+      "etaOrder": 7,
+      "coefficient": "283662191921346785606250240",
+      "binaryDigits": 88
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 0,
+      "etaOrder": 8,
+      "coefficient": "16378174216103782053328670033280",
+      "binaryDigits": 104
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 0,
+      "etaOrder": 9,
+      "coefficient": "1216416870755457465723302072501706240",
+      "binaryDigits": 120
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 0,
+      "etaOrder": 10,
+      "coefficient": "112972009138468427034303973913485088121600",
+      "binaryDigits": 137
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 1,
+      "etaOrder": 0,
+      "coefficient": "4",
+      "binaryDigits": 3
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 1,
+      "etaOrder": 1,
+      "coefficient": "66061",
+      "binaryDigits": 17
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 1,
+      "etaOrder": 2,
+      "coefficient": "273636944",
+      "binaryDigits": 29
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 1,
+      "etaOrder": 3,
+      "coefficient": "2567044091094",
+      "binaryDigits": 42
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 1,
+      "etaOrder": 4,
+      "coefficient": "42400302367416864",
+      "binaryDigits": 56
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 1,
+      "etaOrder": 5,
+      "coefficient": "1092291757985605333080",
+      "binaryDigits": 70
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 1,
+      "etaOrder": 6,
+      "coefficient": "40523170274478112229464320",
+      "binaryDigits": 86
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 1,
+      "etaOrder": 7,
+      "coefficient": "2047271777012972756666083754160",
+      "binaryDigits": 101
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 1,
+      "etaOrder": 8,
+      "coefficient": "135157430083939718413700230277967360",
+      "binaryDigits": 117
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 1,
+      "etaOrder": 9,
+      "coefficient": "11297200913846842703430397391348508812160",
+      "binaryDigits": 134
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 2,
+      "etaOrder": 0,
+      "coefficient": "132126",
+      "binaryDigits": 18
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 2,
+      "etaOrder": 1,
+      "coefficient": "273703005",
+      "binaryDigits": 29
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 2,
+      "etaOrder": 2,
+      "coefficient": "1711636364340",
+      "binaryDigits": 41
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 2,
+      "etaOrder": 3,
+      "coefficient": "21202718227799526",
+      "binaryDigits": 55
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 2,
+      "etaOrder": 4,
+      "coefficient": "436959103496609550096",
+      "binaryDigits": 69
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 2,
+      "etaOrder": 5,
+      "coefficient": "13508815716584023015154520",
+      "binaryDigits": 84
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 2,
+      "etaOrder": 6,
+      "coefficient": "584975316602552408588253394080",
+      "binaryDigits": 99
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 2,
+      "etaOrder": 7,
+      "coefficient": "33791404792761942576181723653246000",
+      "binaryDigits": 115
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 2,
+      "etaOrder": 8,
+      "coefficient": "2510624249396048984925168676085502147840",
+      "binaryDigits": 131
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 3,
+      "etaOrder": 0,
+      "coefficient": "821307206",
+      "binaryDigits": 30
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 3,
+      "etaOrder": 1,
+      "coefficient": "2567865134048",
+      "binaryDigits": 42
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 3,
+      "etaOrder": 2,
+      "coefficient": "21205285819164508",
+      "binaryDigits": 55
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 3,
+      "etaOrder": 3,
+      "coefficient": "327751132983320907408",
+      "binaryDigits": 69
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 3,
+      "etaOrder": 4,
+      "coefficient": "8105944889805809907126288",
+      "binaryDigits": 83
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 3,
+      "etaOrder": 5,
+      "coefficient": "292507922070996959321452095360",
+      "binaryDigits": 98
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 3,
+      "etaOrder": 6,
+      "coefficient": "14482908108705892927072677203357280",
+      "binaryDigits": 114
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 3,
+      "etaOrder": 7,
+      "coefficient": "941534781654343400767288904450585051520",
+      "binaryDigits": 130
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 4,
+      "etaOrder": 0,
+      "coefficient": "10273103282734",
+      "binaryDigits": 44
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 4,
+      "etaOrder": 1,
+      "coefficient": "42415707642366178",
+      "binaryDigits": 56
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 4,
+      "etaOrder": 2,
+      "coefficient": "437043922927976206844",
+      "binaryDigits": 69
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 4,
+      "etaOrder": 3,
+      "coefficient": "8106600413277061820831724",
+      "binaryDigits": 83
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 4,
+      "etaOrder": 4,
+      "coefficient": "234022549983578682875952895824",
+      "binaryDigits": 98
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 4,
+      "etaOrder": 5,
+      "coefficient": "9655857101824645286975769660249840",
+      "binaryDigits": 113
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 4,
+      "etaOrder": 6,
+      "coefficient": "538048841632286623425703263169509602400",
+      "binaryDigits": 129
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 5,
+      "etaOrder": 0,
+      "coefficient": "212104222339213396",
+      "binaryDigits": 58
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 5,
+      "etaOrder": 1,
+      "coefficient": "1092715850869506122674",
+      "binaryDigits": 70
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 5,
+      "etaOrder": 2,
+      "coefficient": "13512093333948845964605336",
+      "binaryDigits": 84
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 5,
+      "etaOrder": 3,
+      "coefficient": "292548454526811449479570498716",
+      "binaryDigits": 98
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 5,
+      "etaOrder": 4,
+      "coefficient": "9656442171710604915385675075061856",
+      "binaryDigits": 113
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 5,
+      "etaOrder": 5,
+      "coefficient": "448398174823873726751180451279783559920",
+      "binaryDigits": 129
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 6,
+      "etaOrder": 0,
+      "coefficient": "6556931443570920374348",
+      "binaryDigits": 73
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 6,
+      "etaOrder": 1,
+      "coefficient": "40539558255451257444840086",
+      "binaryDigits": 86
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 6,
+      "etaOrder": 2,
+      "coefficient": "585137446426340595510310713064",
+      "binaryDigits": 99
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 6,
+      "etaOrder": 3,
+      "coefficient": "14485540923197627797745000740030548",
+      "binaryDigits": 114
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 6,
+      "etaOrder": 4,
+      "coefficient": "538106779700260512751242322100134182048",
+      "binaryDigits": 129
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 7,
+      "etaOrder": 0,
+      "coefficient": "283799857790665986388047936",
+      "binaryDigits": 88
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 7,
+      "etaOrder": 1,
+      "coefficient": "2048122954770962836106234258712",
+      "binaryDigits": 101
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 7,
+      "etaOrder": 2,
+      "coefficient": "33801643515819774993433931970914112",
+      "binaryDigits": 115
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 7,
+      "etaOrder": 3,
+      "coefficient": "941737564892677619875574546160385141584",
+      "binaryDigits": 130
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 8,
+      "etaOrder": 0,
+      "coefficient": "16386118868200848670783571915184",
+      "binaryDigits": 104
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 8,
+      "etaOrder": 1,
+      "coefficient": "135214766744298088919851529232962136",
+      "binaryDigits": 117
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 8,
+      "etaOrder": 2,
+      "coefficient": "2511435382352034204109390196706836142240",
+      "binaryDigits": 131
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 9,
+      "etaOrder": 0,
+      "coefficient": "1217006639936526563330823273336952800",
+      "binaryDigits": 120
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 9,
+      "etaOrder": 1,
+      "coefficient": "11302067699324092406452288679241604992768",
+      "binaryDigits": 134
+    },
+    {
+      "branch": "flatten",
+      "radialOrder": 10,
+      "etaOrder": 0,
+      "coefficient": "113026762149345013076771793178118971968912",
+      "binaryDigits": 137
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 0,
+      "etaOrder": 0,
+      "coefficient": "1",
+      "binaryDigits": 1
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 0,
+      "etaOrder": 1,
+      "coefficient": "3",
+      "binaryDigits": 2
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 0,
+      "etaOrder": 2,
+      "coefficient": "14",
+      "binaryDigits": 4
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 0,
+      "etaOrder": 3,
+      "coefficient": "90",
+      "binaryDigits": 7
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 0,
+      "etaOrder": 4,
+      "coefficient": "744",
+      "binaryDigits": 10
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 0,
+      "etaOrder": 5,
+      "coefficient": "7560",
+      "binaryDigits": 13
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 0,
+      "etaOrder": 6,
+      "coefficient": "91440",
+      "binaryDigits": 17
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 0,
+      "etaOrder": 7,
+      "coefficient": "1285200",
+      "binaryDigits": 21
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 0,
+      "etaOrder": 8,
+      "coefficient": "20603520",
+      "binaryDigits": 25
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 0,
+      "etaOrder": 9,
+      "coefficient": "371226240",
+      "binaryDigits": 29
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 0,
+      "etaOrder": 10,
+      "coefficient": "7428153600",
+      "binaryDigits": 33
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 1,
+      "etaOrder": 0,
+      "coefficient": "3",
+      "binaryDigits": 2
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 1,
+      "etaOrder": 1,
+      "coefficient": "7",
+      "binaryDigits": 3
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 1,
+      "etaOrder": 2,
+      "coefficient": "30",
+      "binaryDigits": 5
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 1,
+      "etaOrder": 3,
+      "coefficient": "186",
+      "binaryDigits": 8
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 1,
+      "etaOrder": 4,
+      "coefficient": "1512",
+      "binaryDigits": 11
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 1,
+      "etaOrder": 5,
+      "coefficient": "15240",
+      "binaryDigits": 14
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 1,
+      "etaOrder": 6,
+      "coefficient": "183600",
+      "binaryDigits": 18
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 1,
+      "etaOrder": 7,
+      "coefficient": "2575440",
+      "binaryDigits": 22
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 1,
+      "etaOrder": 8,
+      "coefficient": "41247360",
+      "binaryDigits": 26
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 1,
+      "etaOrder": 9,
+      "coefficient": "742815360",
+      "binaryDigits": 30
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 2,
+      "etaOrder": 0,
+      "coefficient": "17",
+      "binaryDigits": 5
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 2,
+      "etaOrder": 1,
+      "coefficient": "37",
+      "binaryDigits": 6
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 2,
+      "etaOrder": 2,
+      "coefficient": "154",
+      "binaryDigits": 8
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 2,
+      "etaOrder": 3,
+      "coefficient": "942",
+      "binaryDigits": 10
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 2,
+      "etaOrder": 4,
+      "coefficient": "7608",
+      "binaryDigits": 13
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 2,
+      "etaOrder": 5,
+      "coefficient": "76440",
+      "binaryDigits": 17
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 2,
+      "etaOrder": 6,
+      "coefficient": "919440",
+      "binaryDigits": 20
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 2,
+      "etaOrder": 7,
+      "coefficient": "12887280",
+      "binaryDigits": 24
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 2,
+      "etaOrder": 8,
+      "coefficient": "206317440",
+      "binaryDigits": 28
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 3,
+      "etaOrder": 0,
+      "coefficient": "138",
+      "binaryDigits": 8
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 3,
+      "etaOrder": 1,
+      "coefficient": "290",
+      "binaryDigits": 9
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 3,
+      "etaOrder": 2,
+      "coefficient": "1188",
+      "binaryDigits": 11
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 3,
+      "etaOrder": 3,
+      "coefficient": "7212",
+      "binaryDigits": 13
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 3,
+      "etaOrder": 4,
+      "coefficient": "58032",
+      "binaryDigits": 16
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 3,
+      "etaOrder": 5,
+      "coefficient": "582000",
+      "binaryDigits": 20
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 3,
+      "etaOrder": 6,
+      "coefficient": "6994080",
+      "binaryDigits": 23
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 3,
+      "etaOrder": 7,
+      "coefficient": "97987680",
+      "binaryDigits": 27
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 4,
+      "etaOrder": 0,
+      "coefficient": "1456",
+      "binaryDigits": 11
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 4,
+      "etaOrder": 1,
+      "coefficient": "3000",
+      "binaryDigits": 12
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 4,
+      "etaOrder": 2,
+      "coefficient": "12176",
+      "binaryDigits": 14
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 4,
+      "etaOrder": 3,
+      "coefficient": "73584",
+      "binaryDigits": 17
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 4,
+      "etaOrder": 4,
+      "coefficient": "590784",
+      "binaryDigits": 20
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 4,
+      "etaOrder": 5,
+      "coefficient": "5918400",
+      "binaryDigits": 23
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 4,
+      "etaOrder": 6,
+      "coefficient": "71084160",
+      "binaryDigits": 27
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 5,
+      "etaOrder": 0,
+      "coefficient": "18922",
+      "binaryDigits": 15
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 5,
+      "etaOrder": 1,
+      "coefficient": "38538",
+      "binaryDigits": 16
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 5,
+      "etaOrder": 2,
+      "coefficient": "155540",
+      "binaryDigits": 18
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 5,
+      "etaOrder": 3,
+      "coefficient": "937404",
+      "binaryDigits": 20
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 5,
+      "etaOrder": 4,
+      "coefficient": "7515888",
+      "binaryDigits": 23
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 5,
+      "etaOrder": 5,
+      "coefficient": "75242160",
+      "binaryDigits": 27
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 6,
+      "etaOrder": 0,
+      "coefficient": "292526",
+      "binaryDigits": 19
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 6,
+      "etaOrder": 1,
+      "coefficient": "591630",
+      "binaryDigits": 20
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 6,
+      "etaOrder": 2,
+      "coefficient": "2379676",
+      "binaryDigits": 22
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 6,
+      "etaOrder": 3,
+      "coefficient": "14317524",
+      "binaryDigits": 24
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 6,
+      "etaOrder": 4,
+      "coefficient": "114698064",
+      "binaryDigits": 27
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 7,
+      "etaOrder": 0,
+      "coefficient": "5248296",
+      "binaryDigits": 23
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 7,
+      "etaOrder": 1,
+      "coefficient": "10569384",
+      "binaryDigits": 24
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 7,
+      "etaOrder": 2,
+      "coefficient": "42423120",
+      "binaryDigits": 26
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 7,
+      "etaOrder": 3,
+      "coefficient": "254975472",
+      "binaryDigits": 28
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 8,
+      "etaOrder": 0,
+      "coefficient": "107266488",
+      "binaryDigits": 27
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 8,
+      "etaOrder": 1,
+      "coefficient": "215453880",
+      "binaryDigits": 28
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 8,
+      "etaOrder": 2,
+      "coefficient": "863657328",
+      "binaryDigits": 30
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 9,
+      "etaOrder": 0,
+      "coefficient": "2461504032",
+      "binaryDigits": 32
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 9,
+      "etaOrder": 1,
+      "coefficient": "4936117152",
+      "binaryDigits": 33
+    },
+    {
+      "branch": "wait",
+      "radialOrder": 10,
+      "etaOrder": 0,
+      "coefficient": "62684738544",
+      "binaryDigits": 36
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 0,
+      "etaOrder": 0,
+      "coefficient": "4",
+      "binaryDigits": 3
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 0,
+      "etaOrder": 1,
+      "coefficient": "792612",
+      "binaryDigits": 20
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 0,
+      "etaOrder": 2,
+      "coefficient": "79635659880",
+      "binaryDigits": 37
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 0,
+      "etaOrder": 3,
+      "coefficient": "2499652631592120",
+      "binaryDigits": 52
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 0,
+      "etaOrder": 4,
+      "coefficient": "127134955923350732256",
+      "binaryDigits": 67
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 0,
+      "etaOrder": 5,
+      "coefficient": "10530202687559772071161440",
+      "binaryDigits": 84
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 0,
+      "etaOrder": 6,
+      "coefficient": "1321779915455233513077837771840",
+      "binaryDigits": 101
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 0,
+      "etaOrder": 7,
+      "coefficient": "234632823309857487050699442061164480",
+      "binaryDigits": 118
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 0,
+      "etaOrder": 8,
+      "coefficient": "55851170468472600201625587955476780879360",
+      "binaryDigits": 136
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 0,
+      "etaOrder": 9,
+      "coefficient": "17139043105388793942090562036647925720345382400",
+      "binaryDigits": 154
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 0,
+      "etaOrder": 10,
+      "coefficient": "6581300652011862621123725330626014365604224601369600",
+      "binaryDigits": 173
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 1,
+      "etaOrder": 0,
+      "coefficient": "792612",
+      "binaryDigits": 20
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 1,
+      "etaOrder": 1,
+      "coefficient": "39817829940",
+      "binaryDigits": 36
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 1,
+      "etaOrder": 2,
+      "coefficient": "833217543864040",
+      "binaryDigits": 50
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 1,
+      "etaOrder": 3,
+      "coefficient": "31783738980837683064",
+      "binaryDigits": 65
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 1,
+      "etaOrder": 4,
+      "coefficient": "2106040537511954414232288",
+      "binaryDigits": 81
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 1,
+      "etaOrder": 5,
+      "coefficient": "220296652575872252179639628640",
+      "binaryDigits": 98
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 1,
+      "etaOrder": 6,
+      "coefficient": "33518974758551069578671348865880640",
+      "binaryDigits": 115
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 1,
+      "etaOrder": 7,
+      "coefficient": "6981396308559075025203198494434597609920",
+      "binaryDigits": 133
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 1,
+      "etaOrder": 8,
+      "coefficient": "1904338122820977104676729115183102857816153600",
+      "binaryDigits": 151
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 1,
+      "etaOrder": 9,
+      "coefficient": "658130065201186262112372533062601436560422460136960",
+      "binaryDigits": 169
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 2,
+      "etaOrder": 0,
+      "coefficient": "79636452492",
+      "binaryDigits": 37
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 2,
+      "etaOrder": 1,
+      "coefficient": "833257361693980",
+      "binaryDigits": 50
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 2,
+      "etaOrder": 2,
+      "coefficient": "21189992538102319416",
+      "binaryDigits": 65
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 2,
+      "etaOrder": 3,
+      "coefficient": "1053052052494958044799208",
+      "binaryDigits": 80
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 2,
+      "etaOrder": 4,
+      "coefficient": "88120767070886412826270083744",
+      "binaryDigits": 97
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 2,
+      "etaOrder": 5,
+      "coefficient": "11173211882836265731809295928255520",
+      "binaryDigits": 114
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 2,
+      "etaOrder": 6,
+      "coefficient": "1994718178563065701127635384044465197760",
+      "binaryDigits": 131
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 2,
+      "etaOrder": 7,
+      "coefficient": "476091512101552835244207481994270149051648320",
+      "binaryDigits": 149
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 2,
+      "etaOrder": 8,
+      "coefficient": "146253029938386434779854128520804391227396140628480",
+      "binaryDigits": 167
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 3,
+      "etaOrder": 0,
+      "coefficient": "2499891540156984",
+      "binaryDigits": 52
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 3,
+      "etaOrder": 1,
+      "coefficient": "31786238713104935064",
+      "binaryDigits": 65
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 3,
+      "etaOrder": 2,
+      "coefficient": "1053083837900373970210352",
+      "binaryDigits": 80
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 3,
+      "etaOrder": 3,
+      "coefficient": "66092154897135421547188603152",
+      "binaryDigits": 96
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 3,
+      "etaOrder": 4,
+      "coefficient": "6704059311905386037460794169195072",
+      "binaryDigits": 113
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 3,
+      "etaOrder": 5,
+      "coefficient": "997375849209505431250351532055944796480",
+      "binaryDigits": 130
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 3,
+      "etaOrder": 6,
+      "coefficient": "204042211566121404225344718525670376438586240",
+      "binaryDigits": 148
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 3,
+      "etaOrder": 7,
+      "coefficient": "54845600367653763525977702019126237362714429013120",
+      "binaryDigits": 166
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 4,
+      "etaOrder": 0,
+      "coefficient": "127149954715137299328",
+      "binaryDigits": 67
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 4,
+      "etaOrder": 1,
+      "coefficient": "2106231249111471329814752",
+      "binaryDigits": 81
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 4,
+      "etaOrder": 2,
+      "coefficient": "88124979385047188566504741696",
+      "binaryDigits": 97
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 4,
+      "etaOrder": 3,
+      "coefficient": "6704191497268264144537827428883648",
+      "binaryDigits": 113
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 4,
+      "etaOrder": 4,
+      "coefficient": "797914087574351028883780072013778543360",
+      "binaryDigits": 130
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 4,
+      "etaOrder": 5,
+      "coefficient": "136030135806952787340581154657572505083201280",
+      "binaryDigits": 147
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 4,
+      "etaOrder": 6,
+      "coefficient": "31340751153648605955190676095420686746268739115520",
+      "binaryDigits": 165
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 5,
+      "etaOrder": 0,
+      "coefficient": "10531474124610829486224888",
+      "binaryDigits": 84
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 5,
+      "etaOrder": 1,
+      "coefficient": "220317714093719897885921979320",
+      "binaryDigits": 98
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 5,
+      "etaOrder": 2,
+      "coefficient": "11173872809650762232988286071712240",
+      "binaryDigits": 114
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 5,
+      "etaOrder": 3,
+      "coefficient": "997409370056838180991091881332207721296",
+      "binaryDigits": 130
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 5,
+      "etaOrder": 4,
+      "coefficient": "136032130603345375713249146421673784465163072",
+      "binaryDigits": 147
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 5,
+      "etaOrder": 5,
+      "coefficient": "26117632705042343360370403741642393761721911389760",
+      "binaryDigits": 165
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 6,
+      "etaOrder": 0,
+      "coefficient": "1321937879302580606806091582760",
+      "binaryDigits": 101
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 6,
+      "etaOrder": 1,
+      "coefficient": "33522279387360304920547242307083880",
+      "binaryDigits": 115
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 6,
+      "etaOrder": 2,
+      "coefficient": "1994852261952423028352006378357557684304",
+      "binaryDigits": 131
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 6,
+      "etaOrder": 3,
+      "coefficient": "204051188149889043298366262525785320570447216",
+      "binaryDigits": 148
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 6,
+      "etaOrder": 4,
+      "coefficient": "31341567344437440808641237055270452352659139422144",
+      "binaryDigits": 165
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 7,
+      "etaOrder": 0,
+      "coefficient": "234660582530960965529614203476145120",
+      "binaryDigits": 118
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 7,
+      "etaOrder": 1,
+      "coefficient": "6982100245582466789855327939988787866336",
+      "binaryDigits": 133
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 7,
+      "etaOrder": 2,
+      "coefficient": "476126421038433927127478824588043567654232000",
+      "binaryDigits": 149
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 7,
+      "etaOrder": 3,
+      "coefficient": "54848457035415037485113336385303980949197094483264",
+      "binaryDigits": 166
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 8,
+      "etaOrder": 0,
+      "coefficient": "55857740613159049045725159028379704876704",
+      "binaryDigits": 136
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 8,
+      "etaOrder": 1,
+      "coefficient": "1904533612711158426726133712054796790505458080",
+      "binaryDigits": 151
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 8,
+      "etaOrder": 2,
+      "coefficient": "146264456609433720689915056299819630192206803671360",
+      "binaryDigits": 167
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 9,
+      "etaOrder": 0,
+      "coefficient": "17141053875641176312977588003392903558456179584",
+      "binaryDigits": 154
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 9,
+      "etaOrder": 1,
+      "coefficient": "658198625185602248776481906985099095273839174263168",
+      "binaryDigits": 169
+    },
+    {
+      "branch": "terminalWithHeatAndExterior",
+      "radialOrder": 10,
+      "etaOrder": 0,
+      "coefficient": "6582071957544340788238376464030327588844883203576640",
+      "binaryDigits": 173
+    }
+  ],
+  "scope": {
+    "actualSourceF0ExteriorC10NumericallyBounded": true,
+    "actualSourceF0InteriorC10BoundedHere": false,
+    "terminalHeatTransitionIncluded": true,
+    "infiniteExteriorTailIncluded": true,
+    "signedFTCQuadratureEvaluated": false,
+    "positiveOrderBackgroundBoundedHere": false,
+    "finalJetAcceptanceChanged": false
+  }
+}

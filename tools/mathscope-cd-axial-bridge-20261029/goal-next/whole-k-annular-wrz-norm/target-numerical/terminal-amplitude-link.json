@@ -1,0 +1,18 @@
+{
+  "status": "SOURCE_BOUND_TERMINAL_AMPLITUDE_UPPER_CONDITIONAL_ORIGINAL_ANALYTIC_SEMANTICS",
+  "targetGraphSHA256": "8ecdc6d5ba6faae0114249a5041eee1d8af1268e1ec98cc4f526a8b615bb70e5",
+  "sourceParameterSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+  "sourceTerminalEndRoot": 3613,
+  "targetOuterEpowB": 119257,
+  "alphaNormalizedOriginalAndTargetSHA256": "508dd94a9ac67a4cfdf11cbaa05b6f713762f6c7ee639e2270a5b1cb7817971b",
+  "leadingReceiptSHA256": "a2937d2c2066946f3dbe0a1be2a883766266a0b984914b67780ab81e55eadcbb",
+  "bound": "0<EpowB<exp(-65536)<1; 0<=delta<=1/2 and A=1/2+h<1 give EpowB*exp(A*delta)<2",
+  "proof": {
+    "pulse": "alpha=-1/2-lambda, length=13/lambda; pulse decreases log amplitude by 13/(2 lambda)+13",
+    "wait": "Qsteep>=0 because lambda>h and sigma>=0. holdLength=-4 log h=32008T. Qb >= exp(-1/2)(1-h)*32008T >1. Qp<= exp(3)*rho/(1-rho)<54/(256*64)<1, since 0<=sigma, integral sigma prime=1, rho=h/256 and h<1/64. Thus wait=log(Qb/Qp)/(1-h)>0.",
+    "otherStages": "Initial endpoint contribution is -1/5, using the original sigmoid symmetry; axial decay, entry, reservedPower, interpolation, angular, steepen, steepPower, flatten and nonnegative wait do not increase the scalar log amplitude. The terminal endpoint contributes -3(1/2+h)+log(1/(1-rho))<0 since rho<1/16384 and log(1/(1-rho))<=2rho.",
+    "exponent": "log(Pstar)=2T, lambda^-1=exp(1000T)>1+1000T; therefore log EpowB < -6498T-13/2 < -65536 since T>11.",
+    "scope": "One source terminal amplitude and the outer K prefactor. Source sigmoid smoothness, monotonicity, symmetry, original positive h/lambda and real integration semantics are used. No automatic validation of the complete C9 Taylor majorant or all outer FTC numeric endpoints is asserted."
+  },
+  "release": "HOLD"
+}

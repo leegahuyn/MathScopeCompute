@@ -1,8 +1,72 @@
-# Replay the November 12 checkpoint
+# Replay the November 13 checkpoint
 
 Extract Continuation17, the cumulative Continuation20 delta, Continuation21,
-Continuation22, Continuation23 and Continuation24 to the same directory in that order. The latest
+Continuation22, Continuation23, Continuation24 and Continuation25 to the same directory in that order. The latest
 checkpoint lists the parent checksums and the replaced files.
+
+## Continuation25
+
+Run the original-runtime check before loading the source majorants. The
+background arithmetic replay can take several minutes. The archive keeps the
+exact source traces and all resulting endpoints for readback.
+
+```sh
+p=tools/mathscope-cd-axial-bridge-20261029/goal-next
+rt=inputs/annular-numerical-runtime
+m2="$rt/research-ide/mathscope-m2/navier"
+hist=inputs/original-selector-scales/historical-scale-arithmetic-input.json
+threshold="$p/whole-k-selector-scales/historical-scale-arithmetic-result.json"
+norm="$p/whole-k-annular-wrz-norm"
+bg="$norm/numerical"
+target="$norm/target-numerical"
+init="$p/whole-k-annular-initial/numerical"
+fixed="$init/stage-zero-fixed-numerical.json"
+slow96="$p/whole-k-annular-slow/annular-slow-numerical-intervals.json"
+o=/tmp/mathscope-25
+mkdir -p "$o"
+
+node "$bg/check_original_runtime.mjs" "$rt" "$rt/GIT-SOURCE-SHA256.json" "$o/original-runtime-readback.json"
+python "$bg/check_background_ftc_trace.py" "$norm/background-c8.json" "$norm/background-c8-graph.jsonl.gz" "$o/background-ftc-transport.json"
+node --stack-size=4096 --max-old-space-size=4096 "$bg/produce_background_majorants.mjs" "$rt" "$norm/background-c8.json" "$o/background-majorants.json"
+node "$bg/evaluate_background_majorants.mjs" "$rt" "$o/background-majorants.json" "$o/background-ftc-transport.json" "$hist" "$threshold" "$o/background-numerical.json"
+node --stack-size=4096 "$bg/produce_leading_active.mjs" "$rt" "$o/leading-active-c10-trace.json"
+node "$bg/leading-outer-c10/replay_leading_outer_c10.mjs" "$rt" "$o/leading-outer-c10.json"
+node "$bg/leading-outer-c10/check_outer_receipt.mjs" "$rt" "$o/leading-outer-c10.json"
+node "$bg/complete_background_numerical.mjs" "$rt" "$o/background-numerical.json" "$o/background-ftc-transport.json" "$o/leading-active-c10-trace.json" "$o/leading-outer-c10.json" "$fixed" "$hist" "$threshold" "$o/background-c8-complete.json"
+
+node "$target/target-middle-reduction.mjs" "$norm/target-c7.json" "$norm/target-c7-graph.jsonl.gz" "$norm/replay_target_c7.mjs" "$m2/actual-background-physical-seminorms.mjs" > "$o/target-middle-reduction.lf.json"
+node "$target/outer-kernel-bounds.mjs" "$norm/target-c7.json" "$norm/target-c7-graph.jsonl.gz" "$m2/source-profile-data.mjs" "$m2/actual-stress-direction-program.mjs" > "$o/outer-kernel-bounds.lf.json"
+# Preserve the byte format of the two archived Windows receipts.
+for stem in target-middle-reduction outer-kernel-bounds; do
+  python -c 'from pathlib import Path; import sys; Path(sys.argv[2]).write_bytes(Path(sys.argv[1]).read_text().replace("\n","\r\n").encode())' \
+    "$o/$stem.lf.json" "$o/$stem.json"
+done
+node "$target/check_terminal_amplitude_bound.mjs" "$rt" "$norm/target-c7.json" "$norm/target-c7-graph.jsonl.gz" "$o/leading-outer-c10.json" "$o/terminal-amplitude-link.json"
+python "$target/check_target_ftc_trace.py" "$norm/target-c7.json" "$norm/target-c7-graph.jsonl.gz" "$o/target-middle-reduction.json" "$o/target-ftc-transport.json"
+node "$target/evaluate_target_inner.mjs" "$rt" "$norm/target-c7.json" "$fixed" "$hist" "$threshold" "$o/target-inner-numerical.json"
+node "$target/evaluate_target_middle.mjs" "$rt" "$o/background-c8-complete.json" "$o/target-middle-reduction.json" "$hist" "$threshold" "$o/target-middle-numerical.json"
+node "$target/evaluate_target_outer.mjs" "$rt" "$norm/target-c7.json" "$o/outer-kernel-bounds.json" "$o/terminal-amplitude-link.json" "$o/background-c8-complete.json" "$fixed" "$threshold" "$o/target-outer-numerical.json"
+node "$target/complete_target_numerical.mjs" "$rt" "$o/target-ftc-transport.json" "$o/target-inner-numerical.json" "$o/target-middle-numerical.json" "$o/target-outer-numerical.json" "$hist" "$threshold" "$o/target-c7-complete.json"
+cmp "$o/target-c7-complete.json" "$target/target-c7-complete.json"
+node "$init/evaluate_stage_zero_all.mjs" "$p" "$rt" "$slow96" "$o/stage-zero-complete-numerical.json"
+node "$init/check_stage_zero_numerical.mjs" "$p" "$rt" "$slow96" "$o/stage-zero-complete-numerical.json" "$o/stage-zero-complete-readback.json"
+
+loc="$p/whole-k-annular-initial/localized-force"
+cp "$loc/export_stencil.py" "$o/"
+python -B "$o/export_stencil.py" inputs/localization-source
+node "$loc/evaluate.mjs" "$p" "$rt" "$o"
+cmp "$o/initialized-annular-localized-force.json" "$loc/initialized-annular-localized-force.json"
+```
+
+For the isolated browser check use the original candidate
+`inputs/m4-r108-isolated-candidate/candidate.html`.
+[Browser arguments and scope](m4/r108/isolated-file-reimport/README.md).
+
+GitHub run [43242610982](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43242610982)
+passed the original Temporal inverse and initialized mean. Its angular
+constructor still requested 5,000,000 nodes. The source-verified resource
+overlay now supplies the same ceiling to both constructors in run
+[43256030290](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43256030290).
 
 ## Continuation24
 

@@ -5,12 +5,19 @@
 | M3 | **62/64** | N7-06 에너지 수지와 N8-05 수렴·꼬리 검증 OPEN |
 | M4 | **격리 후보 16/16** | 원래 평가기에 R1-08 등록. 운영 웹의 R1-08은 OPEN |
 | Y | **523/523** | 원본 N=1의 확장된 명시적 자유 좌표 영역. 결속 없이 검사한 식은 519/523 |
-| 최종장 jets | **0/67** | 환대 초기장의 기호 상계 67/67 재현. 전체 최종장의 닫힌 셀 구간 OPEN |
+| 최종장 jets | **0/67** | 환대 초기장 67/67 수치 구간. 모든 활성 보정을 포함하는 최종장 구간 OPEN |
 | 릴리스 | **HOLD** | M3 전체 검증과 최종장 구간 OPEN |
 
-첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20, Continuation21, Continuation22, Continuation23, Continuation24를 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
+첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20, Continuation21, Continuation22, Continuation23, Continuation24, Continuation25를 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
-## 현재 이어진 전체장 검증
+## Continuation25
+
+- **VERIFIED · 원본 초기장 67개의 수치 구간.** 배경 C8 상계 18개와 가중 표적 C7 상계 16개를 원본 FTC 식에서 얻었다. 원본 노드 8,121개와 외부 입력 108개를 통해 환대 초기장 퍼텐셜 57개, 직접 스칼라 6개, 압력 4개의 유한 구간을 재실행했다. 원본 바깥 cutoff까지 적용한 초기장의 속도, 기울기, 압력, 외력 16개 상계도 계산했다. 구간은 보수적이며 원본의 실해석 정칙성 전제 위에 있다. [배경 C8](whole-k-annular-wrz-norm/numerical/README.md) · [가중 표적 C7](whole-k-annular-wrz-norm/target-numerical/README.md) · [67개 초기 구간](whole-k-annular-initial/numerical/STAGE_ZERO_NUMERICAL.md) · [초기 외력](whole-k-annular-initial/localized-force/README.md).
+- **CONDITIONAL · 첫 Forced에 필요한 같은 계열 계산.** Primary C3, 압력, Temporal 역연산, 초기 평균장이 GitHub에서 통과했다. 각방향 초기화에 남아 있던 500만 노드 요청을 기존 680만 한도에 맞추고 다시 실행했다. 새 실행은 원본 20개 역연산과 120개 성분의 동일 계열 결속을 확인한다. 전체 가중 Forced 입력 상계는 별도 의무다. [종료한 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43242610982) · [새 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43256030290).
+- **VERIFIED · 격리 M4 파일 왕복.** 원본 후보의 두 예제에서 JSON을 저장하고 파일로 다시 선택해 별도 Worker에서 같은 결과 해시를 얻었다. 잘못된 파일, 미적용 편집, 이전 결과의 STALE 표시를 확인했다. **OPEN · 운영 R1-08.** 운영 화면과 기준 브랜치의 바이트·해시를 다시 확인했다. 현재 운영본에는 그 후보의 게시·복구 증거가 없다. [파일 재현](m4/r108/isolated-file-reimport/README.md) · [보존 기록](preservation-continuation25.json).
+- **OPEN · 최종장과 M3 두 항목.** 실제 활성 Forced 및 후속 보정의 가중 도함수, 원본 cutoff 선택 및 접합으로 최종장 67개를 닫는다. 이 동일 최종장으로 N7-06의 전체 K 에너지 수지와 두 독립 세분화, N8-05의 네 독립 비교와 꼬리 상계를 계산해야 한다. 최종장 jet 0/67과 RELEASE HOLD를 유지한다.
+
+## 이전 체크포인트의 증거
 
 - **VERIFIED · 환대의 원본 느린 배경장 수치 구간 67개.** 선도장 노름 두 개와 고차 노름 네 개의 정확한 산술 그래프를 재현했다. 원본 256비트 방향 반올림으로 67개 닫힌 구간과 19개 정확한 영을 얻었고, 96비트 상계가 그 결과를 전부 포함함을 대조했다. 초기장 전체 상계의 외부 입력을 4,456,994개 원본 노드에서 추적해 느린 장 48개, 고정 반경 연산자 15개, 원본 상수 11개를 수치로 결속했다. 초기장 전체에는 고차 배경 C8 18개와 가중 표적 C7 16개의 노름이 남아 있다. [느린 배경 수치 구간](whole-k-annular-slow/README.md) · [초기장 입력 추적](whole-k-annular-initial/numerical/README.md).
 - **VERIFIED · 원본 평균 압력 정규화와 FiveMap의 양의 모멘트.** 원본 \(\#633724\)의 질량은 \([0.000702978853,0.000702992830]\)에 있고 역수 \(\#633725\)는 \([1422.489616,1422.517896]\)에 있다. 원본 평균 패치의 포함과 \(0<\lambda<1\)을 방향 반올림으로 증명했다. 원본 허용 밴드에서 FiveMap의 다섯 정규화 모멘트가 모두 \(10000/20834143\)보다 크다. 질량 적분은 독립 midpoint 상계로 교차 확인했다. [원본 질량 적분](whole-k-annular-pressure-lower/numerical-mass/ACTUAL_RHO_MASS.md).

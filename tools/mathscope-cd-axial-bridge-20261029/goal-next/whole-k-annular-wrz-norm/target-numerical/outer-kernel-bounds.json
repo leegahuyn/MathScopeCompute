@@ -1,0 +1,98 @@
+{
+  "status": "VERIFIED_SOURCE_OUTER_HEAT_ENCLOSURES_CONDITIONAL_REAL_SEMANTICS",
+  "targetReceiptSHA256": "3917c6f194dbf70b397f9bb8ad56deb42dae204966dad78dea15618231f58770",
+  "targetGraphSHA256": "8ecdc6d5ba6faae0114249a5041eee1d8af1268e1ec98cc4f526a8b615bb70e5",
+  "sourceProfileSHA256": "df33560d2b9369ba32cf9f50877e355824ed1e7fdb84ef6b145d941c80db8e4a",
+  "sourceGamma": 119328,
+  "originalJkernels": [
+    {
+      "name": "outer_inviscid_stress",
+      "root": 119364,
+      "m": -3
+    },
+    {
+      "name": "outer_viscous_stress",
+      "root": 119561,
+      "m": -3
+    },
+    {
+      "name": "outer_pressure",
+      "root": 119679,
+      "m": -3
+    },
+    {
+      "name": "outer_axial_stress",
+      "root": 119689,
+      "m": 0
+    }
+  ],
+  "sourceHeat": 119354,
+  "sourceHeatFirstDerivative": 119550,
+  "sourceHNode": 9,
+  "outerBodies": [
+    119567,
+    119692,
+    119694
+  ],
+  "outerRowsDefinitionConservativelyReachGamma": 72,
+  "exactIdentity": "Gamma=integral_0^infinity exp(-t) t^h dt by t=u/(1-u), with the original improper endpoint limits",
+  "sourceHExact": "exp(-8002*(exp(1048576)+10))",
+  "kernelBounds": {
+    "value": "|J_(4,m) G| <= sup|G|/4",
+    "firstDelta": "|partial_delta J_(4,m) G| <= sup|G prime|/4 + (m+3)*sup|G|/32 for m>=-3 and 0<=delta<=1/2",
+    "source": "The actual four kernels preserve the positive e^(-4t) integral; the rational 1/4 and 1/32 are exact, not quadrature."
+  },
+  "heatBounds": {
+    "actualNormalizedHeat": "0<H(Z)<=1 and H(Z)>=1-h(1+h)Z >= 1-2h Z for all Z>=0",
+    "outerZ": "0<=Z<=4/Xb for 0<=delta<=1/2, |eta|<=1 and original nonnegative J-kernel binder",
+    "outerHeat": "H > 1-2^(-1024253)/Xb; if Xb>=1, H > 1-2^(-1024253)",
+    "firstDerivative": "-2^(-1024255)<dH/dZ<=0, including the actual #119550",
+    "higherDerivatives": "for j>=1, |d^jH/dZ^j|<=h*j!*(j+1)!; for 1<=j<=9 this is <2^(-1024215)",
+    "factorialCoefficients": [
+      {
+        "order": 1,
+        "coefficient": "2"
+      },
+      {
+        "order": 2,
+        "coefficient": "12"
+      },
+      {
+        "order": 3,
+        "coefficient": "144"
+      },
+      {
+        "order": 4,
+        "coefficient": "2880"
+      },
+      {
+        "order": 5,
+        "coefficient": "86400"
+      },
+      {
+        "order": 6,
+        "coefficient": "3628800"
+      },
+      {
+        "order": 7,
+        "coefficient": "203212800"
+      },
+      {
+        "order": 8,
+        "coefficient": "14631321600"
+      },
+      {
+        "order": 9,
+        "coefficient": "1316818944000"
+      }
+    ]
+  },
+  "rigorousBounds": {
+    "exactSource": "1-h < Gamma(1+h) < 1",
+    "dyadic": "1-2^(-1024256) < Gamma(1+h) < 1",
+    "strictPositive": true,
+    "reciprocal": "1 < 1/Gamma(1+h) < 1/(1-2^(-1024256))"
+  },
+  "proof": "For 0<h<1, t^h<=1-h+h*t by concavity, hence Gamma<=1. Also t^h>=1+h log(t); integral exp(-t)log(t) dt > -1 because its negative part has magnitude < integral_0^1 -log(t)dt=1. T=exp(1048576)+10>128 since exp(x)>2^x and 1048576>7, so h<2^(-8002*128).",
+  "scope": "Actual four J-kernel operator constants, normalized outer heat and Gamma only, not full 72 outer FTC values. Reachability through the original definition is conservative and does not assert every differentiated output depends nontrivially on Gamma. Source h, endpoint convergence and ordinary real source semantics required; no live same-family equivalence or final jet claim."
+}
