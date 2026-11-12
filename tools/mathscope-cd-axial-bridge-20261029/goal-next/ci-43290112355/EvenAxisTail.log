@@ -1,0 +1,16 @@
+MathScope/M3/CD/EvenAxisTail.lean:22:77: error: unsolved goals
+first second : ℝ → ℝ
+x : ℝ
+hx : x ≠ 0
+hzero : first 0 = 0
+hderiv : ∀ t ∈ Set.uIcc 0 1, HasDerivAt first (second (t * x)) (t * x)
+hint : IntervalIntegrable (fun t => second (t * x) * x) volume 0 1
+hscaled : ∀ t ∈ Set.uIcc 0 1, HasDerivAt (fun u => first (u * x)) (second (t * x) * x) t
+average : ℝ := ∫ (t : ℝ) in 0..1, second (t * x)
+hFTC : average * x = first x
+⊢ first x / (2 * x) = 1 / 2 * average
+MathScope/M3/CD/EvenAxisTail.lean:31:57: error: unexpected token 'at'; expected command
+'MathScope.M3.CD.evenAxisFirstDerivativeAverage' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'MathScope.M3.CD.evenAxisIntegralBound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MathScope.M3.CD.evenAxisErrorBound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MathScope.M3.CD.evenAxisGeometricTail' depends on axioms: [propext, Classical.choice, Quot.sound]

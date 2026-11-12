@@ -4,6 +4,14 @@ Extract Continuation17, the cumulative Continuation20 delta, Continuation21,
 Continuation22, Continuation23, Continuation24, Continuation25 and Continuation26 to the same directory in that order. The latest
 checkpoint lists the parent checksums and the replaced files.
 
+## Continuation31
+
+- [Active native N3 Primary C5 receipt and terminal execution](primary-forced-weights/live-c5/hosted-43285995098-n3/primary-c5-native.json)
+- [Active N3 mode-two arithmetic and live attachment](primary-forced-join/active-n3-c5-binding/README.md)
+- [Original initialized and Forced branch observer](primary-forced-join/active-mode-two-witness/README.md)
+- [Original N1–5 Picard even-axis parity, matrix derivatives and seam](y-higher-flow/picard-even-axis/README.md)
+- [Active N4 source node budget and exact storage replay](primary-forced-weights/live-c5/large-pack/README.md)
+
 ## Continuation29–30
 
 - [Original C8 bounded replay and differential checks](primary-forced-weights/live-c5/large-pack/README.md)

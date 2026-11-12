@@ -10,6 +10,15 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation31
+
+- **VERIFIED · 활성 원본 N3 Primary C5.** C8 배경을 17,732,727개, 같은 계열의 가중 C6 표적을 17,761,759개, 원본 Primary C5를 18,310,172개 노드에서 확인했다. 원본 검사 9개가 통과했다. 노름 상수는 원본 그래프의 `#18310069`이며 값·도함수의 수치 구간과 강제 보정 입력 인증은 OPEN이다. [GitHub 계산](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43285995098/job/131419412189).
+- **VERIFIED · 원본 노드 번호를 보존하는 키 저장.** 앞선 실행은 N3·N4 모두 V8 단일 Map 한도로 중단됐다. 분할 저장에서 16,777,233개 키와 노드 번호의 전체 순서, 원본 M2·M3의 작은 그래프를 독립 대조했다. 같은 방식으로 N4도 원본 가중 C6까지 23,572,162개 노드를 검증했다. [중단과 재현](primary-forced-weights/live-c5/large-pack/README.md).
+- **CONDITIONAL · 실제 활성 N3 모드 2의 C4 상계.** 원본 차수·극점 24개를 독립 재생했다. 원래 보존형 이차항에서 선도 curl의 위상 접선성을 써서 빠른 주파수 손실을 제한했다. 두 실제 lift가 허용되는 고정 셀에서 `H_w` 이후 투영 입력의 상계는 \((KS_{\rm label})^{3055}\delta_*^{-42}\varepsilon^{99999/100000}\zeta P(w)^2\)다. 실제 같은 원본 객체의 초기화와 Forced 입력 결속, 역연산 출력, 수치 끝점 및 전체 환형 셀의 확장은 OPEN이다. [조건과 정수 재생](primary-forced-join/active-n3-c5-binding/README.md).
+- **CONDITIONAL · 원본 N1–5 Picard의 첫 짝수 \(X\) 미분.** 원본 행렬·forcing의 짝홀 항 110개와 행렬의 \(\xi\) 미분 근 95개를 대조했다. 다섯 계수 행렬의 의존성에 하위 Picard가 없음을 Python으로 확인했다. 원본 leading 상계를 전제로 \(D\le C_n\)이며 \(n=1\)은 별도 \(C_1\)을 쓴다. 미적분 기본정리의 축 평균식과 기하 꼬리 부등식을 포함한 Lean 정리 네 개를 GitHub에서 검증했다. [원본 짝홀성과 미분](y-higher-flow/picard-even-axis/README.md) · [GitHub Lean](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43290866453).
+- **VERIFIED / CONDITIONAL · B.26 접합의 원본 분기와 기울기.** 정확한 유리수 비교로 활성화 구간이 실제 natural 분기이고 \(\beta=1\), blend=0임을 확인했다. 원본 실수 cutoff의 양 끝 평탄성을 유도했다. 두 기울기 결함의 도함수가 원본 자연 재귀 잔차에 해당함을 SymPy로 확인했고, 원본 자연 급수의 수렴·항별 미분과 \(\Phi\ne0\)에서 접합이 따른다. 원본 forcing \(C^1\)과 복소 \(\eta\) 띠의 해석성 및 native 무한 극한은 OPEN이다. [원본 B.26 기울기](y-higher-flow/picard-even-axis/actual-seam/README.md).
+- **OPEN · 활성 강제 보정과 최종장.** N3의 실제 모드 2 두 분기 내보내기가 원본 해시 준비를 통과했다. N4의 2,400만 노드 한도에서 C5 생성을 멈췄고, 2,500만 설정의 두 원본 해시를 추가 대조해 재실행했다. 최종장 jets 67개와 N7-06 에너지·N8-05 수렴 검사는 각 활성 증분과 접합의 최종 수치 구간을 요구한다. [N3 모드 2](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43288360518) · [N4 C5](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43290112348).
+
 ## Continuation29–30
 
 - **VERIFIED · 같은 원본 N1 계열의 Primary C5.** 14,220,509개 노드에서 C8 배경의 12개 원본 검사를 통과했다. 원본의 압력·응력과 cutoff 저장을 조각 처리한 뒤 C8 공통 계열, N1 밴드·대표점·현재장, 같은 계열 가중 C6 표적과 Primary C5를 모두 발행하고 원본 검사기로 다시 확인했다. 최종 그래프는 15,122,428개 노드다. 이 상계는 원본 상징식이며, 활성 N3/N4와 가중 Forced 입력의 결속은 OPEN이다. [N1 성공 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43279539851).
