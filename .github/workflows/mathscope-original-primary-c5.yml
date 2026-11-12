@@ -151,7 +151,7 @@ jobs:
           out="$RUNNER_TEMP/mathscope-primary-c5"
           cp "$active/capture_source_delta.mjs" "$m3/mathscope-active-forced-seal.mjs"
           python3 -B "$active/prepare_active_first_forced.py" "$m3" "../evidence/$m3" \
-            24000000 "$out/forced-preparation.json" --witness
+            "$SOURCE_NODE_BUDGET" "$out/forced-preparation.json" --witness
           python3 - "$m3" "$out/forced-preparation.json" <<'PY'
           import hashlib, json, subprocess, sys
           from pathlib import Path

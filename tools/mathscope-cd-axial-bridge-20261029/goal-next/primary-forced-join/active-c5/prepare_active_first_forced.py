@@ -71,7 +71,7 @@ def main():
     parser = ArgumentParser(description=__doc__)
     parser.add_argument("navier", type=Path)
     parser.add_argument("repaired", type=Path)
-    parser.add_argument("budget", type=int, choices=(8_000_000, 24_000_000, 30_000_000))
+    parser.add_argument("budget", type=int, choices=(8_000_000, 24_000_000, 25_000_000, 30_000_000))
     parser.add_argument("receipt", type=Path)
     parser.add_argument("--witness", action="store_true")
     args = parser.parse_args()
