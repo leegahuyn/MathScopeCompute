@@ -407,4 +407,39 @@ theorem fourth_selector_frequency_atom {R N A B : ℝ} {k : ℕ}
 
 #print axioms fourth_selector_frequency_atom
 
+/-- A smooth cutoff zero on the open upper interval has zero finite jets
+at the closed cutoff boundary as well. -/
+theorem finite_jet_zero_on_closed_upper_cutoff {f : ℝ → ℝ} {a x : ℝ}
+    (hf : ContDiff ℝ ⊤ f) (hzero : Set.EqOn f (fun _ => 0) (Set.Ioi a))
+    (hx : a ≤ x) (n : ℕ) : iteratedDeriv n f x = 0 := by
+  have hopen : Set.EqOn (iteratedDeriv n f) (fun _ => 0) (Set.Ioi a) := by
+    induction n with
+    | zero => simpa using hzero
+    | succ n ih =>
+      rw [iteratedDeriv_succ]
+      simpa using (ih.deriv isOpen_Ioi)
+  have hclosed := hopen.closure (hf.continuous_iteratedDeriv n le_top) continuous_const
+  rw [closure_Ioi] at hclosed
+  exact hclosed hx
+
+/-- The actual fourth-scale identity puts the entire physical slab in
+the closed zero region, including its lower time face. -/
+theorem fourth_cutoff_physical_finite_jet {f : ℝ → ℝ} {b Q q : ℝ}
+    (hf : ContDiff ℝ ⊤ f) (hzero : Set.EqOn f (fun _ => 0) (Set.Ioi (1 : ℝ)))
+    (hQ : 0 < Q) (hscale : b * Q = 64) (hq : Q / 64 ≤ q) (n : ℕ) :
+    iteratedDeriv n f (b * q) = 0 := by
+  have hb : 0 < b := by
+    by_contra! h
+    have hbad := mul_nonpos_of_nonpos_of_nonneg h hQ.le
+    rw [hscale] at hbad
+    norm_num at hbad
+  have hface : b * (Q / 64) = 1 := by
+    rw [mul_div_assoc, hscale]
+    norm_num
+  have hq' := mul_le_mul_of_nonneg_left hq hb.le
+  rw [hface] at hq'
+  exact finite_jet_zero_on_closed_upper_cutoff hf hzero hq' n
+
+#print axioms fourth_cutoff_physical_finite_jet
+
 end MathScope.M3.CD
