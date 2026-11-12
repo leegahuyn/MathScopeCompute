@@ -23,6 +23,7 @@ ALLOWED = {
     ".github/workflows/mathscope-original-primary-c5.yml",
     ".github/workflows/mathscope-cd-axial-bridge-20261029.yml",
     ".github/workflows/mathscope-active-mode-two-witness.yml",
+    ".github/workflows/mathscope-active-n3-same-family-forced.yml",
     LEAN,
 }
 C5 = "primary-forced-weights/live-c5/"
@@ -69,6 +70,22 @@ def verify(source, git, status):
     assert partial["limits"]["familyNodes"] == n4["nodeLimit"] == 24000000
     assert partial["error"]["code"] == n4["stopCode"] == "RESOURCE_LIMIT"
     assert not n4["actualPrimaryC5Certified"]
+    n4_final = scope["nativeActiveN4PrimaryC5"]
+    primary4 = checked(f"{C5}hosted-{n4_final['run']}-n4/primary-c5-native.json", n4_final["receiptSHA256"])
+    assert primary4["status"] == n4_final["status"] == "VERIFIED_ORIGINAL_NATIVE_N4_PRIMARY_C5_CLASS"
+    assert primary4["requested"] == {
+        "prefix": 4, "selectorThroughOrder": 5, "familyC": 8, "weightedTargetC": 6, "primaryC": 5,
+    }
+    assert primary4["limits"]["familyNodes"] == 25000000
+    assert len(primary4["stages"]) == 6
+    assert primary4["stages"][0]["nodeCount"] == n4_final["backgroundNodes"] == 23543130
+    assert primary4["stages"][-2]["nodeCount"] == n4_final["targetNodes"] == n4["targetNodes"]
+    assert primary4["stages"][-1]["nodeCount"] == n4_final["finalNodes"] == 24120575
+    assert primary4["normRoot"] == n4_final["normRoot"] == 24120472
+    assert len(primary4["nativeChecks"]) == n4_final["nativeChecks"] == 9
+    assert all(row["pass"] for row in primary4["nativeChecks"])
+    assert not primary4["scope"]["actualForcedInputWClassCertified"]
+    assert primary4["finalJets"] == "0/67"
     original = status["pendingHostedCalculations"]["activeN3N4FamilyPrimaryC5BudgetRetry"]
     for prefix, nodes in ((3, 16764850), (4, 16001770)):
         stopped = checked(
@@ -96,8 +113,25 @@ def verify(source, git, status):
             "power": bound[key], "pole": 42, "epsilon_units": 99999, "zeta_half_units": 2, "gaussian": 2,
         }
     assert not bound["numericEndpointCertified"] and bound["activeVolterraOutputBound"] == "OPEN"
+    inverse = checked(
+        "primary-forced-join/active-n3-c5-binding/active-inverse/n3-active-inverse-degrees.json",
+        bound["conditionalStableInverseSHA256"],
+    )
+    assert inverse["inputSHA256"] == bound["receiptSHA256"] and inverse["sourceK"] == n3["normRoot"]
+    for name, power, epsilon in (("nativeVelocity", 3134, 99999), ("cutoffGauge", 3165, 149999),
+                                  ("cutoffPressure", 3172, 149999)):
+        assert inverse["bounds"][name][-1] == {
+            "power": power, "pole": 42, "epsilon_units": epsilon, "zeta_half_units": 2, "gaussian": 1,
+        }
     historical = json.loads(source("primary-forced-join/active-mode-two-witness/historical-n1-control.json"))
     assert historical["status"] == "HISTORICAL_N1_CONTROL_ONLY" and not historical["completeForcedSeal"]
+    pressure = scope["nativePressureStorageParity"]
+    base = "primary-forced-join/active-c5/pressure-parity/"
+    left, right = [checked(base + name + ".json", pressure["bothReceiptsSHA256"]) for name in ("original", "overlay")]
+    assert left == right and left["nodes"] == pressure["nodes"] == 1635639
+    assert left["mutationAndEquivalentReplacementControls"]
+    assert len(left["checks"]) == 11 and all(row["pass"] for row in left["checks"])
+    assert entry(source(base + "old-helper.mjs"))["sha256"] == pressure["helperSHA256"]
 
     even = scope["evenAxisTail"]
     parity = checked(EVEN + "parity.json", even["paritySHA256"])
@@ -118,6 +152,11 @@ def verify(source, git, status):
     assert slopes["status"] == "PASS" and len(slopes["checks"]) == 4
     domain = checked(EVEN + "actual-seam/domain-receipt.json", even["actualActivationDomainSHA256"])
     assert domain["status"] == "PASS" and "beta=1, blend=0" in domain["conclusion"]
+    natural = checked(EVEN + "actual-seam/natural-bridge-receipt.json", even["naturalLeadingDataSHA256"])
+    assert natural["status"] == "PASS" and natural["same_actual_parameter_keys"] == 12
+    assert natural["original_axis_scalar_checks"] == "51/51" and "63/256" in natural["phi_bound"]
+    for name in ("SAME_DATUM_ANALYTIC_AXIS.md", "axis-envelope-certificate.json"):
+        assert entry(source(EVEN + "actual-seam/natural-source/" + name))["sha256"] == natural["pins"][name]
     assert even["actualForcingC1"] == even["nativeInfinitePicardLimit"] == "OPEN"
     for result, stem in ((even, "firstLean"), (even["averageLeanVerified"], "lean")):
         lean_sha = result[stem + "SourceSHA256"]
@@ -132,6 +171,7 @@ def verify(source, git, status):
         ]
     return {
         "verifiedNativeN3PrimaryC5Nodes": n3["finalNodes"],
+        "verifiedNativeN4PrimaryC5Nodes": n4_final["finalNodes"],
         "verifiedEarlierNativeN4C6Nodes": n4["targetNodes"],
         "verifiedN3ProjectedModeTwoConditionalPower": bound["pulledBackPower"],
         "verifiedOriginalPicardParityEntries": even["parityEntries"],

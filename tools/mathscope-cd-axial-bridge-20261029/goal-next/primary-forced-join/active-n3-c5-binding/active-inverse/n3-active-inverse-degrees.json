@@ -1,0 +1,921 @@
+{
+  "schema": "MathScope.ActiveN3ModeTwoStableVolterraDegreeReplay/1",
+  "status": "VERIFIED_STABLE_DEGREE_RECURRENCE_CONDITIONAL_ON_ACTIVE_FRAME_IDENTITY",
+  "inputSHA256": "adcabe6055fed4483e3052101e3f8fa4cf8422f9a603a44809b33c9bb923c0d1",
+  "sourcePins": {
+    "mathscope-m3/navier/source-forced-pulse.mjs": "129423c917b3b8b1aae72b242f802e9f9934f17569fa895c669708785dbff924",
+    "mathscope-m2/navier/actual-covariance-matrix.mjs": "7419cc0aa5e08fb57c11264013f661f85a82fb481fb69e4610029d806c1efd26",
+    "mathscope-m2/navier/actual-pulse-gaussian-power-kernel.mjs": "534976d0dfd4c02fa8e7e4f6e5ea46c7152e33d793c489d7450f320a536abbc7",
+    "mathscope-m2/navier/actual-all-order-gaussian-jet-kernel.mjs": "5de9d043e77bc511e2e117bc825c42d60375193f617a78724ae535f0127415f6"
+  },
+  "sourceK": 18310069,
+  "forwardBound": "W=exp(3*Bnorm^256*Lmax), W<=K; M2=M1-3d*I, d=epsilon*k^2*|n|^2>=0.",
+  "formula": "(K*S)^power * delta_*^(-pole) * epsilon^(epsilon_units/100000) * zeta^(zeta_half_units/2) * P(w)^gaussian",
+  "scope": {
+    "pulse": "0<=w<=Ls on admitted fixed-label interior with delta_*>0, fixed representative, copy and chart.",
+    "parameters": [
+      "R",
+      "Z",
+      "T",
+      "Y_0",
+      "Y_1"
+    ],
+    "allDerivativeWordsThrough": 4,
+    "weightedBoundaryFlatJoinSeparate": true,
+    "endpointMapWtoVVerifiedInThisRun": false,
+    "liveFrameBoundChecked": false,
+    "numericUpperEndpoint": false,
+    "completeForcedSeal": false
+  },
+  "recurrences": [
+    {
+      "index": [
+        0,
+        0
+      ],
+      "sourceOrder": 0,
+      "terms": [],
+      "factor": "(K*S)^2",
+      "bound": {
+        "power": 1422,
+        "pole": 18,
+        "epsilon_units": 99999,
+        "zeta_half_units": 2,
+        "gaussian": 0
+      }
+    },
+    {
+      "index": [
+        1,
+        0
+      ],
+      "sourceOrder": 1,
+      "terms": [
+        [
+          1,
+          0,
+          1,
+          [
+            0,
+            0
+          ]
+        ]
+      ],
+      "factor": "(K*S)^2",
+      "bound": {
+        "power": 1841,
+        "pole": 24,
+        "epsilon_units": 99999,
+        "zeta_half_units": 2,
+        "gaussian": 0
+      }
+    },
+    {
+      "index": [
+        2,
+        0
+      ],
+      "sourceOrder": 2,
+      "terms": [
+        [
+          1,
+          0,
+          2,
+          [
+            1,
+            0
+          ]
+        ],
+        [
+          2,
+          0,
+          1,
+          [
+            0,
+            0
+          ]
+        ]
+      ],
+      "factor": "(K*S)^2",
+      "bound": {
+        "power": 2256,
+        "pole": 30,
+        "epsilon_units": 99999,
+        "zeta_half_units": 2,
+        "gaussian": 0
+      }
+    },
+    {
+      "index": [
+        3,
+        0
+      ],
+      "sourceOrder": 3,
+      "terms": [
+        [
+          1,
+          0,
+          3,
+          [
+            2,
+            0
+          ]
+        ],
+        [
+          2,
+          0,
+          3,
+          [
+            1,
+            0
+          ]
+        ],
+        [
+          3,
+          0,
+          1,
+          [
+            0,
+            0
+          ]
+        ]
+      ],
+      "factor": "(K*S)^2",
+      "bound": {
+        "power": 2670,
+        "pole": 36,
+        "epsilon_units": 99999,
+        "zeta_half_units": 2,
+        "gaussian": 0
+      }
+    },
+    {
+      "index": [
+        4,
+        0
+      ],
+      "sourceOrder": 4,
+      "terms": [
+        [
+          1,
+          0,
+          4,
+          [
+            3,
+            0
+          ]
+        ],
+        [
+          2,
+          0,
+          6,
+          [
+            2,
+            0
+          ]
+        ],
+        [
+          3,
+          0,
+          4,
+          [
+            1,
+            0
+          ]
+        ],
+        [
+          4,
+          0,
+          1,
+          [
+            0,
+            0
+          ]
+        ]
+      ],
+      "factor": "(K*S)^2",
+      "bound": {
+        "power": 3087,
+        "pole": 42,
+        "epsilon_units": 99999,
+        "zeta_half_units": 2,
+        "gaussian": 0
+      }
+    },
+    {
+      "index": [
+        0,
+        1
+      ],
+      "sourceOrder": 0,
+      "terms": [
+        [
+          0,
+          0,
+          1,
+          [
+            0,
+            0
+          ]
+        ]
+      ],
+      "factor": "1",
+      "bound": {
+        "power": 1527,
+        "pole": 18,
+        "epsilon_units": 99999,
+        "zeta_half_units": 2,
+        "gaussian": 0
+      }
+    },
+    {
+      "index": [
+        1,
+        1
+      ],
+      "sourceOrder": 1,
+      "terms": [
+        [
+          0,
+          0,
+          1,
+          [
+            1,
+            0
+          ]
+        ],
+        [
+          1,
+          0,
+          1,
+          [
+            0,
+            0
+          ]
+        ]
+      ],
+      "factor": "1",
+      "bound": {
+        "power": 1947,
+        "pole": 24,
+        "epsilon_units": 99999,
+        "zeta_half_units": 2,
+        "gaussian": 0
+      }
+    },
+    {
+      "index": [
+        2,
+        1
+      ],
+      "sourceOrder": 2,
+      "terms": [
+        [
+          0,
+          0,
+          1,
+          [
+            2,
+            0
+          ]
+        ],
+        [
+          1,
+          0,
+          2,
+          [
+            1,
+            0
+          ]
+        ],
+        [
+          2,
+          0,
+          1,
+          [
+            0,
+            0
+          ]
+        ]
+      ],
+      "factor": "1",
+      "bound": {
+        "power": 2362,
+        "pole": 30,
+        "epsilon_units": 99999,
+        "zeta_half_units": 2,
+        "gaussian": 0
+      }
+    },
+    {
+      "index": [
+        3,
+        1
+      ],
+      "sourceOrder": 3,
+      "terms": [
+        [
+          0,
+          0,
+          1,
+          [
+            3,
+            0
+          ]
+        ],
+        [
+          1,
+          0,
+          3,
+          [
+            2,
+            0
+          ]
+        ],
+        [
+          2,
+          0,
+          3,
+          [
+            1,
+            0
+          ]
+        ],
+        [
+          3,
+          0,
+          1,
+          [
+            0,
+            0
+          ]
+        ]
+      ],
+      "factor": "1",
+      "bound": {
+        "power": 2777,
+        "pole": 36,
+        "epsilon_units": 99999,
+        "zeta_half_units": 2,
+        "gaussian": 0
+      }
+    },
+    {
+      "index": [
+        0,
+        2
+      ],
+      "sourceOrder": 1,
+      "terms": [
+        [
+          0,
+          0,
+          1,
+          [
+            0,
+            1
+          ]
+        ],
+        [
+          0,
+          1,
+          1,
+          [
+            0,
+            0
+          ]
+        ]
+      ],
+      "factor": "1",
+      "bound": {
+        "power": 1840,
+        "pole": 24,
+        "epsilon_units": 99999,
+        "zeta_half_units": 2,
+        "gaussian": 0
+      }
+    },
+    {
+      "index": [
+        1,
+        2
+      ],
+      "sourceOrder": 2,
+      "terms": [
+        [
+          0,
+          0,
+          1,
+          [
+            1,
+            1
+          ]
+        ],
+        [
+          0,
+          1,
+          1,
+          [
+            1,
+            0
+          ]
+        ],
+        [
+          1,
+          0,
+          1,
+          [
+            0,
+            1
+          ]
+        ],
+        [
+          1,
+          1,
+          1,
+          [
+            0,
+            0
+          ]
+        ]
+      ],
+      "factor": "1",
+      "bound": {
+        "power": 2255,
+        "pole": 30,
+        "epsilon_units": 99999,
+        "zeta_half_units": 2,
+        "gaussian": 0
+      }
+    },
+    {
+      "index": [
+        2,
+        2
+      ],
+      "sourceOrder": 3,
+      "terms": [
+        [
+          0,
+          0,
+          1,
+          [
+            2,
+            1
+          ]
+        ],
+        [
+          0,
+          1,
+          1,
+          [
+            2,
+            0
+          ]
+        ],
+        [
+          1,
+          0,
+          2,
+          [
+            1,
+            1
+          ]
+        ],
+        [
+          1,
+          1,
+          2,
+          [
+            1,
+            0
+          ]
+        ],
+        [
+          2,
+          0,
+          1,
+          [
+            0,
+            1
+          ]
+        ],
+        [
+          2,
+          1,
+          1,
+          [
+            0,
+            0
+          ]
+        ]
+      ],
+      "factor": "1",
+      "bound": {
+        "power": 2669,
+        "pole": 36,
+        "epsilon_units": 99999,
+        "zeta_half_units": 2,
+        "gaussian": 0
+      }
+    },
+    {
+      "index": [
+        0,
+        3
+      ],
+      "sourceOrder": 2,
+      "terms": [
+        [
+          0,
+          0,
+          1,
+          [
+            0,
+            2
+          ]
+        ],
+        [
+          0,
+          1,
+          2,
+          [
+            0,
+            1
+          ]
+        ],
+        [
+          0,
+          2,
+          1,
+          [
+            0,
+            0
+          ]
+        ]
+      ],
+      "factor": "1",
+      "bound": {
+        "power": 2254,
+        "pole": 30,
+        "epsilon_units": 99999,
+        "zeta_half_units": 2,
+        "gaussian": 0
+      }
+    },
+    {
+      "index": [
+        1,
+        3
+      ],
+      "sourceOrder": 3,
+      "terms": [
+        [
+          0,
+          0,
+          1,
+          [
+            1,
+            2
+          ]
+        ],
+        [
+          0,
+          1,
+          2,
+          [
+            1,
+            1
+          ]
+        ],
+        [
+          0,
+          2,
+          1,
+          [
+            1,
+            0
+          ]
+        ],
+        [
+          1,
+          0,
+          1,
+          [
+            0,
+            2
+          ]
+        ],
+        [
+          1,
+          1,
+          2,
+          [
+            0,
+            1
+          ]
+        ],
+        [
+          1,
+          2,
+          1,
+          [
+            0,
+            0
+          ]
+        ]
+      ],
+      "factor": "1",
+      "bound": {
+        "power": 2669,
+        "pole": 36,
+        "epsilon_units": 99999,
+        "zeta_half_units": 2,
+        "gaussian": 0
+      }
+    },
+    {
+      "index": [
+        0,
+        4
+      ],
+      "sourceOrder": 3,
+      "terms": [
+        [
+          0,
+          0,
+          1,
+          [
+            0,
+            3
+          ]
+        ],
+        [
+          0,
+          1,
+          3,
+          [
+            0,
+            2
+          ]
+        ],
+        [
+          0,
+          2,
+          3,
+          [
+            0,
+            1
+          ]
+        ],
+        [
+          0,
+          3,
+          1,
+          [
+            0,
+            0
+          ]
+        ]
+      ],
+      "factor": "1",
+      "bound": {
+        "power": 2669,
+        "pole": 36,
+        "epsilon_units": 99999,
+        "zeta_half_units": 2,
+        "gaussian": 0
+      }
+    }
+  ],
+  "bounds": {
+    "M2": [
+      {
+        "power": 104,
+        "pole": 0,
+        "epsilon_units": 0,
+        "zeta_half_units": 0,
+        "gaussian": 0
+      },
+      {
+        "power": 149,
+        "pole": 0,
+        "epsilon_units": 0,
+        "zeta_half_units": 0,
+        "gaussian": 0
+      },
+      {
+        "power": 194,
+        "pole": 0,
+        "epsilon_units": 0,
+        "zeta_half_units": 0,
+        "gaussian": 0
+      },
+      {
+        "power": 239,
+        "pole": 0,
+        "epsilon_units": 0,
+        "zeta_half_units": 0,
+        "gaussian": 0
+      },
+      {
+        "power": 286,
+        "pole": 0,
+        "epsilon_units": 0,
+        "zeta_half_units": 0,
+        "gaussian": 0
+      }
+    ],
+    "inverseP": [
+      {
+        "power": 0,
+        "pole": 0,
+        "epsilon_units": 0,
+        "zeta_half_units": 0,
+        "gaussian": -1
+      },
+      {
+        "power": 7,
+        "pole": 0,
+        "epsilon_units": 0,
+        "zeta_half_units": 0,
+        "gaussian": -1
+      },
+      {
+        "power": 15,
+        "pole": 0,
+        "epsilon_units": 0,
+        "zeta_half_units": 0,
+        "gaussian": -1
+      },
+      {
+        "power": 24,
+        "pole": 0,
+        "epsilon_units": 0,
+        "zeta_half_units": 0,
+        "gaussian": -1
+      },
+      {
+        "power": 33,
+        "pole": 0,
+        "epsilon_units": 0,
+        "zeta_half_units": 0,
+        "gaussian": -1
+      }
+    ],
+    "forcingNormalized": [
+      {
+        "power": 1420,
+        "pole": 18,
+        "epsilon_units": 99999,
+        "zeta_half_units": 2,
+        "gaussian": 1
+      },
+      {
+        "power": 1838,
+        "pole": 24,
+        "epsilon_units": 99999,
+        "zeta_half_units": 2,
+        "gaussian": 1
+      },
+      {
+        "power": 2252,
+        "pole": 30,
+        "epsilon_units": 99999,
+        "zeta_half_units": 2,
+        "gaussian": 1
+      },
+      {
+        "power": 2666,
+        "pole": 36,
+        "epsilon_units": 99999,
+        "zeta_half_units": 2,
+        "gaussian": 1
+      },
+      {
+        "power": 3082,
+        "pole": 42,
+        "epsilon_units": 99999,
+        "zeta_half_units": 2,
+        "gaussian": 1
+      }
+    ],
+    "nativeVelocity": [
+      {
+        "power": 1460,
+        "pole": 18,
+        "epsilon_units": 99999,
+        "zeta_half_units": 2,
+        "gaussian": 1
+      },
+      {
+        "power": 1882,
+        "pole": 24,
+        "epsilon_units": 99999,
+        "zeta_half_units": 2,
+        "gaussian": 1
+      },
+      {
+        "power": 2300,
+        "pole": 30,
+        "epsilon_units": 99999,
+        "zeta_half_units": 2,
+        "gaussian": 1
+      },
+      {
+        "power": 2714,
+        "pole": 36,
+        "epsilon_units": 99999,
+        "zeta_half_units": 2,
+        "gaussian": 1
+      },
+      {
+        "power": 3134,
+        "pole": 42,
+        "epsilon_units": 99999,
+        "zeta_half_units": 2,
+        "gaussian": 1
+      }
+    ],
+    "cutoffGauge": [
+      {
+        "power": 1482,
+        "pole": 18,
+        "epsilon_units": 149999,
+        "zeta_half_units": 2,
+        "gaussian": 1
+      },
+      {
+        "power": 1907,
+        "pole": 24,
+        "epsilon_units": 149999,
+        "zeta_half_units": 2,
+        "gaussian": 1
+      },
+      {
+        "power": 2328,
+        "pole": 30,
+        "epsilon_units": 149999,
+        "zeta_half_units": 2,
+        "gaussian": 1
+      },
+      {
+        "power": 2742,
+        "pole": 36,
+        "epsilon_units": 149999,
+        "zeta_half_units": 2,
+        "gaussian": 1
+      },
+      {
+        "power": 3165,
+        "pole": 42,
+        "epsilon_units": 149999,
+        "zeta_half_units": 2,
+        "gaussian": 1
+      }
+    ],
+    "cutoffPressure": [
+      {
+        "power": 1489,
+        "pole": 18,
+        "epsilon_units": 149999,
+        "zeta_half_units": 2,
+        "gaussian": 1
+      },
+      {
+        "power": 1914,
+        "pole": 24,
+        "epsilon_units": 149999,
+        "zeta_half_units": 2,
+        "gaussian": 1
+      },
+      {
+        "power": 2335,
+        "pole": 30,
+        "epsilon_units": 149999,
+        "zeta_half_units": 2,
+        "gaussian": 1
+      },
+      {
+        "power": 2749,
+        "pole": 36,
+        "epsilon_units": 149999,
+        "zeta_half_units": 2,
+        "gaussian": 1
+      },
+      {
+        "power": 3172,
+        "pole": 42,
+        "epsilon_units": 149999,
+        "zeta_half_units": 2,
+        "gaussian": 1
+      }
+    ]
+  },
+  "negativeControls": [
+    "omitting parameter Leibniz terms changes C4",
+    "omitting the endpoint matrix term changes C4"
+  ],
+  "finalJets": "0/67",
+  "release": "HOLD"
+}

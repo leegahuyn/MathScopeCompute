@@ -55,3 +55,21 @@ Requires SymPy. The canonical-LF SHA-256 pins cover the original pregluing sourc
 The exact original-parameter-domain check needs only Python's standard library:
 
 `python -B verify_activation_domain.py --source-dir <original-navier-source-directory> --out <domain-receipt.json>`
+
+## Natural series and source parameter binding
+
+The byte-exact original `SAME_DATUM_ANALYTIC_AXIS.md` and its 51/51 exact scalar certificate have been recovered into `natural-source/`; their raw SHA-256 hashes are pinned by `verify_natural_bridge.py`. The document gives a mathematical construction of the same A.21 natural fixed point in B_rho, its convergent coefficient recurrence, analyticity in |Y|<20 and an eta neighborhood, all fixed mixed derivatives, and Phi>1/4 on real 0<=Y<=41/10. Section 9 independently records the same exact source Qs/Ns slope identities. Its boundary explicitly states that the analytic premises are not all Lean proof terms and that finite scalar checks alone do not prove the analytic claims.
+
+The selected native profile and certificate agree on all 12 common parameter expression trees (including h, j, sigma, rho, Q and Lambda). In particular `Q=2^260 K/sigma^2`, `K>1`, `sigma<1`, `Lambda=Q^64`, and `log CSelected>Q^200`. Consequently `Q>2`, `64 Lambda/sigma^2<64 Q^65/2^260<Q^65/2`, and `Q^200>Q^65/2+1`. Thus the actual selected `CSelected` exceeds the document's required `Caxis=exp(64 Lambda/sigma^2+1)`. This is an exact comparison of source expressions; no source exponential is materialized as a floating-point number.
+
+The separate pinned `actual-background-majorant.mjs` records `|Phi_eta|<=4Q/rho` on the relevant eta tube. Since the actual `delta=rho/(1024Q)`, from any eta in the distance-delta tube a straight segment to the real interval gives
+
+`|Phi(Y,eta)| >= 1/4 - (4Q/rho) delta = 63/256 > 1/8`.
+
+The source proof's tube also gives nonzero L and Hstar^2+sigma^2. Therefore the *actual* g=exp(Lambda psi)/CSelected is holomorphic and nonzero, and the natural F=g Phi is nonzero. Together with the separately checked activation Y<=256/63<41/10, this supplies the nonvanishing needed by the original reference slope division on the indicated strip. This is a mathematical implication from the cited original proof and recorded majorant, not a new independent proof of the A.21 pressure identity or the complete B_rho fixed-point theorem.
+
+Under those established source-data theorems, the natural F,U have continuous mixed X and eta derivatives of every fixed finite order on the real core and are holomorphic in eta. On the real B.26 collar, the actual integrals for F,U use smooth flat step controls, the nonvanishing natural Phi denominator, and eta-holomorphic integrands; differentiation under these finite integrals gives the same regularity. The source slope identity and endpoint flatness above identify all their jets at Xa. For the actual natural/collar U, set `average U = integral_0^1 U(tX) dt`; the original source's core average and `coreMoments(4)+integral_Xa^X U` give this same average, provided the original core-moment integral identity is used. Differentiating this regular integral gives all fixed X and eta derivatives, including at X=0 without evaluating a singular quotient. The actual formula `v0=[2 eta U-2D eta average U-d partial_eta average U]/L` then has the same regularity. In particular the third X derivatives and mixed eta derivatives needed to differentiate original n=1 forcing containing v0_XX and Z(Z(F0)), Z(Z(U0)) exist continuously. A closed smaller eta strip inside the larger source tube makes the finite number of relevant derivatives bounded, and the original forcing is C1 in xi and holomorphic in eta. This conclusion relies on the written original fixed-point/pressure proof and ordinary differentiation, not on an executed numerical supremum or a Lean-instantiated analytic theorem. It does not yet prove the higher-order forcing induction.
+
+Reproduce the pinned cross-source and rational checks with
+
+`python -B verify_natural_bridge.py --source-dir <original-navier-source-directory> --evidence-dir <natural-source> --out <natural-bridge-receipt.json>`.

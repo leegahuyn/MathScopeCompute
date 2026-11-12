@@ -7,7 +7,10 @@ checkpoint lists the parent checksums and the replaced files.
 ## Continuation31
 
 - [Active native N3 Primary C5 receipt and terminal execution](primary-forced-weights/live-c5/hosted-43285995098-n3/primary-c5-native.json)
+- [Active native N4 Primary C5 receipt and terminal execution](primary-forced-weights/live-c5/hosted-43290112348-n4/primary-c5-native.json)
 - [Active N3 mode-two arithmetic and live attachment](primary-forced-join/active-n3-c5-binding/README.md)
+- [Active N3 stable inverse and cutoff pressure arithmetic](primary-forced-join/active-n3-c5-binding/active-inverse/README.md)
+- [Independent N1/C2 pressure storage comparison](primary-forced-join/active-c5/pressure-parity/README.md)
 - [Original initialized and Forced branch observer](primary-forced-join/active-mode-two-witness/README.md)
 - [Original N1–5 Picard even-axis parity, matrix derivatives and seam](y-higher-flow/picard-even-axis/README.md)
 - [Active N4 source node budget and exact storage replay](primary-forced-weights/live-c5/large-pack/README.md)
