@@ -18,7 +18,7 @@ assert.equal(process.argv.length, 4);
 assert(out && /^[a-f0-9]{40}$/.test(originalCommit));
 assert.match(process.env.GITHUB_SHA ?? '', /^[a-f0-9]{40}$/);
 mkdirSync(out, {recursive: true});
-const limits = {rssBytes: 12 * 1024 ** 3, durationMinutes: 120, familyNodes: 12_000_000, bandNodes: 16_000_000};
+const limits = {rssBytes: 12 * 1024 ** 3, durationMinutes: 120, familyNodes: 16_000_000, bandNodes: 16_000_000};
 const started = Date.now();
 let lastGC = 0;
 const receipt = {
