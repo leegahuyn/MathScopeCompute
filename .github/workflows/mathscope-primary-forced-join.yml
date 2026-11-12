@@ -5,6 +5,7 @@ on:
     paths:
       - '.github/workflows/mathscope-primary-forced-join.yml'
       - 'tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-forced-join/prepare_live_join.py'
+      - 'tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-forced-join/prepare_temporal_budget.py'
       - 'tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-forced-join/assert_live_join.mjs'
   workflow_dispatch:
     inputs:
@@ -88,6 +89,7 @@ jobs:
           out="$RUNNER_TEMP/primary-forced-join"
           plan="$(python3 - <<'PY'
           from pathlib import Path
+          import os
           gib = 1024**3
           mem = dict(line.split(":", 1) for line in Path("/proc/meminfo").read_text().splitlines())
           available = int(mem["MemAvailable"].split()[0]) * 1024
@@ -101,9 +103,10 @@ jobs:
                       available = min(available, int(cap) - int(usage.read_text()))
           roomy = available >= 11 * gib
           more_room = available >= 14 * gib
+          c3 = os.environ["PRIMARY_ORDER"] == "3"
           print(12 if more_room else 9 if roomy else 6,
                 11000 if more_room else 8100 if roomy else 6100, available,
-                6200000 if roomy else 5000000)
+                6800000 if c3 and more_room else 6200000 if roomy else 5000000)
           PY
           )"
           plan_result=$?
@@ -114,6 +117,12 @@ jobs:
             "$available_bytes" "$M3_MAX_RSS_GB" "$heap_mb" "$M3_FORCED_MAX_NODES" | tee "$out/memory-plan.txt"
           ulimit -s 16384 || exit 1
           printf 'OS stack=%s KiB; V8 stack=4096 KiB\n' "$(ulimit -s)" | tee -a "$out/memory-plan.txt"
+          if [ "$PRIMARY_ORDER" = 3 ] && [ "$M3_FORCED_MAX_NODES" -gt 5000000 ]; then
+            python "$helper/prepare_temporal_budget.py" research-ide/mathscope-m3/navier \
+              "$M3_FORCED_MAX_NODES" "$out/temporal-budget-overlay.json" || exit 1
+            node --check research-ide/mathscope-m3/navier/source-auxiliary-derivative-closure.mjs || exit 1
+            node --check research-ide/mathscope-m3/navier/source-global-temporal.mjs || exit 1
+          fi
           node --max-old-space-size="$heap_mb" --stack-size=4096 --expose-gc research-ide/mathscope-m3/extended-signed-run-20261023/run_primary_forced_live_join.mjs "$out/native-receipt.json" 2>&1 | tee "$out/native-run.log"
           native_result=${PIPESTATUS[0]}
           verify_result=not_run

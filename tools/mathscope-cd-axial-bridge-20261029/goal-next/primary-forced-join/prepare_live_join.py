@@ -67,8 +67,12 @@ import {assertLivePrimaryForcedJoin,raiseSharedNodeLimit} from './assert_live_jo
 """," collect();\n")
  s=replace_one(s," receipt.real_original_current_constructed=true;save();", """ receipt.real_original_current_constructed=true;save();
  const forcedGraphBudget=Number(process.env.M3_FORCED_MAX_NODES??5000000);
- if(![5000000,6200000].includes(forcedGraphBudget))throw Error('Unexpected isolated Forced graph budget.');
- if(forcedGraphBudget>5000000){
+ if(![5000000,6200000,6800000].includes(forcedGraphBudget))throw Error('Unexpected isolated Forced graph budget.');
+ if(forcedGraphBudget>5000000&&initial.G.maxNodes===forcedGraphBudget){
+   receipt.forced_graph_budget={maximum:forcedGraphBudget,sourceNodeCount:initial.G.nodes.length,
+     inheritedFromTemporal:true,mathematicalSourceChanged:false};
+   save();
+ }else if(forcedGraphBudget>5000000){
    const graphBudget=raiseSharedNodeLimit(initial.G,5000000,forcedGraphBudget);
    if(assertGlobalInitializedAngular(initial)!==true)
      throw Error('The initial source seal changed after updating its resource ceiling.');
