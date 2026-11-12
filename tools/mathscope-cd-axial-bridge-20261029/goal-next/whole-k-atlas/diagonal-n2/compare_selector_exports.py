@@ -53,7 +53,10 @@ class Export:
         self.selector = self.receipt['selector']
         assert self.selector['sourceFamilySHA256'] == PROFILE
         self.manifest = json.loads((self.graph.parent/'original-source-export-manifest.json').read_bytes())
-        assert self.receipt['bandSnapshot' if band else 'snapshot'] == self.manifest
+        declared = self.receipt.get('bandSnapshot' if band else 'snapshot')
+        if declared is None and not band:
+            declared = self.receipt['primaryC3Result']['currentSnapshot']
+        assert declared == self.manifest
         assert self.receipt['executingCommit'] == self.manifest['executing_commit']
         assert self.manifest['function_registry_capture_kind'] == 'RAW_BASE_ONLY'
         assert self.receipt['finalJets']==self.manifest['actual_final_67_jets_certified']==0
@@ -61,7 +64,7 @@ class Export:
         raw = (self.graph.parent/'original-source-functions.json').read_bytes()
         assert sha256(raw).hexdigest() == self.manifest['definitions_sha256']
         self.registry = json.loads(raw)
-        base_registry = self.registry if band else self.registry['base']
+        base_registry = self.registry.get('base', self.registry)
         self.base = {k:json.loads(v) for k,v in base_registry.items() if isinstance(v,str)}
         assert self.base['fixed']['source']['parameterExpressionSHA256'] == PROFILE
         self.spool = stack.enter_context(TemporaryFile())
@@ -197,6 +200,21 @@ class Compare:
         require(not any(buckets.values()),f'{op} has unmatched right operands')
         return matched
 
+    def ordered_associative(self, left, right, op, bindings):
+        """Compare same-shaped runs without recursing down long norm sums."""
+        require(len(left)==len(right),'arity differs')
+        pending = list(zip(reversed(left), reversed(right), strict=True))
+        while pending:
+            i,j = pending.pop()
+            if i==j and i<self.shared and all(a==b or i<min(a,b) for a,b in bindings):
+                continue
+            l_op,l_args = self.exports[0].node(i)
+            r_op,r_args = self.exports[1].node(j)
+            if l_op==r_op==op and len(l_args)==len(r_args):
+                pending.extend(zip(reversed(l_args), reversed(r_args), strict=True))
+            else:
+                self.compare(i,j,bindings)
+
     @lru_cache(maxsize=350_000)
     def compare(self,i,j,bindings=()):
         if i==j and i<self.shared and all(x==y or i<min(x,y) for x,y in bindings):
@@ -257,7 +275,7 @@ class Compare:
                 children(a[1:3],b[1:3])
             elif op in ASSOCIATIVE:
                 try:
-                    children(a,b)
+                    self.ordered_associative(a,b,op,bindings)
                 except Difference as exc:
                     if self.first_ordered_difference is None:
                         self.first_ordered_difference={'target':self.context,'rootPair':[i,j],'operator':op,'orderedMismatch':exc.reason,

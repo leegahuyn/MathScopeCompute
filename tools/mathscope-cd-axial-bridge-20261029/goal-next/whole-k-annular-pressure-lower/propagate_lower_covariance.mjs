@@ -10,8 +10,10 @@ const sha=raw=>createHash('sha256').update(raw).digest('hex');
 const hashJSON=obj=>sha(JSON.stringify(obj));
 const [next,hosted,chartFile,out,option]=process.argv.slice(2);
 assert.ok(next&&hosted&&chartFile&&out,'Supply GOAL_NEXT, HOSTED_GRAPH, WHOLE_K_CHART and OUTPUT.');
-assert.ok(option === undefined || option === '--mean-spatial-c2');
-const meanSpatialC2 = option === '--mean-spatial-c2';
+assert.ok([undefined, '--mean-spatial-c2', '--mean-path-longitudinal', '--stage-zero-b'].includes(option));
+const stageZeroB = option === '--stage-zero-b';
+const meanPathLongitudinal = option === '--mean-path-longitudinal' || stageZeroB;
+const meanSpatialC2 = option === '--mean-spatial-c2' || meanPathLongitudinal;
 const sourceGraphSHA='ab52a3337591d2c23c82f8ebbd1ef7305b4ecaebc9fa17ae6d700f32c650e4cf';
 const pins={
   target:['whole-k-annular-wrz-norm/target-c7.json','3917c6f194dbf70b397f9bb8ad56deb42dae204966dad78dea15618231f58770'],
@@ -593,6 +595,66 @@ if (meanSpatialC2) {
     },
   ]));
 }
+let longitudinalSources, longitudinalInputs, longitudinalBounds;
+if (meanPathLongitudinal) {
+  // Cancel the original auxiliary inverse before differentiating in the path variable.
+  const factor = mul(q(2), ci0Inverse);
+  const pEz = scale(factor, projectedInputs[0].ez);
+  const pEzL = scale(factor, projectedInputs[1].ez);
+  const pEtheta = scale(factor, projectedInputs[0].etheta);
+  const pEthetaL = scale(factor, projectedInputs[1].etheta);
+  const nPsi = fixedOperator(T1, pEz);
+  const nPsiL = fixedOperator(T1, pEzL);
+  const nGamma = plus(pEz, fixedOperator(A1, pEz));
+  const nGammaL = plus(pEzL, fixedOperator(A1, pEzL));
+  const nBeta = shift(nPsi);
+  const nBetaL = shift(nPsiL);
+  longitudinalSources = {factor, projectedInputs: projectedInputs.slice(0,2), T1, A1};
+  longitudinalInputs = {
+    beta: {N: through(nBeta,1), NL: through(nBetaL,1)},
+    v: {N: through(pEtheta,1), NL: through(pEthetaL,1)},
+    gamma: {N: through(nGamma,1), NL: through(nGammaL,1)},
+  };
+  longitudinalBounds = Object.fromEntries(Object.entries(longitudinalInputs).map(([name,{N,NL}]) => [
+    name, {value: N[0], R: add(N[1], mul(radialPhaseA0,NL[0])), Z: N[1]},
+  ]));
+}
+let combinedStageZeroB, correctionB, correctionInputs;
+if (stageZeroB) {
+  const vSpatial = meanSpatialBounds.v;
+  const vSlow = meanSpatialInputs.v.M;
+  const Etheta0 = projectedInputs[0].etheta[0];
+  const epsilonInv = ex(mul(h,add(ell,q(17)),log2));
+  const invR0 = boundR;
+  correctionB = {
+    'b@0,0,0': mul(invR0,vSlow[0]),
+    'b@0,0,1': mul(invR0,add(vSlow[1],mul(epsilonInv,q(2),Etheta0))),
+    'b@0,1,0': mul(invR0,vSlow[1]),
+    'b@0,2,0': mul(invR0,vSlow[2]),
+    'b@1,0,0': mul(q(1,2),add(mul(pow(invR0,2),vSpatial.R),mul(pow(invR0,3),vSlow[0]))),
+    'b@2,0,0': mul(q(1,4),add(mul(pow(invR0,3),vSpatial.RR),
+      mul(q(3),pow(invR0,4),vSpatial.R),mul(q(3),pow(invR0,5),vSlow[0]))),
+  };
+  correctionInputs = {vSlow,vSpatial,Etheta0,epsilonInv,invR0};
+  const transport = await pinned(resolve(next,'whole-k-annular-initial/stage-zero-annular-transport.json'),
+    'c9478f9ed4a517061ab1da9e04814e3583af47f1573b1a5c9a9e7d86917df0b6');
+  const slow = await pinned(resolve(next,'whole-k-annular-slow/annular-slow-jet-bounds.json'),
+    '3e3bd5d76fcdac202d2d4da51ca490ddc8dd5d020c1a57aed6a2ecd7985a3a69');
+  assert.equal(transport.chartSHA256,chartSHA);
+  assert.equal(slow.pins.wholeK,chartSHA);
+  assert.equal(transport.atomContractSHA256,slow.pins.atoms);
+  const keys = Object.keys(correctionB);
+  for (const atoms of [transport.atoms, slow.slowFieldAtomIntervals]) {
+    assert.deepEqual(Object.keys(atoms).filter(key => key.startsWith('b@')).sort(), [...keys].sort());
+  }
+  combinedStageZeroB = Object.fromEntries(keys.map(key => [key, {
+    background: slow.slowFieldAtomIntervals[key],
+    actualInitializedPerturbationNormRoot: correctionB[key],
+    physicalQExponent: transport.atoms[key].tau0ReciprocalExponent,
+    QtoTauDyadic: transport.atoms[key].QtoTauDyadic,
+    combination: 'background interval radius + QtoTauDyadic * tau0^(-physicalQExponent) * actualInitializedPerturbationNormRoot',
+  }]));
+}
 // Stage-zero velocity pressure: g_vel=Dr(H)+K, compact H. The whole Haar
 // radial moment of Dr(H) is zero. Preserve the time transport of beta by
 // applying N to the actual Temporal inverse. FiveMap is Haar zero mode.
@@ -654,6 +716,13 @@ const output={
     determinantCoefficientLower:detLowerCoefficient,weightLowerOverZeta:cy,
     normalizedRhoSup:rho0,normalizedRhoSlowC1:rho1,aFast,originalCi0InverseUpper:ci0Inverse,
     earlyPressureChiZJets:pressureChiZ,rawWholeShiftedFixedRoots:rawWholeIds},
+  ...(meanPathLongitudinal && {longitudinalScope: {
+    status: 'CONDITIONAL',
+    sourceCancellation: 'N N^(-1) Pperp = Pperp on the original mean-zero Fourier limit; N FiveMap increment = 0',
+    pullback: 'partial_w u(H_w) = (ci_label / Tg^delta) (N u)(H_w), fixed labels and fixed slow variables',
+    referenceScaling: 'actual mean is rho^(-A) times reference mean at (R/sqrt(rho), Z/rho^D, T/rho, ell_ref, Y); transport of all norms to same live source family remains OPEN',
+    notProved: 'No actual same-family path domain, full weighted W-alpha forcing, all jets, time or N8 completion.',
+  }}),
   ...(meanSpatialC2 && {transverseScope: {
     status: 'CONDITIONAL',
     actualInitializedMean: [3614790,3614791,3614792],
@@ -665,7 +734,20 @@ const output={
     normalization: 'For physical perturbation velocity Q^(-A) times normalized components, physical spatial first and second derivatives gain Q^(-1/2) and Q^(-1), using epsilon=Q^h.',
     notProved: 'No numerical source bounds, actual live-joined private-family identity, background contribution, own/reference/fixed-pulse-path pullback, W-alpha class, physical time derivatives, final 67 jets, energy or N8 gate.',
   }}),
-  roots:{...(meanSpatialC2 && {
+  ...(stageZeroB && {stageZeroBScope: {
+    status: 'CONDITIONAL_EXACT_POSITIVE_SOURCE_EXPRESSIONS',
+    nativeCorrectionV: 3614791,
+    earlyTemporalEtheta: 643868,
+    sourceComponents: 'actual slow background plus actual initialized Temporal and FiveMap direct b; no later stage',
+    physicalScalar: 'b=Q^(-A-1/2) v/R',
+    physicalTime: 'partial_t=-partial_tau; Q^(-1)[-partial_T+epsilon^(-1) ci N]; original ci*N(vTemporal)=-Pperp Etheta, N(vFive)=0',
+    radiusBound: '1/R <= 2 C12EnvelopeR',
+    epsilonInverseBound: 'epsilon^(-1)<=exp(h*(ellMinimum+17)*log(2)) on the fixed reference bands',
+    physicalReference: 'fixed dyadic Q, same original whole-K annulus and original phase/flat source premises',
+    notProved: 'No numerical interval values, actual final field, later increments, 67 global jet coverage, N7/N8 gate completion, or live private-family identification.',
+  }}),
+  roots:{...(stageZeroB && {combinedStageZeroB,correctionB,correctionInputs}),
+  ...(meanPathLongitudinal && {longitudinalSources,longitudinalInputs,longitudinalBounds}), ...(meanSpatialC2 && {
     meanSpatialInputs, meanSpatialBounds, radialPhaseA0, radialPhaseA1,
     transverseC2: {
       vL: through(temporalVL,2), vLL: through(temporalVLL,2),

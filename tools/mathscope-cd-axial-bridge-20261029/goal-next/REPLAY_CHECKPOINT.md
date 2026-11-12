@@ -1,8 +1,8 @@
 # Replay the November 12 checkpoint
 
-Extract Continuation17, the cumulative Continuation20 delta, and the
-Continuation21 overlay to the same directory in that order. The latest
-checkpoint lists both parent checksums and the replaced files.
+Extract Continuation17, the cumulative Continuation20 delta, Continuation21,
+and Continuation22 to the same directory in that order. The latest
+checkpoint lists the parent checksums and the replaced files.
 
 From the extraction directory, set the evidence path in a POSIX shell.
 
@@ -75,3 +75,37 @@ The [closed-boundary proof](https://github.com/leegahuyn/MathScopeCompute/action
 was compiled on GitHub. Its source checksum and assumptions are in
 [the GitHub evidence](ci-43229357946/). The [original N2 finite Picard binder](y-dynamic-n2/README.md)
 has a separate replay command.
+
+## Continuation22
+
+```sh
+g4=inputs/original-whole-k-n4-primary-potential-C3
+python "$p/whole-k-atlas/verify_primary_c3.py" "$g4"
+python "$p/whole-k-atlas/check_primary_cover.py" \
+  --diagonal3 inputs/original-whole-k-n3-diagonal \
+  --diagonal4 inputs/original-whole-k-n4-diagonal \
+  --primary3 inputs/original-whole-k-n3-primary-potential-C3 --primary4 "$g4" \
+  --fourth "$p/whole-k-selector-scales/fourth/fourth-selector-maxima.json" \
+  --out /tmp/primary-reference-cover.json
+python "$p/g0-supported/verify_mean_hw.py" \
+  inputs/corrected-first-forced/corrected-first-forced-graph \
+  "$p/first-force-repair/independent-repaired-first-force.json" \
+  "$p/g0-supported/actual-g0-order.json" /tmp/mean-hw-binding.json
+node --max-old-space-size=3072 "$p/whole-k-annular-pressure-lower/propagate_lower_covariance.mjs" \
+  "$p" "$graph" "$chart" /tmp/mean-path-longitudinal.json --mean-path-longitudinal
+node "$p/whole-k-annular-pressure-lower/check-mean-path-longitudinal.mjs" \
+  "$p" "$graph" /tmp/mean-path-longitudinal.json /tmp/mean-path-longitudinal-readback.json
+node --max-old-space-size=3072 "$p/whole-k-annular-pressure-lower/propagate_lower_covariance.mjs" \
+  "$p" "$graph" "$chart" /tmp/stage-zero-b-jets.json --stage-zero-b
+node "$p/whole-k-annular-pressure-lower/check-stage-zero-b-jets.mjs" \
+  "$p" "$graph" /tmp/stage-zero-b-jets.json /tmp/stage-zero-b-jets-readback.json
+node "$p/whole-k-angular-pressure-c2/replay_angular_pressure_c2.mjs" \
+  "$p" "$graph" /tmp/initialized-angular-pressure-c2.json
+node "$p/whole-k-angular-pressure-c2/check_angular_pressure_c2.mjs" \
+  "$p" "$graph" /tmp/initialized-angular-pressure-c2.json /tmp/initialized-angular-pressure-c2-readback.json
+```
+
+The [N2 five-moment range replay](y-dynamic-n2/README.md) executes the exact
+finite source Picard partial sum and checks all 291 generated literal
+natural arguments in its five local moment integrals. Its mathematical
+range and normalization lemmas passed on [GitHub](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43235628663).

@@ -14,6 +14,17 @@ inactive branch evaluates to zero at the guard. This is a range statement for
 the identified finite-sum call under the source real and native semantics.
 The Picard limit and complete dynamic coverage remain OPEN.
 
+The [five-moment replay](n2-all-local-moment-picard.json) binds the exact
+local integral in each of the five actual order-two moment definitions.
+It checks both realized Picard components at all seven local uses and 291
+distinct generated natural calls in the original three-term partial sums.
+It tracks the lexical unit-interval binders and the original lazy radial
+branches. The two negative controls remove the strict radial guard and
+enlarge the unit binder. Both fail. [GitHub Lean](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43235628663)
+proves the unit-product inequality, the finite radial bound, and the two
+real logarithm normalizations used by the replay. The nonlocal lower
+contributions and nested prior profile bodies retain their separate scope.
+
 From the combined evidence directory:
 
 ```sh
@@ -24,6 +35,9 @@ node "$p/y-dynamic-n2/n2-real-derivative.mjs" \
   inputs/original-core-runtime/research-ide/mathscope-m2/navier/actual-continuation-exact-functions.mjs \
   "$i/y-reached.json"
 node "$p/y-dynamic-n2/n2-moment-native-binder.mjs" \
+  "$i/original-n2-current-pressure-graph" \
+  inputs/original-core-runtime/research-ide/mathscope-m2/navier/actual-continuation-exact-functions.mjs
+node "$p/y-dynamic-n2/n2-all-local-moment-picard.mjs" \
   "$i/original-n2-current-pressure-graph" \
   inputs/original-core-runtime/research-ide/mathscope-m2/navier/actual-continuation-exact-functions.mjs
 ```
