@@ -154,7 +154,7 @@ theorem picard_unit_radial_square {x upper : ℝ} (hx : x ∈ Set.Icc 0 upper)
     induction ys with
     | nil => simp
     | cons a ys ih =>
-      have ha := hy a (List.mem_cons_self _ _)
+      have ha := hy a List.mem_cons_self
       have hp := ih (fun y hy' => hy y (List.mem_cons_of_mem _ hy'))
       simp only [List.prod_cons]
       exact ⟨mul_nonneg ha.1 hp.1, by simpa using mul_le_mul ha.2 hp.2 hp.1 zero_le_one⟩
@@ -207,7 +207,7 @@ theorem picard_local_moment_normalizations {u Xa Λ : ℝ}
   constructor
   · field_simp [hXa.ne']
   · rw [← hΛXa]
-    field_simp [hXa.ne'] <;> ring
+    field_simp [hXa.ne']
 
 #print axioms reference_band_label
 #print axioms reference_general_window_lower_label
