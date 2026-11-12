@@ -7,6 +7,12 @@ on:
       - 'tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-forced-join/prepare_live_join.py'
       - 'tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-forced-join/assert_live_join.mjs'
   workflow_dispatch:
+    inputs:
+      primary_order:
+        description: Primary derivative order for the same-family join
+        type: choice
+        options: ['3', '2']
+        default: '3'
 permissions:
   contents: read
 jobs:
@@ -18,6 +24,7 @@ jobs:
       NODE_OPTIONS: --max-old-space-size=6100
       M3_MAX_MINUTES: '145'
       M3_MAX_RSS_GB: '6'
+      PRIMARY_ORDER: ${{ github.event_name == 'workflow_dispatch' && inputs.primary_order || '3' }}
       ORIGINAL_SOURCE_COMMIT: f8cb4034e86d7b669d52a6f2248aebba156b51b5
     steps:
       - uses: actions/checkout@v4
@@ -70,7 +77,7 @@ jobs:
           mkdir -p "$RUNNER_TEMP/primary-forced-join"
           node --input-type=module -e "import fs from 'node:fs'; import {verifyPR30OriginalSourceFiles} from './$m/navier/source-signed-162-pr30-pins.mjs'; const x=await verifyPR30OriginalSourceFiles(); if(x.verifiedUnchangedPR30Files!==27||x.verifiedPinnedRepairFiles!==2)process.exit(2); fs.writeFileSync(process.argv[1],JSON.stringify({verifiedUnchangedPR30Files:x.verifiedUnchangedPR30Files,verifiedPinnedRepairFiles:x.verifiedPinnedRepairFiles})+'\n')" "$RUNNER_TEMP/primary-forced-join/source-pins.json"
           cp "$evidence/primary-forced-join/assert_live_join.mjs" "$runner/assert_live_join.mjs"
-          python "$evidence/primary-forced-join/prepare_live_join.py" "$runner/run_real_original_signed162.mjs" "$runner/run_primary_forced_live_join.mjs"
+          python "$evidence/primary-forced-join/prepare_live_join.py" "$runner/run_real_original_signed162.mjs" "$runner/run_primary_forced_live_join.mjs" --primary-order "$PRIMARY_ORDER"
           node --check "$runner/run_primary_forced_live_join.mjs"
       - name: Build and verify exact same-family live join
         working-directory: reference
@@ -111,7 +118,7 @@ jobs:
           native_result=${PIPESTATUS[0]}
           verify_result=not_run
           if [ "$native_result" -eq 0 ]; then
-            python "$helper/verify_join_receipt.py" "$out/native-receipt.json" "$out/source-pins.json" "$out/independent-readback.json" 2>&1 | tee "$out/independent-readback.log"
+            python "$helper/verify_join_receipt.py" "$out/native-receipt.json" "$out/source-pins.json" "$out/independent-readback.json" --primary-order "$PRIMARY_ORDER" 2>&1 | tee "$out/independent-readback.log"
             verify_result=${PIPESTATUS[0]}
           fi
           printf 'native_exit=%s verifier_exit=%s\n' "$native_result" "$verify_result" | tee "$out/exit-status.txt"

@@ -1,6 +1,8 @@
 # Replay the November 12 checkpoint
 
-Extract Continuation17 and then the cumulative Continuation20 delta to the same directory. The delta manifest lists the exact replacements. The original source exports and registries in the two archives are the inputs to the commands below.
+Extract Continuation17, the cumulative Continuation20 delta, and the
+Continuation21 overlay to the same directory in that order. The latest
+checkpoint lists both parent checksums and the replaced files.
 
 From the extraction directory, set the evidence path in a POSIX shell.
 
@@ -41,3 +43,35 @@ python "$p/whole-k-exterior/check_exterior_energy_refinement.py" --localization-
 ```
 
 The [fourth-scale certificate](whole-k-selector-scales/fourth/README.md) gives the commands for the N4 source binding and exact scale comparison. The two new Lean proofs are recorded in the GitHub artifacts [ci-43219998006](ci-43219998006/) and [ci-43224231941](ci-43224231941/). The exterior integral details are in [the heat-exterior certificate](whole-k-exterior/EXTERIOR_ENERGY_REFINEMENT.md). Final-field acceptance remains recorded in [STATUS.json](STATUS.json).
+
+## Continuation21
+
+```sh
+graph=inputs/corrected-first-cycle/corrected-first-cycle-graph
+chart="${p%/goal-next}/goal-20261111/m3/whole-k-chart.json"
+python "$p/whole-k-atlas/check_n3_n4_live_band.py" \
+  --n3 inputs/original-whole-k-n3-diagonal --n4 inputs/original-whole-k-n4-diagonal \
+  --fourth "$p/whole-k-selector-scales/fourth/fourth-selector-maxima.json" \
+  --out /tmp/n3-n4-live-band.json
+node --max-old-space-size=3072 "$p/whole-k-annular-pressure-lower/propagate_lower_covariance.mjs" \
+  "$p" "$graph" "$chart" /tmp/lower-covariance-pressure.json
+node "$p/whole-k-annular-pressure-lower/check_lower_covariance.mjs" \
+  "$p" "$graph" /tmp/lower-covariance-pressure.json /tmp/lower-pressure-readback.json
+node "$p/whole-k-angular-pressure/replay_angular_pressure.mjs" \
+  "$p" "$graph" /tmp/initialized-angular-pressure.json
+node "$p/whole-k-angular-pressure/check_angular_pressure.mjs" \
+  "$p" "$graph" /tmp/initialized-angular-pressure.json /tmp/initialized-angular-pressure-readback.json
+node --max-old-space-size=3072 "$p/whole-k-annular-pressure-lower/propagate_lower_covariance.mjs" \
+  "$p" "$graph" "$chart" /tmp/mean-transverse-c2.json --mean-spatial-c2
+node "$p/whole-k-annular-pressure-lower/check-mean-transverse-c2.mjs" \
+  "$p" "$graph" /tmp/mean-transverse-c2.json /tmp/mean-transverse-c2-readback.json
+node "$p/whole-k-angular/n1-fourier-tail.mjs"
+dir="$p/primary-forced-join/hosted-43219432398"
+python "$p/primary-forced-join/verify_join_receipt.py" \
+  "$dir/native-receipt.json" "$dir/source-pins.json" /tmp/forced-readback.json
+```
+
+The [closed-boundary proof](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43229357946)
+was compiled on GitHub. Its source checksum and assumptions are in
+[the GitHub evidence](ci-43229357946/). The [original N2 finite Picard binder](y-dynamic-n2/README.md)
+has a separate replay command.

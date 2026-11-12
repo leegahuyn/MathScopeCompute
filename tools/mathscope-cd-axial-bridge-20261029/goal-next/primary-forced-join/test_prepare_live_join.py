@@ -15,4 +15,17 @@ class Test(unittest.TestCase):
  def test_changed_input_rejected(self):
   raw=(BASE/'original_f8_runner.mjs').read_bytes()
   with self.assertRaises(ValueError):generate(raw+b'\n')
+ def test_c3_uses_c6_c4_and_keeps_the_live_join(self):
+  raw=(BASE/'original_f8_runner.mjs').read_bytes()
+  result=generate(raw,3).decode('utf8')
+  for expected in ('same_family_C6','same_family_target_C4','same_current_primary_C3',
+                   'throughOrder:2,derivativeOrder:6','expectedOrder:3,native:',
+                   'attachGlobalPrimaryClassOperator(cur,target,{order:3'):
+   self.assertEqual(result.count(expected),1,expected)
+  self.assertLess(result.index("stage('same_current_primary_C3'"),result.index("stage('original_forced'"))
+  with tempfile.TemporaryDirectory() as d:
+   runner=Path(d)/'runner.mjs'
+   runner.write_text(result,encoding='utf8')
+   subprocess.run(['node','--check',str(runner)],check=True)
+  with self.assertRaises(ValueError):generate(raw,4)
 if __name__=='__main__':unittest.main()

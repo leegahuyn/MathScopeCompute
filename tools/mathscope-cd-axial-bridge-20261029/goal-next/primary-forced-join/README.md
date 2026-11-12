@@ -32,6 +32,14 @@ permissions. Artifacts contain source pins, the compact native
 receipt, progress log, readback and exit codes as each stage
 finishes.
 
+Run [43219432398](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43219432398)
+completed the C5/C3/C2 route at 5,071,145 shared graph nodes with all
+20 inverses and 120 components. The isolated workflow can now request
+Primary order three using background C6 and target C4 on the same N1
+family. The order-three checker also requires the actual potential,
+full-curl remainder and angular pressure class flags. A successful
+order-three join still leaves the actual weighted Forced class open.
+
 The local small checks are:
 
     node --test assert_live_join.test.mjs

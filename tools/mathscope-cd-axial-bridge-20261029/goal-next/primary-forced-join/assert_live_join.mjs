@@ -21,18 +21,31 @@ export function raiseSharedNodeLimit(graph, expected, maximum) {
   return {previous: expected, maximum, sourceNodeCount: count, actualAllocatorUpdated: true};
 }
 
-export function assertLivePrimaryForcedJoin({family,current,target,primary,initial,forced,native}) {
+export function assertLivePrimaryForcedJoin({family,current,target,primary,initial,forced,native,expectedOrder=2}) {
+  assert.ok(expectedOrder === 2 || expectedOrder === 3);
+  const backgroundOrder = expectedOrder + 3;
+  const targetOrder = expectedOrder + 1;
+  const targetOrders = Array.from({length: targetOrder + 1}, (_, j) => j);
   assert.ok(native && ['assertActualCommonAdmissibleFamily','assertActualCommonTargetWeightedNorms','assertGlobalCurrentState','assertGlobalPrimaryClassOperator','assertGlobalInitializedAngular','assertGlobalForcedCurrent'].every(k=>typeof native[k]==='function'));
   native.assertActualCommonAdmissibleFamily(family);native.assertGlobalCurrentState(current);
   native.assertActualCommonTargetWeightedNorms(target);native.assertGlobalPrimaryClassOperator(primary);
   native.assertGlobalInitializedAngular(initial);native.assertGlobalForcedCurrent(forced);
-  assert.equal(family.request.throughOrder,2);assert.equal(family.request.derivativeOrder,5);
+  assert.equal(family.request.throughOrder,2);assert.equal(family.request.derivativeOrder,backgroundOrder);
   assert.strictEqual(current.band.family,family);assert.equal(current.band.window.coefficientOrder,1);
-  assert.strictEqual(target.family,family);assert.equal(target.request.derivativeOrder,3);
-  assert.strictEqual(primary.current,current);assert.strictEqual(primary.target,target);assert.equal(primary.request.order,2);
-  assert.equal(primary.bounds.backgroundRow.derivativeOrder,3);assert.equal(primary.bounds.backgroundRow.backgroundDerivativeOrder,5);
-  assert.deepEqual(primary.bounds.targetRows.map(x=>x.derivativeOrder),[0,1,2,3]);assert.deepEqual(primary.bounds.targetRows.map(x=>x.pole),[3,6,9,12]);
-  assert.equal(primary.scope.actualFiniteDerivativeOrder,2);assert.equal(primary.scope.actualForcedInputWClassCertified,false);assert.equal(primary.scope.completeN6,false);
+  assert.strictEqual(target.family,family);assert.equal(target.request.derivativeOrder,targetOrder);
+  assert.strictEqual(primary.current,current);assert.strictEqual(primary.target,target);assert.equal(primary.request.order,expectedOrder);
+  assert.equal(primary.bounds.backgroundRow.derivativeOrder,targetOrder);
+  assert.equal(primary.bounds.backgroundRow.backgroundDerivativeOrder,backgroundOrder);
+  assert.deepEqual(primary.bounds.targetRows.map(x=>x.derivativeOrder),targetOrders);
+  assert.deepEqual(primary.bounds.targetRows.map(x=>x.pole),targetOrders.map(j => 3*(j+1)));
+  assert.equal(primary.scope.actualFiniteDerivativeOrder,expectedOrder);
+  assert.equal(primary.scope.actualForcedInputWClassCertified,false);assert.equal(primary.scope.completeN6,false);
+  const primaryClassScope = expectedOrder === 3 ? {
+    potentialWOne: primary.scope.actualOriginalPotentialWOneClassCertified,
+    fullCurlWOneMinusKappa: primary.scope.actualFullCurlRemainderWOneMinusKappaClassCertified,
+    angularPressureWOne: primary.scope.actualOriginalPrimaryPressureWOneClassCertified,
+  } : undefined;
+  if (primaryClassScope) assert.ok(Object.values(primaryClassScope).every(value => value === true));
   assert.strictEqual(forced.input,initial);
   assert.strictEqual(initial.mean.temporal.pressure.current,current);
   assert.strictEqual(forced.input.mean.temporal.pressure.current,current);
@@ -74,6 +87,7 @@ export function assertLivePrimaryForcedJoin({family,current,target,primary,initi
   native.assertGlobalCurrentState(current);native.assertActualCommonTargetWeightedNorms(target);
   native.assertGlobalPrimaryClassOperator(primary);native.assertGlobalInitializedAngular(initial);native.assertGlobalForcedCurrent(forced);
   return {scope:'SAME_LIVE_FAMILY_CURRENT_PRIMARY_AND_CORRECTED_FIRST_FORCED_BINDING_ONLY',
-    backgroundOrder:5,targetOrder:3,primaryOrder:2,coefficientOrder:1,systems:20,components:120,rows,
+    backgroundOrder,targetOrder,primaryOrder:expectedOrder,coefficientOrder:1,systems:20,components:120,rows,
+    ...(primaryClassScope && {primaryClassScope}),
     actualInputForcingWClassCertified:false,actualCompleteCurrentClassCertified:false,completeN6:false,newLeanKernelProof:false,release:'HOLD'};
 }

@@ -4,6 +4,16 @@ The checker streams the exact 2,852,905-node original graph. It runs the pinned 
 
 The replay establishes these operator identities on the authentic prefix. Actual range after arbitrary later binder substitutions, dynamic Picard evaluation and Forced calls remains OPEN.
 
+The original local moment `#120279` binds `#120276` on `[0,Xcut]` and calls
+native expression system 11 with that exact radial argument. A second replay
+expands the literal finite Picard sum and follows a natural-series call with
+three actual nested integration binders in `[0,1]`. On the active branch,
+`Xa < v² <= Xcut < Xa exp(t1/16)` and
+`Y = Λ v² <= 4 exp(t1/32) < 5` with the original source constants. The
+inactive branch evaluates to zero at the guard. This is a range statement for
+the identified finite-sum call under the source real and native semantics.
+The Picard limit and complete dynamic coverage remain OPEN.
+
 From the combined evidence directory:
 
 ```sh
@@ -13,4 +23,7 @@ node "$p/y-dynamic-n2/n2-real-derivative.mjs" \
   "$i/original-n2-current-pressure-graph/original-source-nodes.jsonl.gz" \
   inputs/original-core-runtime/research-ide/mathscope-m2/navier/actual-continuation-exact-functions.mjs \
   "$i/y-reached.json"
+node "$p/y-dynamic-n2/n2-moment-native-binder.mjs" \
+  "$i/original-n2-current-pressure-graph" \
+  inputs/original-core-runtime/research-ide/mathscope-m2/navier/actual-continuation-exact-functions.mjs
 ```

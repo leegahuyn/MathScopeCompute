@@ -19,4 +19,13 @@ class Test(unittest.TestCase):
  def test_pins(self):
   a,b=fixture();b['verifiedPinnedRepairFiles']=1
   with self.assertRaises(AssertionError):verify(a,b)
+ def test_c3_requires_real_c3_and_three_original_class_flags(self):
+  a,b=fixture()
+  with self.assertRaises(AssertionError):verify(a,b,3)
+  a['same_family_join'].update(backgroundOrder=6,primaryBackgroundOrder=6,targetOrder=4,
+     primaryOrder=3,primaryFiniteOrder=3,primaryTargetOrders=list(range(5)),primaryTargetPoles=[3,6,9,12,15],
+     primaryClassScope={'potentialWOne':True,'fullCurlWOneMinusKappa':True,'angularPressureWOne':True})
+  self.assertEqual(verify(a,b,3)['status'],'PASS_RECEIPT_READBACK_ONLY')
+  a['same_family_join']['primaryClassScope']['angularPressureWOne']=False
+  with self.assertRaises(AssertionError):verify(a,b,3)
 if __name__=='__main__':unittest.main()

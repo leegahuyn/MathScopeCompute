@@ -10,8 +10,9 @@ def blob(x):return hashlib.sha1(b'blob '+str(len(x)).encode()+b'\0'+x).hexdigest
 def replace_one(s,old,new):
  if s.count(old)!=1:raise ValueError('expected exactly one source anchor: '+old[:80])
  return s.replace(old,new,1)
-def generate(raw):
+def generate(raw, order=2):
  if blob(raw)!=PIN:raise ValueError('original f8 runner blob mismatch')
+ if order not in (2,3):raise ValueError('supported Primary orders are 2 and 3')
  s=raw.decode('utf8')
  s=replace_one(s,"schema:'MathScope.M3.SourceBoundOriginalPipeline/1'","schema:'MathScope.M3.LiveSameFamilyForcedPrimary/1'")
  s=replace_one(s,"M3_original_accepted:62,M4_original_accepted:0,release:'HOLD'","progress_counts_not_asserted:true,release:'HOLD'")
@@ -96,7 +97,21 @@ import {assertLivePrimaryForcedJoin,raiseSharedNodeLimit} from './assert_live_jo
  receipt.status='VERIFIED_LIVE_SOURCE_JOIN_ONLY';receipt.stop_reason='Exact live source identity only; actual Forced W-alpha input, original moment bridge, all later stages and final 67 jets remain OPEN.';
  receipt.actual_final67_jets_evaluated=0;receipt.release='HOLD';save();
 """
- return (prefix+extension+suffix).encode('utf8')
+ runner=prefix+extension+suffix
+ if order==3:
+  for old,new in (
+   ("stage('same_family_C5'","stage('same_family_C6'"),
+   ('throughOrder:2,derivativeOrder:5','throughOrder:2,derivativeOrder:6'),
+   ("stage('same_family_target_C3'","stage('same_family_target_C4'"),
+   ('constructTargetWeightedNorms({derivativeOrder:3','constructTargetWeightedNorms({derivativeOrder:4'),
+   ("stage('same_current_primary_C2'","stage('same_current_primary_C3'"),
+   ('attachGlobalPrimaryClassOperator(cur,target,{order:2','attachGlobalPrimaryClassOperator(cur,target,{order:3'),
+   ('family,current:cur,target,primary,initial,forced,native:', 'family,current:cur,target,primary,initial,forced,expectedOrder:3,native:'),
+  ):
+   runner=replace_one(runner,old,new)
+ return runner.encode('utf8')
 def main():
- p=argparse.ArgumentParser();p.add_argument('runner',type=Path);p.add_argument('out',type=Path);a=p.parse_args();a.out.write_bytes(generate(a.runner.read_bytes()));print('PASS generated first-Forced live join from exact pinned runner; no construction executed')
+ p=argparse.ArgumentParser();p.add_argument('runner',type=Path);p.add_argument('out',type=Path)
+ p.add_argument('--primary-order',type=int,choices=(2,3),default=2);a=p.parse_args()
+ a.out.write_bytes(generate(a.runner.read_bytes(),a.primary_order));print('PASS generated first-Forced live join from exact pinned runner; no construction executed')
 if __name__=='__main__':main()
