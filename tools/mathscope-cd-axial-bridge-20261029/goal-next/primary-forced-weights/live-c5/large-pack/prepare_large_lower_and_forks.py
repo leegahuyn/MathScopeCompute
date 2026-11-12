@@ -31,6 +31,13 @@ GLOBAL = M3 + "source-global-expressions.mjs"
 GLOBAL_PIN = "89904bd7441a57cf634ff7b4c579e9ee7688868d14eafd999e44f41f74f0c2d1"
 PARTITION = M2 + "actual-covariance-global-assembly.mjs"
 PARTITION_PIN = "bd0f09f78a2f93cad9fdb679ba25509ecb2891ba86eee1bc3e57df6da74e37cc"
+INDUCTION_NORMS = M2 + "actual-residual-order-induction-norms.mjs"
+INDUCTION_NORM_PINS = (
+    "0387335a081650c4a6ffed6e213215d32a363350c2a156a7163e82f4c0234634",
+    "91c9b4ab946c06f07be2f78415a4b4cc2666fdab45ad7e643fe885f0df304817",
+)
+WEIGHTED_STRESS = M2 + "actual-order-one-weighted-stress.mjs"
+WEIGHTED_STRESS_PIN = "49cde0b930f375e8eca5610ecb7d1e91c9c4361bdd1395a1971081fb1fdfd1b3"
 
 
 class ExactPatch:
@@ -124,6 +131,35 @@ def partition_patch(path):
     return patch
 
 
+def induction_norm_patch(path):
+    patch = ExactPatch(path, INDUCTION_NORM_PINS)
+    anchor = "const sealedNorms=new WeakMap();"
+    patch.change(anchor, "import {captureRawNodes} from './mathscope-large-seal.mjs';\n" + anchor)
+    patch.change("prefix:JSON.stringify(G.nodes)", "prefix:captureRawNodes(G.nodes)")
+    patch.change("JSON.stringify(r.G.nodes.slice(0,r.nodeCount))!==r.prefix", "!r.prefix.verify(r.G.nodes)")
+    return patch
+
+
+def weighted_stress_patch(path):
+    patch = ExactPatch(path, (WEIGHTED_STRESS_PIN,))
+    patch.change("import {canonicalStringify,sha256} from '../../mathscope-m0/contracts.mjs';",
+                 "import {canonicalStringify} from '../../mathscope-m0/contracts.mjs';\n"
+                 "import {captureNodes,makeProgramSnapshot,canonicalHash} from './mathscope-large-seal.mjs';")
+    patch.change("),{nodes,...metadata}=packed;\n  result.program={...structuredClone(metadata),nodes:nodes.slice()};",
+                 ");\n  const programSeal=makeProgramSnapshot(packed);result.program=programSeal.program;")
+    patch.change("nodes:canonicalStringify(G.nodes),definitions:G.captureFunctionDefinitions(),\n"
+                 "    binding:resultBinding(result),metadata:canonicalStringify(metadata),serialized:canonicalStringify(result.program)",
+                 "programSeal,livePrefix:captureNodes(G.nodes),definitions:G.captureFunctionDefinitions(),\n    binding:resultBinding(result)")
+    patch.change("canonicalStringify(saved.G.nodes.slice(0,saved.count))!==saved.nodes", "!saved.livePrefix.verify(saved.G.nodes)")
+    patch.change("  const {nodes,...metadata}=result.program??{};\n"
+                 "  if(!Array.isArray(nodes)||canonicalStringify(nodes)!==saved.nodes||canonicalStringify(metadata)!==saved.metadata)",
+                 "  if(!saved.programSeal.verify(saved.G.nodes,result.program))")
+    patch.change("hash=await sha256(s.serialized)", "encoded=canonicalHash(result.program)")
+    patch.change("sha256:hash,nodeCount:s.count,canonicalBytes:new TextEncoder().encode(s.serialized).byteLength",
+                 "sha256:encoded.sha256,nodeCount:s.count,canonicalBytes:encoded.bytes")
+    return patch
+
+
 def main():
     parser = ArgumentParser(description=__doc__)
     parser.add_argument("runtime", type=Path)
@@ -134,6 +170,8 @@ def main():
         induction_patch(args.runtime / INDUCTION),
         global_patch(args.runtime / GLOBAL),
         partition_patch(args.runtime / PARTITION),
+        induction_norm_patch(args.runtime / INDUCTION_NORMS),
+        weighted_stress_patch(args.runtime / WEIGHTED_STRESS),
     ]
     files = {}
     outputs = [(patch, patch.checked()) for patch in patches]
