@@ -1,5 +1,10 @@
 name: MathScope original Primary C5
 on:
+  workflow_call:
+    inputs:
+      with_forced:
+        type: boolean
+        default: false
   push:
     branches: [mathscope-cd-axial-source-bridge-20261029]
     paths:
@@ -18,12 +23,7 @@ jobs:
     name: Original N${{ matrix.prefix }} Primary C5
     strategy:
       fail-fast: false
-      matrix:
-        include:
-          - prefix: 3
-            nodes: 20000000
-          - prefix: 4
-            nodes: 25000000
+      matrix: ${{ fromJSON(inputs.with_forced && '{"include":[{"prefix":3,"nodes":25000000}]}' || '{"include":[{"prefix":3,"nodes":20000000},{"prefix":4,"nodes":25000000}]}') }}
     runs-on: ubuntu-24.04
     timeout-minutes: 135
     env:
@@ -36,7 +36,11 @@ jobs:
           path: evidence
           persist-credentials: false
           sparse-checkout: |
+            research-ide/mathscope-m3/navier
             tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-forced-weights/live-c5
+            tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-forced-weights/active-mode-two
+            tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-forced-join
+            tools/mathscope-cd-axial-bridge-20261029/goal-next/first-force-repair
             tools/mathscope-cd-axial-bridge-20261029/goal-next/whole-k-atlas
       - uses: actions/checkout@v4
         with:
@@ -135,6 +139,33 @@ jobs:
           node --check "$navier/actual-global-primitive-kernels.mjs"
           node --check "$navier/mathscope-large-seal.mjs"
           node --check "$navier/mathscope-owned-lookup.mjs"
+      - name: Prepare the original Initialized and Forced source
+        if: inputs.with_forced
+        working-directory: original
+        run: |
+          set -euo pipefail
+          goal=../evidence/tools/mathscope-cd-axial-bridge-20261029/goal-next
+          active="$goal/primary-forced-join/active-c5"
+          m3=research-ide/mathscope-m3/navier
+          out="$RUNNER_TEMP/mathscope-primary-c5"
+          cp "$active/capture_source_delta.mjs" "$m3/mathscope-active-forced-seal.mjs"
+          python3 -B "$active/prepare_active_first_forced.py" "$m3" "../evidence/$m3" \
+            24000000 "$out/forced-preparation.json" --witness
+          python3 - "$m3" "$out/forced-preparation.json" <<'PY'
+          import hashlib, json, subprocess, sys
+          from pathlib import Path
+          m3 = Path(sys.argv[1])
+          for row in json.loads(Path(sys.argv[2]).read_bytes())["files"]:
+              file = m3 / row["file"]
+              original = subprocess.check_output(["git", "show", "HEAD:" + file.as_posix()])
+              assert hashlib.sha256(original).hexdigest() == row["originalSHA256"]
+              assert row["exactStorageAndBudgetReversal"]
+              assert hashlib.sha256(file.read_bytes()).hexdigest() == row["outputSHA256"]
+          PY
+          observer="$goal/primary-forced-join/active-n3-c5-binding/run_same_family_mode_two.mjs"
+          node --check "$observer"
+          echo "MATHSCOPE_SAME_FAMILY_FORCED_OBSERVER=$(realpath "$observer")" >> "$GITHUB_ENV"
+          echo "MATHSCOPE_ACTIVE_N3_SUPPORT=$(realpath "$goal/primary-forced-weights/active-mode-two/active-n3-physical-fast-support.json")" >> "$GITHUB_ENV"
       - name: Build the same-family original C8, weighted C6 and Primary C5
         working-directory: original
         run: |
@@ -144,6 +175,17 @@ jobs:
           node --max-old-space-size=11000 --stack-size=4096 --expose-gc \
             research-ide/mathscope-m3/extended-signed-run-20261023/run_live_primary_c5.mjs \
             "$out" "$ORIGINAL_SOURCE_COMMIT" "$SOURCE_PREFIX" 2>&1 | tee "$out/native-run.log"
+      - name: Independently read the selected same-family source graph
+        if: inputs.with_forced
+        working-directory: original
+        run: |
+          set -euo pipefail
+          goal=../evidence/tools/mathscope-cd-axial-bridge-20261029/goal-next
+          out="$RUNNER_TEMP/mathscope-primary-c5"
+          sha="$(sha256sum "$out/witness/original-active-mode-two-witness.json" | cut -d ' ' -f 1)"
+          python3 -B "$goal/primary-forced-join/active-mode-two-witness/check_active_mode_two.py" \
+            --bundle "$out/witness" --checker "$goal/first-force-repair/verify_repaired_first_force.py" \
+            --support "$MATHSCOPE_ACTIVE_N3_SUPPORT" --witness-sha "$sha" --out "$out/independent-readback.json"
       - uses: actions/upload-artifact@v4
         if: always()
         with:

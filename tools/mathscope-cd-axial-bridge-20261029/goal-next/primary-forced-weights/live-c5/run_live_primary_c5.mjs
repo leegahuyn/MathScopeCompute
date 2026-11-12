@@ -2,6 +2,7 @@
 import assert from 'node:assert/strict';
 import {mkdirSync, writeFileSync} from 'node:fs';
 import {join} from 'node:path';
+import {pathToFileURL} from 'node:url';
 import {compactOwnedLookup, compactDerivativesFromLegacy} from '../../mathscope-m2/navier/mathscope-owned-lookup.mjs';
 import {
   assertActualCommonAdmissibleFamily,
@@ -186,6 +187,18 @@ try {
   receipt.potentialSix = weighted.potential[6];
   receipt.currentStage = 'complete-primary-C5-class-only';
   save();
+  const forcedObserver = process.env.MATHSCOPE_SAME_FAMILY_FORCED_OBSERVER;
+  if (forcedObserver) {
+    assert.equal(prefix, 3);
+    try {
+      const {runSameFamilyModeTwo} = await import(pathToFileURL(forcedObserver).href);
+      await runSameFamilyModeTwo({family, current, target, primary, context, out,
+        runtime: 'research-ide', supportReceipt: process.env.MATHSCOPE_ACTIVE_N3_SUPPORT});
+    } catch (error) {
+      console.error(error);
+      process.exitCode = 1;
+    }
+  }
 } catch (error) {
   receipt.status = 'BLOCKED_AT_ORIGINAL_STAGE';
   receipt.error = {code: error.code ?? null, message: error.message, stack: error.stack};
