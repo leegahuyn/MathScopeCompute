@@ -5,6 +5,7 @@ on:
     paths:
       - '.github/workflows/mathscope-original-primary-c5.yml'
       - 'tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-forced-weights/live-c5/run_live_primary_c5.mjs'
+      - 'tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-forced-weights/live-c5/prepare_leading_budget.py'
 permissions:
   contents: read
 jobs:
@@ -58,6 +59,8 @@ jobs:
           python3 "$atlas/prepare_iterative_norm_import.py" . "$out/iterative-norm-import-overlay.json"
           python3 "$atlas/prepare_wider_band_budget.py" research-ide/mathscope-m3/navier/source-global-band.mjs "$out/band-budget-overlay.json"
           python3 "$atlas/prepare_wider_band_budget.py" research-ide/mathscope-m2/navier/actual-residual-order-induction-expressions.mjs "$out/graph-copy-budget-overlay.json"
+          python3 "../evidence/tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-forced-weights/live-c5/prepare_leading_budget.py" . "$out/leading-budget-overlay.json"
+          node --check research-ide/mathscope-m2/navier/actual-global-source-expressions.mjs
           python3 - "$out" <<'PY'
           import hashlib
           import json
@@ -69,6 +72,7 @@ jobs:
               "research-ide/mathscope-m2/navier/actual-residual-order-induction-norms.mjs": "iterative-norm-import-overlay.json",
               "research-ide/mathscope-m3/navier/source-global-band.mjs": "band-budget-overlay.json",
               "research-ide/mathscope-m2/navier/actual-residual-order-induction-expressions.mjs": "graph-copy-budget-overlay.json",
+              "research-ide/mathscope-m2/navier/actual-global-source-expressions.mjs": "leading-budget-overlay.json",
           }
           modified = subprocess.check_output(["git", "diff", "--name-only", "HEAD", "--"], text=True).splitlines()
           assert set(modified) == set(overlays), modified
