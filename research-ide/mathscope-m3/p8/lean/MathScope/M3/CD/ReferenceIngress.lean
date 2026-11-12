@@ -144,6 +144,71 @@ theorem open_band_guard_within_window {t : ℝ} {lo hi j : ℤ}
   have hhiInt : j < hi + 1 := by exact_mod_cast hjhi
   omega
 
+/-- A finite product of the original unit-interval Picard binders preserves
+the radial square bound, including the axis and the upper moment endpoint. -/
+theorem picard_unit_radial_square {x upper : ℝ} (hx : x ∈ Set.Icc 0 upper)
+    (ts : List ℝ) (ht : ∀ t ∈ ts, t ∈ Set.Icc 0 1) :
+    (Real.sqrt x * ts.prod) ^ 2 ∈ Set.Icc 0 upper := by
+  have unitProduct (ys : List ℝ) (hy : ∀ y ∈ ys, y ∈ Set.Icc 0 1) :
+      ys.prod ∈ Set.Icc (0 : ℝ) 1 := by
+    induction ys with
+    | nil => simp
+    | cons a ys ih =>
+      have ha := hy a (List.mem_cons_self _ _)
+      have hp := ih (fun y hy' => hy y (List.mem_cons_of_mem _ hy'))
+      simp only [List.prod_cons]
+      exact ⟨mul_nonneg ha.1 hp.1, by simpa using mul_le_mul ha.2 hp.2 hp.1 zero_le_one⟩
+  have hp := unitProduct ts ht
+  have hnonneg := mul_nonneg (Real.sqrt_nonneg x) hp.1
+  have hle : Real.sqrt x * ts.prod ≤ Real.sqrt x := by
+    simpa using mul_le_mul_of_nonneg_left hp.2 (Real.sqrt_nonneg x)
+  refine ⟨sq_nonneg _, ?_⟩
+  calc
+    (Real.sqrt x * ts.prod) ^ 2 ≤ (Real.sqrt x) ^ 2 :=
+      pow_le_pow_left₀ hnonneg hle 2
+    _ = x := Real.sq_sqrt hx.1
+    _ ≤ upper := hx.2
+
+/-- The original N2 local moment radius puts every such natural argument
+below five at any finite depth in the unit-interval radial integrations. -/
+theorem picard_local_moment_natural_range {x Xa Λ t₁ : ℝ}
+    (hXa : 0 < Xa) (hΛXa : Λ * Xa = 4) (ht₁ : t₁ < 1 / 128)
+    (hx : x ∈ Set.Icc 0 (Xa * Real.exp (t₁ / 32))) (ts : List ℝ)
+    (ht : ∀ t ∈ ts, t ∈ Set.Icc 0 1) :
+    Λ * (Real.sqrt x * ts.prod) ^ 2 ∈ Set.Ico 0 5 := by
+  have hΛ : 0 < Λ := by
+    by_contra! h
+    have hbad := mul_nonpos_of_nonpos_of_nonneg h hXa.le
+    linarith
+  have hr := picard_unit_radial_square hx ts ht
+  have he := Real.exp_pos (t₁ / 32)
+  have hunit : (1 - t₁ / 32) * Real.exp (t₁ / 32) ≤ 1 := by
+    calc
+      _ ≤ Real.exp (-(t₁ / 32)) * Real.exp (t₁ / 32) := by
+        apply mul_le_mul_of_nonneg_right _ he.le
+        linarith [Real.add_one_le_exp (-(t₁ / 32))]
+      _ = 1 := by rw [← Real.exp_add, neg_add_cancel, Real.exp_zero]
+  have hlt : (4 / 5 : ℝ) * Real.exp (t₁ / 32) <
+      (1 - t₁ / 32) * Real.exp (t₁ / 32) :=
+    mul_lt_mul_of_pos_right (by linarith) he
+  refine ⟨mul_nonneg hΛ.le hr.1, ?_⟩
+  calc
+    Λ * (Real.sqrt x * ts.prod) ^ 2 ≤ Λ * (Xa * Real.exp (t₁ / 32)) :=
+      mul_le_mul_of_nonneg_left hr.2 hΛ.le
+    _ = 4 * Real.exp (t₁ / 32) := by rw [← mul_assoc, hΛXa]
+    _ < 5 := by linarith [hlt.trans_le hunit]
+
+/-- The log forms in the active radial branch preserve its natural argument. -/
+theorem picard_local_moment_normalizations {u Xa Λ : ℝ}
+    (hXa : 0 < Xa) (hu : Xa < u) (hΛXa : Λ * Xa = 4) :
+    Xa * Real.exp (Real.log (u / Xa)) = u ∧
+    4 * Real.exp (Real.log (u / Xa)) = Λ * u := by
+  rw [Real.exp_log (div_pos (hXa.trans hu) hXa)]
+  constructor
+  · field_simp [hXa.ne']
+  · rw [← hΛXa]
+    field_simp [hXa.ne'] <;> ring
+
 #print axioms reference_band_label
 #print axioms reference_general_window_lower_label
 #print axioms reference_general_window_strict_point
@@ -153,5 +218,8 @@ theorem open_band_guard_within_window {t : ℝ} {lo hi j : ℤ}
 #print axioms zero_axial_time_below_reference_bracket
 #print axioms representative_midpoint_brackets
 #print axioms open_band_guard_within_window
+#print axioms picard_unit_radial_square
+#print axioms picard_local_moment_natural_range
+#print axioms picard_local_moment_normalizations
 
 end MathScope.M3.CD
