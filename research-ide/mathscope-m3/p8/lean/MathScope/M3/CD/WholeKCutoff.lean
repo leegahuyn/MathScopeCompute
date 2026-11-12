@@ -434,7 +434,7 @@ theorem fourth_cutoff_physical_finite_jet {f : ℝ → ℝ} {b Q q : ℝ}
     rw [hscale] at hbad
     norm_num at hbad
   have hface : b * (Q / 64) = 1 := by
-    rw [mul_div_assoc, hscale]
+    rw [← mul_div_assoc, hscale]
     norm_num
   have hq' := mul_le_mul_of_nonneg_left hq hb.le
   rw [hface] at hq'
