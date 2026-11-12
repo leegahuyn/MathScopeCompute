@@ -39,7 +39,8 @@ This run passed the coefficient norm stage and stopped at a separate raw
 string conversion in the normalized cutoff issuer. The isolated
 `43279539851` retry applies the exact raw prefix comparison to the two
 normalized cutoff issuers. `cutoffs-storage-preflight.json` records the
-original hash and exact reversal.
-The issued C8 object contains symbolic bounds. Directed numerical enclosures,
-the common family, weighted target C6 and Primary C5 each require separate
-verification.
+original hash and exact reversal. The retry verified the common C8 family,
+the N1 band, representative and current, the weighted C6 target and
+Primary C5. The issued bounds are symbolic. Directed numerical enclosures,
+the active N3/N4 attachment and the downstream Forced input are separate
+verification steps.

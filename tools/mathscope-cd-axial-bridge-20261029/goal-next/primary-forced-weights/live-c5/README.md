@@ -1,4 +1,23 @@
-# Original Primary C5 on an admitted N1 source window
+# Original Primary C5 on the native source windows
+
+[Run 43279539851](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43279539851)
+verified the native N1 chain with the original private constructors and
+assertions. The C8 common family, original band, fixed representative,
+current, weighted C6 target and Primary C5 are all present in the receipt.
+The last graph contains 15,122,428 nodes. The class certifies the original
+real wave, angular pressure, potential and full-curl remainder bounds.
+The norms and K root are symbolic, and the native N1 source window still
+requires membership for any chosen point. The original Forced input
+class and final-field jets remain open.
+
+[Run 43282051006](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43282051006)
+constructed the C8 background for active prefixes 3 and 4 in separate
+jobs. Each requested its own additional successor selector row. Both
+reached the 16-million-node admission bound before the common family
+was issued. N3 finished velocity order four and N4 finished velocity
+order one. The retry uses measured limits of 20 and 24 million nodes
+and keeps the existing RSS limit and original assertions.
+[Active retry](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43283839447).
 
 The local degree replay executes the original finite weighted arithmetic
 through C5 and verifies its exact C2 prefix. It uses the original
@@ -11,12 +30,11 @@ factors are retained. The replay does not evaluate the full original K
 or attach the actual class to a private live graph.
 
 The independent GitHub job constructs the original C8 common family,
-its actual N1 current, the same family's weighted C6 target, then the
-Primary C5 class. Its only temporary source changes are reversible
-capacity adjustments and the previously verified iterative copy of the
-same source norm DAG. The original private seals and object identities
-are required. The job writes a compact receipt and a progress log even
-on failure.
+its actual current, the same family's weighted C6 target, then the
+Primary C5 class. The temporary source changes cover representation
+limits, iterative copies of the same DAG and exact bounded graph storage.
+The original private assertions and object identities are required.
+The job writes a compact receipt and a progress log even on failure.
 
 - [43261331187](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43261331187)
   hit the leading expression graph's 350,000-node guard at about 1.4 GB RSS.
@@ -32,7 +50,8 @@ on failure.
   completed the four coefficient expansions and all 31,713 coefficient FTC
   records. It reached program packing with 14,220,509 nodes and
   8,187,076,608 bytes RSS. The original single canonical JSON string failed
-  with V8's “Invalid string length.” The native final seals are still open.
+  with V8's “Invalid string length.” Later retries and the successful
+  native result are recorded in the [storage notes](large-pack/README.md).
 
 The local evidence does not supply the live class, the Forced input
 class, later active increments or any final-field jet. Whole-K jets

@@ -1,0 +1,85 @@
+{
+  "schema": "MathScope.OriginalPicard.SourceTailAndRadialDerivative/1",
+  "graphSHA256": "ce3238938bd5ed7cd5f1d554eddf2f15e774928388fbc54a978c45fea99731bd",
+  "registrySHA256": "049b05929080b4c8a16a5e2c74a1d6f1ad51232fdfb90222d42ffb4f0bbb22ad",
+  "sourceFunctionsSHA256": "326b94ad5d9dc0b4bfda83a53edb7da06ed4ca30506e1ff952f77a0e59676311",
+  "nodeCount": 7358162,
+  "rows": [
+    {
+      "order": 1,
+      "system": 0,
+      "sourceC": 24818,
+      "solutionStrip": 24807,
+      "sourceStrip": 26745,
+      "Kcondition": 24825,
+      "solutionNorm": 24848,
+      "radialDomain": [
+        0,
+        24806
+      ],
+      "sourceA1MaskChecked": true
+    },
+    {
+      "order": 2,
+      "system": 3,
+      "sourceC": 118568,
+      "solutionStrip": 117678,
+      "sourceStrip": 117679,
+      "Kcondition": 118577,
+      "solutionNorm": 118573,
+      "radialDomain": [
+        0,
+        24806
+      ],
+      "sourceA1MaskChecked": true
+    },
+    {
+      "order": 3,
+      "system": 5,
+      "sourceC": 121892,
+      "solutionStrip": 120822,
+      "sourceStrip": 120823,
+      "Kcondition": 121901,
+      "solutionNorm": 121897,
+      "radialDomain": [
+        0,
+        24806
+      ],
+      "sourceA1MaskChecked": true
+    },
+    {
+      "order": 4,
+      "system": 7,
+      "sourceC": 125092,
+      "solutionStrip": 123872,
+      "sourceStrip": 123873,
+      "Kcondition": 125101,
+      "solutionNorm": 125097,
+      "radialDomain": [
+        0,
+        24806
+      ],
+      "sourceA1MaskChecked": true
+    },
+    {
+      "order": 5,
+      "system": 9,
+      "sourceC": 128610,
+      "solutionStrip": 127243,
+      "sourceStrip": 127244,
+      "Kcondition": 128619,
+      "solutionNorm": 128615,
+      "radialDomain": [
+        0,
+        24806
+      ],
+      "sourceA1MaskChecked": true
+    }
+  ],
+  "exactTailThresholdRationalTests": 100,
+  "sourceEqualities": "For actual n=1..5, source K=ceil(72*C^2*a^2/s) and M=exp(9*C^2*a^2/(2*s)); n=1 uses s=delta/8 and source strip 2s, n>=2 uses s=delta/(8*256^n) and source strip 4s. All n use the original actual radius a^2=#24805 and the original nilpotent A1 mask.",
+  "conditionalLemma": "Let E_N be the mathematical error after N Volterra iterates. Assume the original source coefficient functions are continuous in xi, holomorphic on the needed eta strips, satisfy the source A0/A1 row-sum bound C/2, and the existing source value tail ||E_(N-1)||_(S_s)<=4^(-(N-1))/3 for N-1>=K. Then the original regular Volterra derivative identity yields ||partial_xi E_N||_(S_(s/2)) <= C*(1+2/s)*4^(-(N-1))/3. For real eta, Cauchy on eta disks of radii approaching s/2 gives |partial_eta^m partial_xi E_N| <= m!*(2/s)^m*C*(1+2/s)*4^(-(N-1))/3, uniformly for xi in [0,a], including xi=0.",
+  "negativeControl": "A scalar eta-independent component with a=1, A0=2, A1=0 has one-step operator norm at least 2; the source upper-bound hypotheses alone do not imply a Banach contraction. This is an abstract control, not an actual-source counterexample.",
+  "limits": "These are mathematical Picard iterates and a conditional bound, not native display partialSum(max 8) evaluation of the astronomical source K, nor an independent proof of coefficient majorants, Picard existence, X/axis higher radial derivatives, all original formal-to-actual domains or source cutoffs. Release and gates unchanged.",
+  "release": "HOLD"
+}

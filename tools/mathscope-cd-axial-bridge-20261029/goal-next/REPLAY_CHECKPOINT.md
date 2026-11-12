@@ -10,7 +10,9 @@ checkpoint lists the parent checksums and the replaced files.
 - [Archived original wave C4, mean–wave C2 and supported mode-one C2](primary-forced-weights/mixed-wave/README.md)
 - [Archived original radial background C3](primary-forced-weights/radial-background/README.md)
 - [Archived original mode-two input, inverse and mapped output C3](primary-forced-weights/archived-mode-two/README.md)
+- [Original active N3 cell, typed wave roots and local mode-two replay](primary-forced-weights/active-mode-two/README.md)
 - [Actual N4 Picard caller and binder checks](y-higher-flow/y-picard-callers/README.md)
+- [Actual fixed-order Picard tail constants and first radial derivative](y-higher-flow/fixed-n-radial-tail/README.md)
 - [Actual N2 original finite Picard witness and fixed-n analytic reduction](y-higher-flow/fixed-n-limit/README.md)
 
 ## Continuation26
