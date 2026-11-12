@@ -12,7 +12,7 @@ on:
       phase:
         description: Source construction to replay
         type: choice
-        options: [prefix, primary-potential-c3, primary-c3, primary-c3-order4]
+        options: [prefix, primary-potential-c3, primary-potential-c3-order4, primary-c3, primary-c3-order4]
         default: prefix
 permissions:
   contents: read
@@ -23,7 +23,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        prefix: ${{ fromJSON((github.event_name == 'push' || inputs.phase == 'primary-potential-c3' || inputs.phase == 'primary-c3') && '[2,3]' || inputs.phase == 'primary-c3-order4' && '[4]' || '[0,2,3,4]') }}
+        prefix: ${{ fromJSON((github.event_name == 'push' || inputs.phase == 'primary-potential-c3' || inputs.phase == 'primary-c3') && '[2,3]' || endsWith(inputs.phase, '-order4') && '[4]' || '[0,2,3,4]') }}
     env:
       NODE_OPTIONS: --max-old-space-size=6100
       ORIGINAL_SOURCE_COMMIT: f8cb4034e86d7b669d52a6f2248aebba156b51b5
@@ -57,7 +57,7 @@ jobs:
           mkdir -p "$out"
           if [ "$ORIGINAL_PHASE" != prefix ]; then
             export MATHSCOPE_WHOLE_K_PRIMARY_ORDER=3
-            if [ "$ORIGINAL_PHASE" = primary-potential-c3 ]; then
+            if [[ "$ORIGINAL_PHASE" == primary-potential-c3* ]]; then
               export MATHSCOPE_WHOLE_K_PRIMARY_ORDER=2
             fi
             helper=../evidence/tools/mathscope-cd-axial-bridge-20261029/goal-next/whole-k-atlas
