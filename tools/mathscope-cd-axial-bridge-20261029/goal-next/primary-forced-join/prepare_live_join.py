@@ -44,7 +44,7 @@ import {clearDisposableThirdJetCaches} from '../../mathscope-m2/navier/actual-th
 import {attachGlobalSourceBand} from '../navier/source-global-band.mjs';
 import {assertGlobalCurrentState} from '../navier/source-global-current.mjs';
 import {attachGlobalPrimaryClassOperator,assertGlobalPrimaryClassOperator} from '../navier/source-primary-class-majorants.mjs';
-import {assertLivePrimaryForcedJoin} from './assert_live_join.mjs';""")
+import {assertLivePrimaryForcedJoin,raiseSharedNodeLimit} from './assert_live_join.mjs';""")
  s=replace_one(s,"const band=await stage('source_band',()=>prepareGlobalSourceBand({coefficientOrder:1,maxNodes:3500000},context));", """const family=await stage('same_family_C5',()=>prepareActualCommonAdmissibleFamily({throughOrder:2,derivativeOrder:5,maxNodes:5000000,maxProfileJets:60000,maxJetRequests:600000},context));
  assertActualCommonAdmissibleFamily(family);clearDisposableThirdJetCaches(family.G);global.gc?.();
  const band=await stage('source_band',()=>attachGlobalSourceBand(family,{coefficientOrder:1,maxNodes:4000000},context));""")
@@ -68,13 +68,10 @@ import {assertLivePrimaryForcedJoin} from './assert_live_join.mjs';""")
  const forcedGraphBudget=Number(process.env.M3_FORCED_MAX_NODES??5000000);
  if(![5000000,6200000].includes(forcedGraphBudget))throw Error('Unexpected isolated Forced graph budget.');
  if(forcedGraphBudget>5000000){
-   const base=initial.G.baseGraph;
-   const count=initial.G.nodes.length;
-   if(base.maxNodes!==5000000||count>base.maxNodes)throw Error('Unexpected inherited auxiliary graph budget.');
-   base.maxNodes=forcedGraphBudget;
-   if(initial.G.nodes.length!==count||assertGlobalInitializedAngular(initial)!==true)
+   const graphBudget=raiseSharedNodeLimit(initial.G,5000000,forcedGraphBudget);
+   if(assertGlobalInitializedAngular(initial)!==true)
      throw Error('The initial source seal changed after updating its resource ceiling.');
-   receipt.forced_graph_budget={previous:5000000,maximum:forcedGraphBudget,sourceNodeCount:count,
+   receipt.forced_graph_budget={...graphBudget,
      mathematicalSourceChanged:false,initializedPrivateSealRechecked:true};
    memoryGC('after-forced-budget-change');bound();save();
  }""")

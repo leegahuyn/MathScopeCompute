@@ -67,7 +67,7 @@ theorem chart_bracket_derivative {Z T h x : ℝ} (h₀ : 0 < h) (h₁ : h < 1 / 
       _ = 8 * h := by ring
   have hnonnegative : 0 ≤ Z ^ 2 * (2 * h * x ^ (2 * h - 1)) := by positivity
   refine ⟨?_, by linarith, by linarith⟩
-  simpa only [originalChartF, id_eq] using
+  simpa only [originalChartF, Pi.sub_apply, id_eq] using
     (((hasDerivAt_id x).sub (hp.const_mul (Z ^ 2))).sub_const T)
 
 /-- Each point supplied by the original reference image has the unique
@@ -96,7 +96,9 @@ theorem chart_source_image_exists_unique {s η h : ℝ}
         _ ≤ (2 : ℝ) ^ (1 : ℝ) := Real.rpow_le_rpow_of_exponent_le (by norm_num) (by linarith)
         _ = 2 := Real.rpow_one 2
     calc
-      Z ^ 2 = s ^ (1 - 2 * h) * η ^ 2 := by rw [Z, mul_pow, hp]
+      Z ^ 2 = s ^ (1 - 2 * h) * η ^ 2 := by
+        dsimp only [Z]
+        rw [mul_pow, hp]
       _ ≤ s ^ (1 - 2 * h) * 1 := mul_le_mul_of_nonneg_left hη₂ (Real.rpow_nonneg hs₀.le _)
       _ ≤ 2 := by simpa only [mul_one] using hP
   have hf : ContinuousOn (fun x => originalChartF x Z T h) (Set.Icc (1 / 2) 2) := by

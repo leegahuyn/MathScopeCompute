@@ -3,6 +3,24 @@
  * Source IDs belong to the forced/current shared node array only.
  */
 import assert from 'node:assert/strict';
+
+export function raiseSharedNodeLimit(graph, expected, maximum) {
+  const auxiliary = graph.baseGraph;
+  const allocator = auxiliary.baseGraph;
+  const nodes = graph.nodes;
+  const count = nodes.length;
+  assert.strictEqual(auxiliary.nodes, nodes);
+  assert.strictEqual(allocator.nodes, nodes);
+  assert.ok(!Object.hasOwn(graph, 'maxNodes') && !Object.hasOwn(auxiliary, 'maxNodes'));
+  assert.ok(Object.hasOwn(allocator, 'maxNodes'));
+  assert.equal(allocator.maxNodes, expected);
+  assert.ok(count <= expected && Number.isSafeInteger(maximum) && expected < maximum && maximum <= 8000000);
+  allocator.maxNodes = maximum;
+  assert.equal(graph.maxNodes, maximum);
+  assert.equal(nodes.length, count);
+  return {previous: expected, maximum, sourceNodeCount: count, actualAllocatorUpdated: true};
+}
+
 export function assertLivePrimaryForcedJoin({family,current,target,primary,initial,forced,native}) {
   assert.ok(native && ['assertActualCommonAdmissibleFamily','assertActualCommonTargetWeightedNorms','assertGlobalCurrentState','assertGlobalPrimaryClassOperator','assertGlobalInitializedAngular','assertGlobalForcedCurrent'].every(k=>typeof native[k]==='function'));
   native.assertActualCommonAdmissibleFamily(family);native.assertGlobalCurrentState(current);

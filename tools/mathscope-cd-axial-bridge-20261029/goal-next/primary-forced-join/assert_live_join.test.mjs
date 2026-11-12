@@ -1,5 +1,30 @@
 import test from 'node:test';import assert from 'node:assert/strict';
-import {assertLivePrimaryForcedJoin} from './assert_live_join.mjs';
+import {assertLivePrimaryForcedJoin, raiseSharedNodeLimit} from './assert_live_join.mjs';
+
+test('the shared allocator admits new nodes after its real ceiling changes', () => {
+  const allocator = {nodes: [0, 1], maxNodes: 2, append(node) {
+    if (this.nodes.length >= this.maxNodes) throw Error('node limit');
+    this.nodes.push(node);
+  }};
+  const layer = baseGraph => new Proxy({baseGraph}, {get(target, key) {
+    if (Reflect.has(target, key)) return target[key];
+    const value = baseGraph[key];
+    return typeof value === 'function' ? value.bind(baseGraph) : value;
+  }});
+  const auxiliary = layer(allocator);
+  const coupled = layer(auxiliary);
+  assert.throws(() => coupled.append(2), /node limit/);
+  auxiliary.maxNodes = 3;
+  assert.equal(coupled.maxNodes, 3);
+  assert.throws(() => coupled.append(2), /node limit/);
+  assert.throws(() => raiseSharedNodeLimit(coupled, 2, 3));
+  delete auxiliary.maxNodes;
+  assert.deepEqual(raiseSharedNodeLimit(coupled, 2, 3),
+    {previous: 2, maximum: 3, sourceNodeCount: 2, actualAllocatorUpdated: true});
+  coupled.append(2);
+  assert.deepEqual(allocator.nodes, [0, 1, 2]);
+  assert.throws(() => coupled.append(3), /node limit/);
+});
 function fixture(){
  const native=Object.fromEntries(['assertActualCommonAdmissibleFamily','assertActualCommonTargetWeightedNorms','assertGlobalCurrentState','assertGlobalPrimaryClassOperator','assertGlobalInitializedAngular','assertGlobalForcedCurrent'].map(k=>[k,()=>true]));
  const family={request:{throughOrder:2,derivativeOrder:5}},nodes=[],G={nodes,zero:0,q:x=>x,mul:(a,b)=>a*b,add:(a,b)=>a+b,expressionSystem:body=>({body})};
