@@ -116,6 +116,17 @@ def verify(source, git, status):
             "power": bound[key], "pole": 42, "epsilon_units": 99999, "zeta_half_units": 2, "gaussian": 2,
         }
     assert not bound["numericEndpointCertified"] and bound["activeVolterraOutputBound"] == "OPEN"
+    retry = status["pendingHostedCalculations"]["activeN3SameLiveC5AndForced"]
+    prior = retry["earlierTemporalBudgetFailure"]
+    prior_path = f"primary-forced-join/active-n3-c5-binding/hosted-{prior['run']}/"
+    prior_primary = checked(prior_path + "primary-c5-native.json", prior["primaryReceiptSHA256"])
+    assert prior_primary["status"] == n3["status"] and prior_primary["normRoot"] == n3["normRoot"]
+    assert prior_primary["limits"]["familyNodes"] == prior["priorNodeLimit"] == retry["alignedNodeLimit"]
+    prior_join = checked(prior_path + "same-family-mode-two.json", prior["receiptSHA256"])
+    assert prior_join["stages"][-1]["name"] == "same-family-pressure"
+    assert prior_join["stages"][-1]["nodes"] == prior["sameFamilyPressureNodes"] == 19560947
+    assert prior_join["currentStage"] == "same-family-temporal" and prior_join["error"]["code"] == "RESOURCE_LIMIT"
+    assert not prior_join["rows"] and not prior_join["completeForcedSeal"]
     inverse = checked(
         "primary-forced-join/active-n3-c5-binding/active-inverse/n3-active-inverse-degrees.json",
         bound["conditionalStableInverseSHA256"],
