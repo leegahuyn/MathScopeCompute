@@ -1,0 +1,100 @@
+name: MathScope active N3 mode-two source witness
+on:
+  push:
+    branches: [mathscope-cd-axial-source-bridge-20261029]
+    paths:
+      - '.github/workflows/mathscope-active-mode-two-witness.yml'
+      - 'tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-forced-join/active-mode-two-witness/**'
+      - 'tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-forced-join/active-c5/prepare_active_first_forced.py'
+      - 'tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-forced-join/active-c5/capture_source_delta.mjs'
+permissions:
+  contents: read
+jobs:
+  original-active-n3:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 125
+    env:
+      ORIGINAL_SOURCE_COMMIT: f8cb4034e86d7b669d52a6f2248aebba156b51b5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: evidence
+          persist-credentials: false
+          sparse-checkout: |
+            research-ide/mathscope-m3/navier
+            tools/mathscope-cd-axial-bridge-20261029/goal-next
+      - uses: actions/checkout@v4
+        with:
+          ref: f8cb4034e86d7b669d52a6f2248aebba156b51b5
+          path: original
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Prepare the pinned original N3 source
+        working-directory: original
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$ORIGINAL_SOURCE_COMMIT"
+          git diff --quiet --exit-code HEAD --
+          out="$RUNNER_TEMP/mathscope-active-n3"
+          mkdir -p "$out"
+          goal=../evidence/tools/mathscope-cd-axial-bridge-20261029/goal-next
+          active="$goal/primary-forced-join/active-c5"
+          m2=research-ide/mathscope-m2/navier
+          m3=research-ide/mathscope-m3/navier
+          python3 -B "$goal/whole-k-atlas/prepare_diagonal_materialization.py" . "$out/diagonal.json"
+          python3 -B "$goal/whole-k-atlas/prepare_wider_band_budget.py" "$m3/source-global-band.mjs" "$out/band-limit.json"
+          cp "$goal/primary-forced-weights/live-c5/large-pack/large_pack.mjs" "$m2/mathscope-large-seal.mjs"
+          cat >> "$m2/mathscope-large-seal.mjs" <<'JS'
+          import {canonicalStringify as originalCanonical} from '../../mathscope-m0/contracts.mjs';
+          export const captureNodes = nodes => captureNodePrefix(nodes, originalCanonical);
+          JS
+          cp "$active/capture_source_delta.mjs" "$m3/mathscope-active-forced-seal.mjs"
+          python3 -B "$active/prepare_active_first_forced.py" "$m3" "../evidence/$m3" 8000000 "$out/forced-preparation.json" --witness
+          python3 - "$out" <<'PY'
+          import hashlib, json, subprocess, sys
+          from pathlib import Path
+          out = Path(sys.argv[1])
+          sha = lambda data: hashlib.sha256(data).hexdigest()
+          expected = {
+              "research-ide/mathscope-m2/navier/" + name: item["patchedSHA256"]
+              for name, item in json.loads((out / "diagonal.json").read_bytes())["files"].items()
+          }
+          band = "research-ide/mathscope-m3/navier/source-global-band.mjs"
+          receipt = json.loads((out / "band-limit.json").read_bytes())
+          assert receipt["oldSHA256"] == sha(subprocess.check_output(["git", "show", "HEAD:" + band]))
+          expected[band] = receipt["newSHA256"]
+          for row in json.loads((out / "forced-preparation.json").read_bytes())["files"]:
+              path = "research-ide/mathscope-m3/navier/" + row["file"]
+              assert row["originalSHA256"] == sha(subprocess.check_output(["git", "show", "HEAD:" + path]))
+              assert row["exactStorageAndBudgetReversal"]
+              expected[path] = row["outputSHA256"]
+          changed = subprocess.check_output(["git", "diff", "--name-only", "HEAD", "--"], text=True).splitlines()
+          assert set(changed) == set(expected)
+          assert all(sha(Path(path).read_bytes()) == digest for path, digest in expected.items())
+          PY
+      - name: Capture the two actual source template alternatives
+        working-directory: original
+        run: |
+          set -euo pipefail
+          ulimit -s 16384
+          out="$RUNNER_TEMP/mathscope-active-n3"
+          goal=../evidence/tools/mathscope-cd-axial-bridge-20261029/goal-next
+          witness="$goal/primary-forced-join/active-mode-two-witness"
+          source_check="$goal/primary-forced-weights/active-mode-two"
+          support="$source_check/active-n3-physical-fast-support.json"
+          node "$witness/run_active_mode_two.mjs" research-ide "$support" "$out/witness" 3 --preflight-only | tee "$out/preflight.log"
+          node --max-old-space-size=11000 --stack-size=4096 --expose-gc \
+            "$witness/run_active_mode_two.mjs" research-ide "$support" "$out/witness" 3 2>&1 | tee "$out/native-run.log"
+          sha="$(sha256sum "$out/witness/original-active-mode-two-witness.json" | cut -d ' ' -f 1)"
+          python3 -B "$witness/check_active_mode_two.py" \
+            --bundle "$out/witness" --checker "$goal/first-force-repair/verify_repaired_first_force.py" \
+            --support "$support" --witness-sha "$sha" --out "$out/independent-readback.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mathscope-active-n3-mode-two
+          path: ${{ runner.temp }}/mathscope-active-n3/**
+          if-no-files-found: warn
+          retention-days: 30
