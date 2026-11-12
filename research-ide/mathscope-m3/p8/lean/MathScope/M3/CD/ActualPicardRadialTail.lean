@@ -35,7 +35,7 @@ theorem actualPicardFirstRadialTail {rhs average radial : V} {c C s e eEta : ℝ
     (haverage : ‖average‖ ≤ ((C / 2) * (e + eEta)) / (c + 1))
     (hradial : radial = rhs - c • average) :
     ‖radial‖ ≤ C * (1 + 2 / s) * e := by
-  have hsum : e + eEta ≤ e + (2 / s) * e := add_le_add_left hEta e
+  have hsum : e + eEta ≤ e + (2 / s) * e := add_le_add (le_refl e) hEta
   calc
     ‖radial‖ ≤ 2 * ((C / 2) * (e + eEta)) :=
       regularPicardRadialBound hc hrhs haverage hradial
