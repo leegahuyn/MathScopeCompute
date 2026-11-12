@@ -1,0 +1,231 @@
+{
+  "schema": "MathScope.N8.InitializedPhysicalCartesianAngularH1Tail/1",
+  "status": "CONDITIONAL_ORIGINAL_INITIALIZED_FIELD_TAIL_BOUND",
+  "domain": {
+    "X": [
+      "Xa",
+      "Xb"
+    ],
+    "eta": [
+      "-3/4",
+      "3/4"
+    ],
+    "q": {
+      "lower": "qBig/64",
+      "upper": "qBig/16",
+      "upperOpen": true
+    }
+  },
+  "source": {
+    "localizedForceAndGradientSHA256": "74bf04dc47c3dfb1f38f1e6343fe855890390aaff8e24cf85c583eb83af1ca96",
+    "stageZeroJetSHA256": "9dcc5ad21169fe7462bd76f588d994126f0beaef5fdfc4e6ab4657e056371b34",
+    "sourceAssumptions": "inherits source regularity, native field meaning, chart, and fixed-cover joins in the original stage-zero proof"
+  },
+  "derivation": {
+    "variable": "physical Cartesian theta, not auxiliary Haar phases",
+    "normalizedCoefficients": "u_hat_n=(1/(2*pi)) integral_0^(2*pi) u(theta) exp(-i*n*theta) dtheta",
+    "derivative": "d_theta u_i=-y*d_x u_i+x*d_y u_i",
+    "pointwise": "sum_i |d_theta u_i|^2 <= r^2 sum_(i=0..2,j=x,y) |d_j u_i|^2",
+    "radial": "r^2<1/48 on the source annulus by the pinned plateau proof",
+    "tail": "for each integer N>=0 and each complete admitted physical circle, sum_|n|>N sum_i |u_hat_i,n|^2 <= E/[48*(N+1)^2]",
+    "E": "directed finite upper enclosure of sum over the six squared actual localized Cartesian gradient bounds",
+    "sameFrequencyRule": "sum all coefficients with the same physical integer frequency before taking squared modulus",
+    "frame": "Cartesian components; cylindrical component Fourier modes need separate frame-rotation bookkeeping",
+    "zeroMode": "retained for every N>=0",
+    "sourceTerms": [
+      {
+        "component": 0,
+        "derivative": 0,
+        "upper": {
+          "exp": {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "exp": {
+                      "exp": {
+                        "rational": "340331812277396038701593024639753719191/324518553658426726783156020576256"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "component": 0,
+        "derivative": 1,
+        "upper": {
+          "exp": {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "exp": {
+                      "exp": {
+                        "rational": "340331812277396038701593024639753719191/324518553658426726783156020576256"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "component": 1,
+        "derivative": 0,
+        "upper": {
+          "exp": {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "exp": {
+                      "exp": {
+                        "rational": "340331812277396038701593024639753719191/324518553658426726783156020576256"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "component": 1,
+        "derivative": 1,
+        "upper": {
+          "exp": {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "exp": {
+                      "exp": {
+                        "rational": "340331812277396038701593024639753719191/324518553658426726783156020576256"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "component": 2,
+        "derivative": 0,
+        "upper": {
+          "exp": {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "exp": {
+                      "exp": {
+                        "rational": "340327269017644820727418060455465651607/324518553658426726783156020576256"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "component": 2,
+        "derivative": 1,
+        "upper": {
+          "exp": {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "exp": {
+                      "exp": {
+                        "rational": "340327269017644820727418060455465651607/324518553658426726783156020576256"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "gradientSquaresUpper": {
+      "exp": {
+        "exp": {
+          "exp": {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "rational": "340333759388717989261953723575877176727/324518553658426726783156020576256"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "exactRatioToN0": {
+      "N0": "1",
+      "N1": "1/4",
+      "N3": "1/16",
+      "N7": "1/64"
+    }
+  },
+  "limits": {
+    "assumptions": "smooth 2pi-periodic angular traces under the source field hypotheses; this is a circle-by-circle bound",
+    "physicalWindingMaximum": "not evaluated",
+    "laterCorrections": "not bounded",
+    "forceFourierTail": "not claimed; force gradients are not supplied by the 67-jet input",
+    "N805": "OPEN",
+    "N706": "OPEN",
+    "wholeKFinalJets": "0/67",
+    "release": "HOLD"
+  },
+  "arithmetic": {
+    "schema": "MathScope.ClosedNumericalExponentialArithmetic/1",
+    "precisionBits": 96,
+    "operations": 1160,
+    "regularOperations": 2222,
+    "deepest": 9,
+    "maximumEndpointDepth": 8,
+    "maxDepth": 128,
+    "memoEntries": 950,
+    "maxMemoEntries": 250000,
+    "memoHits": 64,
+    "memoEpoch": 0,
+    "memoizedEndpointsAreImmutable": true,
+    "tinyRatioBounds": 0,
+    "regularFallbacks": 0,
+    "elementary": {
+      "method": "DIRECTED_POSITIVE_TAYLOR_RANGE_REDUCTION_SQUARING_RECIPROCAL",
+      "degree": 19,
+      "reducedArgument": [
+        "0",
+        "1/8"
+      ],
+      "positiveTaylorRemainder": "1/2454326913349527398903771100610560000",
+      "evaluations": 0,
+      "tinyPositiveUpperBounds": 0,
+      "tinyPolicy": "For x<=-(bits+8), the interval [0,2^-bits] contains exp(x)>0. No tiny exponential is replaced by an exact zero."
+    },
+    "sourceAuthenticated": false,
+    "sourceIntegralOrParameterEvaluated": false,
+    "exactExpLogCancellation": true,
+    "outwardRatioQuantization": true,
+    "positiveTinyUpperEndpointsRetained": true,
+    "binary64UsedForNumericalDecisions": false
+  }
+}

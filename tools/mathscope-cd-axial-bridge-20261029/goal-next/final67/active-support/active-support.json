@@ -1,0 +1,91 @@
+{
+  "schema": "MathScope.N7.ActiveAxialCutoffSupportLedger/1",
+  "status": "VERIFIED_SOURCE_SHELL_AND_DERIVATIVE_BOUNDS_WITH_CONDITIONAL_ENERGY_TRANSFER",
+  "pinnedSHA256": {
+    "family": "b8c2ce18ebdefd2875e83e5f824eb71f77f1c9b7510170d225efce739360bb78",
+    "chart": "af17e240150ca11452ccd5dcde5e1d2a21f5872d3a1e29a9247d75e6902e86b9",
+    "cutoff": "0f2ef1dff821d7d936a9c254a5e846f6557445e2d3ccf97f3201915a6a949298",
+    "tail": "7f1b591721b768ea0c73cfed346d102d7a92752ab9f2c21487fed33b180ef18b",
+    "outer": "535e1126c6450627bd61cf0e5a94c33938b12e71886a995175493dddfe6b8ced"
+  },
+  "sourceStageScaleRoots": [
+    "f_3b700fc1d0d2c77582a0399d",
+    "f_74b782b03adf1a4984b59949",
+    "f_6de97e1d6c2b0406e8378fde",
+    "f_f04af347097e6fe2f932a058",
+    "f_01dc61ab82cf40fc7cbf57dc"
+  ],
+  "sourceCutoff": "C=chi(2*(x^2+y^2))*chi(2*(z/z0)^2)*chi(tau/tau0), literal original sigma1 primitive",
+  "derivativeAudit": {
+    "subcells": 128,
+    "outwardBits": 64,
+    "ordinaryChiDerivatives1to3": [
+      5,
+      43,
+      1230
+    ],
+    "cutoffPartialRows": [
+      {
+        "z": 1,
+        "time": 0,
+        "coefficient": 15,
+        "unit": "z0^(-1)*tau0^(-0)"
+      },
+      {
+        "z": 1,
+        "time": 1,
+        "coefficient": 75,
+        "unit": "z0^(-1)*tau0^(-1)"
+      },
+      {
+        "z": 1,
+        "time": 2,
+        "coefficient": 645,
+        "unit": "z0^(-1)*tau0^(-2)"
+      },
+      {
+        "z": 2,
+        "time": 0,
+        "coefficient": 364,
+        "unit": "z0^(-2)*tau0^(-0)"
+      },
+      {
+        "z": 2,
+        "time": 1,
+        "coefficient": 1820,
+        "unit": "z0^(-2)*tau0^(-1)"
+      },
+      {
+        "z": 3,
+        "time": 0,
+        "coefficient": 31068,
+        "unit": "z0^(-3)*tau0^(-0)"
+      }
+    ],
+    "scope": "All fixed derivatives of positive axial order with total (z,time) order <=3; valid on radial plateau. Other spatial derivatives vanish there."
+  },
+  "strictSpatialShell": "1/2 < |z/z0| < 1/sqrt(2)",
+  "sourcePlateaus": "The source chi and every finite derivative are flat on both ends. For stage 4 the already verified localization puts its support inside the axial and radial plateaus; hence no stage-4 axial commutator anywhere in K.",
+  "stage2and3": {
+    "all": "Q=rho+zeta^2*Q^(2h). From 1/2<=Q<2 and 0<h<1/64, use 1-2h<=Q^(2h)<=32/31. The shell has Q>95/128, Q<47/31 and eta^2>31/188.",
+    "stage3": "a3*qBig>=e^3>20 and aq<1 imply Q<8/5, which is weaker than the whole-K upper bound 47/31.",
+    "stage4": "Absent by previously verified source localization; no replacement or redefinition of its cutoff."
+  },
+  "shellVolume": {
+    "bound": "(33/98)*z0*tau0",
+    "derivation": "radial chi support area <=pi/2; axial shell length=(sqrt(2)-1)*z0; slab length=tau0/2; pi<22/7 and sqrt(2)<10/7.",
+    "use": "If |density difference|<=B on this shell then its absolute integral over the shell is <=(33/98)*z0*tau0*B. The field-dependent B is not supplied."
+  },
+  "commutator": "On the radial plateau, with W=sum_{j=2,3} chi(a_j*q)*A_j, curl(CW)-C curl(W) = C_z*(-W_y,W_x,0). Derivatives obey the ordinary Leibniz rule; derivative order m requires W derivatives through m and C derivatives through m+1.",
+  "selectorCountermodel": {
+    "nature": "Abstract admissible maxima only; not a counterexample for the actual source fields or actual parameters.",
+    "parameters": "h=1/100, qBig=2^-30000, every P_hat=0 and C_hat=2, so L_j=log(1/qBig)+j for j=1..4.",
+    "point": "Q=1, eta=2/3, rho=5/9, z/z0=2/3. Stage 3 has a3*q=e^3/32 in (1/2,1), stage 2 is active, and stage 4 is zero.",
+    "meaning": "The original selector growth and K inequalities alone do not prove stage-3 vanishing or an absent axial transition; actual norm/maxima evidence could still do so."
+  },
+  "open": "Actual potential W and its derivatives, source field enclosures, weighted norms and actual energy-density B are not obtained. Shell support is a geometric restriction, not a positive contribution or final jet evaluation.",
+  "finalJets": 0,
+  "N7_06": "OPEN",
+  "N8_05": "OPEN",
+  "release": "HOLD"
+}

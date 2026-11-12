@@ -1,8 +1,49 @@
 # Replay the November 13 checkpoint
 
 Extract Continuation17, the cumulative Continuation20 delta, Continuation21,
-Continuation22, Continuation23, Continuation24 and Continuation25 to the same directory in that order. The latest
+Continuation22, Continuation23, Continuation24, Continuation25 and Continuation26 to the same directory in that order. The latest
 checkpoint lists the parent checksums and the replaced files.
+
+## Continuation26
+
+Run from the combined package root.
+
+```sh
+p=tools/mathscope-cd-axial-bridge-20261029/goal-next
+chart=tools/mathscope-cd-axial-bridge-20261029/goal-20261111/m3/whole-k-chart.json
+rt=inputs/annular-numerical-runtime
+hist=inputs/original-selector-scales/historical-scale-arithmetic-input.json
+loc=inputs/localization-source/research-ide/mathscope-m3/recovery-20261019
+o=/tmp/mathscope-26
+mkdir -p "$o"
+
+energy="$p/whole-k-annular-initial/energy"
+python -B "$energy/check_annular_measure.py" "$chart" "$p/whole-k-exterior/whole-k-exterior-cell.json" "$o/annular-measure.json"
+node "$energy/evaluate_initial_integrals.mjs" "$p" "$rt" "$hist" "$o/annular-measure.json" "$o/initial-annular-integrals.json"
+cmp "$o/initial-annular-integrals.json" "$energy/initial-annular-integrals.json"
+
+fourier="$p/final67/initial-fourier"
+node "$fourier/evaluate.mjs" "$p" "$rt" "$o"
+cmp "$o/initial-angular-tail.json" "$fourier/initial-angular-tail.json"
+python -B "$fourier/independent_controls.py"
+
+support="$p/final67/active-support"
+python -B "$support/check_active_support.py" \
+  --family inputs/final-functionals/ACTUAL_RECURSIVE_SOURCE_FUNCTIONALS.json \
+  --chart "$chart" --cutoff "$p/final67/first-scale-selector.json" \
+  --tail "$p/final67/cut-correction-tail.json" --outer "$loc/outer_cutoff.py" --out "$o/active-support.json"
+cmp "$o/active-support.json" "$support/active-support.json"
+
+mode="$p/primary-forced-weights/higher-mode-one"
+node "$mode/replay_mode_one_valuation.mjs" "$p" inputs/mode-one-source "$o/mode-one-valuation.json"
+node "$mode/bind_cross_c1.mjs" "$p" "$o/mode-one-valuation.json" "$o/mean-wave-c1-roots.json"
+cmp "$o/mean-wave-c1-roots.json" "$mode/mean-wave-c1-roots.json"
+```
+
+The four geometry layouts are exact additive partitions. An independent
+final-field refinement still needs a separately enclosed final integrand in
+each cell. The physical angular tail is for initialized velocity. The
+archived Forced algebra does not certify numerical same-family C3 norms.
 
 ## Continuation25
 

@@ -8,7 +8,14 @@
 | 최종장 jets | **0/67** | 환대 초기장 67/67 수치 구간. 모든 활성 보정을 포함하는 최종장 구간 OPEN |
 | 릴리스 | **HOLD** | M3 전체 검증과 최종장 구간 OPEN |
 
-첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20, Continuation21, Continuation22, Continuation23, Continuation24, Continuation25를 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
+첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20, Continuation21, Continuation22, Continuation23, Continuation24, Continuation25, Continuation26을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
+
+## Continuation26
+
+- **VERIFIED · 초기 환형 영역의 에너지·소산·외력 일 구간.** 원본 움직이는 환형 영역의 야코비안을 적용했다. 공간과 시간을 각각 나눈 네 배열에서 셀 측도가 정확히 합쳐졌다. 초기장의 운동에너지, 두 방향 소산, 외력 일, 두 외력 노름 상계와 움직이는 경계 유량을 계산했다. 수치는 균일 초기장 상계이며 최종장 에너지 수지와 독립 세분화 판정은 OPEN이다. [원본 환형 적분](whole-k-annular-initial/energy/README.md).
+- **CONDITIONAL · 초기장 속도의 물리적 각도 Fourier 꼬리.** 원본 초기장 속도 기울기 여섯 개를 연결해 절단 차수 \(N\)에서 꼬리 에너지의 \((N+1)^{-2}\) 상계를 얻었다. 최종장과 외력 꼬리는 OPEN이다. [초기장 Fourier 꼬리](final67/initial-fourier/README.md).
+- **VERIFIED · 축방향 cutoff 지지.** 원본 축방향 전이에서는 \(95/128<Q<47/31\), \(\eta^2>31/188\)이다. 네 번째 보정의 축방향 cutoff 교차항은 전 영역에서 0이다. 세 번째 보정은 알려진 selector 하계만으로 0을 결론낼 수 없다. [활성 보정 지지](final67/active-support/README.md).
+- **CONDITIONAL · 첫 Forced 모드 1.** 보관된 원본 계열 60개 성분과 3차까지 56개 미분 인덱스에서 보존형 전개를 대조했다. 평균–파동 교차항 C1에 필요한 평균 도함수 54개를 원본 상계에 결속했다. 보조 토러스의 팔레트 차수와 실제 대역 비율을 혼동한 이전 설명도 고쳤다. 실제 점성의 2차 미분 항이 남아, 강제항 C3 상계를 완성하려면 같은 원본 파동 C5와 각방향 압력 및 평균 C4가 필요하다. [가중 미분 검증](primary-forced-weights/higher-mode-one/README.md) · [GitHub 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43256030290).
 
 ## Continuation25
 

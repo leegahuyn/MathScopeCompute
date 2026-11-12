@@ -71,8 +71,10 @@ Products retain the stronger \(\zeta P(v)^2\) weight, which is
 bounded by \(\sqrt\zeta P(v)\). This transfer needs neither the
 initialized mean nor a mean pressure bound.
 
-On each original difference \(d\in\{0,1,2,3,4\}\), the own-to-reference
-band ratio is \(\rho=2^d\). The fixed slow substitutions and
+The original palette difference \(d\in\{0,1,2,3,4\}\) determines the
+common-torus factors. The own-to-reference band ratio is
+\(\rho=2^{\ell_{\rm own}-\ell_{\rm ref}}\), which uses the original two
+dyadic band indices. The fixed slow substitutions and
 normalization contribute only fixed powers of \(\rho\), including
 \(\rho^{2A+1/2}\) for the residual coefficient when converting an
 own value to reference normalization. \(X\) and its edge distances
