@@ -19,7 +19,7 @@ private theorem gaussianTail (n : ℕ) {a y : ℝ} (ha : 0 < a) (hy : 0 < y) :
         rw [← mul_assoc, ← Real.exp_add, neg_add_cancel, Real.exp_zero, one_mul]
   have hscale : x * a⁻¹ = (y ^ 2)⁻¹ := by
     dsimp [x]
-    field_simp [ha.ne', hy.ne'] <;> ring
+    field_simp [ha.ne', hy.ne']
   change Real.exp (-x) * ((y ^ 2)⁻¹) ^ n ≤ _
   calc
     Real.exp (-x) * ((y ^ 2)⁻¹) ^ n = (Real.exp (-x) * x ^ n) * (a⁻¹) ^ n := by
