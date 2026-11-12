@@ -1,4 +1,4 @@
-/** Build the original N1 Primary C5 class with real same-family C8/C6 norms. */
+/** Build the original Primary C5 class with the same native family and C8/C6 norms. */
 import assert from 'node:assert/strict';
 import {mkdirSync, writeFileSync} from 'node:fs';
 import {join} from 'node:path';
@@ -15,8 +15,11 @@ import {attachGlobalFixedRepresentative, assertGlobalFixedRepresentative} from '
 import {attachGlobalCurrentState, assertGlobalCurrentState} from '../navier/source-global-current.mjs';
 import {attachGlobalPrimaryClassOperator, assertGlobalPrimaryClassOperator} from '../navier/source-primary-class-majorants.mjs';
 
-const [out, originalCommit] = process.argv.slice(2);
-assert.equal(process.argv.length, 4);
+const [out, originalCommit, prefixText = '1'] = process.argv.slice(2);
+assert([4, 5].includes(process.argv.length));
+assert(['1', '3', '4'].includes(prefixText));
+const prefix = Number(prefixText);
+const throughOrder = prefix + 1;
 assert(out && /^[a-f0-9]{40}$/.test(originalCommit));
 assert.match(process.env.GITHUB_SHA ?? '', /^[a-f0-9]{40}$/);
 mkdirSync(out, {recursive: true});
@@ -27,7 +30,7 @@ let ownedBackgroundGraph;
 const receipt = {
   schema: 'MathScope.N7.OriginalLivePrimaryC5/1',
   status: 'RUNNING', originalCommit, executingCommit: process.env.GITHUB_SHA,
-  requested: {prefix: 1, familyC: 8, weightedTargetC: 6, primaryC: 5},
+  requested: {prefix, selectorThroughOrder: throughOrder, familyC: 8, weightedTargetC: 6, primaryC: 5},
   limits, stages: [], progress: [], finalJets: '0/67', release: 'HOLD',
 };
 function save() {
@@ -124,28 +127,31 @@ function stage(name, build, authenticate) {
 
 try {
   const family = stage('same-source-C8-background', () => prepareActualCommonAdmissibleFamily({
-    throughOrder: 2, derivativeOrder: 8, maxNodes: limits.familyNodes,
+    throughOrder, derivativeOrder: 8, maxNodes: limits.familyNodes,
     maxProfileJets: 60_000, maxJetRequests: 600_000,
   }, context), assertActualCommonAdmissibleFamily);
   assert.equal(family.request.derivativeOrder, 8);
+  assert.equal(family.request.throughOrder, throughOrder);
+  assert.deepEqual(family.selector.rows.map(({order}) => order),
+    Array.from({length: throughOrder}, (_, j) => j + 1));
   assert(receipt.cacheStorage);
   assert(receipt.cacheAtPack);
   assert.equal(family.prepared.order, 8);
   const gaussian = family.source.backgroundNorms.gaussianRows.find(row => row.derivativeOrder === 6);
   assert.equal(gaussian.backgroundDerivativeOrder, 8);
-  const band = stage('original-N1-band', () => attachGlobalSourceBand(family, {
-    coefficientOrder: 1, maxNodes: limits.bandNodes,
+  const band = stage(`original-N${prefix}-band`, () => attachGlobalSourceBand(family, {
+    coefficientOrder: prefix, maxNodes: limits.bandNodes,
   }, context), assertGlobalSourceBand);
-  const representative = stage('fixed-N1-representative', () => attachGlobalFixedRepresentative(band, context),
+  const representative = stage(`fixed-N${prefix}-representative`, () => attachGlobalFixedRepresentative(band, context),
     assertGlobalFixedRepresentative);
-  const current = stage('original-N1-current', () => attachGlobalCurrentState(representative, context),
+  const current = stage(`original-N${prefix}-current`, () => attachGlobalCurrentState(representative, context),
     assertGlobalCurrentState);
   const target = stage('same-source-C6-weighted-target', () => family.constructTargetWeightedNorms({
     derivativeOrder: 6, maxNodes: limits.bandNodes, maxJetRequests: 600_000,
   }, context), assertActualCommonTargetWeightedNorms);
   assert.strictEqual(current.band.family, family);
   assert.strictEqual(target.family, family);
-  assert.equal(current.domain.prefixOrder, 1);
+  assert.equal(current.domain.prefixOrder, prefix);
   assert.equal(target.request.derivativeOrder, 6);
   assert.deepEqual(target.rows.map(row => [row.derivativeOrder, row.pole]),
     Array.from({length: 7}, (_, j) => [j, 3 + 3*j]));
@@ -166,7 +172,7 @@ try {
   const {weighted} = primary.bounds.degreeProgram;
   assert.equal(weighted.potential.length, 7);
   assert.equal(weighted.curl.length, 6);
-  receipt.status = 'VERIFIED_ORIGINAL_NATIVE_N1_PRIMARY_C5_CLASS';
+  receipt.status = `VERIFIED_ORIGINAL_NATIVE_N${prefix}_PRIMARY_C5_CLASS`;
   receipt.source = primary.source;
   receipt.domain = primary.domain;
   receipt.backgroundRow = gaussian;

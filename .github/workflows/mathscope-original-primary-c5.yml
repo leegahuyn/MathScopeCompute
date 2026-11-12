@@ -14,11 +14,17 @@ on:
 permissions:
   contents: read
 jobs:
-  original-n1-primary-c5:
+  original-primary-c5:
+    name: Original N${{ matrix.prefix }} Primary C5
+    strategy:
+      fail-fast: false
+      matrix:
+        prefix: [3, 4]
     runs-on: ubuntu-24.04
     timeout-minutes: 135
     env:
       ORIGINAL_SOURCE_COMMIT: f8cb4034e86d7b669d52a6f2248aebba156b51b5
+      SOURCE_PREFIX: ${{ matrix.prefix }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -132,11 +138,11 @@ jobs:
           out="$RUNNER_TEMP/mathscope-primary-c5"
           node --max-old-space-size=11000 --stack-size=4096 --expose-gc \
             research-ide/mathscope-m3/extended-signed-run-20261023/run_live_primary_c5.mjs \
-            "$out" "$ORIGINAL_SOURCE_COMMIT" 2>&1 | tee "$out/native-run.log"
+            "$out" "$ORIGINAL_SOURCE_COMMIT" "$SOURCE_PREFIX" 2>&1 | tee "$out/native-run.log"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: mathscope-original-n1-primary-c5
+          name: mathscope-original-n${{ matrix.prefix }}-primary-c5
           path: ${{ runner.temp }}/mathscope-primary-c5/**
           if-no-files-found: warn
           retention-days: 30
