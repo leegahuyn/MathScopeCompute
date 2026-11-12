@@ -201,6 +201,13 @@ def bind_initialized(checker, graph, registry, a, row, boundary):
     need(mapped['variable'] == row['path']['w'] and mapped['pulseValue'] == row['path']['pulse'], 'exact mapped endpoint')
     n = row['liftNormal']
     carriers = [a.mul(a.scalar(2), a.of(row['k']), a.of(x)) for x in n]
+    literal_radicals = [root for root in graph.reach(row['path']['vt'])
+                        if graph.node(root)[0] == 'sqrt_positive'
+                        and graph.node(graph.node(root)[1][0])[0] == 'rational'
+                        and checker.q(graph, graph.node(root)[1][0]) == 2]
+    need(len(literal_radicals) == 1, 'literal positive sqrt(2) in original transverse direction')
+    radical, = literal_radicals
+
     def carrier(term, j):
         return scale(carriers[j], (a.neg(term[1]), term[0]))
 
@@ -212,7 +219,13 @@ def bind_initialized(checker, graph, registry, a, row, boundary):
             result = add(result, scale(a.neg(inverse_r), mul(coeff[1], coeff[1])))
         if j == 1:
             result = add(result, scale(inverse_r, mul(coeff[0], coeff[1])))
-        need(result == tuple(a.of(got[p]) for p in PARTS), f'exact conservative own positive-pair quadratic {j}')
+        # J_g^delta preserves the source radial/longitudinal basis over
+        # Q(sqrt(2)). All other analytic atoms and all inverse factors stay
+        # opaque. Reducing only the literal radical needs no denominator
+        # clearing and cannot erase a nonzero independent source operand.
+        differences = (a.sub(expected, a.of(got[part])) for expected, part in zip(result, PARTS, strict=True))
+        need(all(not a.reduce_sqrt_two(diff, radical) for diff in differences),
+             f'exact conservative own positive-pair quadratic {j}')
 
 
 def bind_mapped_potential(graph, registry, a, row):

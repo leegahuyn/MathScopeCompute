@@ -35,4 +35,14 @@ The Python replay checks every typed prior edge, the stream and registry hashes,
 
 `--preflight-only` passed against both a byte-pinned original fixture and a disposable copy with the diagonal materialization applied. The actual historical N1 corrected Forced archive, hosted run `43010379487`, passed the shared inverse readback over 4,197,115 nodes and 9,204,800 typed prior edges. Its positive `0:1` and `1:1` mode-two bodies, exact \(H_w\), zero-data matrix, both pressure components, velocity and cutoff split passed. Swapped \(H_w\) failed. Reproduce this with `--historical-n1-control` and the original `corrected-first-forced-graph` directory in place of the active bundle. Omit `--witness-sha` for that pinned control.
 
-The active N3 or N4 producer and active-only Python checks need a completed fresh hosted run. A local operand pass does not establish a Forced whole-cover seal, C3 bounds, final field values, final jets or a release change.
+## Actual active N3 readback
+
+The pinned active N3 GitHub run exported both original branches. The graph has 6,019,418 nodes and the independent Python replay checked 12,835,313 typed edges. The original positive square-root node has radicand 2. The initial comparison treated this node as opaque, leaving the radial carrier defect proportional to `2 - (sqrt(2))^2` in the lift-one branch. The corrected comparison reduces powers of that literal source radical and keeps all other analytic atoms and inverse factors opaque. Both actual branches and the swapped-`H_w` negative control passed. The historical N1 control was replayed separately and produced the same receipt.
+
+Use the extracted `hosted-43288360518` directory as `--bundle` in the command above. Its input witness SHA-256 is `246a425524981185734cd741a2ef9eb3ed297adf6f3dcbcd83db2abfd68f718a`. The independent result is `n3-active-mode-two-readback.json`. The selected positive mode-two input scope leaves the same-live C5 binding, Forced whole-cover seal, C3 numerical bounds and final field jets open. [Original GitHub artifact](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43288360518).
+
+The extracted directory also contains `diagnose.py` and the exact original comparison script. To reproduce the smallest defect, run from that directory.
+
+```text
+python -B diagnose.py check_active_mode_two.pre_radical.py ../../../first-force-repair/verify_repaired_first_force.py . new-radical-defect.json
+```

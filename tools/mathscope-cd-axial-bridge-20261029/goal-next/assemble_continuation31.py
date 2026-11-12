@@ -1,6 +1,8 @@
 """Verify and archive the active N3 Primary C5 and even-axis evidence."""
 
 from argparse import ArgumentParser
+from hashlib import sha256
+import gzip
 import json
 from pathlib import Path
 import subprocess
@@ -28,6 +30,7 @@ ALLOWED = {
 }
 C5 = "primary-forced-weights/live-c5/"
 EVEN = "y-higher-flow/picard-even-axis/"
+WITNESS = "primary-forced-join/active-mode-two-witness/hosted-43288360518/"
 
 
 def verify(source, git, status):
@@ -132,6 +135,12 @@ def verify(source, git, status):
     assert left["mutationAndEquivalentReplacementControls"]
     assert len(left["checks"]) == 11 and all(row["pass"] for row in left["checks"])
     assert entry(source(base + "old-helper.mjs"))["sha256"] == pressure["helperSHA256"]
+    current_base = "primary-forced-join/active-c5/pressure-current-parity/"
+    current = checked(current_base + "overlay-current.json", pressure["bothReceiptsSHA256"])
+    assert current == left and pressure["latestHelperEndToEndParity"] == "VERIFIED_N1_C2"
+    assert entry(source(current_base + "current-helper.mjs"))["sha256"] == pressure["latestHelperSHA256"]
+    n4_overlay = json.loads(source(f"{C5}hosted-{n4_final['run']}-n4/bounded-seal-overlays.json"))
+    assert n4_overlay["helperSHA256"] == pressure["latestHelperSHA256"]
 
     even = scope["evenAxisTail"]
     parity = checked(EVEN + "parity.json", even["paritySHA256"])
@@ -183,6 +192,7 @@ def main():
     parser = ArgumentParser(description=__doc__)
     parser.add_argument("--workspace", type=Path, required=True)
     parser.add_argument("--repo", type=Path, required=True)
+    parser.add_argument("--active-witness", type=Path, required=True)
     args = parser.parse_args()
     outputs = args.workspace / "outputs"
 
@@ -208,7 +218,51 @@ def main():
             older.update(json.loads(ancestor.read("SHA256.json")))
 
     report, status = source("REPORT_KO.md"), source("STATUS.json")
-    checks = verify(source, git, json.loads(status))
+    parsed = json.loads(status)
+    checks = verify(source, git, parsed)
+    witness = parsed["continuation31"]["activeN3SourceWitness"]
+    witness_raw = source(WITNESS + "original-active-mode-two-witness.json")
+    assert entry(witness_raw)["sha256"] == witness["witnessReceiptSHA256"]
+    original = json.loads(witness_raw)
+    assert original["initializedNodeCount"] == 5999692
+    assert [row["key"] for row in original["rows"]] == ["0:1", "1:1"]
+    assert not original["completeForcedSeal"] and not original["uniformClassOrJetBound"]
+    snapshot = original["snapshot"]
+    graph = args.active_witness / "original-source-nodes.jsonl.gz"
+    registry = args.active_witness / "original-source-functions.json"
+    assert file_sha(graph) == witness["compressedGraphSHA256"]
+    assert file_sha(registry) == snapshot["definitions_sha256"] == witness["registrySHA256"]
+    digest = sha256()
+    nodes = size = 0
+    with gzip.open(graph, "rb") as stream:
+        for block in iter(lambda: stream.read(1 << 20), b""):
+            digest.update(block)
+            nodes += block.count(b"\n")
+            size += len(block)
+    assert nodes == snapshot["node_count"] == witness["nodes"] == 6019418
+    assert size == snapshot["node_stream_uncompressed_bytes"]
+    assert digest.hexdigest() == snapshot["node_stream_sha256"] == witness["nodeStreamSHA256"]
+    readback_raw = source(WITNESS + "n3-active-mode-two-readback.json")
+    assert entry(readback_raw)["sha256"] == witness["independentReadbackSHA256"]
+    readback = json.loads(readback_raw)
+    assert readback["status"] == "ACTIVE_SOURCE_MODE_TWO_OPERAND_READBACK"
+    assert readback["inputReceiptSHA256"] == witness["witnessReceiptSHA256"]
+    assert readback["graphSHA256"] == witness["nodeStreamSHA256"]
+    assert readback["registrySHA256"] == witness["registrySHA256"]
+    assert [row["key"] for row in readback["rows"]] == witness["originalKeys"]
+    assert readback["priorEdges"] == witness["typedPriorEdges"] == 12835313
+    assert readback["negativeControl"] == "swapped H_w rejected"
+    assert not readback["completeForcedSeal"] and not readback["classBounds"]
+    assert entry(source("primary-forced-join/active-mode-two-witness/check_active_mode_two.py"))["sha256"] == witness["checkerSHA256"]
+    defect_raw = source(WITNESS + "radical-defect.json")
+    assert entry(defect_raw)["sha256"] == "891f6d2440a5dd8c4de0c10d3b639afac308bdb85471a4f9c6c4fe4f188dddd0"
+    defect = json.loads(defect_raw)
+    assert defect["inputSHA256"] == witness["witnessReceiptSHA256"] and defect["nodeCount"] == nodes
+    assert defect["rows"][1]["radical"] == 3622 and defect["rows"][1]["unitPerturbationRejected"]
+    assert [part["termsAfterLiteralSqrt"] for part in defect["rows"][1]["parts"]] == [0, 0]
+    earlier_checker = git("show", "891ca1646b8a3e4512ed33fc6b0876a46855aa92:" + CURRENT
+                          + "/primary-forced-join/active-mode-two-witness/check_active_mode_two.py")
+    assert entry(earlier_checker)["sha256"] == "ecbf621f9aa917c3dfad34ff134d25ce64588b2eb4996eebc7024c9c86dd7362"
     delta = outputs / f"{LABEL}_Delta_{DATE}.zip"
     pending = delta.with_suffix(".zip.tmp")
     files = {}
@@ -229,6 +283,9 @@ def main():
                 assert entry(git("show", PARENT + ":" + path)) == older[path], path
             add(path, git("show", head + ":" + path))
 
+        add(f"{CURRENT}/{WITNESS}{graph.name}", graph.read_bytes())
+        add(f"{CURRENT}/{WITNESS}{registry.name}", registry.read_bytes())
+        add(f"{CURRENT}/{WITNESS}check_active_mode_two.pre_radical.py", earlier_checker)
         add("REPORT_KO.md", report)
         add("STATUS.json", status)
         add("CHECKPOINT.json", encode({
@@ -248,7 +305,8 @@ def main():
     receipt = {
         "file": delta.name, "bytes": delta.stat().st_size, "files": len(files) + 1,
         "sha256": file_sha(delta), "branchHead": head, "verifiedParentsInOrder": PARENTS,
-        **checks, "verifiedDeltaManifest": True,
+        **checks, "activeN3WitnessNodes": nodes, "activeN3VerifiedTypedEdges": readback["priorEdges"],
+        "verifiedDeltaManifest": True,
     }
     (outputs / f"{LABEL}_Report_{DATE}_KO.md").write_bytes(report)
     (outputs / f"{LABEL}_Receipt_{DATE}.json").write_bytes(encode(receipt))
