@@ -122,6 +122,7 @@ jobs:
               "$M3_FORCED_MAX_NODES" "$out/temporal-budget-overlay.json" || exit 1
             node --check research-ide/mathscope-m3/navier/source-auxiliary-derivative-closure.mjs || exit 1
             node --check research-ide/mathscope-m3/navier/source-global-temporal.mjs || exit 1
+            node --check research-ide/mathscope-m3/navier/source-global-angular.mjs || exit 1
           fi
           node --max-old-space-size="$heap_mb" --stack-size=4096 --expose-gc research-ide/mathscope-m3/extended-signed-run-20261023/run_primary_forced_live_join.mjs "$out/native-receipt.json" 2>&1 | tee "$out/native-run.log"
           native_result=${PIPESTATUS[0]}

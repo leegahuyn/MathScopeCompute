@@ -1,4 +1,4 @@
-"""Adjust the two authenticated Temporal resource literals in a CI checkout."""
+"""Use one authenticated resource ceiling across Temporal and angular initialization."""
 
 from argparse import ArgumentParser
 import json
@@ -19,6 +19,13 @@ FILES = {
         "04577e8da66311862a17c0ab0fc62491dd366178",
         "declareExactAuxiliaryMaterializationBudget(G,5000000)",
         "declareExactAuxiliaryMaterializationBudget(G,{budget})",
+    ),
+    "source-global-angular.mjs": (
+        "97f982d74a887dcdf4dcff2214a16536bcfc52db",
+        "materializationBudget=declareExactAuxiliaryMaterializationBudget(G,5000000),{epsilon,k}",
+        "materializationBudget=declareExactAuxiliaryMaterializationBudget(G,{budget}),{{epsilon,k}}",
+        "assertGlobalInitialAngularState(s);const G=s.G,start=G.nodes.length,materializationBudget=declareExactAuxiliaryMaterializationBudget(G,5000000),",
+        "assertGlobalInitialAngularState(s);const G=s.G,start=G.nodes.length,materializationBudget=declareExactAuxiliaryMaterializationBudget(G,{budget}),",
     ),
 }
 ALLOWED = (6200000, 6800000)
@@ -53,7 +60,7 @@ def main():
     for path, changed in outputs.items():
         path.write_bytes(changed)
     args.receipt.write_bytes((json.dumps({
-        "status": "PINNED_TEMPORAL_RESOURCE_LITERALS_ONLY",
+        "status": "PINNED_TEMPORAL_AND_ANGULAR_RESOURCE_LITERALS_ONLY",
         "originalNodeBudget": 5000000, "requestedNodeBudget": args.budget,
         "files": changes,
     }, indent=2) + "\n").encode())
