@@ -4,7 +4,7 @@ import {writeFile} from 'node:fs/promises';
 import {resolve} from 'node:path';
 import {pathToFileURL} from 'node:url';
 
-const [sourceRoot, output] = process.argv.slice(2);
+const [sourceRoot, output, arithmeticOutput] = process.argv.slice(2);
 assert.ok(sourceRoot && output, 'Supply original source snapshot and output path');
 const navier = resolve(sourceRoot,'research-ide/mathscope-m2/navier');
 const source = name=>import(pathToFileURL(resolve(navier,name)).href);
@@ -110,3 +110,20 @@ const outputData={
 };
 await writeFile(output,JSON.stringify(outputData,null,2)+'\n');
 console.log('PASS original through-three norm roots, higher n=1,2 unabsorbed coefficients, and leading inputs');
+if (arithmeticOutput) {
+  const {traceExactArithmeticDependencies} = await source('actual-common-selection-arithmetic-trace.mjs');
+  const roots = {L_U: Uroot, K, h, Rstar: G.parameter('C12EnvelopeR')};
+  for (const row of higher) roots['H_' + row.bound] = row.bound;
+  const main = traceExactArithmeticDependencies(G, roots);
+  const leadingF = traceExactArithmeticDependencies({nodes: program.nodes}, {L_F: Lroot});
+  assert.ok(main.nonArithmeticBoundaries.every(({id, node}) =>
+    [239, 257, 275].includes(id) && node.op === 'definite_integral'));
+  assert.deepEqual(leadingF.nonArithmeticBoundaries, []);
+  await writeFile(arithmeticOutput, JSON.stringify({
+    schema: 'MathScope.N7.ExactSlowJetNormTrace/1',
+    highNormReceiptSHA256: createHash('sha256').update(JSON.stringify(outputData,null,2)+'\n').digest('hex'),
+    canonicalGraphSHA256: originalHash, leadingProgramSHA256: hash(program.nodes),
+    definitions: G.source.parametersExactExpressions, main, leadingF,
+  })+'\n');
+  console.log('PASS exact arithmetic traces', main.nodeCount, leadingF.nodeCount);
+}

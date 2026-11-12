@@ -1,0 +1,124 @@
+{
+  "status": "VERIFIED_RATIONAL_INTEGRAL_ENCLOSURE_CONDITIONAL_SOURCE_SUPPORT",
+  "sourceGraphSHA256": "ab52a3337591d2c23c82f8ebbd1ef7305b4ecaebc9fa17ae6d700f32c650e4cf",
+  "sourceGraphNodes": 4456994,
+  "sourceMass": 633724,
+  "actualReciprocal": 633725,
+  "transformation": "a=sqrt(2*X0Imean)*exp(1/2)*sqrt(s), u=10*(R/a-1), integrand=a^-1*exp(-1/(u*(1-u))) on 0<u<1",
+  "exactMass": "(1/10) * integral_0^1 exp(-1/(u*(1-u))) du, provided the actual radial endpoints enclose [a,11a/10]",
+  "supportPremise": "positive X0Imean and s in [1/2,2]; the original entire Imean patch lies within [Xa,Xb].",
+  "supportProof": "For u in [0,1], X=X0Imean*exp(1)*(1+u/10)^2 lies in original patch 0<log(X/X0Imean)<5 since log(11/10)<=1/10. With 1/2<=s<=2 and Xa<=X<=Xb, sqrt(Xa)<=R<=2sqrt(Xb).",
+  "sourceFiles": {
+    "geometrySHA256": "93f86661d67e6bc7b916218cd7af3db72f348ba7fdc876e3618ba3a49edff760",
+    "meanPatchSHA256": "4e2930c8c89596c11f0db8ce72c417b52d01393f8d760920a197f6139bcb0e32"
+  },
+  "proof": "f is increasing on [0,1/2] and symmetric. Nested dyadic endpoint Darboux sums are outward rounded. For x<32, alternating Taylor truncations bracket exp(-x/128); seven directed integer squarings recover exp(-x). For x>=32, 0<=exp(-x)<2^-32. All internal operations are integers.",
+  "bits": 160,
+  "fineIntervalsPerHalf": 131072,
+  "actualFiveMu": {
+    "sourceRoots": [
+      634285,
+      634289,
+      634293,
+      634296,
+      634300
+    ],
+    "originalX0Root": 633686,
+    "lambdaPremise": "0<lambda<=1",
+    "normalizedMu": [
+      {
+        "root": 634285,
+        "power": "2",
+        "quantity": "mu/x0^power",
+        "lower": "0.000702978853",
+        "upper": "0.000850621324",
+        "proofLowerFactor": [
+          "1",
+          "1"
+        ],
+        "proofUpperFactor": [
+          "121",
+          "100"
+        ]
+      },
+      {
+        "root": 634289,
+        "power": "-2-2 lambda",
+        "quantity": "mu/x0^power",
+        "lower": "0.000480144015",
+        "upper": "0.000702992830",
+        "proofLowerFactor": [
+          "10000",
+          "14641"
+        ],
+        "proofUpperFactor": [
+          "1",
+          "1"
+        ]
+      },
+      {
+        "root": 634293,
+        "power": "-2 lambda",
+        "quantity": "mu/x0^power",
+        "lower": "0.000580974259",
+        "upper": "0.000702992830",
+        "proofLowerFactor": [
+          "100",
+          "121"
+        ],
+        "proofUpperFactor": [
+          "1",
+          "1"
+        ]
+      },
+      {
+        "root": 634296,
+        "power": "1",
+        "quantity": "mu/x0^power",
+        "lower": "0.000702978853",
+        "upper": "0.000773292112",
+        "proofLowerFactor": [
+          "1",
+          "1"
+        ],
+        "proofUpperFactor": [
+          "11",
+          "10"
+        ]
+      },
+      {
+        "root": 634300,
+        "power": "1-2 lambda",
+        "quantity": "mu/x0^power",
+        "lower": "0.000639071685",
+        "upper": "0.000773292112",
+        "proofLowerFactor": [
+          "10",
+          "11"
+        ],
+        "proofUpperFactor": [
+          "11",
+          "10"
+        ]
+      }
+    ],
+    "commonLower": "mu/x0^power > 10000/20834143 for every one of the five original rows"
+  },
+  "exact": {
+    "lowerNumerator": "1346639948462868005751081965020803302767372385947845",
+    "upperNumerator": "1346666719679582888300540227302605270636723358024053",
+    "denominator": "1915619426082361072947933783937886479523423902729502720"
+  },
+  "decimalOutward": {
+    "lower": "0.000702978853",
+    "upper": "0.000702992830",
+    "inverseLower": "1422.489616",
+    "inverseUpper": "1422.517896"
+  },
+  "controls": {
+    "nestedDyadicEnclosure": true,
+    "positiveLower": true,
+    "reciprocalStrictlyBetween1422And1423": true
+  },
+  "scope": "Original mass, reciprocal, and five source moment enclosures normalized by their exact positive powers of x0. No numerical evaluation of x0, lambda, other norm leaves, same-family identity, full field jets or release."
+}

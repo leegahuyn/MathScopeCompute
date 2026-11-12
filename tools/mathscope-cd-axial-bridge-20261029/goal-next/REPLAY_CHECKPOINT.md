@@ -1,8 +1,49 @@
 # Replay the November 12 checkpoint
 
 Extract Continuation17, the cumulative Continuation20 delta, Continuation21,
-Continuation22, and Continuation23 to the same directory in that order. The latest
+Continuation22, Continuation23 and Continuation24 to the same directory in that order. The latest
 checkpoint lists the parent checksums and the replaced files.
+
+## Continuation24
+
+Use the pinned original runtime for this replay. It has a separate path so
+earlier checkpoint inputs preserve their exact bytes.
+
+```sh
+p=tools/mathscope-cd-axial-bridge-20261029/goal-next
+rt=inputs/annular-numerical-runtime
+m2="$rt/research-ide/mathscope-m2/navier"
+m3=inputs/original-core-runtime/research-ide/mathscope-m3/navier
+graph=inputs/corrected-first-cycle/corrected-first-cycle-graph
+forced=inputs/corrected-first-forced/corrected-first-forced-graph
+hist=inputs/original-selector-scales/historical-scale-arithmetic-input.json
+threshold="$p/whole-k-selector-scales/historical-scale-arithmetic-result.json"
+slow="$p/whole-k-annular-slow"
+fixed="$p/whole-k-annular-initial/numerical"
+node --stack-size=4096 "$p/whole-k-core-jet-bounds/replay_core_high_norms.mjs" \
+  "$rt" /tmp/core-high-norms.json /tmp/slow-jet-norm-trace.json
+node "$slow/evaluate_annular_slow.mjs" "$rt" /tmp/slow-jet-norm-trace.json \
+  "$hist" "$slow/annular-slow-jet-bounds.json" "$threshold" /tmp/annular-slow-256bit.json
+node "$slow/evaluate_annular_slow.mjs" "$rt" /tmp/slow-jet-norm-trace.json \
+  "$hist" "$slow/annular-slow-jet-bounds.json" "$threshold" /tmp/annular-slow-96bit.json coarse-upper
+node "$slow/compare_directed_intervals.mjs" "$rt" "$threshold" \
+  /tmp/annular-slow-256bit.json /tmp/annular-slow-96bit.json /tmp/slow-interval-comparison.json
+python "$fixed/trace_stage_zero_leaves.py" "$p" "$graph/original-source-nodes.jsonl.gz" \
+  /tmp/stage-zero-transitive-inputs.json
+node "$fixed/evaluate_stage_zero_fixed.mjs" "$rt" /tmp/stage-zero-transitive-inputs.json \
+  "$hist" "$threshold" /tmp/annular-slow-96bit.json /tmp/stage-zero-fixed-numerical.json
+mass="$p/whole-k-annular-pressure-lower/numerical-mass"
+node "$mass/actual-rho-mass.mjs" "$graph/original-source-nodes.jsonl.gz" \
+  "$m3/source-global-current.mjs" "$m2/actual-pulse-meanpatch.mjs" > /tmp/actual-rho-mass.json
+node "$mass/rho-mass-independent.mjs" /tmp/actual-rho-mass.json > /tmp/rho-mass-independent.json
+mode="$p/first-forced-mode-two-jets"
+node "$mode/replay_mode_two_jets.mjs" "$p" "$forced" "$m3/source-forced-pulse.mjs" /tmp/mode-two-selected-jets.json
+node "$mode/check_mode_two_jets.mjs" "$p" "$forced" /tmp/mode-two-selected-jets.json /tmp/mode-two-selected-jets-readback.json
+```
+
+The local browser replay accepts `inputs/operational-m4/production-v137.html`,
+the installed Playwright module path, the Chrome path and an output directory.
+[Browser replay and scope](m4/r108/production-pointer-local/README.md).
 
 ## Continuation23
 

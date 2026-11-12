@@ -70,3 +70,24 @@ Use Node.js and Python with SymPy with the packaged runtime and original Git obj
       --joined <inputs/first-gauge-joined> --whole-k <whole-k-chart.json>
 
 The Python reader pins the original atom formulas, whole-K chart, N3 coefficient norms, exact source Stokes certificate, radial envelope and replayed leading norms by SHA-256. The leading Node runtime closure is also checked against Git blobs of the pinned original source. The script help lists path overrides for an extracted checkpoint. This evidence adds no Lean theorem.
+
+## Directed numerical endpoints
+
+The original replay now emits the exact arithmetic closure of the four
+unabsorbed roots \(H_{212882},H_{212886},H_{212893},H_{212905}\) and
+both leading norms \(L_U,L_F\). The two graph namespaces retain their
+original root numbers. Three original integral boundaries use their
+previously checked closed intervals. The physical time factor uses the
+original \(\log(1/\tau_0)=(\ell_{\min}+10)\log 2+\log 32\). The signed
+coefficient of \(h\) is retained separately in each physical exponent.
+
+The 256-bit original directed replay produced 67 symmetric numerical
+enclosures, including 19 exact zeros, for the pre-localization slow
+field. Endpoint exponentials are stored as exact nested exp/rational
+objects. A separate 96-bit coarse replay encloses every resulting
+physical and normalized upper endpoint. The two replays count
+10,678,549 and 1,710,106 arithmetic operations respectively.
+
+The initialized mean and wave bounds still need their separate
+high-order background and target norms, and all later active
+corrections remain separate from this result.

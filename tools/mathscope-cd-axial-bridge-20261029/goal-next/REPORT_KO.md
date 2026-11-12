@@ -8,10 +8,14 @@
 | 최종장 jets | **0/67** | 환대 초기장의 기호 상계 67/67 재현. 전체 최종장의 닫힌 셀 구간 OPEN |
 | 릴리스 | **HOLD** | M3 전체 검증과 최종장 구간 OPEN |
 
-첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20, Continuation21, Continuation22, Continuation23을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
+첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20, Continuation21, Continuation22, Continuation23, Continuation24를 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
 ## 현재 이어진 전체장 검증
 
+- **VERIFIED · 환대의 원본 느린 배경장 수치 구간 67개.** 선도장 노름 두 개와 고차 노름 네 개의 정확한 산술 그래프를 재현했다. 원본 256비트 방향 반올림으로 67개 닫힌 구간과 19개 정확한 영을 얻었고, 96비트 상계가 그 결과를 전부 포함함을 대조했다. 초기장 전체 상계의 외부 입력을 4,456,994개 원본 노드에서 추적해 느린 장 48개, 고정 반경 연산자 15개, 원본 상수 11개를 수치로 결속했다. 초기장 전체에는 고차 배경 C8 18개와 가중 표적 C7 16개의 노름이 남아 있다. [느린 배경 수치 구간](whole-k-annular-slow/README.md) · [초기장 입력 추적](whole-k-annular-initial/numerical/README.md).
+- **VERIFIED · 원본 평균 압력 정규화와 FiveMap의 양의 모멘트.** 원본 \(\#633724\)의 질량은 \([0.000702978853,0.000702992830]\)에 있고 역수 \(\#633725\)는 \([1422.489616,1422.517896]\)에 있다. 원본 평균 패치의 포함과 \(0<\lambda<1\)을 방향 반올림으로 증명했다. 원본 허용 밴드에서 FiveMap의 다섯 정규화 모멘트가 모두 \(10000/20834143\)보다 크다. 질량 적분은 독립 midpoint 상계로 교차 확인했다. [원본 질량 적분](whole-k-annular-pressure-lower/numerical-mass/ACTUAL_RHO_MASS.md).
+- **CONDITIONAL · 보관된 N1 첫 Forced 모드 2의 추가 도함수.** 원본 10개 영 초기조건 계의 해와 게이지에 대해 모든 통상 1차 미분과 \(vv,Rv,Zv,Tv,\xi v\) 상계를 구성했다. 압력과 두 cutoff 항은 1차까지 연결했다. 원본 도함수와 행렬 곱의 순서를 독립 대조했다. N3/N4 결속, 나머지 고차 미분과 전체 \(K\)의 수치 구간은 OPEN이다. [모드 2 추가 재현](first-forced-mode-two-jets/README.md).
+- **VERIFIED · 운영 M4 버튼의 로컬 수정 시험.** 공개본의 정확한 HTTP 바이트로 데스크톱 버튼 겹침을 재현했다. 메모리에 넣은 위치 조정 후 390–1920px의 여섯 화면에서 실제 포인터로 두 대화상자를 열고 닫았다. 외부 요청을 차단한 로컬 시험이다. 운영 게시 및 R1-08은 OPEN이다. [운영 스냅샷 재현](m4/r108/production-pointer-local/README.md).
 - **VERIFIED · 환대 초기장의 67개 기호 상계 재현.** 원본 4,456,994개 노드의 부호별 포텐셜과 물리 좌표 변환으로 \(A\)의 57개 상계를 확인했다. \(b\) 6개와 \(p\) 4개를 결합해 67개 초기 상계를 구성했다. 독립 검사는 세 번째 반경 미분에서 좌표 변환의 \(a''\) 항을 빠뜨린 대조를 거부했다. 원본 노름의 유한성, 지지와 평탄 접합을 사용하는 상계이며 FTC 노름의 수치 평가와 모든 활성 증분은 OPEN이다. [초기장 67개와 독립 검증](whole-k-initialized-gauge/README.md).
 - **CONDITIONAL · 첫 Forced 모드 1의 보존형 평균–파동 교차항.** 고정 슬래브의 기존 원본 초기 평균 상계에서 값은 \(\epsilon^{1-\kappa_s}\), 공간 1차 미분은 \(\epsilon^{1-2\kappa_s}\) 차수다. 같은 실제 경로의 파동 상계를 가정하면 교차항의 \(\epsilon^{1-3\kappa_s}\sqrt\zeta P(v)\) 상계가 따른다. 비가중 평균만 가정할 경우 발산 없는 \(M=e_\theta\), \(a=n^{-1}e^{in\theta}e_z\), \(\epsilon=n^{-2}\)가 양의 \(\epsilon\) 차수에 대한 반례다. 새 GitHub 계열과의 동일성 및 전체 \(W_\alpha\) 상계는 OPEN이다. [가중 상계 재현](primary-forced-weights/WEIGHTED_STAGE_ZERO_VALUATION.md).
 - **CONDITIONAL · 보관된 첫 Forced 모드 2의 입력·퍼텐셜.** 두 원본 그래프의 공통 3,860,185개 노드와 10개 경로의 실제 원시·지원 성분 60개를 Python으로 대조했다. 원본 발산 항등식으로 운반 주파수 \(k\)를 소거해 입력의 값과 1차 미분 상계를 얻었다. 10개 영 초기조건 역연산과 보정 퍼텐셜의 값·횡방향 \(\xi\) 미분 상계도 독립 재현했다. 상계는 원본 N1 허용 창에 적용되며, 전체 \(K\) 안쪽의 N3/N4 부착과 새 GitHub 계열 결속은 OPEN이다. [모드 2 재현](first-forced-mode-two-c1/README.md).
