@@ -109,12 +109,15 @@ by the flat cutoff.
 
 ## OPEN · First actual gaps and the initialized mean route
 
-The primary order-2 receipt and first Forced receipt were produced
-from separate private source constructions. The same-family attempt
-43044574048 authenticated the C5 family and stopped at `source_band`
-because its supplied 6,000,000-node input cap exceeded the original
-4,000,000-node API cap. It provides no joined norm for these live
-120 operands. The coefficient transfer is conditional on the
+GitHub run [43219432398](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43219432398)
+completed the live same-family order-two join and verified the 120
+native components in the new graph namespace. The separate initialized
+mean replay now supplies [conditional fixed-reference spatial C2 bounds](../whole-k-annular-pressure-lower/MEAN_SPATIAL_C2.md).
+The live order-three rerun [43232163618](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43232163618)
+has passed runner preparation and the checker controls. It is still building
+the source join. The spatial mean result needs the original weighted norm,
+fixed-representative transport and live-family binding before it supplies the
+mode-one forcing class. The coefficient transfer is conditional on the
 original same-source Primary class and the smooth zero extension
 along the full actual pulse path. The exact product ideal shows
 zero when the retained wave/pressure jets and primary cutoff jet
@@ -122,8 +125,8 @@ are zero and their companion operands are defined. Positive-order
 intrinsic shell, transverse and slow seam regularity remains an
 analytic condition.
 
-For mode-1 order zero, the first missing class is already the actual
-initialized mean \(C^1\). Its early Temporal source includes raw axial
+The original mode-one route needs the actual initialized mean with its
+weights and charts through \(C^1\). Its early Temporal source includes raw axial
 residual #643883 and the original shifted-pressure axial derivative
 #643849. The corrected fixed-\(u\) operator preserves ordinary derivative
 order under the actual smooth zero extension. The improved Temporal
