@@ -1,6 +1,6 @@
 # Replay the November 12 checkpoint
 
-Extract Continuation17 and then the cumulative Continuation19 delta to the same directory. The delta manifest lists the exact replacements. The original source exports and registries in the two archives are the inputs to the commands below.
+Extract Continuation17 and then the cumulative Continuation20 delta to the same directory. The delta manifest lists the exact replacements. The original source exports and registries in the two archives are the inputs to the commands below.
 
 From the extraction directory, set the evidence path in a POSIX shell.
 
@@ -40,4 +40,4 @@ done
 python "$p/whole-k-exterior/check_exterior_energy_refinement.py" --localization-source inputs/localization-source --out /tmp/mathscope-exterior-energy.json
 ```
 
-The Lean run used GitHub Actions and is recorded in [ci-43219998006](ci-43219998006/). The exterior integral details are in [the heat-exterior certificate](whole-k-exterior/EXTERIOR_ENERGY_REFINEMENT.md). Final-field acceptance remains recorded in [STATUS.json](STATUS.json).
+The [fourth-scale certificate](whole-k-selector-scales/fourth/README.md) gives the commands for the N4 source binding and exact scale comparison. The two new Lean proofs are recorded in the GitHub artifacts [ci-43219998006](ci-43219998006/) and [ci-43224231941](ci-43224231941/). The exterior integral details are in [the heat-exterior certificate](whole-k-exterior/EXTERIOR_ENERGY_REFINEMENT.md). Final-field acceptance remains recorded in [STATUS.json](STATUS.json).

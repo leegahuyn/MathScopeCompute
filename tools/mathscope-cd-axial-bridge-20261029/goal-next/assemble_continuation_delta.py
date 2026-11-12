@@ -32,12 +32,13 @@ def main():
         parser.add_argument("--"+name, type=Path, required=True)
     parser.add_argument("--potential-artifacts", type=Path, required=True)
     parser.add_argument("--primary-artifacts", type=Path, required=True)
+    parser.add_argument("--fourth-inputs", type=Path, required=True)
     args = parser.parse_args()
     workspace = args.workspace.resolve()
     repo = workspace / "work/MathScopeCompute-CD"
     outputs = workspace / "outputs"
     base = outputs / "MathScope_Goal_Continuation17_20261111.zip"
-    label = "MathScope_Goal_Continuation19"
+    label = "MathScope_Goal_Continuation20"
     delta = outputs / f"{label}_Delta_20261112.zip"
 
     def git(*params):
@@ -127,6 +128,26 @@ def main():
             path = f"{localization}/{name}"
             source = workspace/"work/goal-next/final67/source"/path
             put_file(f"inputs/localization-source/{path}", source,
+                     {"sha256": expected, "bytes": source.stat().st_size})
+        fourth_pins = {
+            "fourth-ftc-prefix-capture.json": "758275f4cd1b23d38babfc91a3be3f961e073271a077db58523edbc22532c4b8",
+            "fourth-ftc-exact-bodies.json.gz": "908cf614b88e1bd6c5f5ab9c49977d66fed82b57bbfcf60bc93cfc0c92606caa",
+            "historical-c4-operands.json": "e1c782cbb6ea5670e618e41833a4d7f640d6ed50d02d6c4f73607e1b52f4790f",
+            "fourth-ftc-all-upper-operands.json": "d1a32576780f3c10956d03aaca6f51a5cd408a1ae5558e31e04384bbccab33bd",
+            "fourth-threshold-source.json": "1a5ce5577bd4c5d47975b89a1de4433eb37a46068ba388459d2821f8ddd0c69a",
+            "fourth-archived-selector-stage.json": "0c7285a274b3442eca8cf2127c3d279f8a09ec0db48f5d444006f23d324b3cd8",
+            "fourth-archived-selector-final.json": "88f7cf6fe5af934d6b3bcacc8ad975e86bd0b37fee2110b9db8c73e72acb129e",
+            "historical-scale-arithmetic-input.json": "03806ccc21ae6f759d0f5908d9eaabb24e3972aaedd530d43aea8ade522fa3f0",
+            "historical-c4-relative-degree.json": "018af4f89ff5b43a3d6cd6a6096034070371e51170428991ec466c2e735b9497",
+            "fourth-ftc-relative-degree.json": "49e6a71566c13cf22910d94fed5f9d75e7361d79e2fa381b3618404b14e29649",
+            "historical-c4-relative-atoms.json": "48c7f9b4d051ae2ede6c568079daf9a53ebf960e8cc7884b4c01797ee14eef8b",
+            "fourth-ftc-relative-atoms.json": "f647cffde45b05c896c59fbe96c0fc5789d8521ce8ad30b05ebfbbb712d25e26",
+            "historical-c4-atoms-directed.json": "26932ce7c403658fed60c07733fedcd58953005c6b156f1e3e056946c0051844",
+            "fourth-ftc-atoms-directed.json": "cab725cdeec1ce06d1ec20bad5b90ad1cb43219c2fc7a2368d896768fc32fc42",
+        }
+        for name, expected in fourth_pins.items():
+            source = args.fourth_inputs/name
+            put_file(f"inputs/fourth-selector/{name}", source,
                      {"sha256": expected, "bytes": source.stat().st_size})
         put("REPORT_KO.md", report)
         put("STATUS.json", status)
