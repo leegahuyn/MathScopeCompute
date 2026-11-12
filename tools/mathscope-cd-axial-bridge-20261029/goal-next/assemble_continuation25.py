@@ -64,8 +64,9 @@ def main():
     assert summary["continuation25"]["initializedAnnularNumerical"]["externalInputs"] == 108
 
     delta = outputs / f"{LABEL}_Delta_{DATE}.zip"
+    pending = delta.with_suffix(".zip.tmp")
     files = {}
-    with ZipFile(delta, "w", compression=ZIP_DEFLATED, compresslevel=5) as bundle:
+    with ZipFile(pending, "w", compression=ZIP_DEFLATED, compresslevel=5) as bundle:
         def add(name, data):
             assert name not in files
             bundle.writestr(name, data)
@@ -84,7 +85,7 @@ def main():
             add(path, git("show", head + ":" + path))
         source_manifest = git(
             "show", f"{head}:{CURRENT}/whole-k-annular-initial/localized-force/SOURCE_INPUTS.md"
-        ).decode()
+        ).decode().replace("\r\n", "\n")
         localization_inputs = re.findall(
             r"^\| `(research-ide/[^\n`]+)` \| `([a-f0-9]{64})` \| `([a-f0-9]{40})` \|$",
             source_manifest, re.MULTILINE,
@@ -109,12 +110,13 @@ def main():
         }))
         bundle.writestr("SHA256.json", encode(files))
 
-    with ZipFile(delta) as bundle:
+    with ZipFile(pending) as bundle:
         assert bundle.testzip() is None
         assert set(bundle.namelist()) == set(files) | {"SHA256.json"}
         assert json.loads(bundle.read("SHA256.json")) == files
         for path, expected in files.items():
             assert entry(bundle.read(path)) == expected, path
+    pending.replace(delta)
     receipt = {
         "file": delta.name, "bytes": delta.stat().st_size, "files": len(files) + 1,
         "sha256": file_sha(delta), "branchHead": head, "verifiedParentsInOrder": PARENTS,
