@@ -209,6 +209,55 @@ theorem picard_local_moment_normalizations {u Xa Λ : ℝ}
   · rw [← hΛXa]
     field_simp [hXa.ne']
 
+/-- Every source Volterra step keeps the radial input in its registered collar. -/
+theorem picard_radial_step {x upper t : ℝ}
+    (hx : x ∈ Set.Icc 0 upper) (ht : t ∈ Set.Icc 0 1) :
+    t * x ∈ Set.Icc 0 upper := by
+  refine ⟨mul_nonneg ht.1 hx.1, ?_⟩
+  calc
+    t * x ≤ 1 * x := mul_le_mul_of_nonneg_right ht.2 hx.1
+    _ = x := one_mul x
+    _ ≤ upper := hx.2
+
+/-- The successive radial inputs of an arbitrary finite Volterra word. -/
+def picardRadialPath (x : ℝ) : List ℝ → List ℝ
+  | [] => [x]
+  | t :: ts => x :: picardRadialPath (t * x) ts
+
+theorem picard_radial_path_closed {x upper : ℝ} (hx : x ∈ Set.Icc 0 upper)
+    (ts : List ℝ) (ht : ∀ t ∈ ts, t ∈ Set.Icc 0 1) :
+    ∀ z ∈ picardRadialPath x ts, z ∈ Set.Icc 0 upper := by
+  induction ts generalizing x with
+  | nil =>
+    intro z hz
+    have hz' : z = x := by simpa [picardRadialPath] using hz
+    simpa [hz'] using hx
+  | cons t ts ih =>
+    intro z hz
+    change z ∈ x :: picardRadialPath (t * x) ts at hz
+    rcases List.mem_cons.mp hz with h | h
+    · simpa [h] using hx
+    · have ht₀ := ht t List.mem_cons_self
+      have htail : ∀ y ∈ ts, y ∈ Set.Icc (0 : ℝ) 1 :=
+        fun y hy => ht y (List.mem_cons_of_mem _ hy)
+      exact ih (picard_radial_step hx ht₀) htail z h
+
+/-- The common real cap of the retained coefficient and binder range checks. -/
+theorem picard_core_natural_argument_below_five {Y t₁ : ℝ}
+    (ht₁ : t₁ < 1 / 128) (hY : Y ∈ Set.Icc 0 (4 * Real.exp (2 * t₁))) :
+    Y ∈ Set.Ico 0 5 := by
+  have he := Real.exp_pos (2 * t₁)
+  have hunit : (1 - 2 * t₁) * Real.exp (2 * t₁) ≤ 1 := by
+    calc
+      _ ≤ Real.exp (-(2 * t₁)) * Real.exp (2 * t₁) := by
+        apply mul_le_mul_of_nonneg_right _ he.le
+        linarith [Real.add_one_le_exp (-(2 * t₁))]
+      _ = 1 := by rw [← Real.exp_add, neg_add_cancel, Real.exp_zero]
+  have hlt : (4 / 5 : ℝ) * Real.exp (2 * t₁) <
+      (1 - 2 * t₁) * Real.exp (2 * t₁) :=
+    mul_lt_mul_of_pos_right (by linarith) he
+  exact ⟨hY.1, hY.2.trans_lt (by linarith [hlt.trans_le hunit])⟩
+
 #print axioms reference_band_label
 #print axioms reference_general_window_lower_label
 #print axioms reference_general_window_strict_point
@@ -221,5 +270,7 @@ theorem picard_local_moment_normalizations {u Xa Λ : ℝ}
 #print axioms picard_unit_radial_square
 #print axioms picard_local_moment_natural_range
 #print axioms picard_local_moment_normalizations
+#print axioms picard_radial_path_closed
+#print axioms picard_core_natural_argument_below_five
 
 end MathScope.M3.CD
