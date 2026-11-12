@@ -3,12 +3,49 @@ import Mathlib
 /-!
 Conditional algebraic part of the first even-X error estimate.
 
-The source Picard tail, eta Cauchy bound, coefficient-xi suprema, and the
-regular even-axis integral identity are inputs. This file does not establish
-any of those analytic hypotheses or identify a native Picard limit.
+The source Picard tail, eta Cauchy bound, and coefficient-xi suprema are
+inputs. The normalized averaging identity is derived from the derivative
+of the odd first derivative and its vanishing at zero.
 -/
 
+open MeasureTheory
+
 namespace MathScope.M3.CD
+
+/-- Away from the axis, rescale the interval before applying FTC to the
+first radial derivative. The vanishing at zero comes from even parity. -/
+theorem evenAxisFirstDerivativeAverage
+    (first second : ℝ → ℝ) (x : ℝ) (hx : x ≠ 0)
+    (hzero : first 0 = 0)
+    (hderiv : ∀ t ∈ Set.uIcc (0 : ℝ) 1, HasDerivAt first (second (t * x)) (t * x))
+    (hint : IntervalIntegrable (fun t => second (t * x) * x) volume 0 1) :
+    first x / (2 * x) = (1 / 2 : ℝ) * (∫ t in (0 : ℝ)..1, second (t * x)) := by
+  have hFTC := intervalIntegral.integral_eq_sub_of_hasDerivAt
+    (f := fun t => first (t * x)) (f' := fun t => second (t * x) * x)
+    (fun t ht => (hderiv t ht).comp t ((hasDerivAt_id t).mul_const x)) hint
+  rw [intervalIntegral.integral_mul_const] at hFTC
+  simp only [one_mul, zero_mul, hzero, sub_zero] at hFTC
+  rw [← hFTC]
+  field_simp <;> ring
+
+/-- A pointwise bound on the integrand gives the same bound divided by two
+for its normalized average, including the constant integrand at the axis. -/
+theorem evenAxisIntegralBound
+    (f : ℝ → ℝ) (B : ℝ)
+    (hbound : ∀ t ∈ Set.uIoc (0 : ℝ) 1, |f t| ≤ B) :
+    |(1 / 2 : ℝ) * (∫ t in (0 : ℝ)..1, f t)| ≤ B / 2 := by
+  have hi := intervalIntegral.norm_integral_le_of_norm_le_const
+    (a := (0 : ℝ)) (b := (1 : ℝ)) (C := B) (f := f) (by
+      intro t ht
+      simpa only [Real.norm_eq_abs] using hbound t ht)
+  have habs : |∫ t in (0 : ℝ)..1, f t| ≤ B := by
+    simpa [Real.norm_eq_abs] using hi
+  calc
+    |(1 / 2 : ℝ) * (∫ t in (0 : ℝ)..1, f t)| =
+        (1 / 2 : ℝ) * |∫ t in (0 : ℝ)..1, f t| := by
+          rw [abs_mul, abs_of_nonneg (by norm_num : 0 ≤ (1 / 2 : ℝ))]
+    _ ≤ (1 / 2 : ℝ) * B := mul_le_mul_of_nonneg_left habs (by norm_num)
+    _ = B / 2 := by ring
 
 /-- Combine a first-xi derivative tail, a second-xi Volterra error estimate,
 and a bound obtained from the regular even-axis averaging identity. -/
@@ -56,6 +93,8 @@ theorem evenAxisGeometricTail
     ((Nat.factorial m : ℝ) * (2 / s) ^ m) error hs hC hgamma
     hfirst hsecond haxis
 
+#print axioms evenAxisFirstDerivativeAverage
+#print axioms evenAxisIntegralBound
 #print axioms evenAxisErrorBound
 #print axioms evenAxisGeometricTail
 
