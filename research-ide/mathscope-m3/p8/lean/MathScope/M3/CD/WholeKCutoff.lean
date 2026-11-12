@@ -389,7 +389,7 @@ theorem fourth_selector_frequency_atom {R N A B : ℝ} {k : ℕ}
     have hbase : R ≤ R ^ 3672 := by
       simpa only [pow_one] using (pow_le_pow_right₀ hR₁ (show 1 ≤ 3672 by decide))
     calc
-      _ ≤ R ^ 3672 + R ^ 3672 := add_le_add_left hbase _
+      _ ≤ R ^ 3672 + R ^ 3672 := add_le_add (le_refl _) hbase
       _ = R ^ 3672 * 2 := by rw [mul_two]
       _ ≤ R ^ 3672 * R := mul_le_mul_of_nonneg_left hR.le (pow_nonneg hR₀ _)
       _ = R ^ 3673 := (pow_succ R 3672).symm
