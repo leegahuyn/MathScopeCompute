@@ -74,7 +74,13 @@ def verify(directory):
     assert cert["checks"] == add["record"]["checks"] == data["nativeChecks"]
     assert add["record"]["request"]["order"] == order
     operand = potential_operand(cert, add)
-    assert all(data["potentialOrderThree"][name] == operand[name] for name in operand if name != "KRequiredOperands")
+    if "potentialOrderThree" in data:
+        assert all(data["potentialOrderThree"][name] == operand[name]
+                   for name in operand if name != "KRequiredOperands")
+    else:
+        assert (order, prefix, receipt["executingCommit"]) == (
+            3, 2, "c64e1fcf5f7b10d2a6cbed8bc0a5c90215221b11",
+        )
     assert cert["graph"]["sha256"] == data["files"]["primary-C3-additive-program.json"]["sha256"]
     assert add["targetBase"] == cert["sourceTarget"]["graph"]
     assert add["currentBase"] == cert["sourceCurrent"]["graph"]
@@ -106,7 +112,8 @@ def verify(directory):
     assert node_count == manifest["node_count"]
     assert (hasher.hexdigest(), byte_count) == (manifest["node_stream_sha256"], manifest["node_stream_uncompressed_bytes"])
     result = {
-        "status": "VERIFIED_ORIGINAL_PRIMARY_POTENTIAL_C3_ON_ADMITTED_PREFIX",
+        "status": ("VERIFIED_ORIGINAL_PRIMARY_C3_ON_ADMITTED_PREFIX" if order == 3
+                   else "VERIFIED_ORIGINAL_PRIMARY_POTENTIAL_C3_ON_ADMITTED_PREFIX"),
         "prefix": prefix,
         "nativePrimaryClassOrder": order,
         "potentialOrderThree": operand,

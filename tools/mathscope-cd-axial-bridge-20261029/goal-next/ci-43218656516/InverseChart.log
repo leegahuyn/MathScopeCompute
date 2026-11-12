@@ -1,0 +1,14 @@
+MathScope/M3/CD/InverseChart.lean:70:2: error: Type mismatch: After simplification, term
+  HasDerivAt.sub_const T (HasDerivAt.sub (hasDerivAt_id x) (HasDerivAt.const_mul (Z ^ 2) hp))
+ has type
+  @HasDerivAt ℝ DenselyNormedField.toNontriviallyNormedField ℝ Real.normedAddCommGroup.toAddCommGroup
+    RCLike.toInnerProductSpaceReal.toModule PseudoMetricSpace.toUniformSpace.toTopologicalSpace ⋯
+    (fun x => (id - fun y => Z ^ 2 * y ^ (2 * h)) x - T) (1 - Z ^ 2 * (2 * h * x ^ (2 * h - 1))) x
+but is expected to have type
+  @HasDerivAt ℝ DenselyNormedField.toNontriviallyNormedField ℝ Real.instAddCommGroup Semiring.toModule
+    PseudoMetricSpace.toUniformSpace.toTopologicalSpace ⋯ (fun u => u - Z ^ 2 * u ^ (2 * h) - T)
+    (1 - Z ^ 2 * (2 * h * x ^ (2 * h - 1))) x
+MathScope/M3/CD/InverseChart.lean:99:48: error: Invalid rewrite argument: Expected an equality or iff proof or definition name, but `Z` is a value of type
+  ℝ
+'MathScope.M3.CD.chart_bracket_derivative' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'MathScope.M3.CD.chart_source_image_exists_unique' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]

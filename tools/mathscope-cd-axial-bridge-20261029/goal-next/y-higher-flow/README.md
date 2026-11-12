@@ -1,0 +1,27 @@
+# N3 and N4 original literal natural-series range transport
+
+`range_flow_n3.py` and `range_flow_n4.py` apply the same source-bound, branch-aware obligation transport as `../y-n2-flow/range_flow_n2.py` to the pinned original N3 and N4 raw-base current/pressure and selector graphs. Each call starts from zero previously certified N1/N2 calls; source replay, registry and pinned source profile hashes are checked. The input reached graphs and original registry files are reused in place; no big graph is copied.
+
+| Original prefix | Reached nodes | Manifest roots | Natural call nodes | Conditional pass | Native coordinate transports | Remove root bracket | Remove loopILeft sign |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| N3 | 598,891 | 13 | 582 | 582 | 3,881 | 578 | 424 |
+| N4 | 1,169,752 | 14 | 597 | 597 | 7,770 | 593 | 439 |
+
+All branches and typed source definition edges are considered conservatively, and unresolved native definition kinds are rejected by the originating collectors. For the successful executions the checker records no unresolved condition and no unsupported native transport. The proof input assumes the original real branches, interval/binder semantics, native formal-to-actual substitution, defined source operations and exact positive source profile bounds. Every Y argument is enclosed in `0<=Y<=4 exp(2*t1)<256/63<5`. Disallowing the defined root-2 bracket leaves literal calls #4758, #4784, #5177, #5299 open in each graph; disallowing the pinned positive loopILeft leaves 158 calls open. The controls are expected to fail closed.
+
+The only source bracket used by the positive range checker is the **defined reference root** #2086999 for N3, respectively #4587654 for N4; the checker does not claim unconditional existence. `check_reference_roots.py` verifies the exact AST and source registry identities `X=R^2/(2s)`, `eta=Z/s^(1/2-h)` and `F(s)=s-Z^2*s^(2h)-T` on `[1/2,2]`. On a valid original physical reference image `Z=s^(1/2-h)*eta`, `T=s*(1-eta^2)`, `1/2<=s<=2`, `|eta|<=1`, the input s is a root and `F'(u)>1-8h>1/2` throughout the bracket for the pinned `0<h<1/16`. This binds the root assumption on that image; actual physical chart and common-family selection are separate premises. `../whole-k-atlas/README.md` treats the slab selector and active indexed/frozen charts under its own explicit same-family assumptions.
+
+This is a finite literal source-call range result for exactly those exported raw-base roots. It does not establish range for new AST calls that may arise through derivative or Picard materialization, source-level cutoff seams, arbitrary invalid chart arguments, unexported coupled/Forced/FiveMap systems or every final field jet. N1 519/523 raw and source-bound N1 523/523 have their original distinct scopes. No M3/M4 acceptance or final jets are promoted; RELEASE HOLD.
+
+Reproduce (workspace root; first recreate and hash the N3/N4 reached graphs as described in `../y-n3/README.md` and `../y-n4/README.md`):
+
+    python work/goal-next/y-higher-flow/range_flow_n3.py work/goal-next/y-n3/reached.json work/goal-next/hosted-43057719849-N3/original-whole-k-current-pressure-graph/original-source-functions.json work/goal-20261111/axial-replay/source/research-ide/mathscope-m2/navier/source-profile-data.mjs work/goal-next/y-higher-flow/n3.json --transport --allow-defined-root2
+    python work/goal-next/y-higher-flow/range_flow_n3.py work/goal-next/y-n3/reached.json work/goal-next/hosted-43057719849-N3/original-whole-k-current-pressure-graph/original-source-functions.json work/goal-20261111/axial-replay/source/research-ide/mathscope-m2/navier/source-profile-data.mjs work/goal-next/y-higher-flow/n3-no-bracket.json --transport
+    python work/goal-next/y-higher-flow/range_flow_n3.py work/goal-next/y-n3/reached.json work/goal-next/hosted-43057719849-N3/original-whole-k-current-pressure-graph/original-source-functions.json work/goal-20261111/axial-replay/source/research-ide/mathscope-m2/navier/source-profile-data.mjs work/goal-next/y-higher-flow/n3-no-loop.json --transport --allow-defined-root2 --drop-loop-sign
+    python work/goal-next/y-higher-flow/range_flow_n4.py work/goal-next/y-n4/reached.json work/goal-next/hosted-43055678022-N4/original-whole-k-current-pressure-graph/original-source-functions.json work/goal-20261111/axial-replay/source/research-ide/mathscope-m2/navier/source-profile-data.mjs work/goal-next/y-higher-flow/n4.json --transport --allow-defined-root2
+    python work/goal-next/y-higher-flow/range_flow_n4.py work/goal-next/y-n4/reached.json work/goal-next/hosted-43055678022-N4/original-whole-k-current-pressure-graph/original-source-functions.json work/goal-20261111/axial-replay/source/research-ide/mathscope-m2/navier/source-profile-data.mjs work/goal-next/y-higher-flow/n4-no-bracket.json --transport
+    python work/goal-next/y-higher-flow/range_flow_n4.py work/goal-next/y-n4/reached.json work/goal-next/hosted-43055678022-N4/original-whole-k-current-pressure-graph/original-source-functions.json work/goal-20261111/axial-replay/source/research-ide/mathscope-m2/navier/source-profile-data.mjs work/goal-next/y-higher-flow/n4-no-loop.json --transport --allow-defined-root2 --drop-loop-sign
+    python work/goal-next/y-higher-flow/check_reference_roots.py
+    python work/goal-next/y-higher-flow/verify_receipts.py
+
+No Lean compilation was performed locally and no shared branch was modified.

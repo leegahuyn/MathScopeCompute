@@ -3,6 +3,7 @@ import argparse
 from hashlib import sha256
 import json
 from pathlib import Path
+import shutil
 import subprocess
 import zipfile
 
@@ -27,14 +28,17 @@ def encode(value):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    for name in ("workspace", "n3-reached", "n4-reached"):
+    for name in ("workspace", "n2-reached", "n3-reached", "n4-reached"):
         parser.add_argument("--"+name, type=Path, required=True)
+    parser.add_argument("--potential-artifacts", type=Path, required=True)
+    parser.add_argument("--primary-artifacts", type=Path, required=True)
     args = parser.parse_args()
     workspace = args.workspace.resolve()
     repo = workspace / "work/MathScopeCompute-CD"
     outputs = workspace / "outputs"
     base = outputs / "MathScope_Goal_Continuation17_20261111.zip"
-    delta = outputs / "MathScope_Goal_Continuation18_Delta_20261111.zip"
+    label = "MathScope_Goal_Continuation19"
+    delta = outputs / f"{label}_Delta_20261112.zip"
 
     def git(*params):
         return subprocess.check_output(["git", "-c", "core.longpaths=true", *params], cwd=repo)
@@ -62,20 +66,68 @@ def main():
             evidence.writestr(name, data)
             files[name] = {"sha256": sha256(data).hexdigest(), "bytes": len(data)}
 
+        def put_file(name, source, expected=None):
+            assert name not in files
+            observed = {"sha256": file_sha(source), "bytes": source.stat().st_size}
+            if expected is not None:
+                assert observed == expected, (name, observed)
+            with source.open("rb") as incoming, evidence.open(name, "w") as outgoing:
+                shutil.copyfileobj(incoming, outgoing, 1 << 20)
+            files[name] = observed
+
         for kind, path in changes:
             assert path.startswith((CURRENT+"/", ".github/workflows/", "research-ide/mathscope-m3/p8/lean/"))
             if kind == "M":
-                assert path in base_manifest and sha256(original.read(path)).hexdigest() == base_manifest[path]["sha256"]
+                alias = path if path in base_manifest else "lean/"+Path(path).name
+                assert alias in base_manifest
+                old = original.read(alias)
+                assert sha256(old).hexdigest() == base_manifest[alias]["sha256"]
+                if alias != path:
+                    assert old == git("show", BASE_HEAD+":"+path)
             data = git("show", head+":"+path)
             assert (repo/path).read_bytes() == data
             put(path, data)
-        for n, path, expected in (
-            (3, args.n3_reached, "3de8ebed1c18e6d5ec3d104d82e2b5c65302c82865f0025015ba23b96cc886fa"),
-            (4, args.n4_reached, "1b9f1a4febae2d9c7c24df080b7aec07f871f4b04c05fcc8a5650bb77e0dcbfc"),
+            if kind == "M" and alias != path:
+                put(alias, data)
+        for group, path, expected in (
+            ("original-axial-n2", args.n2_reached, "4779b42d41b9ef8f54484744860f2c6f3da4bde19d5e01bab9af704699f3ee32"),
+            ("original-whole-k-n3-diagonal", args.n3_reached, "3de8ebed1c18e6d5ec3d104d82e2b5c65302c82865f0025015ba23b96cc886fa"),
+            ("original-whole-k-n4-diagonal", args.n4_reached, "1b9f1a4febae2d9c7c24df080b7aec07f871f4b04c05fcc8a5650bb77e0dcbfc"),
         ):
             data = path.read_bytes()
             assert sha256(data).hexdigest() == expected
-            put(f"inputs/original-whole-k-n{n}-diagonal/y-reached.json", data)
+            put(f"inputs/{group}/y-reached.json", data)
+        for n, run, group, artifact in (
+            (2, 43066373460, "primary-potential-C3", args.potential_artifacts),
+            (3, 43066373460, "primary-potential-C3", args.potential_artifacts),
+            (2, 43065642858, "primary-C3", args.primary_artifacts),
+        ):
+            hosted = artifact / f"mathscope-whole-k-primary-C3-N{n}"
+            original_prefix = (hosted/"original-whole-k-prefix.json").read_bytes()
+            archived = head+":"+CURRENT+f"/whole-k-atlas/hosted-{run}-N{n}"
+            assert original_prefix == git("show", archived+"/original-whole-k-prefix.json")
+            native_files = json.loads(original_prefix)["primaryC3Result"]["files"]
+            assert set(native_files) == {
+                "primary-C3-certificate.json", "primary-C3-additive-program.json", "primary-C3-target-program.json",
+            }
+            files_prefix = f"inputs/original-whole-k-n{n}-{group}"
+            for name, expected in native_files.items():
+                put_file(f"{files_prefix}/{name}", hosted/name, expected)
+            graph = "original-whole-k-primary-current-graph"
+            for name in ("original-source-export-manifest.json", "original-source-functions.json", "original-source-nodes.jsonl.gz"):
+                put_file(f"{files_prefix}/{graph}/{name}", hosted/graph/name)
+            for name in ("original-whole-k-prefix.json", "primary-C3-independent-readback.json"):
+                assert (hosted/name).read_bytes() == git("show", archived+"/"+name)
+                put_file(f"{files_prefix}/{name}", hosted/name)
+        localization = "research-ide/mathscope-m3/closure-evidence-20261023"
+        for name, expected in (
+            ("original_torus_fourier_interval.py", "a57677542de54d521d6ab72039b94fa869452f15637a586876e85c10af259499"),
+            ("rigorous_rational_intervals.py", "e5f63a02a7cef384eafb697be14f1e9c8dccca973b8c51b6e296a592c0f87616"),
+        ):
+            path = f"{localization}/{name}"
+            source = workspace/"work/goal-next/final67/source"/path
+            put_file(f"inputs/localization-source/{path}", source,
+                     {"sha256": expected, "bytes": source.stat().st_size})
         put("REPORT_KO.md", report)
         put("STATUS.json", status)
         put("CHECKPOINT.json", encode({
@@ -93,15 +145,19 @@ def main():
         assert set(evidence.namelist()) == set(files)|{"SHA256.json"}
         assert json.loads(evidence.read("SHA256.json")) == files
         for name, expected in files.items():
-            data = evidence.read(name)
-            assert {"sha256": sha256(data).hexdigest(), "bytes": len(data)} == expected
+            digest, count = sha256(), 0
+            with evidence.open(name) as stream:
+                for block in iter(lambda: stream.read(1 << 20), b""):
+                    digest.update(block)
+                    count += len(block)
+            assert {"sha256": digest.hexdigest(), "bytes": count} == expected
     receipt = {
         "file": delta.name, "bytes": delta.stat().st_size, "files": len(files)+1,
         "sha256": file_sha(delta), "branchHead": head,
         "verifiedBaseSHA256": BASE_SHA, "verifiedDeltaManifest": True,
     }
-    (outputs/"MathScope_Goal_Continuation18_Report_20261111_KO.md").write_bytes(report)
-    (outputs/"MathScope_Goal_Continuation18_Receipt_20261111.json").write_bytes(encode(receipt))
+    (outputs/f"{label}_Report_20261112_KO.md").write_bytes(report)
+    (outputs/f"{label}_Receipt_20261112.json").write_bytes(encode(receipt))
     print(json.dumps(receipt))
 
 
