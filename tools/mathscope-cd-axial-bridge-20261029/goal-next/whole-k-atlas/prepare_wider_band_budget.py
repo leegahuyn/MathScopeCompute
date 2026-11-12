@@ -8,7 +8,7 @@ source = Path(sys.argv[1])
 receipt = Path(sys.argv[2])
 assert len(sys.argv) in (3, 4)
 requested = int(sys.argv[3]) if len(sys.argv) == 4 else 16_000_000
-assert requested in (16_000_000, 20_000_000, 24_000_000)
+assert requested in (16_000_000, 20_000_000, 24_000_000, 25_000_000)
 original_guards = {
     "source-global-band.mjs": ("1f1c18a26372c998d8389b6c5138b3c9d3a66f36", b"maxNodes>4000000"),
     "actual-residual-order-induction-expressions.mjs":
