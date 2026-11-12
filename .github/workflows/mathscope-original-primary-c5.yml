@@ -1,0 +1,96 @@
+name: MathScope original Primary C5
+on:
+  push:
+    branches: [mathscope-cd-axial-source-bridge-20261029]
+    paths:
+      - '.github/workflows/mathscope-original-primary-c5.yml'
+      - 'tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-forced-weights/live-c5/run_live_primary_c5.mjs'
+permissions:
+  contents: read
+jobs:
+  original-n1-primary-c5:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 135
+    env:
+      ORIGINAL_SOURCE_COMMIT: f8cb4034e86d7b669d52a6f2248aebba156b51b5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: evidence
+          persist-credentials: false
+          sparse-checkout: |
+            tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-forced-weights/live-c5
+            tools/mathscope-cd-axial-bridge-20261029/goal-next/whole-k-atlas
+      - uses: actions/checkout@v4
+        with:
+          ref: f8cb4034e86d7b669d52a6f2248aebba156b51b5
+          path: original
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Prepare pinned original source and owned limits
+        working-directory: original
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$ORIGINAL_SOURCE_COMMIT"
+          git diff --quiet --exit-code HEAD --
+          out="$RUNNER_TEMP/mathscope-primary-c5"
+          mkdir -p "$out"
+          python3 - "$out/memory.json" <<'PY'
+          import json
+          from pathlib import Path
+          import sys
+          info = dict(line.split(":", 1) for line in Path("/proc/meminfo").read_text().splitlines())
+          available = int(info["MemAvailable"].split()[0]) * 1024
+          root = Path("/sys/fs/cgroup")
+          for limit, usage in (("memory.max", "memory.current"),
+                               ("memory/memory.limit_in_bytes", "memory/memory.usage_in_bytes")):
+              if (root / limit).exists() and (root / usage).exists():
+                  cap = (root / limit).read_text().strip()
+                  if cap != "max":
+                      available = min(available, int(cap) - int((root / usage).read_text()))
+          receipt = {"availableBytes": available, "requiredAvailableBytes": 14 * 1024**3}
+          Path(sys.argv[1]).write_text(json.dumps(receipt) + "\n")
+          assert available >= receipt["requiredAvailableBytes"], receipt
+          PY
+          atlas=../evidence/tools/mathscope-cd-axial-bridge-20261029/goal-next/whole-k-atlas
+          python3 "$atlas/prepare_iterative_norm_import.py" . "$out/iterative-norm-import-overlay.json"
+          python3 "$atlas/prepare_wider_band_budget.py" research-ide/mathscope-m3/navier/source-global-band.mjs "$out/band-budget-overlay.json"
+          python3 "$atlas/prepare_wider_band_budget.py" research-ide/mathscope-m2/navier/actual-residual-order-induction-expressions.mjs "$out/graph-copy-budget-overlay.json"
+          python3 - "$out" <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+          import subprocess
+          import sys
+          root = Path(sys.argv[1])
+          overlays = {
+              "research-ide/mathscope-m2/navier/actual-residual-order-induction-norms.mjs": "iterative-norm-import-overlay.json",
+              "research-ide/mathscope-m3/navier/source-global-band.mjs": "band-budget-overlay.json",
+              "research-ide/mathscope-m2/navier/actual-residual-order-induction-expressions.mjs": "graph-copy-budget-overlay.json",
+          }
+          modified = subprocess.check_output(["git", "diff", "--name-only", "HEAD", "--"], text=True).splitlines()
+          assert set(modified) == set(overlays), modified
+          for path, proof in overlays.items():
+              assert hashlib.sha256(Path(path).read_bytes()).hexdigest() == json.loads((root / proof).read_bytes())["newSHA256"]
+          PY
+          runner=research-ide/mathscope-m3/extended-signed-run-20261023/run_live_primary_c5.mjs
+          cp "../evidence/tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-forced-weights/live-c5/run_live_primary_c5.mjs" "$runner"
+          node --check "$runner"
+      - name: Build the same-family original C8, weighted C6 and Primary C5
+        working-directory: original
+        run: |
+          set -euo pipefail
+          ulimit -s 16384
+          out="$RUNNER_TEMP/mathscope-primary-c5"
+          node --max-old-space-size=11000 --stack-size=4096 --expose-gc \
+            research-ide/mathscope-m3/extended-signed-run-20261023/run_live_primary_c5.mjs \
+            "$out" "$ORIGINAL_SOURCE_COMMIT" 2>&1 | tee "$out/native-run.log"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mathscope-original-n1-primary-c5
+          path: ${{ runner.temp }}/mathscope-primary-c5/**
+          if-no-files-found: warn
+          retention-days: 30
