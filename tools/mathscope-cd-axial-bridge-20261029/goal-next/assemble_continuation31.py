@@ -235,6 +235,11 @@ def main():
     digest = sha256()
     nodes = size = 0
     with gzip.open(graph, "rb") as stream:
+        header = stream.readline()
+        assert json.loads(header) == {"schema": "MathScope.M3.FullNodesJSONL/1",
+                                     "node_count": snapshot["node_count"]}
+        digest.update(header)
+        size += len(header)
         for block in iter(lambda: stream.read(1 << 20), b""):
             digest.update(block)
             nodes += block.count(b"\n")
