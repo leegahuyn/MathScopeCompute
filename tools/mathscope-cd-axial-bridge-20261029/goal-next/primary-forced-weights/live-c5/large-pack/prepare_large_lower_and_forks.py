@@ -38,6 +38,8 @@ INDUCTION_NORM_PINS = (
 )
 WEIGHTED_STRESS = M2 + "actual-order-one-weighted-stress.mjs"
 WEIGHTED_STRESS_PIN = "49cde0b930f375e8eca5610ecb7d1e91c9c4361bdd1395a1971081fb1fdfd1b3"
+CUTOFFS = M2 + "actual-residual-order-induction-cutoffs.mjs"
+CUTOFFS_PIN = "be8c7dbe6a7bc78ace2e87dc5e205640a06237e3db0670f9388aab4c0c0772f5"
 
 
 class ExactPatch:
@@ -160,6 +162,15 @@ def weighted_stress_patch(path):
     return patch
 
 
+def cutoffs_patch(path):
+    patch = ExactPatch(path, (CUTOFFS_PIN,))
+    anchor = "const sealed=new WeakMap();"
+    patch.change(anchor, "import {captureRawNodes} from './mathscope-large-seal.mjs';\n" + anchor)
+    patch.change("prefix:JSON.stringify(G.nodes)", "prefix:captureRawNodes(G.nodes)", 2)
+    patch.change("JSON.stringify(r.G.nodes.slice(0,r.nodeCount))!==r.prefix", "!r.prefix.verify(r.G.nodes)")
+    return patch
+
+
 def main():
     parser = ArgumentParser(description=__doc__)
     parser.add_argument("runtime", type=Path)
@@ -172,6 +183,7 @@ def main():
         partition_patch(args.runtime / PARTITION),
         induction_norm_patch(args.runtime / INDUCTION_NORMS),
         weighted_stress_patch(args.runtime / WEIGHTED_STRESS),
+        cutoffs_patch(args.runtime / CUTOFFS),
     ]
     files = {}
     outputs = [(patch, patch.checked()) for patch in patches]
