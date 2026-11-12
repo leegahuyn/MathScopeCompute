@@ -7,6 +7,7 @@ import {
   assertActualCommonAdmissibleFamily,
   prepareActualCommonAdmissibleFamily,
 } from '../../mathscope-m2/navier/actual-common-admissible-family.mjs';
+import {assertActualCompactAllBandBackgroundNorms} from '../../mathscope-m2/navier/actual-compact-all-band-background-norms.mjs';
 import {assertActualCommonTargetWeightedNorms} from '../../mathscope-m2/navier/actual-common-target-weighted-norms.mjs';
 import {clearDisposableThirdJetCaches} from '../../mathscope-m2/navier/actual-third-jet-ftc.mjs';
 import {attachGlobalSourceBand, assertGlobalSourceBand} from '../navier/source-global-band.mjs';
@@ -67,6 +68,21 @@ const context = {
       });
     }
   },
+  onBackgroundNorms(norms) {
+    assert.strictEqual(norms.G, ownedBackgroundGraph);
+    assert.equal(assertActualCompactAllBandBackgroundNorms(norms), true);
+    assert(norms.checks.every(({pass}) => pass));
+    assert.equal(norms.request.derivativeOrder, 8);
+    const row = norms.gaussianRows.find(({derivativeOrder}) => derivativeOrder === 6);
+    assert.equal(row?.backgroundDerivativeOrder, 8);
+    receipt.originalBackgroundC8 = {
+      status: 'VERIFIED_NATIVE_ORIGINAL_ALL_BAND_BACKGROUND_C8',
+      nodeCount: norms.G.nodes.length, source: norms.sourceBinding,
+      roots: norms.roots, row, checks: norms.checks, scope: norms.scope, ...measured(),
+    };
+    save();
+    console.log(JSON.stringify(receipt.originalBackgroundC8));
+  },
   onProgress(row) {
     context.checkCancelled();
     const name = row.stage ?? row.phase;
@@ -81,8 +97,8 @@ const context = {
     const latest = receipt.progress.at(-1);
     const nodeCount = row.nodeCount ?? row.nodes ?? null;
     if (latest?.name === name && latest.nodeCount === nodeCount &&
-        latest.coefficientFTCCount === row.coefficientFTCCount) return;
-    const progress = {name, field: row.field, coefficientFTCCount: row.coefficientFTCCount,
+        latest.coefficientFTCCount === row.coefficientFTCCount && latest.order === row.order) return;
+    const progress = {name, field: row.field, order: row.order, coefficientFTCCount: row.coefficientFTCCount,
       nodeCount, ...measured()};
     receipt.progress.push(progress);
     if (receipt.progress.length > 100) receipt.progress.shift();

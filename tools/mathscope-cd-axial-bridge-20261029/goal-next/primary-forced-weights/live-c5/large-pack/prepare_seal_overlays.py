@@ -77,6 +77,8 @@ def main():
   ('data(p)!==s.data||canonicalStringify(p.program)!==s.program||canonicalStringify(p.G.nodes.slice(0,s.count))!==s.prefix',
    'data(p)!==s.data||!s.largeSnapshot.verify(p.G.nodes,p.program)'),
   ('assertActualCommonAdmissibleFamily(p);const s=seals.get(p);','assertActualCommonAdmissibleFamily(p);const s=seals.get(p),encoded=canonicalHash(p.program);'),
+  ("clearDisposableThirdJetCaches(G);stage(context,'common-full-Cm-ready',G);",
+   "clearDisposableThirdJetCaches(G);stage(context,'common-full-Cm-ready',G);context.onBackgroundNorms?.(backgroundNorms);"),
   ('sha256:await sha256(s.program),nodeCount:s.count,canonicalBytes:new TextEncoder().encode(s.program).length',
    'sha256:encoded.sha256,nodeCount:s.count,canonicalBytes:encoded.bytes')])
  for file in ('actual-common-admissible-band.mjs','actual-common-target-weighted-norms.mjs'):

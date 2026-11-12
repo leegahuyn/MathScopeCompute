@@ -74,6 +74,7 @@ jobs:
           python3 "$live/large-pack/prepare_seal_overlays.py" --owned --runtime . \
             --helper "$live/large-pack/large_pack.mjs" --receipt "$out/bounded-seal-overlays.json"
           python3 "$live/large-pack/prepare_large_lower_and_forks.py" . "$out/bounded-lower-overlays.json"
+          python3 "$live/large-pack/prepare_primitive_visit_budget.py" . "$out/primitive-visit-budget-overlay.json"
           navier=research-ide/mathscope-m2/navier
           cp "$live/compact-lookup/compact_lookup.mjs" "$navier/mathscope-compact-lookup.mjs"
           cp "$live/large-pack/owned_lookup.mjs" "$navier/mathscope-owned-lookup.mjs"
@@ -91,6 +92,7 @@ jobs:
               "research-ide/mathscope-m2/navier/actual-residual-order-induction-expressions.mjs": "graph-copy-budget-overlay.json",
               "research-ide/mathscope-m2/navier/actual-global-source-expressions.mjs": "leading-budget-overlay.json",
               "research-ide/mathscope-m2/navier/actual-compact-all-band-background-norms.mjs": "background-cache-overlay.json",
+              "research-ide/mathscope-m2/navier/actual-global-primitive-kernels.mjs": "primitive-visit-budget-overlay.json",
           }
           def digest(data):
               return hashlib.sha256(data).hexdigest()
@@ -119,6 +121,7 @@ jobs:
           cp "$live/run_live_primary_c5.mjs" "$runner"
           node --check "$runner"
           node --check "$issuer"
+          node --check "$navier/actual-global-primitive-kernels.mjs"
           node --check "$navier/mathscope-large-seal.mjs"
           node --check "$navier/mathscope-owned-lookup.mjs"
       - name: Build the same-family original C8, weighted C6 and Primary C5
