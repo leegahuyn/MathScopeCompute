@@ -8,7 +8,14 @@
 | 최종장 jets | **0/67** | 환대 초기장 67/67 수치 구간. 모든 활성 보정을 포함하는 최종장 구간 OPEN |
 | 릴리스 | **HOLD** | M3 전체 검증과 최종장 구간 OPEN |
 
-첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20, Continuation21, Continuation22, Continuation23, Continuation24, Continuation25, Continuation26을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
+첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–27을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
+
+## Continuation27
+
+- **VERIFIED · 원본 느린 시간 미분과 방사 연산자.** 고정 물리 구간에서 원본 배경 상계 18개와 가중 표적 상계 16개를 통상 \(R,Z,T\) 혼합 미분에 적용했다. 원본 고정 \(T_1,A_1\)의 5차 수치 상계도 재현했다. 0–4차 원본 상계 20개와 적분 경계 3개가 일치했다. [전체 느린 방향](primary-forced-weights/full-slow-norms/README.md) · [원본 방사 재생](primary-forced-weights/higher-mean/README.md).
+- **VERIFIED / CONDITIONAL · 초기 평균장의 펄스 미분.** 보관 원본 4,456,994개 노드와 공분산 972행에서 Fourier 역연산 소거를 대조했다. 명시된 원본 차트 전제 아래 종방향 미분 상계 57개를 수치화했다. 현재 평균–파동 C2 경로에 남은 평균 입력은 직접 각방향 성분의 순수 느린 C3이다. 초기 축압력의 \(W_{rz}\) 느린 7차와 해당 횡방향 \(L^2\) 항이 필요하다. [평균 미분과 남은 입력](primary-forced-weights/higher-mean/README.md).
+- **VERIFIED / CONDITIONAL · 첫 Forced에 필요한 Primary 고차 계수.** 원본 가중 C5 차수 계산을 실행해 C2 접두부와 일치시켰다. 고정 물리 구간의 별도 스칼라 전제를 두면 계수 25개를 정확한 지수탑으로 상계할 수 있다. 원본의 가중치·경계 차수와 펄스 인자를 유지했다. 전역 C8 원본 실행은 2,133,044개 노드의 선도장 검사를 완료한 뒤 C8 구성에서 힙 한계에 도달했다. 같은 계열 C8/C6/C5 증명서와 고정 구간 전체 경로의 증명은 OPEN이다. [수치 전제와 계수](primary-forced-weights/live-c5/README.md) · [GitHub 중단 지점](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43262848151).
+- **VERIFIED / OPEN · 운영 R1-08.** 현재 공개 응답의 SHA-256을 확인했다. 같은 바이트의 로컬 복제본에서 수정·복원 왕복, 세 변조 대조와 두 화면의 클릭을 재현했다. 공급자 버전 137을 읽기 전용으로 조회했다. 운영 적용 범위의 소스·복구 자료와 실제 게시 후 화면은 OPEN이다. [운영 증거](m4/r108/operational-replay-audit/README.md) · [보존 확인](preservation-continuation27.json).
 
 ## Continuation26
 

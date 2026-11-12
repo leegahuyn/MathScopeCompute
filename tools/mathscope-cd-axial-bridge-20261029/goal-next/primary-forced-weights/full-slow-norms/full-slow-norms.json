@@ -1,0 +1,981 @@
+{
+  "schema": "MathScope.N7.OriginalFixedBandFullSlowNumericalNorms/1",
+  "status": "VERIFIED_ORIGINAL_FULL_R_Z_T_BOUNDS_ON_THE_FIXED_PHYSICAL_SLAB",
+  "sourceParameterSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+  "inputPins": {
+    "backgroundGraph": [
+      "whole-k-annular-wrz-norm/background-c8.json",
+      "5d972553e3d31ee8ef9de55019b672bfd344b4bd11bdb9a84dc7d1e9c506652e"
+    ],
+    "targetGraph": [
+      "whole-k-annular-wrz-norm/target-c7.json",
+      "3917c6f194dbf70b397f9bb8ad56deb42dae204966dad78dea15618231f58770"
+    ],
+    "background": [
+      "whole-k-annular-wrz-norm/numerical/background-c8-complete.json",
+      "4c056bb0ed357b7741b9a1e0ef02d82edfda30cf0cd1e10abc321b1d4cf0b966"
+    ],
+    "target": [
+      "whole-k-annular-wrz-norm/target-numerical/target-c7-complete.json",
+      "b262127767b185e99041bd14f1f8dd2af6fe7d9a95736b93d9ac114914348f1a"
+    ],
+    "fixed": [
+      "whole-k-annular-initial/numerical/stage-zero-fixed-numerical.json",
+      "9740009e01d587310aae82dc2f2ace4cafa12a9f3f5654c2fbd48ae132e4533c"
+    ],
+    "thresholds": [
+      "whole-k-selector-scales/historical-scale-arithmetic-result.json",
+      "af666a28520316043b00cacbf0cda14e624f419b857e6b3063ab6fdd6ae8afaf"
+    ]
+  },
+  "sourcePins": {
+    "backgroundProducer": [
+      "whole-k-annular-wrz-norm/replay_background_c8.mjs",
+      "ec125854198ced32cb80b1d48dc31ac39749bff318a59a6bdbbd3b1435c2d655"
+    ],
+    "targetProducer": [
+      "whole-k-annular-wrz-norm/replay_target_c7.mjs",
+      "06b2791ae53587b8c76408271c929c8479a7d76f5b3ade741f1a2e164dc62446"
+    ],
+    "chart": [
+      "research-ide/mathscope-m2/navier/actual-all-band-background-norm-kernel.mjs",
+      "384daafdcb5cad2e57b4bbb0440bc4b2e4a5912b4835e2d7510c21301a44ff15"
+    ],
+    "normalization": [
+      "research-ide/mathscope-m2/navier/actual-common-target-weighted-norms.mjs",
+      "6fca53620e45a839868d094a1425ee0071ec4ca21c16bff77476d8be2f32e38a"
+    ]
+  },
+  "domain": {
+    "axes": [
+      "R",
+      "Z",
+      "T"
+    ],
+    "s": [
+      "1/2",
+      "2"
+    ],
+    "X": [
+      "Xa",
+      "Xb"
+    ],
+    "eta": [
+      "-3/4",
+      "3/4"
+    ],
+    "q": [
+      "qBig/64",
+      "qBig/16"
+    ],
+    "fixedBandAndDiscreteLabels": true,
+    "timeConvention": "ordinary T derivatives of normalized source profiles at fixed band; continuous inward jets at chart boundaries"
+  },
+  "transformation": {
+    "radius": "1/(128 Rstar)",
+    "sameElementarySuprema": true,
+    "allTermsPositive": true,
+    "reason": "For each factor of degree j the extra Cauchy count costs at most 2^j; finite positive products and composition charge 2^m in total degree m.",
+    "targetWeight": "zeta times delta_star^(-(3+3*m)) at a real point; no complex continuation of the profile or the weight",
+    "factors": [
+      {
+        "degree": 0,
+        "twoVariables": 1,
+        "threeVariables": 1,
+        "factor": "1",
+        "cumulativeThreeVariableIndices": 1
+      },
+      {
+        "degree": 1,
+        "twoVariables": 2,
+        "threeVariables": 3,
+        "factor": "2",
+        "cumulativeThreeVariableIndices": 4
+      },
+      {
+        "degree": 2,
+        "twoVariables": 3,
+        "threeVariables": 6,
+        "factor": "4",
+        "cumulativeThreeVariableIndices": 10
+      },
+      {
+        "degree": 3,
+        "twoVariables": 4,
+        "threeVariables": 10,
+        "factor": "8",
+        "cumulativeThreeVariableIndices": 20
+      },
+      {
+        "degree": 4,
+        "twoVariables": 5,
+        "threeVariables": 15,
+        "factor": "16",
+        "cumulativeThreeVariableIndices": 35
+      },
+      {
+        "degree": 5,
+        "twoVariables": 6,
+        "threeVariables": 21,
+        "factor": "32",
+        "cumulativeThreeVariableIndices": 56
+      },
+      {
+        "degree": 6,
+        "twoVariables": 7,
+        "threeVariables": 28,
+        "factor": "64",
+        "cumulativeThreeVariableIndices": 84
+      },
+      {
+        "degree": 7,
+        "twoVariables": 8,
+        "threeVariables": 36,
+        "factor": "128",
+        "cumulativeThreeVariableIndices": 120
+      },
+      {
+        "degree": 8,
+        "twoVariables": 9,
+        "threeVariables": 45,
+        "factor": "256",
+        "cumulativeThreeVariableIndices": 165
+      }
+    ]
+  },
+  "backgroundC8": [
+    {
+      "order": 0,
+      "originalDirectionalRoots": {
+        "F": 141904,
+        "G": 141905
+      },
+      "F": {
+        "lower": {
+          "rational": "0"
+        },
+        "upper": {
+          "exp": {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "exp": {
+                      "rational": "83106227912452114852398425490438247/79228162514264337593543950336"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "G": {
+        "lower": {
+          "rational": "0"
+        },
+        "upper": {
+          "exp": {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "exp": {
+                      "rational": "83105277174501943680347302963034215/79228162514264337593543950336"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "order": 1,
+      "originalDirectionalRoots": {
+        "F": 142098,
+        "G": 142099
+      },
+      "F": {
+        "lower": {
+          "rational": "0"
+        },
+        "upper": {
+          "exp": {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "exp": {
+                      "rational": "83106544825102171909748799666239591/79228162514264337593543950336"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "G": {
+        "lower": {
+          "rational": "0"
+        },
+        "upper": {
+          "exp": {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "exp": {
+                      "rational": "83105594087152000737697677138835559/79228162514264337593543950336"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "order": 2,
+      "originalDirectionalRoots": {
+        "F": 142467,
+        "G": 142468
+      },
+      "F": {
+        "lower": {
+          "rational": "0"
+        },
+        "upper": {
+          "exp": {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "exp": {
+                      "rational": "83107020194077257495774360929941607/79228162514264337593543950336"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "G": {
+        "lower": {
+          "rational": "0"
+        },
+        "upper": {
+          "exp": {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "exp": {
+                      "rational": "83106069456127086323723238402537575/79228162514264337593543950336"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "order": 3,
+      "originalDirectionalRoots": {
+        "F": 143072,
+        "G": 143073
+      },
+      "F": {
+        "lower": {
+          "rational": "0"
+        },
+        "upper": {
+          "exp": {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "exp": {
+                      "rational": "83107812475702400139150296369444967/79228162514264337593543950336"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "G": {
+        "lower": {
+          "rational": "0"
+        },
+        "upper": {
+          "exp": {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "exp": {
+                      "rational": "83106861737752228967099173842040935/79228162514264337593543950336"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "order": 4,
+      "originalDirectionalRoots": {
+        "F": 143990,
+        "G": 143991
+      },
+      "F": {
+        "lower": {
+          "rational": "0"
+        },
+        "upper": {
+          "exp": {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "exp": {
+                      "rational": "83109000898140114104214199528700007/79228162514264337593543950336"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "G": {
+        "lower": {
+          "rational": "0"
+        },
+        "upper": {
+          "exp": {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "exp": {
+                      "rational": "83108050160189942932163077001295975/79228162514264337593543950336"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "order": 5,
+      "originalDirectionalRoots": {
+        "F": 145272,
+        "G": 145273
+      },
+      "F": {
+        "lower": {
+          "rational": "0"
+        },
+        "upper": {
+          "exp": {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "exp": {
+                      "rational": "83110664689552913655303663951657063/79228162514264337593543950336"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "G": {
+        "lower": {
+          "rational": "0"
+        },
+        "upper": {
+          "exp": {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "exp": {
+                      "rational": "83109713951602742483252541424253031/79228162514264337593543950336"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "order": 6,
+      "originalDirectionalRoots": {
+        "F": 146996,
+        "G": 146997
+      },
+      "F": {
+        "lower": {
+          "rational": "0"
+        },
+        "upper": {
+          "exp": {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "exp": {
+                      "rational": "83112883078103313056756283182266471/79228162514264337593543950336"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "G": {
+        "lower": {
+          "rational": "0"
+        },
+        "upper": {
+          "exp": {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "exp": {
+                      "rational": "83111932340153141884705160654862439/79228162514264337593543950336"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "order": 7,
+      "originalDirectionalRoots": {
+        "F": 149274,
+        "G": 149275
+      },
+      "F": {
+        "lower": {
+          "rational": "0"
+        },
+        "upper": {
+          "exp": {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "exp": {
+                      "rational": "83115735291953826572909650764478567/79228162514264337593543950336"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "G": {
+        "lower": {
+          "rational": "0"
+        },
+        "upper": {
+          "exp": {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "exp": {
+                      "rational": "83114784554003655400858528237074535/79228162514264337593543950336"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "order": 8,
+      "originalDirectionalRoots": {
+        "F": 152306,
+        "G": 152307
+      },
+      "F": {
+        "lower": {
+          "rational": "0"
+        },
+        "upper": {
+          "exp": {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "exp": {
+                      "rational": "83119300559266968468101360242243687/79228162514264337593543950336"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "G": {
+        "lower": {
+          "rational": "0"
+        },
+        "upper": {
+          "exp": {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "exp": {
+                      "rational": "83118349821316797296050237714839655/79228162514264337593543950336"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "weightedTargetC7": [
+    {
+      "order": 0,
+      "pole": 3,
+      "originalDirectionalRoots": [
+        153439,
+        153440
+      ],
+      "component": [
+        {
+          "lower": {
+            "rational": "0"
+          },
+          "upper": {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "exp": {
+                      "rational": "83167075141263069863670267244296295/79228162514264337593543950336"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "lower": {
+            "rational": "0"
+          },
+          "upper": {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "exp": {
+                      "rational": "83167312825750612656683047876147303/79228162514264337593543950336"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "order": 1,
+      "pole": 6,
+      "originalDirectionalRoots": [
+        153441,
+        153442
+      ],
+      "component": [
+        {
+          "lower": {
+            "rational": "0"
+          },
+          "upper": {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "exp": {
+                      "rational": "83167550510238155449695828507998311/79228162514264337593543950336"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "lower": {
+            "rational": "0"
+          },
+          "upper": {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "exp": {
+                      "rational": "83167946651050726771383796227749991/79228162514264337593543950336"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "order": 2,
+      "pole": 9,
+      "originalDirectionalRoots": [
+        153443,
+        153444
+      ],
+      "component": [
+        {
+          "lower": {
+            "rational": "0"
+          },
+          "upper": {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "exp": {
+                      "rational": "83168184335538269564396576859600999/79228162514264337593543950336"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "lower": {
+            "rational": "0"
+          },
+          "upper": {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "exp": {
+                      "rational": "83168580476350840886084544579352679/79228162514264337593543950336"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "order": 3,
+      "pole": 12,
+      "originalDirectionalRoots": [
+        153445,
+        153446
+      ],
+      "component": [
+        {
+          "lower": {
+            "rational": "0"
+          },
+          "upper": {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "exp": {
+                      "rational": "83168976617163412207772512299104359/79228162514264337593543950336"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "lower": {
+            "rational": "0"
+          },
+          "upper": {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "exp": {
+                      "rational": "83169293529813469265122886474905703/79228162514264337593543950336"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "order": 4,
+      "pole": 15,
+      "originalDirectionalRoots": [
+        153447,
+        153448
+      ],
+      "component": [
+        {
+          "lower": {
+            "rational": "0"
+          },
+          "upper": {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "exp": {
+                      "rational": "83169848126951069115486041282558055/79228162514264337593543950336"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "lower": {
+            "rational": "0"
+          },
+          "upper": {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "exp": {
+                      "rational": "83170244267763640437174009002309735/79228162514264337593543950336"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "order": 5,
+      "pole": 18,
+      "originalDirectionalRoots": [
+        153449,
+        153450
+      ],
+      "component": [
+        {
+          "lower": {
+            "rational": "0"
+          },
+          "upper": {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "exp": {
+                      "rational": "83170957321226268816212350897862759/79228162514264337593543950336"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "lower": {
+            "rational": "0"
+          },
+          "upper": {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "exp": {
+                      "rational": "83171274233876325873562725073664103/79228162514264337593543950336"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "order": 6,
+      "pole": 21,
+      "originalDirectionalRoots": [
+        153451,
+        153452
+      ],
+      "component": [
+        {
+          "lower": {
+            "rational": "0"
+          },
+          "upper": {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "exp": {
+                      "rational": "83172145743663982781276254057117799/79228162514264337593543950336"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "lower": {
+            "rational": "0"
+          },
+          "upper": {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "exp": {
+                      "rational": "83172541884476554102964221776869479/79228162514264337593543950336"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "order": 7,
+      "pole": 24,
+      "originalDirectionalRoots": [
+        153453,
+        153454
+      ],
+      "component": [
+        {
+          "lower": {
+            "rational": "0"
+          },
+          "upper": {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "exp": {
+                      "rational": "83173571850589239539352937848223847/79228162514264337593543950336"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "lower": {
+            "rational": "0"
+          },
+          "upper": {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "exp": {
+                      "rational": "83173888763239296596703312024025191/79228162514264337593543950336"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "scope": {
+    "privateLiveFamilyHydrated": false,
+    "primaryC5Attached": false,
+    "finalJets": "0/67",
+    "release": "HOLD"
+  },
+  "arithmetic": {
+    "schema": "MathScope.ClosedNumericalExponentialArithmetic/1",
+    "precisionBits": 96,
+    "operations": 3640,
+    "regularOperations": 12450,
+    "deepest": 8,
+    "maximumEndpointDepth": 7,
+    "maxDepth": 128,
+    "memoEntries": 2671,
+    "maxMemoEntries": 250000,
+    "memoHits": 227,
+    "memoEpoch": 0,
+    "memoizedEndpointsAreImmutable": true,
+    "tinyRatioBounds": 0,
+    "regularFallbacks": 0,
+    "elementary": {
+      "method": "DIRECTED_POSITIVE_TAYLOR_RANGE_REDUCTION_SQUARING_RECIPROCAL",
+      "degree": 19,
+      "reducedArgument": [
+        "0",
+        "1/8"
+      ],
+      "positiveTaylorRemainder": "1/2454326913349527398903771100610560000",
+      "evaluations": 0,
+      "tinyPositiveUpperBounds": 0,
+      "tinyPolicy": "For x<=-(bits+8), the interval [0,2^-bits] contains exp(x)>0. No tiny exponential is replaced by an exact zero."
+    },
+    "sourceAuthenticated": false,
+    "sourceIntegralOrParameterEvaluated": false,
+    "exactExpLogCancellation": true,
+    "outwardRatioQuantization": true,
+    "positiveTinyUpperEndpointsRetained": true,
+    "binary64UsedForNumericalDecisions": false
+  }
+}

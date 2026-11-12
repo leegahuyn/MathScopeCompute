@@ -311,3 +311,33 @@ The [N2 five-moment range replay](y-dynamic-n2/README.md) executes the exact
 finite source Picard partial sum and checks all 291 generated literal
 natural arguments in its five local moment integrals. Its mathematical
 range and normalization lemmas passed on [GitHub](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43235628663).
+
+## Continuation27
+
+Merge the archives in the order in CHECKPOINT.json. Use the existing
+corrected graph and chart from Continuation21. The new runtime manifests
+pin the original code modules. The mean and radial numerical evaluators
+also use the directed arithmetic runtime included with Continuation24.
+
+~~~sh
+p=tools/mathscope-cd-axial-bridge-20261029/goal-next
+f="$p/primary-forced-weights"
+node "$f/full-slow-norms/replay_full_slow_norms.mjs" \
+  "$p" "$arithmetic_runtime" /tmp/full-slow-norms.json
+node "$f/live-c5/replay_primary_degree_five.mjs" \
+  inputs/original-primary-degree-runtime /tmp/full-slow-norms.json /tmp/primary-degree-five.json
+python "$f/live-c5/check_fixed_slab_coefficients.py" \
+  --degrees /tmp/primary-degree-five.json \
+  --slab "$f/c5-pulse-audit/slab-k.json" \
+  --fixed "$p/whole-k-annular-initial/numerical/stage-zero-fixed-numerical.json" \
+  --scale-program "$p/whole-k-annular-pressure-lower/propagate_lower_covariance.mjs" \
+  --out /tmp/fixed-slab-coefficients.json
+~~~
+
+[The mean and radial replays](primary-forced-weights/higher-mean/README.md)
+use the corrected graph and original numerical operands. [The cutoff
+and pulse checks](primary-forced-weights/c5-pulse-audit/README.md)
+give the separate integer and source-pin controls. [The three GitHub C5
+logs](primary-forced-weights/live-c5/README.md) record the original
+computation limits. [The operating M4 rehearsal](m4/r108/operational-replay-audit/README.md)
+reverses the exact public HTTP bytes locally.

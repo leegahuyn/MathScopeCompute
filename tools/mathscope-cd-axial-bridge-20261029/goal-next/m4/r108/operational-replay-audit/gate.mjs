@@ -1,0 +1,17 @@
+import assert from 'node:assert/strict';
+import {readFile,writeFile} from 'node:fs/promises';
+import {resolve} from 'node:path';
+import {pathToFileURL} from 'node:url';
+const [evaluatorFile, artifactRoot, output]=process.argv.slice(2);assert(evaluatorFile&&artifactRoot&&output);
+const evaluator=await import(pathToFileURL(resolve(evaluatorFile)).href);
+const file=resolve(artifactRoot,'tools/mathscope-cd-axial-bridge-20261029/goal-next/m4/candidates/R1-08.json');
+const original=JSON.parse(await readFile(file,'utf8'));
+const artifact=async p=>await readFile(resolve(artifactRoot,p));
+const good=await evaluator.verifyCriterionEvidence(original,artifact);
+assert.equal(good.code,'CRITERION_ACCEPTED');assert.equal(good.receipt.digest,'51d2a4027b3c45cf414ce15e990d78bdd3c06e568bc30704a68c5c861057b518');
+const expanded=structuredClone(original);expanded.verifiedScope+=' Also confirms production rollback.';
+const rejected=await evaluator.verifyCriterionEvidence(expanded,artifact);assert.equal(rejected.code,'CRITERION_REVIEW_REQUIRED');
+const changed=await evaluator.verifyCriterionEvidence(original,async p=>{let b=await artifact(p);return p===original.artifacts[0].path?Buffer.concat([b,Buffer.from('!')]):b;});assert.equal(changed.code,'CRITERION_ARTIFACT_HASH_MISMATCH');
+const assessment=await evaluator.assessM4Acceptance({criterionReceipts:[good.receipt]});assert.equal(assessment.canFreeze,false);assert.equal(assessment.publicationConfirmed,false);
+const report={schema:'MathScope.R108.OperationalScopeGateReplay/1',registeredPrivateScope:'CRITERION_ACCEPTED',registeredDigest:good.receipt.digest,unreviewedExpandedProductionClaim:rejected.code,changedEvidenceArtifact:changed.code,singleAcceptedReceiptM4Count:assessment.newlyAcceptedCriteriaInThisAudit,canFreeze:assessment.canFreeze,publicationConfirmed:assessment.publicationConfirmed,scope:'Read-only gate execution against pinned existing 19-artifact private candidate; no production evidence claimed.',release:'HOLD'};
+await writeFile(output,JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));

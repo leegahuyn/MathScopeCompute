@@ -1,0 +1,45 @@
+{
+  "schema": "MathScope.M4.OperationalSnapshotPatchRollbackRehearsal/1",
+  "status": "VERIFIED_OFFLINE_EXACT_BYTES_AND_NEGATIVE_CONTROLS",
+  "baseline": {
+    "kind": "archived public HTTP response, not WebsitePublisher edit source",
+    "bytes": 30707818,
+    "sha256": "a945831236caa965dd96f986fb3f8311d6a236afed8235c0a69e135f51febe48",
+    "recordedProviderVersion": 137,
+    "recordedProviderShortHash": "9171eb0c"
+  },
+  "hypotheticalCandidate": {
+    "kind": "local bytes with previously UI-replayed CSS change; never uploaded",
+    "sha256": "bed25212d4d3397d2c5d71092afe141ef87c165b6a9fba00d1827c97ef4d84a3",
+    "bytes": 30707940,
+    "insertedBytes": 122,
+    "insertedSha256": "054f089487dfdecad27312c033daf46d799987c5b0f17c41be4a6c43ac25071a",
+    "beforeUnique": "</head>"
+  },
+  "reverse": {
+    "restoredSHA256": "a945831236caa965dd96f986fb3f8311d6a236afed8235c0a69e135f51febe48",
+    "byteIdentical": true
+  },
+  "negativeControls": [
+    {
+      "name": "wrong_baseline",
+      "reason": "BASE_SHA256_MISMATCH"
+    },
+    {
+      "name": "altered_candidate",
+      "reason": "CANDIDATE_SHA256_MISMATCH"
+    },
+    {
+      "name": "duplicate_marker",
+      "reason": "CANDIDATE_SHA256_MISMATCH"
+    }
+  ],
+  "scope": {
+    "serverRollbackAttempted": false,
+    "productionPageUpdated": false,
+    "actualPublisherRollbackAvailabilityVerified": false,
+    "authenticatedProductionRehearsal": false,
+    "actualProductionR108": "OPEN",
+    "release": "HOLD"
+  }
+}

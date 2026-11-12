@@ -1,0 +1,56 @@
+{
+  "schema": "MathScope.Forced.FixedSlabScalarCandidate/1",
+  "status": "CONDITIONAL_COARSE_FIXED_SLAB_SCALAR_CANDIDATE_NOT_ORIGINAL_GLOBAL_K",
+  "pins": {
+    "norms": "517662b18f4014644cd7539de42b82b74999374aaf34273163f39693f160bdb4",
+    "fixed": "9740009e01d587310aae82dc2f2ace4cafa12a9f3f5654c2fbd48ae132e4533c",
+    "lower": "5582056d41cd5ddd57bf6f293c8ec09bb47d9a6bae77929f3ff4283afbb71328",
+    "lower_code": "34f45caa70455663b06f9c5116aa490ef59d58fc17e00a6b618918e35b78a338",
+    "global_class": "f07341f299b2b9cd24844c4d738b5c6605816bdaf4eeca317b80618b27ed7095",
+    "family": "7fd3ec07b567af86f84df7a1b789a5a57366186d4e8c26c2a4a35dc5948c5b75",
+    "time": "aa100d47e54442be8c24f167a160816d31c883ddfdc4f0a3274b496c9b3c7a53",
+    "bump": "bd0f09f78a2f93cad9fdb679ba25509ecb2891ba86eee1bc3e57df6da74e37cc"
+  },
+  "T0": "1073741824",
+  "towerRecurrence": "T[n+1]=exp(T[n])",
+  "candidate": "T[10]",
+  "parsedEndpointCount": 37,
+  "maxEndpointHeight": 6,
+  "endpointProof": "Each endpoint is exp^k(r) with 0<r<2^30 and k<=6, including 1/kappa via its directed lower endpoint; hence each <T6.",
+  "integerCutoffBounds": {
+    "sigmaOrders": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "maxSigmaBits": 101,
+    "partitionFTCBoundCeiling": "240773353520722132728651607149505413120003",
+    "partitionThroughDerivative": 8,
+    "timeFTCStepThrough": 8,
+    "requiresSigmaThrough": 9,
+    "slowChartCauchyBase": "24371944523430924162076508160",
+    "allFiniteCoefficientsLessThan": "2^100000"
+  },
+  "proofIngredients": {
+    "chart": "Fixed h<1/64, s\u2208[1/2,2], |eta|\u22641, profile discs radius1/4096 and physical inverse discs radius1/256; see README. All X derivatives of log s vanish.",
+    "dstar": "dstar^-1 <= 3000000*r0^-3*W^4*R^172, W=exp(3 Bnorm^256 Lmax), using u>=2, 1<Dgeom<4, Tg<6 and massLower>=1/(480 W^2 R^83).",
+    "cy": "cy^-1/2 <=64 R^64 W kappa^-1/2, since massUpper<=32 W^2.",
+    "bounds": "W^8<T8; dstar^-1, cy^-1/2<T9; finite cutoff, chart and radius bounds <T7; K=T10 dominates all."
+  },
+  "crucialScope": "The physical slab background roots can serve in a re-proved fixed-slab mixed-jet lemma; they do not bound the literal enlarged all-band Cslow or literal original global K.",
+  "premises": "Original same-family frozen carrier bounds Bnorm, normal/cone/determinant/weight lower and propagator/Gaussian hypotheses; chart inverse Cauchy continuation; source real derivative and FTC endpoint bounds. The numerical root certificates carry their own analytic assumptions.",
+  "stillOpen": [
+    "Independent complete fixed-slab re-proof of all hypotheses and path containment",
+    "Source-bound C5 coefficient graph and numerical constant",
+    "Original all-band K",
+    "Live-family class binding"
+  ],
+  "release": "HOLD"
+}
