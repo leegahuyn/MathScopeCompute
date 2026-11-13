@@ -59,3 +59,40 @@ The literal source recurrence for a fixed coefficient at order `j` combines at m
 python -B check_slow_chart_majorant.py ORIGINAL_RUNTIME/research-ide/mathscope-m2/navier slow-chart-majorant.json
 node evaluate_slow_chart_majorant.mjs ORIGINAL_RUNTIME HISTORICAL_SCALE_RESULT slow-chart-majorant.json slow-chart-directed.json
 ```
+
+## Actual whole-norm N3 and N4 enclosures
+
+The original 14-operand maximum was evaluated for each prefix. The original
+background C8 operand requires 808,755 arithmetic nodes after stopping at
+90 bound leading FTC sums, 25,299 original slow-chart coefficient FTC sums
+and the three historical integral intervals. This uses seven actual positive
+finite-block terms and its exact `1/128` tail. Those terms are the source's
+positive majorant programs. They are distinct from the separately reproduced
+270 positive-profile FTC sums. Each directed background run executed
+48,805,382 operations without binary64 numerical decisions.
+
+The actual cutoff/map maximum takes eight partition FTC bounds, 35 slow-chart
+FTC bounds, eight squared step derivative integrals and three historical
+integrals. The weighted target's 168 FTC rows and 672 faces are independently
+matched for each prefix. See [N4 replay](weighted-target/n4-replay/README.md).
+
+With the stated leaf inequalities, the whole original K intervals at N3
+#18310069 and N4 #24120472 have equal exact endpoints. The upper endpoint
+has ten nested exponentials with positive innermost argument below `2^21`.
+The integer readback gives the common bound `K < T25`, where `T1=2` and
+`T(j+1)=2^Tj`. This bound is coarse. It does not supply the actual final
+corrected-field values, their uniform derivative intervals, or a comparison
+with an error tolerance.
+
+```text
+node evaluate_k_background.mjs ARITHMETIC_RUNTIME HISTORICAL_RESULT HISTORICAL_INPUT ARTIFACT EVIDENCE n3-background.json
+node evaluate_k_cutoff_map.mjs ARITHMETIC_RUNTIME HISTORICAL_RESULT HISTORICAL_INPUT ARTIFACT EVIDENCE n3-cutoff-map.json
+node combine_original_k.mjs ARITHMETIC_RUNTIME HISTORICAL_RESULT ARTIFACT/primary-K-arithmetic-frontier.json n3-closed.json n3-background.json n3-cutoff-map.json weighted-target/n3-weighted-target-directed.json n3-whole-k.json
+python -B check_whole_k_enclosure.py EVIDENCE whole-k-integer-readback.json
+```
+
+For N4 use the N4 hosted artifact and the directed target JSON in
+`weighted-target/n4-replay`. The background evaluator accepts the earlier
+43371105453 artifacts; the cutoff evaluator uses the added map index in
+43373034256. Both runs record the identical original arithmetic frontier
+hash per prefix. The join uses this hash and exact node IDs.

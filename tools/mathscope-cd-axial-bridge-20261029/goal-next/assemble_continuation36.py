@@ -97,6 +97,12 @@ def main():
     n3_intervals = [row['enclosure'] for row in source(TARGET + 'n3-weighted-target-directed.json')['rows']]
     n4_intervals = [row['enclosure'] for row in source(n4 + 'n4-weighted-target-directed.json')['rows']]
     assert len(n3_intervals) == 7 and n3_intervals == n4_intervals
+    readback = source(NORM + 'whole-k-integer-readback.json')
+    assert readback['commonStrictUpper'] == 'T25' and len(readback['rows']) == 2
+    for row in readback['rows']:
+        receipt = raw(f"{NORM}n{row['prefix']}-whole-k.json")
+        assert row['receiptSHA256'] == entry(receipt)['sha256']
+        assert len(json.loads(receipt)['operands']) == 14
     retry_path = JOIN + 'hosted-43372241418/first-cycle.json'
     assert entry(raw(retry_path))['sha256'] == '90a3c10a16b4e2e5b818f0bbab36e3ee8405a007ebcddc9980893ae21a1b4d14'
     retry = source(retry_path)
@@ -140,6 +146,7 @@ def main():
     receipt = {'file': delta.name, 'bytes': delta.stat().st_size, 'files': len(files) + 1,
                'sha256': file_sha(delta), 'branchHead': head, 'verifiedParentsInOrder': PARENTS,
                'targetRowsPerPrefix': 168, 'targetFacesPerPrefix': 672, 'cutoffLeavesPerPrefix': 54,
+               'wholeKOperandsPerPrefix': 14, 'conditionalWholeKUpper': 'T25',
                'verifiedDeltaManifest': True}
     (outputs / f'{LABEL}_Report_{DATE}_KO.md').write_bytes(raw('REPORT_KO.md'))
     (outputs / f'{LABEL}_Receipt_{DATE}.json').write_bytes(encode(receipt))
