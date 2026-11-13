@@ -1,0 +1,98 @@
+{
+  "status": "SAME_LIVE_N3_GAMMA_POSITIVE_N_SOURCE_BOUND_CONDITIONAL",
+  "pins": {
+    "nodes": "1ad501984212afd18d2ee6361f14ce6b1a28cf67c36e90eb059bb162514dc8fc",
+    "registry": "364425db9d5bbd317f8aaad681fdfdd3206f97e0f46d2beb78b6e7d5a30a3111",
+    "primary": "ebd5da297d06da881e0d38bd6d04507595b50a980b2bb2399ac7df42725323ad",
+    "w4": "9da54bbb2bd959e097c8ef610eabaf8ef8b163e540c73169dd82fcdaa784bc69",
+    "identities": "004b3f26f845c2069c669eedc982f7e76d74afff78814335010000bd49c8e6f7",
+    "pressure": "fd93001ad4bbc002d329cba54d1c884cc5e7bfd93444b1d72bd9c331a67b966d",
+    "zeta": "d3713e0a3f1cd17404e2afb23da20c4b32e9e840445eed53ce2849ecd200d240"
+  },
+  "actualEz": 17754268,
+  "actualStress": 17744195,
+  "actualPressureZ": 17754234,
+  "actualPressureZCutoffTerm": {
+    "chiZTimesWhole": 17754229,
+    "negative": 17754230,
+    "firstPartialMinusCutoff": 17754231,
+    "chiTimesWholePartial": 17754232,
+    "negativeWholePartial": 17754233,
+    "complete": 17754234
+  },
+  "fields": [
+    {
+      "index": 0,
+      "component": "rr",
+      "rows": 162,
+      "bodies": [
+        17736018,
+        17739436
+      ]
+    },
+    {
+      "index": 2,
+      "component": "rz",
+      "rows": 162,
+      "bodies": [
+        17737175,
+        17740593
+      ]
+    },
+    {
+      "index": 3,
+      "component": "thetatheta",
+      "rows": 162,
+      "bodies": [
+        17737686,
+        17741104
+      ]
+    },
+    {
+      "index": 5,
+      "component": "zz",
+      "rows": 162,
+      "bodies": [
+        17738743,
+        17742161
+      ]
+    }
+  ],
+  "localC5": {
+    "power": 2994,
+    "pole": 42,
+    "constant": 18310104,
+    "epsilonExponent": "1",
+    "weight": "zeta",
+    "gaussian": "P(v)^2",
+    "sourceStage": "LOCAL_COEFFICIENT_BEFORE_AUXILIARY_HAAR_AVERAGE",
+    "pointwiseBound": "constant*S_label^power*epsilon^epsilonExponent*weight*delta_*^(-pole)*gaussian"
+  },
+  "normRoot": 18310069,
+  "covarianceC5": "||W_rr,W_rz,W_thetatheta,W_zz||_C5 <= 5184 * 4^2999 * Tg^25 * K^2994 * S_ref^2999 * epsilon_ref * zeta * delta_*^-42",
+  "gaussianUniform": "Z42=1+22!*(t1^-44+4^-22); original zeta*delta_*^-42 <= Z42 on the whole radial shell, with positive t1.",
+  "gaussianProof": "For delta=min(1,log(X/Xa),log(Xb/X))<1, use exp(-u)<=22!*u^-22 on the active end. This even gives an extra delta^2 near that end; for delta=1 use zeta<=1.",
+  "radialProjection": "Pperp E_z=Pperp[(D1 W_rz)+epsilon*dZ W_zz+epsilon*dZ T0 G]; G= -D1 W_rr-epsilon*dZ W_rz+W_thetatheta/R. The original -D1 stress and rho*P in T0 are common-Y independent and are removed by Haar projection, not set to zero.",
+  "operatorNorms": {
+    "O0": "an actual fixed-chart C4-to-C4 sup norm bound for the complete original shifted T0, including chi and its Z derivatives",
+    "O1": "an actual fixed-chart C3-to-C3 sup norm bound for the complete original shifted A1",
+    "A": "a bound >=1 for the original a and R^-1 slow derivatives through order four"
+  },
+  "intermediate": "||G||C4 <= 50*A*B5 and ||projected E_z||C3 <= 2*(18+50*O0)*A*B5",
+  "positiveNReferenceGamma": "For the 52 mean-wave positive-N shapes, ||D_s^alpha L^l N^j gamma||infinity <= 136*c0^-1*A*(1+O0)*(1+O1)*B5.",
+  "symbolicSourceBound": "<= 5640192 * 4^2999 * Tg^26 * K^2995 * S_ref^3000 * epsilon_ref^(1-kappa_s) * Z42 * (1+O0)*(1+O1)",
+  "premises": [
+    "original same-live local C5 weighted class and fixed-label 162-row cover on the whole radial integration domain",
+    "the original shifted radial T0 and A1 have the stated finite C4 and C3 norms on that domain",
+    "source smoothness, nonzero inner radius, fixed labels and flat joins",
+    "original Fourier inverse identity, c0 positivity and original radial phase bound"
+  ],
+  "limitations": [
+    "O0 and O1 are unevaluated source-dependent operator bounds and may themselves depend on epsilon; no uniform epsilon exponent is concluded.",
+    "The radial integral requires the global Z42 bound: no local output zeta or delta weight is asserted.",
+    "Own-label conversion, beta, zero-N, full gamma/mean C4, full Forced and numerical K remain open."
+  ],
+  "completeForcedSeal": false,
+  "finalJets": "0/67",
+  "release": "HOLD"
+}

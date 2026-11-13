@@ -54,10 +54,13 @@ export async function exportActualTargetC6Dag(target,{outputPath,maxVisited=2500
  }
  const ids=[...seen].sort((a,b)=>a-b),fixed=G.captureFunctionDefinitions?.().fixed??null;
  const bodyHash=createHash('sha256');for(const id of ids)bodyHash.update(JSON.stringify([id,G.nodes[id]])+'\n');
+ const sourcePrefix117100SHA256=G.nodes.length>=117100
+  ?createHash('sha256').update(JSON.stringify(G.nodes.slice(0,117100))).digest('hex'):null;
  const header={kind:'header',schema:'MathScope.ActualTargetC6TypedDag/1',sourceProfile:target.sourceBinding?.parameterExpressionSHA256??G.source?.parameterExpressionSHA256,
   graphNamespace:'live-target-G',originalGraphNodeCount:G.nodes.length,rowCount:rows.length,rows,
   definitionCounts:Object.fromEntries(Object.entries(seenDefs).map(([k,v])=>[k,v.size])),nodeCount:ids.length,nodeRecordsSHA256:bodyHash.digest('hex'),
-  fixedRegistry:fixed,scope:'Exact typed reachable nodes and referenced source registrations; no private seal or equality to archived C7 is claimed.'};
+  fixedRegistry:fixed,sourcePrefix117100SHA256,
+  scope:'Exact typed reachable nodes and referenced source registrations; no private seal or equality to archived C7 is claimed.'};
  async function* stream(){yield JSON.stringify(header)+'\n';for(const id of ids)yield JSON.stringify({kind:'node',id,node:G.nodes[id]})+'\n';
   for(const [kind,values] of Object.entries(seenDefs))for(const id of [...values].sort((a,b)=>a-b))yield JSON.stringify({kind:'definition',type:kind,id,definition:defArrays[kind][id]})+'\n';
   yield JSON.stringify({kind:'trailer',nodeCount:ids.length,definitionCounts:header.definitionCounts})+'\n';}

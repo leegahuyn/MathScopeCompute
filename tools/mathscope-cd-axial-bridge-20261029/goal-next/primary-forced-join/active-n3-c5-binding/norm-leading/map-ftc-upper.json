@@ -1,0 +1,60 @@
+{
+  "schema": "MathScope.OriginalPartitionAndStepFTCUpper/1",
+  "status": "PASS",
+  "sourcePins": {
+    "mathscope-m3/navier/source-global-class.mjs": "f07341f299b2b9cd24844c4d738b5c6605816bdaf4eeca317b80618b27ed7095",
+    "mathscope-m2/navier/actual-covariance-global-assembly.mjs": "bd0f09f78a2f93cad9fdb679ba25509ecb2891ba86eee1bc3e57df6da74e37cc",
+    "mathscope-m2/navier/actual-gaussian-flat-tail-kernel.mjs": "aa100d47e54442be8c24f167a160816d31c883ddfdc4f0a3274b496c9b3c7a53",
+    "mathscope-m2/navier/actual-residual-order-induction-kernels.mjs": "97f8bbc5927ee2b2ac5b41851ba5bc2c800fd4cad6b85c7a1039095c066f7fef",
+    "mathscope-m2/navier/actual-physical-full-curl.mjs": "539753a76375338653ff7420752270b600dc8c78893212ce541c47484b2f6454"
+  },
+  "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+  "partitionUpper": [
+    "633603",
+    "131455551747",
+    "40927371254770179",
+    "16989652645108700350467",
+    "8815870701120048198611742723",
+    "5489428961820066114263710962216963",
+    "3987823389699417012734501931407090049027",
+    "3310827930353591183019847390090451180454739971"
+  ],
+  "timeStepSquareIntegrals": [
+    {
+      "derivativeOrder": 2,
+      "integralUpper": "496111739904"
+    },
+    {
+      "derivativeOrder": 3,
+      "integralUpper": "135917321153872896"
+    },
+    {
+      "derivativeOrder": 4,
+      "integralUpper": "69580683574467684765696"
+    },
+    {
+      "derivativeOrder": 5,
+      "integralUpper": "57899758342920166296178790400"
+    },
+    {
+      "derivativeOrder": 6,
+      "integralUpper": "72156569714106063364126231652312064"
+    },
+    {
+      "derivativeOrder": 7,
+      "integralUpper": "128122925739903853257496543280134413640704"
+    },
+    {
+      "derivativeOrder": 8,
+      "integralUpper": "315431681245004397876008625045689262393600000000"
+    },
+    {
+      "derivativeOrder": 9,
+      "integralUpper": "1069341150946585852117945901244369241762696537639501824"
+    }
+  ],
+  "partitionProof": "Translate three original bumps. On the numerator support D>=1/4. Leibniz and Bell polynomials bound the quotient derivatives through order eight. The original flat guard gives zero outside. The one-dimensional anchored rectangle has length two, so its face sum is bounded by 3 times one plus the maximum of two consecutive derivatives.",
+  "timeProof": "The original sigma_j derivative is bounded by the linear-seed recurrence. The unit-interval square integral is at most the square of that bound.",
+  "scope": "These are upper bounds for the original partition and step-square operands only. Bind their actual IDs before using them to evaluate a K operand.",
+  "release": "HOLD"
+}

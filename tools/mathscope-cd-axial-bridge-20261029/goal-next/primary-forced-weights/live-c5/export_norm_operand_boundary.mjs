@@ -88,11 +88,20 @@ export function writePrimaryNormBindingIndex(primary, background, out) {
   });
   assert.equal(targetFTC.length, 168);
   assert.equal(finiteBlocks.length, 9);
+  const {coefficientConstants: map} = bounds;
+  const faces = row => ({bound: row.bound, faces: row.faces.map(({mask, upperBound}) => ({mask, upperBound}))});
+  const mapFTC = {partition: map.partitionRows.map(row => ({order: row.order, ...faces(row)})),
+    chart: map.coefficientRows.map(faces),
+    timeStepSquaredIntegrals: map.time.stepBounds.slice(1).map((root, j) => {
+      const integral = rootAt(root).args.find(id => rootAt(id).op === 'definite_integral');
+      assert.ok(Number.isSafeInteger(integral));
+      return {derivativeOrder: j + 2, integral};
+    }), maximum: map.maximum};
   const data = {schema: 'MathScope.ActivePrimaryNormBindingIndex/1', graphNamespace: 'norm',
     prefix: primary.current.domain.prefixOrder, normRoot: bounds.K, backgroundSource: background.sourceBinding,
     targetSourceProfileSHA256: target.sourceBinding.parameterExpressionSHA256,
     slowConstants: background.rows.map(({derivativeOrder, Cslow, errorConstant}) => ({derivativeOrder, Cslow, errorConstant})),
-    coefficientFTC, finiteBlocks, targetFTC, numericalEndpointsCertified: false};
+    coefficientFTC, finiteBlocks, targetFTC, mapFTC, numericalEndpointsCertified: false};
   const text = JSON.stringify(data) + '\n';
   writeFileSync(join(out, 'primary-K-binding-index.json'), text, {flag: 'wx'});
   return {coefficients: coefficientFTC.length, targetFTC: targetFTC.length,

@@ -203,7 +203,7 @@ try {
     try {
       receipt.normOperandBoundary = writePrimaryNormOperandBoundary(primary, out);
       receipt.normBindingIndex = writePrimaryNormBindingIndex(primary, family.source.backgroundNorms, out);
-      if (prefix === 3 && !process.env.MATHSCOPE_SAME_FAMILY_FORCED_OBSERVER) {
+      if (!process.env.MATHSCOPE_SAME_FAMILY_FORCED_OBSERVER) {
         receipt.targetOperandDag = await exportActualTargetC6Dag(target, {
           outputPath: join(out, 'primary-target-c6-source.jsonl.gz'),
           onProgress() { context.checkCancelled(); },
