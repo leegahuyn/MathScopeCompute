@@ -24,18 +24,24 @@ theorem picardAxisBranchCoefficients
     (heq : ∀ x, x * dw x + c * w x = x * g x) :
     dw 0 = g 0 / (1 + c) ∧ ddw 0 / 2 = dg 0 / (2 + c) := by
   have heq' (x : ℝ) : dw x + x * ddw x + c * dw x = g x + x * dg x := by
-    have hleft := ((hasDerivAt_id x).mul (hdw x)).add ((hw x).const_mul c)
-    have hright := (hasDerivAt_id x).mul (hg x)
-    have same : (fun x => id x * dw x + c * w x) = (fun x => id x * g x) := by
+    have hleft : HasDerivAt (fun y => y * dw y + c * w y)
+        (dw x + x * ddw x + c * dw x) x := by
+      simpa only [id_eq, one_mul] using
+        ((hasDerivAt_id x).mul (hdw x)).add ((hw x).const_mul c)
+    have hright : HasDerivAt (fun y => y * g y) (g x + x * dg x) x := by
+      simpa only [id_eq, one_mul] using (hasDerivAt_id x).mul (hg x)
+    have same : (fun x => x * dw x + c * w x) = (fun x => x * g x) := by
       funext y
       exact heq y
     rw [same] at hleft
-    simpa only [id_eq, one_mul] using hleft.unique hright
+    exact hleft.unique hright
   have hs : dw 0 + c * dw 0 = g 0 := by simpa using heq' 0
-  have hleft := ((hdw 0).add (hasDerivAt_id_mul_at_zero ddw hddw)).add
-    ((hdw 0).const_mul c)
-  have hright := (hg 0).add (hasDerivAt_id_mul_at_zero dg hdg)
-  have same : (fun x => dw x + id x * ddw x + c * dw x) = (fun x => g x + id x * dg x) := by
+  have hleft : HasDerivAt (fun x => dw x + x * ddw x + c * dw x)
+      (ddw 0 + ddw 0 + c * ddw 0) 0 :=
+    ((hdw 0).add (hasDerivAt_id_mul_at_zero ddw hddw)).add ((hdw 0).const_mul c)
+  have hright : HasDerivAt (fun x => g x + x * dg x) (dg 0 + dg 0) 0 :=
+    (hg 0).add (hasDerivAt_id_mul_at_zero dg hdg)
+  have same : (fun x => dw x + x * ddw x + c * dw x) = (fun x => g x + x * dg x) := by
     funext y
     exact heq' y
   rw [same] at hleft
