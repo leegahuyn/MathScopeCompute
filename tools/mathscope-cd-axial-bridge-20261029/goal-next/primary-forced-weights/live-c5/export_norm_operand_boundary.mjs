@@ -55,3 +55,46 @@ export function writePrimaryNormOperandBoundary(primary, out) {
   return {root: trace.roots.K, nodes: trace.nodes.length, boundaries: trace.nonArithmeticBoundaries.length,
     sha256: createHash('sha256').update(text).digest('hex')};
 }
+
+/** Record the issuer's actual FTC grouping and finite-block roots in the norm namespace. */
+export function writePrimaryNormBindingIndex(primary, background, out) {
+  const {G, bounds, target} = primary;
+  assert.equal(bounds.graphNamespace, 'norm');
+  assert.equal(target.G, G);
+  assert.equal(target.family.source.backgroundNorms, background);
+  const rootAt = id => {
+    const node = G.nodes[id];
+    assert.ok(node && Number.isSafeInteger(id));
+    return node;
+  };
+  const coefficientFTC = background.coefficientFTC.map(row => {
+    assert.deepEqual(rootAt(row.bound), background.G.nodes[row.bound]);
+    const faces = row.faces.map(({mask, upperBound}) => ({mask, upperBound}));
+    assert.equal(faces.length, row.sourceConstant ? 0 : 8);
+    return {bound: row.bound, sourceConstant: row.sourceConstant, faces};
+  });
+  const finiteBlocks = background.normalizedBlocks.map(({derivativeOrder, tailStarts, tailConstant, finite, coefficient}) => {
+    rootAt(coefficient);
+    return {derivativeOrder, tailStarts, tailConstant, finite, coefficient};
+  });
+  const targetFTC = target.ftcRows.map(row => {
+    rootAt(row.bound);
+    assert.equal(row.faces.length, 4);
+    return {kind: row.kind, component: row.component, radialOrder: row.radialOrder, etaOrder: row.etaOrder,
+      bound: row.bound, coordinates: row.coordinates, lower: row.lower, upper: row.upper,
+      actualBody: row.actualStressBody ?? row.actualCoefficientBody,
+      actualDerivative: row.actualDerivative,
+      faces: row.faces.map(({mask, upperBound}) => ({mask, upperBound}))};
+  });
+  assert.equal(targetFTC.length, 168);
+  assert.equal(finiteBlocks.length, 9);
+  const data = {schema: 'MathScope.ActivePrimaryNormBindingIndex/1', graphNamespace: 'norm',
+    prefix: primary.current.domain.prefixOrder, normRoot: bounds.K, backgroundSource: background.sourceBinding,
+    targetSourceProfileSHA256: target.sourceBinding.parameterExpressionSHA256,
+    slowConstants: background.rows.map(({derivativeOrder, Cslow, errorConstant}) => ({derivativeOrder, Cslow, errorConstant})),
+    coefficientFTC, finiteBlocks, targetFTC, numericalEndpointsCertified: false};
+  const text = JSON.stringify(data) + '\n';
+  writeFileSync(join(out, 'primary-K-binding-index.json'), text, {flag: 'wx'});
+  return {coefficients: coefficientFTC.length, targetFTC: targetFTC.length,
+    sha256: createHash('sha256').update(text).digest('hex')};
+}
