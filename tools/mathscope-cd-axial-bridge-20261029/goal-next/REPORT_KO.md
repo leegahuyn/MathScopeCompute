@@ -10,6 +10,14 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation34
+
+- **VERIFIED · 원본 N4의 선도 FTC 90개.** 같은 GitHub 실행의 실제 선도 `F₀,U₀` 정의, 사각형, 90개 면 합 ID와 `K`로 가는 의존 관계에 방향 반올림 상계를 연결했다. 양의 차수 `n=1,2,3`의 원본 `F,U`에는 별도 C10 재생으로 FTC 270개에 상계를 얻었다. 희소 원본 그래프에서 해당 정의와 1,080개 면을 대조했고 활성 `K` 결속은 OPEN이다. 원본 느린 차트 계수의 여덟 면 합에도 공통 방향 반올림 상계를 계산했다. 전체 `K`와 가중 표적은 OPEN이다. [활성 N4 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43368204121/job/131697534716) · [선도·양의 차수·차트 상계](primary-forced-join/active-n3-c5-binding/norm-leading/README.md).
+- **VERIFIED / CONDITIONAL · 활성 N3 두 분기의 동결 법선.** 원래 대표점과 실제 펄스 변수 `w`를 치환한 동차 법선과 그 펄스 도함수가 Forced의 12개 스칼라와 정확히 일치했다. 대표점의 두 좌표를 바꾸거나 원래 펄스 변수를 남긴 대조는 실패했다. 두 분기의 안정성 경로를 원래 역연산에 연결했다. 모드 1 평균은 원래 162개 라벨 행의 좌표 변환을 써 공통 `Y`의 가중 C4와 양의 `N` 방향 52개 점별 상계까지 조건부로 연결했다. 각 라벨로 되돌리는 좌표 변환, 나머지 평균 성분과 실제 수치 `K`는 OPEN이다. [동결 법선](primary-forced-join/active-n3-c5-binding/endpoint/frozen-normal/README.md) · [공통 Y 상계](primary-forced-join/active-n3-c5-binding/mean-c4/common-w4/README.md).
+- **VERIFIED · (X=0\)의 원본 Picard 직접 분기.** 원본 7,358,162개 노드에서 네 성분과 \(\eta\) 차수 0–3의 16개 직접 분기를 GitHub Lean 축 계수 공식에 결속했다. 원본 다섯 계의 행렬과 강제항으로 이차 계수를 각각 만들었다. 고차 어댑터의 실제 적분 전개는 최초 노드 한도를 넘었고 무한 극한의 동일성은 OPEN이다. [축 계수와 재생](y-higher-flow/high-picard-tail/README.md).
+- **VERIFIED · M4 격리 후보 되돌리기.** 같은 주소와 브라우저 탭에서 후보, 기준본, 후보 복구를 재현했다. 복구한 후보의 실제 M2 `point` 입력·결과·Worker 해시가 최초 후보와 일치했다. 공급자 조회의 운영 버전은 137이며 운영 R1-08은 OPEN이다. [브라우저와 공급자 기록](m4/r108/operational-replay-audit/browser-rollback/README.md).
+- **OPEN · 최종장.** 원본 첫 보정 전체 주기는 GitHub에서 실행 중이다. M3 62/64, 최종 jets 0/67, 일반 Y 재귀 OPEN, RELEASE HOLD다. [첫 주기 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43367325423).
+
 ## Continuation33
 
 - **VERIFIED · 활성 N3의 원본 첫 Forced 전체.** 동일 원본 계열에서 원래 81개 라벨과 양 부호 162개 기여, 양의 역연산 20개와 음의 켤레 경로 20개를 구성했다. 갱신한 전압력과 물리 잔차를 포함해 총 21,999,237개 노드에서 원본 검사 805개가 통과했다. 별도 Python 검사는 내려받은 결과의 해시, 20쌍, 805개 검사와 11개 체크포인트를 대조했다. 전체 그래프 재평가는 이 결과 확인의 범위 밖이다. [GitHub 원본 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43363985428) · [독립 결과 확인](primary-forced-join/active-n3-c5-binding/hosted-43363985428/full-first-forced-independent.json).

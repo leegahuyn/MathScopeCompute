@@ -1,0 +1,138 @@
+{
+  "status": "SAME_LIVE_POSITIVE_N_V_POINTWISE_CONDITIONAL_REDUCTION",
+  "pins": {
+    "demand": "7db7caeab702abd948936c075f6cc27e8218e5fd98fc577a6d325224f25376ec",
+    "primary": "ebd5da297d06da881e0d38bd6d04507595b50a980b2bb2399ac7df42725323ad",
+    "registry": "364425db9d5bbd317f8aaad681fdfdd3206f97e0f46d2beb78b6e7d5a30a3111",
+    "fourier": "59e1d8f7fd72b880de030a2a56bee9be65b5e02203cffa73157ce8dae420ad2e"
+  },
+  "count": 52,
+  "requiresProjectionFactorTwo": 19,
+  "projectionDerivativeAnnihilatesHaar": 33,
+  "sourceCovarianceFields": [
+    1,
+    4
+  ],
+  "signedRowsPerField": 162,
+  "localPrimaryC4": {
+    "power": 2585,
+    "pole": 36,
+    "constant": 18310098,
+    "epsilonExponent": "1",
+    "weight": "zeta",
+    "gaussian": "P(v)^2",
+    "sourceStage": "LOCAL_COEFFICIENT_BEFORE_AUXILIARY_HAAR_AVERAGE",
+    "pointwiseBound": "constant*S_label^power*epsilon^epsilonExponent*weight*delta_*^(-pole)*gaussian"
+  },
+  "fieldEvidence": [
+    {
+      "field": "GlobalCompleteCommonTorus_rtheta",
+      "signedRows": 162,
+      "uniqueBoxes": 81,
+      "localBodies": [
+        17736607,
+        17740025
+      ],
+      "activeLocalParameterIndices": [
+        0,
+        1,
+        2,
+        7,
+        8
+      ]
+    },
+    {
+      "field": "GlobalCompleteCommonTorus_thetaz",
+      "signedRows": 162,
+      "uniqueBoxes": 81,
+      "localBodies": [
+        17738267,
+        17741685
+      ],
+      "activeLocalParameterIndices": [
+        0,
+        1,
+        2,
+        7,
+        8
+      ]
+    }
+  ],
+  "chainRuleCountsDegree0Through4": [
+    1,
+    6,
+    41,
+    311,
+    2576
+  ],
+  "conditionalCoverBound": "For each of the 162 rows, if local coefficient and its five active argument maps have all derivatives through degree four bounded by C>=1, local signed W has all derivatives through four bounded by M, mapped arguments remain in that local domain, and original joins are flat, then ||D^alpha L^l N^m W||infinity <= 417312*C^5*M for degree <=4.",
+  "conditionalVBound": "Under these same conditions the 19 projection rows are <=15023232*c0^-1*A*C^5*M and the other 33 rows <=7511616*c0^-1*A*C^5*M.",
+  "unverified": "Prove the numerical C and a uniform M from the actual local C4 weighted bound, including all 162 map values, dyadic scale conversions, pulse paths, and flat joins on the active domain.",
+  "directPointwise": "If B_infinity bounds every required actual W derivative through total order four and A>=1 bounds the displayed coefficient derivatives, the 19 rows are <=36*c0^-1*A*B_infinity and the other 33 <=18*c0^-1*A*B_infinity.",
+  "derivedFrom": "Pperp g=g-Haar(g), ||Pperp g||infinity<=2||g||infinity; when L or N has already differentiated g, its Haar mean is zero.",
+  "directionArithmetic": {
+    "k": [
+      "-1",
+      "1"
+    ],
+    "d": [
+      "4",
+      "-2"
+    ],
+    "dInverse": [
+      "1/2",
+      "1/4"
+    ],
+    "dY0": [
+      "L/d",
+      "k*N/d"
+    ],
+    "dY1": [
+      "N/d",
+      "-k*L/d"
+    ],
+    "dY0dY1": [
+      "-k*L^2/d^2",
+      "(1-k^2)*L*N/d^2",
+      "k*N^2/d^2"
+    ],
+    "incorrectSignRejected": true
+  },
+  "unitTorusFTC": "||f||infinity <= ||f||2+||d0 f||2+||d1 f||2+||d0d1 f||2 <= ||f||2+2||Lf||2+2||Nf||2+||L^2 f||2+||LN f||2+||N^2 f||2",
+  "ftcDemand": "Applying this two-extra-derivative estimate to top-order positive-N v demands source covariance derivatives through total six. The already executed Primary C5 local covariance rows reach order five, not six; independent transfer and further order are required by this specific L2-to-sup route.",
+  "oneDerivativeCounterexample": {
+    "family": "f_M(Y)=sum_(0<||k||infinity<=M) exp(2*pi*i*k.Y)/(1+|k|^2)",
+    "exact": "f_M(0)=S_M; ||f_M||_2^2+(||d0 f_M||_2^2+||d1 f_M||_2^2)/(4*pi^2)=S_M; S_M>=8/3 H_M -> infinity",
+    "consequence": "No universal 2D L2 first-derivative inequality controls sup, even though L,N span the torus. A noncritical one-spare-order estimate needs stronger input.",
+    "rationalChecks": [
+      {
+        "radius": 1,
+        "S": "10/3",
+        "harmonicLower": "8/3"
+      },
+      {
+        "radius": 2,
+        "S": "266/45",
+        "harmonicLower": "4"
+      },
+      {
+        "radius": 4,
+        "S": "135455212/14549535",
+        "harmonicLower": "50/9"
+      },
+      {
+        "radius": 8,
+        "S": "9269657464229139966066712/702064977376282583037975",
+        "harmonicLower": "761/105"
+      },
+      {
+        "radius": 16,
+        "S": "3876236287702513689911839611481569661266218068589096517455862553693274129802421728080114639651888/223531998061670334784835075069627397499669850774659136417281735810705497379354600550739518033175",
+        "harmonicLower": "2436559/270270"
+      }
+    ]
+  },
+  "scope": "Conditional fixed-Y positive-N v reduction; no numerical A or B_infinity, full mean C4, full Forced or final Cartesian jet proof.",
+  "finalJets": "0/67",
+  "release": "HOLD"
+}

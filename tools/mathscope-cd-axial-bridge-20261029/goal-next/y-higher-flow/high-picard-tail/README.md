@@ -52,6 +52,19 @@ For an odd q with q(0)=0, the *separate analytic quotient* `q(sqrt X)/sqrt X=int
 
 The original standalone n1 `ActualConvergentExpressions.picardEven` permits only components 0–3, radial X order 0–4 and eta order 0–8. Its X=0, radial-order-one case has a separate direct equation-coefficient implementation; the integral representation must be proved equal to this branch using the same ODE and regularity. The higher `ActualInductionExpressions` adapter also permits only components 0–3 and requires `derivativeBudget(2*r,m)`, plus its separate node budget. The original displayed partial sum is limited to 0–8 terms and is not the mathematically certified K-term sum. Thus the arbitrary-fixed-r theorem does not imply arbitrary native materialization or a checked numerical source tail. In particular, r=3 is within the standalone source's stated selector range but has not been newly materialized or evaluated here.
 
+The original standalone branch at `X=0`, `r=1` is now bound to the GitHub-compiled `picardAxisBranchCoefficients` theorem. Let `g=f+A0 W+A1 d_eta W` and suppose the actual solution is jointly regular near the axis, with `W(0,eta)=0` for all real eta under consideration. Then `g_i(0)=f_i(0)` and
+
+```text
+g_i'(0)=f_i'(0)+sum_j A0_ij(0) w_1j + sum_j A1_ij(0) d_eta w_1j,
+w_1j=f_j(0)/(1+c_j),  w_2i=g_i'(0)/(2+c_i).
+```
+
+The theorem gives `w_2i=W_i''(0)/2`, equal to the one-sided even-X derivative by the preceding FTC formula. The equality can be differentiated in eta through the tested order when the relevant mixed jets exist continuously. The audit checks literal native node equality for all four components and eta orders zero through three, and detects a changed quadratic denominator. It checks the exported 7,358,162-node stream and registry and builds the first even Taylor coefficient from the actual forcing and matrices in all five registered systems. The higher adapter's integral branch still needs independent identification of its actual native limit and differentiation; directly expanding all higher-system integrals exceeded the finite node limit in the first replay. The receipt records which operations were executed. [GitHub Lean](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43366489558)
+
+```sh
+node --max-old-space-size=3072 replay_axis_coefficients.mjs ORIGINAL_N4_BUNDLE ORIGINAL_RUNTIME axis-replay.json
+```
+
 Reproduce the exact finite coefficient, source selectors, preexisting parity/tail receipts and monomial controls with
 
 `python -B verify_exact_coefficients.py --source-dir <original-navier-source-directory> --out <coefficient-receipt.json>`.

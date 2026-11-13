@@ -1,0 +1,50 @@
+{
+  "schema": "MathScope.R108.IsolatedArchivedWorkerRoundTrip/1",
+  "status": "VERIFIED_LOOPBACK_CANDIDATE_ROLLBACK_REDEPLOY",
+  "route": "/v0.3.1.html",
+  "stages": [
+    {
+      "phase": "original-candidate-worker",
+      "status": 200,
+      "bytes": 28928002,
+      "sha256": "0504482900dbeac2faf992be9a923bc51ab1de6bcec0b82ac058085444669735",
+      "labMarker": true,
+      "launcherMarker": true,
+      "cacheControl": "private, no-store",
+      "headStatus": 200
+    },
+    {
+      "phase": "served-rollback",
+      "status": 200,
+      "bytes": 28547605,
+      "sha256": "e6ebde6250a861296554f26305cb40200b0a70e822acb3f588e9dca423d6e784",
+      "labMarker": false,
+      "launcherMarker": true,
+      "cacheControl": "private, no-store",
+      "headStatus": 200
+    },
+    {
+      "phase": "served-candidate-again",
+      "status": 200,
+      "bytes": 28928002,
+      "sha256": "0504482900dbeac2faf992be9a923bc51ab1de6bcec0b82ac058085444669735",
+      "labMarker": true,
+      "launcherMarker": true,
+      "cacheControl": "private, no-store",
+      "headStatus": 200
+    }
+  ],
+  "inputPins": {
+    "baseline": "e6ebde6250a861296554f26305cb40200b0a70e822acb3f588e9dca423d6e784",
+    "candidate": "0504482900dbeac2faf992be9a923bc51ab1de6bcec0b82ac058085444669735",
+    "worker": "eacd0e21b85b79f1892182963c77e50248a77e11ac07c1d1f0bc789b57587705",
+    "patch": "04662c00f3e1c93eedbce8782231433b5a9f7bb60e1bda630475202844e14fe3"
+  },
+  "patches": 4,
+  "wrongGenerationRollbackRejected": true,
+  "corruptCandidateRollbackRejected": true,
+  "scope": "Original candidate Worker and exact reversed historical baseline served under a common loopback URL. This is separate from the operating WebsitePublisher page and provider version restore.",
+  "liveDeploymentPerformed": false,
+  "operatingR108": "OPEN",
+  "release": "HOLD"
+}

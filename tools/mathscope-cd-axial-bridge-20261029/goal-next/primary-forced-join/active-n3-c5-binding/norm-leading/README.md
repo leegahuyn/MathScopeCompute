@@ -39,3 +39,14 @@ python work/goal-next/continuation36/norm-leaf/check_directed_readback.py --dir 
 ```
 
 The first producer hard-pins the source program, hosted C8/C6 receipt and geometry receipt; the second uses SymPy. No local Lean was compiled and no shared branch edited.
+
+## Original slow-chart coefficient integrals
+
+The same original C8 issuer also integrates its explicit slow-chart coefficients over `s∈[1/2,2]`, `X∈[Xa/2,2Xb]`, and `eta∈[-1,1]`. Set `H=max(2,Lambda,C12EnvelopeR)`. The source geometry gives `2/H≤X≤H²`. The script bounds the first eleven ordinary mixed derivatives of every atom using falling factorials for the powers of `s,X`, and the radius-`1/4` Cauchy bound of `1/(1-2h eta²)` around each real eta. There the denominator has absolute value greater than `1/2`. The Euler derivative has coefficient `s a_i0` in the ordinary-coordinate basis. That product, the other coefficients and all four multipliers have seminorm at most `2^156 H^13` through order eleven.
+
+The literal source recurrence for a fixed coefficient at order `j` combines at most six terms from its preceding row. Three differentiate the predecessor coefficient and three advance one profile derivative. A product costs at most `2^11` in the total-order mixed seminorm. Thus at order `j≤8`, the seminorm through order `11-j` is at most `2^(156+170j) H^(13(j+1))`. All eight faces use at most three of the remaining derivatives. Integrating `sqrt(1+u²)≤1+|u|` costs `(1+3/2)(1+DeltaX)(1+2)≤15H²`. Each nonconstant slow-chart coefficient FTC sum is bounded by `2^1521 H^119`. The directed evaluator encloses this expression with the original fixed parameters, without integrating the unknown profile or weighted-target derivatives. The current export does not enumerate the exact IDs of this coefficient family.
+
+```sh
+python -B check_slow_chart_majorant.py ORIGINAL_RUNTIME/research-ide/mathscope-m2/navier slow-chart-majorant.json
+node evaluate_slow_chart_majorant.mjs ORIGINAL_RUNTIME HISTORICAL_SCALE_RESULT slow-chart-majorant.json slow-chart-directed.json
+```
