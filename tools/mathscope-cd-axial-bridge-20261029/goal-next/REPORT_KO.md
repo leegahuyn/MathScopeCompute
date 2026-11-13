@@ -10,6 +10,18 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation35
+
+- **VERIFIED · 원본 \(K\) 산술 구간.** 활성 N3와 N4의 실제 최대값에 들어가는 14개 항 중 5개씩, 그리고 \(E,W,d_\star,c_y\)를 96비트 방향 반올림으로 양쪽에서 감쌌다. 원본 세 적분을 그대로 유지했다. 분할 함수 FTC 8개와 펄스 계단 제곱 적분 8개의 정수 상계도 재현했다. 전체 cutoff/map 최대값은 원본 항에 연결해 재평가해야 한다. 차수 1–3의 별도 프로필 FTC 상계 270개와 실제 C8의 정규화 유한합은 서로 다른 식이다. 실제 유한합은 1–7차의 \(E,U,\Pi,V/R,M/R\), 추가 Stokes 항 및 꼬리를 사용한다. [수치 구간](primary-forced-join/active-n3-c5-binding/norm-leading/README.md).
+- **VERIFIED / CONDITIONAL · N3 원본 가중 표적 C6.** GitHub에서 원본 private family와 C5 검사 9개를 통과했다. 원본 C6의 168개 FTC 식과 672개 면을 독립 비교해 기존 방향 구간이 있는 C7의 해당 식과 일치함을 확인했다. 실제 인자, 정적분 경계와 바인더, 참조된 native 정의와 미분 차수를 비교했다. 느린 차트 계수 FTC 1,148개와 공통 원본 적분 세 개를 연결해 N3의 일곱 \(N_m\)에 조건부 방향 구간 \(1\le N_m<T_{15}\)를 얻었다. \(T_1=2, T_{j+1}=2^{T_j}\)이다. N4의 별도 typed DAG 추출을 시작했다. [N3 원본 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43371105453) · [N4 추출](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43373034256) · [독립 원본 비교](primary-forced-join/active-n3-c5-binding/norm-leading/weighted-target/README.md).
+- **VERIFIED / CONDITIONAL · 원본 평균장.** 각 라벨에서 \(v\)의 양의 \(N\) 방향 52개 미분 상계를 해당 좌표로 옮겼다. \(\beta,\gamma\)의 원본 이동 적분과 압력 항을 보존했고 \(\gamma\)에 필요한 두 연산자 노름을 cutoff·위상·반경의 실제 기하 상수에 대한 명시적 다항식으로 제한했다. 실제 기하 상수의 균일 상계, 평탄 접합 및 \(\beta\) 전체가 남아 있다. \(\beta\)의 직접 경로는 공분산 C6을 요구한다. C5만으로 그 일반 경로를 보장할 수 없음을 매끄러운 모형으로 확인했다. [라벨별 좌표](primary-forced-join/active-n3-c5-binding/mean-c4/own-label/README.md) · [연산자 상계](primary-forced-join/active-n3-c5-binding/mean-c4/beta-gamma/radial-operator/README.md).
+- **VERIFIED / CONDITIONAL · 각도 주파수.** 원본 4,682,006개 노드의 보관 자료에서 실제 위상 10개, 두 번째 Forced의 역연산 후보 40개, 각도 독립 계수 484개를 검사했다. 원래 지지집합 조건에서 물리 속도와 외력의 주파수 상한을 얻었고, 같은 주파수를 먼저 합산하는 정확한 각도 적분식을 도출했다. 최종장 계수와 네 가지 독립 정밀화는 남아 있다. [원본 각도 검사](final67/angular-winding/README.md).
+- **VERIFIED · 움직이는 열 외부 영역의 적분.** 원본 열 외부장 식별을 적용해 \(X=X_b\)까지의 에너지와 일, 방위각 외력의 방향 구간을 계산했다. 공간과 시간 격자를 각각 세분화했을 때 방위각 외력의 구간 폭이 줄었다. 움직이는 경계의 점성·이동 유량과 소산을 제한하고, 에너지와 일의 공통 선도항을 소거해 외부 에너지 수지 오차를 원본 스케일 \(S\)의 \(2^{-8168}\) 미만으로 제한했다. 원래 압력 기울기와 두 압력 cutoff 항을 포함한 외부 벡터 외력의 제곱 \(L^1_tL^2_x\) 노름에 \([2^{-20}S_R,S_R/8]\)를 얻었다. 여기서 \(S_R\)은 별도의 정확한 양의 원본 스케일이다. 환형·중심을 포함한 전체 에너지 수지와 최종장 정밀화는 OPEN이다. [열 외부 에너지와 벡터 외력 재현](final67/moving-heat-energy/README.md).
+- **VERIFIED / CONDITIONAL · 원본 Y 방사 미분.** 원본 N4 보관 자료의 실제 Picard 계 5개에서 네 번째 성분의 방사 미분식을 생성했다. 각 식의 원래 단위구간 적분 안에서 자연함수의 \(Y=\Lambda(t\sqrt X)^2\)를 찾았다. 별도 정의역 가정 아래 \(Y<5\)가 따른다. 재현에 쓴 \(X\)는 새 변수이며, 실제 모든 호출자의 정의역과 일반 재귀 및 극한은 OPEN이다. [실제 Picard 방사 미분](y-higher-flow/generated-picard-rhs/README.md).
+- **VERIFIED / OPEN · 첫 보정 주기.** 첫 Forced 뒤 원본 Corollary 8.5 응력 검사가 22,001,223개 노드에서 18/18 통과했다. Signed 호출에 전달한 불허 옵션을 제거하고 원본 1,620행 수락값을 적용해 재실행했다. Signed 이후와 전체 최종장 수치 구간이 남아 있다. [실패와 응력 원본 로그](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43367325423) · [수정 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43372241418).
+
+M3 62/64, 최종 jets 0/67, 일반 Y 재귀와 운영 R1-08 OPEN, RELEASE HOLD.
+
 ## Continuation34
 
 - **VERIFIED · 원본 N3와 N4의 선도 FTC 90개씩.** 같은 GitHub 실행의 실제 선도 `F₀,U₀` 정의, 사각형, 90개 면 합 ID와 각 `K`로 가는 의존 관계에 방향 반올림 상계를 연결했다. 양의 차수 `n=1,2,3`의 원본 `F,U`에는 별도 C10 재생으로 FTC 270개에 상계를 얻었다. 희소 원본 그래프에서 해당 정의와 1,080개 면을 대조했고 활성 `K` 결속은 OPEN이다. 원본 느린 차트 계수의 여덟 면 합에도 공통 방향 반올림 상계를 계산했다. 전체 `K`와 가중 표적은 OPEN이다. [활성 N3·N4 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43368204121) · [선도·양의 차수·차트 상계](primary-forced-join/active-n3-c5-binding/norm-leading/README.md).

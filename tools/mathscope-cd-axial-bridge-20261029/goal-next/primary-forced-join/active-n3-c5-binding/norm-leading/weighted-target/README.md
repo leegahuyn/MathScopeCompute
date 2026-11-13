@@ -29,4 +29,14 @@ python work/goal-next/continuation38/target-bound/match_live_c6_to_c7.py --self-
 python work/goal-next/continuation38/target-bound/match_live_c6_to_c7.py --live <sealed-live-c6-dag.jsonl.gz> --out <live-c6-c7-binding.json>
 ```
 
-No Git changes, local Lean compilation, or new live seal were performed here. RELEASE HOLD.
+## Actual N3 readback
+
+The N3 job in GitHub run 43371105453 reports nine original private-family/C5 checks. Its typed DAG has 23,366 nodes and a body checksum recorded in the native receipt. Run the certified comparator with the packaged files to reproduce the 168-row and 672-face match:
+
+```text
+python match_c6_certified.py --archive c7-grammar-test.jsonl.gz --candidates c7-candidate-168.json --comparator compare_selector_exports.py --live hosted-43371105453-n3/primary-target-c6-source.jsonl.gz --out replay.json
+```
+
+`safe_common_nodes.py` accelerates the comparison only for equal typed records with equal referenced definitions and strictly earlier certified dependencies. `test_safe_common_nodes.py` rejects changed leaves, altered registrations, unsupported operations and forward references.
+
+`classify_weighted_target.py` binds the matched IDs to the norm index. `bind_three_source_integrals.py` checks 54 complete ancestors of the three historical integrals. The directed replay then takes the existing target, chart and integral bounds as premises, and encloses all seven exact N3 roots. The independent integer readback verifies each upper endpoint lies below the tower T15. The N4 source DAG and the complete K norm remain open. RELEASE HOLD.
