@@ -10,6 +10,16 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation36
+
+- **VERIFIED / CONDITIONAL · N3와 N4 가중 표적과 cutoff/map.** 두 원본 작업이 GitHub에서 성공했다. 각각의 C6 원본 FTC 168개와 적분 면 672개를 바인더·인자·함수 본문까지 별도로 대조했다. 1,148개 느린 차트 계수와 세 원본 적분을 포함한 산술을 두 번 재생해 일곱 \(N_m\) 모두 동일한 방향 구간을 얻었다. 원본 cutoff/map 최대값은 N3 #18310062, N4 #24120465이며 각각 실제 54개 경계를 사용해 \(T_{13}\) 미만임을 검산했다. 배경 C8에는 실제 정규화 1–7차와 꼬리 \(1/128\), 선도 FTC 90개, 느린 차트 FTC 25,299개, 원본 적분 세 개를 연결했다. 배경 수치 실행과 전체 \(K\)는 확인 중이다. [GitHub 원본](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43373034256) · [N4 독립 대조와 재현](primary-forced-join/active-n3-c5-binding/norm-leading/weighted-target/n4-replay/README.md).
+- **VERIFIED / CONDITIONAL · 원본 축방향 차수 1–5.** 원본 축방향 밀도, 양쪽 적분의 부호와 정해진 경계를 확인하고 원래 모멘트 계약 아래 전체 적분의 영 환원을 재생했다. 차수 1은 원본 저장 적분 #117075와 재구성한 전체 적분을 대조했다. 차수 2–5는 양쪽 실제 적분에 공통인 밀도로 전체 적분을 재구성했다. 임의 \(n\), 미분과 적분·극한 교환, 전체 물리 cutoff에는 독립 증명이 남아 있다. [축방향 범위와 재현](axial-alln/independent-scope/README.md).
+- **VERIFIED / CONDITIONAL · 실제 Picard 호출자.** 보관된 원본 N4의 실제 호출 노드 다섯 개에서 첫 방사 미분을 생성해, 두 원래 단위구간 적분 변수가 자연함수의 \(Y\)에 함께 들어감을 확인했다. 원본 호출 가드와 \(X\ge0\)를 가정하면 \(Y<5\)다. 전체 호출 영역, 임의 차수와 native 극한은 OPEN이다. [실제 Picard 호출 재현](y-higher-flow/actual-picard-callers/README.md).
+- **VERIFIED / OPEN · 원고 (10.13).** 열 외부의 에너지와 소산은 원본 스케일 \(S\)의 \(4S\) 미만이고, 전체 외력 노름 제곱에는 \(2^{8172}S\)의 엄격한 하한이 있다. 같은 원본 중심장에서 22개 입력과 16개 미분 식을 결속해 에너지·소산·외력 상계를 계산했다. 중심 상계가 비교에 필요한 만큼 좁지 않았고, 실제 환형 보정장까지 포함한 비교는 OPEN이다. [정규화와 중심부 재현](final67/energy-1013/README.md).
+- **VERIFIED / OPEN · 운영 M4.** 보관된 운영 바이트에서 기존 후보의 패치 네 개 중 두 개의 대체 문자열을 확인했다. 후보는 운영과 기준 해시가 다르며, 격리 Worker의 경로 및 보안 설정은 운영의 감사 화면과 일부 외부 자산을 제공하지 않는다. 기존 격리 판정 16/16과 별도로 운영 R1-08은 OPEN이다. [운영·후보 대조](m4/r108/operational-replay-audit/static-hosted/README.md).
+
+M3 62/64, 최종 jets 0/67, 일반 Y 재귀와 운영 R1-08 OPEN, RELEASE HOLD.
+
 ## Continuation35
 
 - **VERIFIED · 원본 \(K\) 산술 구간.** 활성 N3와 N4의 실제 최대값에 들어가는 14개 항 중 5개씩, 그리고 \(E,W,d_\star,c_y\)를 96비트 방향 반올림으로 양쪽에서 감쌌다. 원본 세 적분을 그대로 유지했다. 분할 함수 FTC 8개와 펄스 계단 제곱 적분 8개의 정수 상계도 재현했다. 전체 cutoff/map 최대값은 원본 항에 연결해 재평가해야 한다. 차수 1–3의 별도 프로필 FTC 상계 270개와 실제 C8의 정규화 유한합은 서로 다른 식이다. 실제 유한합은 1–7차의 \(E,U,\Pi,V/R,M/R\), 추가 Stokes 항 및 꼬리를 사용한다. [수치 구간](primary-forced-join/active-n3-c5-binding/norm-leading/README.md).

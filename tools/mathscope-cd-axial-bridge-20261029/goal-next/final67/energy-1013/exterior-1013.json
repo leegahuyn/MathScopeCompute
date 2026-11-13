@@ -1,0 +1,36 @@
+{
+  "schema": "MathScope.N7.OriginalEnergyComparisonBudget/1",
+  "status": "VERIFIED_SAME_FIELD_EXTERIOR_BUDGET_INTERIOR_COMPARISON_OPEN",
+  "inputSHA256": {
+    "paper": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+    "chart": "af17e240150ca11452ccd5dcde5e1d2a21f5872d3a1e29a9247d75e6902e86b9",
+    "moving": "c614a3a12ec8d9dcf5bd02235dd6227bb79969d372f345baad6aec471c127c2b",
+    "radial": "0d67104a020f0e7b57cdbeabc4bade9d5401cbe795cdde9a7b0e60ce90cb8c5d",
+    "center": "de578dd4f456e8ad698f33baa8302bd65af8550d53e4317589946aacc85be28f"
+  },
+  "originalPages": [
+    118,
+    121
+  ],
+  "domain": "full localized support K and rho in [1/2,1], endpoint t=1-tau0/2",
+  "earlierPhysicalTime": "u=p=f=0 identically on [0,1-tau0] by flat original time cutoff",
+  "normalization": {
+    "commonFactor": "z0*tau0^(-2A), exact positive, cancels",
+    "left": "2*(E_star+D_star) with E_star=1/2*integral |tau0^A u|^2 and D_star=tau0^(2A+1)*integral |grad u|^2",
+    "right": "(integral_[1/2,1] norm_{L2(dxdy dzeta)}(tau0^(A+1)*f) d rho)^2"
+  },
+  "genuineExteriorComparison": {
+    "leftUpper": "4*S",
+    "wholeKRightLower": "2^8172*S"
+  },
+  "interiorCriterion": "2*(E_inner+D_inner+E_annular+D_annular) <= (2^8172-4)*S is sufficient for actual (10.13)",
+  "interiorBudget": "(2^8172-4)*S",
+  "strictDisjointCenterEnergyLower": "pi*tau0*etaStar/(16*CSelected^2*Lambda^2)",
+  "centerLowerIsNotUpper": true,
+  "interfaceFlux": "No interface flux enters (10.13) itself. For energy defect, pair identical oriented traces and moving boundaries at Xa and Xb before enclosures.",
+  "notYetCompared": "The sufficient interior budget is an exact criterion. Its actual annular bound and full whole-K refinement are still open.",
+  "N7_06": "OPEN",
+  "N8_05": "OPEN",
+  "finalJets": 0,
+  "release": "HOLD"
+}

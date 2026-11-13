@@ -35,3 +35,23 @@ Derivatives in eta commute with these fixed X integrals only under the separatel
 * The whole physical infinite cutoff, global flat residual, terminal jets and unrelated gate counts remain separate. Keep RELEASE HOLD.
 
 Reproduce the receipt cross-read from this directory with `python -B audit_scope.py --out new-scope-receipt.json`. Use `--goal-next` to supply a different copy of the evidence tree.
+
+## Actual finite replay through order five
+
+`replay_fixed_prefix.mjs` checks the pinned original issuer and the historical
+117,100-node prefix before examining the axial rows. The order-five run reached
+148,591 nodes and checked the original density, FTC derivative, forward/backward
+signs, whole density and original moment reduction for each order 1–5. A
+wrong-sign negative control failed in each row as expected.
+
+At order one the issuer retains its literal whole integral #117075. Its own
+comparison matches it to the whole integral formed using the forward integral's
+binder. At orders two through five the source stores the two split integrals.
+The verified issuer constructs the whole integral with the shared density and
+checks equality against the backward side completed to the same endpoints.
+The receipt records both identities separately. The reductions use the source
+moment, regularity and integral premises detailed above.
+
+```text
+node --max-old-space-size=4096 replay_fixed_prefix.mjs ORIGINAL_RUNTIME 5 5000000 n5-fixed-prefix.json
+```
