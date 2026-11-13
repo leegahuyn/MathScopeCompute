@@ -87,6 +87,16 @@ const context = {
       nodeCount: norms.G.nodes.length, source: norms.sourceBinding,
       roots: norms.roots, row, checks: norms.checks, scope: norms.scope, ...measured(),
     };
+    if (process.env.MATHSCOPE_EXPORT_NORM_OPERANDS === 'true') {
+      const {G, leading, sourceBinding} = norms;
+      const rows = leading.ftcRows.map(({field, radialOrder, etaOrder, sourceJet, bound}) => ({
+        field, radialOrder, etaOrder, sourceJet, bound, node: G.nodes[bound],
+      }));
+      assert.equal(rows.length, 90);
+      const metadata = {schema: 'MathScope.ActiveOriginalLeadingFTCBindings/1', graphNamespace: 'norm',
+        sourceBinding, nodeCount: G.nodes.length, definitions: leading.definitions, box: leading.box, rows};
+      writeFileSync(join(out, 'actual-leading-ftc-bindings.json'), JSON.stringify(metadata, null, 2) + '\n', {flag: 'wx'});
+    }
     save();
     console.log(JSON.stringify(receipt.originalBackgroundC8));
   },

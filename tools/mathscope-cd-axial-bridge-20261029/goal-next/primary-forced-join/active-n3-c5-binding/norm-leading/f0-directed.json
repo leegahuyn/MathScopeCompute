@@ -1,0 +1,208 @@
+{
+  "schema": "MathScope.N7.ActualLeadingF0C8FTCArith/1",
+  "status": "DIRECTED_F0_FTC_UPPER_ONLY",
+  "sourceNormSHA256": "ba937ba0fa45592c3bb2e3049fddfadb57ba91a17a4fcc7264f5d1d18a20b5f6",
+  "actualSourceParameterSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+  "sourceParameterNames": [
+    "Q",
+    "rho",
+    "Lambda",
+    "CSelected",
+    "sourceEnvelopeS",
+    "radialFrequencyN",
+    "t1",
+    "lambda",
+    "muMoment",
+    "XR",
+    "Pstar",
+    "sigmaStar",
+    "loopDelta",
+    "loopMuMax",
+    "loopD0",
+    "T",
+    "BOuter",
+    "K",
+    "h",
+    "Tsh",
+    "logP",
+    "Md",
+    "X0I1",
+    "X0I2",
+    "C12EnvelopeR"
+  ],
+  "H": {
+    "lower": {
+      "exp": {
+        "exp": {
+          "exp": {
+            "exp": {
+              "rational": "649043957388941136144743407221603/618970019642690137449562112"
+            }
+          }
+        }
+      }
+    },
+    "upper": {
+      "exp": {
+        "exp": {
+          "exp": {
+            "exp": {
+              "exp": {
+                "rational": "83152101018547873903865087437682791/79228162514264337593543950336"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "positiveMajorant": {
+    "lower": {
+      "exp": {
+        "exp": {
+          "exp": {
+            "exp": {
+              "rational": "649043957388941136144743407221603/618970019642690137449562112"
+            }
+          }
+        }
+      }
+    },
+    "upper": {
+      "exp": {
+        "exp": {
+          "exp": {
+            "exp": {
+              "exp": {
+                "rational": "83152338703035416696877868069533799/79228162514264337593543950336"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "FTCInterval": {
+    "lower": {
+      "rational": "0"
+    },
+    "upper": {
+      "exp": {
+        "exp": {
+          "exp": {
+            "exp": {
+              "exp": {
+                "rational": "83152338703035416696877868069533799/79228162514264337593543950336"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "dyadicUpper": {
+    "base": 2,
+    "exponent": {
+      "ceil": {
+        "product": [
+          {
+            "integer": 2
+          },
+          {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "rational": "83152338703035416696877868069533799/79228162514264337593543950336"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "proof": "exp(v) <= 2^(2 v) for v>=0 because e<4; ceiling rounds exponent upward",
+    "integerExponentNumericallyMaterialized": false
+  },
+  "fixedDyadicTowerUpper": {
+    "definition": "T_1=2; T_(j+1)=2^(T_j)",
+    "index": 15,
+    "proof": "c<2^21<2^65536=T5; e^x<2^(2x) for x>=0, and 2Tj<=2^Tj for integer Tj>=2, so exp(Tj)<T_(j+2); apply five times",
+    "fullIntegerNumericallyMaterialized": false
+  },
+  "graphStats": {
+    "sourceNodes": 8976,
+    "trace": {
+      "schema": "MathScope.TracedArithmeticEvaluation/1",
+      "visitedNodes": 8976,
+      "nodeVisits": 8976,
+      "sourceParametersNumericallyConsumed": [
+        "BOuter",
+        "CSelected",
+        "K",
+        "Lambda",
+        "Md",
+        "Pstar",
+        "Q",
+        "T",
+        "Tsh",
+        "X0I1",
+        "X0I2",
+        "XR",
+        "h",
+        "lambda",
+        "logP",
+        "loopD0",
+        "loopDelta",
+        "loopMuMax",
+        "muMoment",
+        "radialFrequencyN",
+        "rho",
+        "sigmaStar",
+        "sourceEnvelopeS",
+        "t1"
+      ],
+      "conditionalBoundaryIntervalsConsumed": [],
+      "sourceAuthenticated": false,
+      "boundaryPremisesProvedHere": false,
+      "opaqueSourceValuesReplacedByZero": false,
+      "originalNodesRewritten": false
+    }
+  },
+  "arithmetic": {
+    "schema": "MathScope.ClosedNumericalExponentialArithmetic/1",
+    "precisionBits": 96,
+    "operations": 274650,
+    "regularOperations": 804636,
+    "deepest": 12,
+    "maximumEndpointDepth": 8,
+    "maxDepth": 128,
+    "memoEntries": 158285,
+    "maxMemoEntries": 250000,
+    "memoHits": 55900,
+    "memoEpoch": 0,
+    "memoizedEndpointsAreImmutable": true,
+    "tinyRatioBounds": 6874,
+    "regularFallbacks": 0,
+    "elementary": {
+      "method": "DIRECTED_POSITIVE_TAYLOR_RANGE_REDUCTION_SQUARING_RECIPROCAL",
+      "degree": 19,
+      "reducedArgument": [
+        "0",
+        "1/8"
+      ],
+      "positiveTaylorRemainder": "1/2454326913349527398903771100610560000",
+      "evaluations": 220,
+      "tinyPositiveUpperBounds": 0,
+      "tinyPolicy": "For x<=-(bits+8), the interval [0,2^-bits] contains exp(x)>0. No tiny exponential is replaced by an exact zero."
+    },
+    "sourceAuthenticated": false,
+    "sourceIntegralOrParameterEvaluated": false,
+    "exactExpLogCancellation": true,
+    "outwardRatioQuantization": true,
+    "positiveTinyUpperEndpointsRetained": true,
+    "binary64UsedForNumericalDecisions": false
+  },
+  "scope": "Noncircular source F0 active plus pinned exterior C8 FTC upper expression only; no private-seal live join, target/positive-order leaves, full K, numerical quadrature, or release promotion."
+}

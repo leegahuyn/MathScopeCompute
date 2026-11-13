@@ -1,0 +1,43 @@
+{
+  "status": "SAME_LIVE_N3_V_LONGITUDINAL_CONDITIONAL_L2_BOUND",
+  "pins": {
+    "nodes": "1ad501984212afd18d2ee6361f14ce6b1a28cf67c36e90eb059bb162514dc8fc",
+    "registry": "364425db9d5bbd317f8aaad681fdfdd3206f97e0f46d2beb78b6e7d5a30a3111",
+    "join": "160c99aaada4417e87993b8ff906288661960be9642485824b9ef1ec98798ddf",
+    "primary": "ebd5da297d06da881e0d38bd6d04507595b50a980b2bb2399ac7df42725323ad",
+    "temporal": "d5e20e78c119b678b61df35c1bf0f560826e7dddb74e70edd0c17a67d18a9759",
+    "pressure": "fd93001ad4bbc002d329cba54d1c884cc5e7bfd93444b1d72bd9c331a67b966d",
+    "readback": "2a2c80b4020cfcff50a60563a9c4fbbc72a192dda851d29af9fb559435884d2a"
+  },
+  "nodeCount": 21681493,
+  "fixedLabel": 17732737,
+  "meanBody": 21435336,
+  "background": 17744974,
+  "correction": 21374947,
+  "temporal": 19570772,
+  "fiveMap": 21374923,
+  "inverse": 19560947,
+  "inverseSourceTheta": 17754253,
+  "c0": 17745449,
+  "c0DependsOnlyOnFrozenLabelAndEarlierSourceRoots": true,
+  "sourceCovarianceTheta": 17754252,
+  "sourceStressTerm": 17744077,
+  "formula": "N^j(v_full)=-c0^-1 N^(j-1) P_perp E_theta = -c0^-1 N^(j-1) P_perp (D_2 W_rtheta + epsilon partial_Z W_thetaz), j>=1",
+  "inequality": "||D_s^alpha L^l N^j v_full||_L2Y <= c0^-1 ||D_s^alpha L^l N^(j-1) (D_2 W_rtheta + epsilon partial_Z W_thetaz)||_L2Y",
+  "reason": "P_perp is the orthogonal Haar mean-zero projection and commutes with constant N,L and fixed-label slow partials.",
+  "stressCancellation": "The original stress node #17744077 precedes both Y coordinates, and the original graph is topologically ordered; hence P_perp removes it. No original stress was set to zero.",
+  "premises": [
+    "original complete Fourier inverse and derivative theorem",
+    "fixed label and source smoothness",
+    "L2 integrability of the displayed source derivative",
+    "positive c0"
+  ],
+  "limitations": [
+    "This is a conditional L2 source inequality, not a fixed-Y supremum.",
+    "Actual source derivative norms and complete common-Y source attachment remain open.",
+    "Not a full mean C4 or Forced input bound."
+  ],
+  "registryExportSourceAuthenticatedFlag": false,
+  "numericalFinalJets": "0/67",
+  "release": "HOLD"
+}

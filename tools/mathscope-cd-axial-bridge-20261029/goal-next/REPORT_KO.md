@@ -10,6 +10,13 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation33
+
+- **VERIFIED · 활성 N3의 원본 첫 Forced 전체.** 동일 원본 계열에서 원래 81개 라벨과 양 부호 162개 기여, 양의 역연산 20개와 음의 켤레 경로 20개를 구성했다. 갱신한 전압력과 물리 잔차를 포함해 총 21,999,237개 노드에서 원본 검사 805개가 통과했다. 별도 Python 검사는 내려받은 결과의 해시, 20쌍, 805개 검사와 11개 체크포인트를 대조했다. 전체 그래프 재평가는 이 결과 확인의 범위 밖이다. [GitHub 원본 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43363985428) · [독립 결과 확인](primary-forced-join/active-n3-c5-binding/hosted-43363985428/full-first-forced-independent.json).
+- **VERIFIED / CONDITIONAL · 노름과 활성 환형 경계.** N3/N4에서 각각 (K) 산술 의존 노드 1,245,636개, 원본 적분 178,131개, native 편미분 25,600개를 발행했다. 선도 (U_0,F_0)의 90개 FTC 면 합을 별도의 동일 원본 프로필에서 방향 반올림으로 감쌌다. 이 상계를 활성 (K)의 정확한 면 합 ID에 연결하는 실행 경로를 추가했다. N3의 두 모드 2 분기에서 환형 가우스의 42차 역거듭제곱 손실을 (K)로 흡수했다. 원본 이동 프레임과 Forced 행렬은 보관 그래프에서 확인했고 동차 법선에서 두 실제 Forced 법선으로 가는 대표점 치환은 OPEN이다. 모드 1 평균 (v)의 양의 (N) 방향 52개는 실제 공분산 4차의 조건부 (L^2) 상계로 줄였다. 전체 (K)와 고정 (Y)의 점별 상계는 남아 있다. [N3/N4 원본 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43365519173) · [선도 FTC](primary-forced-join/active-n3-c5-binding/norm-leading/README.md) · [환형 경계](primary-forced-join/active-n3-c5-binding/endpoint/annular-bound/README.md) · [모드 1 평균](primary-forced-join/active-n3-c5-binding/mean-c4/README.md).
+- **VERIFIED · GitHub Lean 축 계수.** 원래 정칙 특이 방정식을 두 번 미분하는 데 필요한 정칙성 아래 축의 선형·이차 계수 공식을 Lean에서 확인했다. `sorryAx` 의존은 없다. 실제 모든 재귀 차수의 native 극한과 소스 적용은 OPEN이다. 이전 선택 두 분기의 독립 Python 검증도 GitHub 재실행에서 통과했다. [GitHub Lean](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43366489558) · [GitHub Python](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43363985266).
+- **OPEN · 첫 주기와 최종장.** 이미 검증된 첫 Forced 다음의 Corollary 8.5, Signed, Temporal, FiveMap과 물리 잔차를 같은 그래프에서 생성하는 GitHub 실행을 시작했다. 최종장 jets 0/67, M3 62/64, 운영 R1-08과 일반 Y 재귀 OPEN, RELEASE HOLD다. 운영 웹은 읽기 전용 조회에서 HTTP 200, 30,707,818바이트와 이전 SHA-256이 일치했다. [첫 주기 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43367325423).
+
 ## Continuation32
 
 - **VERIFIED · 동일 계열 N3 C5와 선택된 모드 2.** 원본 C5와 같은 객체로 압력·Temporal·초기 평균장·초기 각방향 장을 만들고 두 실제 Forced 분기까지 연결했다. 원본 그래프 21,681,493개 노드와 43,980,655개 참조를 독립 재검사했다. GitHub의 후속 Python 단계는 4,300자리 제한에서 멈췄으며, 원본 아티팩트의 큰 정수를 허용한 Python 재검사는 통과했다. [원본 GitHub 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43296617887).
