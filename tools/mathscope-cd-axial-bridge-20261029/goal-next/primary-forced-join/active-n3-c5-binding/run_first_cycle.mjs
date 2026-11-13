@@ -37,10 +37,11 @@ export async function runFirstCycle({load, navier, forced, context, out}) {
     const signedSource = await load('original-signed-162-successor.mjs');
     const signed = await stage('original-signed-162-successor',
       () => signedSource.attachOriginalSigned162Successor(forced, {
-        authenticatedLatestStress: stress, candidateMaxAdditionalNodes: 250_000,
+        candidateMaxAdditionalNodes: 250_000,
         assemblyMaxAdditionalNodes: 1_500_000, onProgress: context.onProgress,
       }), signedSource.assertOriginalSigned162Successor, value => {
-        assert.equal(value.audit.allIndexedRows, 162);
+        assert.strictEqual(value.latestStress.input, stress.input);
+        assert.equal(value.audit.allIndexedRows, 1620);
         return {indexedRows: value.audit.allIndexedRows, roots: value.audit.rootInventory};
       });
     const frontierSource = await load('source-signed-temporal-frontier.mjs');
