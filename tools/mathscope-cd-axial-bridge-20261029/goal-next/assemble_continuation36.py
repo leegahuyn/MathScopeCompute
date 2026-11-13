@@ -7,7 +7,7 @@ from pathlib import Path
 import subprocess
 from zipfile import ZIP_DEFLATED, ZipFile
 
-from assemble_continuation35 import NORM, PARENTS as EARLIER, PUBLIC_SHA, TARGET, sha256_stream
+from assemble_continuation35 import JOIN, NORM, PARENTS as EARLIER, PUBLIC_SHA, TARGET, sha256_stream
 from assemble_continuation32 import entry
 from assemble_continuation_delta import BRANCH, CURRENT, encode, file_sha
 
@@ -17,6 +17,10 @@ PARENTS = {**EARLIER, 'MathScope_Goal_Continuation35_Delta_20261113.zip':
            '7341bc6bcdff47809f3eeedae1e0988d7ac511808608962bfd1993bed0aafecc'}
 LABEL = 'MathScope_Goal_Continuation36'
 DATE = '20261113'
+WORKFLOWS = {
+    '.github/workflows/mathscope-original-primary-c5.yml',
+    '.github/workflows/mathscope-active-n3-first-cycle.yml',
+}
 ARTIFACTS = {
     3: {
         'primary-c5-native.json': 'fe6974c4fd65c9dc1a3e0457cbce248d474481791f9dfa551036fe57d0de2fcd',
@@ -93,6 +97,12 @@ def main():
     n3_intervals = [row['enclosure'] for row in source(TARGET + 'n3-weighted-target-directed.json')['rows']]
     n4_intervals = [row['enclosure'] for row in source(n4 + 'n4-weighted-target-directed.json')['rows']]
     assert len(n3_intervals) == 7 and n3_intervals == n4_intervals
+    retry_path = JOIN + 'hosted-43372241418/first-cycle.json'
+    assert entry(raw(retry_path))['sha256'] == '90a3c10a16b4e2e5b818f0bbab36e3ee8405a007ebcddc9980893ae21a1b4d14'
+    retry = source(retry_path)
+    assert retry['error']['code'] == 'SIGNED_TANGENCY_UNPROVED' and retry['stoppedNodes'] == 22001443
+    assert len(retry['stages']) == 1 and len(retry['stages'][0]['checks']) == 18
+    assert all(row['pass'] for row in retry['stages'][0]['checks'])
 
     delta = outputs / f'{LABEL}_Delta_{DATE}.zip'
     pending = delta.with_suffix('.zip.tmp')
@@ -105,7 +115,7 @@ def main():
 
         for line in git('diff', '--name-status', '--no-renames', PARENT, head).decode().splitlines():
             change, path = line.split('\t')
-            assert change in {'A', 'M'} and path.startswith(CURRENT + '/'), path
+            assert change in {'A', 'M'} and (path.startswith(CURRENT + '/') or path in WORKFLOWS), path
             if change == 'M' and path in previous:
                 assert entry(git('show', PARENT + ':' + path)) == previous[path], path
             add(path, git('show', head + ':' + path))

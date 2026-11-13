@@ -17,6 +17,7 @@
 - **VERIFIED / CONDITIONAL · 실제 Picard 호출자.** 보관된 원본 N4의 실제 호출 노드 다섯 개에서 첫 방사 미분을 생성해, 두 원래 단위구간 적분 변수가 자연함수의 \(Y\)에 함께 들어감을 확인했다. 원본 호출 가드와 \(X\ge0\)를 가정하면 \(Y<5\)다. 전체 호출 영역, 임의 차수와 native 극한은 OPEN이다. [실제 Picard 호출 재현](y-higher-flow/actual-picard-callers/README.md).
 - **VERIFIED / OPEN · 원고 (10.13).** 열 외부의 에너지와 소산은 원본 스케일 \(S\)의 \(4S\) 미만이고, 전체 외력 노름 제곱에는 \(2^{8172}S\)의 엄격한 하한이 있다. 같은 원본 중심장에서 22개 입력과 16개 미분 식을 결속해 에너지·소산·외력 상계를 계산했다. 중심 상계가 비교에 필요한 만큼 좁지 않았고, 실제 환형 보정장까지 포함한 비교는 OPEN이다. [정규화와 중심부 재현](final67/energy-1013/README.md).
 - **VERIFIED / OPEN · 운영 M4.** 보관된 운영 바이트에서 기존 후보의 패치 네 개 중 두 개의 대체 문자열을 확인했다. 후보는 운영과 기준 해시가 다르며, 격리 Worker의 경로 및 보안 설정은 운영의 감사 화면과 일부 외부 자산을 제공하지 않는다. 기존 격리 판정 16/16과 별도로 운영 R1-08은 OPEN이다. [운영·후보 대조](m4/r108/operational-replay-audit/static-hosted/README.md).
+- **VERIFIED / OPEN · 첫 보정 주기.** 응력 원본 검사가 다시 18/18 통과했고, 구버전 Signed의 직교성 검사에서 중단됐다. 이 검사는 가중 진폭 성분을 독립 원자로 처리해 실제 이동 프레임의 공통 인자를 전개하지 않는다. 보관된 원본의 인수분해 직교성 증명기와 부정 대조를 해시 고정해 격리 실행에 적용했다. GitHub 준비 단계의 회귀 검사와 원본 29개 파일 핀이 통과했고, 같은 N3 전체 보정 결과는 대기 중이다. [실패 단계](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43372241418) · [직교성 증명기 적용 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43376435788).
 
 M3 62/64, 최종 jets 0/67, 일반 Y 재귀와 운영 R1-08 OPEN, RELEASE HOLD.
 
