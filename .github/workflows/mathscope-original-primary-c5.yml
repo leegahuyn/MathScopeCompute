@@ -8,6 +8,9 @@ on:
       full_forced:
         type: boolean
         default: false
+      through_first_cycle:
+        type: boolean
+        default: false
   push:
     branches: [mathscope-cd-axial-source-bridge-20261029]
     paths:
@@ -176,13 +179,40 @@ jobs:
           echo "MATHSCOPE_SAME_FAMILY_FORCED_OBSERVER=$(realpath "$observer")" >> "$GITHUB_ENV"
           echo "MATHSCOPE_ACTIVE_N3_SUPPORT=$(realpath "$goal/primary-forced-weights/active-mode-two/active-n3-physical-fast-support.json")" >> "$GITHUB_ENV"
           echo "MATHSCOPE_FULL_FORCED=${{ inputs.full_forced }}" >> "$GITHUB_ENV"
+      - name: Prepare the original Signed and post-Signed source modules
+        if: inputs.through_first_cycle
+        working-directory: original
+        run: |
+          set -euo pipefail
+          test "${{ inputs.with_forced }}" = true && test "${{ inputs.full_forced }}" = true
+          patch=research-ide/mathscope-m3/staged-patches-20261023/PR30_Cumulative_Signed162_Cor85_TemporalFrontier.patch
+          pins=research-ide/mathscope-m3/pin-test-hotfix-20261023/PR30_RealCheckout_PinTest_EnvPortable.patch
+          echo "d23a2ac3b56412f176c3f86a7303a623fe07931453aff0e55ddf1730e34ee312  $patch" | sha256sum --check
+          echo "5f225deef9418ce3b50d8791ed40524e4202873148c953c36fa66f19d74f7f92  $pins" | sha256sum --check
+          git apply --check "$patch"
+          git apply "$patch"
+          git apply --check "$pins"
+          git apply "$pins"
+          out="$RUNNER_TEMP/mathscope-primary-c5"
+          goal=../evidence/tools/mathscope-cd-axial-bridge-20261029/goal-next
+          cycle="$goal/primary-forced-join/active-n3-c5-binding"
+          python3 -B "$cycle/prepare_first_cycle_overlays.py" "$out"
+          node --input-type=module -e "import {writeFileSync} from 'node:fs'; import {verifyPR30OriginalSourceFiles} from './research-ide/mathscope-m3/navier/source-signed-162-pr30-pins.mjs'; const x=await verifyPR30OriginalSourceFiles(); if(x.verifiedFiles.length!==29)process.exit(2); writeFileSync(process.argv[1], JSON.stringify(x,null,2)+'\\n')" "$out/pr30-source-pins.json"
+          echo 'MATHSCOPE_THROUGH_FIRST_CYCLE=true' >> "$GITHUB_ENV"
+          echo "MATHSCOPE_FIRST_CYCLE_OVERLAY_MANIFEST=$out/pr30-runtime-overlays.json" >> "$GITHUB_ENV"
+          echo "MATHSCOPE_FIRST_CYCLE_OVERLAY_LOADER=$(realpath "$cycle/load_first_cycle_overlays.mjs")" >> "$GITHUB_ENV"
       - name: Build the same-family original C8, weighted C6 and Primary C5
         working-directory: original
         run: |
           set -euo pipefail
           ulimit -s 16384
           out="$RUNNER_TEMP/mathscope-primary-c5"
+          loader=()
+          if [[ "${{ inputs.through_first_cycle }}" == true ]]; then
+            loader+=(--import "$MATHSCOPE_FIRST_CYCLE_OVERLAY_LOADER")
+          fi
           node --max-old-space-size=11000 --stack-size=4096 --expose-gc \
+            "${loader[@]}" \
             research-ide/mathscope-m3/extended-signed-run-20261023/run_live_primary_c5.mjs \
             "$out" "$ORIGINAL_SOURCE_COMMIT" "$SOURCE_PREFIX" 2>&1 | tee "$out/native-run.log"
       - name: Independently read the selected same-family source graph

@@ -53,10 +53,15 @@ export async function runSameFamilyModeTwo({family, current, target, primary, co
     if (fullForced) {
       report.currentStage = 'same-family-full-forced';
       await save();
-      report.full = await runFullFirstForced({load, initial, binding, context, out});
+      const {result, receipt} = await runFullFirstForced({load, initial, binding, context, out});
+      report.full = receipt;
       report.completeForcedSeal = true;
       report.status = 'VERIFIED_COMPLETE_SAME_LIVE_N3_FIRST_FORCED';
       await save();
+      if (process.env.MATHSCOPE_THROUGH_FIRST_CYCLE === 'true') {
+        const {runFirstCycle} = await import('./run_first_cycle.mjs');
+        await runFirstCycle({load, navier, forced: result, context, out});
+      }
       return;
     }
     report.currentStage = 'same-family-forced-mode-two';
@@ -89,7 +94,7 @@ export async function runSameFamilyModeTwo({family, current, target, primary, co
     report.status = 'VERIFIED_SAME_LIVE_N3_PRIMARY_C5_AND_SELECTED_FORCED_INPUTS';
     await save();
   } catch (error) {
-    report.status = 'STOPPED_BEFORE_SAME_FAMILY_INPUT_BINDING';
+    if (!report.completeForcedSeal) report.status = 'STOPPED_BEFORE_SAME_FAMILY_INPUT_BINDING';
     report.error = {code: error.code ?? null, message: error.message, stack: error.stack};
     await save();
     throw error;

@@ -34,11 +34,12 @@ export async function runFullFirstForced({load, initial, binding, context, out})
   });
   assert.equal(new Set(rows.map(row => row.system)).size, 20);
   assert.equal(new Set(rows.map(row => row.key)).size, 10);
-  return {nodes: result.G.nodes.length, checks: result.checks, assembly: {
+  const receipt = {nodes: result.G.nodes.length, checks: result.checks, assembly: {
     allOriginalSourceLabels: result.assembly.allOriginalSourceLabels,
     signedSourceContributions: result.assembly.signedSourceContributions,
     exactPositiveSourceSystems: result.assembly.exactPositiveSourceSystems,
     exactNegativeConjugateSolutionRoutes: result.assembly.exactNegativeConjugateSolutionRoutes,
   }, rows, roots: {velocity: result.global.velocity, pressure: result.global.pressure,
     physicalResidual: result.global.direct.conservativeResidual}, scope: result.scope};
+  return {result, receipt};
 }

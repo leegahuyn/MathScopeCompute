@@ -1,0 +1,18 @@
+name: MathScope active N3 complete first correction cycle
+on:
+  push:
+    branches: [mathscope-cd-axial-source-bridge-20261029]
+    paths:
+      - '.github/workflows/mathscope-active-n3-first-cycle.yml'
+      - 'tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-forced-join/active-n3-c5-binding/run_first_cycle.mjs'
+      - 'tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-forced-join/active-n3-c5-binding/*first_cycle_overlays*'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  complete-first-cycle:
+    uses: ./.github/workflows/mathscope-original-primary-c5.yml
+    with:
+      with_forced: true
+      full_forced: true
+      through_first_cycle: true
