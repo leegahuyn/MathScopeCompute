@@ -24,17 +24,13 @@ theorem picardAxisBranchCoefficients
     (heq : ∀ x, x * dw x + c * w x = x * g x) :
     dw 0 = g 0 / (1 + c) ∧ ddw 0 / 2 = dg 0 / (2 + c) := by
   have heq' (x : ℝ) : dw x + x * ddw x + c * dw x = g x + x * dg x := by
-    have hleft : HasDerivAt (fun y => y * dw y + c * w y)
-        (dw x + x * ddw x + c * dw x) x := by
-      simpa only [id_eq, one_mul] using
-        ((hasDerivAt_id x).mul (hdw x)).add ((hw x).const_mul c)
-    have hright : HasDerivAt (fun y => y * g y) (g x + x * dg x) x := by
-      simpa only [id_eq, one_mul] using (hasDerivAt_id x).mul (hg x)
-    have same : (fun x => x * dw x + c * w x) = (fun x => x * g x) := by
+    have hleft := ((hasDerivAt_id x).mul (hdw x)).add ((hw x).const_mul c)
+    have hright := (hasDerivAt_id x).mul (hg x)
+    have same : (id * dw + (fun y => c * w y)) = id * g := by
       funext y
       exact heq y
     rw [same] at hleft
-    exact hleft.unique hright
+    simpa only [id_eq, one_mul] using hleft.unique hright
   have hs : dw 0 + c * dw 0 = g 0 := by simpa using heq' 0
   have hleft : HasDerivAt (fun x => dw x + x * ddw x + c * dw x)
       (ddw 0 + ddw 0 + c * ddw 0) 0 :=
