@@ -10,6 +10,13 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation37
+
+- **VERIFIED · 원고 (10.13)의 중심부 예산.** 원본 선도항을 실제 중심부에 한정했고 \(\tau_0\)의 지수를 \(a/2+bh\)로 정확히 계산한 뒤 공통 스케일을 약분했다. 중심부에 대해 \(2(E_{\rm inner}+D_{\rm inner})<2^{-22}S_R\)을 얻었다. 독립 Python 검산에서 22개 입력과 속도 8항, 기울기 36항, 외력 99항의 스케일을 확인했다. 열 외부 기여까지 포함하면 원고 끝단 비교를 위한 충분조건은 실제 환형장에 대해 \(2(E_{\rm annular}+D_{\rm annular})\le2^{-21}S_R\)이다. 2–4차에는 필요한 포텐셜 공간 C2 및 방위각 성분 C1의 차수별 스케일을 계산했고 실제 계수 구간은 OPEN이다. [중심부 재현](final67/energy-1013-sharp/README.md) · [후속 차수 스케일](final67/energy-1013-sharp/late-annular/README.md).
+- **CONDITIONAL · 원본 평균장과 첫 Forced.** 같은 N3의 양의 \(N\) 방향 \(\gamma\) 미분 52개에 실제 이동 연산자, cutoff 미분, 원본 반경과 위상으로부터 공통 방향 구간 계수를 얻었다. 이 계수는 \(S_{\rm ref}^{3000}\epsilon_{\rm ref}^{1-14/100000}\)을 곱하는 상계이며 원본의 평탄 접합 및 Fourier 역연산 조건을 사용한다. 원본 \(K\) 구간을 실제 첫 Forced의 모드 2 두 양의 부호 분기에 옮기고 고정 라벨 좌표변환의 계수를 \(33S\)로 제한했다. \(H_w\) 합성과 역연산 출력, \(\beta\), 영 \(N\) 방향은 OPEN이다. [평균장 상계](primary-forced-join/active-n3-c5-binding/mean-c4/beta-gamma/radial-operator/README.md) · [두 Forced 분기](primary-forced-join/active-n3-c5-binding/endpoint/forced-k-transfer/README.md).
+- **CONDITIONAL · 원본 N4의 정적 Y 범위.** 원본 도달 그래프 1,169,752개 노드에서 자연함수 호출 597개의 범위를 재검사했다. 원본 14개 함수 호출에서 물리 \(X,\eta\)의 동시 치환을 확인했다. 역함수 구간 조건이나 원본 loop 하한 양성을 제거한 대조에서는 각각 4개와 158개 의무가 남았다. 실제 모든 호출자의 상 소속, 동적 미분, 임의 차수와 native 극한은 OPEN이다. [범위와 재현](y-higher-flow/n4-static-range/README.md).
+- **OPEN · 첫 보정 및 운영 판정.** 원본 직교성 증명기를 적용한 첫 보정은 GitHub에서 진행 중이다. M3 62/64, 최종 jets 0/67, 일반 Y 재귀와 운영 R1-08 OPEN, RELEASE HOLD. [첫 보정 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43376435788).
+
 ## Continuation36
 
 - **VERIFIED / CONDITIONAL · N3와 N4 원본 노름 \(K\).** 각각의 가중 표적 C6에서 FTC 168개와 적분 면 672개를 바인더·인자·함수 본문까지 별도로 대조했다. 일곱 \(N_m\) 구간과 cutoff/map 최대값을 각각 재생했다. 배경 C8의 실제 정규화 1–7차, 꼬리 \(1/128\), 선도 FTC 90개, 느린 차트 FTC 25,299개, 원본 적분 세 개를 연결해 차수별 원본 산술 노드 808,755개를 평가했다. 같은 원본 해석 상계와 정의역 조건 아래 14개 실제 항을 모두 결합하니 N3 #18310069와 N4 #24120472의 두 끝점이 각각 일치했다. 독립 정수 검산에서 공통 상계 \(K<T_{25}\)를 확인했다. 최종 보정장의 수치 구간은 OPEN이다. [GitHub 원본](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43373034256) · [전체 노름 재현](primary-forced-join/active-n3-c5-binding/norm-leading/README.md).

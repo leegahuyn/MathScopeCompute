@@ -1,0 +1,63 @@
+{
+  "status": "CONDITIONAL_TWO_SAME_LIVE_M2_EXPLICIT_AFFINE_LIFT",
+  "branches": [
+    "0:1",
+    "1:1"
+  ],
+  "slopeFormat": "a+b*sqrt(2)",
+  "exactLiftSlopes": [
+    {
+      "delta": 0,
+      "xiY": [
+        [
+          "1/2",
+          "1/4"
+        ],
+        [
+          "0",
+          "-1/4"
+        ]
+      ],
+      "etaY": [
+        [
+          "0",
+          "1/4"
+        ],
+        [
+          "1/2",
+          "1/4"
+        ]
+      ]
+    },
+    {
+      "delta": 1,
+      "xiY": [
+        [
+          "3/2",
+          "1/2"
+        ],
+        [
+          "1/2",
+          "-1"
+        ]
+      ],
+      "etaY": [
+        [
+          "1/2",
+          "1"
+        ],
+        [
+          "5/2",
+          "3/2"
+        ]
+      ]
+    }
+  ],
+  "liftOrderFiveBound": "L5 <= 5*(1+1/ci) < 33*S for ci>0, ell>=1, S=ell^2",
+  "sourcePaletteBound": "For Tg=4+sqrt(2), i=floor(((1+h)*ell*log(2)-2*log(ell))/log(Tg)), Q=2^(-ell), ci=Tg^i*Q^(1+h), one has (Tg*S)^(-1)<ci<=S^(-1).",
+  "transferBound": "|partial^alpha f_2,j| <= (1053*3125^2*33^10/4) * C4 * S^10 * T26 * W5^2, |alpha|<=4.",
+  "proof": "Both selected fixed-label lift maps are affine in (R,Z,T,Y1,Y2). Their derivatives of order >=2 vanish; the two original matrices are I and J=[[3,1],[1,5]]. Exact Q(sqrt(2)) arithmetic gives the slopes, while sqrt(2)<3/2 yields Tg<11/2. Five-coordinate chain differentiation through order 5 yields at most 5^5=3125 terms and the source 1/2 factor is retained. Palette floor gives ci^(-1)<Tg*S and L5<5(1+Tg*S)<33*S.",
+  "scope": "Conditional bound for exactly the delta=0 and delta=1 positive-sign m=2 source branches. C4 and W5 remain pointwise original source quantities and are not yet numerically enclosed. H_w derivatives and inverse/output remain separate. Requires fixed-label active domain ell>=1, ci>0 and original primary/source class premises.",
+  "priorSHA256": "901326c9f59e4f5b3e2ff3e6afd6d6520fbc441311388af227c131d02045cfe6",
+  "release": "HOLD"
+}

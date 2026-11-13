@@ -107,3 +107,61 @@ The line continuation shown is for a POSIX shell; on PowerShell use one
 line or the native continuation syntax. The checker accepts explicit paths and
 fails on any mismatch in the four SHA-256 pins. Its finite arithmetic and
 source-syntax checks are separate from the analytical proof and its premises.
+
+## Directed source geometry
+
+`evaluate_source_geometry.mjs` pins the original common pressure cover, mean
+geometry, slow chart and cutoff kernel. It uses the whole-N3 directed K
+interval and the previous positive-N gamma identity. Work on the original
+fixed reference chart with integer band index ell≥4, 1/2≤s≤2, |eta|≤1 and
+the full fixed radial integration shell. Let H=max(3,C12EnvelopeR,1/sqrt(Xa)).
+The original radius premises give H^(-1)≤sqrt(Xa)≤R≤2sqrt(Xb)≤H.
+The integration length and |R| are at most H. The derivatives of 1/R
+through order four, including its value, are bounded by 24 H^5.
+
+Write Q=2^(-ell), epsilon=Q^h, and i0=i(ell-2), with the original
+palette i. Since ell/(ell-2)≤2, the unfloored palette numerator at ell
+exceeds the numerator at ell-2 by at least 2h log 2. Therefore
+Lambda^i0 ≤ Lambda^i(ell). Using S=ell²≥1 and the original radial exponent,
+Lambda^i(ell) Q^(dr/2)≤epsilon^(-kappa_s). In this comparison Lambda is the
+pulse constant 4-sqrt(2). The pulse ratio rho_g lies between 1/4 and 3/4:
+2<Lambda<3, 5<Tg<6, and 3^4<5^3. Hence 0<dr<2 for the original h<1/64.
+The phase derivative a and its first four ordinary radial derivatives
+are bounded by 40320 H^5 epsilon^(-kappa_s), using the falling products
+of dr and the original positive R interval. Its other derivatives vanish
+at fixed label.
+
+The cutoff argument is b=10(R/(sqrt(s)*x0)-1). Its transition has
+1≤R/(sqrt(s)*x0)≤11/10. The directed parameter evaluation verifies X0Imean>1,
+hence x0=sqrt(2*X0Imean)*exp(1/2)>1. To bound all mixed derivatives of b
+through order four, center a complex polydisc of radius 1/256 in (R,Z,T)
+at a real transition point. For fixed Z,T in the polydisc the map
+u↦T+Z²u^(2h) is a contraction on |u-s|≤1/16 using the principal branch.
+Indeed |Z|<3/2, |u|≥7/16 and 2h<1/32 give Lipschitz constant <1/4.
+Its displacement at the center is at most
+`[1+2*(2*sqrt(2)+1/256)]/256 < 3/64`; it maps the disk into itself.
+The uniform limit of analytic iterates gives the holomorphic chart s.
+On this polydisc |sqrt(s_center/s)|≤2 and the new radial displacement
+changes the real normalized numerator by at most 1/256 before that factor
+of two. Hence |b|<70, and Cauchy's estimate gives
+`|D^alpha b| ≤ 70 |alpha|! 256^|alpha|`. The original sigma derivative
+bound and the multivariate product rule, grouped by set partitions, give
+the Bell-polynomial cutoff bound. On the other branches the cutoff is
+constant, and flatness gives the same inequality at the two joins. This
+argument concerns the elementary slow chart and cutoff argument. It
+requires no complex extension of the actual covariance.
+
+Take C0 to be the maximum of 40320 H^5 and the four cutoff derivative
+bounds. Then C=C0 epsilon^(-kappa_s) bounds the geometry in both the
+operator ledger and the earlier factor A through order four. As C≥1,
+O0≤133 C^6 and O1≤928 C^7. The total 14 factors cost at most
+epsilon^(-14 kappa_s); the explicit numerical gamma coefficient thus
+multiplies `S_ref^3000 epsilon_ref^(1-14/100000)` for all 52 positive-N
+shapes. This is a coarse, uniform-in-label coefficient. The original
+source smoothness, flat support, fixed-label class, valid real chart,
+and exact Fourier differentiation remain premises. The zero-N sector,
+beta, and the full output are open.
+
+```text
+node evaluate_source_geometry.mjs ARITHMETIC_RUNTIME ORIGINAL_RUNTIME HISTORICAL_RESULT HISTORICAL_INPUT N3_WHOLE_K SAME_LIVE_GAMMA OPERATOR_POLYNOMIALS source-geometry.json
+```
