@@ -1,0 +1,80 @@
+{
+  "schema": "MathScope.ActiveN3ModeTwoFixedLabelPhysicalTransport/1",
+  "status": "VERIFIED_EXACT_PHYSICAL_SCALES_AND_CONDITIONAL_CARTESIAN_TRANSPORT_FORMULA",
+  "sourcePins": {
+    "mathscope-m3/navier/source-global-angular.mjs": "4e9c3ea67b124a953856f83d0aca0dcfec4b01a245043424de2bb035b8d902ca",
+    "mathscope-m3/navier/source-global-band.mjs": "babe4aceb97d0bdee4084e5f06009e6724128935fffde1647c11e3aab022df60",
+    "mathscope-m3/navier/source-harmonic-assembly.mjs": "339c8cb4e5853ba4afe68f3b37933784241baaef3fcf655d5d88aa9f13708d20"
+  },
+  "endpointBoundsSHA256": "496ae8a16a642171f8e6f17aef9ad091761f07000526479ea077522bc0634ef8",
+  "coordinateCount": 6,
+  "coordinates": [
+    "R",
+    "Z",
+    "T",
+    "Y0",
+    "Y1",
+    "theta"
+  ],
+  "normalizedOperators": {
+    "Dx1": "cos(theta) Dr - sin(theta) (1/R) partial_theta",
+    "Dx2": "sin(theta) Dr + cos(theta) (1/R) partial_theta",
+    "Dx3": "Dz",
+    "Dt": "Time",
+    "Dr": "partial_R + a_fast*(vr0*partial_Y0+vr1*partial_Y1)",
+    "Dz": "epsilon*partial_Z",
+    "Time": "-epsilon*partial_T + ci*(vt0*partial_Y0+vt1*partial_Y1)"
+  },
+  "physicalScale": "Q^(-j_space/2-j_time)*epsilon^(-j_time) times the fixed label physical field scale",
+  "phaseAndBasisRule": "For e^(2ik Phi) times cylindrical coefficient use D+i*2k*(D Phi). For vector components also differentiate e_r,e_theta using partial_theta e_r=e_theta and partial_theta e_theta=-e_r.",
+  "coefficientSupremumU": {
+    "definition": "max(1, sup of absolute ordinary derivatives through order 3 of every scalar term coefficient)",
+    "operands": [
+      "1",
+      "a_fast*vr0",
+      "a_fast*vr1",
+      "R^-1",
+      "epsilon",
+      "ci*vt0",
+      "ci*vt1",
+      "2k*n_r",
+      "2k*n_theta",
+      "2k*n_z",
+      "2k*Time(Phi)"
+    ],
+    "trigonometry": "Each cos(theta) and sin(theta) ordinary derivative is bounded by one. U is taken for the scalar coefficients with the trigonometric factor already attached where present.",
+    "status": "OPEN_SOURCE_BOUND_FOR_TIME_PHASE_AND_FINAL_CARTESIAN_COEFFICIENT_SUPREMA"
+  },
+  "rows": [
+    {
+      "totalOrder": 1,
+      "maximumTerms": 12,
+      "operatorCoefficientPower": 1,
+      "maxInputDerivativeOrder": 1
+    },
+    {
+      "totalOrder": 2,
+      "maximumTerms": 288,
+      "operatorCoefficientPower": 2,
+      "maxInputDerivativeOrder": 2
+    },
+    {
+      "totalOrder": 3,
+      "maximumTerms": 10368,
+      "operatorCoefficientPower": 3,
+      "maxInputDerivativeOrder": 3
+    },
+    {
+      "totalOrder": 4,
+      "maximumTerms": 497664,
+      "operatorCoefficientPower": 4,
+      "maxInputDerivativeOrder": 4
+    }
+  ],
+  "sufficientLocalMajorant": "For order j use maximum endpoint bound over orders 0..j times maximumTerms*U^j, then multiply by the exact Q/epsilon and field factors. A real signed pair costs at most a further factor 4 in component magnitude.",
+  "domain": "One smooth fixed own-label/nearest-copy chart on admitted annulus and pulse. The physical chart is fixed during derivatives. Indexed joins and all other sources remain separate.",
+  "activeFrameBoundChecked": false,
+  "finalCartesianJetIntervals": 0,
+  "finalJets": "0/67",
+  "release": "HOLD"
+}

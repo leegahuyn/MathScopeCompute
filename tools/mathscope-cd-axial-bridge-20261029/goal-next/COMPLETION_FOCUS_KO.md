@@ -11,6 +11,8 @@
 
 활성 N3와 N4에서 각각 원본 Primary C5와 9개 원본 검사를 마쳤다. N3 모드 2 입력과 역연산의 원본 가중 C4 차수 계산은 조건부로 통과했다. 같은 원본 계열의 Initialized Angular·Forced 투영 입력 결속, 물리 좌표 미분과 압력·cutoff의 수치 구간이 필요하다. [N3 C5 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43285995098/job/131419412189) · [N4 C5 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43290112348/job/131433785481) · [모드 2 정수 재생](primary-forced-join/active-n3-c5-binding/README.md).
 
+같은 원본 계열의 N3 모드 2 두 분기를 실제 초기화와 투영 입력까지 결속했다. 전체 첫 Forced와 모드 1 평균장의 수치 상계, 이후 실제 cutoff 스케일 및 활성 보정의 최종장 수치 구간이 남아 있다. [동일 계열 검증](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43296617887) · [전체 첫 Forced 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43363985428).
+
 원본 고정 환형 구간에서 \(W_{rz}\)와 \(L^2W_{rz}\)의 느린 7차를 수치화해 초기 평균장 \(v\)의 느린 3차 상계를 얻었다. 보관된 N1의 평균–파동 C2와 모드 1 전체 C2, 모드 2 입력·역연산·게이지·압력·cutoff C3까지 결속했다. 원본 N1 조건은 실제 whole-K 내부에서 성립하지 않는다. 활성 N3/N4 입력과 새 계열을 결속하고 보정의 역연산·압력·cutoff를 적용해야 최종 환형 셀 67개와 두 M3 수치 실험으로 전달할 수 있다. [모드 1](primary-forced-weights/mixed-wave/README.md) · [모드 2](primary-forced-weights/archived-mode-two/README.md).
 
 원본 초기장 수치 입력은 108/108이다. 같은 계열의 GitHub 계산에서 초기 Temporal, 평균장, 각방향 장과 Forced 조립 비교 10개를 통과했다. 최종 봉인 전 메모리 한계가 발생했다. 별도의 N1 계산은 같은 원본 계열의 C8 배경, 가중 C6 표적과 Primary C5를 발행·검증했다. 활성 N3/N4 실행은 C8 배경을 확인한 후 1,600만 노드에서 중단됐다. 이 원본 계열의 용량 재실행과 가중 Forced 결속이 이어진다. [초기장 구간](whole-k-annular-initial/numerical/STAGE_ZERO_NUMERICAL.md) · [Forced 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43256030290) · [N1 Primary 성공](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43279539851) · [활성 N3/N4 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43282051006).

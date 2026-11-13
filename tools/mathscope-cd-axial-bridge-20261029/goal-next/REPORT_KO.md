@@ -10,6 +10,13 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation32
+
+- **VERIFIED · 동일 계열 N3 C5와 선택된 모드 2.** 원본 C5와 같은 객체로 압력·Temporal·초기 평균장·초기 각방향 장을 만들고 두 실제 Forced 분기까지 연결했다. 원본 그래프 21,681,493개 노드와 43,980,655개 참조를 독립 재검사했다. GitHub의 후속 Python 단계는 4,300자리 제한에서 멈췄으며, 원본 아티팩트의 큰 정수를 허용한 Python 재검사는 통과했다. [원본 GitHub 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43296617887).
+- **VERIFIED / CONDITIONAL · 실제 모드 1과 모드 2의 끝점.** 별도 원본 그래프의 모드 1 두 분기에서 원본 주 절단항을 차감한 12개 실수·허수 성분, \(H_w\), 투영과 압력을 독립 검증했다. 평균장 도함수는 성분당 121개가 필요하며, 실제 평균에는 배경과 보정이 함께 들어간다. 동일 계열의 21,681,493개 노드에서도 모드 2의 \(w=v(Y)\) 치환과 완전한 원통 curl을 대조했다. \(A_\theta/R\)을 빠뜨린 대조를 거부했다. 실제 활성 프레임과 시간 위상항의 미분 상계, 최종 수치 구간은 OPEN이다. [모드 1](primary-forced-join/active-n3-mode-one/README.md) · [모드 2 끝점](primary-forced-join/active-n3-c5-binding/endpoint/README.md).
+- **CONDITIONAL · 고차 Y와 원본 축방향 적분.** 실제 N2–5 강제항의 하위 호출 19·37·48·59개의 방사 인자와 적분 바인더를 검증했다. 원본 cutoff 3차 상계와 고정 차수 Picard 미분 오차를 유도했고, 축 적분 가중치 \(r!/(2r)!\)의 Lean 정리 세 개가 GitHub에서 통과했다. #672의 밀도 #117047과 두 분할 적분·전체 적분의 인자 결속 및 원본 \(n=1,2,3\) 재생도 재감사했다. 전체 적분의 영 환원에는 실제 모멘트와 미분·적분 교환이 필요하며, 임의 \(n\) 귀납과 native 극한은 OPEN이다. [고차 강제항](y-higher-flow/forcing-regularity/README.md) · [축방향 재감사](axial-alln/independent-scope/README.md) · [GitHub Lean](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43298101816).
+- **OPEN · 전체 첫 Forced와 최종장.** 원본의 전체 81개 라벨과 양 부호, 20개 양의 역연산, 갱신 압력 및 물리 잔차를 구성하는 별도 GitHub 실행을 시작했다. 현재 모드별 결과에는 전체 첫 Forced 봉인과 전체 \(K\) 수치 구간이 남아 있다. M4 원본 평가기는 비공개 M1/M2 후보의 R1-08 수용을 재현했으며 운영 R1-08은 OPEN이다. [전체 첫 Forced](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43363985428) · [M4 범위](m4/r108/operational-replay-audit/README.md).
+
 ## Continuation31
 
 - **VERIFIED · 활성 원본 N3 Primary C5.** C8 배경을 17,732,727개, 같은 계열의 가중 C6 표적을 17,761,759개, 원본 Primary C5를 18,310,172개 노드에서 확인했다. 원본 검사 9개가 통과했다. 노름 상수는 원본 그래프의 `#18310069`이며 값·도함수의 수치 구간과 강제 보정 입력 인증은 OPEN이다. [GitHub 계산](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43285995098/job/131419412189).

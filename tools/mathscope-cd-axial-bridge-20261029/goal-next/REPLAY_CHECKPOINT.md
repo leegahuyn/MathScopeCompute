@@ -4,6 +4,14 @@ Extract Continuation17, the cumulative Continuation20 delta, Continuation21,
 Continuation22, Continuation23, Continuation24, Continuation25 and Continuation26 to the same directory in that order. The latest
 checkpoint lists the parent checksums and the replaced files.
 
+## Continuation32
+
+- [Same-family active N3 witness and independent readback](primary-forced-join/active-n3-c5-binding/hosted-43296617887/independent-readback-local.json)
+- [Active N3 first harmonic and actual mean derivative demand](primary-forced-join/active-n3-mode-one/README.md)
+- [Active N3 mapped endpoint and physical scaling](primary-forced-join/active-n3-c5-binding/endpoint/README.md)
+- [Actual higher forcing calls](y-higher-flow/forcing-regularity/README.md) and [fixed-order high Picard derivative tail](y-higher-flow/high-picard-tail/README.md)
+- [Axial source/analytic scope cross-check](axial-alln/independent-scope/README.md)
+
 ## Continuation31
 
 - [Active native N3 Primary C5 receipt and terminal execution](primary-forced-weights/live-c5/hosted-43285995098-n3/primary-c5-native.json)
