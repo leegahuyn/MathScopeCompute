@@ -17,6 +17,7 @@ on:
       - '.github/workflows/mathscope-original-primary-c5.yml'
       - 'tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-forced-weights/live-c5/run_live_primary_c5.mjs'
       - 'tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-forced-weights/live-c5/export_norm_operand_boundary.mjs'
+      - 'tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-forced-weights/live-c5/export_target_c6_dag.mjs'
       - 'tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-forced-weights/live-c5/prepare_leading_budget.py'
       - 'tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-forced-weights/live-c5/compact-lookup/prepare_background_overlay.py'
       - 'tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-forced-weights/live-c5/compact-lookup/compact_lookup.mjs'
@@ -144,6 +145,7 @@ jobs:
           runner=research-ide/mathscope-m3/extended-signed-run-20261023/run_live_primary_c5.mjs
           cp "$live/run_live_primary_c5.mjs" "$runner"
           cp "$live/export_norm_operand_boundary.mjs" "$(dirname "$runner")/"
+          cp "$live/export_target_c6_dag.mjs" "$(dirname "$runner")/"
           node --check "$runner"
           node --check "$issuer"
           node --check "$navier/actual-global-primitive-kernels.mjs"

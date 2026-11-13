@@ -4,6 +4,7 @@ import {mkdirSync, writeFileSync} from 'node:fs';
 import {join} from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {writePrimaryNormBindingIndex, writePrimaryNormOperandBoundary} from './export_norm_operand_boundary.mjs';
+import {exportActualTargetC6Dag} from './export_target_c6_dag.mjs';
 import {compactOwnedLookup, compactDerivativesFromLegacy} from '../../mathscope-m2/navier/mathscope-owned-lookup.mjs';
 import {
   assertActualCommonAdmissibleFamily,
@@ -202,6 +203,12 @@ try {
     try {
       receipt.normOperandBoundary = writePrimaryNormOperandBoundary(primary, out);
       receipt.normBindingIndex = writePrimaryNormBindingIndex(primary, family.source.backgroundNorms, out);
+      if (prefix === 3 && !process.env.MATHSCOPE_SAME_FAMILY_FORCED_OBSERVER) {
+        receipt.targetOperandDag = await exportActualTargetC6Dag(target, {
+          outputPath: join(out, 'primary-target-c6-source.jsonl.gz'),
+          onProgress() { context.checkCancelled(); },
+        });
+      }
       save();
     } catch (error) {
       console.error(error);
