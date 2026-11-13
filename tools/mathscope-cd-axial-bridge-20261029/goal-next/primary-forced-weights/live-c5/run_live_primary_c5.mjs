@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {mkdirSync, writeFileSync} from 'node:fs';
 import {join} from 'node:path';
 import {pathToFileURL} from 'node:url';
+import {writePrimaryNormOperandBoundary} from './export_norm_operand_boundary.mjs';
 import {compactOwnedLookup, compactDerivativesFromLegacy} from '../../mathscope-m2/navier/mathscope-owned-lookup.mjs';
 import {
   assertActualCommonAdmissibleFamily,
@@ -187,6 +188,15 @@ try {
   receipt.potentialSix = weighted.potential[6];
   receipt.currentStage = 'complete-primary-C5-class-only';
   save();
+  if (process.env.MATHSCOPE_EXPORT_NORM_OPERANDS === 'true') {
+    try {
+      receipt.normOperandBoundary = writePrimaryNormOperandBoundary(primary, out);
+      save();
+    } catch (error) {
+      console.error(error);
+      process.exitCode = 1;
+    }
+  }
   const forcedObserver = process.env.MATHSCOPE_SAME_FAMILY_FORCED_OBSERVER;
   if (forcedObserver) {
     assert.equal(prefix, 3);
