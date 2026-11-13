@@ -193,7 +193,8 @@ try {
     try {
       const {runSameFamilyModeTwo} = await import(pathToFileURL(forcedObserver).href);
       await runSameFamilyModeTwo({family, current, target, primary, context, out,
-        runtime: 'research-ide', supportReceipt: process.env.MATHSCOPE_ACTIVE_N3_SUPPORT});
+        runtime: 'research-ide', supportReceipt: process.env.MATHSCOPE_ACTIVE_N3_SUPPORT,
+        fullForced: process.env.MATHSCOPE_FULL_FORCED === 'true'});
     } catch (error) {
       console.error(error);
       process.exitCode = 1;

@@ -8,8 +8,9 @@ import {
   witnessContext,
 } from '../active-mode-two-witness/record_active_mode_two.mjs';
 import {prepareLivePrimaryC5Binding} from './bind_live_primary_c5.mjs';
+import {runFullFirstForced} from './run_full_first_forced.mjs';
 
-export async function runSameFamilyModeTwo({family, current, target, primary, context, out, runtime, supportReceipt}) {
+export async function runSameFamilyModeTwo({family, current, target, primary, context, out, runtime, supportReceipt, fullForced}) {
   assert.equal(current.domain.prefixOrder, 3);
   const navier = resolve(runtime, 'mathscope-m3/navier');
   const load = name => import(pathToFileURL(join(navier, name)).href);
@@ -49,6 +50,15 @@ export async function runSameFamilyModeTwo({family, current, target, primary, co
       angular.assertGlobalInitializedAngular, initializedMean);
     const binding = await prepareLivePrimaryC5Binding({runtime, family, current, target, primary, initial});
     report.normRoots = binding.normRoots;
+    if (fullForced) {
+      report.currentStage = 'same-family-full-forced';
+      await save();
+      report.full = await runFullFirstForced({load, initial, binding, context, out});
+      report.completeForcedSeal = true;
+      report.status = 'VERIFIED_COMPLETE_SAME_LIVE_N3_FIRST_FORCED';
+      await save();
+      return;
+    }
     report.currentStage = 'same-family-forced-mode-two';
     await save();
 
