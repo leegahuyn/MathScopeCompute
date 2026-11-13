@@ -1,4 +1,4 @@
-"""Join the 90 original leading FTC bounds to their same-run N4 K operands."""
+"""Join the 90 original leading FTC bounds to the native N3 or N4 K operands."""
 from argparse import ArgumentParser
 from collections import Counter
 from hashlib import sha256
@@ -7,8 +7,9 @@ import json
 from pathlib import Path
 
 
-PINS = {'actual-leading-ftc-bindings.json': '4535e399bb473fa2c6b9d7251ab26dae8a345f4ccdab75ec227ebd4393833e6e',
-        'primary-K-arithmetic-frontier.json': '22728b80327798f6fad284058b558d10527e4d8b7534a0c2bd9634eebb906b99'}
+BINDING = '4535e399bb473fa2c6b9d7251ab26dae8a345f4ccdab75ec227ebd4393833e6e'
+FRONTIERS = {3: ('fbaea5bd2475e54919cef4099479c1c6ad6ad48dc68225190ea9f6c127f07aaa', 18310069, 131697534434),
+             4: ('22728b80327798f6fad284058b558d10527e4d8b7534a0c2bd9634eebb906b99', 24120472, 131697534716)}
 ENDPOINTS = {'F': 'f94fa27286e02bc858777aba8302c68b7c71141790aba465f177e3ee8e407bcd',
              'U': 'c1b8eef03b5cac90a9a9eabda2d9baa3f255c1bd860d382af1562a53847811af'}
 
@@ -26,12 +27,16 @@ def main():
     parser.add_argument('artifact', type=Path)
     parser.add_argument('norm_dir', type=Path)
     parser.add_argument('out', type=Path)
+    parser.add_argument('--prefix', type=int, choices=FRONTIERS, required=True)
     args = parser.parse_args()
-    binding, frontier = (read(args.artifact / name, pin)[0] for name, pin in PINS.items())
+    prefix = args.prefix
+    frontier_pin, norm_root, job = FRONTIERS[prefix]
+    pins = {'actual-leading-ftc-bindings.json': BINDING, 'primary-K-arithmetic-frontier.json': frontier_pin}
+    binding, frontier = (read(args.artifact / name, pin)[0] for name, pin in pins.items())
     native, native_sha = read(args.artifact / 'primary-c5-native.json')
-    assert native['status'] == 'VERIFIED_ORIGINAL_NATIVE_N4_PRIMARY_C5_CLASS'
+    assert native['status'] == f'VERIFIED_ORIGINAL_NATIVE_N{prefix}_PRIMARY_C5_CLASS'
     assert native['executingCommit'] == 'afa225f3252a1cf79880d327d4b909566e12e7fd'
-    assert frontier['prefix'] == 4 and frontier['roots']['K'] == native['normRoot'] == 24120472
+    assert frontier['prefix'] == prefix and frontier['roots']['K'] == native['normRoot'] == norm_root
     assert binding['sourceBinding'] == native['originalBackgroundC8']['source']
     assert binding['nodeCount'] == native['originalBackgroundC8']['nodeCount']
     assert binding['graphNamespace'] == frontier['graphNamespace'] == 'norm'
@@ -57,18 +62,18 @@ def main():
         data, _ = read(args.norm_dir / f'{field.lower()}0-directed.json', pin)
         assert data['actualSourceParameterSHA256'] == binding['sourceBinding']['parameterExpressionSHA256']
         intervals[field] = data['FTCInterval']
-    result = {'schema': 'MathScope.ActualN4LeadingFTCBoundJoin/1', 'status': 'BOUND_ALL_90_LEADING_FTC_INPUTS',
-              'run': 43368204121, 'job': 131697534716, 'normRoot': frontier['roots']['K'],
-              'nativeReceiptSHA256': native_sha, 'sourcePins': PINS, 'endpointPins': ENDPOINTS,
+    result = {'schema': 'MathScope.ActualLeadingFTCBoundJoin/1', 'status': 'BOUND_ALL_90_LEADING_FTC_INPUTS',
+              'run': 43368204121, 'job': job, 'prefix': prefix, 'normRoot': frontier['roots']['K'],
+              'nativeReceiptSHA256': native_sha, 'sourcePins': pins, 'endpointPins': ENDPOINTS,
               'countByField': dict(Counter(row['field'] for row in bounds.values())),
               'sourceGraphNamespace': 'norm', 'directedFTCIntervals': intervals,
               'operands': [{k: row[k] for k in ('field', 'radialOrder', 'etaOrder', 'sourceJet', 'bound')}
                            for row in binding['rows']],
-              'scope': 'The original full leading definitions, rectangle, profile and 90 retained sums are checked on the same original N4 run. The separately proved original leading majorants supply their upper endpoints.',
+              'scope': f'The original full leading definitions, rectangle, profile and 90 retained sums are checked on the same original N{prefix} run. The separately proved original leading majorants supply their upper endpoints.',
               'remainingNormK': 'Non-leading FTC, coordinate coefficient and weighted-target intervals must be joined separately.',
               'fullKEnclosed': False, 'release': 'HOLD'}
     args.out.write_text(json.dumps(result, indent=2) + '\n', encoding='utf-8', newline='\n')
-    print('PASS all 90 original N4 leading FTC sum IDs, same-run K ancestry and directed endpoint applicability')
+    print(f'PASS all 90 original N{prefix} leading FTC sum IDs, same-run K ancestry and directed endpoint applicability')
 
 
 if __name__ == '__main__':

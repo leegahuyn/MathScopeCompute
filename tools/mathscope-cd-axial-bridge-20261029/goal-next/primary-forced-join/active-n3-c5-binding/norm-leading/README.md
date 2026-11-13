@@ -40,6 +40,15 @@ python work/goal-next/continuation36/norm-leaf/check_directed_readback.py --dir 
 
 The first producer hard-pins the source program, hosted C8/C6 receipt and geometry receipt; the second uses SymPy. No local Lean was compiled and no shared branch edited.
 
+## Live N3 and N4 binding
+
+GitHub run 43368204121 retains the same leading FTC binding bytes in both jobs and distinct arithmetic frontiers for K roots 18310069 and 24120472. In each job `bind_actual_leading_ftc.py` compares every one of the 90 bound nodes against that job's reachable arithmetic frontier, and confirms that the two full leading functions and their admitted rectangle are the ones bounded above. The two endpoint lists attach those bounds without modifying the original graph. The newly bound rows and the [separate positive-order upper bounds](positive-ftc/README.md) still leave the full norm evaluation open.
+
+```sh
+python -B bind_actual_leading_ftc.py N3_ARTIFACT . n3-leading-ftc-join.json --prefix 3
+python -B bind_actual_leading_ftc.py N4_ARTIFACT . n4-leading-ftc-join.json --prefix 4
+```
+
 ## Original slow-chart coefficient integrals
 
 The same original C8 issuer also integrates its explicit slow-chart coefficients over `s∈[1/2,2]`, `X∈[Xa/2,2Xb]`, and `eta∈[-1,1]`. Set `H=max(2,Lambda,C12EnvelopeR)`. The source geometry gives `2/H≤X≤H²`. The script bounds the first eleven ordinary mixed derivatives of every atom using falling factorials for the powers of `s,X`, and the radius-`1/4` Cauchy bound of `1/(1-2h eta²)` around each real eta. There the denominator has absolute value greater than `1/2`. The Euler derivative has coefficient `s a_i0` in the ordinary-coordinate basis. That product, the other coefficients and all four multipliers have seminorm at most `2^156 H^13` through order eleven.
