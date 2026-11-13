@@ -199,6 +199,17 @@ jobs:
           goal=../evidence/tools/mathscope-cd-axial-bridge-20261029/goal-next
           cycle="$goal/primary-forced-join/active-n3-c5-binding"
           python3 -B "$cycle/prepare_first_cycle_overlays.py" "$out"
+          # Reuse the archived moving-frame tangency proof on the same source.
+          tangency=research-ide/mathscope-m3/tangency-proof-20261023
+          navier=research-ide/mathscope-m3/navier
+          echo "15eea2c0f984c5b3bb58dd372d9b01660e44a85526c1f329b41b41855b4c27e2  $navier/generic-signed-source-kernel.mjs" | sha256sum --check
+          test "$(git hash-object "$tangency/generic-signed-source-kernel.fixed.mjs")" = 70e2dff76fb34bf937ed6ede85adac7826afac32
+          test "$(git hash-object "$tangency/signed-source-frame-tangency.mjs")" = 5bc972f20bfe96b01595fdb8690706b80fd3d060
+          test "$(git hash-object "$tangency/signed-source-frame-tangency.test.mjs")" = 4b6e7a13bbc387f6f67e20f96e3e75a33f791a95
+          cp "$tangency/generic-signed-source-kernel.fixed.mjs" "$navier/generic-signed-source-kernel.mjs"
+          cp "$tangency/signed-source-frame-tangency.mjs" "$navier/signed-source-frame-tangency.mjs"
+          cp "$tangency/signed-source-frame-tangency.test.mjs" research-ide/mathscope-m3/tests/signed-source-frame-tangency.test.mjs
+          node --test research-ide/mathscope-m3/tests/signed-source-frame-tangency.test.mjs | tee "$out/signed-frame-tangency.tap"
           node --input-type=module -e "import {writeFileSync} from 'node:fs'; import {verifyPR30OriginalSourceFiles} from './research-ide/mathscope-m3/navier/source-signed-162-pr30-pins.mjs'; const x=await verifyPR30OriginalSourceFiles(); if(x.verifiedFiles.length!==29)process.exit(2); writeFileSync(process.argv[1], JSON.stringify(x,null,2)+'\\n')" "$out/pr30-source-pins.json"
           echo 'MATHSCOPE_THROUGH_FIRST_CYCLE=true' >> "$GITHUB_ENV"
           echo "MATHSCOPE_FIRST_CYCLE_OVERLAY_MANIFEST=$out/pr30-runtime-overlays.json" >> "$GITHUB_ENV"
