@@ -4,9 +4,9 @@ import {realpath, writeFile} from 'node:fs/promises';
 import {resolve} from 'node:path';
 import {load, sha, sourceArithmetic} from './source_arithmetic.mjs';
 
-const [goal, tree, slowPath, output] = process.argv.slice(2);
-assert(process.argv.length === 6 && goal && tree && slowPath && output,
-  'Pass exactly GOAL_NEXT, ORIGINAL_RUNTIME, SLOW_RECEIPT and OUTPUT.');
+const [goal, tree, slowPath, output, diagnosticPath] = process.argv.slice(2);
+assert((process.argv.length === 6 || process.argv.length === 7) && goal && tree && slowPath && output,
+  'Pass GOAL_NEXT, ORIGINAL_RUNTIME, SLOW_RECEIPT, OUTPUT and optionally a separate radial diagnostic path.');
 const paths = {
   'stage-zero': ['whole-k-initialized-gauge/initialized-stage-zero-atoms.json', 'ac0c5dd82edad9dfef71266ef444b6448d77e6e9fc0739666fc55f5d53ff9a7a'],
   'initialized-mean-positive': ['whole-k-annular-pressure-lower/lower-covariance-pressure.json', '5582056d41cd5ddd57bf6f293c8ec09bb47d9a6bae77929f3ff4283afbb71328'],
@@ -24,6 +24,11 @@ const inputPaths = [...Object.values(paths).map(([path]) => resolve(goal, path))
 const outputPath = resolve(output);
 const comparablePath = path => process.platform === 'win32' ? path.toLowerCase() : path;
 assert(!inputPaths.map(comparablePath).includes(comparablePath(outputPath)), 'An output cannot replace an input receipt.');
+const diagnostic = diagnosticPath && resolve(diagnosticPath);
+if (diagnostic) {
+  assert(![...inputPaths, outputPath].map(comparablePath).includes(comparablePath(diagnostic)),
+    'The diagnostic must use a separate new path.');
+}
 let existingOutputPath;
 try {
   existingOutputPath = await realpath(outputPath);
@@ -271,3 +276,35 @@ const result = {
 };
 await writeFile(outputPath, JSON.stringify(result, null, 2) + '\n');
 console.log(`PASS ${Object.keys(atoms).length} original initialized annular jet intervals (57 gauge, 6 direct, 4 pressure).`);
+
+if (diagnostic) {
+  assert.equal(source.roots.all['b@1,0,0'], 496);
+  assert.deepEqual(source.nodes[496], {op: 'add', args: [491, 495]});
+  assert.deepEqual(source.nodes[491], {op: 'authenticated_source_norm_root', args: ['slow-background-atom', 'b@1,0,0']});
+  assert.deepEqual(source.nodes[495], {op: 'multiply', args: [479, 494]});
+  assert.deepEqual(source.nodes[494], {op: 'add', args: [492, 493]});
+  const originalValues = [491, 492, 493, 479].map(id => {
+    const flat = interned.get(`stage-zero/${id}`);
+    assert(Number.isSafeInteger(flat));
+    return numerical.value(flat);
+  });
+  const [backgroundValue, meanRadial, meanValue, physical] = originalValues;
+  const magnitudes = [
+    ['slow-background', backgroundValue],
+    ['initialized-mean-radial', N.mul(physical, meanRadial)],
+    ['initialized-mean-value', N.mul(physical, meanValue)],
+  ].map(([name, bound]) => ({name, interval: N.toClosed(bound)}));
+  const strictLargestUpper = magnitudes.find(x => magnitudes.every(y =>
+    x === y || N.compareEndpoints(x.interval.upper, y.interval.upper) === 1));
+  const record = {
+    schema: 'MathScope.N7.InitializedDirectRadialAtomDecomposition/1',
+    status: 'VERIFIED_ORIGINAL_DOMINANT_RADIAL_ATOM_COMPONENTS',
+    sourceSHA256, originalAtom: 'b@1,0,0', sourceBoundRoot: 496,
+    sourceRootRoles: {slowBackground: 491, radialMean: 492, meanValue: 493, physicalScaling: 479},
+    components: magnitudes, largestUpper: strictLargestUpper?.name ?? null,
+    initializedReplaySHA256: sha(JSON.stringify(result, null, 2) + '\n'),
+    arithmetic: N.report(), release: 'HOLD',
+  };
+  await writeFile(diagnostic, JSON.stringify(record, null, 2) + '\n', {flag: 'wx'});
+  console.log(JSON.stringify({status: record.status, largestUpper: record.largestUpper}));
+}

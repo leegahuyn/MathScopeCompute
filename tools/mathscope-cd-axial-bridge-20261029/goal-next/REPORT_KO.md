@@ -10,6 +10,12 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation39
+
+- **VERIFIED / OPEN · 환형 초기장.** 초기장 67개 구간을 원본 산술 8,121개와 고정 구간 입력 108개로 재생해 기존 결과와 바이트 단위로 일치시켰다. 앞서 에너지 계산에서 가장 큰 항에 들어간 `b@1,0,0`의 상계 #496을 배경 #491, 초기 평균의 방사 미분 #492, 초기 평균의 값 #493으로 나눴다. 물리 스케일 #479를 적용하면 #493에서 유도한 상단이 가장 크다. 이 비교는 상계 성분 사이의 비교다. 실제 환형 초기장 에너지 예산은 OPEN이다. [상계 분해 재현](final67/energy-1013-sharp/correction-budget/README.md).
+- **VERIFIED / CONDITIONAL · 다섯 실제 N4 호출자의 첫 방사 미분.** 원본 생성기에서 새로 할당한 자연함수 호출 114개를 찾아 직접식 66개, 로그 한 번 44개, 로그 두 번 4개를 검사했다. 원래 적분 구간과 로그 분기의 가드를 각각 제거해 호출이 도달 불가능해짐을 확인했다. 원본 호출 범위와 분기 의미론 아래 각 호출에서 `0 ≤ Y < 5`가 성립한다. 전체 실제 `eta` 영상, 다른 동적 호출과 일반 재귀는 OPEN이다. [검사 코드와 로그](y-higher-flow/n4-dynamic-range/README.md).
+- **CONDITIONAL · 실제 첫 강제항의 두 `m=2` 분기.** 동일한 고정 라벨에서 `H_w`가 횡방향 좌표를 보존하고 맥동 좌표를 `w`로 옮김을 정확 산술로 확인했다. 원래 허용 영역과 매끄러움 아래 4차 pullback 계수는 16 이하이고, 정수 각도 파수가 역제곱 노름 `|n|⁻² ≤ 4 R_env²/ε`를 보장한다. 두 실제 투영 강제항의 `C⁴` 상계를 원본 배경 및 라벨 계수로 환원했다. 그 계수의 충분한 상계, 원래 전파자, 강제 출력과 최종장 구간은 OPEN이다. [조건과 재현](primary-forced-join/active-n3-c5-binding/endpoint/forced-hw-c4/README.md).
+
 ## Continuation38
 
 - **VERIFIED / OPEN · 첫 보정 주기.** 고정된 원본 직교성 증명기를 적용한 GitHub 실행이 22,032,001개 노드까지 진행했고, Signed 후보를 조립한 뒤 원본 81개 라벨 감사에서 중단됐다. 기존 감사기는 원본의 문자열 평탄 접합 규칙에 불리언 값을 요구했다. 보관된 두 원본 패치를 Git blob으로 고정해 실제 평탄 접합 규칙, native 필드 핸들과 가드 동일성을 검사하도록 격리 실행에 적용했다. 실제 유리식 직교성, 81개 라벨과 native 레지스트리 회귀를 실행하는 GitHub 준비 단계는 통과했다. 전체 첫 주기는 진행 중이다. [중단된 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43376435788) · [새 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44029534187).

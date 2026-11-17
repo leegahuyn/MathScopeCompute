@@ -1,0 +1,128 @@
+{
+  "status": "CONDITIONAL_SAME_LIVE_HW_C4_SOURCE_PULLBACK",
+  "branches": [
+    {
+      "key": "0:1",
+      "rawSource": [
+        {
+          "real": 21443862,
+          "imaginary": 21443863
+        },
+        {
+          "real": 21443873,
+          "imaginary": 21443874
+        },
+        {
+          "real": 21443832,
+          "imaginary": 21443835
+        }
+      ],
+      "H_w": [
+        21661712,
+        21661713
+      ],
+      "actualPullbackSource": [
+        {
+          "real": 21665106,
+          "imaginary": 21665123
+        },
+        {
+          "real": 21665140,
+          "imaginary": 21665157
+        },
+        {
+          "real": 21665174,
+          "imaginary": 21665191
+        }
+      ]
+    },
+    {
+      "key": "1:1",
+      "rawSource": [
+        {
+          "real": 21480589,
+          "imaginary": 21480590
+        },
+        {
+          "real": 21480600,
+          "imaginary": 21480601
+        },
+        {
+          "real": 21480559,
+          "imaginary": 21480562
+        }
+      ],
+      "H_w": [
+        21675073,
+        21675074
+      ],
+      "actualPullbackSource": [
+        {
+          "real": 21678413,
+          "imaginary": 21678430
+        },
+        {
+          "real": 21678447,
+          "imaginary": 21678464
+        },
+        {
+          "real": 21678481,
+          "imaginary": 21678498
+        }
+      ]
+    }
+  ],
+  "fixedLabelJacobian": "d_Y H_w = I - v_t v_t^T/Dgeom; d_w H_w = ci*Tg^(-delta)*v_t",
+  "exactProjectionEntries": [
+    [
+      [
+        "1/2",
+        "1/4"
+      ],
+      [
+        "0",
+        "-1/4"
+      ]
+    ],
+    [
+      [
+        "0",
+        "-1/4"
+      ],
+      [
+        "1/2",
+        "-1/4"
+      ]
+    ]
+  ],
+  "exactRelations": [
+    "v_t dot v_t = Dgeom",
+    "v_r dot v_t = 0",
+    "Jg v_t = Tg v_t",
+    "P^2=P"
+  ],
+  "pathImage": "Both actual delta=0,1 lifts satisfy xi(H_w)=xi(Y), v(H_w)=w; R,Z,T are unchanged. Thus |xi|<=r0 and 0<=w<=Ls imply the mapped point stays in the same closed fixed-label pulse rectangle, assuming the original annulus and fixed chart are admitted.",
+  "jacobianColumnL1Upper": "2",
+  "affineSecondAndHigherDerivatives": "0",
+  "sixVariableMultiIndexCounts": {
+    "0": 1,
+    "1": 6,
+    "2": 21,
+    "3": 56,
+    "4": 126
+  },
+  "pointwiseSourceBound": "For |alpha|<=4 in (R,Z,T,Y1,Y2,w), |partial^alpha(f_2,j composed with H_w)| <= 16848*C4(H_w)*B5(H_w)^2.",
+  "KTransferBound": "(16*1053*3125^2*33^10/4)*C4(H_w)*S^10*T26*W5(H_w)^2",
+  "integerNumerator": "251992604919291374531250000",
+  "integerDenominator": 4,
+  "domain": "Fixed actual label, delta 0 or 1, original annulus, ell>=1, ci>0, 0<=w<=Ls; original smoothness and source-domain inclusion at H_w are separate premises.",
+  "proof": "Actual H_w is affine in Y,w; original path verifies v(H_w)=w and transverse invariance. ci<=1/S<=1 and Tg>1. The Y Jacobian is the rank-one orthogonal projection P, with each entry absolute <=1; the w column is ci*Tg^(-delta)*v_t, with l1 norm <=2. Each coordinate-derivative chain expansion therefore costs <=2 and no higher derivatives of H_w occur. Apply the source-bound C4 estimate at the mapped point, not after differentiating its envelope.",
+  "limitations": "Conditional on the original analytic K/primary and source geometry claims, source inclusion at H_w, and C4/W5 at the mapped point. This bounds the actual unprojected forcing pullback, not the projected vector, matrix propagator, forced velocity or pressure; no final jets or gates are closed.",
+  "pins": {
+    "liveReceiptSHA256": "7aab5356be60246d2eca0d24fbf17724e1a4ab6fe3794570a3588e17f78b4b6b",
+    "previousTransferSHA256": "3e335e8e4ab2be1238802c95fadb2f115a668564aea261db422ff02d52ae292a",
+    "sourceInitializedGitBlob": "5270ae0792718cbc475c9e7249f7cb4e8f0309c6",
+    "sourceForcedGitBlob": "1a8d1968b1825de477960cd59b3a0420c72ba4e3"
+  },
+  "release": "HOLD"
+}

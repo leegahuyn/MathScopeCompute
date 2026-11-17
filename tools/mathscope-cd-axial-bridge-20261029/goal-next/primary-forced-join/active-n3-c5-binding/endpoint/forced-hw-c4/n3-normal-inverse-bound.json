@@ -1,0 +1,25 @@
+{
+  "status": "CONDITIONAL_SAME_LIVE_NORMAL_INVERSE_BOUND",
+  "branches": [
+    "0:1",
+    "1:1"
+  ],
+  "harmonic": 2,
+  "checkedPulseDomainIDs": [
+    "actual-forced-original-pulse-domain-0:1-2",
+    "actual-forced-original-pulse-domain-1:1-2"
+  ],
+  "sourceNormalTheta": "n_theta = p/R = roundedInteger/(k*R)",
+  "bound": "0 < 1/(n dot n) <= k^2 R^2 <= 4*Renv^2/epsilon",
+  "proof": "The actual signed carrier is a nonzero integer divided by k, so |roundedInteger|>=1. Since n is real, n dot n >= n_theta^2. The exact original annulus satisfies X=R^2/(2s), s<=2, X<=Xb and 4Xb<=Renv^2. For 0<epsilon<=1, ceil(epsilon^(-1/2)) <= 2 epsilon^(-1/2). Fixed-label H_w changes neither R nor the angular carrier.",
+  "projectedC4Replacement": "The M from n3-projected-m2-source-c4.json may be chosen as max(1, all required normal derivative magnitudes through C4, 4*Renv^2/epsilon).",
+  "scope": "Conditional on the original nonzero-integer carrier, epsilon>0, annular R>0, s<=2 and source geometry 4Xb<=Renv^2. It removes the inverse-normal term as an independent analytic unknown but does not bound normal derivatives, C4, the matrix propagator or the forced output.",
+  "sameLiveSHA256": "7aab5356be60246d2eca0d24fbf17724e1a4ab6fe3794570a3588e17f78b4b6b",
+  "priorProjectionSHA256": "87d7c754aca55c95149ecf81b1e4b88efa16933f872ff384ec9f069d5ef22357",
+  "sourceGitBlobs": {
+    "movingFrame": "80c0976b8bbd7b24a1f9e094937d1822726b240d",
+    "band": "1f1c18a26372c998d8389b6c5138b3c9d3a66f36",
+    "window": "94bdacdff8b40fbc80c23add81202a5b41c3fbdf"
+  },
+  "release": "HOLD"
+}

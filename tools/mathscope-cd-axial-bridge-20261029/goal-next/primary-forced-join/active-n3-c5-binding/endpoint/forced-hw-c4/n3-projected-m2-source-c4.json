@@ -1,0 +1,81 @@
+{
+  "status": "CONDITIONAL_SAME_LIVE_PROJECTED_M2_SOURCE_C4",
+  "branches": [
+    {
+      "key": "0:1",
+      "harmonic": 2,
+      "system": 1,
+      "pullback": [
+        {
+          "real": 21665106,
+          "imaginary": 21665123
+        },
+        {
+          "real": 21665140,
+          "imaginary": 21665157
+        },
+        {
+          "real": 21665174,
+          "imaginary": 21665191
+        }
+      ],
+      "projected": [
+        {
+          "real": 21665223,
+          "imaginary": 21665224
+        },
+        {
+          "real": 21665235,
+          "imaginary": 21665236
+        },
+        {
+          "real": 21665247,
+          "imaginary": 21665248
+        }
+      ]
+    },
+    {
+      "key": "1:1",
+      "harmonic": 2,
+      "system": 5,
+      "pullback": [
+        {
+          "real": 21678413,
+          "imaginary": 21678430
+        },
+        {
+          "real": 21678447,
+          "imaginary": 21678464
+        },
+        {
+          "real": 21678481,
+          "imaginary": 21678498
+        }
+      ],
+      "projected": [
+        {
+          "real": 21678530,
+          "imaginary": 21678531
+        },
+        {
+          "real": 21678542,
+          "imaginary": 21678543
+        },
+        {
+          "real": 21678554,
+          "imaginary": 21678555
+        }
+      ]
+    }
+  ],
+  "N4": "A number M>=1 bounding all absolute coordinate derivatives through order four of the original real normal components along the mapped path, and also |n|^(-2).",
+  "projectionFormula": "P_ij=delta_ij-n_i*n_j/(n dot n); actual projectedSource=-P*(full source composed with H_w).",
+  "projectionC4Bound": "max_{i,j,|alpha|<=4}|D^alpha P_ij| <= (1+81*720^4)*M^15.",
+  "conditionalSourceBound": "max_{i,|alpha|<=4}|D^alpha projectedSource_i| <= 808704*(1+81*720^4)*M^15*C4(H_w)*B5(H_w)^2.",
+  "geometryAndProof": "On the actual source domain n is real and n dot n >0. Each derivative of q=n dot n through order four is <=48*M^2. From q*(1/q)=1, reciprocal derivatives satisfy H_j<=720*M^3*max_{l<j} H_l; H_0<=M, so H_j<=720^4*M^13. Leibniz for three factors gives 81*720^4*M^15 for nn^T/q, and multiplying P with the three complex pulled-back source components costs 3*2^4. The earlier exact affine H_w pullback contributes 16*1053.",
+  "scope": "Formal conditional C4 bound at the actual two selected projected-source roots. M, C4 and B5 must be bounded on the original admissible mapped domain; nonzero n and analytic differentiability are explicit premises. The exact zero normalization in the source is semantic equality, not an additional estimate. No Duhamel matrix propagator, output velocity/pressure or final jet bound is asserted.",
+  "sourceGitBlob": "bf44357f7038ebe07d78ffc208cf5bd357df928a",
+  "hwPullbackSHA256": "1b752098493b07d23ba4d6a2acb0222dcb200d58456be192332d6b3d96aecb26",
+  "sameLiveSHA256": "7aab5356be60246d2eca0d24fbf17724e1a4ab6fe3794570a3588e17f78b4b6b",
+  "release": "HOLD"
+}

@@ -76,3 +76,17 @@ identifies a priority for sharper original atom bounds.
 ```text
 node evaluate_initialized_budget.mjs GOAL_NEXT ARITHMETIC_RUNTIME HISTORICAL_INPUT original-67plus13-polynomials.json annular-initialized-budget.json
 ```
+### Component bounds for the dominant initialized radial atom
+
+`radial-dominance.json` records the directed component bounds of the pinned
+stage-zero DAG root #496, the bound for `b@1,0,0`. The root adds #491 (slow
+background) to #479 (physical scaling) times the sum of #492 (initialized
+mean radial derivative) and #493 (initialized mean value). The upper endpoint
+of the scaled #493 contribution strictly exceeds the other two upper
+endpoints. The original 67-atom output retains its existing SHA-256
+`9dcc5ad21169fe7462bd76f588d994126f0beaef5fdfc4e6ab4657e056371b34`.
+This comparison identifies the largest bound contribution. The annular
+initial energy comparison remains open.
+
+To reproduce it, append a new diagnostic output path as the fifth argument
+to the [stage-zero replay](../../../whole-k-annular-initial/numerical/STAGE_ZERO_NUMERICAL.md).
