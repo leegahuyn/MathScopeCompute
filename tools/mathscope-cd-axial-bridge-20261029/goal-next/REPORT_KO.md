@@ -17,7 +17,7 @@
 - **VERIFIED · 원본 역함수의 조건부 좌표 정리.** 양의 근과 비음수 시간에서 원본 물리 좌표를 복원하는 정리, 활성 밴드 가드가 역함수 구간을 보장하는 정리, 공동 스케일 변환에서 동일한 eta와 유일한 양의 근을 보장하는 정리를 GitHub Lean 4.34.1로 컴파일했다. 각 정리의 의존 공리는 `propext`, `Classical.choice`, `Quot.sound`이다. [GitHub 컴파일](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44032831080) · [컴파일 로그](ci-44032831080/InverseChart.log).
 - **VERIFIED / OPEN · N8의 실제 이동 열 외부.** 공간 32→64와 정밀도 72→144를 별도로 높였을 때 외부 운동에너지·외력 제곱 구간이 좁아졌다. 각방향 Fourier 2→4의 꼬리는 정확히 0이다. 외부 열급수 차수 4→8에서 균일 도함수 꼬리 상계가 1,000배 이상 줄었다. 확인된 외부 마지막 양의 시간은 `qBig/64`이다. 전체 장의 활성 차수와 환형 오차 비교가 남아 N8-05는 OPEN이다. [외부 재현 코드와 로그](final67/exterior-n8-refinement/README.md).
 - **VERIFIED / CONDITIONAL · 실제 강제 시스템 1과 5.** 원본 그래프에서 두 비감쇠 행렬의 18개 원소를 기호적으로 대조했다. 공통 스칼라 감쇠를 정확히 분리했고, 실제 normal이 펄스 변수에서 affine이라 감쇠 적분은 3차 다항식이다. 다섯 고정 펄스 매개변수의 4차 미분 상계는 유한 4차 다항식을 사용한다. 비영 정수 각방향 반송파에서 양의 감쇠 하한을 확인했다. 실제 전파자에 필요한 상계와 끝점 미분, 출력은 OPEN이다. [원본 행렬과 조건](primary-forced-join/active-n3-c5-binding/endpoint/forced-damping/README.md).
-- **VERIFIED / OPEN · 운영 M4 R1-08.** 원래 평가기에서 격리 후보의 제한된 증거를 다시 수용했다. 운영 공급자 메타데이터는 버전 137이다. 편집 원본 전체 읽기는 연결 오류로 끝났고 저장 버전의 본문 읽기는 서비스의 무료 등급 제한 응답 402로 끝났다. 운영 원본과 HTTP 화면의 연결은 아직 확인되지 않았다. [읽기 전용 검증](m4/r108-independent-20261117/README.md).
+- **VERIFIED / OPEN · 운영 M4 R1-08.** 원래 평가기에서 격리 후보의 제한된 증거를 다시 수용했다. 운영 공급자 메타데이터는 버전 137이고, 공개 HTML의 30,707,818바이트는 이전 스냅샷과 일치했다. 편집 원본 전체 읽기는 연결 오류로 끝났고 저장 버전의 본문 읽기는 서비스의 무료 등급 제한 응답 402로 끝났다. 운영 원본과 공개 HTML의 연결은 아직 확인되지 않았다. [읽기 전용 검증](m4/r108-independent-20261117/README.md) · [공개 HTML 해시](m4/r108-independent-20261117/public-http-fresh.json).
 
 ## Continuation39
 

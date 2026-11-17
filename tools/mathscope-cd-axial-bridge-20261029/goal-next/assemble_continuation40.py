@@ -25,6 +25,7 @@ PINS = {
     FORCED + 'n3-two-actual-pulse-damping-transport.json': 'ebae8e28350f3939cc37f97ae1252ce28a118ddb077ed41852e012ace1be1755',
     FORCED + 'n3-two-actual-pulse-damping-floor.json': 'd691b408fc4c74b374da0f3156625c95b76fd8f82180d0849ead2954f39cf453',
     M4 + 'verified.json': 'a9c4747a795996bcc4b0fa91f274f53b889a742eb0385c71bac3ee4563387f6c',
+    M4 + 'public-http-fresh.json': 'a72647ae8f8cbe3ae83eb236c31536f94fefa40623ccf985a154179fdedd150a',
 }
 
 
@@ -55,6 +56,8 @@ def verify_evidence(raw, source):
     assert floor['priorDampingSHA256'] == PINS[FORCED + 'n3-two-actual-pulse-damping-transport.json']
     audit = source(M4 + 'verified.json')
     assert audit['providerContentReadCodes'] == [402, 402] and not audit['productionPublicationProven']
+    public = source(M4 + 'public-http-fresh.json')
+    assert public['http'] == 200 and public['bytes'] == 30707818 and public['matchesPriorPublicSnapshot']
     run = source(CI + 'github-run.json')
     assert run['databaseId'] == 44032831080 and run['conclusion'] == 'success'
     assert run['headSha'] == '3b9f429be630ebf58badd4dc6326cc623fa36a86'
