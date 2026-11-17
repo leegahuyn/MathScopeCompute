@@ -1,0 +1,180 @@
+{
+  "status": "CONDITIONAL_ACTUAL_TWO_MODE_SCALAR_DAMPING_TRANSPORT",
+  "rows": [
+    {
+      "key": "0:1",
+      "system": 1,
+      "matrix": [
+        [
+          21665210,
+          21661945,
+          21661947
+        ],
+        [
+          21661950,
+          21665211,
+          21661954
+        ],
+        [
+          21661957,
+          21661959,
+          21665212
+        ]
+      ],
+      "undampedAphi": [
+        [
+          21661942,
+          21661945,
+          21661947
+        ],
+        [
+          21661950,
+          21661952,
+          21661954
+        ],
+        [
+          21661957,
+          21661959,
+          21661961
+        ]
+      ],
+      "negativeScalarRoot": 21665209,
+      "dampingRoot": 21661962,
+      "normalSquared": 21661917,
+      "epsilon": 17732744,
+      "k": 17732747,
+      "pulseVariable": 21661707,
+      "n0": [
+        17736577,
+        17735985,
+        17735992
+      ],
+      "normalSlope": [
+        17788298,
+        0,
+        17766524
+      ],
+      "forcing": [
+        {
+          "imaginary": 21665224,
+          "real": 21665223
+        },
+        {
+          "imaginary": 21665236,
+          "real": 21665235
+        },
+        {
+          "imaginary": 21665248,
+          "real": 21665247
+        }
+      ]
+    },
+    {
+      "key": "1:1",
+      "system": 5,
+      "matrix": [
+        [
+          21678547,
+          21675353,
+          21675355
+        ],
+        [
+          21675358,
+          21678548,
+          21675361
+        ],
+        [
+          21675364,
+          21675366,
+          21678549
+        ]
+      ],
+      "undampedAphi": [
+        [
+          21675350,
+          21675353,
+          21675355
+        ],
+        [
+          21675358,
+          21675360,
+          21675361
+        ],
+        [
+          21675364,
+          21675366,
+          21675368
+        ]
+      ],
+      "negativeScalarRoot": 21678546,
+      "dampingRoot": 21675369,
+      "normalSquared": 21675325,
+      "epsilon": 17732744,
+      "k": 17732747,
+      "pulseVariable": 21675098,
+      "n0": [
+        17736577,
+        17735985,
+        17735992
+      ],
+      "normalSlope": [
+        17788298,
+        0,
+        17766524
+      ],
+      "forcing": [
+        {
+          "imaginary": 21678561,
+          "real": 21678560
+        },
+        {
+          "imaginary": 21678573,
+          "real": 21678572
+        },
+        {
+          "imaginary": 21678585,
+          "real": 21678584
+        }
+      ]
+    }
+  ],
+  "uncompressedSourceGraphSHA256": "831120617913e89c5bb60976fb26f58c6714decc301097a08f72ee23233e0a6a",
+  "registrySHA256": "364425db9d5bbd317f8aaad681fdfdd3206f97e0f46d2beb78b6e7d5a30a3111",
+  "sameLiveCheckpointSHA256": "c267a0d90347171c6527480469a759f9af7635c6785acaa38c19063a8afc1276",
+  "sourceKernelGitBlob": "bf44357f7038ebe07d78ffc208cf5bd357df928a",
+  "exactFactorization": "M(w)=Aphi(w)-4*d(w)*I, d(w)=epsilon*k^2*|n(w)|^2>=0; U_M(t,s)=exp(-4*integral_s^t d(w)dw)*U_Aphi(t,s).",
+  "all18UndampedMatrixEntries": "Each checked exactly against Aphi_ij=-K_ij+n_i*(sum_k(n_k*K_kj)-nprime_j)/|n|^2; all other original source operands remain symbolic.",
+  "actualNormal": "n(w)=n(0)+w*nprime, with the three literal original source components and derivatives recorded above.",
+  "exactIntegratedNormal": "integral_s^t |n(w)|^2 dw = (t-s)|n(s)|^2+(t-s)^2 n(s) dot nprime+(t-s)^3 |nprime|^2/3.",
+  "valueBound": "||u(t)||_infinity <= F*t*exp(A*t), where F bounds the actual projected complex forcing and A bounds the matrix row norm of actual Aphi.",
+  "fixedPulseC4Bound": "max_|alpha|<=4 ||D^alpha u(t)||_infinity <= F*t*exp(A*t)*sum_{j=0}^4 (15*B*t)^j/(j+1)!, at fixed t.",
+  "polynomialCoefficients": [
+    "1",
+    "15/2",
+    "75/2",
+    "1125/8",
+    "3375/8"
+  ],
+  "directions": [
+    "R",
+    "Z",
+    "T",
+    "Y1",
+    "Y2"
+  ],
+  "multiIndexCounts": {
+    "0": 1,
+    "1": 5,
+    "2": 15,
+    "3": 35,
+    "4": 70
+  },
+  "boundDefinitions": "F bounds all actual forcing derivatives through 4; A bounds ||Aphi||_infinity; B bounds ||D^beta M||_infinity for 1<=|beta|<=4, throughout 0<=w<=Ls and the original fixed-label parameter domain.",
+  "proof": "Use the positive scalar integrating factor and the source ordered zero-data Volterra equation. Each parameter derivative satisfies the exact binomial triangular system. Its off-diagonal coupling strictly lowers derivative order, so an ordered expansion uses at most four couplings. The binomial row sum is <=15, and the j-fold ordered integral has volume t^(j+1)/(j+1)!. Products of the undamped Aphi propagators contribute exp(A*t), while scalar damping factors are <=1. No matrix commutativity is assumed.",
+  "negativeControls": [
+    "a nonscalar diagonal damping matrix fails the asserted factorization for a noncommuting A",
+    "omitting a parameter derivative of damping fails: the scalar zero-data example has derivative -2 at theta=0"
+  ],
+  "scope": "Actual selected witness systems and their exact source matrices; F,A,B and the admitted-domain analyticity, positivity and same-private-family input remain premises. Bound is at fixed pulse time, before endpoint/time chain rules, pressure, mapped full curl, output class, numerical final jets or any gate conclusion. No \u03b5-uniformity is inferred.",
+  "release": "HOLD"
+}

@@ -279,32 +279,104 @@ console.log(`PASS ${Object.keys(atoms).length} original initialized annular jet 
 
 if (diagnostic) {
   assert.equal(source.roots.all['b@1,0,0'], 496);
+  assert.deepEqual(transport.atoms['b@1,0,0'].mean, [
+    {mappedOrder: 0, radiusEnvelopePower: 3, coefficient: '1/2'},
+    {mappedOrder: 1, radiusEnvelopePower: 2, coefficient: '1/2'},
+  ]);
   assert.deepEqual(source.nodes[496], {op: 'add', args: [491, 495]});
   assert.deepEqual(source.nodes[491], {op: 'authenticated_source_norm_root', args: ['slow-background-atom', 'b@1,0,0']});
   assert.deepEqual(source.nodes[495], {op: 'multiply', args: [479, 494]});
+  assert.deepEqual(source.nodes[479], {op: 'exp', args: [478]});
+  assert.deepEqual(source.nodes[478], {op: 'multiply', args: [5, 9, 477]});
+  assert.deepEqual(source.nodes[5], {op: 'authenticated_source_norm_root', args: ['hosted-original', 127]});
+  assert.deepEqual(source.nodes[9], {op: 'add', args: [4, 8]});
+  assert.deepEqual(source.nodes[4], {op: 'authenticated_source_norm_root', args: ['hosted-original', 617432]});
+  assert.deepEqual(source.nodes[8], {op: 'rational', args: ['17', '1']});
+  assert.deepEqual(source.nodes[477], {op: 'add', args: [3, 476]});
+  assert.deepEqual(source.nodes[3], {op: 'authenticated_source_norm_root', args: ['hosted-original', 9]});
+  assert.deepEqual(source.nodes[476], {op: 'rational', args: ['4', '2']});
   assert.deepEqual(source.nodes[494], {op: 'add', args: [492, 493]});
-  const originalValues = [491, 492, 493, 479].map(id => {
+  assert.deepEqual(source.nodes[492], {op: 'multiply', args: [69, 274, 377]});
+  assert.deepEqual(source.nodes[493], {op: 'multiply', args: [16, 69, 276]});
+  assert.deepEqual(source.intermediate.vAll.slice(0, 2), [274, 276]);
+  assert.deepEqual(source.nodes[16], {op: 'integer_power', args: [2, 2]});
+  assert.deepEqual(source.nodes[377], {op: 'integer_power', args: [2, 3]});
+  assert.deepEqual(source.nodes[69], {op: 'rational', args: ['1', '2']});
+  assert.deepEqual(source.nodes[276], {op: 'add', args: [234, 275]});
+  assert.deepEqual(source.nodes[275], {op: 'maximum', args: [267, 273]});
+  assert.equal(source.intermediate.vSpatial[1], 267);
+  assert.equal(source.intermediate.vTime, 273);
+  assert.deepEqual(source.nodes[234], {op: 'authenticated_source_norm_root',
+    args: ['initialized-mean-positive', receipts['initialized-mean-positive'].roots.fiveMapBounds.v[1]]});
+  assert.deepEqual(source.nodes[192], {op: 'authenticated_source_norm_root',
+    args: ['initialized-mean-positive', receipts['initialized-mean-positive'].roots.temporalBounds.v[1]]});
+  assert.deepEqual(source.nodes[2], {op: 'authenticated_source_norm_root', args: ['hosted-original', 216823]});
+  const checkNodes = expected => {
+    for (const [id, [op, ...args]] of Object.entries(expected)) {
+      assert.deepEqual(source.nodes[id], {op, args});
+    }
+  };
+  assert.equal(source.roots.all['b@0,0,0'], 474);
+  assert.deepEqual(transport.atoms['b@0,0,0'].mean,
+    [{mappedOrder: 0, radiusEnvelopePower: 1, coefficient: '1'}]);
+  checkNodes({
+    474: ['add', 471, 473], 471: ['authenticated_source_norm_root', 'slow-background-atom', 'b@0,0,0'],
+    473: ['multiply', 291, 472], 472: ['multiply', 2, 274], 291: ['exp', 290],
+    290: ['multiply', 5, 9, 289], 289: ['add', 3, 288], 288: ['rational', '2', '2'],
+  });
+  assert.equal(source.roots.all['b@0,1,0'], 485);
+  assert.deepEqual(transport.atoms['b@0,1,0'].mean,
+    [{mappedOrder: 1, radiusEnvelopePower: 1, coefficient: '1'}]);
+  checkNodes({
+    485: ['add', 483, 484], 483: ['authenticated_source_norm_root', 'slow-background-atom', 'b@0,1,0'],
+    484: ['multiply', 309, 480], 480: ['multiply', 2, 276], 309: ['multiply', 299, 308],
+    299: ['inverse', 11], 11: ['exp', 10], 10: ['multiply', 3, 5, 9],
+    308: ['exp', 307], 307: ['multiply', 5, 9, 306], 306: ['add', 3, 305],
+    305: ['rational', '3', '2'],
+  });
+  const boundAt = id => {
     const flat = interned.get(`stage-zero/${id}`);
     assert(Number.isSafeInteger(flat));
     return numerical.value(flat);
-  });
-  const [backgroundValue, meanRadial, meanValue, physical] = originalValues;
+  };
+  const [backgroundValue, meanValue, meanRadial, physical] = [491, 492, 493, 479].map(boundAt);
+  const meanRadialSpatial = N.mul(N.mul(boundAt(16), boundAt(69)), N.add(boundAt(234), boundAt(267)));
+  const normalizedMeanSpatial = N.add(meanValue, meanRadialSpatial);
+  const radialOnly = N.add(backgroundValue, N.mul(physical, normalizedMeanSpatial));
   const magnitudes = [
     ['slow-background', backgroundValue],
-    ['initialized-mean-radial', N.mul(physical, meanRadial)],
     ['initialized-mean-value', N.mul(physical, meanValue)],
+    ['initialized-mean-radial', N.mul(physical, meanRadial)],
   ].map(([name, bound]) => ({name, interval: N.toClosed(bound)}));
   const strictLargestUpper = magnitudes.find(x => magnitudes.every(y =>
     x === y || N.compareEndpoints(x.interval.upper, y.interval.upper) === 1));
+  const spatialUpper = N.toClosed(radialOnly).upper;
+  const spatialUpperComparedToOriginal = N.compareEndpoints(spatialUpper, atoms['b@1,0,0'].upper);
+  assert.ok(spatialUpperComparedToOriginal === -1 || spatialUpperComparedToOriginal === 0);
+  const readFactor = (atom, slow, meanUpper, reciprocalTau0Power) => ({
+    sourceRoot: source.roots.all[atom], slowBackgroundUpper: N.toClosed(boundAt(slow)).upper,
+    normalizedMeanSpatialUpper: N.toClosed(meanUpper).upper, reciprocalTau0Power,
+  });
+  const spatialDirectFactors = {
+    'b@0,0,0': readFactor('b@0,0,0', 471, boundAt(472), [2, 1]),
+    'b@1,0,0': readFactor('b@1,0,0', 491, normalizedMeanSpatial, [4, 1]),
+    // Axial differentiation has neither the radial phase derivative nor the epsilon time inverse.
+    'b@0,1,0': readFactor('b@0,1,0', 483, N.mul(boundAt(2), N.add(boundAt(192), boundAt(234))), [3, 0]),
+  };
   const record = {
-    schema: 'MathScope.N7.InitializedDirectRadialAtomDecomposition/1',
-    status: 'VERIFIED_ORIGINAL_DOMINANT_RADIAL_ATOM_COMPONENTS',
+    schema: 'MathScope.N7.InitializedDirectSpatialAtomDecomposition/1',
+    status: 'DIRECTED_ORIGINAL_SPATIAL_RADIAL_ATOM',
     sourceSHA256, originalAtom: 'b@1,0,0', sourceBoundRoot: 496,
-    sourceRootRoles: {slowBackground: 491, radialMean: 492, meanValue: 493, physicalScaling: 479},
+    sourceRootRoles: {slowBackground: 491, meanValue: 492, radialMean: 493, physicalScaling: 479,
+      temporalMeanRadial: 267, temporalMeanTime: 273, fiveMapMeanSpatial: 234},
     components: magnitudes, largestUpper: strictLargestUpper?.name ?? null,
+    derivativeUpperComparison: N.compareEndpoints(N.toClosed(boundAt(267)).upper, N.toClosed(boundAt(273)).upper),
+    spatialUpper, spatialUpperComparedToOriginal,
+    spatialDirectFactors, dyadicOffsetAboveTau0Band: 2,
     initializedReplaySHA256: sha(JSON.stringify(result, null, 2) + '\n'),
     arithmetic: N.report(), release: 'HOLD',
   };
   await writeFile(diagnostic, JSON.stringify(record, null, 2) + '\n', {flag: 'wx'});
-  console.log(JSON.stringify({status: record.status, largestUpper: record.largestUpper}));
+  console.log(JSON.stringify({status: record.status, largestUpper: record.largestUpper,
+    derivativeUpperComparison: record.derivativeUpperComparison, spatialUpperComparedToOriginal}));
 }

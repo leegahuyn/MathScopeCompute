@@ -1,0 +1,30 @@
+{
+  "status": "CONDITIONAL_ACTUAL_TWO_MODE_POSITIVE_DAMPING_FLOOR",
+  "rows": [
+    {
+      "key": "0:1",
+      "nThetaRoot": 17735985,
+      "Rroot": 17732748,
+      "kRoot": 17732747,
+      "roundedIntegerRoot": 17735983,
+      "roundedBeforeFallbackRoot": 17735981
+    },
+    {
+      "key": "1:1",
+      "nThetaRoot": 17735985,
+      "Rroot": 17732748,
+      "kRoot": 17732747,
+      "roundedIntegerRoot": 17735983,
+      "roundedBeforeFallbackRoot": 17735981
+    }
+  ],
+  "actualLowerBound": "4*epsilon*k^2*|n(w)|^2 >= 4*epsilon*roundedInteger^2/R^2 >= 4*epsilon/Renv^2 = mu > 0.",
+  "reason": "The checked actual n_theta root is roundedInteger/(k R). The original rounded value is an integer; when it is zero, the retained smooth-piecewise fallback is exactly -1 or +1, so |roundedInteger|>=1. On the original annulus R^2=2sX<=4Xb<=Renv^2. The slow R, integer carrier and epsilon are fixed along w.",
+  "fixedPulseC4Bound": "max_|alpha|<=4 ||D^alpha u(t)||_infinity <= F*t*exp(max(A-mu,0)*t)*sum_{j=0}^4 (15*B*t)^j/(j+1)!, with the same F,A,B source sup assumptions.",
+  "conditionalContraction": "If the separately established actual bound A<mu holds, the undamped growth is dominated and ||u(t)||_infinity <= F*(1-exp(-(mu-A)*t))/(mu-A). No such dominance is asserted here.",
+  "scope": "Conditional on the original positive epsilon, nonzero R, admitted annulus/radial envelope, fixed-label source binding and actual zero-data pulse system. Actual A,F,B and A<mu remain unproved; no forced output, final jet or gate closure is claimed.",
+  "graphSHA256": "831120617913e89c5bb60976fb26f58c6714decc301097a08f72ee23233e0a6a",
+  "priorDampingSHA256": "ebae8e28350f3939cc37f97ae1252ce28a118ddb077ed41852e012ace1be1755",
+  "bandGitBlob": "1f1c18a26372c998d8389b6c5138b3c9d3a66f36",
+  "release": "HOLD"
+}

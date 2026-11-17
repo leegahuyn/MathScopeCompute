@@ -78,15 +78,41 @@ node evaluate_initialized_budget.mjs GOAL_NEXT ARITHMETIC_RUNTIME HISTORICAL_INP
 ```
 ### Component bounds for the dominant initialized radial atom
 
-`radial-dominance.json` records the directed component bounds of the pinned
+`direct-spatial-factor.json` binds the directed component bounds of
 stage-zero DAG root #496, the bound for `b@1,0,0`. The root adds #491 (slow
 background) to #479 (physical scaling) times the sum of #492 (initialized
-mean radial derivative) and #493 (initialized mean value). The upper endpoint
-of the scaled #493 contribution strictly exceeds the other two upper
-endpoints. The original 67-atom output retains its existing SHA-256
+mean value) and #493 (initialized mean radial derivative). The mapped orders
+and inverse-radius powers are respectively `(0,3)` and `(1,2)` with
+coefficient `1/2`. The names in the archived `radial-dominance.json` were
+reversed. The upper endpoint of the scaled #493 contribution strictly
+exceeds the other two upper endpoints. The original 67-atom output retains
+its existing SHA-256
 `9dcc5ad21169fe7462bd76f588d994126f0beaef5fdfc4e6ab4657e056371b34`.
-This comparison identifies the largest bound contribution. The annular
-initial energy comparison remains open.
 
-To reproduce it, append a new diagnostic output path as the fifth argument
-to the [stage-zero replay](../../../whole-k-annular-initial/numerical/STAGE_ZERO_NUMERICAL.md).
+For the radial derivative, retain the original spatial #267 and FiveMap
+#234 terms in #276. The old maximum also included the temporal #273. Their
+rounded upper endpoints coincide at the recorded precision. The physical
+factor is exactly `exp[(ell+17)(2+h)log(2)]`. Since the original schedule is
+`tau0=exp[-(ell+15)log(2)]`, split this factor into
+`4^(2+h) tau0^(-2-h)` before multiplying by the positive envelope.
+The direct value and axial derivative have reciprocal powers `1+h` and
+`3/2`, respectively. The axial derivative retains the ordinary temporal
+field's spatial derivative and the FiveMap derivative. Its mean bound
+dispenses with the radial phase derivative and time transport term. The
+source contains an exact cancellation of the two opposite (h) exponents
+for this axial scale.
+
+The new replay splits twelve affected stencil terms, giving 62 positive
+terms in total. The normalized leading mean contribution has exact
+`tau0` exponent zero. The directed bound is strictly lower than the archived
+50-term result and still exceeds the initialized energy budget. Even after
+removing the positive split contributions of the three direct mean atoms
+from the budget computation, the remaining upper envelope exceeds the
+threshold. The largest remaining term contains `A1@2,0,0,0`.
+
+Reproduce the spatial factor by appending a new diagnostic output path as
+the fifth argument to the
+[stage-zero replay](../../../whole-k-annular-initial/numerical/STAGE_ZERO_NUMERICAL.md).
+Then append the spatial-factor receipt as a sixth argument to
+`evaluate_initialized_budget.mjs`. This emits the factorization and
+remaining-envelope comparisons in `initialized-budget-direct.json`.

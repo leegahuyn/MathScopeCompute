@@ -1,0 +1,43 @@
+{
+  "schema": "MathScope.R108.StoredPageVersionReadAccess/1",
+  "observed_utc": "2026-11-17 06:42:03 UTC",
+  "project": 29770,
+  "slug": "v0.3.1.html",
+  "source": "WebsitePublisher versioning.get-page-version read-only integration",
+  "results": [
+    {
+      "target_version": 103,
+      "response": {
+        "success": true,
+        "data": {
+          "success": true,
+          "integration": "versioning",
+          "endpoint": "get-page-version",
+          "result": {
+            "success": false,
+            "error": "Version history is not available on the Free plan. Upgrade to Starter or higher.",
+            "code": 402
+          }
+        }
+      }
+    },
+    {
+      "target_version": 137,
+      "response": {
+        "success": true,
+        "data": {
+          "success": true,
+          "integration": "versioning",
+          "endpoint": "get-page-version",
+          "result": {
+            "success": false,
+            "error": "Version history is not available on the Free plan. Upgrade to Starter or higher.",
+            "code": 402
+          }
+        }
+      }
+    }
+  ],
+  "interpretation": "The outer integration request succeeded, but each nested version-content result failed with code 402; no version content or SHA-256 was returned. No rollback was invoked and its runtime outcome is unknown.",
+  "release": "HOLD"
+}

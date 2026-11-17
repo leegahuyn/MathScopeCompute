@@ -30,11 +30,14 @@ PINS = {
 }
 
 
-def main():
-    parser = ArgumentParser(description=__doc__)
+def read_arguments(description):
+    parser = ArgumentParser(description=description)
     for name in ('workspace', 'repo', 'public-copy'):
         parser.add_argument('--' + name, type=Path, required=True)
-    args = parser.parse_args()
+    return parser.parse_args()
+
+
+def assemble_delta(args, *, parent, parents, label, date, verify, additional_pins=None):
     outputs = args.workspace / 'outputs'
 
     def git(*params):
@@ -56,7 +59,7 @@ def main():
     assert observed == refs and file_sha(args.public_copy) == PUBLIC_SHA
 
     previous = {}
-    for name, pin in PARENTS.items():
+    for name, pin in parents.items():
         package = outputs / name
         assert file_sha(package) == pin, name
         with ZipFile(package) as bundle:
@@ -66,6 +69,50 @@ def main():
     assert status['M3']['accepted'] == 62 and status['jets']['accepted'] == 0
     assert status['M4']['publicReadback']['currentR108'] == 'OPEN'
     assert status['release'] == 'HOLD' and not status['goal_complete']
+    evidence = verify(raw, source)
+    additional_pins = additional_pins or {}
+
+    delta = outputs / f'{label}_Delta_{date}.zip'
+    pending = delta.with_suffix('.zip.tmp')
+    files = {}
+    with ZipFile(pending, 'w', compression=ZIP_DEFLATED, compresslevel=5) as bundle:
+        def add(path, data):
+            assert path not in files
+            bundle.writestr(path, data)
+            files[path] = entry(data)
+
+        for line in git('diff', '--name-status', '--no-renames', parent, head).decode().splitlines():
+            change, path = line.split('\t')
+            assert change in {'A', 'M'} and (path.startswith(CURRENT + '/') or path in additional_pins), path
+            if change == 'M' and path in previous:
+                assert entry(git('show', parent + ':' + path)) == previous[path], path
+            data = git('show', head + ':' + path)
+            if path in additional_pins:
+                assert entry(data)['sha256'] == additional_pins[path], path
+            add(path, data)
+        add('REPORT_KO.md', raw('REPORT_KO.md'))
+        add('STATUS.json', raw('STATUS.json'))
+        add('CHECKPOINT.json', encode({'schema': 'MathScope.GoalEvidenceDelta/1',
+            'parentsInOrder': parents, 'parentCommit': parent, 'deltaCommit': head,
+            'verifiedRemoteRefs': refs, 'priorReadOnlyPublicSnapshotSHA256': PUBLIC_SHA,
+            'filesThatSupersedeParents': sorted(set(files) & set(previous)), 'release': 'HOLD'}))
+        bundle.writestr('SHA256.json', encode(files))
+    with ZipFile(pending) as bundle:
+        assert bundle.testzip() is None and len(bundle.namelist()) == len(files) + 1
+        assert json.loads(bundle.read('SHA256.json')) == files
+        for path, expected in files.items():
+            with bundle.open(path) as stream:
+                assert sha256_stream(stream) == expected['sha256']
+            assert bundle.getinfo(path).file_size == expected['bytes']
+    pending.replace(delta)
+    receipt = {'file': delta.name, 'bytes': delta.stat().st_size, 'files': len(files) + 1,
+               'sha256': file_sha(delta), 'branchHead': head, **evidence, 'verifiedDeltaManifest': True}
+    (outputs / f'{label}_Report_{date}_KO.md').write_bytes(raw('REPORT_KO.md'))
+    (outputs / f'{label}_Receipt_{date}.json').write_bytes(encode(receipt))
+    print(json.dumps(receipt))
+
+
+def verify_evidence(raw, source):
     for path, expected in PINS.items():
         assert entry(raw(path))['sha256'] == expected, path
     radial = source(BUDGET + 'radial-dominance.json')
@@ -93,43 +140,9 @@ def main():
     assert weighted['sourcePins']['projection'] == PINS[FORCED + 'n3-projected-m2-source-c4.json']
     assert weighted['sourcePins']['geometry'] == PINS[FORCED + 'n3-m2-c4-source-geometry.json']
 
-    delta = outputs / f'{LABEL}_Delta_{DATE}.zip'
-    pending = delta.with_suffix('.zip.tmp')
-    files = {}
-    with ZipFile(pending, 'w', compression=ZIP_DEFLATED, compresslevel=5) as bundle:
-        def add(path, data):
-            assert path not in files
-            bundle.writestr(path, data)
-            files[path] = entry(data)
-
-        for line in git('diff', '--name-status', '--no-renames', PARENT, head).decode().splitlines():
-            change, path = line.split('\t')
-            assert change in {'A', 'M'} and path.startswith(CURRENT + '/'), path
-            if change == 'M' and path in previous:
-                assert entry(git('show', PARENT + ':' + path)) == previous[path], path
-            add(path, git('show', head + ':' + path))
-        add('REPORT_KO.md', raw('REPORT_KO.md'))
-        add('STATUS.json', raw('STATUS.json'))
-        add('CHECKPOINT.json', encode({'schema': 'MathScope.GoalEvidenceDelta/1',
-            'parentsInOrder': PARENTS, 'parentCommit': PARENT, 'deltaCommit': head,
-            'verifiedRemoteRefs': refs, 'priorReadOnlyPublicSnapshotSHA256': PUBLIC_SHA,
-            'filesThatSupersedeParents': sorted(set(files) & set(previous)), 'release': 'HOLD'}))
-        bundle.writestr('SHA256.json', encode(files))
-    with ZipFile(pending) as bundle:
-        assert bundle.testzip() is None and len(bundle.namelist()) == len(files) + 1
-        assert json.loads(bundle.read('SHA256.json')) == files
-        for path, expected in files.items():
-            with bundle.open(path) as stream:
-                assert sha256_stream(stream) == expected['sha256']
-            assert bundle.getinfo(path).file_size == expected['bytes']
-    pending.replace(delta)
-    receipt = {'file': delta.name, 'bytes': delta.stat().st_size, 'files': len(files) + 1,
-               'sha256': file_sha(delta), 'branchHead': head, 'initializedJets': 67,
-               'dynamicNaturalCalls': 114, 'projectedBranches': 2, 'verifiedDeltaManifest': True}
-    (outputs / f'{LABEL}_Report_{DATE}_KO.md').write_bytes(raw('REPORT_KO.md'))
-    (outputs / f'{LABEL}_Receipt_{DATE}.json').write_bytes(encode(receipt))
-    print(json.dumps(receipt))
+    return {'initializedJets': 67, 'dynamicNaturalCalls': 114, 'projectedBranches': 2}
 
 
 if __name__ == '__main__':
-    main()
+    assemble_delta(read_arguments(__doc__), parent=PARENT, parents=PARENTS, label=LABEL,
+                   date=DATE, verify=verify_evidence)
