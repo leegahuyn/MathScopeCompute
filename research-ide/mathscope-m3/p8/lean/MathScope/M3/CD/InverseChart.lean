@@ -113,7 +113,77 @@ theorem chart_source_image_exists_unique {s η h : ℝ}
   have hr : originalChartF s Z T h = 0 := chart_full_source_image s η h hs₀
   exact ⟨s, ⟨hs, hr⟩, fun x hx => hm.injOn hx.1 hs (hx.2.trans hr.symm)⟩
 
+/-- Positive source roots with physical time recover the reference image,
+including its closed axial endpoints. -/
+theorem chart_positive_root_recovers_image {s Z T h : ℝ}
+    (hs : 0 < s) (hT : 0 ≤ T) (hr : originalChartF s Z T h = 0) :
+    ∃ η : ℝ, |η| ≤ 1 ∧
+      Z = s ^ ((1 / 2 : ℝ) - h) * η ∧ T = s * (1 - η ^ 2) := by
+  let η := Z / s ^ ((1 / 2 : ℝ) - h)
+  have hd : 0 < s ^ ((1 / 2 : ℝ) - h) := Real.rpow_pos_of_pos hs _
+  have hz : Z = s ^ ((1 / 2 : ℝ) - h) * η := by
+    dsimp only [η]
+    symm
+    field_simp [hd.ne'] <;> ring
+  have hi := chart_full_source_image s η h hs
+  rw [← hz] at hi
+  have ht : T = s * (1 - η ^ 2) := by
+    unfold originalChartF at hr hi
+    linarith
+  have hmul : 0 ≤ s * (1 - η ^ 2) := by rwa [← ht]
+  have hηsq : η ^ 2 ≤ 1 := by
+    by_contra! hn
+    exact (not_lt_of_ge hmul) (mul_neg_of_pos_of_neg hs (by linarith))
+  refine ⟨η, abs_le.mpr ⟨?_, ?_⟩, hz, ht⟩
+  · by_contra! hneg
+    have hprod : 0 < (-1 - η) * (1 - η) :=
+      mul_pos (sub_pos.mpr hneg) (by linarith)
+    nlinarith
+  · by_contra! hpos
+    have hprod : 0 < (η - 1) * (η + 1) :=
+      mul_pos (sub_pos.mpr hpos) (by linarith)
+    nlinarith
+
+/-- The actual open three-quarter label guard implies the closed inverse
+bracket for the reconstructed dyadic scale. -/
+theorem chart_active_band_scale_bracket {s v : ℝ}
+    (hscale : s = (2 : ℝ) ^ v) (hguard : |v| < 3 / 4) :
+    s ∈ Set.Icc (1 / 2 : ℝ) 2 := by
+  obtain ⟨hl, hu⟩ := abs_lt.mp hguard
+  have hlow : (2 : ℝ) ^ (-1 : ℝ) ≤ (2 : ℝ) ^ v :=
+    Real.rpow_le_rpow_of_exponent_le (by norm_num) (by linarith)
+  have hhigh : (2 : ℝ) ^ v ≤ (2 : ℝ) ^ (1 : ℝ) :=
+    Real.rpow_le_rpow_of_exponent_le (by norm_num) (by linarith)
+  rw [Real.rpow_neg_one, ← hscale] at hlow
+  rw [Real.rpow_one, ← hscale] at hhigh
+  exact ⟨by simpa only [one_div] using hlow, hhigh⟩
+
+/-- Scaling Z and T together transports the original axial coordinate and
+selects the unique registered slow root for the new admitted label. -/
+theorem chart_joint_scale_transports_root {s Z T h c : ℝ}
+    (hs : 0 < s) (hc : 0 < c) (hT : 0 ≤ T) (hr : originalChartF s Z T h = 0)
+    (hrow : c * s ∈ Set.Icc (1 / 2 : ℝ) 2) (h₀ : 0 < h) (h₁ : h < 1 / 16) :
+    ∃ η : ℝ, |η| ≤ 1 ∧
+      c ^ ((1 / 2 : ℝ) - h) * Z = (c * s) ^ ((1 / 2 : ℝ) - h) * η ∧
+      c * T = (c * s) * (1 - η ^ 2) ∧
+      originalChartF (c * s) (c ^ ((1 / 2 : ℝ) - h) * Z) (c * T) h = 0 ∧
+      (∃! x : ℝ, x ∈ Set.Icc (1 / 2 : ℝ) 2 ∧
+        originalChartF x (c ^ ((1 / 2 : ℝ) - h) * Z) (c * T) h = 0) := by
+  obtain ⟨η, hη, hz, ht⟩ := chart_positive_root_recovers_image hs hT hr
+  have hz' : c ^ ((1 / 2 : ℝ) - h) * Z = (c * s) ^ ((1 / 2 : ℝ) - h) * η := by
+    rw [hz, Real.mul_rpow hc.le hs.le]
+    ring
+  have ht' : c * T = (c * s) * (1 - η ^ 2) := by rw [ht]; ring
+  refine ⟨η, hη, hz', ht', ?_, ?_⟩
+  · rw [hz', ht']
+    exact chart_full_source_image (c * s) η h (mul_pos hc hs)
+  · rw [hz', ht']
+    exact chart_source_image_exists_unique hrow hη h₀ h₁
+
 #print axioms chart_bracket_derivative
 #print axioms chart_source_image_exists_unique
+#print axioms chart_positive_root_recovers_image
+#print axioms chart_active_band_scale_bracket
+#print axioms chart_joint_scale_transports_root
 end
 end MathScope.M3.CD
