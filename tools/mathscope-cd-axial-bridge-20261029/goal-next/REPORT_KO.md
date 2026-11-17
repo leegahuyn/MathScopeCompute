@@ -10,6 +10,14 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation38
+
+- **VERIFIED / OPEN · 첫 보정 주기.** 고정된 원본 직교성 증명기를 적용한 GitHub 실행이 22,032,001개 노드까지 진행했고, Signed 후보를 조립한 뒤 원본 81개 라벨 감사에서 중단됐다. 기존 감사기는 원본의 문자열 평탄 접합 규칙에 불리언 값을 요구했다. 보관된 두 원본 패치를 Git blob으로 고정해 실제 평탄 접합 규칙, native 필드 핸들과 가드 동일성을 검사하도록 격리 실행에 적용했다. 실제 유리식 직교성, 81개 라벨과 native 레지스트리 회귀를 실행하는 GitHub 준비 단계는 통과했다. 전체 첫 주기는 진행 중이다. [중단된 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43376435788) · [새 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44029534187).
+- **VERIFIED / CONDITIONAL · 원고 (10.13)의 환형 보정 계수 한도.** 원본 축방향 cutoff 두 개의 곱과 Cartesian curl을 유지하고 보정 차수 1–4의 충분한 계수 한도 \(2^{-36}X_b^{-2}\tau_0^{-jh/10}\)를 방향 구간으로 계산했다. 각 보정이 자기 한도를 충족하고 초기장이 별도 예산을 충족하면, 겹치는 지지까지 포함한 전체 환형 에너지 노름은 삼각부등식으로 필요한 \(2^{-21}S_R\) 이하가 된다. 현재 \(K\)의 상단값은 네 한도를 모두 초과했다. 실제 포텐셜 공간 C2와 직접 속도 공간 C1 계수, 초기장 비교, 전체 에너지 결함 및 독립 정밀화는 OPEN이다. [정확한 식과 재현](final67/energy-1013-sharp/correction-budget/README.md).
+- **VERIFIED / OPEN · 환형 초기장의 상계.** 원본 초기장 67개 구간 중 필요한 실제 미분을 Cartesian stencil의 비영 항 50개에 적용했다. \(\tau_0\)의 정확한 지수를 결합해 비교했으나 기존 초기장 구간에서 유도한 상단값이 충분조건을 넘었다. 가장 큰 정규화 stencil 상단은 직접 속도 원본 입력 `b@1,0,0`과 두 가로 좌표의 곱에서 나왔다. 실제 초기장 에너지의 예산 충족 여부는 OPEN이다. [초기장 수치 근거](final67/energy-1013-sharp/correction-budget/annular-initialized-budget.json).
+
+M3 62/64, 최종 jets 0/67, 운영 R1-08과 일반 Y 재귀 OPEN, RELEASE HOLD.
+
 ## Continuation37
 
 - **VERIFIED · 원고 (10.13)의 중심부 예산.** 원본 선도항을 실제 중심부에 한정했고 \(\tau_0\)의 지수를 \(a/2+bh\)로 정확히 계산한 뒤 공통 스케일을 약분했다. 중심부에 대해 \(2(E_{\rm inner}+D_{\rm inner})<2^{-22}S_R\)을 얻었다. 독립 Python 검산에서 22개 입력과 속도 8항, 기울기 36항, 외력 99항의 스케일을 확인했다. 열 외부 기여까지 포함하면 원고 끝단 비교를 위한 충분조건은 실제 환형장에 대해 \(2(E_{\rm annular}+D_{\rm annular})\le2^{-21}S_R\)이다. 2–4차에는 필요한 포텐셜 공간 C2 및 방위각 성분 C1의 차수별 스케일을 계산했고 실제 계수 구간은 OPEN이다. [중심부 재현](final67/energy-1013-sharp/README.md) · [후속 차수 스케일](final67/energy-1013-sharp/late-annular/README.md).
