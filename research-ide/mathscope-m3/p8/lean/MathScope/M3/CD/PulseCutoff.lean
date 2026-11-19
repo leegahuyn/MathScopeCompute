@@ -2,6 +2,8 @@ import Mathlib
 
 namespace MathScope.M3.CD
 
+open MeasureTheory
+
 /-- The two exact terms left by multiplication of the principal forced
 equation by a scalar cutoff. The four inputs are the original derivative,
 linear term, force and pressure, before multiplication by the cutoff. -/
@@ -232,6 +234,74 @@ theorem forced_tangent_energy_growth
   have h := forced_shear_energy_bound u₀ u₁ u₂ a b rate hrate hshear
   nlinarith
 
+/-- A radial characteristic primitive has a local value bound. The source
+FTC identity and its uniform bound along the characteristic are inputs. -/
+theorem mean_radial_characteristic_primitive_bound
+    (g : ℝ → ℝ) (a r M psi : ℝ)
+    (ha : 0 ≤ a) (har : a ≤ r) (hr : 0 < r) (hM : 0 ≤ M)
+    (hbound : ∀ t ∈ Set.Ioc a r, |g t| ≤ M)
+    (hprimitive : psi = (∫ t in a..r, t * g t) / r) :
+    |psi| ≤ M * r / 2 ∧ |psi / r| ≤ M / 2 := by
+  have hint : IntervalIntegrable (fun t : ℝ => t * M) volume a r :=
+    (continuous_id.mul continuous_const).intervalIntegrable a r
+  have hnorm := intervalIntegral.norm_integral_le_of_norm_le
+    (a := a) (b := r) (f := fun t => t * g t) (g := fun t => t * M) har
+    (Filter.Eventually.of_forall (fun t ht => by
+      have ht₀ : 0 ≤ t := ha.trans ht.1.le
+      rw [Real.norm_eq_abs, abs_mul, abs_of_nonneg ht₀]
+      exact mul_le_mul_of_nonneg_left (hbound t ht) ht₀)) hint
+  have hid : (∫ t in a..r, t) = (r ^ 2 - a ^ 2) / 2 := by
+    have hp : (∫ t in a..r, t ^ 1) = (r ^ 2 - a ^ 2) / 2 := by
+      rw [integral_pow]
+      norm_num
+    simpa only [pow_one] using hp
+  rw [intervalIntegral.integral_mul_const, hid, Real.norm_eq_abs] at hnorm
+  have hupper : |∫ t in a..r, t * g t| ≤ M * r ^ 2 / 2 := by
+    have hnonneg := mul_nonneg hM (sq_nonneg a)
+    nlinarith
+  have hpsi : |psi| ≤ M * r / 2 := by
+    rw [hprimitive, abs_div, abs_of_pos hr]
+    apply (div_le_iff₀ hr).2
+    nlinarith
+  refine ⟨hpsi, ?_⟩
+  rw [abs_div, abs_of_pos hr]
+  apply (div_le_iff₀ hr).2
+  nlinarith
+
+/-- The physical potential derivative identities eliminate its separate
+first-derivative norm from the radial cutoff commutator. -/
+theorem mean_cutoff_radial_derivative
+    (C Cz betaR gamma psi psiR r : ℝ)
+    (hpsi : psiR = gamma - psi / r) :
+    C * betaR - Cz * psiR = C * betaR - Cz * gamma + Cz * psi / r := by
+  rw [hpsi]
+  ring
+
+theorem mean_cutoff_axial_derivative
+    (C Cz Czz beta betaZ psi psiZ : ℝ)
+    (hpsi : psiZ = -beta) :
+    C * betaZ + Cz * beta - Czz * psi - Cz * psiZ =
+      C * betaZ + 2 * Cz * beta - Czz * psi := by
+  rw [hpsi]
+  ring
+
+/-- On the radial plateau the exact potential cutoff retains the mean
+divergence equation. Both source curl and source divergence are explicit. -/
+theorem mean_cutoff_divergence
+    (C Cz beta betaR gamma gammaZ psi psiR r : ℝ)
+    (hdiv : betaR + beta / r + gammaZ = 0)
+    (hpsi : gamma = psiR + psi / r) :
+    (C * betaR - Cz * psiR) + (C * beta - Cz * psi) / r +
+      C * gammaZ + Cz * gamma = 0 := by
+  calc
+    _ = C * (betaR + beta / r + gammaZ) +
+          Cz * (gamma - psiR - psi / r) := by ring
+    _ = 0 := by rw [hdiv, hpsi]; ring
+
+#print axioms mean_radial_characteristic_primitive_bound
+#print axioms mean_cutoff_radial_derivative
+#print axioms mean_cutoff_axial_derivative
+#print axioms mean_cutoff_divergence
 #print axioms forced_tangent_energy_cancellation
 #print axioms forced_shear_energy_bound
 #print axioms forced_tangent_energy_growth
