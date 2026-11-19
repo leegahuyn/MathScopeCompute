@@ -10,6 +10,10 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation63
+
+- **VERIFIED / CONDITIONAL · 실제 슬랩으로 제한한 원본 C8 배경장.** 원본 느린 미분 행 330개와 선도 입력 90개, 차트 입력 25,299개를 대조했다. 실제 cutoff는 상부 N3에서 3차 이상, 하부 N4에서 4차 이상을 평탄하게 소거한다. 살아 있는 계수와 기존 13개 피연산자를 합친 지역 상계는 \(\exp(H/2^{128})/(64X_b^2)\)보다 작다. 원래 전역 최대값과 선택기는 보존했다. 고정 N4 대표점의 전체 4차 항을 쓰는 경우의 상계와 완전한 Forced·Signed·평균장 상계에 대한 적용은 OPEN이다. [원본 국소 상계와 재현](final67/local-background-c8/README.md).
+
 ## Continuation62
 
 - **VERIFIED / OPEN · 원본 Primary 상계를 가르는 C8 입력.** 원본 최대값의 14개 피연산자 중 13개의 상계는 여섯 비교 기준 각각의 \(1/64\)보다 작다. 배경 C8 `#14220496`의 구간만 기준을 가로지른다. 그 안에서 1–3차 상계가 같은 여유를 만족하며 원본 전역 유한합의 5–7차 상계에는 큰 값이 남는다. 실제 고정 슬랩에서 허용되는 계수와 방사·대표점 영역을 결속하는 증명이 필요하다. [원본 수치 비교](final67/active-n3-cap-transport/PRIMARY_NORM_OPERANDS.md).
