@@ -10,6 +10,11 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation46
+
+- **VERIFIED · 같은 원본 계열의 첫 보정 작성 완료.** GitHub 실행 44528954587이 이전 Temporal 옵션 오류를 통과했다. 원래 Forced 805개 검사, 평균 응력 18개 검사와 Signed 1,620개 행 뒤에 원래 두 Temporal 역함수, 새 FiveMap, 전체 3차원 물리 잔차를 작성했다. 최종 원본 그래프는 22,153,782개 노드다. 이전에 검증한 세 단계의 값·인덱스, 29개 원본 소스 파일 pin과 새 실행 로그를 별도 Python 검사로 다시 대조했다. [GitHub 원본 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44528954587) · [로그와 재현](primary-forced-join/active-n3-c5-binding/hosted-44528954587/README.md).
+- **OPEN · 같은 그래프의 독립 잔차 환원.** 현재장의 직접 잔차와 분해 잔차 차이 세 개 및 발산 차이 한 개의 노드가 작성됐다. 해당 네 노드의 정확 대수적 환원, 전체 물리 잔차의 수치 구간, 후속 보정과 최종장 구간은 별도 검증이 필요하다. GitHub 결과의 전체 원본 그래프 독립 재검사 단계는 생략된 것으로 기록됐다. M3 62/64, 최종 jet 0/67과 RELEASE HOLD를 유지한다. [대조 결과](primary-forced-join/active-n3-c5-binding/hosted-44528954587/verified-readback.json).
+
 ## Continuation45
 
 - **VERIFIED / CONDITIONAL · 더 좁은 원본 초기 평균장 상계.** GitHub에서 검증한 중첩 지수 합 상계를 적용하고, 원본 고정 입력 생산기의 `Bnorm=exp(log(2B)/512)`를 같은 임곗값으로 재실행했다. 원본 #300170 상계, 초기 평균장의 값·1차 미분 9개 상계와 cutoff를 거친 평균장 에너지 상단이 각각 작아졌다. 42개 공분산 입력에 원본 작은 계수를 보존했고, Temporal 이차항과 축방향 cutoff 교환항을 포함했다. 정확 유리수 독립 대조에서 새 에너지 상단은 이전보다 낮았으며 배정 예산보다 높았다. 이 계산은 원본 해석학적 입력 상계와 고정 차트를 전제로 한다. N7-06과 이후 보정이 들어간 최종장 구간은 OPEN이다. [산술 코드와 대조](final67/energy-1013-sharp/correction-budget/spatial-gauge/mean-deep-exponential/README.md).
