@@ -127,7 +127,6 @@ theorem source_ns_mode_defect (j : Jet)
     j.X * L j * (sourceNs j + 2 * j.Ux) = Cz j := by
   dsimp only [sourceNs, Cz, Ns, axialMoment, W, A, D, L, delta]
   field_simp [hX, hL]
-  ring
 
 end
 end MathScope.M3.CD.SourceNaturalFirstIntegrals
