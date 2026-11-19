@@ -10,6 +10,10 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation48
+
+- **VERIFIED / CONDITIONAL · 국소화한 원본 느린 초기 배경의 에너지 상계.** 원래 cutoff와 Cartesian 속도·기울기 식에서 정확한 시간 스케일을 먼저 결합했다. 양의 항 360개와 영 항 58개를 독립 재생했다. 남은 시간 지수는 `0,h,2h,3h,4h,5h`여서 원본 시간 구간에서 해당 인자는 모두 1 이하이다. 원본 느린 스칼라 상계와 차트 조건 아래 계산된 에너지 상단이 `2^-28 S_R` 하단보다 작다. 초기 평균장과 함께 두 초기 기여분의 충분조건이 확보됐으며, 초기 파동과 이후 활성 보정은 OPEN이다. [기호·수치 재현](final67/energy-1013-sharp/correction-budget/spatial-gauge/slow-coupled-source/README.md).
+
 ## Continuation47
 
 - **VERIFIED / CONDITIONAL · 초기 평균장 에너지의 배정 예산 충족.** 4,456,994개 원본 노드에서 공통 밴드 임곗값을 확인하고, 초기 평균장 그래프의 안정화 상수와 방사 미분 상수를 같은 작은 매개변수와 결합했다. 원본 양의 산술 DAG의 정확한 차수 상단은 각각 187과 6이다. 이 결합으로 cutoff curl과 첫 미분을 포함한 초기 평균장 에너지 상계가 (2^{-32}S_R) 아래로 내려갔다. 원본 해석학적 상계와 고정 차트가 전제다. 느린 초기 배경, 초기 파동과 실제 활성 보정은 별도 계산이 남아 있다. [GitHub Lean](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44543956526).
