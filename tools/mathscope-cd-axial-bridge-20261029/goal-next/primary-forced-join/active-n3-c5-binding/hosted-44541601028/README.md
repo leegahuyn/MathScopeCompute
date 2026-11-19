@@ -20,6 +20,10 @@ expressions whenever their shared native source operands are defined
 and the ten recorded denominator values are nonzero on the original
 admitted chart. This identity leaves actual residual size, supported
 source regularity, quantitative closure, and final jets OPEN.
+The [denominator audit](domains/README.md) proves positivity of all ten
+under that original chart and ordinary source denotation. It also
+encloses the original mean normalization integral by exact directed
+rational sums.
 
 Run the verifier one directory up, with the original pinned runtime
 files and a fresh output. `SOURCE_FILE` parameters are the full PDE
