@@ -10,6 +10,14 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation80
+
+- **VERIFIED.** 같은 활성 N3 원본의 첫 Forced 20개 모드와 Signed 10개 템플릿에서 실제 파동 curl을 독립 재생했다. Forced에서 제거한 초기 파동 계수 60개, 일치하는 원래 가드 비교 210개, 162개 원래 행에서 실제 lift 인자 1,620개, 후보 curl에 들어가는 아홉 기울기 슬롯을 확인했다. 동결한 방사·축·각도 배율 정리 3개를 GitHub Lean에서 컴파일했다. [파동 재현](primary-forced-join/active-n3-c5-binding/live-wave-gauge/README.md) · [Lean 로그](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44604053598).
+- **CONDITIONAL.** 양의 반경, 원본이 허용한 고정 네이티브 차트의 열린 분기, 원래 평균 적분의 정칙성 아래 실제 첫 보정의 세 전체 curl 차 `#22154926`, `#22154928`, `#22154930`가 모두 정확히 0이다. 근접 복사본·레이블·팔레트 차이는 해당 분기에서 고정했다. 경계 도함수 접합과 전 영역 가중 상계는 OPEN이며 바깥 cutoff 미분항은 남는다.
+- **VERIFIED.** N4의 원본 양의 반경 첫 전개 호출을 추가로 71개 검사해 지정된 유한 범위 전체를 112/112로 닫았다. 1,319,012개 노드에서 새 자연급수 인자 15,000개, 재사용 인자 9,651개, 명시적 native 프레임 25,125개를 검사했다. 원본 허용 좌표·적분·분기 안에서 이 자연급수 인자는 모두 \(0\le Y<5\)이다. native 정의 본문, 임의 재귀와 무한극한은 OPEN이다. [N4 코드와 결과](y-higher-flow/n4-first-ordinary-112/README.md).
+- **VERIFIED.** 실제 첫 FiveMap 성분의 Cartesian 속도는 각방향 차수 1까지, 공간 기울기는 차수 2까지 포함하면 각방향 꼬리가 0이다. 네 점 각 격자의 성분 앨리어싱 편차와 그 전체 Frobenius 합에서의 소거를 재현했다. 다섯 점 격자는 개별 성분 제곱의 각 평균도 정확히 적분한다. 전체 최종장의 네 정밀화 비교는 0/4다. [Fourier 증거와 재현](final67/energy-1013-sharp/correction-budget/spatial-gauge/active-n3-five-map-fourier/README.md).
+- **OPEN.** 실제 원본 첫 보정의 수치 가중 상계와 후속 보정, N7-06과 N8-05, 최종 jets 0/67, 운영 R1-08과 전체 RELEASE HOLD는 기존 판정이다.
+
 ## Continuation79
 
 - **VERIFIED.** 활성 N3 원본 전체 방사 적분 `#22151951`에서 두 FiveMap 범프, 실제 반지름 바인더, 고정 양끝과 원본 차트 bracket \([1/2,2]\)를 결속했다. 계수는 \((\ell,Z,T)\)에만 의존한다. 원본 shell의 62개 노드와 같은 출처의 보관 N1을 다시 대조했다. [실제 적분과 코드](primary-forced-join/active-n3-c5-binding/whole-five-map-moment/README.md).
