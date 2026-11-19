@@ -1,4 +1,4 @@
-import Mathlib.Data.Real.Basic
+import Mathlib.Basic.Real.Basic
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Ring
 
@@ -127,7 +127,7 @@ theorem source_n1_seven_flux_with_defects (j : Jet)
     H, Hx, Q, Qx, lastFluxX, lastFluxXE,
     T, Z, Tbar, Zbar, a, b, c, A, D, L, delta]
   field_simp [hL]
-  <;> ring
+  ring
 
 /-- Source stream identities, rather than moment cancellation, must remove
 both distinct ordered-pair defects. -/
