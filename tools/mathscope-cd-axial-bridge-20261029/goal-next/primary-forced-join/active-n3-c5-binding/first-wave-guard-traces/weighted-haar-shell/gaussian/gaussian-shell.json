@@ -1,0 +1,241 @@
+{
+  "status": "VERIFIED_SOURCE_CRAMER_AND_LOGARITHMIC_SHELL_TRANSFER_CONDITIONAL_HAAR_WEIGHT",
+  "inputsSHA256": {
+    "manifest": "8468c8e0e357d60130e9a467fd709b37c5e689a44aeebe7e3c3e91741aa6aa9a",
+    "registry": "e1e692f0b684199d7d7c1ab9e4e434aba9472329152b5d7533067313ef507f03",
+    "shell": "5fe379bdc734b5f1c17248bd4ad5b879afa19206e15d74a6f29204846cec8308",
+    "target": "75b0bb821dc1a486ced5d88176faffe63645d73534366f11bd1708d39377e25f",
+    "weightSource": "d3713e0a3f1cd17404e2afb23da20c4b32e9e840445eed53ce2849ecd200d240",
+    "targetSource": "6fca53620e45a839868d094a1425ee0071ec4ca21c16bff77476d8be2f32e38a",
+    "familySource": "7fd3ec07b567af86f84df7a1b789a5a57366186d4e8c26c2a4a35dc5948c5b75"
+  },
+  "registeredSourceSHA256": "faa23696dd592dd83487e842d775e41072159e6d8377a69f2b93650e5839ee96",
+  "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+  "targetBindings": {
+    "H": [
+      [
+        17733407,
+        17733739
+      ],
+      [
+        17733410,
+        17733742
+      ]
+    ],
+    "HIntegrals": [
+      {
+        "root": 17733407,
+        "integral": 17733406,
+        "integrand": 17733405,
+        "binder": 17732751,
+        "limits": [
+          0,
+          17733029
+        ]
+      },
+      {
+        "root": 17733739,
+        "integral": 17733738,
+        "integrand": 17733737,
+        "binder": 17732751,
+        "limits": [
+          0,
+          17733029
+        ]
+      },
+      {
+        "root": 17733410,
+        "integral": 17733409,
+        "integrand": 17733408,
+        "binder": 17732751,
+        "limits": [
+          0,
+          17733029
+        ]
+      },
+      {
+        "root": 17733742,
+        "integral": 17733741,
+        "integrand": 17733740,
+        "binder": 17732751,
+        "limits": [
+          0,
+          17733029
+        ]
+      }
+    ],
+    "determinant": 17733794,
+    "targetScale": 17732886,
+    "Tbar": [
+      {
+        "component": "theta",
+        "baseNativeSlot": 32017,
+        "baseBody": 17732694,
+        "formalArguments": [
+          4756,
+          2
+        ],
+        "actualArguments": [
+          17732770,
+          17732775
+        ],
+        "T0": 17733782,
+        "Tbar": 17733783
+      },
+      {
+        "component": "z",
+        "baseNativeSlot": 32018,
+        "baseBody": 17732695,
+        "formalArguments": [
+          4756,
+          2
+        ],
+        "actualArguments": [
+          17732770,
+          17732775
+        ],
+        "T0": 17733789,
+        "Tbar": 17733790
+      }
+    ],
+    "radiiAndTargetArguments": {
+      "R": 17732748,
+      "s": 17732766,
+      "X": 17732770,
+      "eta": 17732775,
+      "sBracket": [
+        "1/2",
+        "2"
+      ]
+    },
+    "actualRadicands": [
+      17733801,
+      17733805
+    ],
+    "actualSquareRoots": [
+      17733826,
+      17733827
+    ],
+    "cramerIdentity": "H*y=Tbar (both checked with all matrix denominators on admitted domain)"
+  },
+  "derivativeInventory": [
+    {
+      "pureNormalOrder": 0,
+      "TbarOrders": [
+        0
+      ],
+      "LeibnizCoefficients": [
+        1
+      ]
+    },
+    {
+      "pureNormalOrder": 1,
+      "TbarOrders": [
+        0,
+        1
+      ],
+      "LeibnizCoefficients": [
+        1,
+        1
+      ]
+    },
+    {
+      "pureNormalOrder": 2,
+      "TbarOrders": [
+        0,
+        1,
+        2
+      ],
+      "LeibnizCoefficients": [
+        1,
+        2,
+        1
+      ]
+    },
+    {
+      "pureNormalOrder": 3,
+      "TbarOrders": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "LeibnizCoefficients": [
+        1,
+        3,
+        3,
+        1
+      ]
+    }
+  ],
+  "envelope": {
+    "original": "zeta=exp(-t1^2/log(X/Xa)^2-4/log(Xb/X)^2)",
+    "inner": "x=log(X/Xa), a=t1^2, b=4",
+    "t1OriginalParameter": 3612,
+    "outer": "x=log(Xb/X), a=4, b=t1^2",
+    "width": "width=log(Xb/Xa), opposite distance width-x",
+    "collar": "p*d^2+2*b*(d/(width-d))^3<=2*a; sufficient d<=min(1,width/2,a/(p+1),width*a/(16*(a+b)))",
+    "movingPhysicalLimits": "R_a=sqrt(2*s*Xa), R_b=sqrt(2*s*Xb); fixed alpha=sqrt(Xa), beta=2*sqrt(Xb)",
+    "physicalDistanceMaps": "inner R_x=R_a exp(x/2); outer R_x=R_b exp(-x/2); absolute derivative R_x/2",
+    "radialJacobian": "original (R_x/R_d)^w*(R_x/2); w=2 or 1 for the respective actual primitive",
+    "innerComparison": "C*zeta(d)*d^(-p) * R_d/(w+1) * (1-exp(-(w+1)*d/2))",
+    "outerComparison": "C*zeta(d)*d^(-p) * R_d/(w+1) * (exp((w+1)*d/2)-1)",
+    "condition": "Need admitted weighted Haar residual and zero exterior on original envelope, ordinary change of variable and integrability. Both Gaussian factors are retained."
+  },
+  "exactRationalControls": {
+    "weightedCollarArithmetic": [
+      {
+        "a": "1/65",
+        "b": "4",
+        "p": "18",
+        "width": "3",
+        "safeDistance": "1/1392",
+        "collarInequalityLeft": "72773720559/7833852766000000"
+      },
+      {
+        "a": "4",
+        "b": "1/65",
+        "p": "18",
+        "width": "3",
+        "safeDistance": "65/348",
+        "collarInequalityLeft": "3964432398875/6312974835992"
+      },
+      {
+        "a": "1/81",
+        "b": "4",
+        "p": "0",
+        "width": "9/5",
+        "safeDistance": "9/26000",
+        "collarInequalityLeft": "8/140526895599"
+      }
+    ],
+    "exactCylindricalRadialMass": [
+      {
+        "w": 0,
+        "innerMass": "3/5",
+        "outerMass": "3/4"
+      },
+      {
+        "w": 1,
+        "innerMass": "27/50",
+        "outerMass": "27/32"
+      },
+      {
+        "w": 2,
+        "innerMass": "61/125",
+        "outerMass": "61/64"
+      }
+    ],
+    "outOfShellNegativeControlAtMovingRadius2WithFixedLower1": {
+      "1": "3/4",
+      "2": "7/12"
+    }
+  },
+  "remaining": [
+    "The actual Haar E values do not receive an estimate from this transform alone.",
+    "Weight transport to y requires the same admitted H inverse derivatives and directed Tbar estimates. Exact Cramer identity attaches the operands.",
+    "Mixed moving-endpoint traces and actual total energy or final jets."
+  ],
+  "finalJets": 0,
+  "release": "HOLD"
+}

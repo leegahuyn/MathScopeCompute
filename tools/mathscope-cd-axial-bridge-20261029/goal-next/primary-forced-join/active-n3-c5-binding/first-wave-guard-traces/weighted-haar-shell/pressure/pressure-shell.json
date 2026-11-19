@@ -1,0 +1,191 @@
+{
+  "status": "VERIFIED_ACTUAL_AXIAL_PRESSURE_OPERANDS_CONDITIONAL_COMPACT_COVARIANCE_PULLBACK",
+  "pins": {
+    "manifest": "8468c8e0e357d60130e9a467fd709b37c5e689a44aeebe7e3c3e91741aa6aa9a",
+    "pressure": "6ea6cb85cddd54b0421203e8fc37d24bdfcb8d3c6e62f78c5dada3dab8bd0c07",
+    "equations": "2f44315a940fc959f1c86c2a8fd5b1a252521cbb8e2565dc42fc07b139773d76",
+    "shell": "5fe379bdc734b5f1c17248bd4ad5b879afa19206e15d74a6f29204846cec8308"
+  },
+  "actual": {
+    "axialResidualPressureArm": 22000444,
+    "pZAtBoundRadius": 22000443,
+    "epsilon": 17732744,
+    "leftAndWholeZ": [
+      22000436,
+      22000440
+    ],
+    "sameZIntegrand": 22000435,
+    "wholePressureBeforeZ": 21999414,
+    "chi": 17744394,
+    "chiZ": 17744392,
+    "fixedLimits": [
+      17743711,
+      17743713
+    ],
+    "boundEvaluationRadius": 17743710,
+    "rhoPZ": 21728856,
+    "PAndPZApplications": {
+      "[0, 0, 0]": 21728564,
+      "[0, 1, 0]": 21728766
+    },
+    "rhoAndDerivativeSupportAtoms": [
+      21728833,
+      21728846
+    ],
+    "rawGrNative": "coupled-expression:500",
+    "rawGrBody": 21728512,
+    "grZAtShiftedPulse": 22000434,
+    "covarianceArms": [
+      {
+        "root": 21728232,
+        "field": "rr",
+        "orders": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "root": 21728385,
+        "field": "thetatheta",
+        "orders": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "root": 21728489,
+        "field": "rr",
+        "orders": [
+          1,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "root": 21728491,
+        "field": "rr",
+        "orders": [
+          0,
+          0,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "root": 21728493,
+        "field": "rr",
+        "orders": [
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      },
+      {
+        "root": 21728503,
+        "field": "rz",
+        "orders": [
+          0,
+          1,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "translationIndependence": "Both actual torus shifts are translations independent of slow Z and T and torus Y.",
+    "exteriorEndpointValues": "Unauthenticated until the original zero extension is proved."
+  },
+  "firstForcedCovarianceCoefficientOrders": {
+    "originalFirstForcedIncrementCoefficientFamilies": [
+      "a1",
+      "f1",
+      "f2"
+    ],
+    "directRolesPerFamily": [
+      [
+        "r",
+        "R",
+        1
+      ],
+      [
+        "r",
+        "value",
+        0
+      ],
+      [
+        "theta",
+        "R",
+        1
+      ],
+      [
+        "theta",
+        "Z",
+        1
+      ],
+      [
+        "theta",
+        "value",
+        0
+      ],
+      [
+        "z",
+        "R",
+        1
+      ],
+      [
+        "z",
+        "Z",
+        1
+      ],
+      [
+        "z",
+        "value",
+        0
+      ]
+    ],
+    "additionalPressureRolesPerFamily": [
+      [
+        "r",
+        "Z",
+        1
+      ],
+      [
+        "r",
+        "Z",
+        2
+      ],
+      [
+        "z",
+        "Z",
+        2
+      ]
+    ],
+    "directAndPressureLabelledRolesAcrossTenCharts": 330
+  },
+  "reduction": {
+    "collar": "chi is locally constant and chi_Z=0. On the retained short collar, rho and rho_Z are zero. The two exact pressure integrals use identical inner gr_Z-rhoP_Z and fixed outer limits.",
+    "translation": "Normalized torus Haar commutes with the actual shift, which is independent of Z. Ordinary integration under Z and compact exterior hypotheses remain explicit.",
+    "products": "g=Haar(gr) has covariance arm -dR Wrr + (Wthetatheta-Wrr)/R - epsilon*dZ Wrz, where each W is the same auxiliary mean.",
+    "bothSigns": "Inner pZ contribution is integral from the fixed lower end to R; outer pZ is minus integral from R to fixed upper end. The radial derivative Wrr_RZ yields -Wrr_Z(R) for either side if exterior endpoint value is zero.",
+    "remainingCovarianceDerivativeRoles": [
+      "Wrr_Z",
+      "Wthetatheta_Z",
+      "Wrz_ZZ"
+    ],
+    "transfer": "The short integral retains original zeta if these actual roles admit their weighted estimates, using zero extension on the fixed envelope and the original Gaussian endpoint lemma.",
+    "separate": "Complete gr also has initialized mean, background and viscous terms. They retain independent weight obligations. No numerical pressure value is evaluated."
+  },
+  "finalJets": 0,
+  "release": "HOLD"
+}

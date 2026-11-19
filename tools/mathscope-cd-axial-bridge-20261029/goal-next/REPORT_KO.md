@@ -10,6 +10,19 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation84
+
+- **VERIFIED.** 원본 Signed의 두 진폭 제곱값에 대해 실제 펄스 적분 네 개, 목표 함수의 형식·실제 인자, 행렬식 분모를 보존해 $Hy=\bar T$를 대조했다. 같은 원본의 방사 좌표, $t_1$, 양끝 Gaussian 및 고정 적분 끝점을 결속했다. [Gaussian 및 원본 진폭](primary-forced-join/active-n3-c5-binding/first-wave-guard-traces/weighted-haar-shell/gaussian/README.md).
+
+- **VERIFIED / CONDITIONAL.** 첫 Forced 공분산 본문 60개와 보조각 Haar 잔차의 직접 항 10개를 검증했다. 원본 파동 계수 상계가 주어지면 직접 공분산 증분은 $\zeta$를 유지한다. 축방향 압력 `#22000443`의 실제 두 순서 적분, cutoff 곱미분, 정규화 범프와 $g_r$ 공분산 인자 여섯 개를 대조했다. 원본 FTC와 외부 영연장 아래 압력의 공분산 성분에는 $W_{rr,Z}$, $W_{\theta\theta,Z}$, $W_{rz,ZZ}$의 가중 상계가 필요하다. [공분산](primary-forced-join/active-n3-c5-binding/first-wave-guard-traces/weighted-haar-shell/covariance/README.md) · [압력원](primary-forced-join/active-n3-c5-binding/first-wave-guard-traces/weighted-haar-shell/pressure/README.md).
+
+- **VERIFIED / CONDITIONAL.** 초기 Temporal의 영평균 조건과 초기 FiveMap의 실제 전체 모멘트 소거를 원본 잔차에 연결했다. 각 방향의 원본 식에 남은 초기 평균 이차항 22개와 148개를 분리했다. 안쪽 경계에서는 세 차수의 추가 응력 두 성분이 영이고, 바깥쪽 경계에는 $\theta$의 $n=3$ 응력이 남는다. [원본 평균과 응력](primary-forced-join/active-n3-c5-binding/first-wave-guard-traces/weighted-haar-shell/mean/README.md).
+
+- **CONDITIONAL.** 움직이는 실제 방사 끝점까지 적분할 때 원본 Gaussian 두 인자를 유지하는 상계를 얻었다. 고정 적분 끝점과 움직이는 물리 shell 사이의 원본 영연장이 필요하다. 초기 컴파일 오류를 수정해 로그 미분, 단조성과 적분 비교 정리 세 개가 GitHub에서 통과했다. [GitHub Lean](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44615355954).
+
+- **OPEN.** 실제 Forced 파동과 초기 평균의 균일 가중 범위, 압력 및 전체 보조 Haar 잔차의 0–2차 방사 상계와 혼합 미분이 남아 있다. N7-06·N8-05, 최종 비교 0/4, jets 0/67, 운영 R1-08 OPEN 및 RELEASE HOLD다.
+
+
 ## Continuation83
 
 - **VERIFIED.** 원본 잠재장 30개에서 삼각함수 계수 항 150개를 재현했다. 실제 벡터 포텐셜과 직접 속도의 물리각 주파수가 일치하고, 원본 공간·시간 cutoff `#622958`과 첫 단계의 $\chi(a_1q)$는 각도에 독립이다. 원본 24개 입력의 속도·공변 기울기 12개와 힘에 필요한 2차 공간·1차 시간 미분 9개를 정확 산술로 대조했다. 정규화 전각 내적과 주파수 합산 정리 세 개를 GitHub에서 컴파일했다. [각도·cutoff 검증](final67/energy-1013-sharp/correction-budget/spatial-gauge/active-n3-localized-gram/README.md) · [Lean 결과](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44611824132).
