@@ -10,6 +10,11 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation67
+
+- **VERIFIED / CONDITIONAL · 첫 Forced의 원본 2차 모드 두 표본.** 원본 N3 그래프 21,681,493개 노드를 재생했다. 분기 \(\texttt{0:1},\texttt{1:1}\)에 대해 원본 고정 대표점과 pulse 변수로 치환한 법선·법선 미분·행렬이 실제 역연산 입력과 정확히 같았다. 두 분기와 켤레 성분의 속도·퍼텐셜과 1차 공간 미분은 원본 지역 경로 가정 아래 모두 \(e^{-H/3}\)로 제어된다. 이 값은 충분 공간 보정 한계보다 작다. 전체 라벨, 최초 보정장 24개로의 결속, Signed 및 양쪽 평균장은 OPEN이다. [원본 두 모드와 재현](final67/selected-mode-two-spatial/README.md).
+- **VERIFIED / OPEN · 평균장 응력에 남는 미분.** FiveMap의 gauge에 필요한 목표는 \(P_0,J_{z,0}\)의 \(Z\) 1차와 \(J_{\theta,0}\)의 \(Z\) 2차까지다. 응력까지 구하면 \(\varepsilon^3\partial_{ZZT}P_0\)와 \(\varepsilon^3\partial_{ZZT}J_{z,0}\) 경로가 남는다. 원본 기호 대조는 반경 독립성과 전체 모멘트 조건만으로 첫 경로를 지울 수 없음을 확인했다. 배후 공분산의 좁은 입력은 \(\varepsilon^7\partial_Z^5\partial_T^2 W_{rz}\)이며 원래 역연산 손실과 커널을 유지한다. 실제 값 상계는 OPEN이다. [방향별 응력 의무](final67/mean-directional-stress/README.md).
+
 ## Continuation66
 
 - **VERIFIED / CONDITIONAL · 한 개 단계 전이의 원본 환형 외력.** \(r<1/2\)인 원본 환대의 한 점에서 단계 cutoff 전이가 최대 하나다. 인접한 두 누적 상태와 영 상태에서 외력을 재구성했다. 실제 source 경계에서 유도한 외력 성분 3개, 접합 성분 12개와 원통 연결 성분 12개를 정확 기호 대조했으며 필요한 항을 빼거나 부호를 바꾼 7개 대조가 실패했다. 잠재장의 미분은 시간 1차와 공간 2차까지 필요하다. 3차 및 시간·공간 혼합 미분은 cutoff에 붙는다. 실제 인접 잔차의 값 구간과 완전한 최종 jets는 OPEN이다. [원본 외력 항등식과 재현](final67/annular-force-transfer/README.md).
