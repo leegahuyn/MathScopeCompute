@@ -181,6 +181,60 @@ theorem pulse_inverse_length_band_gain {L S r : ℝ}
     1 / L ≤ 1 / (2 * r * S) := by
   exact one_div_le_one_div_of_le (by positivity) hL
 
+/-- The normal rank-one term vanishes in the energy of a tangent vector.
+The two rotational coefficients cancel in the symmetric energy form. -/
+theorem forced_tangent_energy_cancellation
+    (u₀ u₁ u₂ n₀ n₁ n₂ F a b correction damping : ℝ)
+    (htangent : n₀ * u₀ + n₁ * u₁ + n₂ * u₂ = 0) :
+    u₀ * (2 * F * u₁ + n₀ * correction - damping * u₀) +
+      u₁ * (-(2 * F + a) * u₀ + n₁ * correction - damping * u₁) +
+      u₂ * (-b * u₀ + n₂ * correction - damping * u₂) =
+        -a * u₀ * u₁ - b * u₀ * u₂ - damping * (u₀ ^ 2 + u₁ ^ 2 + u₂ ^ 2) := by
+  calc
+    _ = (n₀ * u₀ + n₁ * u₁ + n₂ * u₂) * correction -
+          a * u₀ * u₁ - b * u₀ * u₂ -
+          damping * (u₀ ^ 2 + u₁ ^ 2 + u₂ ^ 2) := by ring
+    _ = _ := by rw [htangent]; ring
+
+/-- A sum-of-squares bound for the symmetric part of the actual shear.
+It can be applied separately to the real and imaginary tangent vectors. -/
+theorem forced_shear_energy_bound
+    (u₀ u₁ u₂ a b rate : ℝ) (hrate : 0 < rate)
+    (hshear : a ^ 2 + b ^ 2 ≤ 4 * rate ^ 2) :
+    -a * u₀ * u₁ - b * u₀ * u₂ ≤ rate * (u₀ ^ 2 + u₁ ^ 2 + u₂ ^ 2) := by
+  have hidentity :
+      (2 * rate * u₀ + a * u₁ + b * u₂) ^ 2 +
+        (4 * rate ^ 2 - a ^ 2 - b ^ 2) * (u₁ ^ 2 + u₂ ^ 2) +
+        (a * u₂ - b * u₁) ^ 2 =
+      4 * rate * (rate * (u₀ ^ 2 + u₁ ^ 2 + u₂ ^ 2) + a * u₀ * u₁ + b * u₀ * u₂) := by ring
+  have hpositive : 0 ≤
+      4 * rate * (rate * (u₀ ^ 2 + u₁ ^ 2 + u₂ ^ 2) + a * u₀ * u₁ + b * u₀ * u₂) := by
+    rw [← hidentity]
+    have hgap : 0 ≤ 4 * rate ^ 2 - a ^ 2 - b ^ 2 := by linarith
+    positivity
+  by_contra! hfail
+  have hnegative :
+      4 * rate * (rate * (u₀ ^ 2 + u₁ ^ 2 + u₂ ^ 2) + a * u₀ * u₁ + b * u₀ * u₂) < 0 :=
+    mul_neg_of_pos_of_neg (by positivity) (by linarith)
+  exact (not_lt_of_ge hpositive) hnegative
+
+/-- The scalar damping remains subtractive in the actual tangent energy.
+Numeric bounds and the solution's tangent constraint are separate inputs. -/
+theorem forced_tangent_energy_growth
+    (u₀ u₁ u₂ n₀ n₁ n₂ F a b correction damping rate : ℝ)
+    (htangent : n₀ * u₀ + n₁ * u₁ + n₂ * u₂ = 0)
+    (hrate : 0 < rate) (hshear : a ^ 2 + b ^ 2 ≤ 4 * rate ^ 2) :
+    u₀ * (2 * F * u₁ + n₀ * correction - damping * u₀) +
+      u₁ * (-(2 * F + a) * u₀ + n₁ * correction - damping * u₁) +
+      u₂ * (-b * u₀ + n₂ * correction - damping * u₂) ≤
+        (rate - damping) * (u₀ ^ 2 + u₁ ^ 2 + u₂ ^ 2) := by
+  rw [forced_tangent_energy_cancellation _ _ _ _ _ _ _ _ _ _ _ htangent]
+  have h := forced_shear_energy_bound u₀ u₁ u₂ a b rate hrate hshear
+  nlinarith
+
+#print axioms forced_tangent_energy_cancellation
+#print axioms forced_shear_energy_bound
+#print axioms forced_tangent_energy_growth
 #print axioms forced_principal_cutoff_terms
 #print axioms pulse_cutoff_derivative_outside_transitions
 #print axioms gaussian_dyadic_flat
