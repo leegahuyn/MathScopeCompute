@@ -10,6 +10,10 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation51
+
+- **VERIFIED / OPEN · 같은 원본 N3 실행의 첫 활성 보정 추출을 시작했다.** 보관된 원본 N1 노드 4,456,994개를 재생해 좌표 참조 정의 6개, 원본 행 매핑 162개, 실제 미분 연산과 33개 공간 요청의 형식을 대조했다. 격리 브랜치의 N3 실행에는 에너지 입력 24개, 공간 jet 요청 33개, 게이지 curl 차이 3개와 원본 함수 레지스트리 추출을 연결했다. 현재 실행의 실제 추출 결과, 게이지 등식과 균일 수치 상계는 OPEN이다. [추출기와 사전 검사](primary-forced-join/active-n3-c5-binding/spatial-stage1/README.md) · [GitHub 원본 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44553053960).
+
 ## Continuation50
 
 - **VERIFIED / CONDITIONAL · 원본 (n=1) 축방향 밀도와 식 (5.20)–(5.21).** 레거시 레지스트리의 `ActualAllFiniteOrderOneStress_z #672`와 밀도 `#117047`을 정확히 결속했다. 잘라내기 전 밀도 `#117045` 및 원본 `η` 자동 미분 그래프가 Step 4의 식과 정확히 일치한다. 일곱 경계항과 두 연속방정식 결함항을 보존했고, 전방·후방·전체 적분의 실제 인자와 고정 경계를 재생했다. 정확 기호 검증 6개, 잘못된 식을 구분하는 대조 3개와 GitHub Lean 대수 정리 2개를 통과했다. N4의 함수 번호 `#672`는 다른 함수를 가리킨다. 실제 적분 소거에는 native 미분 의미론, 경계항 소멸 및 전체 모멘트 동일성이 필요하다. 일반 재귀의 native 증명은 OPEN이다. [원본 재생과 조건](axial-order-one-identity/README.md) · [GitHub Lean](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44551494917).
