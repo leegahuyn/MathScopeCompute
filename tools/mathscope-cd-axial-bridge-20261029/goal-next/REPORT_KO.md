@@ -10,6 +10,12 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation57
+
+- **VERIFIED / CONDITIONAL · 모든 고정 차수의 축 잔차 항등식.** 실제 재귀 2–5차의 항 52개를 각 곱과 η 미분까지 재생했다. 일반 \(n\)의 축방향 잔차는 (5.20)–(5.21)의 모멘트 밀도, 일곱 방사 경계항과 순서 있는 연속방정식 결함으로 분해된다. 원본 stream primitive의 통상 미분과 실제 보정 적분의 모멘트 소거를 적용하면 \(X_-,X_+\) 접합이 성립한다. 지수 인덱스 오류는 전체 합에서 소거될 수 있어 순서쌍별로 대조했다. [고정 차수 증명과 재현](axial-order-one-identity/higher-recursive-identities/README.md).
+- **VERIFIED / CONDITIONAL · 선도장 지지 경계와 Ipos.** 실제 `U0`, `M0`, `v0`의 원본 함수와 203개 혼합 미분 상계 기록을 대조했다. 원본 실수 접합 조건에서 세 선도량의 모든 고정 혼합 미분은 \(X\ge e^{-17/20}X_v\)에서 0이다. Ipos의 앞선 구간에는 \(U_0=0\)이지만 질량이 남아 \(\Omega_0/X=-m_{\rm Const}^2/(2X^2)\)가 된다. 이 밀도를 후속 보정에 보존했다. [원본 지지와 모멘트](axial-order-one-identity/leading-axial-support/LEADING_AXIAL_SUPPORT.md).
+- **VERIFIED / CONDITIONAL · Ipos 원본 가역성과 Lean.** 실제 범프 지지와 원본 \(\lambda\)에서 정규화한 축방향 행렬식은 \(1/32\), 방위각 행렬식의 절댓값은 \(1/131072\)보다 크다. 단위 질량과 통상 적분의 부호를 쓴다. 순서쌍의 연속방정식 결함, 유한 합, 원본 stream 및 모멘트 변환의 정리 5개를 GitHub에서 컴파일했다. [Ipos 범위와 행렬식](axial-order-one-identity/higher-recursive-identities/README.md) · [GitHub Lean](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44564079637).
+
 ## Continuation56
 
 - **VERIFIED / CONDITIONAL · 원본 축방향 잔차와 Picard 극한.** 원본 선도장과 B.26을 연결해 실제 상계 \(B=4096\Lambda^2Q^3/t_1\)를 \(0\le X\le a^2\), \(\eta\in S_\delta\) 전체에서 얻었다. 원본 자연축 정리와 결합해 \(n=1\) Picard 급수의 균등 수렴과 유일성을 \(S_{\delta/8}\)에서 증명했다. 기존 다섯 모멘트와 결합하면 원본 실수 primitive의 의미를 전제로 전체 적분 `#117075`의 소거와 두 cutoff의 접합을 얻는다. 네 첫 적분 정리와 두 Picard 상계 정리가 GitHub Lean을 통과했다. [원본 \(n=1\) 증명](axial-order-one-identity/ORDER_ONE_RESULT_KO.md) · [GitHub Lean](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44562112347).
