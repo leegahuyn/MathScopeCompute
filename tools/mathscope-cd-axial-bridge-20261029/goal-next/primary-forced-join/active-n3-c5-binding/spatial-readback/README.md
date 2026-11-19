@@ -21,6 +21,14 @@ registry definitions and same-owner component associations are checked
 against the complete exported source tree rather than the new receipt
 alone.
 
+Use `--retry` with the authenticated artifact and run JSON for
+[44568520276](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44568520276),
+commit `b26c8d8bd30a94540669791991795bea01535dbf`. The complete
+retry also checks both original Corollary 8.5 stress applications directly
+in the official node stream and coupled registry. Their registration
+identifiers differ. The defining body, formal parameter list, actual
+argument list and derivative orders must agree.
+
 The full source case verifies the original manifest, gzip stream
 header, uncompressed SHA-256, exact bytes, count, operations histogram,
 and extended registry SHA-256, shapes and sizes. A disk spool with

@@ -10,6 +10,11 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation60
+
+- **VERIFIED / OPEN · 첫 보정 공간 자료 재실행.** 원본의 결합 함수 등록에서 번호가 다른 두 응력 호출의 본문, 형식·실제 인자 및 미분 차수를 비교하도록 수정했다. 원래 결합 함수 API의 두 등록이 통과하고 원본 바꾸기 대조 7개가 검출됐다. 고친 코드로 실제 N3 재실행을 시작했다. 새 원본 스트림과 공간 입력의 검산 결과는 OPEN이다. [재실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44568520276) · [독립 판독 방법](primary-forced-join/active-n3-c5-binding/spatial-readback/README.md).
+- **VERIFIED / OPEN · 원본 초기 파동의 라벨과 평균장 소거.** 보관된 N1 원본 4,456,994개 노드에서 초기장·Forced·Signed의 성분별 라벨·가드 486개와 평균장 기준항 6개의 소거를 재현했다. 오류 대조 4개가 검출됐다. 실제 N3의 \(\xi,v\) 인자에서 파동 함수와 게이지가 일치하는지는 OPEN이다. [원본 초기장 독립 검산](primary-forced-join/active-n3-c5-binding/spatial-stage1/initialized-metadata/INITIALIZED_METADATA.md).
+
 ## Continuation59
 
 - **VERIFIED · 축방향 원본 결속 종합.** 원고 (5.20)–(5.21), 원본 밀도 `#117047`, 모멘트와 두 적분의 정의역·인자·η 미분, 각 고정 차수의 조건부 접합 및 최종장의 열린 조건을 한 문서에 정리했다. [원본 축방향 검증](axial-order-one-identity/AXIAL_SOURCE_CLOSURE_KO.md).

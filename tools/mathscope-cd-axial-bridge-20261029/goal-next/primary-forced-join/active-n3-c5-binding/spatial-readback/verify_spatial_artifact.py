@@ -10,6 +10,7 @@ from source_stream import MANIFEST, REGISTRY, STREAM, Native, SourceStream, need
 
 RUN = 44553053960
 COMMIT = '6adb862667b0ce0e627843b253d6d94673a35164'
+RETRY = (44568520276, 'b26c8d8bd30a94540669791991795bea01535dbf')
 PR30 = 'a9b3a5b317525f6d0a71e2e356b054c9d25d2e60'
 REF = '74a686bc95f4c094f1de834062b8b402aa5b861940fa3e109aa0f1913d52d529'
 GUARD = 'b7ec3b426589c207973c62a9debd19adb54ce66c15dd625c963ed56a4d697a36'
@@ -194,18 +195,41 @@ def optional_full_prefix(graph, native, previous_directory, scratch):
             'originalRegistrySHA256':before_native.pin,'newNativeRegistrations':added}
 
 
-def run_metadata(path, artifact):
+def run_metadata(path, artifact, run, commit):
     candidate=path if path is not None else artifact/'run.json'
     result, pin=read(candidate)
-    need(result['databaseId']==RUN and result['headSha']==COMMIT and result['status']=='completed'
+    need(result['databaseId']==run and result['headSha']==commit and result['status']=='completed'
          and result['conclusion'] in ('success','failure','cancelled','timed_out'),
          'wrong or unfinished independently retrieved hosted run')
-    return {'id':RUN,'headSha':COMMIT,'conclusion':result['conclusion'],'metadataSHA256':pin}
+    return {'id':run,'headSha':commit,'conclusion':result['conclusion'],'metadataSHA256':pin}
 
 
-def readback(directory, reference_path, metadata, prior, before, scratch):
+def verify_retry_stress(graph, native, ingress, reference):
+    saved = ingress['latestStressApplications']
+    announced = reference['stages'][0]['sigma']
+    need([row['announcedRoot'] for row in saved] == announced, 'original first stress roots')
+    need([row['signedRoot'] for row in saved] == [22001223, 22001224], 'retained Signed stress roots')
+    for component, evidence in enumerate(saved):
+        old_root, signed_root = evidence['announcedRoot'], evidence['signedRoot']
+        for root in (old_root, signed_root):
+            graph.args(root, 'm3_coupled_expression_partial')
+        name = f'ActualLatestMeanSigma_after-forced_{component}'
+        old, old_values, old_orders = native.application(graph, old_root, name)
+        current, values, orders = native.application(graph, signed_root, name)
+        same_definition = lambda data: {key: value for key, value in data.items() if key != 'id'}
+        need(old['id'] != current['id'] and same_definition(old) == same_definition(current),
+             'duplicate registration must preserve the original Sigma definition')
+        need(values == old_values and orders == old_orders, 'duplicate Sigma application arguments')
+        need(evidence == {'announcedRoot':old_root, 'signedRoot':signed_root, 'body':current['body'],
+                          'formalParameters':current['parameters'], 'actualArguments':values,
+                          'derivativeOrders':orders}, 'recorded Sigma comparison must match the source')
+    return saved
+
+
+def readback(directory, reference_path, metadata, prior, before, scratch, *, retry=False):
     reference, _ = read(reference_path,REF)
-    host=run_metadata(metadata,directory)
+    expected_run, commit = RETRY if retry else (RUN, COMMIT)
+    host=run_metadata(metadata,directory,expected_run,commit)
     receipt_path=directory/'first-cycle.json'
     result={'schema':'MathScope.N7.IndependentActiveN3SpatialReadback/1',
             'sourceReferenceReceiptSHA256':REF,'hostedRun':host,**limit_status()}
@@ -250,11 +274,13 @@ def readback(directory, reference_path, metadata, prior, before, scratch):
          and exported['status']=='VERIFIED_SOURCE_RECORD_EXPORT_NUMERICAL_ENDPOINTS_OPEN'
          and exported['preferredExistingIngress']==INGRESS
          and exported['snapshot']==manifest and exported['roots']==roots,'source capture envelope and digest')
-    manifest_shape(manifest,COMMIT,ingress['materializedNodes'],roots,SOURCE_SCOPE)
+    manifest_shape(manifest,commit,ingress['materializedNodes'],roots,SOURCE_SCOPE)
     native=Native(src,manifest)
     from verify_spatial_structure import check_spatial_structure
     with SourceStream(src,manifest,ingress['originalPrefix'],scratch) as graph:
         structural=check_spatial_structure(graph,native,ingress,reference)
+        if retry:
+            result['signedStressApplications'] = verify_retry_stress(graph,native,ingress,reference)
         prefix_checks={'sameRunCompact':compact_prefix(graph,directory,reference),
                        'completePreappendExport':optional_full_prefix(graph,native,before,scratch)}
         if prior is not None:
@@ -294,14 +320,16 @@ def main():
     parser.add_argument('--scratch',type=Path)
     parser.add_argument('--out',type=Path,required=True)
     parser.add_argument('--archive-control',action='store_true')
+    parser.add_argument('--retry',action='store_true',help='read the pinned fixed Signed-stress retry')
     a=parser.parse_args()
     scratch=a.scratch or a.out.parent
     need(not a.out.exists(),'output already exists')
     if a.archive_control:
+        need(not a.retry, 'retry applies only to the live artifact')
         result=archived_control(a.artifact,scratch)
     else:
         need(a.reference is not None,'main readback requires --reference')
-        result=readback(a.artifact,a.reference,a.run_json,a.prior_compact,a.preappend_export,scratch)
+        result=readback(a.artifact,a.reference,a.run_json,a.prior_compact,a.preappend_export,scratch,retry=a.retry)
     with a.out.open('x',encoding='utf8',newline='\n') as f:
         json.dump(result,f,indent=2)
         f.write('\n')
