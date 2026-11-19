@@ -10,6 +10,13 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation77
+
+- **VERIFIED.** GitHub의 활성 N3 첫 보정 실행에서 원본 노드 22,155,584개를 독립적으로 읽고 SHA-256을 재현했다. 이전 Wrz, Temporal, Haar와 초기 압력·유량 계산의 타입 있는 레코드 40,621개가 같은 ID에서 일치했다. 이 일치는 선택한 소스 경로에 해당한다. 이전 전체 그래프의 접두부 해시는 다르다. 실제 에너지 입력 24개와 공간 미분 라벨 33개, 원본의 162개 지표 사상과 세 게이지 차를 확인했다. [원본 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44582875351) · [소스 재현](primary-forced-join/active-n3-c5-binding/hosted-44582875351/README.md).
+- **VERIFIED.** 원본 FiveMap의 이동 상한과 고정 전체 적분의 경계를 구분하고, 같은 방사 적분 변수와 실제 \(Z\) 미분을 결속했다. 이전 compact Temporal 식의 native 호출 다섯 개를 실제 라벨과 인자에 연결했다. 동일 실행에서 두 번째 Forced 후보 40개의 부호와 원본 인자 순서, 매핑된 포텐셜 메타데이터 240개를 점검했다. [원본 후보 검사](primary-forced-join/active-n3-c5-binding/hosted-44582875351/repeat-metadata/README.md).
+- **CONDITIONAL.** 원본 물리 좌표에 맞춘 24개 cutoff 및 에너지 상계의 전달식을 결속했다. 동일 가중치의 균일 상계가 입력으로 필요하다. 평균 게이지의 일반 미적분 계산에는 실제 방사 구간의 FTC, 매끄러운 경계 접합, 고정 경계에서의 적분 미분, Temporal 이동 위상의 지지 조건이 필요하다.
+- **OPEN.** 첫 보정의 전체 게이지 차 세 개와 모든 균일 가중 노름, 두 번째 Forced 후보가 추가한 실제 소스 본문과 느린 좌표에서의 지지 동치가 남았다. 현재 그래프는 두 번째 Forced 후보 직전까지만 내보냈다. N7-06 전체 에너지 검증, N8-05의 네 정밀화 비교, 최종 jets 67개의 닫힌 구간과 운영 R1-08은 OPEN이다.
+
 ## Continuation76
 
 - **VERIFIED / CONDITIONAL · 원본 \(W_{zz}\)과 \(J_{z0}\)의 한 이차 기여.** 실제 두 부호의 \(\chi^2,\chi\chi',(\chi')^2\) 구조와 162개 좌표 대응을 확인했다. 세 표본으로 추가 느린 미분 없이 역연산 계수 \(2^{130}\)과 \(2^{132}\) 미만을 각각 \(Z^3T,Z^5T\) 입력에 얻었다. 원본 반경 이동과 끝점이 고정 \(R,\ell\)에서 \(Z,T\)와 독립임을 확인했고, \(\gamma=g-(\chi_R/R)J(g)\)의 정확한 소거를 재생했다. \(\chi_R/R\)의 \(Z,T\) 혼합 3차 상계를 결합했다. 원본 이동 적분점의 정의역과 계수 전제 아래 \(J_{z0,ZZT}\)의 \(W_{zz}\) 유래 자기 제곱 기여는 \(\sup_r\zeta(r)e^{(-4+2^{-112})H}\) 이하이다. 교차곱, 전체 \(J_{z0}\), 에너지 및 수렴 검증은 OPEN이다. 관련 Lean 정리 두 개를 GitHub에서 컴파일했다. [실제 세 표본](final67/temporal-wzz-three-point/README.md) · [원본 반경 이동](final67/temporal-wzz-gamma/README.md) · [cutoff 계수](final67/original-mean-radial-cutoff-coefficients/README.md) · [GitHub Lean](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44597786608).
