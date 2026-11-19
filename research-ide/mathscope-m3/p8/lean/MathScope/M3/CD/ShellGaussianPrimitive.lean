@@ -93,7 +93,7 @@ theorem weighted_shell_endpoint_integral_cubic {a b width p d C : ℝ} {f : ℝ 
       (C * Real.exp (shellLogWeight a b width p d)) * (d ^ 3 / a) := by
   let k := a / d ^ 3
   have hk : 0 < k := div_pos ha (pow_pos hd 3)
-  let shifted := fun x => shellLogWeight a b width p x - k * x
+  let shifted := shellLogWeight a b width p - fun x : ℝ => k * x
   have hdiff : ∀ x ∈ Ioc (0 : ℝ) d, HasDerivAt shifted
       ((2 * a - p * x ^ 2 - 2 * b * (x / (width - x)) ^ 3) / x ^ 3 - k) x := by
     intro x hx
