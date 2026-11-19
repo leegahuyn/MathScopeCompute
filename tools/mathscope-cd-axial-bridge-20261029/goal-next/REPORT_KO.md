@@ -10,6 +10,10 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation75
+
+- **VERIFIED / CONDITIONAL · 비선형에 남은 \(W_{rz,Z^6T}\)의 역연산.** 실제 원본 양쪽 부호의 횡방향 의존성을 \(\chi^2B+\chi\chi'C\)로 정확히 전개했다. 원본 162개 행과 두 표본을 사용해 추가 느린 미분 없이 \(L^2\) 항을 제어했다. 원본 \(N^{-1}P_\perp\)의 조건부 계수는 \(2^{127}\) 이하이다. 실제 \(c_i\)와 \(T_1\)의 역수, 원본 \(T_0/T_1\) 길이 요인을 유지했다. 모든 원본 이동 적분점이 허용 범위 안에 있으면 확인한 최고차 한 항의 상계는 \(\sup_r\sqrt{\zeta(r)}\,e^{(-4+2^{-112})H}\)이다. 하위 배분, 나머지 이동·cutoff 미분과 비선형 곱 전체는 OPEN이다. 횡방향 두 점 역산과 2차 미분의 Lean 정리 두 개를 GitHub에서 컴파일했다. [실제 역연산 증거](final67/temporal-wrz-anisotropic/README.md) · [반경 길이 산술](final67/original-radial-time-length/README.md) · [GitHub Lean](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44596465130).
+
 ## Continuation74
 
 - **VERIFIED / CONDITIONAL · 원본 초기 Temporal 선형항의 평균 소거.** 원본 N3 그래프 21,681,493개 노드에서 두 Fourier 역연산, \(T_0/T_1\) 평행이동, 실제 Haar와 \(P_0,J_{\theta0},J_{z0}\) 적분을 대조했다. 원래 주기성·적분 교환 및 미분 조건에서 초기 Temporal 속도의 모든 선형 항이 세 결함 평균에서 0이 된다. 따라서 앞서 추적한 선형 시간항의 \(W_{rz,Z^5T^2}\) 경로도 소거된다. \(\beta_Z\gamma\)의 한 이차 미분 항에는 \(W_{rz,Z^6T}\)가 남는다. 이 원본 역연산의 \(L^2\) 손실과 전체 이차항은 OPEN이다. [실제 선형 시간항 경로](final67/initial-temporal-haar-zero/README.md) · [세 결함 평균의 전체 선형식](final67/initial-temporal-linear-source-audit/README.md).
