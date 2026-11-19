@@ -30,10 +30,8 @@ The other summand of each full field is angle independent. The mean and
 wave kinetic and dissipation cross terms vanish on full physical circles
 under the original smooth chart and flat-join contracts. This split includes
 the cylindrical connection in the angular part of the gradient.
-Angle-independent scalar multiplication preserves the split. Localization
-by a curl of the cutoff times the wave potential still needs a separate
-bound for the wave cutoff contribution. Run with the corrected source graph
-directory from job 43010593847 and a fresh output path.
+Angle-independent scalar multiplication preserves the split. Run with the
+corrected source graph directory from job 43010593847 and a fresh output path.
 
 ```text
 python -B check_initialized_angular_split.py ORIGINAL_GRAPH_DIRECTORY NEW_JSON
@@ -52,6 +50,25 @@ convergence comparison.
 
 ```text
 node evaluate_initialized_winding.mjs GOAL_NEXT ORIGINAL_RUNTIME NEW_JSON
+```
+
+The localized-force check additionally verifies angle independence for
+all six actual pre-curl potential bodies, following 128,437 original nodes.
+It applies the pinned signed fundamental gauge recipe and the 540 terms of
+the original Cartesian stencil. The axial cutoff curl lies in the same
+cylindrical frequencies as the potential. Thus the localized mean-wave
+energy cross terms still vanish on full circles, including the cutoff
+contribution. If `W=ceil(physicalWindingUpper)`, the localized Cartesian
+force has cap `2W+1` for the horizontal components and `2W` for the axial
+component. The pressure cap is `W`. The quadratic advection doubles the
+cylindrical frequencies, and the final rotation adds one only to the
+horizontal outputs. Both the componentwise bounds from the original
+Cartesian stencil and the tighter cylindrical bounds appear in the result.
+The source smoothness, angular-independent cutoff and fixed-label
+derivative premises apply to these bounds.
+
+```text
+python -B check_localized_initial_modes.py GOAL_NEXT ORIGINAL_GRAPH_DIRECTORY NEW_JSON
 ```
 
 **Remaining.** The original field's nonzero frequencies must be grouped

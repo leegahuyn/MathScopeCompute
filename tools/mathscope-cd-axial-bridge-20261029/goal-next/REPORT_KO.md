@@ -10,6 +10,12 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation43
+
+- **VERIFIED / CONDITIONAL · 초기 localized 외력의 물리 Fourier 꼬리.** 원본 파동 포텐셜 여섯 몸체에 각도가 들어가지 않음을 원본 조상 128,437개에서 확인하고, 부호가 달린 정수 기본 주파수와 원본 위치화 stencil 540개 항을 결합했다. 스칼라 cutoff와 원통 curl을 거친 초기장에서도 전체 원의 평균–파동 교차항은 0이다. 원통 연결항을 포함하면 원본으로 정한 정수 반송파 상계 `W`에 대해 초기 외력의 Fourier 꼬리는 수평 성분 `2W+1`, 축방향 성분 `2W` 이상의 절단 차수에서 정확히 0이다. 낮은 차수 정밀화와 이후 보정의 꼬리는 OPEN이다. [원본 힘과 절단 차수](final67/initial-fourier/README.md).
+- **VERIFIED / CONDITIONAL · 원래 다섯 스케일 아래 모든 N4 프로필.** 이전 182개 경로에 없던 77개를 원본 다섯 번째 스케일에서 확인했다. 다섯 스케일에 별도의 물리 시간이나 역함수 인자 정보를 넣지 않고 원본 가드, 적분 및 실제 인자 전달만 추적했다. 원본 조상 468,209개를 경유하는 실제 프로필 259개 모두에서 `0≤X≤Xcut<a²`와 `|eta|≤1`을 얻었다. 가드·적분 대조 검사는 각각 245·259개를 미확인으로 남겼다. 원본 native 의미론, 무한해 수렴 및 다른 실제 호출 문맥은 별도 의무다. [다섯 원본 스케일과 재현](y-higher-flow/n4-selector-frame/README.md).
+- **VERIFIED / OPEN · 운영 페이지 읽기.** 공개 HTML 30,707,818바이트를 새로 읽어 보존 사본과 SHA-256이 일치함을 확인했다. 운영 R1-08은 별도의 실제 게시와 화면 검증이 남아 있다. [공개 HTML 조회](m4/production-readback-20261119/public-http.json).
+
 ## Continuation42
 
 - **VERIFIED / CONDITIONAL · 전체 초기 평균장의 공간 cutoff.** 실제 Temporal·FiveMap과 각도 연결항을 포함해 환형 초기 평균장의 조건부 구간을 계산했다. 방사 특성선의 원본 적분에서 포텐셜 값 상계를 얻고, 속도와 포텐셜 값으로 축방향 cutoff 항 및 첫 공간 미분을 평가했다. 계산된 상단은 배정 에너지 예산을 넘는다. 반지름 적분과 cutoff에 관한 Lean 정리 네 개가 GitHub에서 통과했다. [원본과 수치 구간](final67/energy-1013-sharp/correction-budget/spatial-gauge/actual-mean-cutoff/README.md) · [Lean 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44533412267).
