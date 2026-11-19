@@ -10,6 +10,12 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation62
+
+- **VERIFIED / OPEN · 원본 Primary 상계를 가르는 C8 입력.** 원본 최대값의 14개 피연산자 중 13개의 상계는 여섯 비교 기준 각각의 \(1/64\)보다 작다. 배경 C8 `#14220496`의 구간만 기준을 가로지른다. 그 안에서 1–3차 상계가 같은 여유를 만족하며 원본 전역 유한합의 5–7차 상계에는 큰 값이 남는다. 실제 고정 슬랩에서 허용되는 계수와 방사·대표점 영역을 결속하는 증명이 필요하다. [원본 수치 비교](final67/active-n3-cap-transport/PRIMARY_NORM_OPERANDS.md).
+- **VERIFIED / CONDITIONAL · 같은 N3/N4 위치의 에너지 상계.** 원본의 20개 Forced 시스템과 두 평균장을 식별했다. 가중 seed로 cutoff 공간 상수를 30과 1,264로 좁혔고, 두 원본 위치의 에너지 계수는 675,267,552와 882,877,968이다. 원래 전파 상수의 로그는 \(H/2^{27}\) 미만이다. 원본의 완전한 보정 계수 상계를 이 값과 연결하는 것은 OPEN이다. [원본 환산과 전파 로그](final67/active-n3-cap-transport/source-cap/README.md).
+- **VERIFIED / CONDITIONAL · 보관된 원본 첫 보정의 파동 curl.** 같은 4,197,115개 소스 노드의 prefix와 함수 레지스트리를 확인한 뒤 Forced 계수 240개, Signed 계수 120개와 공유 법선의 30개 성분을 실제 curl과 정확히 대조했다. 새 N3와 최종장의 수치 구간은 OPEN이다. [보관 N1 파동 재생](primary-forced-join/active-n3-c5-binding/spatial-stage1/correction-waves/CORRECTION_WAVES.md).
+
 ## Continuation61
 
 - **VERIFIED / CONDITIONAL · 최종 67개 입력을 합성하는 원본 cutoff 미분.** 미분 라벨 67개에서 보정 한 단계당 필요한 곱미분 118항과 여섯 cutoff 도함수를 확인했다. 원본 seed를 256개 닫힌 구간에서 80비트 유리수 구간으로 재생했다. 시간·축·혼합·축 2차·축 3차의 상계는 원본 \(\tau_0\) 단위로 각각 9, 12, 203, 288, 22,290이다. 정규화에서 실제 \((\tau_0^h)^{\beta_z}\)를 보존한다. 최종장에서 쓸 각 보정의 미분 수치 구간은 OPEN이다. [67개 원본 곱미분과 코드](final67/correction-jet-composition/README.md).
