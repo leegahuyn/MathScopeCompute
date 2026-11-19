@@ -25,8 +25,10 @@ theorem hasDerivAt_shellLogWeight {a b width p x : ℝ}
   have h₁ := (hasDerivAt_const x (-a)).div (hx'.pow 2) (pow_ne_zero 2 hx.ne')
   have h₂ := (hasDerivAt_const x (-b)).div (hw'.pow 2) (pow_ne_zero 2 hw)
   have h₃ := (Real.hasDerivAt_log hx.ne').const_mul p
-  convert (h₁.add h₂).sub h₃ using 1 <;>
-    (try simp [shellLogWeight]) <;> (try field_simp [hx.ne', hw]) <;> ring
+  convert (h₁.add h₂).sub h₃ using 1
+  · funext y
+    rfl
+  · (try simp) <;> field_simp [hx.ne', hw] <;> ring
 
 /-- On the original logarithmic collar the elementary pointwise envelope is
 largest at the current radius. The condition keeps the full opposite-face
