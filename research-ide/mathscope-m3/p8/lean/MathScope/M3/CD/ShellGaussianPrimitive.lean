@@ -82,6 +82,91 @@ theorem weighted_shell_endpoint_integral {a b width p d C : ℝ} {f : ℝ → �
 #print axioms shellLogWeight_monoOn
 #print axioms weighted_shell_endpoint_integral
 
+/-- A positive log-slope reserve gains three powers of the distance in the
+short endpoint integral, including the original opposite-end weight. -/
+theorem weighted_shell_endpoint_integral_cubic {a b width p d C : ℝ} {f : ℝ → ℝ}
+    (ha : 0 < a) (hb : 0 ≤ b) (hp : 0 ≤ p) (hd : 0 < d) (hdw : d < width)
+    (hC : 0 ≤ C)
+    (hcollar : p * d ^ 2 + 2 * b * (d / (width - d)) ^ 3 ≤ a)
+    (hsource : ∀ x ∈ Ioc (0 : ℝ) d, ‖f x‖ ≤ C * Real.exp (shellLogWeight a b width p x)) :
+    ‖∫ x in (0 : ℝ)..d, f x‖ ≤
+      (C * Real.exp (shellLogWeight a b width p d)) * (d ^ 3 / a) := by
+  let k := a / d ^ 3
+  have hk : 0 < k := div_pos ha (pow_pos hd 3)
+  let shifted := fun x => shellLogWeight a b width p x - k * x
+  have hdiff : ∀ x ∈ Ioc (0 : ℝ) d, HasDerivAt shifted
+      ((2 * a - p * x ^ 2 - 2 * b * (x / (width - x)) ^ 3) / x ^ 3 - k) x := by
+    intro x hx
+    simpa only [shifted, id_eq, mul_one] using
+      (hasDerivAt_shellLogWeight (a := a) (b := b) (p := p) hx.1 (hx.2.trans_lt hdw)).sub
+        ((hasDerivAt_id x).const_mul k)
+  have hmono : MonotoneOn shifted (Ioc 0 d) := by
+    refine monotoneOn_of_deriv_nonneg (convex_Ioc _ _)
+      (fun x hx => (hdiff x hx).continuousAt.continuousWithinAt)
+      (fun x hx => (hdiff x (interior_subset hx)).differentiableAt.differentiableWithinAt) ?_
+    intro x hx
+    have hx' : x ∈ Ioc (0 : ℝ) d := interior_subset hx
+    rw [(hdiff x hx').deriv]
+    have hw : 0 < width - x := sub_pos.mpr (hx'.2.trans_lt hdw)
+    have hwd : 0 < width - d := sub_pos.mpr hdw
+    have hwpos : 0 ≤ width := (hd.trans hdw).le
+    have hratio : x / (width - x) ≤ d / (width - d) := by
+      apply (div_le_div_iff₀ hw hwd).2
+      nlinarith only [mul_le_mul_of_nonneg_right hx'.2 hwpos]
+    have hpole := mul_le_mul_of_nonneg_left
+      (pow_le_pow_left₀ hx'.1.le hx'.2 2) hp
+    have hother := mul_le_mul_of_nonneg_left
+      (pow_le_pow_left₀ (div_nonneg hx'.1.le hw.le) hratio 3)
+      (mul_nonneg (by norm_num : (0 : ℝ) ≤ 2) hb)
+    apply sub_nonneg.mpr
+    calc
+      k ≤ a / x ^ 3 := by
+        exact div_le_div_of_nonneg_left ha.le (pow_pos hx'.1 3)
+          (pow_le_pow_left₀ hx'.1.le hx'.2 3)
+      _ ≤ _ := div_le_div_of_nonneg_right
+        (by linarith only [hcollar, hpole, hother]) (pow_nonneg hx'.1.le 3)
+  let C₀ := C * Real.exp (shellLogWeight a b width p d)
+  let g := fun x => C₀ * Real.exp (k * (x - d))
+  have hg : Continuous g := by
+    unfold g
+    fun_prop
+  have hgres : ∀ x ∈ Ioc (0 : ℝ) d, ‖f x‖ ≤ g x := by
+    intro x hx
+    have hshift := hmono hx ⟨hd, le_rfl⟩ hx.2
+    change shellLogWeight a b width p x - k * x ≤
+      shellLogWeight a b width p d - k * d at hshift
+    have hlog : shellLogWeight a b width p x ≤ shellLogWeight a b width p d + k * (x - d) := by
+      linarith only [hshift, mul_sub k x d]
+    calc
+      ‖f x‖ ≤ C * Real.exp (shellLogWeight a b width p x) := hsource x hx
+      _ ≤ C * Real.exp (shellLogWeight a b width p d + k * (x - d)) :=
+        mul_le_mul_of_nonneg_left (Real.exp_le_exp.mpr hlog) hC
+      _ = g x := by simp only [g, C₀, Real.exp_add, mul_assoc]
+  let F := fun x => (C₀ / k) * Real.exp (k * (x - d))
+  have hF (x : ℝ) : HasDerivAt F (g x) x := by
+    have hx : HasDerivAt (fun y : ℝ => y - d) 1 x := by
+      simpa only [id_eq] using (hasDerivAt_id x).sub_const d
+    have hExp := (hx.const_mul k).exp.const_mul (C₀ / k)
+    convert hExp using 1 <;> dsimp [F, g] <;> field_simp [hk.ne'] <;> ring
+  have hi := intervalIntegral.integral_eq_sub_of_hasDerivAt
+    (fun x _ => hF x) (hg.intervalIntegrable (μ := volume) 0 d)
+  calc
+    ‖∫ x in (0 : ℝ)..d, f x‖ ≤ ∫ x in (0 : ℝ)..d, g x :=
+      intervalIntegral.norm_integral_le_of_norm_le hd.le
+        (Filter.Eventually.of_forall hgres) (hg.intervalIntegrable 0 d)
+    _ = F d - F 0 := hi
+    _ ≤ C₀ / k := by
+      have h0 : 0 ≤ F 0 := by
+        exact mul_nonneg (div_nonneg (mul_nonneg hC (Real.exp_pos _).le) hk.le)
+          (Real.exp_pos _).le
+      simpa only [F, sub_self, mul_zero, Real.exp_zero, mul_one] using
+        (sub_le_self (F d) h0)
+    _ = C₀ * (d ^ 3 / a) := by
+      dsimp [k]
+      field_simp [hd.ne', ha.ne']
+
+#print axioms weighted_shell_endpoint_integral_cubic
+
 end
 
 end MathScope.M3.CD
