@@ -1,0 +1,109 @@
+{
+  "status": "CONDITIONAL_ACTUAL_TANGENT_PROPAGATOR_VALUE_GROWTH",
+  "rows": [
+    {
+      "key": "0:1",
+      "system": 1,
+      "principalK": [
+        [
+          0,
+          17733152,
+          0
+        ],
+        [
+          17733154,
+          0,
+          0
+        ],
+        [
+          17733121,
+          0,
+          0
+        ]
+      ],
+      "F": 17732934,
+      "FR": 17733119,
+      "GR": 17733121,
+      "R": 17732748,
+      "actualProjectedTangencies": [
+        "real",
+        "imaginary"
+      ]
+    },
+    {
+      "key": "1:1",
+      "system": 5,
+      "principalK": [
+        [
+          0,
+          17733152,
+          0
+        ],
+        [
+          17733154,
+          0,
+          0
+        ],
+        [
+          17733121,
+          0,
+          0
+        ]
+      ],
+      "F": 17732934,
+      "FR": 17733119,
+      "GR": 17733121,
+      "R": 17732748,
+      "actualProjectedTangencies": [
+        "real",
+        "imaginary"
+      ]
+    }
+  ],
+  "exactPrincipalK": "[[0,-2F,0],[2F+R*FR,0,0],[GR,0,0]]",
+  "constraintIdentity": "n^T*Aphi+nprime^T=0; n^T*(-P*rawForcing)=0.",
+  "invariant": "The exact source zero-data solution has n(w)^T*u(w)=0 throughout every admitted pulse interval.",
+  "energyIdentity": "For tangent complex u, Re(u* Aphi u)=-R*FR*Re(conj(u0)*u1)-GR*Re(conj(u0)*u2).",
+  "rate": "a(w)=sqrt((R*FR)^2+GR^2)/2; Re(u* Aphi u)<=a(w)*|u|_2^2.",
+  "dampedTangentPropagator": "|U(t,s)z|_2<=exp(integral_s^t[a(w)-4*epsilon*k^2*|n(w)|^2]dw)*|z|_2 for n(s)^T z=0.",
+  "sourceForcingContraction": "|-P(w) rawForcing(w)|_2<=|rawForcing(w)|_2.",
+  "zeroDataValueBound": "|u(t)|_2<=integral_0^t exp(integral_s^t[a(w)-4*epsilon*k^2*|n(w)|^2]dw)*|rawForcing(s)|_2 ds.",
+  "finiteValueEnvelope": "|u(t)|_2<=Fraw*t*exp(max(Abg-mu,0)*t), with Fraw>=sup|rawForcing|_2, Abg>=sup a and mu=4epsilon/Renv^2.",
+  "sourceBackgroundReduction": "If the original same-family C8 bound dominates |FR|,|GR| on the actual band and R<=Renv, then Abg=(Renv+1)*K/2<=H*K, where H>=max(2,Renv).",
+  "directedConditionalRateUpper": {
+    "exp": {
+      "exp": {
+        "exp": {
+          "exp": {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "exp": {
+                      "exp": {
+                        "rational": "83118191364991768767375050626938983/79228162514264337593543950336"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "directedGapProof": "Kupper=exp^10(a), Hupper=exp^4(b). For a,b>13 and c=max(a,b), Hupper<=exp^10(c), Kupper<=exp^10(c), and exp^10(c)^2<=exp^10(c+1). The last follows by repeated exp growth, using exp(x+1)>=2exp(x) for x>=0. The rational seed c+1<2^21 gives this exact positive numeric rate majorant below T25.",
+  "negativeControl": "At n=(1,0,0), nprime=(-1,0,0), K=0 and u=(1,0,0), the rank-one term gives growth 1 while the shear rate is 0. Such u is outside n-perp; the tangent premise is essential.",
+  "pins": {
+    "matrixWindow": "347ca74441e6a9861383bb146660b78d559702afc8a443dc900e5d9dc2d2254b",
+    "dampingTransport": "ebae8e28350f3939cc37f97ae1252ce28a118ddb077ed41852e012ace1be1755",
+    "dampingFloor": "d691b408fc4c74b374da0f3156625c95b76fd8f82180d0849ead2954f39cf453",
+    "registry": "364425db9d5bbd317f8aaad681fdfdd3206f97e0f46d2beb78b6e7d5a30a3111",
+    "selectedWitness": "a35bd111ef2f60b0e779a85433571db8caa00061616da91372782a28a16859e9",
+    "wholeK": "0e1984e6f872e9a167b7920d31a55b4888a807c359a0c38dbff9f8f8af5f4acb",
+    "slowChart": "81f5a9ad2d0141a495d0e6a99e07e453fd754aaa6473d006a6426423a9352ddd"
+  },
+  "scope": "The source-pinned tangent value propagator and conditional numeric background rate for two selected original witness systems. Admitted source domain, ordered-limit differentiation, same-family background norm transfer and a bound on actual raw forcing remain premises. No Fraw numeric enclosure, parameter derivatives, endpoint chain, final output class or final jets are certified.",
+  "release": "HOLD"
+}

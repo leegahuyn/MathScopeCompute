@@ -10,6 +10,14 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation41
+
+- **VERIFIED / OPEN · 같은 원본 계열의 Signed 접합.** 실행 44029534187의 실제 기록에서 전체 Forced 805개 검사, 최신 평균 응력 18개 검사, Signed 1,620개 인덱스 행과 그 이후 중심화한 Temporal 입력을 확인했다. 22,032,009개 노드에서 실행기가 원래 API의 허용 목록을 넘는 옵션을 전달해 중단됐다. Temporal·FiveMap·전체 물리 잔차 호출에 두 콜백만 전달하도록 고쳤고, 원래 API 세 개의 양성·음성 계약 검사를 재실행 준비 단계에 추가했다. 새 첫 보정 실행은 진행 중이다. [실제 기록](primary-forced-join/active-n3-c5-binding/hosted-44029534187/verified-readback.json) · [재실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44528954587).
+- **VERIFIED / CONDITIONAL · 실제 강제항의 접선 에너지.** 선택된 두 원본 시스템의 투영 강제항 실수부·허수부 네 개를 대조해 normal에 수직임을 확인했다. 접선 공간에서 역 normal 항과 회전항이 에너지식에서 소거되며 성장률은 `sqrt((R F_R)^2+G_R^2)/2`로 제한된다. 이때 스칼라 감쇠는 음의 항으로 유지된다. 대수 정리 세 개가 GitHub Lean에서 컴파일됐다. 실제 원시 강제항 수치와 매개변수·끝점 도함수는 OPEN이다. [원본 결속과 조건](primary-forced-join/active-n3-c5-binding/endpoint/forced-tangent/README.md) · [GitHub 증명](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44529293123).
+- **VERIFIED / CONDITIONAL · 실제 자연함수의 높은 eta 미분.** N4 자연함수 597개 중 25개는 eta 5차 미분을 요구한다. 원래 유리수 꼬리 함수와 338개 비교를 통과했고, 원본 비선형 계수 상계 아래 충분한 꼬리 차수를 12차까지 확장했다. 핵심 다항식 상계를 GitHub Lean에서 컴파일했다. 실제 입력의 정의역과 같은 무한해의 계수라는 전제, 유한 계수 평가와 전체 재귀는 OPEN이다. [정확 정수와 유리수 재현](y-higher-flow/n4-natural-tail/README.md) · [GitHub 증명](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44530264291).
+- **VERIFIED / OPEN · 환형 초기장의 공간 포텐셜.** 실제 공간 포텐셜 30개의 배경·평균·주파동 성분을 분리했다. 원본 공간 위상의 1·2차 미분 20개를 대조해 불필요한 시간 미분 상계를 제거하고 정확한 물리 스케일을 118개 stencil 항에 유지했다. `A1@2,0,0,0`의 가장 큰 상계는 평균장이다. 각 성분의 전역 상계가 충분한 에너지 예산을 넘으므로, 위치별 상계와 원본 작은 계수의 보존이 필요하다. [계산과 범위](final67/energy-1013-sharp/correction-budget/spatial-gauge/README.md).
+- **VERIFIED / CONDITIONAL · 이전 원본 평균장의 작은 계수.** 같은 저장 원본의 이전 노드 공간에서 산술식 3,924개와 수치 입력 51개를 평가했다. 값의 `epsilon^(1-kappa_s)`, 미분의 `epsilon^(1-2kappa_s)`와 radial beta의 추가 epsilon을 보존했다. 스칼라 cutoff와 평균속도의 곱에 대한 상단도 충분조건을 넘는다. 원본 4,456,994개 노드와 실제 적분 인자를 별도로 대조해 Temporal gamma가 이미 공변 curl `(partial_R+a L+1/R)psi`임을 확인했다. 내부 이동 적분의 미분항과 외부 `a Lpsi`가 정확히 소거되므로, 이를 별도 미해결 항으로 남긴 이전 설명을 정정했다. 방사 plateau에서 남는 cutoff 교환항은 `-C_z Q^(-h)psi e_r`이다. [계수의 범위](final67/energy-1013-sharp/correction-budget/spatial-gauge/weighted-velocity/README.md) · [실제 curl 결속](final67/energy-1013-sharp/correction-budget/spatial-gauge/mean-curl/README.md).
+
 ## Continuation40
 
 - **VERIFIED / OPEN · 환형 초기장 공간 미분.** 원본 운반 행의 미분 차수와 역반지름 차수를 대조했다. #492는 평균장 값, #493은 평균장 방사 미분이다. 직전 보고에서 두 이름을 뒤바꿨다. 공간 미분에서 시간 미분 상계를 제거하고 실제 직접 속도 세 항의 물리 스케일을 분리했다. 62개 양의 항으로 재계산한 결과 전체 상단은 낮아졌으며, 선도항의 시간 스케일 지수는 정확히 0이다. 해당 평균장 세 항을 모두 제외한 나머지 상계도 예산을 넘고, 그중 `A1@2,0,0,0`을 포함한 항이 가장 크다. [정확한 식과 재현](final67/energy-1013-sharp/correction-budget/README.md).

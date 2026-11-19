@@ -1,0 +1,156 @@
+{
+  "status": "VERIFIED_LITERAL_SOURCE_NORMALIZED_SPATIAL_PHASE",
+  "sourceSHA256": "babe4aceb97d0bdee4084e5f06009e6724128935fffde1647c11e3aab022df60",
+  "sourceGitBlob": "1f1c18a26372c998d8389b6c5138b3c9d3a66f36",
+  "rows": [
+    {
+      "directions": [
+        "R"
+      ],
+      "formula": "-v*Derivative(H(R, Z, T), R) + x0"
+    },
+    {
+      "directions": [
+        "R",
+        "R"
+      ],
+      "formula": "-v*Derivative(H(R, Z, T), (R, 2))"
+    },
+    {
+      "directions": [
+        "R",
+        "Z"
+      ],
+      "formula": "-epsilon*v*Derivative(H(R, Z, T), R, Z)"
+    },
+    {
+      "directions": [
+        "R",
+        "theta"
+      ],
+      "formula": "0"
+    },
+    {
+      "directions": [
+        "R",
+        "v"
+      ],
+      "formula": "-Derivative(H(R, Z, T), R)"
+    },
+    {
+      "directions": [
+        "R",
+        "xi"
+      ],
+      "formula": "0"
+    },
+    {
+      "directions": [
+        "Z"
+      ],
+      "formula": "-epsilon*v*Derivative(H(R, Z, T), Z) + pz"
+    },
+    {
+      "directions": [
+        "Z",
+        "Z"
+      ],
+      "formula": "-epsilon**2*v*Derivative(H(R, Z, T), (Z, 2))"
+    },
+    {
+      "directions": [
+        "Z",
+        "theta"
+      ],
+      "formula": "0"
+    },
+    {
+      "directions": [
+        "Z",
+        "v"
+      ],
+      "formula": "-epsilon*Derivative(H(R, Z, T), Z)"
+    },
+    {
+      "directions": [
+        "Z",
+        "xi"
+      ],
+      "formula": "0"
+    },
+    {
+      "directions": [
+        "theta"
+      ],
+      "formula": "p"
+    },
+    {
+      "directions": [
+        "theta",
+        "theta"
+      ],
+      "formula": "0"
+    },
+    {
+      "directions": [
+        "theta",
+        "v"
+      ],
+      "formula": "0"
+    },
+    {
+      "directions": [
+        "theta",
+        "xi"
+      ],
+      "formula": "0"
+    },
+    {
+      "directions": [
+        "v"
+      ],
+      "formula": "-H(R, Z, T)"
+    },
+    {
+      "directions": [
+        "v",
+        "v"
+      ],
+      "formula": "0"
+    },
+    {
+      "directions": [
+        "v",
+        "xi"
+      ],
+      "formula": "0"
+    },
+    {
+      "directions": [
+        "xi"
+      ],
+      "formula": "0"
+    },
+    {
+      "directions": [
+        "xi",
+        "xi"
+      ],
+      "formula": "0"
+    }
+  ],
+  "assumptions": [
+    "epsilon is constant on the frozen original band",
+    "0<epsilon<=1",
+    "source H and coefficients are smooth through order two",
+    "the original admitted frozen-label chart and coefficient derivative bounds"
+  ],
+  "phaseBounds": {
+    "first": "k*(carrier+length*H1+H0)",
+    "second": "k*(length*H2+H1)",
+    "directions": "partial_R, epsilon partial_Z, partial_theta, partial_v, partial_xi"
+  },
+  "physicalPower": "Each restored ordinary Z derivative costs epsilon^-1. With epsilon=Q^h, this cancels Q^(z*h) in the original physical potential exponent.",
+  "scope": "Exact first and second source-phase identities and conditional derivative envelope only. This does not evaluate the source pulse, final fields, energy acceptance or later corrections.",
+  "release": "HOLD"
+}
