@@ -17,7 +17,7 @@ PROOF = 'research-ide/mathscope-m3/p8/lean/MathScope/M3/CD/InitializedEnergyJoin
 EXTRA = {
     PROOF: '6734cb3f3c6dccf6b7532f164d7ee4ff4396da8e9d0653f15ad39c8eb5bdcde2',
     '.github/workflows/mathscope-cd-axial-bridge-20261029.yml':
-        '15c1596fc94cc4591ff87114ff13a176d0af6a249f0be2324394edd11b34105f',
+        'bd6d5484e062a098085f93a5ea165e739c1615bda3c3cb1eb661ade092f87070',
 }
 PINS = {
     WAVE + 'wave-energy-ledger.json': 'b06a3591051ef0f0ac15896c7ed88b264bdd9a7c3891c0d84f0b471488d1f4f3',
