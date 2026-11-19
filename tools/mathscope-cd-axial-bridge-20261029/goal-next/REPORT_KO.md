@@ -10,6 +10,17 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation82
+
+- **VERIFIED.** 동일 원본 N3 실행에서 첫 Forced의 20개 모드, 초기 소스 100개 및 투영 강제항 120개를 대조했다. $H_w$는 횡좌표를 보존하고 펄스 좌표를 정확히 $w$로 보낸다. 네 느린 cutoff의 양쪽 경계에서 정규화 분모는 정확히 1이고 cutoff는 평탄하다. 원본 실행의 20개 영초기조건 순서 적분을 결속했다. [횡·펄스](primary-forced-join/active-n3-c5-binding/first-wave-guard-traces/forced-fast/README.md) · [네 느린 cutoff](primary-forced-join/active-n3-c5-binding/first-wave-guard-traces/forced-slow/README.md).
+
+- **CONDITIONAL.** 원본 고정 차트에서 다른 느린 guard와 shell이 엄격하고 네이티브 계수가 허용되는 경우, 첫 Forced 포텐셜과 curl의 횡·펄스 경계 미분이 3차까지 0이다. 네 느린 경계에서 해 쪽으로 영미분을 전달하려면 실제 계수와 변분계가 닫힌 펄스 전체에서 경계까지 정칙해야 한다. GitHub에서 동차 cutoff 끝점과 영강제 순서 적분 정리 세 개를 컴파일했다. [GitHub Lean](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44609380607).
+
+- **VERIFIED / CONDITIONAL.** 원본 첫 보정의 실제 순평균은 물리각과 독립이다. 원래 매끄러운 차트에서 전체 각도 평균의 평균–파동 교차항은 0이다. Signed와 첫 Forced 기본파는 같은 주파수를 공유하므로 합한 후 제곱한다. 서로 다른 레이블 사이의 기본파와 이중 조화가 같은 물리 주파수를 가지는 경우도 합산한다. 이로써 첫 보정의 운동에너지와 공간 기울기 제곱에 대한 정확한 각도 적분식을 얻었다. [각도 적분 식과 코드](final67/energy-1013-sharp/correction-budget/spatial-gauge/active-n3-angular-gram/README.md).
+
+- **OPEN.** 원본 느린·방사 경계의 균일 가중 상계, 이후 보정, 외력 일과 반경·시간 적분, 최종 비교 0/4가 남아 있다. M3 62/64, 최종 jets 0/67, 운영 R1-08 OPEN 및 RELEASE HOLD다.
+
+
 ## Continuation81
 
 - **VERIFIED.** 활성 N3의 실제 위상 10개와 739개 각도 독립 입력을 확인했다. 원본 각방향 기울기는 \(p=\omega/k\)이며, \(\omega\)는 원본 반올림과 0에서 쓰는 부호 단위값으로 얻는 0이 아닌 정수다. 첫 Forced의 실제 상대 모드 \(m=1,2\)에는 물리 각주파수 \(\pm m\omega\)가 남는다. [위상 원본·재현](final67/energy-1013-sharp/correction-budget/spatial-gauge/active-n3-angular-cross/README.md).
