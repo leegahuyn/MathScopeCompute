@@ -10,18 +10,16 @@ namespace MathScope.M3.CD
 theorem forced_weighted_word_bound {f p : ℝ → ℝ} {v L C J : ℝ} (k : ℕ)
     (hv : 0 ≤ v) (hvL : v ≤ L) (hC : 0 ≤ C)
     (hp : IntervalIntegrable p volume 0 v)
-    (hpoint : ∀ t ∈ uIoc (0 : ℝ) v,
+    (hpoint : ∀ t ∈ Ioc (0 : ℝ) v,
       0 ≤ p t ∧ ‖f t‖ ≤ C * (v - t) ^ k * p t)
     (hMass : (∫ t in (0 : ℝ)..v, p t) ≤ J) :
     ‖∫ t in (0 : ℝ)..v, f t‖ ≤ (C * L ^ k) * J := by
   have hL := hv.trans hvL
-  have hbound : ∀ t ∈ uIoc (0 : ℝ) v, ‖f t‖ ≤ (C * L ^ k) * p t := by
+  have hbound : ∀ t ∈ Ioc (0 : ℝ) v, ‖f t‖ ≤ (C * L ^ k) * p t := by
     intro t ht
-    have htOrd : t ∈ Ioc (0 : ℝ) v := by
-      simpa only [uIoc_of_le hv] using ht
     have hpwr : (v - t) ^ k ≤ L ^ k := by
-      apply pow_le_pow_left₀ (sub_nonneg.mpr htOrd.2) _ k
-      linarith only [hvL, htOrd.1]
+      apply pow_le_pow_left₀ (sub_nonneg.mpr ht.2) _ k
+      linarith only [hvL, ht.1]
     exact (hpoint t ht).2.trans
       (mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_left hpwr hC)
         (hpoint t ht).1)
