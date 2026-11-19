@@ -51,8 +51,35 @@ theorem wave_reference_cylindrical_curl
   rw [hFast, hAxial, hAngular, ← hVelocity]
   exact ⟨by ring, by ring, by ring⟩
 
+/-- Real divergence of a phase-modulated cylindrical curl, with the overall
+factor one half suppressed. Only the three mixed phase defects survive. -/
+theorem phase_curl_real_divergence_defect {F : Type*} [CommRing F]
+    (k invR nR nTheta nZ nThetaR nThetaZ nZR nRZ : F)
+    (cR cTheta cZ cThetaR cZR cRZ cThetaZ : F) :
+    k * (nZR * cTheta + nZ * cThetaR - nThetaR * cZ - nTheta * cZR) +
+      invR * (k * (nZ * cTheta - nTheta * cZ)) +
+      k * (nThetaZ * cR + nTheta * cRZ - nRZ * cTheta - nR * cThetaZ) -
+      k * (-nR * cThetaZ + nTheta * (cRZ - cZR) + nZ * (cThetaR + invR * cTheta)) =
+    k * (-(nThetaR + invR * nTheta) * cZ + (nZR - nRZ) * cTheta + nThetaZ * cR) := by
+  ring
+
+/-- The imaginary divergence uses commutation of the two slow physical
+derivatives and the exact alternating real leading curl. -/
+theorem phase_curl_imaginary_divergence_zero {F : Type*} [CommRing F]
+    (k invR nR nTheta nZ cR cTheta cZ cThetaZ cThetaRZ cThetaZR : F)
+    (hcomm : cThetaRZ = cThetaZR) :
+    -cThetaRZ - invR * cThetaZ + cThetaZR + invR * cThetaZ +
+      k * (nR * (k * (nZ * cTheta - nTheta * cZ)) +
+        nTheta * (k * (nR * cZ - nZ * cR)) +
+        nZ * (k * (nTheta * cR - nR * cTheta))) = 0 := by
+  rw [hcomm]
+  ring
+
 #print axioms wave_reference_axial_scale
 #print axioms wave_reference_potential_scale
 #print axioms wave_reference_cylindrical_curl
+
+#print axioms phase_curl_real_divergence_defect
+#print axioms phase_curl_imaginary_divergence_zero
 
 end MathScope.M3.CD
