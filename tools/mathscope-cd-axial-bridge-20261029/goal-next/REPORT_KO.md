@@ -10,6 +10,18 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation90
+
+- **VERIFIED.** 첫 Forced 20개 시스템의 실제 원본 투영 실수부·허수부 120개를 유리수로 전개했다. 원본 \(H_w\)가 횡좌표를 보존하고 펄스 좌표를 \(w\)로 옮기는 것을 대조했다. 원본 각 강제항에서 모드 1의 \(P(w)\)와 모드 2의 \(P(w)^2\)를 분리했다. 모드 1에는 원본 속도에 곱해진 \(\lambda-d_{\rm ref}\) 항이 남고, 모드 2에서는 명시적인 Gaussian 미분항이 모두 소거된다. [가중 변분 적분](primary-forced-join/active-n3-c5-binding/first-wave-guard-traces/forced-normalized-variation/README.md).
+
+- **CONDITIONAL.** 정규화 원본 단항식 4,350개에서 절댓값 상계 항을 모드 1의 33종과 모드 2의 5종으로 묶었다. 원본 변분 요청 23개에 해당하는 1,380개 복소 강제항 역할의 정확한 적분 계수도 계산했다. 같은 실제 \(H_w\) 경로에서 강제항의 정규화 도함수가 \(F_m S^{b_m+2s}\)와 원본 방사 가중치로 제어되면, 정규화 해의 \(S\) 지수는 모드 1이 \(b_1+2s+1\), 모드 2가 \(b_2+2s+1/2\)다. 물리 모드 2에서 두 Gaussian을 함께 쓰면 행렬 삽입 개수에 따라 더 강한 항별 상계를 적용할 수 있다. 실제 강제항의 균일 수치 상수 \(F_m\)는 아직 OPEN이다.
+
+- **VERIFIED / CONDITIONAL.** Y의 원본 N1 속도 \(U_1\) 호출을 \(\eta=0\), \(0<X_*<X_a\)인 실제 한 점에 결속했다. 원본의 두 축 강제항에서 \(f_5(0,0)=4Aj_0\)를 대조했다. 원본의 계수 해석성과 국소 실현 조건을 사용하면 두 항으로 \(U_1(X_*,0)/(j_0X_*)\)가 \(524233/1048576\)과 \(65543/131072\) 사이에 있음을 얻는다. 수치 범위는 선택한 원본 한 점이다. [Y 국소 구간](y-higher-flow/picard-core-interval/README.md).
+
+- **VERIFIED.** 순서 적분에서 펄스 질량을 보존하는 부등식과 \(\sqrt{L_s}\) 상계 두 정리를 GitHub Lean에서 컴파일했다. 첫 실행 뒤 적분 구간의 방향을 명시했고 두 실행 로그를 보존했다. [성공한 GitHub 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44632889517).
+
+- **OPEN.** N7-06 에너지와 N8-05 수렴·꼬리 및 최종장 jets 0/67은 그대로다. 운영 웹의 새 읽기 해시가 보존된 공개 본문과 일치했다. 운영 R1-08의 편집 원본과 수락 증거가 필요하며 RELEASE HOLD다. [운영 웹 읽기 기록](preservation-continuation90.json).
+
 ## Continuation89
 
 - **VERIFIED.** 활성 그래프의 원본 배경 접두부 123,870개를 다시 생성한 배경과 해시까지 대조했다. 두 실제 배경의 원본 계수, 시간 cutoff, 차트 배율 및 \(R,Z,T\) 인자가 기존 10차 상계의 정의와 일치했다. 같은 두 배경이 원본 양쪽 공분산의 기저와 Haar 질량에 들어간다. [고정 라벨 원본 결속](primary-forced-join/active-n3-c5-binding/first-wave-guard-traces/outer-fixed-label-norm/README.md).

@@ -1,0 +1,2107 @@
+{
+  "status": "VERIFIED_ACTUAL_FORCED_JET_DEMAND_AND_CONDITIONAL_CONCENTRATED_VARIATION",
+  "inputPins": {
+    "radial": "bd1974a286e1bb99f07c780b8a3ca29dc2ff65347231cfa36a31bb744133eb3d",
+    "frame": "56cc1d9685f00a5aba808675023453b3808fd916bd697f4ab9a242512ebee32d",
+    "matrix": "e808bd89285aa55ec0f1bf1c66cf7875ca26f706724ebc575e43c0466d2cdc36",
+    "background": "0b7c13076805acc97cd45e3e4e70e6f7620950744dc493dbff26d0644ff977cc",
+    "weight": "4e334a10ed93839437baa8b2caefe36d32291bfc6c3d67d3b8b04c41fa797ba0",
+    "outer": "71b6c139f15491aa0c625a25c91c32987a4f58038ccd97fdce9ea888a6e892aa",
+    "temporal": "c347d10e54d4bfd2ff845892047b09d38ef1bcec596369694ad0a8e73dbbd45b"
+  },
+  "sourceNodes": 22155584,
+  "nativeSystems": [
+    {
+      "key": "0:1",
+      "mode": 1,
+      "system": 0,
+      "pulse": 21661707
+    },
+    {
+      "key": "0:1",
+      "mode": 2,
+      "system": 1,
+      "pulse": 21661707
+    },
+    {
+      "key": "0:-1",
+      "mode": 1,
+      "system": 2,
+      "pulse": 21668404
+    },
+    {
+      "key": "0:-1",
+      "mode": 2,
+      "system": 3,
+      "pulse": 21668404
+    },
+    {
+      "key": "1:1",
+      "mode": 1,
+      "system": 4,
+      "pulse": 21675068
+    },
+    {
+      "key": "1:1",
+      "mode": 2,
+      "system": 5,
+      "pulse": 21675068
+    },
+    {
+      "key": "1:-1",
+      "mode": 1,
+      "system": 6,
+      "pulse": 21681715
+    },
+    {
+      "key": "1:-1",
+      "mode": 2,
+      "system": 7,
+      "pulse": 21681715
+    },
+    {
+      "key": "2:1",
+      "mode": 1,
+      "system": 8,
+      "pulse": 21688334
+    },
+    {
+      "key": "2:1",
+      "mode": 2,
+      "system": 9,
+      "pulse": 21688334
+    },
+    {
+      "key": "2:-1",
+      "mode": 1,
+      "system": 10,
+      "pulse": 21694989
+    },
+    {
+      "key": "2:-1",
+      "mode": 2,
+      "system": 11,
+      "pulse": 21694989
+    },
+    {
+      "key": "3:1",
+      "mode": 1,
+      "system": 12,
+      "pulse": 21701616
+    },
+    {
+      "key": "3:1",
+      "mode": 2,
+      "system": 13,
+      "pulse": 21701616
+    },
+    {
+      "key": "3:-1",
+      "mode": 1,
+      "system": 14,
+      "pulse": 21708271
+    },
+    {
+      "key": "3:-1",
+      "mode": 2,
+      "system": 15,
+      "pulse": 21708271
+    },
+    {
+      "key": "4:1",
+      "mode": 1,
+      "system": 16,
+      "pulse": 21714898
+    },
+    {
+      "key": "4:1",
+      "mode": 2,
+      "system": 17,
+      "pulse": 21714898
+    },
+    {
+      "key": "4:-1",
+      "mode": 1,
+      "system": 18,
+      "pulse": 21721553
+    },
+    {
+      "key": "4:-1",
+      "mode": 2,
+      "system": 19,
+      "pulse": 21721553
+    }
+  ],
+  "realAndImaginaryShareCoefficients": true,
+  "baseForcingCondition": "For each m=1,2, on the same admitted H_w path f_m=P(w)^m*fhat_m. For alpha=(r,z,l), with s=r+z, |D^alpha fhat_m|_inf<=F_m*S^(b_m+2s) times the given radial weight with pole growth 3s. P, L_s, labels and representatives are fixed for these derivatives.",
+  "projectionAndLeftBasis": "-BLeft*Pi times the original raw forcing. The two matrix factors cost S^r+z, and their L derivatives vanish.",
+  "massBounds": {
+    "mode1": "Lmax*S",
+    "mode2": "3*sqrt(Lmax/gL)*S^(1/2)",
+    "retainedSourcePulse": "P(t0) at innermost forcing time of mode 2",
+    "gL": "Renv^(-41)/8",
+    "orderedVolume": "(v-t0)^k/k!",
+    "onlySameAdmittedInterval": "0<=t0<=v<=L_s"
+  },
+  "optionalPhysicalModeTwo": {
+    "bound": "P(v)*integral_0^v P(t)*(v-t)^k/k! dt <= sqrt(P(v))*3*(2*L_s/gL)^((k+1)/2)/sqrt(k!)",
+    "origin": "With c=gL/L_s and a=v-L_s/2, b=t-L_s/2, use (a-b)^2<=2(a^2+b^2). Retain exp(-c*b^2/2) for integration and bound |a-b|^k*exp(-c*(a-b)^2/4) by sqrt(k!)*(2/c)^(k/2) from the nonnegative exponential series.",
+    "application": "Keep sqrt(P(v)) on the physical mode-two field. Use physicalOverPPolynomial coefficients, replacing their innermost mass and Lmax^k by newWindowFactor, and taking the listed power of S plus b_2.",
+    "windowMonomialControlPairs": 49
+  },
+  "coefficientMeaning": "Multiply F_m and the appropriate innermost mass bound no S included, then sum the row coefficients times A^maxSourceConstantPower C0^propagatorPower Lmax^remainingOrderedWindowPower. Multiply by the total listed S power including input b_m and radial weight. A>=1 as in the original C89 source norm.",
+  "rows": [
+    {
+      "RZL": [
+        0,
+        0,
+        0
+      ],
+      "slowOrder": 0,
+      "orderedWords": 1,
+      "statePolynomial": [
+        {
+          "orderedMatrixInsertions": 0,
+          "coefficient": "27",
+          "maxSourceConstantPower": 6,
+          "propagatorPower": 1,
+          "remainingOrderedWindowPower": 0
+        }
+      ],
+      "physicalOverPPolynomial": [
+        {
+          "orderedMatrixInsertions": 0,
+          "coefficient": "216",
+          "maxSourceConstantPower": 9,
+          "propagatorPower": 1,
+          "remainingOrderedWindowPower": 0
+        }
+      ],
+      "physicalModeTwoWindowTerms": [
+        {
+          "orderedMatrixInsertions": 0,
+          "sourceBandPowerAboveBase": "1/2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 1
+        }
+      ],
+      "mode1BandPowerAddedToInputBase": "1",
+      "mode2BandPowerAddedToInputBase": "1/2",
+      "additionalRadialPole": 0
+    },
+    {
+      "RZL": [
+        0,
+        0,
+        1
+      ],
+      "slowOrder": 0,
+      "orderedWords": 1,
+      "statePolynomial": [
+        {
+          "orderedMatrixInsertions": 0,
+          "coefficient": "27",
+          "maxSourceConstantPower": 6,
+          "propagatorPower": 1,
+          "remainingOrderedWindowPower": 0
+        }
+      ],
+      "physicalOverPPolynomial": [
+        {
+          "orderedMatrixInsertions": 0,
+          "coefficient": "216",
+          "maxSourceConstantPower": 9,
+          "propagatorPower": 1,
+          "remainingOrderedWindowPower": 0
+        }
+      ],
+      "physicalModeTwoWindowTerms": [
+        {
+          "orderedMatrixInsertions": 0,
+          "sourceBandPowerAboveBase": "1/2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 1
+        }
+      ],
+      "mode1BandPowerAddedToInputBase": "1",
+      "mode2BandPowerAddedToInputBase": "1/2",
+      "additionalRadialPole": 0
+    },
+    {
+      "RZL": [
+        0,
+        1,
+        0
+      ],
+      "slowOrder": 1,
+      "orderedWords": 2,
+      "statePolynomial": [
+        {
+          "orderedMatrixInsertions": 0,
+          "coefficient": "351",
+          "maxSourceConstantPower": 11,
+          "propagatorPower": 1,
+          "remainingOrderedWindowPower": 0
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "coefficient": "960498",
+          "maxSourceConstantPower": 22,
+          "propagatorPower": 2,
+          "remainingOrderedWindowPower": 1
+        }
+      ],
+      "physicalOverPPolynomial": [
+        {
+          "orderedMatrixInsertions": 0,
+          "coefficient": "4104",
+          "maxSourceConstantPower": 14,
+          "propagatorPower": 1,
+          "remainingOrderedWindowPower": 0
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "coefficient": "7683984",
+          "maxSourceConstantPower": 25,
+          "propagatorPower": 2,
+          "remainingOrderedWindowPower": 1
+        }
+      ],
+      "physicalModeTwoWindowTerms": [
+        {
+          "orderedMatrixInsertions": 0,
+          "sourceBandPowerAboveBase": "5/2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 1
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "sourceBandPowerAboveBase": "2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 1
+        }
+      ],
+      "mode1BandPowerAddedToInputBase": "3",
+      "mode2BandPowerAddedToInputBase": "5/2",
+      "additionalRadialPole": 0
+    },
+    {
+      "RZL": [
+        0,
+        1,
+        1
+      ],
+      "slowOrder": 1,
+      "orderedWords": 2,
+      "statePolynomial": [
+        {
+          "orderedMatrixInsertions": 0,
+          "coefficient": "351",
+          "maxSourceConstantPower": 11,
+          "propagatorPower": 1,
+          "remainingOrderedWindowPower": 0
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "coefficient": "960498",
+          "maxSourceConstantPower": 22,
+          "propagatorPower": 2,
+          "remainingOrderedWindowPower": 1
+        }
+      ],
+      "physicalOverPPolynomial": [
+        {
+          "orderedMatrixInsertions": 0,
+          "coefficient": "4104",
+          "maxSourceConstantPower": 14,
+          "propagatorPower": 1,
+          "remainingOrderedWindowPower": 0
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "coefficient": "7683984",
+          "maxSourceConstantPower": 25,
+          "propagatorPower": 2,
+          "remainingOrderedWindowPower": 1
+        }
+      ],
+      "physicalModeTwoWindowTerms": [
+        {
+          "orderedMatrixInsertions": 0,
+          "sourceBandPowerAboveBase": "5/2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 1
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "sourceBandPowerAboveBase": "2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 1
+        }
+      ],
+      "mode1BandPowerAddedToInputBase": "3",
+      "mode2BandPowerAddedToInputBase": "5/2",
+      "additionalRadialPole": 0
+    },
+    {
+      "RZL": [
+        0,
+        2,
+        0
+      ],
+      "slowOrder": 2,
+      "orderedWords": 4,
+      "statePolynomial": [
+        {
+          "orderedMatrixInsertions": 0,
+          "coefficient": "9801",
+          "maxSourceConstantPower": 16,
+          "propagatorPower": 1,
+          "remainingOrderedWindowPower": 0
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "coefficient": "58571667",
+          "maxSourceConstantPower": 27,
+          "propagatorPower": 2,
+          "remainingOrderedWindowPower": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "coefficient": "34168755852",
+          "maxSourceConstantPower": 38,
+          "propagatorPower": 3,
+          "remainingOrderedWindowPower": 2
+        }
+      ],
+      "physicalOverPPolynomial": [
+        {
+          "orderedMatrixInsertions": 0,
+          "coefficient": "133488",
+          "maxSourceConstantPower": 19,
+          "propagatorPower": 1,
+          "remainingOrderedWindowPower": 0
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "coefficient": "560781144",
+          "maxSourceConstantPower": 30,
+          "propagatorPower": 2,
+          "remainingOrderedWindowPower": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "coefficient": "273350046816",
+          "maxSourceConstantPower": 41,
+          "propagatorPower": 3,
+          "remainingOrderedWindowPower": 2
+        }
+      ],
+      "physicalModeTwoWindowTerms": [
+        {
+          "orderedMatrixInsertions": 0,
+          "sourceBandPowerAboveBase": "9/2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 1
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "sourceBandPowerAboveBase": "4",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "sourceBandPowerAboveBase": "7/2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 2
+        }
+      ],
+      "mode1BandPowerAddedToInputBase": "5",
+      "mode2BandPowerAddedToInputBase": "9/2",
+      "additionalRadialPole": 0
+    },
+    {
+      "RZL": [
+        0,
+        2,
+        1
+      ],
+      "slowOrder": 2,
+      "orderedWords": 4,
+      "statePolynomial": [
+        {
+          "orderedMatrixInsertions": 0,
+          "coefficient": "9801",
+          "maxSourceConstantPower": 16,
+          "propagatorPower": 1,
+          "remainingOrderedWindowPower": 0
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "coefficient": "58571667",
+          "maxSourceConstantPower": 27,
+          "propagatorPower": 2,
+          "remainingOrderedWindowPower": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "coefficient": "34168755852",
+          "maxSourceConstantPower": 38,
+          "propagatorPower": 3,
+          "remainingOrderedWindowPower": 2
+        }
+      ],
+      "physicalOverPPolynomial": [
+        {
+          "orderedMatrixInsertions": 0,
+          "coefficient": "133488",
+          "maxSourceConstantPower": 19,
+          "propagatorPower": 1,
+          "remainingOrderedWindowPower": 0
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "coefficient": "560781144",
+          "maxSourceConstantPower": 30,
+          "propagatorPower": 2,
+          "remainingOrderedWindowPower": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "coefficient": "273350046816",
+          "maxSourceConstantPower": 41,
+          "propagatorPower": 3,
+          "remainingOrderedWindowPower": 2
+        }
+      ],
+      "physicalModeTwoWindowTerms": [
+        {
+          "orderedMatrixInsertions": 0,
+          "sourceBandPowerAboveBase": "9/2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 1
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "sourceBandPowerAboveBase": "4",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "sourceBandPowerAboveBase": "7/2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 2
+        }
+      ],
+      "mode1BandPowerAddedToInputBase": "5",
+      "mode2BandPowerAddedToInputBase": "9/2",
+      "additionalRadialPole": 0
+    },
+    {
+      "RZL": [
+        0,
+        3,
+        0
+      ],
+      "slowOrder": 3,
+      "orderedWords": 8,
+      "statePolynomial": [
+        {
+          "orderedMatrixInsertions": 0,
+          "coefficient": "413127",
+          "maxSourceConstantPower": 21,
+          "propagatorPower": 1,
+          "remainingOrderedWindowPower": 0
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "coefficient": "3957351552",
+          "maxSourceConstantPower": 32,
+          "propagatorPower": 2,
+          "remainingOrderedWindowPower": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "coefficient": "4918303967346",
+          "maxSourceConstantPower": 43,
+          "propagatorPower": 3,
+          "remainingOrderedWindowPower": 2
+        },
+        {
+          "orderedMatrixInsertions": 3,
+          "coefficient": "1215519320679048",
+          "maxSourceConstantPower": 54,
+          "propagatorPower": 4,
+          "remainingOrderedWindowPower": 3
+        }
+      ],
+      "physicalOverPPolynomial": [
+        {
+          "orderedMatrixInsertions": 0,
+          "coefficient": "6124464",
+          "maxSourceConstantPower": 24,
+          "propagatorPower": 1,
+          "remainingOrderedWindowPower": 0
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "coefficient": "42375275712",
+          "maxSourceConstantPower": 35,
+          "propagatorPower": 2,
+          "remainingOrderedWindowPower": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "coefficient": "44266732581456",
+          "maxSourceConstantPower": 46,
+          "propagatorPower": 3,
+          "remainingOrderedWindowPower": 2
+        },
+        {
+          "orderedMatrixInsertions": 3,
+          "coefficient": "9724154565432384",
+          "maxSourceConstantPower": 57,
+          "propagatorPower": 4,
+          "remainingOrderedWindowPower": 3
+        }
+      ],
+      "physicalModeTwoWindowTerms": [
+        {
+          "orderedMatrixInsertions": 0,
+          "sourceBandPowerAboveBase": "13/2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 1
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "sourceBandPowerAboveBase": "6",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "sourceBandPowerAboveBase": "11/2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 2
+        },
+        {
+          "orderedMatrixInsertions": 3,
+          "sourceBandPowerAboveBase": "5",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 6
+        }
+      ],
+      "mode1BandPowerAddedToInputBase": "7",
+      "mode2BandPowerAddedToInputBase": "13/2",
+      "additionalRadialPole": 0
+    },
+    {
+      "RZL": [
+        1,
+        0,
+        0
+      ],
+      "slowOrder": 1,
+      "orderedWords": 2,
+      "statePolynomial": [
+        {
+          "orderedMatrixInsertions": 0,
+          "coefficient": "351",
+          "maxSourceConstantPower": 11,
+          "propagatorPower": 1,
+          "remainingOrderedWindowPower": 0
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "coefficient": "960498",
+          "maxSourceConstantPower": 22,
+          "propagatorPower": 2,
+          "remainingOrderedWindowPower": 1
+        }
+      ],
+      "physicalOverPPolynomial": [
+        {
+          "orderedMatrixInsertions": 0,
+          "coefficient": "4104",
+          "maxSourceConstantPower": 14,
+          "propagatorPower": 1,
+          "remainingOrderedWindowPower": 0
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "coefficient": "7683984",
+          "maxSourceConstantPower": 25,
+          "propagatorPower": 2,
+          "remainingOrderedWindowPower": 1
+        }
+      ],
+      "physicalModeTwoWindowTerms": [
+        {
+          "orderedMatrixInsertions": 0,
+          "sourceBandPowerAboveBase": "5/2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 1
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "sourceBandPowerAboveBase": "2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 1
+        }
+      ],
+      "mode1BandPowerAddedToInputBase": "3",
+      "mode2BandPowerAddedToInputBase": "5/2",
+      "additionalRadialPole": 0
+    },
+    {
+      "RZL": [
+        1,
+        0,
+        1
+      ],
+      "slowOrder": 1,
+      "orderedWords": 2,
+      "statePolynomial": [
+        {
+          "orderedMatrixInsertions": 0,
+          "coefficient": "351",
+          "maxSourceConstantPower": 11,
+          "propagatorPower": 1,
+          "remainingOrderedWindowPower": 0
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "coefficient": "960498",
+          "maxSourceConstantPower": 22,
+          "propagatorPower": 2,
+          "remainingOrderedWindowPower": 1
+        }
+      ],
+      "physicalOverPPolynomial": [
+        {
+          "orderedMatrixInsertions": 0,
+          "coefficient": "4104",
+          "maxSourceConstantPower": 14,
+          "propagatorPower": 1,
+          "remainingOrderedWindowPower": 0
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "coefficient": "7683984",
+          "maxSourceConstantPower": 25,
+          "propagatorPower": 2,
+          "remainingOrderedWindowPower": 1
+        }
+      ],
+      "physicalModeTwoWindowTerms": [
+        {
+          "orderedMatrixInsertions": 0,
+          "sourceBandPowerAboveBase": "5/2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 1
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "sourceBandPowerAboveBase": "2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 1
+        }
+      ],
+      "mode1BandPowerAddedToInputBase": "3",
+      "mode2BandPowerAddedToInputBase": "5/2",
+      "additionalRadialPole": 0
+    },
+    {
+      "RZL": [
+        1,
+        1,
+        0
+      ],
+      "slowOrder": 2,
+      "orderedWords": 6,
+      "statePolynomial": [
+        {
+          "orderedMatrixInsertions": 0,
+          "coefficient": "9801",
+          "maxSourceConstantPower": 16,
+          "propagatorPower": 1,
+          "remainingOrderedWindowPower": 0
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "coefficient": "58571667",
+          "maxSourceConstantPower": 27,
+          "propagatorPower": 2,
+          "remainingOrderedWindowPower": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "coefficient": "34168755852",
+          "maxSourceConstantPower": 38,
+          "propagatorPower": 3,
+          "remainingOrderedWindowPower": 2
+        }
+      ],
+      "physicalOverPPolynomial": [
+        {
+          "orderedMatrixInsertions": 0,
+          "coefficient": "133488",
+          "maxSourceConstantPower": 19,
+          "propagatorPower": 1,
+          "remainingOrderedWindowPower": 0
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "coefficient": "560781144",
+          "maxSourceConstantPower": 30,
+          "propagatorPower": 2,
+          "remainingOrderedWindowPower": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "coefficient": "273350046816",
+          "maxSourceConstantPower": 41,
+          "propagatorPower": 3,
+          "remainingOrderedWindowPower": 2
+        }
+      ],
+      "physicalModeTwoWindowTerms": [
+        {
+          "orderedMatrixInsertions": 0,
+          "sourceBandPowerAboveBase": "9/2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 1
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "sourceBandPowerAboveBase": "4",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "sourceBandPowerAboveBase": "7/2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 2
+        }
+      ],
+      "mode1BandPowerAddedToInputBase": "5",
+      "mode2BandPowerAddedToInputBase": "9/2",
+      "additionalRadialPole": 0
+    },
+    {
+      "RZL": [
+        1,
+        1,
+        1
+      ],
+      "slowOrder": 2,
+      "orderedWords": 6,
+      "statePolynomial": [
+        {
+          "orderedMatrixInsertions": 0,
+          "coefficient": "9801",
+          "maxSourceConstantPower": 16,
+          "propagatorPower": 1,
+          "remainingOrderedWindowPower": 0
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "coefficient": "58571667",
+          "maxSourceConstantPower": 27,
+          "propagatorPower": 2,
+          "remainingOrderedWindowPower": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "coefficient": "34168755852",
+          "maxSourceConstantPower": 38,
+          "propagatorPower": 3,
+          "remainingOrderedWindowPower": 2
+        }
+      ],
+      "physicalOverPPolynomial": [
+        {
+          "orderedMatrixInsertions": 0,
+          "coefficient": "133488",
+          "maxSourceConstantPower": 19,
+          "propagatorPower": 1,
+          "remainingOrderedWindowPower": 0
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "coefficient": "560781144",
+          "maxSourceConstantPower": 30,
+          "propagatorPower": 2,
+          "remainingOrderedWindowPower": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "coefficient": "273350046816",
+          "maxSourceConstantPower": 41,
+          "propagatorPower": 3,
+          "remainingOrderedWindowPower": 2
+        }
+      ],
+      "physicalModeTwoWindowTerms": [
+        {
+          "orderedMatrixInsertions": 0,
+          "sourceBandPowerAboveBase": "9/2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 1
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "sourceBandPowerAboveBase": "4",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "sourceBandPowerAboveBase": "7/2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 2
+        }
+      ],
+      "mode1BandPowerAddedToInputBase": "5",
+      "mode2BandPowerAddedToInputBase": "9/2",
+      "additionalRadialPole": 0
+    },
+    {
+      "RZL": [
+        1,
+        2,
+        0
+      ],
+      "slowOrder": 3,
+      "orderedWords": 16,
+      "statePolynomial": [
+        {
+          "orderedMatrixInsertions": 0,
+          "coefficient": "413127",
+          "maxSourceConstantPower": 21,
+          "propagatorPower": 1,
+          "remainingOrderedWindowPower": 0
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "coefficient": "3957351552",
+          "maxSourceConstantPower": 32,
+          "propagatorPower": 2,
+          "remainingOrderedWindowPower": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "coefficient": "4918303967346",
+          "maxSourceConstantPower": 43,
+          "propagatorPower": 3,
+          "remainingOrderedWindowPower": 2
+        },
+        {
+          "orderedMatrixInsertions": 3,
+          "coefficient": "1215519320679048",
+          "maxSourceConstantPower": 54,
+          "propagatorPower": 4,
+          "remainingOrderedWindowPower": 3
+        }
+      ],
+      "physicalOverPPolynomial": [
+        {
+          "orderedMatrixInsertions": 0,
+          "coefficient": "6124464",
+          "maxSourceConstantPower": 24,
+          "propagatorPower": 1,
+          "remainingOrderedWindowPower": 0
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "coefficient": "42375275712",
+          "maxSourceConstantPower": 35,
+          "propagatorPower": 2,
+          "remainingOrderedWindowPower": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "coefficient": "44266732581456",
+          "maxSourceConstantPower": 46,
+          "propagatorPower": 3,
+          "remainingOrderedWindowPower": 2
+        },
+        {
+          "orderedMatrixInsertions": 3,
+          "coefficient": "9724154565432384",
+          "maxSourceConstantPower": 57,
+          "propagatorPower": 4,
+          "remainingOrderedWindowPower": 3
+        }
+      ],
+      "physicalModeTwoWindowTerms": [
+        {
+          "orderedMatrixInsertions": 0,
+          "sourceBandPowerAboveBase": "13/2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 1
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "sourceBandPowerAboveBase": "6",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "sourceBandPowerAboveBase": "11/2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 2
+        },
+        {
+          "orderedMatrixInsertions": 3,
+          "sourceBandPowerAboveBase": "5",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 6
+        }
+      ],
+      "mode1BandPowerAddedToInputBase": "7",
+      "mode2BandPowerAddedToInputBase": "13/2",
+      "additionalRadialPole": 0
+    },
+    {
+      "RZL": [
+        1,
+        2,
+        1
+      ],
+      "slowOrder": 3,
+      "orderedWords": 16,
+      "statePolynomial": [
+        {
+          "orderedMatrixInsertions": 0,
+          "coefficient": "413127",
+          "maxSourceConstantPower": 21,
+          "propagatorPower": 1,
+          "remainingOrderedWindowPower": 0
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "coefficient": "3957351552",
+          "maxSourceConstantPower": 32,
+          "propagatorPower": 2,
+          "remainingOrderedWindowPower": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "coefficient": "4918303967346",
+          "maxSourceConstantPower": 43,
+          "propagatorPower": 3,
+          "remainingOrderedWindowPower": 2
+        },
+        {
+          "orderedMatrixInsertions": 3,
+          "coefficient": "1215519320679048",
+          "maxSourceConstantPower": 54,
+          "propagatorPower": 4,
+          "remainingOrderedWindowPower": 3
+        }
+      ],
+      "physicalOverPPolynomial": [
+        {
+          "orderedMatrixInsertions": 0,
+          "coefficient": "6124464",
+          "maxSourceConstantPower": 24,
+          "propagatorPower": 1,
+          "remainingOrderedWindowPower": 0
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "coefficient": "42375275712",
+          "maxSourceConstantPower": 35,
+          "propagatorPower": 2,
+          "remainingOrderedWindowPower": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "coefficient": "44266732581456",
+          "maxSourceConstantPower": 46,
+          "propagatorPower": 3,
+          "remainingOrderedWindowPower": 2
+        },
+        {
+          "orderedMatrixInsertions": 3,
+          "coefficient": "9724154565432384",
+          "maxSourceConstantPower": 57,
+          "propagatorPower": 4,
+          "remainingOrderedWindowPower": 3
+        }
+      ],
+      "physicalModeTwoWindowTerms": [
+        {
+          "orderedMatrixInsertions": 0,
+          "sourceBandPowerAboveBase": "13/2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 1
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "sourceBandPowerAboveBase": "6",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "sourceBandPowerAboveBase": "11/2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 2
+        },
+        {
+          "orderedMatrixInsertions": 3,
+          "sourceBandPowerAboveBase": "5",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 6
+        }
+      ],
+      "mode1BandPowerAddedToInputBase": "7",
+      "mode2BandPowerAddedToInputBase": "13/2",
+      "additionalRadialPole": 0
+    },
+    {
+      "RZL": [
+        1,
+        3,
+        0
+      ],
+      "slowOrder": 4,
+      "orderedWords": 40,
+      "statePolynomial": [
+        {
+          "orderedMatrixInsertions": 0,
+          "coefficient": "23035401",
+          "maxSourceConstantPower": 26,
+          "propagatorPower": 1,
+          "remainingOrderedWindowPower": 0
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "coefficient": "311573642823",
+          "maxSourceConstantPower": 37,
+          "propagatorPower": 2,
+          "remainingOrderedWindowPower": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "coefficient": "614126181580065",
+          "maxSourceConstantPower": 48,
+          "propagatorPower": 3,
+          "remainingOrderedWindowPower": 2
+        },
+        {
+          "orderedMatrixInsertions": 3,
+          "coefficient": "318323988331077960",
+          "maxSourceConstantPower": 59,
+          "propagatorPower": 4,
+          "remainingOrderedWindowPower": 3
+        },
+        {
+          "orderedMatrixInsertions": 4,
+          "coefficient": "43240884313836453552",
+          "maxSourceConstantPower": 70,
+          "propagatorPower": 5,
+          "remainingOrderedWindowPower": 4
+        }
+      ],
+      "physicalOverPPolynomial": [
+        {
+          "orderedMatrixInsertions": 0,
+          "coefficient": "361151892",
+          "maxSourceConstantPower": 29,
+          "propagatorPower": 1,
+          "remainingOrderedWindowPower": 0
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "coefficient": "3612429320040",
+          "maxSourceConstantPower": 40,
+          "propagatorPower": 2,
+          "remainingOrderedWindowPower": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "coefficient": "6019693742179656",
+          "maxSourceConstantPower": 51,
+          "propagatorPower": 3,
+          "remainingOrderedWindowPower": 2
+        },
+        {
+          "orderedMatrixInsertions": 3,
+          "coefficient": "2779971616219000896",
+          "maxSourceConstantPower": 62,
+          "propagatorPower": 4,
+          "remainingOrderedWindowPower": 3
+        },
+        {
+          "orderedMatrixInsertions": 4,
+          "coefficient": "345927074510691628416",
+          "maxSourceConstantPower": 73,
+          "propagatorPower": 5,
+          "remainingOrderedWindowPower": 4
+        }
+      ],
+      "physicalModeTwoWindowTerms": [
+        {
+          "orderedMatrixInsertions": 0,
+          "sourceBandPowerAboveBase": "17/2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 1
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "sourceBandPowerAboveBase": "8",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "sourceBandPowerAboveBase": "15/2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 2
+        },
+        {
+          "orderedMatrixInsertions": 3,
+          "sourceBandPowerAboveBase": "7",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 6
+        },
+        {
+          "orderedMatrixInsertions": 4,
+          "sourceBandPowerAboveBase": "13/2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 24
+        }
+      ],
+      "mode1BandPowerAddedToInputBase": "9",
+      "mode2BandPowerAddedToInputBase": "17/2",
+      "additionalRadialPole": 0
+    },
+    {
+      "RZL": [
+        2,
+        0,
+        0
+      ],
+      "slowOrder": 2,
+      "orderedWords": 4,
+      "statePolynomial": [
+        {
+          "orderedMatrixInsertions": 0,
+          "coefficient": "9801",
+          "maxSourceConstantPower": 16,
+          "propagatorPower": 1,
+          "remainingOrderedWindowPower": 0
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "coefficient": "58571667",
+          "maxSourceConstantPower": 27,
+          "propagatorPower": 2,
+          "remainingOrderedWindowPower": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "coefficient": "34168755852",
+          "maxSourceConstantPower": 38,
+          "propagatorPower": 3,
+          "remainingOrderedWindowPower": 2
+        }
+      ],
+      "physicalOverPPolynomial": [
+        {
+          "orderedMatrixInsertions": 0,
+          "coefficient": "133488",
+          "maxSourceConstantPower": 19,
+          "propagatorPower": 1,
+          "remainingOrderedWindowPower": 0
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "coefficient": "560781144",
+          "maxSourceConstantPower": 30,
+          "propagatorPower": 2,
+          "remainingOrderedWindowPower": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "coefficient": "273350046816",
+          "maxSourceConstantPower": 41,
+          "propagatorPower": 3,
+          "remainingOrderedWindowPower": 2
+        }
+      ],
+      "physicalModeTwoWindowTerms": [
+        {
+          "orderedMatrixInsertions": 0,
+          "sourceBandPowerAboveBase": "9/2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 1
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "sourceBandPowerAboveBase": "4",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "sourceBandPowerAboveBase": "7/2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 2
+        }
+      ],
+      "mode1BandPowerAddedToInputBase": "5",
+      "mode2BandPowerAddedToInputBase": "9/2",
+      "additionalRadialPole": 0
+    },
+    {
+      "RZL": [
+        2,
+        0,
+        1
+      ],
+      "slowOrder": 2,
+      "orderedWords": 4,
+      "statePolynomial": [
+        {
+          "orderedMatrixInsertions": 0,
+          "coefficient": "9801",
+          "maxSourceConstantPower": 16,
+          "propagatorPower": 1,
+          "remainingOrderedWindowPower": 0
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "coefficient": "58571667",
+          "maxSourceConstantPower": 27,
+          "propagatorPower": 2,
+          "remainingOrderedWindowPower": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "coefficient": "34168755852",
+          "maxSourceConstantPower": 38,
+          "propagatorPower": 3,
+          "remainingOrderedWindowPower": 2
+        }
+      ],
+      "physicalOverPPolynomial": [
+        {
+          "orderedMatrixInsertions": 0,
+          "coefficient": "133488",
+          "maxSourceConstantPower": 19,
+          "propagatorPower": 1,
+          "remainingOrderedWindowPower": 0
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "coefficient": "560781144",
+          "maxSourceConstantPower": 30,
+          "propagatorPower": 2,
+          "remainingOrderedWindowPower": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "coefficient": "273350046816",
+          "maxSourceConstantPower": 41,
+          "propagatorPower": 3,
+          "remainingOrderedWindowPower": 2
+        }
+      ],
+      "physicalModeTwoWindowTerms": [
+        {
+          "orderedMatrixInsertions": 0,
+          "sourceBandPowerAboveBase": "9/2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 1
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "sourceBandPowerAboveBase": "4",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "sourceBandPowerAboveBase": "7/2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 2
+        }
+      ],
+      "mode1BandPowerAddedToInputBase": "5",
+      "mode2BandPowerAddedToInputBase": "9/2",
+      "additionalRadialPole": 0
+    },
+    {
+      "RZL": [
+        2,
+        1,
+        0
+      ],
+      "slowOrder": 3,
+      "orderedWords": 16,
+      "statePolynomial": [
+        {
+          "orderedMatrixInsertions": 0,
+          "coefficient": "413127",
+          "maxSourceConstantPower": 21,
+          "propagatorPower": 1,
+          "remainingOrderedWindowPower": 0
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "coefficient": "3957351552",
+          "maxSourceConstantPower": 32,
+          "propagatorPower": 2,
+          "remainingOrderedWindowPower": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "coefficient": "4918303967346",
+          "maxSourceConstantPower": 43,
+          "propagatorPower": 3,
+          "remainingOrderedWindowPower": 2
+        },
+        {
+          "orderedMatrixInsertions": 3,
+          "coefficient": "1215519320679048",
+          "maxSourceConstantPower": 54,
+          "propagatorPower": 4,
+          "remainingOrderedWindowPower": 3
+        }
+      ],
+      "physicalOverPPolynomial": [
+        {
+          "orderedMatrixInsertions": 0,
+          "coefficient": "6124464",
+          "maxSourceConstantPower": 24,
+          "propagatorPower": 1,
+          "remainingOrderedWindowPower": 0
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "coefficient": "42375275712",
+          "maxSourceConstantPower": 35,
+          "propagatorPower": 2,
+          "remainingOrderedWindowPower": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "coefficient": "44266732581456",
+          "maxSourceConstantPower": 46,
+          "propagatorPower": 3,
+          "remainingOrderedWindowPower": 2
+        },
+        {
+          "orderedMatrixInsertions": 3,
+          "coefficient": "9724154565432384",
+          "maxSourceConstantPower": 57,
+          "propagatorPower": 4,
+          "remainingOrderedWindowPower": 3
+        }
+      ],
+      "physicalModeTwoWindowTerms": [
+        {
+          "orderedMatrixInsertions": 0,
+          "sourceBandPowerAboveBase": "13/2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 1
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "sourceBandPowerAboveBase": "6",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "sourceBandPowerAboveBase": "11/2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 2
+        },
+        {
+          "orderedMatrixInsertions": 3,
+          "sourceBandPowerAboveBase": "5",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 6
+        }
+      ],
+      "mode1BandPowerAddedToInputBase": "7",
+      "mode2BandPowerAddedToInputBase": "13/2",
+      "additionalRadialPole": 0
+    },
+    {
+      "RZL": [
+        2,
+        1,
+        1
+      ],
+      "slowOrder": 3,
+      "orderedWords": 16,
+      "statePolynomial": [
+        {
+          "orderedMatrixInsertions": 0,
+          "coefficient": "413127",
+          "maxSourceConstantPower": 21,
+          "propagatorPower": 1,
+          "remainingOrderedWindowPower": 0
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "coefficient": "3957351552",
+          "maxSourceConstantPower": 32,
+          "propagatorPower": 2,
+          "remainingOrderedWindowPower": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "coefficient": "4918303967346",
+          "maxSourceConstantPower": 43,
+          "propagatorPower": 3,
+          "remainingOrderedWindowPower": 2
+        },
+        {
+          "orderedMatrixInsertions": 3,
+          "coefficient": "1215519320679048",
+          "maxSourceConstantPower": 54,
+          "propagatorPower": 4,
+          "remainingOrderedWindowPower": 3
+        }
+      ],
+      "physicalOverPPolynomial": [
+        {
+          "orderedMatrixInsertions": 0,
+          "coefficient": "6124464",
+          "maxSourceConstantPower": 24,
+          "propagatorPower": 1,
+          "remainingOrderedWindowPower": 0
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "coefficient": "42375275712",
+          "maxSourceConstantPower": 35,
+          "propagatorPower": 2,
+          "remainingOrderedWindowPower": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "coefficient": "44266732581456",
+          "maxSourceConstantPower": 46,
+          "propagatorPower": 3,
+          "remainingOrderedWindowPower": 2
+        },
+        {
+          "orderedMatrixInsertions": 3,
+          "coefficient": "9724154565432384",
+          "maxSourceConstantPower": 57,
+          "propagatorPower": 4,
+          "remainingOrderedWindowPower": 3
+        }
+      ],
+      "physicalModeTwoWindowTerms": [
+        {
+          "orderedMatrixInsertions": 0,
+          "sourceBandPowerAboveBase": "13/2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 1
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "sourceBandPowerAboveBase": "6",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "sourceBandPowerAboveBase": "11/2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 2
+        },
+        {
+          "orderedMatrixInsertions": 3,
+          "sourceBandPowerAboveBase": "5",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 6
+        }
+      ],
+      "mode1BandPowerAddedToInputBase": "7",
+      "mode2BandPowerAddedToInputBase": "13/2",
+      "additionalRadialPole": 0
+    },
+    {
+      "RZL": [
+        2,
+        2,
+        0
+      ],
+      "slowOrder": 4,
+      "orderedWords": 52,
+      "statePolynomial": [
+        {
+          "orderedMatrixInsertions": 0,
+          "coefficient": "23035401",
+          "maxSourceConstantPower": 26,
+          "propagatorPower": 1,
+          "remainingOrderedWindowPower": 0
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "coefficient": "311573642823",
+          "maxSourceConstantPower": 37,
+          "propagatorPower": 2,
+          "remainingOrderedWindowPower": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "coefficient": "614126181580065",
+          "maxSourceConstantPower": 48,
+          "propagatorPower": 3,
+          "remainingOrderedWindowPower": 2
+        },
+        {
+          "orderedMatrixInsertions": 3,
+          "coefficient": "318323988331077960",
+          "maxSourceConstantPower": 59,
+          "propagatorPower": 4,
+          "remainingOrderedWindowPower": 3
+        },
+        {
+          "orderedMatrixInsertions": 4,
+          "coefficient": "43240884313836453552",
+          "maxSourceConstantPower": 70,
+          "propagatorPower": 5,
+          "remainingOrderedWindowPower": 4
+        }
+      ],
+      "physicalOverPPolynomial": [
+        {
+          "orderedMatrixInsertions": 0,
+          "coefficient": "361151892",
+          "maxSourceConstantPower": 29,
+          "propagatorPower": 1,
+          "remainingOrderedWindowPower": 0
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "coefficient": "3612429320040",
+          "maxSourceConstantPower": 40,
+          "propagatorPower": 2,
+          "remainingOrderedWindowPower": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "coefficient": "6019693742179656",
+          "maxSourceConstantPower": 51,
+          "propagatorPower": 3,
+          "remainingOrderedWindowPower": 2
+        },
+        {
+          "orderedMatrixInsertions": 3,
+          "coefficient": "2779971616219000896",
+          "maxSourceConstantPower": 62,
+          "propagatorPower": 4,
+          "remainingOrderedWindowPower": 3
+        },
+        {
+          "orderedMatrixInsertions": 4,
+          "coefficient": "345927074510691628416",
+          "maxSourceConstantPower": 73,
+          "propagatorPower": 5,
+          "remainingOrderedWindowPower": 4
+        }
+      ],
+      "physicalModeTwoWindowTerms": [
+        {
+          "orderedMatrixInsertions": 0,
+          "sourceBandPowerAboveBase": "17/2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 1
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "sourceBandPowerAboveBase": "8",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "sourceBandPowerAboveBase": "15/2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 2
+        },
+        {
+          "orderedMatrixInsertions": 3,
+          "sourceBandPowerAboveBase": "7",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 6
+        },
+        {
+          "orderedMatrixInsertions": 4,
+          "sourceBandPowerAboveBase": "13/2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 24
+        }
+      ],
+      "mode1BandPowerAddedToInputBase": "9",
+      "mode2BandPowerAddedToInputBase": "17/2",
+      "additionalRadialPole": 0
+    },
+    {
+      "RZL": [
+        3,
+        0,
+        0
+      ],
+      "slowOrder": 3,
+      "orderedWords": 8,
+      "statePolynomial": [
+        {
+          "orderedMatrixInsertions": 0,
+          "coefficient": "413127",
+          "maxSourceConstantPower": 21,
+          "propagatorPower": 1,
+          "remainingOrderedWindowPower": 0
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "coefficient": "3957351552",
+          "maxSourceConstantPower": 32,
+          "propagatorPower": 2,
+          "remainingOrderedWindowPower": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "coefficient": "4918303967346",
+          "maxSourceConstantPower": 43,
+          "propagatorPower": 3,
+          "remainingOrderedWindowPower": 2
+        },
+        {
+          "orderedMatrixInsertions": 3,
+          "coefficient": "1215519320679048",
+          "maxSourceConstantPower": 54,
+          "propagatorPower": 4,
+          "remainingOrderedWindowPower": 3
+        }
+      ],
+      "physicalOverPPolynomial": [
+        {
+          "orderedMatrixInsertions": 0,
+          "coefficient": "6124464",
+          "maxSourceConstantPower": 24,
+          "propagatorPower": 1,
+          "remainingOrderedWindowPower": 0
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "coefficient": "42375275712",
+          "maxSourceConstantPower": 35,
+          "propagatorPower": 2,
+          "remainingOrderedWindowPower": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "coefficient": "44266732581456",
+          "maxSourceConstantPower": 46,
+          "propagatorPower": 3,
+          "remainingOrderedWindowPower": 2
+        },
+        {
+          "orderedMatrixInsertions": 3,
+          "coefficient": "9724154565432384",
+          "maxSourceConstantPower": 57,
+          "propagatorPower": 4,
+          "remainingOrderedWindowPower": 3
+        }
+      ],
+      "physicalModeTwoWindowTerms": [
+        {
+          "orderedMatrixInsertions": 0,
+          "sourceBandPowerAboveBase": "13/2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 1
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "sourceBandPowerAboveBase": "6",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "sourceBandPowerAboveBase": "11/2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 2
+        },
+        {
+          "orderedMatrixInsertions": 3,
+          "sourceBandPowerAboveBase": "5",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 6
+        }
+      ],
+      "mode1BandPowerAddedToInputBase": "7",
+      "mode2BandPowerAddedToInputBase": "13/2",
+      "additionalRadialPole": 0
+    },
+    {
+      "RZL": [
+        3,
+        0,
+        1
+      ],
+      "slowOrder": 3,
+      "orderedWords": 8,
+      "statePolynomial": [
+        {
+          "orderedMatrixInsertions": 0,
+          "coefficient": "413127",
+          "maxSourceConstantPower": 21,
+          "propagatorPower": 1,
+          "remainingOrderedWindowPower": 0
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "coefficient": "3957351552",
+          "maxSourceConstantPower": 32,
+          "propagatorPower": 2,
+          "remainingOrderedWindowPower": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "coefficient": "4918303967346",
+          "maxSourceConstantPower": 43,
+          "propagatorPower": 3,
+          "remainingOrderedWindowPower": 2
+        },
+        {
+          "orderedMatrixInsertions": 3,
+          "coefficient": "1215519320679048",
+          "maxSourceConstantPower": 54,
+          "propagatorPower": 4,
+          "remainingOrderedWindowPower": 3
+        }
+      ],
+      "physicalOverPPolynomial": [
+        {
+          "orderedMatrixInsertions": 0,
+          "coefficient": "6124464",
+          "maxSourceConstantPower": 24,
+          "propagatorPower": 1,
+          "remainingOrderedWindowPower": 0
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "coefficient": "42375275712",
+          "maxSourceConstantPower": 35,
+          "propagatorPower": 2,
+          "remainingOrderedWindowPower": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "coefficient": "44266732581456",
+          "maxSourceConstantPower": 46,
+          "propagatorPower": 3,
+          "remainingOrderedWindowPower": 2
+        },
+        {
+          "orderedMatrixInsertions": 3,
+          "coefficient": "9724154565432384",
+          "maxSourceConstantPower": 57,
+          "propagatorPower": 4,
+          "remainingOrderedWindowPower": 3
+        }
+      ],
+      "physicalModeTwoWindowTerms": [
+        {
+          "orderedMatrixInsertions": 0,
+          "sourceBandPowerAboveBase": "13/2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 1
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "sourceBandPowerAboveBase": "6",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "sourceBandPowerAboveBase": "11/2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 2
+        },
+        {
+          "orderedMatrixInsertions": 3,
+          "sourceBandPowerAboveBase": "5",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 6
+        }
+      ],
+      "mode1BandPowerAddedToInputBase": "7",
+      "mode2BandPowerAddedToInputBase": "13/2",
+      "additionalRadialPole": 0
+    },
+    {
+      "RZL": [
+        3,
+        1,
+        0
+      ],
+      "slowOrder": 4,
+      "orderedWords": 40,
+      "statePolynomial": [
+        {
+          "orderedMatrixInsertions": 0,
+          "coefficient": "23035401",
+          "maxSourceConstantPower": 26,
+          "propagatorPower": 1,
+          "remainingOrderedWindowPower": 0
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "coefficient": "311573642823",
+          "maxSourceConstantPower": 37,
+          "propagatorPower": 2,
+          "remainingOrderedWindowPower": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "coefficient": "614126181580065",
+          "maxSourceConstantPower": 48,
+          "propagatorPower": 3,
+          "remainingOrderedWindowPower": 2
+        },
+        {
+          "orderedMatrixInsertions": 3,
+          "coefficient": "318323988331077960",
+          "maxSourceConstantPower": 59,
+          "propagatorPower": 4,
+          "remainingOrderedWindowPower": 3
+        },
+        {
+          "orderedMatrixInsertions": 4,
+          "coefficient": "43240884313836453552",
+          "maxSourceConstantPower": 70,
+          "propagatorPower": 5,
+          "remainingOrderedWindowPower": 4
+        }
+      ],
+      "physicalOverPPolynomial": [
+        {
+          "orderedMatrixInsertions": 0,
+          "coefficient": "361151892",
+          "maxSourceConstantPower": 29,
+          "propagatorPower": 1,
+          "remainingOrderedWindowPower": 0
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "coefficient": "3612429320040",
+          "maxSourceConstantPower": 40,
+          "propagatorPower": 2,
+          "remainingOrderedWindowPower": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "coefficient": "6019693742179656",
+          "maxSourceConstantPower": 51,
+          "propagatorPower": 3,
+          "remainingOrderedWindowPower": 2
+        },
+        {
+          "orderedMatrixInsertions": 3,
+          "coefficient": "2779971616219000896",
+          "maxSourceConstantPower": 62,
+          "propagatorPower": 4,
+          "remainingOrderedWindowPower": 3
+        },
+        {
+          "orderedMatrixInsertions": 4,
+          "coefficient": "345927074510691628416",
+          "maxSourceConstantPower": 73,
+          "propagatorPower": 5,
+          "remainingOrderedWindowPower": 4
+        }
+      ],
+      "physicalModeTwoWindowTerms": [
+        {
+          "orderedMatrixInsertions": 0,
+          "sourceBandPowerAboveBase": "17/2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 1
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "sourceBandPowerAboveBase": "8",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "sourceBandPowerAboveBase": "15/2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 2
+        },
+        {
+          "orderedMatrixInsertions": 3,
+          "sourceBandPowerAboveBase": "7",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 6
+        },
+        {
+          "orderedMatrixInsertions": 4,
+          "sourceBandPowerAboveBase": "13/2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 24
+        }
+      ],
+      "mode1BandPowerAddedToInputBase": "9",
+      "mode2BandPowerAddedToInputBase": "17/2",
+      "additionalRadialPole": 0
+    },
+    {
+      "RZL": [
+        4,
+        0,
+        0
+      ],
+      "slowOrder": 4,
+      "orderedWords": 16,
+      "statePolynomial": [
+        {
+          "orderedMatrixInsertions": 0,
+          "coefficient": "23035401",
+          "maxSourceConstantPower": 26,
+          "propagatorPower": 1,
+          "remainingOrderedWindowPower": 0
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "coefficient": "311573642823",
+          "maxSourceConstantPower": 37,
+          "propagatorPower": 2,
+          "remainingOrderedWindowPower": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "coefficient": "614126181580065",
+          "maxSourceConstantPower": 48,
+          "propagatorPower": 3,
+          "remainingOrderedWindowPower": 2
+        },
+        {
+          "orderedMatrixInsertions": 3,
+          "coefficient": "318323988331077960",
+          "maxSourceConstantPower": 59,
+          "propagatorPower": 4,
+          "remainingOrderedWindowPower": 3
+        },
+        {
+          "orderedMatrixInsertions": 4,
+          "coefficient": "43240884313836453552",
+          "maxSourceConstantPower": 70,
+          "propagatorPower": 5,
+          "remainingOrderedWindowPower": 4
+        }
+      ],
+      "physicalOverPPolynomial": [
+        {
+          "orderedMatrixInsertions": 0,
+          "coefficient": "361151892",
+          "maxSourceConstantPower": 29,
+          "propagatorPower": 1,
+          "remainingOrderedWindowPower": 0
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "coefficient": "3612429320040",
+          "maxSourceConstantPower": 40,
+          "propagatorPower": 2,
+          "remainingOrderedWindowPower": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "coefficient": "6019693742179656",
+          "maxSourceConstantPower": 51,
+          "propagatorPower": 3,
+          "remainingOrderedWindowPower": 2
+        },
+        {
+          "orderedMatrixInsertions": 3,
+          "coefficient": "2779971616219000896",
+          "maxSourceConstantPower": 62,
+          "propagatorPower": 4,
+          "remainingOrderedWindowPower": 3
+        },
+        {
+          "orderedMatrixInsertions": 4,
+          "coefficient": "345927074510691628416",
+          "maxSourceConstantPower": 73,
+          "propagatorPower": 5,
+          "remainingOrderedWindowPower": 4
+        }
+      ],
+      "physicalModeTwoWindowTerms": [
+        {
+          "orderedMatrixInsertions": 0,
+          "sourceBandPowerAboveBase": "17/2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 1
+        },
+        {
+          "orderedMatrixInsertions": 1,
+          "sourceBandPowerAboveBase": "8",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 1
+        },
+        {
+          "orderedMatrixInsertions": 2,
+          "sourceBandPowerAboveBase": "15/2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 2
+        },
+        {
+          "orderedMatrixInsertions": 3,
+          "sourceBandPowerAboveBase": "7",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 6
+        },
+        {
+          "orderedMatrixInsertions": 4,
+          "sourceBandPowerAboveBase": "13/2",
+          "newWindowFactor": "3*sqrt(k!)*(2*Lmax/gL)^((k+1)/2)",
+          "factorialUnderSquareRoot": 24
+        }
+      ],
+      "mode1BandPowerAddedToInputBase": "9",
+      "mode2BandPowerAddedToInputBase": "17/2",
+      "additionalRadialPole": 0
+    }
+  ],
+  "distinctDirections": 23,
+  "complexProjectedRoleDemand": 1380,
+  "velocityRoleDemand": 750,
+  "initialTemporalDemand": {
+    "outputJets": 129,
+    "covarianceRequests": 600,
+    "WrzSlowOrder": 7
+  },
+  "scope": {
+    "originalForwardPropagatorAndDifferentiationPremisesRetained": true,
+    "wholeRawSourceNormEvaluated": false,
+    "normalizedSolutionNumericalInterval": false,
+    "closedFinalN8Comparisons": 0,
+    "finalJets": 0,
+    "release": "HOLD"
+  },
+  "finalJets": 0,
+  "release": "HOLD"
+}

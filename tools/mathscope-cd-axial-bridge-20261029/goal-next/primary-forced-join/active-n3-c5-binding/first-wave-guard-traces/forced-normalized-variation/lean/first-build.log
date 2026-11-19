@@ -1,0 +1,24 @@
+MathScope/M3/CD/ForcedPulseConcentration.lean:31:33: error: Application type mismatch: The argument
+  hbound
+has type
+  ∀ t ∈ uIoc 0 v, ‖f t‖ ≤ C * L ^ k * p t
+but is expected to have type
+  ∀ x ∈ Ioc 0 v, ‖?m.248 x‖ ≤ ?m.250 x
+in the application
+  Filter.Eventually.of_forall hbound
+MathScope/M3/CD/ForcedPulseConcentration.lean:16:50: error: unsolved goals
+f p : ℝ → ℝ
+v L C J : ℝ
+k : ℕ
+hv : 0 ≤ v
+hvL : v ≤ L
+hC : 0 ≤ C
+hp : IntervalIntegrable p volume 0 v
+hpoint : ∀ t ∈ uIoc 0 v, 0 ≤ p t ∧ ‖f t‖ ≤ C * (v - t) ^ k * p t
+hMass : ∫ (t : ℝ) in 0..v, p t ≤ J
+hL : 0 ≤ L
+hbound : ∀ t ∈ uIoc 0 v, ‖f t‖ ≤ C * L ^ k * p t
+hg : IntervalIntegrable (fun t => C * L ^ k * p t) volume 0 v
+⊢ ‖∫ (t : ℝ) in 0..v, f t‖ ≤ C * L ^ k * J
+'MathScope.M3.CD.forced_weighted_word_bound' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'MathScope.M3.CD.forced_pulse_sqrt_band' depends on axioms: [propext, Classical.choice, Quot.sound]
