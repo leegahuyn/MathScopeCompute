@@ -1,0 +1,524 @@
+{
+  "schema": "MathScope.C85.ActualN1ThetaOuterRegularFactor/1",
+  "status": "VERIFIED_ACTUAL_N1_SOURCE_TERMINAL_COEFFICIENT_AND_C0_FTC_BOUND_DERIVATIVE_RECIPES_CONDITIONAL_TERMINAL_SOURCE_REDUCTION",
+  "hostedRun": 44582875351,
+  "sourceStream": {
+    "nodes": 22155584,
+    "bytes": 1024352367,
+    "sha256": "faa23696dd592dd83487e842d775e41072159e6d8377a69f2b93650e5839ee96",
+    "originalPrefixRecords": 22153782,
+    "originalPrefixRecordBytes": 1024222169,
+    "originalPrefixRecordsSHA256": "c0577d2b5ecf5808aa0ba82dab89e5ae2b125edc8e4c126fff8bfd913b903240",
+    "originalPrefixHashCoverage": "node records only, without the new export header"
+  },
+  "registrySHA256": "e1e692f0b684199d7d7c1ab9e4e434aba9472329152b5d7533067313ef507f03",
+  "inputPins": {
+    "reader": "2969fcc291caffcc5291d3f07e33a2e33625512e4c5765055fdb8725b5dfb6bb",
+    "exact": "260017f8285e45e570bfde6865cc0483e1cb39379a45349ab3c7e1b33d012e75",
+    "cache": "909a6dcab87a9537eac5b40738023a2e517c07f99754ae924295a4f47628349f",
+    "git": "9c035f488b57d4165f0db3f55906d42a628ce6d409fc75bf7dbd706045dee0ee"
+  },
+  "sourceModules": {
+    "actual-order-one-weighted-stress.mjs": "49cde0b930f375e8eca5610ecb7d1e91c9c4361bdd1395a1971081fb1fdfd1b3",
+    "actual-continuation-exact-stress.mjs": "22d0fe9deae4dd7a5dca687758fb3b8b57a56cba7472c9fb23b76dd360f0bcc2",
+    "actual-continuation-exact-heat.mjs": "c999b45a6d1e18226c80fb9866b6743553f1859c67dffa39490cd25f7e13d172",
+    "actual-background-residual-bridge.mjs": "a0d2823ee658aadff65171441c06c9cb0f52ac7115be948e17600d343fd5788a"
+  },
+  "orderCorrection": {
+    "actualArmOrders": [
+      {
+        "powerRoot": 17743840,
+        "actualOrder": 3,
+        "exactExponent": "2*3*h*log(qActual)"
+      },
+      {
+        "powerRoot": 17743846,
+        "actualOrder": 2,
+        "exactExponent": "2*2*h*log(qActual)"
+      },
+      {
+        "powerRoot": 17743852,
+        "actualOrder": 1,
+        "exactExponent": "2*1*h*log(qActual)"
+      }
+    ],
+    "exceptionalValueRoot": 17744341,
+    "exceptionalActualOrder": 1,
+    "originalStressRoot": 117068,
+    "supersedes": "C84 positional order labels [1,2,3]; exact pairings remain valid, actual labels are [3,2,1]."
+  },
+  "actualPrimitive": {
+    "originalX": 4756,
+    "originalEta": 2,
+    "rawAngularDensity": 117038,
+    "supportedAngular": 117046,
+    "weightedIntegrand": 117048,
+    "integrandDefinition": 0,
+    "forward": 117054,
+    "backward": 117063,
+    "wholeAngularMoment": 117072,
+    "liveIntegral": 17744317,
+    "liveX": 17744284,
+    "liveEta": 17732775,
+    "liveStress": 17744341,
+    "exactDifference": "Tforward-Tbackward=-Jtheta(eta)/(2X)",
+    "wholeMomentZeroProvedHere": false,
+    "forwardTailJetsIfNonzeroJ": [
+      {
+        "XDerivative": 0,
+        "coefficient": "-1/2",
+        "factor": "J(eta)*X^(-1)"
+      },
+      {
+        "XDerivative": 1,
+        "coefficient": "1/2",
+        "factor": "J(eta)*X^(-2)"
+      },
+      {
+        "XDerivative": 2,
+        "coefficient": "-1",
+        "factor": "J(eta)*X^(-3)"
+      },
+      {
+        "XDerivative": 3,
+        "coefficient": "3",
+        "factor": "J(eta)*X^(-4)"
+      }
+    ]
+  },
+  "terminalRawDensity": {
+    "deltaFormal": 17716930,
+    "deltaMeaning": "log(Xb/X)",
+    "domain": [
+      "0",
+      "1/4"
+    ],
+    "factorDefinition": 32004,
+    "factorBody": 17716949,
+    "factorDerivatives": [
+      17716950,
+      17716991,
+      17716992
+    ],
+    "completeHeatDefinition": 32005,
+    "completeHeatBody": 17716976,
+    "completeHeatCall": 17716977,
+    "literalRawCoefficient": 17717045,
+    "actualDirect": 17717024,
+    "actualFactored": 17717048,
+    "outerGaussianRoot": 17716940,
+    "BDefinition": 32006,
+    "BBody": 17717057,
+    "BRelation": "B=exp(-2delta)*rawCoefficient",
+    "exactFormula": "Atheta=exp(2delta-4/delta^2)*delta^(-6)*B(delta,eta)",
+    "pointwiseAlgebraVerified": true,
+    "originalRawDensityIdentification": "Uses original terminal source support reductions, positive square-root density match and Z_b(Fheat)=0 from actualHeatExteriorIdentity. No whole-angular-moment identity is used for this RAW DENSITY reduction.",
+    "coefficientFormula": "H{az^2[delta^6 A2+16delta^3 A1+(64-24delta^2)A0]-bz[delta^6 A1+8delta^3 A0]}",
+    "az": "-2eta/L",
+    "bz": "(-2D*eta*az+(1-eta^2)*az_eta)/L",
+    "L": "1-2h*eta^2",
+    "D": "1/2-h"
+  },
+  "sourceC0Bound": {
+    "B0": 17717108,
+    "fourFaces": [
+      17717067,
+      17717079,
+      17717091,
+      17717105
+    ],
+    "sourceWeightedPrimitiveC0Norm": 17717699,
+    "bound": "sup_[0,1/4]x[-1,1] |B| <= B0",
+    "sourceB0EvaluatedNumerically": false,
+    "rawTheta": "|Atheta| <= exp(1/2)*B0*exp(-4/delta^2)*delta^-6",
+    "zetaRecovery": "For original t1<1/128 and total log width>2, opposite Gaussian inverse<=50176/50175, and exp(1/2)<5/3. Hence |Atheta|<2*B0*zeta*delta^-6.",
+    "regularityPremises": "Original h>0, h<1/64 and positive fixed parameters; the smooth factor denominator is bounded below by the second seed on delta<=1/4; the original full heat Laplace moments dominate every finite derivative, including eta endpoints."
+  },
+  "sourceC1C2Recipes": {
+    "K": [
+      {
+        "nativeDefinition": 32006,
+        "nativeBody": 17717057,
+        "derivative": [
+          0,
+          0
+        ],
+        "corner": {
+          "actualArguments": [
+            "0",
+            "-1"
+          ],
+          "orders": [
+            0,
+            0
+          ]
+        },
+        "deltaFace": {
+          "integral": [
+            "u",
+            "0",
+            "1/4"
+          ],
+          "actualArguments": [
+            "u",
+            "-1"
+          ],
+          "orders": [
+            1,
+            0
+          ]
+        },
+        "etaFace": {
+          "integral": [
+            "v",
+            "-1",
+            "1"
+          ],
+          "actualArguments": [
+            "0",
+            "v"
+          ],
+          "orders": [
+            0,
+            1
+          ]
+        },
+        "rectangle": {
+          "integrals": [
+            [
+              "u",
+              "0",
+              "1/4"
+            ],
+            [
+              "v",
+              "-1",
+              "1"
+            ]
+          ],
+          "actualArguments": [
+            "u",
+            "v"
+          ],
+          "orders": [
+            1,
+            1
+          ]
+        },
+        "integrandForEveryFace": "sqrt(1+(native derivative)^2)",
+        "existingConstantRoot": 17717108
+      },
+      {
+        "nativeDefinition": 32006,
+        "nativeBody": 17717057,
+        "derivative": [
+          1,
+          0
+        ],
+        "corner": {
+          "actualArguments": [
+            "0",
+            "-1"
+          ],
+          "orders": [
+            1,
+            0
+          ]
+        },
+        "deltaFace": {
+          "integral": [
+            "u",
+            "0",
+            "1/4"
+          ],
+          "actualArguments": [
+            "u",
+            "-1"
+          ],
+          "orders": [
+            2,
+            0
+          ]
+        },
+        "etaFace": {
+          "integral": [
+            "v",
+            "-1",
+            "1"
+          ],
+          "actualArguments": [
+            "0",
+            "v"
+          ],
+          "orders": [
+            1,
+            1
+          ]
+        },
+        "rectangle": {
+          "integrals": [
+            [
+              "u",
+              "0",
+              "1/4"
+            ],
+            [
+              "v",
+              "-1",
+              "1"
+            ]
+          ],
+          "actualArguments": [
+            "u",
+            "v"
+          ],
+          "orders": [
+            2,
+            1
+          ]
+        },
+        "integrandForEveryFace": "sqrt(1+(native derivative)^2)",
+        "existingConstantRoot": null
+      },
+      {
+        "nativeDefinition": 32006,
+        "nativeBody": 17717057,
+        "derivative": [
+          2,
+          0
+        ],
+        "corner": {
+          "actualArguments": [
+            "0",
+            "-1"
+          ],
+          "orders": [
+            2,
+            0
+          ]
+        },
+        "deltaFace": {
+          "integral": [
+            "u",
+            "0",
+            "1/4"
+          ],
+          "actualArguments": [
+            "u",
+            "-1"
+          ],
+          "orders": [
+            3,
+            0
+          ]
+        },
+        "etaFace": {
+          "integral": [
+            "v",
+            "-1",
+            "1"
+          ],
+          "actualArguments": [
+            "0",
+            "v"
+          ],
+          "orders": [
+            2,
+            1
+          ]
+        },
+        "rectangle": {
+          "integrals": [
+            [
+              "u",
+              "0",
+              "1/4"
+            ],
+            [
+              "v",
+              "-1",
+              "1"
+            ]
+          ],
+          "actualArguments": [
+            "u",
+            "v"
+          ],
+          "orders": [
+            3,
+            1
+          ]
+        },
+        "integrandForEveryFace": "sqrt(1+(native derivative)^2)",
+        "existingConstantRoot": null
+      }
+    ],
+    "newOriginalGraphNodesAppended": false,
+    "derivativeOrderMeaning": "Kj uniformly bounds partial_delta^j B; K1,K2 are explicit source functionals, with no invented original node IDs and no claimed numeric evaluation.",
+    "ordinaryXBounds": {
+      "order0": "2*K0*zeta*delta^-6",
+      "order1": "2*Xedge^-1*(9*K0+K1)*zeta*delta^-9",
+      "order2": "2*Xedge^-2*(83*K0+19*K1+K2)*zeta*delta^-12"
+    },
+    "Xedge": "Xb*exp(-1/4)",
+    "conversion": "partial_X=-X^-1 partial_delta; partial_X^2=X^-2(partial_delta^2+partial_delta)",
+    "deltaLaurentJets": [
+      {
+        "order": 0,
+        "terms": [
+          {
+            "deltaPower": -6,
+            "BdeltaOrder": 0,
+            "coefficient": "1"
+          }
+        ]
+      },
+      {
+        "order": 1,
+        "terms": [
+          {
+            "deltaPower": -9,
+            "BdeltaOrder": 0,
+            "coefficient": "8"
+          },
+          {
+            "deltaPower": -7,
+            "BdeltaOrder": 0,
+            "coefficient": "-6"
+          },
+          {
+            "deltaPower": -6,
+            "BdeltaOrder": 0,
+            "coefficient": "2"
+          },
+          {
+            "deltaPower": -6,
+            "BdeltaOrder": 1,
+            "coefficient": "1"
+          }
+        ]
+      },
+      {
+        "order": 2,
+        "terms": [
+          {
+            "deltaPower": -12,
+            "BdeltaOrder": 0,
+            "coefficient": "64"
+          },
+          {
+            "deltaPower": -10,
+            "BdeltaOrder": 0,
+            "coefficient": "-120"
+          },
+          {
+            "deltaPower": -9,
+            "BdeltaOrder": 0,
+            "coefficient": "32"
+          },
+          {
+            "deltaPower": -9,
+            "BdeltaOrder": 1,
+            "coefficient": "16"
+          },
+          {
+            "deltaPower": -8,
+            "BdeltaOrder": 0,
+            "coefficient": "42"
+          },
+          {
+            "deltaPower": -7,
+            "BdeltaOrder": 0,
+            "coefficient": "-24"
+          },
+          {
+            "deltaPower": -7,
+            "BdeltaOrder": 1,
+            "coefficient": "-12"
+          },
+          {
+            "deltaPower": -6,
+            "BdeltaOrder": 0,
+            "coefficient": "4"
+          },
+          {
+            "deltaPower": -6,
+            "BdeltaOrder": 1,
+            "coefficient": "4"
+          },
+          {
+            "deltaPower": -6,
+            "BdeltaOrder": 2,
+            "coefficient": "1"
+          }
+        ]
+      }
+    ],
+    "ordinaryXSecondPolynomial": [
+      {
+        "deltaPower": -12,
+        "BdeltaOrder": 0,
+        "coefficient": "64"
+      },
+      {
+        "deltaPower": -10,
+        "BdeltaOrder": 0,
+        "coefficient": "-120"
+      },
+      {
+        "deltaPower": -9,
+        "BdeltaOrder": 0,
+        "coefficient": "40"
+      },
+      {
+        "deltaPower": -9,
+        "BdeltaOrder": 1,
+        "coefficient": "16"
+      },
+      {
+        "deltaPower": -8,
+        "BdeltaOrder": 0,
+        "coefficient": "42"
+      },
+      {
+        "deltaPower": -7,
+        "BdeltaOrder": 0,
+        "coefficient": "-30"
+      },
+      {
+        "deltaPower": -7,
+        "BdeltaOrder": 1,
+        "coefficient": "-12"
+      },
+      {
+        "deltaPower": -6,
+        "BdeltaOrder": 0,
+        "coefficient": "6"
+      },
+      {
+        "deltaPower": -6,
+        "BdeltaOrder": 1,
+        "coefficient": "5"
+      },
+      {
+        "deltaPower": -6,
+        "BdeltaOrder": 2,
+        "coefficient": "1"
+      }
+    ]
+  },
+  "primitiveGaussianRule": {
+    "identity": "d_delta(exp(-4/delta^2)*delta^-3)=exp(-4/delta^2)*delta^-6*(8-3delta^2)",
+    "positiveFactorLower": "125/16",
+    "integralUpperFactor": "16/125",
+    "wholeMomentNeededOnlyForOriginalForwardStress": true
+  },
+  "scope": {
+    "rawThetaWeightedC0": "CONDITIONAL_ON_ORIGINAL_TERMINAL_IDENTIFICATION_AND_REGULARITY",
+    "rawThetaXAndXX": "EXPLICIT_FINITE_SOURCE_NORM_RECIPES_NOT_NUMERICAL_ENCLOSURES",
+    "originalStressWholeMomentZero": "SEPARATE_OPEN_IN_THIS_REPLAY",
+    "noLocalLean": true,
+    "base67Unchanged": true,
+    "release": "HOLD"
+  }
+}

@@ -10,13 +10,24 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation85
+
+- **VERIFIED · 차수 정정.** 원본 $q^{6h},q^{4h},q^{2h}$로 이전 배열 슬롯 1·2·3의 실제 차수가 3·2·1임을 확인했다. 바깥 $X_b$까지 남는 것은 $\theta$의 실제 **$n=1$ 응력**이다. 원본의 전방·후방·전체 각 적분이 같은 0번 native 피적분함수를 쓰며, 전체 각 모멘트는 `#117072`이다. [실제 차수와 국소 응력](primary-forced-join/active-n3-c5-binding/first-wave-guard-traces/angular-order-one-shell/README.md).
+
+- **VERIFIED / CONDITIONAL · 실제 끝점 상계.** 활성 원본과 독립 2차 원본 실행에서 끝점 계수 $B$와 0차 상계의 타입 있는 식이 일치했다. 같은 $B$의 FTC 상계식 0–2차와 12개 미분 면을 확인했다. 원본 실해석 전제 아래 실제 $\theta$ 응력의 국소 잔차에서 전방 적분이 소거되고, 방사 0·1·2차의 $\zeta$ 가중 상계를 얻는다. 전체 각 모멘트의 값은 국소 잔차의 이 계산에 필요하지 않다. 전방 응력 자체의 접합에는 별도 소거가 필요하다. 관련 Lean 정리 3개가 GitHub에서 통과했다. [Lean 결과](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44617281687).
+
+- **VERIFIED / CONDITIONAL · 첫 Forced.** 실제 20개 시스템의 투영항 120개를 대조했다. 모드 2는 Primary의 이차항만 포함하고 모드 1의 실제 선형 확산항은 투영 후에도 남는다. C84의 계수 역할 330개에 필요한 원본 미분 조합은 12종이다. [원본 Forced](primary-forced-join/active-n3-c5-binding/first-wave-guard-traces/angular-order-one-shell/forced/README.md).
+
+- **OPEN.** 원본 실제 전체 각 모멘트 소거, 전체 초기 평균·공분산·압력의 균일 가중 상계, 이후 보정과 최종 수렴 비교가 남는다. M3 62/64, 최종 비교 0/4, jets 0/67, 운영 R1-08 OPEN 및 RELEASE HOLD다.
+
+
 ## Continuation84
 
 - **VERIFIED.** 원본 Signed의 두 진폭 제곱값에 대해 실제 펄스 적분 네 개, 목표 함수의 형식·실제 인자, 행렬식 분모를 보존해 $Hy=\bar T$를 대조했다. 같은 원본의 방사 좌표, $t_1$, 양끝 Gaussian 및 고정 적분 끝점을 결속했다. [Gaussian 및 원본 진폭](primary-forced-join/active-n3-c5-binding/first-wave-guard-traces/weighted-haar-shell/gaussian/README.md).
 
 - **VERIFIED / CONDITIONAL.** 첫 Forced 공분산 본문 60개와 보조각 Haar 잔차의 직접 항 10개를 검증했다. 원본 파동 계수 상계가 주어지면 직접 공분산 증분은 $\zeta$를 유지한다. 축방향 압력 `#22000443`의 실제 두 순서 적분, cutoff 곱미분, 정규화 범프와 $g_r$ 공분산 인자 여섯 개를 대조했다. 원본 FTC와 외부 영연장 아래 압력의 공분산 성분에는 $W_{rr,Z}$, $W_{\theta\theta,Z}$, $W_{rz,ZZ}$의 가중 상계가 필요하다. [공분산](primary-forced-join/active-n3-c5-binding/first-wave-guard-traces/weighted-haar-shell/covariance/README.md) · [압력원](primary-forced-join/active-n3-c5-binding/first-wave-guard-traces/weighted-haar-shell/pressure/README.md).
 
-- **VERIFIED / CONDITIONAL.** 초기 Temporal의 영평균 조건과 초기 FiveMap의 실제 전체 모멘트 소거를 원본 잔차에 연결했다. 각 방향의 원본 식에 남은 초기 평균 이차항 22개와 148개를 분리했다. 안쪽 경계에서는 세 차수의 추가 응력 두 성분이 영이고, 바깥쪽 경계에는 $\theta$의 $n=3$ 응력이 남는다. [원본 평균과 응력](primary-forced-join/active-n3-c5-binding/first-wave-guard-traces/weighted-haar-shell/mean/README.md).
+- **VERIFIED / CONDITIONAL.** 초기 Temporal의 영평균 조건과 초기 FiveMap의 실제 전체 모멘트 소거를 원본 잔차에 연결했다. 각 방향의 원본 식에 남은 초기 평균 이차항 22개와 148개를 분리했다. 안쪽 경계에서는 세 차수의 추가 응력 두 성분이 영이고, 바깥쪽 경계에는 $\theta$의 실제 $n=1$ 응력이 남는다. [원본 평균과 응력](primary-forced-join/active-n3-c5-binding/first-wave-guard-traces/weighted-haar-shell/mean/README.md).
 
 - **CONDITIONAL.** 움직이는 실제 방사 끝점까지 적분할 때 원본 Gaussian 두 인자를 유지하는 상계를 얻었다. 고정 적분 끝점과 움직이는 물리 shell 사이의 원본 영연장이 필요하다. 초기 컴파일 오류를 수정해 로그 미분, 단조성과 적분 비교 정리 세 개가 GitHub에서 통과했다. [GitHub Lean](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44615355954).
 

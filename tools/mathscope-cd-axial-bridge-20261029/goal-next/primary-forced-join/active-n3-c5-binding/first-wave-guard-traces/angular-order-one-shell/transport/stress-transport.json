@@ -1,0 +1,152 @@
+{
+  "status": "VERIFIED_ACTUAL_THETA_STRESS_ORDER_AND_LOCAL_RADIAL_FLUX",
+  "pins": {
+    "previousMean": "168d59a2b935ca6b21da8e830c02a10f172231349d8d9a89cc6d38e73762a90f",
+    "manifest": "8468c8e0e357d60130e9a467fd709b37c5e689a44aeebe7e3c3e91741aa6aa9a",
+    "registry": "e1e692f0b684199d7d7c1ab9e4e434aba9472329152b5d7533067313ef507f03",
+    "band": "babe4aceb97d0bdee4084e5f06009e6724128935fffde1647c11e3aab022df60"
+  },
+  "sourceStreamSHA256": "faa23696dd592dd83487e842d775e41072159e6d8377a69f2b93650e5839ee96",
+  "positiveStressOrderBindings": [
+    {
+      "savedPositionalSlot": 1,
+      "physicalCoefficientOrder": 3,
+      "cutoff": 17743838,
+      "qPower": 17743840,
+      "selectorScale": 17727385,
+      "originalCutoffSystem": 32019,
+      "originalCutoffBody": 17732791,
+      "components": [
+        {
+          "component": "theta",
+          "value": 17744332,
+          "derivative": 17744302,
+          "originalLower": 28814,
+          "originalUpper": 28824
+        },
+        {
+          "component": "z",
+          "value": 17744447,
+          "derivative": 17744418,
+          "originalLower": 28814,
+          "originalUpper": 28824
+        }
+      ]
+    },
+    {
+      "savedPositionalSlot": 2,
+      "physicalCoefficientOrder": 2,
+      "cutoff": 17743844,
+      "qPower": 17743846,
+      "selectorScale": 17727322,
+      "originalCutoffSystem": 32019,
+      "originalCutoffBody": 17732791,
+      "components": [
+        {
+          "component": "theta",
+          "value": 17744336,
+          "derivative": 17744313,
+          "originalLower": 28814,
+          "originalUpper": 28824
+        },
+        {
+          "component": "z",
+          "value": 17744451,
+          "derivative": 17744428,
+          "originalLower": 28814,
+          "originalUpper": 28824
+        }
+      ]
+    },
+    {
+      "savedPositionalSlot": 3,
+      "physicalCoefficientOrder": 1,
+      "cutoff": 17743850,
+      "qPower": 17743852,
+      "selectorScale": 17727273,
+      "originalCutoffSystem": 32019,
+      "originalCutoffBody": 17732791,
+      "components": [
+        {
+          "component": "theta",
+          "value": 17744341,
+          "derivative": 17744324,
+          "originalLower": 28814,
+          "originalUpper": 28826
+        },
+        {
+          "component": "z",
+          "value": 17744456,
+          "derivative": 17744439,
+          "originalLower": 28814,
+          "originalUpper": 28824
+        }
+      ]
+    }
+  ],
+  "correctedExceptionalPhysicalOrder": 1,
+  "exactAngularFlux": {
+    "rawETheta": 21999622,
+    "liveStressValue": 17744341,
+    "liveRadialDerivative": 17744324,
+    "liveInteriorValue": 17744340,
+    "liveInteriorDerivative": 17744323,
+    "liveForwardIntegral": 17744317,
+    "liveDensity": 17743895,
+    "liveEndpointDensity": 17744319,
+    "sourceRegistry": {
+      "index": 0,
+      "body": 117048,
+      "formals": [
+        4756,
+        2
+      ],
+      "boundActuals": [
+        117049,
+        17732775
+      ],
+      "endpointActuals": [
+        17744284,
+        17732775
+      ]
+    },
+    "sourceSupport": {
+      "exactRawGuard": 117046,
+      "rawInnerBody": 117038,
+      "ends": [
+        28814,
+        28826
+      ]
+    },
+    "sourcePrimitives": {
+      "stress": 117068,
+      "forward": 117054,
+      "backward": 117063,
+      "forwardIntegral": 117051,
+      "backwardIntegral": 117062,
+      "wholeAngularMoment": 117072
+    },
+    "factorRoots": [
+      17732744,
+      17732886,
+      17743850,
+      17743852
+    ],
+    "derivativeRemainderIntervalTerms": 0,
+    "directRemainder": "K*(R/s)*A_theta(X,eta)",
+    "sameCaseZeroBranches": "Both stress leaves are literal zero outside the true n1 support. The source generated residual arm is zero there.",
+    "weightedPressureMomentDistinction": "This local angular stress contribution uses no whole moment value. Actual forward potential value and ordinary joining at Xb require whole angular #117072=0 under the source integral meaning. This is a different source integral from axial #117047."
+  },
+  "conditionalFirstThreeRadialFormulas": [
+    "K*v*A",
+    "K*(A/s+v^2*A_X)",
+    "K*(3*v*A_X/s+v^3*A_XX)"
+  ],
+  "conditional": "Ordinary interior calculus under fixed Z,T,band and original admitted s bracket. To extend Signed stress piece by zero retain source derivative semantics. Complete physical stress joining and higher differentiation at a source seam require separate ordinary limits.",
+  "stillOpen": [
+    "Actual full theta whole angular moment independent validation with original I2 and eta domains.",
+    "Full same-source Haar residual weighted estimates, coefficient derivatives for all retained waves and final jet values."
+  ],
+  "finalJets": 0,
+  "release": "HOLD"
+}
