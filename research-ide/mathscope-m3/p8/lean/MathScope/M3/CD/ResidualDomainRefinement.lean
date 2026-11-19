@@ -45,7 +45,7 @@ theorem quadratic_error_radius_contraction
         (mul_le_mul_of_nonneg_left haNew hb)) hab
     _ = factor * (a * bOld + b * aOld) + (factor * factor) * (aOld * bOld) := by ring
     _ ≤ factor * (a * bOld + b * aOld) + factor * (aOld * bOld) :=
-      add_le_add_left (mul_le_mul_of_nonneg_right hFactorSq (mul_nonneg haOld hbOld)) _
+      add_le_add (le_refl _) (mul_le_mul_of_nonneg_right hFactorSq (mul_nonneg haOld hbOld))
     _ = _ := by ring
 
 #print axioms original_mean_bump_mass_gt_inv_five_thousand
