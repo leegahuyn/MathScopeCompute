@@ -10,6 +10,11 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation53
+
+- **VERIFIED / CONDITIONAL · N8의 원본 안쪽 장 근사 차수 비교.** 실제 원본 계수 324개와 축값을 보정한 4차·8차 다항식을 재생했다. 원래 압력 기준값과 축 조건을 보존했고, 일치하는 안쪽 차트에서 스칼라 22개와 영이 아닌 지역 jet 48개의 오차 구간 폭이 각각 기존의 (5/16) 이하로 줄었다. 나머지 19개 오차는 정확히 0이다. 원본 복소 노름과 물리 좌표 적용이 전제다. 전체 (K)의 N8 비교와 환대 수치 구간은 OPEN이다. [안쪽 차수 비교와 재현](final67/inner-n8-refinement/README.md).
+- **VERIFIED / OPEN · 새 N3 보정 자료의 독립 검산기.** 원본 그래프와 함수 레지스트리의 해시, 이전 그래프와 겹치는 원본 노드, 에너지와 jet 입력의 좌표·차수·스케일을 검사한다. 보관된 실제 N1 원본 그래프 4,456,994개 노드와 원본 Temporal·FiveMap 연산, 오류 대조 11개와 부분 자료 처리 4개를 통과했다. 새 N3의 실제 검산과 수치 구간은 OPEN이다. [검산기와 대조군](primary-forced-join/active-n3-c5-binding/spatial-readback/README.md).
+
 ## Continuation52
 
 - **VERIFIED / CONDITIONAL · 같은 원본 3차원 잔차의 직접식과 분해식.** 실제 22,153,782개 노드 그래프에서 비교에 필요한 산술 기록 1,663개를 추출했다. 직접 잔차와 분해 잔차의 세 차이 및 발산 차이 한 개가 정확히 0이었다. 원래 직접식의 세 대조는 각각 953, 1,053, 3,134개 항을 유지했다. GitHub 출력과 독립 Python 검산이 바이트 단위로 같았다. 원본 연산의 정의역과 열 개 분모의 비영 조건이 물리 적용에 필요하고, 잔차 수치 구간은 OPEN이다. [정확 잔차 재생](primary-forced-join/active-n3-c5-binding/hosted-44541601028/README.md) · [GitHub 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44541601028).
