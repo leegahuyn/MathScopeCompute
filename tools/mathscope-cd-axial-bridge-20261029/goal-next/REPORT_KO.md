@@ -10,6 +10,12 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation56
+
+- **VERIFIED / CONDITIONAL · 원본 축방향 잔차와 Picard 극한.** 원본 선도장과 B.26을 연결해 실제 상계 \(B=4096\Lambda^2Q^3/t_1\)를 \(0\le X\le a^2\), \(\eta\in S_\delta\) 전체에서 얻었다. 원본 자연축 정리와 결합해 \(n=1\) Picard 급수의 균등 수렴과 유일성을 \(S_{\delta/8}\)에서 증명했다. 기존 다섯 모멘트와 결합하면 원본 실수 primitive의 의미를 전제로 전체 적분 `#117075`의 소거와 두 cutoff의 접합을 얻는다. 네 첫 적분 정리와 두 Picard 상계 정리가 GitHub Lean을 통과했다. [원본 \(n=1\) 증명](axial-order-one-identity/ORDER_ONE_RESULT_KO.md) · [GitHub Lean](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44562112347).
+- **VERIFIED / CONDITIONAL · 각 고정 재귀 차수의 국소 해.** 원본 커널 78개 위치와 세 자연 코어를 정확 비교했다. 실제·보조 재귀의 항별 일치가 \(X_a\)까지 성립한다. \(a^2\)에서 \(\Omega\)를 잇는 데 필요한 양의 차수 질량의 평탄 구간을 확인했다. \(n=2\)의 중첩 점성항에는 \(v_0\)가 들어간다. 전체 실수 차트의 원시함수와 지지 경계, Ipos 전역 적분은 OPEN이다. [원본 재귀와 경계 조건](axial-order-one-identity/general-source-picard/SOURCE_PICARD_SCOPE.md).
+- **VERIFIED / CONDITIONAL · 안쪽 영역의 실제 스케일에서 힘 제곱 오차.** 원본 물리 단항식 396개를 정확 재생했다. 원본 안쪽 해석적 계수 상계를 적용하면 4차와 8차 각각에서 정규화한 힘 제곱 적분의 변화량과 힘 오차 제곱 적분이 모두 \(2^{-256}S_R\) 미만이다. 양의 상계 네 개와 엄격 부등식을 독립 검산했다. 환대와 활성 보정을 포함하는 전체 (K)의 수치 구간은 OPEN이다. [힘 제곱 적분 오차](final67/inner-n8-absolute-error/README.md).
+
 ## Continuation55
 
 - **VERIFIED / CONDITIONAL · 원본 $n=1$ Picard의 η 미분과 실제 계수 상계.** 원본 system 0의 우변 18개와 연속 미분 항등식 12개를 기호적으로 확인했다. 원본 $[0,1]$ 적분 바인더가 보존된 첫 적분 단계의 미분 9개가 정확히 일치했다. 원본 행렬 12행과 강제항 6행을 실제 상계 $C_1=262144B^2/\delta^2$에 연결했다. 이 상계의 적용에는 원본 $F_0,U_0$의 복소 영역에서의 2차 방사 미분 상계와 경계 접합이 필요하다. 실제 Picard 급수와 극한의 해석은 별도 증명 의무다. 일반 차수와 최종장 판정은 OPEN이다. [원본 연산과 남은 $B$ 조건](axial-order-one-identity/native-eta-kernel/README.md).
