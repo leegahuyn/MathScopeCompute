@@ -10,6 +10,20 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation88
+
+- **VERIFIED.** 다른 원본 실행에서 재구성한 표적 두 본문을 활성 원본의 네이티브 슬롯 32017·32018과 대조했다. 각 적분의 결속 좌표와 실제 인자까지 일치했다. 원본 열 cutoff와 양쪽 Haar 질량을 같은 바깥 끝점과 펄스 길이에 결속했다. 정규화 두 열의 행렬식과 양의 질량 하한에 대한 Lean 정리 두 개를 컴파일했다. [바깥 진폭](primary-forced-join/active-n3-c5-binding/first-wave-guard-traces/outer-normalized-amplitude/README.md) · [GitHub Lean](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44625438914).
+
+- **CONDITIONAL.** 원본 Gaussian 집중 폭을 써서 양쪽 질량을 \(S^{-1/2}\) 양쪽 상계로 옮겼다. 고정 라벨에서 펄스 행렬과 접평면 기저의 느린 \(i\)차 미분이 모두 \(O(S^i)\)이면, \(S^{-1/4}\sqrt W\)의 느린 \(j\)차 미분은 \(O(S^{2j})\)이다. 기존 원본 종단 Taylor·열 적분 상계와 차트 변환으로 정칙 표적 항의 \(R,Z,T\) 미분 8차까지 상수를 연결했다. 펄스와 기저의 해당 고차 차수별 상계를 활성 차트 전체에 결속하는 작업은 OPEN이다.
+
+- **VERIFIED / CONDITIONAL.** 첫 Forced 20개 시스템에서 행렬 원소 180개와 투영 강제항 120개를 직접 확인했다. 실제 Primary 본문 100개는 같은 펄스 \(P(v)\)를 인자로 갖는다. 프레임 상수는 실제 \(u=2/\kappa\ge2\)를 사용해 산출했다. 원래 소섭동 조건에서 이 펄스 인자를 쓰면 Forced 전파자 상계의 지수에 밴드 길이가 들어가지 않는다. [첫 Forced 펄스](primary-forced-join/active-n3-c5-binding/first-wave-guard-traces/outer-normalized-amplitude/pulse-frame/README.md).
+
+- **VERIFIED / OPEN.** 실제 운영 N8 장면의 데스크톱 및 터치 화면에서 각각 세 평면의 표본과 원본 다운로드를 확인했다. R1-03의 유한 Navier–Stokes 비교장 경로에 해당한다. 모바일 고정 버튼은 일부 출처 문구를 가렸다. 운영 편집 본문과 R1-08은 OPEN이며 RELEASE HOLD다. [운영 N8 검사](m4/r108/operating-n8-scope/README.md).
+
+- **VERIFIED / CONDITIONAL.** Y의 원본 Picard 10개 시스템에서 Volterra 항 180개, 부분합 240개, 우변·방사 미분식 240개와 \(\eta\) 미분 위치 900개를 대조했다. 같은 원본 B.26과 계수 상계 아래 이 재귀는 유일한 보통 극한을 나타낸다. 수치 절단 \(K\), 모든 차트·차수의 네이티브 극한 및 생성 미분은 OPEN이다. [Y 네이티브 재귀](y-higher-flow/picard-native-steps/README.md).
+
+- **OPEN.** 활성 차트 전체의 고차 프레임 상수, 완전한 압력과 후속 보정의 수치 구간이 남는다. M3 62/64, 네 정밀화 0/4, 최종 jets 0/67이다.
+
 ## Continuation87
 
 - **VERIFIED.** 같은 활성 원본에서 공분산 여섯 성분의 열두 본문과 162개 부호별 덮개를 대조했다. 세 실제 cutoff 값과 여섯 성분의 횡방향 미분 구조를 결합했다. 첫 Forced의 평균 보조각 도함수는 실제 계수 100개에서 \(L\) 방향으로 묶인다. 이 경로의 실제 미분은 평균 성분당 43개로 총 129개이며, 원본 공분산 요청은 600개다. \(W_{rz}\)에만 느린 7차가 필요하다. [초기 Temporal 가중 전개](primary-forced-join/active-n3-c5-binding/first-wave-guard-traces/temporal-weighted-inverse/README.md).

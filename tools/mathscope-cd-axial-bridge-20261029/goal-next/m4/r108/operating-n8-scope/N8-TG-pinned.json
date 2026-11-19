@@ -1,0 +1,4690 @@
+{
+  "schema": "MathScope.NavierM3.Result/1",
+  "version": "0.1.0",
+  "package": "N8",
+  "operation": "galerkin",
+  "input": {
+    "package": "N8",
+    "operation": "galerkin",
+    "parameters": {
+      "cutoff": 2,
+      "viscosity": 1,
+      "endTime": 0.5,
+      "initialStep": 0.1
+    }
+  },
+  "inputHash": "1b9faf38f9769606188f372d505cf61398e9bc4a1063819fc34709044080b673",
+  "runHash": "8bdf584da5121931d1fb7d79416d568c698f5a8211c22d7d600648ea23015b6f",
+  "status": "GENERIC_GALERKIN_EXECUTED_RECONSTRUCTION_PARTIAL",
+  "executionStatus": "FINITE_RUN_COMPLETE",
+  "source": {
+    "implementation": {
+      "schema": "MathScope.NavierM3.ImplementationPin/1",
+      "files": [
+        {
+          "path": "research-ide/mathscope-m3/navier/galerkin.mjs",
+          "sha256": "e0a04a0a5363a7d72dec89fe3b157499669db317bc064d9922ccedf3599239aa",
+          "bytes": 17825
+        },
+        {
+          "path": "research-ide/mathscope-m3/navier/corrections.mjs",
+          "sha256": "120c595312afb232138a4e23b26ae7a7de987aa15729af8fe9f50f5bccea2c8f",
+          "bytes": 22955
+        },
+        {
+          "path": "research-ide/mathscope-m3/navier/localization.mjs",
+          "sha256": "1754c965e6cc977d1e304d16b8eb20578ff27e6158801ea426a4e94f29b090fb",
+          "bytes": 9727
+        },
+        {
+          "path": "research-ide/mathscope-m3/navier/index.mjs",
+          "sha256": "d6b98110ee1644279478ac193fd1dd25cb973b74d08f21d23cf0bcf3e85dc89b",
+          "bytes": 10281
+        },
+        {
+          "path": "research-ide/mathscope-m3/navier/source-mean-map.mjs",
+          "sha256": "072f9cbaa7fedab6ea2cdb64158a7d5af3c3916685dfefeef65e977219ef09b7",
+          "bytes": 11303
+        },
+        {
+          "path": "research-ide/mathscope-m3/navier/source-inheritance.mjs",
+          "sha256": "f3189a00c35fdb1d925650f52edfcb19839d4f751db91aa916a9494b0b49faa8",
+          "bytes": 4835
+        }
+      ],
+      "sha256": "afda0e1039016e2a3553e58aae9d9ccba5f1ef5dedb36b66540bd9de3b81cdb0"
+    },
+    "paper": {
+      "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf",
+      "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+      "pages": 166
+    },
+    "profile": "same-profile-2026-10-10.3",
+    "parameterExpressionSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+    "common6": {
+      "path": "research-ide/mathscope-m2/navier/research/evidence/common-physical-package-20261011/actual-common-physical-package-source-attempt6.json",
+      "sha256": "ac98143158c9e7abc6bd656e687269f183bb803ecdc036edb8a3937edc24bc01",
+      "bytes": 4495330
+    },
+    "source4": {
+      "path": "research-ide/mathscope-m2/navier/research/evidence/physical-full-jets-20261011/actual-physical-center-full-jet-source-attempt4.json",
+      "sha256": "88f7cf6fe5af934d6b3bcacc8ad975e86bd0b37fee2110b9db8c73e72acb129e",
+      "bytes": 161629
+    },
+    "physicalGraph": {
+      "namespace": "physical",
+      "sha256": "79d2ffc302ab2db900b8432dcc5d23d7c85f12d996da244ed421b904dfbdb3cf",
+      "nodeCount": 720452,
+      "canonicalBytes": 31814841,
+      "fixedCompilerPrefix": true
+    },
+    "inheritedM2Assessment": "COMPLETE_IN_DECLARED_SOURCE_BOUND_M2_SCOPE"
+  },
+  "sourceBoundaries": {
+    "M2Preserved": true,
+    "P7Changed": false,
+    "fullUncorrectedResidualAssumedFlat": false,
+    "completeN6": false,
+    "completeN7": false,
+    "completeN8": false,
+    "wholeM3Complete": false
+  },
+  "results": {
+    "schema": "MathScope.N8.GalerkinRun/1",
+    "branch": "GENERIC_FOURIER_GALERKIN",
+    "status": "FINITE_RUN_COMPLETE",
+    "input": {
+      "cutoff": 2,
+      "viscosity": 1,
+      "endTime": 0.5,
+      "initialStep": 0.1,
+      "rtol": 0.000001,
+      "atol": 1e-9,
+      "energyTolerance": 0.00002,
+      "cfl": 0.5,
+      "maxSteps": 2000,
+      "fixture": "Taylor-Green",
+      "fixedStep": false
+    },
+    "domain": {
+      "kind": "PERIODIC_3_TORUS",
+      "lengths": [
+        6.283185307179586,
+        6.283185307179586,
+        6.283185307179586
+      ],
+      "basis": "exp(i k dot x)",
+      "retainedModes": "|k_j| <= K",
+      "meanEnergy": true
+    },
+    "method": "IMEX Crank-Nicolson diffusion / explicit Heun convection; adaptive step doubling",
+    "designOrder": 2,
+    "initial": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.25,
+      0,
+      -0.25,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.25,
+      0,
+      0.25,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      -0.25,
+      0,
+      -0.25,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      -0.25,
+      0,
+      0.25,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "final": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.09196777564043748,
+      0,
+      -0.09196777564043748,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.09196777564043748,
+      0,
+      0.09196777564043748,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      -0.09196777564043748,
+      0,
+      -0.09196777564043748,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      -0.09196777564043748,
+      0,
+      0.09196777564043748,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "modes": [
+      [
+        -2,
+        -2,
+        -2
+      ],
+      [
+        -2,
+        -2,
+        -1
+      ],
+      [
+        -2,
+        -2,
+        0
+      ],
+      [
+        -2,
+        -2,
+        1
+      ],
+      [
+        -2,
+        -2,
+        2
+      ],
+      [
+        -2,
+        -1,
+        -2
+      ],
+      [
+        -2,
+        -1,
+        -1
+      ],
+      [
+        -2,
+        -1,
+        0
+      ],
+      [
+        -2,
+        -1,
+        1
+      ],
+      [
+        -2,
+        -1,
+        2
+      ],
+      [
+        -2,
+        0,
+        -2
+      ],
+      [
+        -2,
+        0,
+        -1
+      ],
+      [
+        -2,
+        0,
+        0
+      ],
+      [
+        -2,
+        0,
+        1
+      ],
+      [
+        -2,
+        0,
+        2
+      ],
+      [
+        -2,
+        1,
+        -2
+      ],
+      [
+        -2,
+        1,
+        -1
+      ],
+      [
+        -2,
+        1,
+        0
+      ],
+      [
+        -2,
+        1,
+        1
+      ],
+      [
+        -2,
+        1,
+        2
+      ],
+      [
+        -2,
+        2,
+        -2
+      ],
+      [
+        -2,
+        2,
+        -1
+      ],
+      [
+        -2,
+        2,
+        0
+      ],
+      [
+        -2,
+        2,
+        1
+      ],
+      [
+        -2,
+        2,
+        2
+      ],
+      [
+        -1,
+        -2,
+        -2
+      ],
+      [
+        -1,
+        -2,
+        -1
+      ],
+      [
+        -1,
+        -2,
+        0
+      ],
+      [
+        -1,
+        -2,
+        1
+      ],
+      [
+        -1,
+        -2,
+        2
+      ],
+      [
+        -1,
+        -1,
+        -2
+      ],
+      [
+        -1,
+        -1,
+        -1
+      ],
+      [
+        -1,
+        -1,
+        0
+      ],
+      [
+        -1,
+        -1,
+        1
+      ],
+      [
+        -1,
+        -1,
+        2
+      ],
+      [
+        -1,
+        0,
+        -2
+      ],
+      [
+        -1,
+        0,
+        -1
+      ],
+      [
+        -1,
+        0,
+        0
+      ],
+      [
+        -1,
+        0,
+        1
+      ],
+      [
+        -1,
+        0,
+        2
+      ],
+      [
+        -1,
+        1,
+        -2
+      ],
+      [
+        -1,
+        1,
+        -1
+      ],
+      [
+        -1,
+        1,
+        0
+      ],
+      [
+        -1,
+        1,
+        1
+      ],
+      [
+        -1,
+        1,
+        2
+      ],
+      [
+        -1,
+        2,
+        -2
+      ],
+      [
+        -1,
+        2,
+        -1
+      ],
+      [
+        -1,
+        2,
+        0
+      ],
+      [
+        -1,
+        2,
+        1
+      ],
+      [
+        -1,
+        2,
+        2
+      ],
+      [
+        0,
+        -2,
+        -2
+      ],
+      [
+        0,
+        -2,
+        -1
+      ],
+      [
+        0,
+        -2,
+        0
+      ],
+      [
+        0,
+        -2,
+        1
+      ],
+      [
+        0,
+        -2,
+        2
+      ],
+      [
+        0,
+        -1,
+        -2
+      ],
+      [
+        0,
+        -1,
+        -1
+      ],
+      [
+        0,
+        -1,
+        0
+      ],
+      [
+        0,
+        -1,
+        1
+      ],
+      [
+        0,
+        -1,
+        2
+      ],
+      [
+        0,
+        0,
+        -2
+      ],
+      [
+        0,
+        0,
+        -1
+      ],
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        2
+      ],
+      [
+        0,
+        1,
+        -2
+      ],
+      [
+        0,
+        1,
+        -1
+      ],
+      [
+        0,
+        1,
+        0
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        2
+      ],
+      [
+        0,
+        2,
+        -2
+      ],
+      [
+        0,
+        2,
+        -1
+      ],
+      [
+        0,
+        2,
+        0
+      ],
+      [
+        0,
+        2,
+        1
+      ],
+      [
+        0,
+        2,
+        2
+      ],
+      [
+        1,
+        -2,
+        -2
+      ],
+      [
+        1,
+        -2,
+        -1
+      ],
+      [
+        1,
+        -2,
+        0
+      ],
+      [
+        1,
+        -2,
+        1
+      ],
+      [
+        1,
+        -2,
+        2
+      ],
+      [
+        1,
+        -1,
+        -2
+      ],
+      [
+        1,
+        -1,
+        -1
+      ],
+      [
+        1,
+        -1,
+        0
+      ],
+      [
+        1,
+        -1,
+        1
+      ],
+      [
+        1,
+        -1,
+        2
+      ],
+      [
+        1,
+        0,
+        -2
+      ],
+      [
+        1,
+        0,
+        -1
+      ],
+      [
+        1,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        1
+      ],
+      [
+        1,
+        0,
+        2
+      ],
+      [
+        1,
+        1,
+        -2
+      ],
+      [
+        1,
+        1,
+        -1
+      ],
+      [
+        1,
+        1,
+        0
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        2
+      ],
+      [
+        1,
+        2,
+        -2
+      ],
+      [
+        1,
+        2,
+        -1
+      ],
+      [
+        1,
+        2,
+        0
+      ],
+      [
+        1,
+        2,
+        1
+      ],
+      [
+        1,
+        2,
+        2
+      ],
+      [
+        2,
+        -2,
+        -2
+      ],
+      [
+        2,
+        -2,
+        -1
+      ],
+      [
+        2,
+        -2,
+        0
+      ],
+      [
+        2,
+        -2,
+        1
+      ],
+      [
+        2,
+        -2,
+        2
+      ],
+      [
+        2,
+        -1,
+        -2
+      ],
+      [
+        2,
+        -1,
+        -1
+      ],
+      [
+        2,
+        -1,
+        0
+      ],
+      [
+        2,
+        -1,
+        1
+      ],
+      [
+        2,
+        -1,
+        2
+      ],
+      [
+        2,
+        0,
+        -2
+      ],
+      [
+        2,
+        0,
+        -1
+      ],
+      [
+        2,
+        0,
+        0
+      ],
+      [
+        2,
+        0,
+        1
+      ],
+      [
+        2,
+        0,
+        2
+      ],
+      [
+        2,
+        1,
+        -2
+      ],
+      [
+        2,
+        1,
+        -1
+      ],
+      [
+        2,
+        1,
+        0
+      ],
+      [
+        2,
+        1,
+        1
+      ],
+      [
+        2,
+        1,
+        2
+      ],
+      [
+        2,
+        2,
+        -2
+      ],
+      [
+        2,
+        2,
+        -1
+      ],
+      [
+        2,
+        2,
+        0
+      ],
+      [
+        2,
+        2,
+        1
+      ],
+      [
+        2,
+        2,
+        2
+      ]
+    ],
+    "history": [
+      {
+        "time": 0,
+        "energy": 0.25,
+        "gradientSquared": 1,
+        "forceWork": 0,
+        "domain": "PERIODIC_3_TORUS",
+        "integralNormalization": "spatial mean; multiply by (2pi)^3 for full periodic integral",
+        "pass": true,
+        "divergence": 0,
+        "conjugacy": 0,
+        "normalizedDivergence": 0,
+        "normalizedConjugacy": 0,
+        "tolerance": 1e-11,
+        "mean": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "time": 0.01657976929434161,
+        "energy": 0.23395769804380434,
+        "gradientSquared": 0.9358307921752174,
+        "forceWork": 0,
+        "domain": "PERIODIC_3_TORUS",
+        "integralNormalization": "spatial mean; multiply by (2pi)^3 for full periodic integral",
+        "pass": true,
+        "divergence": 0,
+        "conjugacy": 0,
+        "normalizedDivergence": 0,
+        "normalizedConjugacy": 0,
+        "tolerance": 1e-11,
+        "mean": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "time": 0.03312228685772439,
+        "energy": 0.2189774468578378,
+        "gradientSquared": 0.8759097874313512,
+        "forceWork": 0,
+        "domain": "PERIODIC_3_TORUS",
+        "integralNormalization": "spatial mean; multiply by (2pi)^3 for full periodic integral",
+        "pass": true,
+        "divergence": 0,
+        "conjugacy": 0,
+        "normalizedDivergence": 0,
+        "normalizedConjugacy": 0,
+        "tolerance": 1e-11,
+        "mean": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "time": 0.04966466117846948,
+        "energy": 0.2049564947414884,
+        "gradientSquared": 0.8198259789659536,
+        "forceWork": 0,
+        "domain": "PERIODIC_3_TORUS",
+        "integralNormalization": "spatial mean; multiply by (2pi)^3 for full periodic integral",
+        "pass": true,
+        "divergence": 0,
+        "conjugacy": 0,
+        "normalizedDivergence": 0,
+        "normalizedConjugacy": 0,
+        "tolerance": 1e-11,
+        "mean": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "time": 0.06620730470607128,
+        "energy": 0.19183308647511804,
+        "gradientSquared": 0.7673323459004722,
+        "forceWork": 0,
+        "domain": "PERIODIC_3_TORUS",
+        "integralNormalization": "spatial mean; multiply by (2pi)^3 for full periodic integral",
+        "pass": true,
+        "divergence": 0,
+        "conjugacy": 0,
+        "normalizedDivergence": 0,
+        "normalizedConjugacy": 0,
+        "tolerance": 1e-11,
+        "mean": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "time": 0.0827502310310571,
+        "energy": 0.17954976973265427,
+        "gradientSquared": 0.7181990789306171,
+        "forceWork": 0,
+        "domain": "PERIODIC_3_TORUS",
+        "integralNormalization": "spatial mean; multiply by (2pi)^3 for full periodic integral",
+        "pass": true,
+        "divergence": 0,
+        "conjugacy": 0,
+        "normalizedDivergence": 0,
+        "normalizedConjugacy": 0,
+        "tolerance": 1e-11,
+        "mean": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "time": 0.09929344971142344,
+        "energy": 0.16805277286054635,
+        "gradientSquared": 0.6722110914421854,
+        "forceWork": 0,
+        "domain": "PERIODIC_3_TORUS",
+        "integralNormalization": "spatial mean; multiply by (2pi)^3 for full periodic integral",
+        "pass": true,
+        "divergence": 0,
+        "conjugacy": 0,
+        "normalizedDivergence": 0,
+        "normalizedConjugacy": 0,
+        "tolerance": 1e-11,
+        "mean": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "time": 0.11583697057569203,
+        "energy": 0.15729176578206897,
+        "gradientSquared": 0.6291670631282759,
+        "forceWork": 0,
+        "domain": "PERIODIC_3_TORUS",
+        "integralNormalization": "spatial mean; multiply by (2pi)^3 for full periodic integral",
+        "pass": true,
+        "divergence": 0,
+        "conjugacy": 0,
+        "normalizedDivergence": 0,
+        "normalizedConjugacy": 0,
+        "tolerance": 1e-11,
+        "mean": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "time": 0.1323808037844392,
+        "energy": 0.14721963969491947,
+        "gradientSquared": 0.5888785587796779,
+        "forceWork": 0,
+        "domain": "PERIODIC_3_TORUS",
+        "integralNormalization": "spatial mean; multiply by (2pi)^3 for full periodic integral",
+        "pass": true,
+        "divergence": 0,
+        "conjugacy": 0,
+        "normalizedDivergence": 0,
+        "normalizedConjugacy": 0,
+        "tolerance": 1e-11,
+        "mean": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "time": 0.1489249598382188,
+        "energy": 0.13779230090880093,
+        "gradientSquared": 0.5511692036352037,
+        "forceWork": 0,
+        "domain": "PERIODIC_3_TORUS",
+        "integralNormalization": "spatial mean; multiply by (2pi)^3 for full periodic integral",
+        "pass": true,
+        "divergence": 0,
+        "conjugacy": 0,
+        "normalizedDivergence": 0,
+        "normalizedConjugacy": 0,
+        "tolerance": 1e-11,
+        "mean": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "time": 0.1654694495926317,
+        "energy": 0.12896847787326718,
+        "gradientSquared": 0.5158739114930687,
+        "forceWork": 0,
+        "domain": "PERIODIC_3_TORUS",
+        "integralNormalization": "spatial mean; multiply by (2pi)^3 for full periodic integral",
+        "pass": true,
+        "divergence": 0,
+        "conjugacy": 0,
+        "normalizedDivergence": 0,
+        "normalizedConjugacy": 0,
+        "tolerance": 1e-11,
+        "mean": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "time": 0.18201428426530444,
+        "energy": 0.12070954056048036,
+        "gradientSquared": 0.48283816224192144,
+        "forceWork": 0,
+        "domain": "PERIODIC_3_TORUS",
+        "integralNormalization": "spatial mean; multiply by (2pi)^3 for full periodic integral",
+        "pass": true,
+        "divergence": 0,
+        "conjugacy": 0,
+        "normalizedDivergence": 0,
+        "normalizedConjugacy": 0,
+        "tolerance": 1e-11,
+        "mean": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "time": 0.19855947545418012,
+        "energy": 0.11297933140172244,
+        "gradientSquared": 0.45191732560688974,
+        "forceWork": 0,
+        "domain": "PERIODIC_3_TORUS",
+        "integralNormalization": "spatial mean; multiply by (2pi)^3 for full periodic integral",
+        "pass": true,
+        "divergence": 0,
+        "conjugacy": 0,
+        "normalizedDivergence": 0,
+        "normalizedConjugacy": 0,
+        "tolerance": 1e-11,
+        "mean": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "time": 0.21510503514435225,
+        "energy": 0.10574400704990929,
+        "gradientSquared": 0.42297602819963714,
+        "forceWork": 0,
+        "domain": "PERIODIC_3_TORUS",
+        "integralNormalization": "spatial mean; multiply by (2pi)^3 for full periodic integral",
+        "pass": true,
+        "divergence": 0,
+        "conjugacy": 0,
+        "normalizedDivergence": 0,
+        "normalizedConjugacy": 0,
+        "tolerance": 1e-11,
+        "mean": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "time": 0.231650975726526,
+        "energy": 0.09897189026401493,
+        "gradientSquared": 0.3958875610560597,
+        "forceWork": 0,
+        "domain": "PERIODIC_3_TORUS",
+        "integralNormalization": "spatial mean; multiply by (2pi)^3 for full periodic integral",
+        "pass": true,
+        "divergence": 0,
+        "conjugacy": 0,
+        "normalizedDivergence": 0,
+        "normalizedConjugacy": 0,
+        "tolerance": 1e-11,
+        "mean": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "time": 0.2481973100047244,
+        "energy": 0.09263333127777028,
+        "gradientSquared": 0.3705333251110811,
+        "forceWork": 0,
+        "domain": "PERIODIC_3_TORUS",
+        "integralNormalization": "spatial mean; multiply by (2pi)^3 for full periodic integral",
+        "pass": true,
+        "divergence": 0,
+        "conjugacy": 0,
+        "normalizedDivergence": 0,
+        "normalizedConjugacy": 0,
+        "tolerance": 1e-11,
+        "mean": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "time": 0.2647440512165945,
+        "energy": 0.08670057803582551,
+        "gradientSquared": 0.34680231214330204,
+        "forceWork": 0,
+        "domain": "PERIODIC_3_TORUS",
+        "integralNormalization": "spatial mean; multiply by (2pi)^3 for full periodic integral",
+        "pass": true,
+        "divergence": 0,
+        "conjugacy": 0,
+        "normalizedDivergence": 0,
+        "normalizedConjugacy": 0,
+        "tolerance": 1e-11,
+        "mean": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "time": 0.28129121304345406,
+        "energy": 0.081147654739045,
+        "gradientSquared": 0.32459061895618,
+        "forceWork": 0,
+        "domain": "PERIODIC_3_TORUS",
+        "integralNormalization": "spatial mean; multiply by (2pi)^3 for full periodic integral",
+        "pass": true,
+        "divergence": 0,
+        "conjugacy": 0,
+        "normalizedDivergence": 0,
+        "normalizedConjugacy": 0,
+        "tolerance": 1e-11,
+        "mean": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "time": 0.2978388096267346,
+        "energy": 0.07595024816062096,
+        "gradientSquared": 0.30380099264248384,
+        "forceWork": 0,
+        "domain": "PERIODIC_3_TORUS",
+        "integralNormalization": "spatial mean; multiply by (2pi)^3 for full periodic integral",
+        "pass": true,
+        "divergence": 0,
+        "conjugacy": 0,
+        "normalizedDivergence": 0,
+        "normalizedConjugacy": 0,
+        "tolerance": 1e-11,
+        "mean": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "time": 0.3143868555833131,
+        "energy": 0.07108560123860051,
+        "gradientSquared": 0.28434240495440205,
+        "forceWork": 0,
+        "domain": "PERIODIC_3_TORUS",
+        "integralNormalization": "spatial mean; multiply by (2pi)^3 for full periodic integral",
+        "pass": true,
+        "divergence": 0,
+        "conjugacy": 0,
+        "normalizedDivergence": 0,
+        "normalizedConjugacy": 0,
+        "tolerance": 1e-11,
+        "mean": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "time": 0.3309353660194985,
+        "energy": 0.06653241347900074,
+        "gradientSquared": 0.26612965391600296,
+        "forceWork": 0,
+        "domain": "PERIODIC_3_TORUS",
+        "integralNormalization": "spatial mean; multiply by (2pi)^3 for full periodic integral",
+        "pass": true,
+        "divergence": 0,
+        "conjugacy": 0,
+        "normalizedDivergence": 0,
+        "normalizedConjugacy": 0,
+        "tolerance": 1e-11,
+        "mean": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "time": 0.34748435655401355,
+        "energy": 0.062270747730877825,
+        "gradientSquared": 0.2490829909235113,
+        "forceWork": 0,
+        "domain": "PERIODIC_3_TORUS",
+        "integralNormalization": "spatial mean; multiply by (2pi)^3 for full periodic integral",
+        "pass": true,
+        "divergence": 0,
+        "conjugacy": 0,
+        "normalizedDivergence": 0,
+        "normalizedConjugacy": 0,
+        "tolerance": 1e-11,
+        "mean": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "time": 0.3640338433265457,
+        "energy": 0.05828194293185547,
+        "gradientSquared": 0.23312777172742188,
+        "forceWork": 0,
+        "domain": "PERIODIC_3_TORUS",
+        "integralNormalization": "spatial mean; multiply by (2pi)^3 for full periodic integral",
+        "pass": true,
+        "divergence": 0,
+        "conjugacy": 0,
+        "normalizedDivergence": 0,
+        "normalizedConjugacy": 0,
+        "tolerance": 1e-11,
+        "mean": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "time": 0.38058384302067466,
+        "energy": 0.05454853243428054,
+        "gradientSquared": 0.21819412973712216,
+        "forceWork": 0,
+        "domain": "PERIODIC_3_TORUS",
+        "integralNormalization": "spatial mean; multiply by (2pi)^3 for full periodic integral",
+        "pass": true,
+        "divergence": 0,
+        "conjugacy": 0,
+        "normalizedDivergence": 0,
+        "normalizedConjugacy": 0,
+        "tolerance": 1e-11,
+        "mean": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "time": 0.39713437288257863,
+        "energy": 0.05105416755993568,
+        "gradientSquared": 0.20421667023974271,
+        "forceWork": 0,
+        "domain": "PERIODIC_3_TORUS",
+        "integralNormalization": "spatial mean; multiply by (2pi)^3 for full periodic integral",
+        "pass": true,
+        "divergence": 0,
+        "conjugacy": 0,
+        "normalizedDivergence": 0,
+        "normalizedConjugacy": 0,
+        "tolerance": 1e-11,
+        "mean": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "time": 0.41368545073536095,
+        "energy": 0.04778354604826334,
+        "gradientSquared": 0.19113418419305336,
+        "forceWork": 0,
+        "domain": "PERIODIC_3_TORUS",
+        "integralNormalization": "spatial mean; multiply by (2pi)^3 for full periodic integral",
+        "pass": true,
+        "divergence": 0,
+        "conjugacy": 0,
+        "normalizedDivergence": 0,
+        "normalizedConjugacy": 0,
+        "tolerance": 1e-11,
+        "mean": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "time": 0.4302370950015419,
+        "energy": 0.044722345082306596,
+        "gradientSquared": 0.17888938032922638,
+        "forceWork": 0,
+        "domain": "PERIODIC_3_TORUS",
+        "integralNormalization": "spatial mean; multiply by (2pi)^3 for full periodic integral",
+        "pass": true,
+        "divergence": 0,
+        "conjugacy": 0,
+        "normalizedDivergence": 0,
+        "normalizedConjugacy": 0,
+        "tolerance": 1e-11,
+        "mean": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "time": 0.4467893247255854,
+        "energy": 0.041857158601332586,
+        "gradientSquared": 0.16742863440533035,
+        "forceWork": 0,
+        "domain": "PERIODIC_3_TORUS",
+        "integralNormalization": "spatial mean; multiply by (2pi)^3 for full periodic integral",
+        "pass": true,
+        "divergence": 0,
+        "conjugacy": 0,
+        "normalizedDivergence": 0,
+        "normalizedConjugacy": 0,
+        "tolerance": 1e-11,
+        "mean": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "time": 0.4633421595907875,
+        "energy": 0.0391754386266085,
+        "gradientSquared": 0.156701754506434,
+        "forceWork": 0,
+        "domain": "PERIODIC_3_TORUS",
+        "integralNormalization": "spatial mean; multiply by (2pi)^3 for full periodic integral",
+        "pass": true,
+        "divergence": 0,
+        "conjugacy": 0,
+        "normalizedDivergence": 0,
+        "normalizedConjugacy": 0,
+        "tolerance": 1e-11,
+        "mean": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "time": 0.47989561994089647,
+        "energy": 0.03666544034156707,
+        "gradientSquared": 0.14666176136626827,
+        "forceWork": 0,
+        "domain": "PERIODIC_3_TORUS",
+        "integralNormalization": "spatial mean; multiply by (2pi)^3 for full periodic integral",
+        "pass": true,
+        "divergence": 0,
+        "conjugacy": 0,
+        "normalizedDivergence": 0,
+        "normalizedConjugacy": 0,
+        "tolerance": 1e-11,
+        "mean": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "time": 0.49644972680625427,
+        "energy": 0.03431617068638119,
+        "gradientSquared": 0.13726468274552475,
+        "forceWork": 0,
+        "domain": "PERIODIC_3_TORUS",
+        "integralNormalization": "spatial mean; multiply by (2pi)^3 for full periodic integral",
+        "pass": true,
+        "divergence": 0,
+        "conjugacy": 0,
+        "normalizedDivergence": 0,
+        "normalizedConjugacy": 0,
+        "tolerance": 1e-11,
+        "mean": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "time": 0.5,
+        "energy": 0.03383228702499939,
+        "gradientSquared": 0.13532914809999755,
+        "forceWork": 0,
+        "domain": "PERIODIC_3_TORUS",
+        "integralNormalization": "spatial mean; multiply by (2pi)^3 for full periodic integral",
+        "pass": true,
+        "divergence": 0,
+        "conjugacy": 0,
+        "normalizedDivergence": 0,
+        "normalizedConjugacy": 0,
+        "tolerance": 1e-11,
+        "mean": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "steps": [
+      {
+        "time": 0,
+        "dt": 0.1,
+        "cflStep": 0.10206207261596574,
+        "localError": 0.00009717677196267016,
+        "errorScale": 7.081067811865475e-7,
+        "energyDefect": 0.00020618980774464446,
+        "normalizedEnergyDefect": 0.0008247592309785778,
+        "accepted": false,
+        "divergence": 0,
+        "conjugacy": 0
+      },
+      {
+        "time": 0,
+        "dt": 0.020000000000000004,
+        "cflStep": 0.10206207261596574,
+        "localError": 9.061097831452679e-7,
+        "errorScale": 7.081067811865475e-7,
+        "energyDefect": 0.0000019221528850463243,
+        "normalizedEnergyDefect": 0.000007688611540185297,
+        "accepted": false,
+        "divergence": 0,
+        "conjugacy": 0
+      },
+      {
+        "time": 0,
+        "dt": 0.01657976929434161,
+        "cflStep": 0.10206207261596574,
+        "localError": 5.197050271411406e-7,
+        "errorScale": 7.081067811865475e-7,
+        "energyDefect": 0.0000011024620822606968,
+        "normalizedEnergyDefect": 0.000004409848329042787,
+        "accepted": true,
+        "divergence": 0,
+        "conjugacy": 0
+      },
+      {
+        "time": 0.01657976929434161,
+        "dt": 0.01654251756338278,
+        "cflStep": 0.10550322081127031,
+        "localError": 4.994096239980111e-7,
+        "errorScale": 6.85043416814758e-7,
+        "energyDefect": 0.0000010248547377116751,
+        "normalizedEnergyDefect": 0.000004380512999917573,
+        "accepted": true,
+        "divergence": 0,
+        "conjugacy": 0
+      },
+      {
+        "time": 0.03312228685772439,
+        "dt": 0.01654237432074509,
+        "cflStep": 0.10905226591538153,
+        "localError": 4.831442024732422e-7,
+        "errorScale": 6.627816057550071e-7,
+        "energyDefect": 9.592089060886377e-7,
+        "normalizedEnergyDefect": 0.000004380400446952718,
+        "accepted": true,
+        "divergence": 0,
+        "conjugacy": 0
+      },
+      {
+        "time": 0.04966466117846948,
+        "dt": 0.01654264352760179,
+        "cflStep": 0.11272066580150827,
+        "localError": 4.674432499387586e-7,
+        "errorScale": 6.412444763392938e-7,
+        "energyDefect": 8.978348759319799e-7,
+        "normalizedEnergyDefect": 0.000004380611978480696,
+        "accepted": true,
+        "divergence": 0,
+        "conjugacy": 0
+      },
+      {
+        "time": 0.06620730470607128,
+        "dt": 0.016542926324985812,
+        "cflStep": 0.1165125294152185,
+        "localError": 4.522533968060969e-7,
+        "errorScale": 6.204079212847022e-7,
+        "energyDefect": 8.403889447949897e-7,
+        "normalizedEnergyDefect": 0.000004380834194126327,
+        "accepted": true,
+        "divergence": 0,
+        "conjugacy": 0
+      },
+      {
+        "time": 0.0827502310310571,
+        "dt": 0.01654321868036635,
+        "cflStep": 0.12043201743688492,
+        "localError": 4.3755764957205355e-7,
+        "errorScale": 6.002491464034875e-7,
+        "energyDefect": 7.866190198501516e-7,
+        "normalizedEnergyDefect": 0.0000043810639301927835,
+        "accepted": true,
+        "divergence": 0,
+        "conjugacy": 0
+      },
+      {
+        "time": 0.09929344971142344,
+        "dt": 0.016543520864268586,
+        "cflStep": 0.12448343004710181,
+        "localError": 4.233399315627481e-7,
+        "errorScale": 5.807461045329176e-7,
+        "energyDefect": 7.362898484675889e-7,
+        "normalizedEnergyDefect": 0.000004381301396785505,
+        "accepted": true,
+        "divergence": 0,
+        "conjugacy": 0
+      },
+      {
+        "time": 0.11583697057569203,
+        "dt": 0.016543833208747173,
+        "cflStep": 0.12867121262346284,
+        "localError": 4.09584693498357e-7,
+        "errorScale": 5.618774657303839e-7,
+        "energyDefect": 6.89181242083739e-7,
+        "normalizedEnergyDefect": 0.000004381546857567955,
+        "accepted": true,
+        "divergence": 0,
+        "conjugacy": 0
+      },
+      {
+        "time": 0.1323808037844392,
+        "dt": 0.01654415605377961,
+        "cflStep": 0.13299996067721367,
+        "localError": 3.9627689138097826e-7,
+        "errorScale": 5.436225938807183e-7,
+        "energyDefect": 6.450871024906574e-7,
+        "normalizedEnergyDefect": 0.000004381800579239696,
+        "accepted": true,
+        "divergence": 0,
+        "conjugacy": 0
+      },
+      {
+        "time": 0.1489249598382188,
+        "dt": 0.016544489754412913,
+        "cflStep": 0.13747442494611983,
+        "localError": 3.8340197118622957e-7,
+        "errorScale": 5.259615241306755e-7,
+        "energyDefect": 6.03814521897908e-7,
+        "normalizedEnergyDefect": 0.000004382062843246576,
+        "accepted": true,
+        "divergence": 0,
+        "conjugacy": 0
+      },
+      {
+        "time": 0.1654694495926317,
+        "dt": 0.01654483467267273,
+        "cflStep": 0.1420995166634913,
+        "localError": 3.7094585153989526e-7,
+        "errorScale": 5.088749410499935e-7,
+        "energyDefect": 5.6518293689925e-7,
+        "normalizedEnergyDefect": 0.000004382333933216112,
+        "accepted": true,
+        "divergence": 0,
+        "conjugacy": 0
+      },
+      {
+        "time": 0.18201428426530444,
+        "dt": 0.016545191188875694,
+        "cflStep": 0.1468803130053968,
+        "localError": 3.588949099272807e-7,
+        "errorScale": 4.923441575117798e-7,
+        "energyDefect": 5.290233407321057e-7,
+        "normalizedEnergyDefect": 0.000004382614151919861,
+        "accepted": true,
+        "divergence": 0,
+        "conjugacy": 0
+      },
+      {
+        "time": 0.19855947545418012,
+        "dt": 0.01654555969017213,
+        "cflStep": 0.15182206272768933,
+        "localError": 3.4723596620724134e-7,
+        "errorScale": 4.763510942487089e-7,
+        "energyDefect": 4.951775410396916e-7,
+        "normalizedEnergyDefect": 0.000004382903801041102,
+        "accepted": true,
+        "divergence": 0,
+        "conjugacy": 0
+      },
+      {
+        "time": 0.21510503514435225,
+        "dt": 0.016545940582173742,
+        "cflStep": 0.1569301919929669,
+        "localError": 3.359562696850887e-7,
+        "errorScale": 4.6087826008609997e-7,
+        "energyDefect": 4.634974705881867e-7,
+        "normalizedEnergyDefect": 0.000004383203204787049,
+        "accepted": true,
+        "divergence": 0,
+        "conjugacy": 0
+      },
+      {
+        "time": 0.231650975726526,
+        "dt": 0.01654633427819841,
+        "cflStep": 0.1622103104008788,
+        "localError": 3.2504348367334687e-7,
+        "errorScale": 4.4590873280711166e-7,
+        "energyDefect": 4.338445366057833e-7,
+        "normalizedEnergyDefect": 0.000004383512686768643,
+        "accepted": true,
+        "divergence": 0,
+        "conjugacy": 0
+      },
+      {
+        "time": 0.2481973100047244,
+        "dt": 0.016546741211870088,
+        "cflStep": 0.1676682172220885,
+        "localError": 3.1448567342820976e-7,
+        "errorScale": 4.3142614065079804e-7,
+        "energyDefect": 4.0608901655074525e-7,
+        "normalizedEnergyDefect": 0.000004383832589730006,
+        "accepted": true,
+        "divergence": 0,
+        "conjugacy": 0
+      },
+      {
+        "time": 0.2647440512165945,
+        "dt": 0.016547161826859533,
+        "cflStep": 0.17330990785040137,
+        "localError": 3.04271292071045e-7,
+        "errorScale": 4.174146444010477e-7,
+        "energyDefect": 3.8010948914118936e-7,
+        "normalizedEnergyDefect": 0.0000043841632634112825,
+        "accepted": true,
+        "divergence": 0,
+        "conjugacy": 0
+      },
+      {
+        "time": 0.28129121304345406,
+        "dt": 0.01654759658328053,
+        "cflStep": 0.17914158047333437,
+        "localError": 2.943891684201771e-7,
+        "errorScale": 4.038589200676708e-7,
+        "energyDefect": 3.5579230388445293e-7,
+        "normalizedEnergyDefect": 0.000004384505073234851,
+        "accepted": true,
+        "divergence": 0,
+        "conjugacy": 0
+      },
+      {
+        "time": 0.2978388096267346,
+        "dt": 0.016548045956578515,
+        "cflStep": 0.18516964297423794,
+        "localError": 2.848284947703349e-7,
+        "errorScale": 3.9074414212562823e-7,
+        "energyDefect": 3.3303108313946506e-7,
+        "normalizedEnergyDefect": 0.000004384858393552117,
+        "accepted": true,
+        "divergence": 0,
+        "conjugacy": 0
+      },
+      {
+        "time": 0.3143868555833131,
+        "dt": 0.016548510436185444,
+        "cflStep": 0.1914007200716569,
+        "localError": 2.755788145412576e-7,
+        "errorScale": 3.780559673008783e-7,
+        "energyDefect": 3.1172625681186866e-7,
+        "normalizedEnergyDefect": 0.000004385223609005599,
+        "accepted": true,
+        "divergence": 0,
+        "conjugacy": 0
+      },
+      {
+        "time": 0.3309353660194985,
+        "dt": 0.016548990534515005,
+        "cflStep": 0.19784166070408293,
+        "localError": 2.6663001204592516e-7,
+        "errorScale": 3.6578051888498856e-7,
+        "energyDefect": 2.917846276149702e-7,
+        "normalizedEnergyDefect": 0.000004385601128193923,
+        "accepted": true,
+        "divergence": 0,
+        "conjugacy": 0
+      },
+      {
+        "time": 0.34748435655401355,
+        "dt": 0.016549486772532165,
+        "cflStep": 0.2044995456728394,
+        "localError": 2.579722999559871e-7,
+        "errorScale": 3.539043715537619e-7,
+        "energyDefect": 2.7311896160474303e-7,
+        "normalizedEnergyDefect": 0.0000043859913612264715,
+        "accepted": true,
+        "divergence": 0,
+        "conjugacy": 0
+      },
+      {
+        "time": 0.3640338433265457,
+        "dt": 0.016549999694128983,
+        "cflStep": 0.21138169554299918,
+        "localError": 2.495962095541051e-7,
+        "errorScale": 3.424145366906789e-7,
+        "energyDefect": 2.5564760773328504e-7,
+        "normalizedEnergyDefect": 0.000004386394736911805,
+        "accepted": true,
+        "divergence": 0,
+        "conjugacy": 0
+      },
+      {
+        "time": 0.38058384302067466,
+        "dt": 0.01655052986190398,
+        "cflStep": 0.2184956788228334,
+        "localError": 2.414925803451748e-7,
+        "errorScale": 3.31298448177646e-7,
+        "energyDefect": 2.3929414039039823e-7,
+        "normalizedEnergyDefect": 0.000004386811701647466,
+        "accepted": true,
+        "divergence": 0,
+        "conjugacy": 0
+      },
+      {
+        "time": 0.39713437288257863,
+        "dt": 0.016551077852782325,
+        "cflStep": 0.22584932042441475,
+        "localError": 2.3365254947128523e-7,
+        "errorScale": 3.2054394865162346e-7,
+        "energyDefect": 2.239870245421098e-7,
+        "normalizedEnergyDefect": 0.000004387242711952113,
+        "accepted": true,
+        "divergence": 0,
+        "conjugacy": 0
+      },
+      {
+        "time": 0.41368545073536095,
+        "dt": 0.016551644266180925,
+        "cflStep": 0.23345071041489013,
+        "localError": 2.260675424089216e-7,
+        "errorScale": 3.1013927621142976e-7,
+        "energyDefect": 2.0965930308796538e-7,
+        "normalizedEnergyDefect": 0.000004387688240554623,
+        "accepted": true,
+        "divergence": 0,
+        "conjugacy": 0
+      },
+      {
+        "time": 0.4302370950015419,
+        "dt": 0.016552229724043497,
+        "cflStep": 0.24130821307435674,
+        "localError": 2.187292638100924e-7,
+        "errorScale": 3.0007305155197984e-7,
+        "energyDefect": 1.9624830403753776e-7,
+        "normalizedEnergyDefect": 0.000004388148780578572,
+        "accepted": true,
+        "divergence": 0,
+        "conjugacy": 0
+      },
+      {
+        "time": 0.4467893247255854,
+        "dt": 0.01655283486520212,
+        "cflStep": 0.24943047626790354,
+        "localError": 2.1162968799018575e-7,
+        "errorScale": 2.90334265517697e-7,
+        "energyDefect": 1.8369536587074103e-7,
+        "normalizedEnergyDefect": 0.000004388624837637518,
+        "accepted": true,
+        "divergence": 0,
+        "conjugacy": 0
+      },
+      {
+        "time": 0.4633421595907875,
+        "dt": 0.01655346035010899,
+        "cflStep": 0.2578264411400735,
+        "localError": 2.0476105018778828e-7,
+        "errorScale": 2.8091226706455186e-7,
+        "energyDefect": 1.7194558110320002e-7,
+        "normalizedEnergyDefect": 0.000004389116934772804,
+        "accepted": true,
+        "divergence": 0,
+        "conjugacy": 0
+      },
+      {
+        "time": 0.47989561994089647,
+        "dt": 0.016554106865357777,
+        "cflStep": 0.26650535214817517,
+        "localError": 1.9811583859646582e-7,
+        "errorScale": 2.7179675161111914e-7,
+        "energyDefect": 1.6094755615238265e-7,
+        "normalizedEnergyDefect": 0.00000438962561619419,
+        "accepted": true,
+        "divergence": 0,
+        "conjugacy": 0
+      },
+      {
+        "time": 0.49644972680625427,
+        "dt": 0.0035502731937457344,
+        "cflStep": 0.2754767674468698,
+        "localError": 1.940076477418991e-9,
+        "errorScale": 2.62977749766583e-7,
+        "energyDefect": 1.5247706203116301e-9,
+        "normalizedEnergyDefect": 4.443300606721702e-8,
+        "accepted": true,
+        "divergence": 0,
+        "conjugacy": 0
+      }
+    ],
+    "acceptedSteps": 31,
+    "rejectedSteps": 2,
+    "lastResolvedTime": 0.5,
+    "precision": {
+      "arithmetic": "IEEE-754 binary64",
+      "errorControl": "embedded local error and observed energy defect",
+      "rigorousErrorEnclosure": false
+    },
+    "evidence": {
+      "finiteDimensionalModel": true,
+      "numericalRun": true,
+      "analyticCertificate": null,
+      "leanTheorem": null,
+      "paperReconstruction": false,
+      "continuumBlowupProof": false
+    }
+  },
+  "checks": [
+    {
+      "id": "finite-run-complete",
+      "pass": true
+    },
+    {
+      "id": "all-accepted-steps-div-free-and-real",
+      "pass": true
+    }
+  ],
+  "observations": {
+    "kind": "ACTUAL_FINITE_FOURIER_FIELD",
+    "samples": [
+      {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "velocity": [
+          0,
+          0,
+          0
+        ],
+        "speed": 0
+      },
+      {
+        "position": [
+          0,
+          0.7853981633974483,
+          0
+        ],
+        "velocity": [
+          0,
+          -0.26012415122398524,
+          0
+        ],
+        "speed": 0.26012415122398524
+      },
+      {
+        "position": [
+          0,
+          1.5707963267948966,
+          0
+        ],
+        "velocity": [
+          0,
+          -0.36787110256174993,
+          0
+        ],
+        "speed": 0.36787110256174993
+      },
+      {
+        "position": [
+          0,
+          2.356194490192345,
+          0
+        ],
+        "velocity": [
+          0,
+          -0.2601241512239853,
+          0
+        ],
+        "speed": 0.2601241512239853
+      },
+      {
+        "position": [
+          0,
+          3.141592653589793,
+          0
+        ],
+        "velocity": [
+          0,
+          -4.5051216825105475e-17,
+          0
+        ],
+        "speed": 4.5051216825105475e-17
+      },
+      {
+        "position": [
+          0,
+          3.9269908169872414,
+          0
+        ],
+        "velocity": [
+          0,
+          0.26012415122398524,
+          0
+        ],
+        "speed": 0.26012415122398524
+      },
+      {
+        "position": [
+          0,
+          4.71238898038469,
+          0
+        ],
+        "velocity": [
+          0,
+          0.36787110256174993,
+          0
+        ],
+        "speed": 0.36787110256174993
+      },
+      {
+        "position": [
+          0,
+          5.497787143782138,
+          0
+        ],
+        "velocity": [
+          0,
+          0.26012415122398536,
+          0
+        ],
+        "speed": 0.26012415122398536
+      },
+      {
+        "position": [
+          0,
+          6.283185307179586,
+          0
+        ],
+        "velocity": [
+          0,
+          9.010243365021095e-17,
+          0
+        ],
+        "speed": 9.010243365021095e-17
+      },
+      {
+        "position": [
+          0.7853981633974483,
+          0,
+          0
+        ],
+        "velocity": [
+          0.26012415122398524,
+          0,
+          0
+        ],
+        "speed": 0.26012415122398524
+      },
+      {
+        "position": [
+          0.7853981633974483,
+          0.7853981633974483,
+          0
+        ],
+        "velocity": [
+          0.18393555128087496,
+          -0.18393555128087496,
+          0
+        ],
+        "speed": 0.2601241512239853
+      },
+      {
+        "position": [
+          0.7853981633974483,
+          1.5707963267948966,
+          0
+        ],
+        "velocity": [
+          2.7755575615628914e-17,
+          -0.26012415122398524,
+          0
+        ],
+        "speed": 0.26012415122398524
+      },
+      {
+        "position": [
+          0.7853981633974483,
+          2.356194490192345,
+          0
+        ],
+        "velocity": [
+          -0.18393555128087496,
+          -0.18393555128087496,
+          0
+        ],
+        "speed": 0.2601241512239853
+      },
+      {
+        "position": [
+          0.7853981633974483,
+          3.141592653589793,
+          0
+        ],
+        "velocity": [
+          -0.26012415122398524,
+          -2.7755575615628914e-17,
+          0
+        ],
+        "speed": 0.26012415122398524
+      },
+      {
+        "position": [
+          0.7853981633974483,
+          3.9269908169872414,
+          0
+        ],
+        "velocity": [
+          -0.183935551280875,
+          0.18393555128087494,
+          0
+        ],
+        "speed": 0.2601241512239853
+      },
+      {
+        "position": [
+          0.7853981633974483,
+          4.71238898038469,
+          0
+        ],
+        "velocity": [
+          -5.551115123125783e-17,
+          0.2601241512239853,
+          0
+        ],
+        "speed": 0.2601241512239853
+      },
+      {
+        "position": [
+          0.7853981633974483,
+          5.497787143782138,
+          0
+        ],
+        "velocity": [
+          0.1839355512808749,
+          0.18393555128087502,
+          0
+        ],
+        "speed": 0.2601241512239853
+      },
+      {
+        "position": [
+          0.7853981633974483,
+          6.283185307179586,
+          0
+        ],
+        "velocity": [
+          0.2601241512239853,
+          5.551115123125783e-17,
+          0
+        ],
+        "speed": 0.2601241512239853
+      },
+      {
+        "position": [
+          1.5707963267948966,
+          0,
+          0
+        ],
+        "velocity": [
+          0.36787110256174993,
+          0,
+          0
+        ],
+        "speed": 0.36787110256174993
+      },
+      {
+        "position": [
+          1.5707963267948966,
+          0.7853981633974483,
+          0
+        ],
+        "velocity": [
+          0.26012415122398524,
+          -2.7755575615628914e-17,
+          0
+        ],
+        "speed": 0.26012415122398524
+      },
+      {
+        "position": [
+          1.5707963267948966,
+          1.5707963267948966,
+          0
+        ],
+        "velocity": [
+          2.2525608412552737e-17,
+          -2.2525608412552737e-17,
+          0
+        ],
+        "speed": 3.1856020917737564e-17
+      },
+      {
+        "position": [
+          1.5707963267948966,
+          2.356194490192345,
+          0
+        ],
+        "velocity": [
+          -0.26012415122398524,
+          0,
+          0
+        ],
+        "speed": 0.26012415122398524
+      },
+      {
+        "position": [
+          1.5707963267948966,
+          3.141592653589793,
+          0
+        ],
+        "velocity": [
+          -0.36787110256174993,
+          0,
+          0
+        ],
+        "speed": 0.36787110256174993
+      },
+      {
+        "position": [
+          1.5707963267948966,
+          3.9269908169872414,
+          0
+        ],
+        "velocity": [
+          -0.26012415122398536,
+          2.7755575615628914e-17,
+          0
+        ],
+        "speed": 0.26012415122398536
+      },
+      {
+        "position": [
+          1.5707963267948966,
+          4.71238898038469,
+          0
+        ],
+        "velocity": [
+          -6.757682523765821e-17,
+          2.2525608412552737e-17,
+          0
+        ],
+        "speed": 7.123222826471643e-17
+      },
+      {
+        "position": [
+          1.5707963267948966,
+          5.497787143782138,
+          0
+        ],
+        "velocity": [
+          0.26012415122398524,
+          0,
+          0
+        ],
+        "speed": 0.26012415122398524
+      },
+      {
+        "position": [
+          1.5707963267948966,
+          6.283185307179586,
+          0
+        ],
+        "velocity": [
+          0.36787110256174993,
+          0,
+          0
+        ],
+        "speed": 0.36787110256174993
+      },
+      {
+        "position": [
+          2.356194490192345,
+          0,
+          0
+        ],
+        "velocity": [
+          0.2601241512239853,
+          0,
+          0
+        ],
+        "speed": 0.2601241512239853
+      },
+      {
+        "position": [
+          2.356194490192345,
+          0.7853981633974483,
+          0
+        ],
+        "velocity": [
+          0.18393555128087496,
+          0.18393555128087496,
+          0
+        ],
+        "speed": 0.2601241512239853
+      },
+      {
+        "position": [
+          2.356194490192345,
+          1.5707963267948966,
+          0
+        ],
+        "velocity": [
+          0,
+          0.26012415122398524,
+          0
+        ],
+        "speed": 0.26012415122398524
+      },
+      {
+        "position": [
+          2.356194490192345,
+          2.356194490192345,
+          0
+        ],
+        "velocity": [
+          -0.18393555128087496,
+          0.18393555128087496,
+          0
+        ],
+        "speed": 0.2601241512239853
+      },
+      {
+        "position": [
+          2.356194490192345,
+          3.141592653589793,
+          0
+        ],
+        "velocity": [
+          -0.2601241512239853,
+          5.551115123125783e-17,
+          0
+        ],
+        "speed": 0.2601241512239853
+      },
+      {
+        "position": [
+          2.356194490192345,
+          3.9269908169872414,
+          0
+        ],
+        "velocity": [
+          -0.18393555128087502,
+          -0.1839355512808749,
+          0
+        ],
+        "speed": 0.2601241512239853
+      },
+      {
+        "position": [
+          2.356194490192345,
+          4.71238898038469,
+          0
+        ],
+        "velocity": [
+          -2.7755575615628914e-17,
+          -0.26012415122398524,
+          0
+        ],
+        "speed": 0.26012415122398524
+      },
+      {
+        "position": [
+          2.356194490192345,
+          5.497787143782138,
+          0
+        ],
+        "velocity": [
+          0.18393555128087494,
+          -0.183935551280875,
+          0
+        ],
+        "speed": 0.2601241512239853
+      },
+      {
+        "position": [
+          2.356194490192345,
+          6.283185307179586,
+          0
+        ],
+        "velocity": [
+          0.2601241512239854,
+          -1.6653345369377348e-16,
+          0
+        ],
+        "speed": 0.2601241512239854
+      },
+      {
+        "position": [
+          3.141592653589793,
+          0,
+          0
+        ],
+        "velocity": [
+          4.5051216825105475e-17,
+          0,
+          0
+        ],
+        "speed": 4.5051216825105475e-17
+      },
+      {
+        "position": [
+          3.141592653589793,
+          0.7853981633974483,
+          0
+        ],
+        "velocity": [
+          2.7755575615628914e-17,
+          0.26012415122398524,
+          0
+        ],
+        "speed": 0.26012415122398524
+      },
+      {
+        "position": [
+          3.141592653589793,
+          1.5707963267948966,
+          0
+        ],
+        "velocity": [
+          0,
+          0.36787110256174993,
+          0
+        ],
+        "speed": 0.36787110256174993
+      },
+      {
+        "position": [
+          3.141592653589793,
+          2.356194490192345,
+          0
+        ],
+        "velocity": [
+          -5.551115123125783e-17,
+          0.2601241512239853,
+          0
+        ],
+        "speed": 0.2601241512239853
+      },
+      {
+        "position": [
+          3.141592653589793,
+          3.141592653589793,
+          0
+        ],
+        "velocity": [
+          -4.5051216825105475e-17,
+          4.5051216825105475e-17,
+          0
+        ],
+        "speed": 6.371204183547513e-17
+      },
+      {
+        "position": [
+          3.141592653589793,
+          3.9269908169872414,
+          0
+        ],
+        "velocity": [
+          0,
+          -0.26012415122398524,
+          0
+        ],
+        "speed": 0.26012415122398524
+      },
+      {
+        "position": [
+          3.141592653589793,
+          4.71238898038469,
+          0
+        ],
+        "velocity": [
+          0,
+          -0.36787110256174993,
+          0
+        ],
+        "speed": 0.36787110256174993
+      },
+      {
+        "position": [
+          3.141592653589793,
+          5.497787143782138,
+          0
+        ],
+        "velocity": [
+          1.3877787807814457e-16,
+          -0.26012415122398547,
+          0
+        ],
+        "speed": 0.26012415122398547
+      },
+      {
+        "position": [
+          3.141592653589793,
+          6.283185307179586,
+          0
+        ],
+        "velocity": [
+          4.5051216825105475e-17,
+          -9.010243365021095e-17,
+          0
+        ],
+        "speed": 1.0073758329001809e-16
+      },
+      {
+        "position": [
+          3.9269908169872414,
+          0,
+          0
+        ],
+        "velocity": [
+          -0.26012415122398524,
+          0,
+          0
+        ],
+        "speed": 0.26012415122398524
+      },
+      {
+        "position": [
+          3.9269908169872414,
+          0.7853981633974483,
+          0
+        ],
+        "velocity": [
+          -0.18393555128087494,
+          0.183935551280875,
+          0
+        ],
+        "speed": 0.2601241512239853
+      },
+      {
+        "position": [
+          3.9269908169872414,
+          1.5707963267948966,
+          0
+        ],
+        "velocity": [
+          -2.7755575615628914e-17,
+          0.26012415122398536,
+          0
+        ],
+        "speed": 0.26012415122398536
+      },
+      {
+        "position": [
+          3.9269908169872414,
+          2.356194490192345,
+          0
+        ],
+        "velocity": [
+          0.1839355512808749,
+          0.18393555128087502,
+          0
+        ],
+        "speed": 0.2601241512239853
+      },
+      {
+        "position": [
+          3.9269908169872414,
+          3.141592653589793,
+          0
+        ],
+        "velocity": [
+          0.26012415122398524,
+          0,
+          0
+        ],
+        "speed": 0.26012415122398524
+      },
+      {
+        "position": [
+          3.9269908169872414,
+          3.9269908169872414,
+          0
+        ],
+        "velocity": [
+          0.18393555128087496,
+          -0.18393555128087496,
+          0
+        ],
+        "speed": 0.2601241512239853
+      },
+      {
+        "position": [
+          3.9269908169872414,
+          4.71238898038469,
+          0
+        ],
+        "velocity": [
+          1.6653345369377348e-16,
+          -0.2601241512239854,
+          0
+        ],
+        "speed": 0.2601241512239854
+      },
+      {
+        "position": [
+          3.9269908169872414,
+          5.497787143782138,
+          0
+        ],
+        "velocity": [
+          -0.1839355512808749,
+          -0.18393555128087502,
+          0
+        ],
+        "speed": 0.2601241512239853
+      },
+      {
+        "position": [
+          3.9269908169872414,
+          6.283185307179586,
+          0
+        ],
+        "velocity": [
+          -0.26012415122398536,
+          5.551115123125783e-17,
+          0
+        ],
+        "speed": 0.26012415122398536
+      },
+      {
+        "position": [
+          4.71238898038469,
+          0,
+          0
+        ],
+        "velocity": [
+          -0.36787110256174993,
+          0,
+          0
+        ],
+        "speed": 0.36787110256174993
+      },
+      {
+        "position": [
+          4.71238898038469,
+          0.7853981633974483,
+          0
+        ],
+        "velocity": [
+          -0.2601241512239853,
+          5.551115123125783e-17,
+          0
+        ],
+        "speed": 0.2601241512239853
+      },
+      {
+        "position": [
+          4.71238898038469,
+          1.5707963267948966,
+          0
+        ],
+        "velocity": [
+          -2.2525608412552737e-17,
+          6.757682523765821e-17,
+          0
+        ],
+        "speed": 7.123222826471643e-17
+      },
+      {
+        "position": [
+          4.71238898038469,
+          2.356194490192345,
+          0
+        ],
+        "velocity": [
+          0.26012415122398524,
+          2.7755575615628914e-17,
+          0
+        ],
+        "speed": 0.26012415122398524
+      },
+      {
+        "position": [
+          4.71238898038469,
+          3.141592653589793,
+          0
+        ],
+        "velocity": [
+          0.36787110256174993,
+          0,
+          0
+        ],
+        "speed": 0.36787110256174993
+      },
+      {
+        "position": [
+          4.71238898038469,
+          3.9269908169872414,
+          0
+        ],
+        "velocity": [
+          0.2601241512239854,
+          -1.6653345369377348e-16,
+          0
+        ],
+        "speed": 0.2601241512239854
+      },
+      {
+        "position": [
+          4.71238898038469,
+          4.71238898038469,
+          0
+        ],
+        "velocity": [
+          6.757682523765821e-17,
+          -6.757682523765821e-17,
+          0
+        ],
+        "speed": 9.55680627532127e-17
+      },
+      {
+        "position": [
+          4.71238898038469,
+          5.497787143782138,
+          0
+        ],
+        "velocity": [
+          -0.26012415122398536,
+          8.326672684688674e-17,
+          0
+        ],
+        "speed": 0.26012415122398536
+      },
+      {
+        "position": [
+          4.71238898038469,
+          6.283185307179586,
+          0
+        ],
+        "velocity": [
+          -0.36787110256174993,
+          0,
+          0
+        ],
+        "speed": 0.36787110256174993
+      },
+      {
+        "position": [
+          5.497787143782138,
+          0,
+          0
+        ],
+        "velocity": [
+          -0.26012415122398536,
+          0,
+          0
+        ],
+        "speed": 0.26012415122398536
+      },
+      {
+        "position": [
+          5.497787143782138,
+          0.7853981633974483,
+          0
+        ],
+        "velocity": [
+          -0.18393555128087502,
+          -0.1839355512808749,
+          0
+        ],
+        "speed": 0.2601241512239853
+      },
+      {
+        "position": [
+          5.497787143782138,
+          1.5707963267948966,
+          0
+        ],
+        "velocity": [
+          0,
+          -0.26012415122398524,
+          0
+        ],
+        "speed": 0.26012415122398524
+      },
+      {
+        "position": [
+          5.497787143782138,
+          2.356194490192345,
+          0
+        ],
+        "velocity": [
+          0.183935551280875,
+          -0.18393555128087494,
+          0
+        ],
+        "speed": 0.2601241512239853
+      },
+      {
+        "position": [
+          5.497787143782138,
+          3.141592653589793,
+          0
+        ],
+        "velocity": [
+          0.26012415122398547,
+          -1.3877787807814457e-16,
+          0
+        ],
+        "speed": 0.26012415122398547
+      },
+      {
+        "position": [
+          5.497787143782138,
+          3.9269908169872414,
+          0
+        ],
+        "velocity": [
+          0.18393555128087502,
+          0.1839355512808749,
+          0
+        ],
+        "speed": 0.2601241512239853
+      },
+      {
+        "position": [
+          5.497787143782138,
+          4.71238898038469,
+          0
+        ],
+        "velocity": [
+          -8.326672684688674e-17,
+          0.26012415122398536,
+          0
+        ],
+        "speed": 0.26012415122398536
+      },
+      {
+        "position": [
+          5.497787143782138,
+          5.497787143782138,
+          0
+        ],
+        "velocity": [
+          -0.18393555128087496,
+          0.18393555128087496,
+          0
+        ],
+        "speed": 0.2601241512239853
+      },
+      {
+        "position": [
+          5.497787143782138,
+          6.283185307179586,
+          0
+        ],
+        "velocity": [
+          -0.26012415122398547,
+          1.942890293094024e-16,
+          0
+        ],
+        "speed": 0.26012415122398547
+      },
+      {
+        "position": [
+          6.283185307179586,
+          0,
+          0
+        ],
+        "velocity": [
+          -9.010243365021095e-17,
+          0,
+          0
+        ],
+        "speed": 9.010243365021095e-17
+      },
+      {
+        "position": [
+          6.283185307179586,
+          0.7853981633974483,
+          0
+        ],
+        "velocity": [
+          -5.551115123125783e-17,
+          -0.2601241512239853,
+          0
+        ],
+        "speed": 0.2601241512239853
+      },
+      {
+        "position": [
+          6.283185307179586,
+          1.5707963267948966,
+          0
+        ],
+        "velocity": [
+          0,
+          -0.36787110256174993,
+          0
+        ],
+        "speed": 0.36787110256174993
+      },
+      {
+        "position": [
+          6.283185307179586,
+          2.356194490192345,
+          0
+        ],
+        "velocity": [
+          1.6653345369377348e-16,
+          -0.2601241512239854,
+          0
+        ],
+        "speed": 0.2601241512239854
+      },
+      {
+        "position": [
+          6.283185307179586,
+          3.141592653589793,
+          0
+        ],
+        "velocity": [
+          9.010243365021095e-17,
+          -4.5051216825105475e-17,
+          0
+        ],
+        "speed": 1.0073758329001809e-16
+      },
+      {
+        "position": [
+          6.283185307179586,
+          3.9269908169872414,
+          0
+        ],
+        "velocity": [
+          -5.551115123125783e-17,
+          0.26012415122398536,
+          0
+        ],
+        "speed": 0.26012415122398536
+      },
+      {
+        "position": [
+          6.283185307179586,
+          4.71238898038469,
+          0
+        ],
+        "velocity": [
+          0,
+          0.36787110256174993,
+          0
+        ],
+        "speed": 0.36787110256174993
+      },
+      {
+        "position": [
+          6.283185307179586,
+          5.497787143782138,
+          0
+        ],
+        "velocity": [
+          -1.942890293094024e-16,
+          0.26012415122398547,
+          0
+        ],
+        "speed": 0.26012415122398547
+      },
+      {
+        "position": [
+          6.283185307179586,
+          6.283185307179586,
+          0
+        ],
+        "velocity": [
+          -9.010243365021095e-17,
+          9.010243365021095e-17,
+          0
+        ],
+        "speed": 1.2742408367095026e-16
+      }
+    ],
+    "curves": [
+      {
+        "time": 0,
+        "energy": 0.25,
+        "gradientSquared": 1,
+        "divergence": 0
+      },
+      {
+        "time": 0.01657976929434161,
+        "energy": 0.23395769804380434,
+        "gradientSquared": 0.9358307921752174,
+        "divergence": 0
+      },
+      {
+        "time": 0.03312228685772439,
+        "energy": 0.2189774468578378,
+        "gradientSquared": 0.8759097874313512,
+        "divergence": 0
+      },
+      {
+        "time": 0.04966466117846948,
+        "energy": 0.2049564947414884,
+        "gradientSquared": 0.8198259789659536,
+        "divergence": 0
+      },
+      {
+        "time": 0.06620730470607128,
+        "energy": 0.19183308647511804,
+        "gradientSquared": 0.7673323459004722,
+        "divergence": 0
+      },
+      {
+        "time": 0.0827502310310571,
+        "energy": 0.17954976973265427,
+        "gradientSquared": 0.7181990789306171,
+        "divergence": 0
+      },
+      {
+        "time": 0.09929344971142344,
+        "energy": 0.16805277286054635,
+        "gradientSquared": 0.6722110914421854,
+        "divergence": 0
+      },
+      {
+        "time": 0.11583697057569203,
+        "energy": 0.15729176578206897,
+        "gradientSquared": 0.6291670631282759,
+        "divergence": 0
+      },
+      {
+        "time": 0.1323808037844392,
+        "energy": 0.14721963969491947,
+        "gradientSquared": 0.5888785587796779,
+        "divergence": 0
+      },
+      {
+        "time": 0.1489249598382188,
+        "energy": 0.13779230090880093,
+        "gradientSquared": 0.5511692036352037,
+        "divergence": 0
+      },
+      {
+        "time": 0.1654694495926317,
+        "energy": 0.12896847787326718,
+        "gradientSquared": 0.5158739114930687,
+        "divergence": 0
+      },
+      {
+        "time": 0.18201428426530444,
+        "energy": 0.12070954056048036,
+        "gradientSquared": 0.48283816224192144,
+        "divergence": 0
+      },
+      {
+        "time": 0.19855947545418012,
+        "energy": 0.11297933140172244,
+        "gradientSquared": 0.45191732560688974,
+        "divergence": 0
+      },
+      {
+        "time": 0.21510503514435225,
+        "energy": 0.10574400704990929,
+        "gradientSquared": 0.42297602819963714,
+        "divergence": 0
+      },
+      {
+        "time": 0.231650975726526,
+        "energy": 0.09897189026401493,
+        "gradientSquared": 0.3958875610560597,
+        "divergence": 0
+      },
+      {
+        "time": 0.2481973100047244,
+        "energy": 0.09263333127777028,
+        "gradientSquared": 0.3705333251110811,
+        "divergence": 0
+      },
+      {
+        "time": 0.2647440512165945,
+        "energy": 0.08670057803582551,
+        "gradientSquared": 0.34680231214330204,
+        "divergence": 0
+      },
+      {
+        "time": 0.28129121304345406,
+        "energy": 0.081147654739045,
+        "gradientSquared": 0.32459061895618,
+        "divergence": 0
+      },
+      {
+        "time": 0.2978388096267346,
+        "energy": 0.07595024816062096,
+        "gradientSquared": 0.30380099264248384,
+        "divergence": 0
+      },
+      {
+        "time": 0.3143868555833131,
+        "energy": 0.07108560123860051,
+        "gradientSquared": 0.28434240495440205,
+        "divergence": 0
+      },
+      {
+        "time": 0.3309353660194985,
+        "energy": 0.06653241347900074,
+        "gradientSquared": 0.26612965391600296,
+        "divergence": 0
+      },
+      {
+        "time": 0.34748435655401355,
+        "energy": 0.062270747730877825,
+        "gradientSquared": 0.2490829909235113,
+        "divergence": 0
+      },
+      {
+        "time": 0.3640338433265457,
+        "energy": 0.05828194293185547,
+        "gradientSquared": 0.23312777172742188,
+        "divergence": 0
+      },
+      {
+        "time": 0.38058384302067466,
+        "energy": 0.05454853243428054,
+        "gradientSquared": 0.21819412973712216,
+        "divergence": 0
+      },
+      {
+        "time": 0.39713437288257863,
+        "energy": 0.05105416755993568,
+        "gradientSquared": 0.20421667023974271,
+        "divergence": 0
+      },
+      {
+        "time": 0.41368545073536095,
+        "energy": 0.04778354604826334,
+        "gradientSquared": 0.19113418419305336,
+        "divergence": 0
+      },
+      {
+        "time": 0.4302370950015419,
+        "energy": 0.044722345082306596,
+        "gradientSquared": 0.17888938032922638,
+        "divergence": 0
+      },
+      {
+        "time": 0.4467893247255854,
+        "energy": 0.041857158601332586,
+        "gradientSquared": 0.16742863440533035,
+        "divergence": 0
+      },
+      {
+        "time": 0.4633421595907875,
+        "energy": 0.0391754386266085,
+        "gradientSquared": 0.156701754506434,
+        "divergence": 0
+      },
+      {
+        "time": 0.47989561994089647,
+        "energy": 0.03666544034156707,
+        "gradientSquared": 0.14666176136626827,
+        "divergence": 0
+      },
+      {
+        "time": 0.49644972680625427,
+        "energy": 0.03431617068638119,
+        "gradientSquared": 0.13726468274552475,
+        "divergence": 0
+      },
+      {
+        "time": 0.5,
+        "energy": 0.03383228702499939,
+        "gradientSquared": 0.13532914809999755,
+        "divergence": 0
+      }
+    ],
+    "contract": {
+      "coordinateFrame": "fixed physical 2pi-periodic box",
+      "bounds": [
+        [
+          0,
+          6.283185307179586
+        ],
+        [
+          0,
+          6.283185307179586
+        ],
+        [
+          0,
+          6.283185307179586
+        ]
+      ],
+      "units": "dimensionless periodic model",
+      "time": 0.5,
+      "velocityOrAngularVelocity": "Cartesian velocity",
+      "streamlineOrParticlePath": "instantaneous vector samples; no particle integration",
+      "energyScope": "whole periodic domain spatial mean",
+      "colorRange": [
+        0,
+        0.36787110256174993
+      ],
+      "vectorScale": 1,
+      "automaticVectorNormalization": false,
+      "paperReconstruction": false,
+      "runHash": "8bdf584da5121931d1fb7d79416d568c698f5a8211c22d7d600648ea23015b6f",
+      "inputHash": "1b9faf38f9769606188f372d505cf61398e9bc4a1063819fc34709044080b673"
+    }
+  },
+  "progress": {
+    "status": "GENERIC_GALERKIN_EXECUTED_RECONSTRUCTION_PARTIAL",
+    "complete": false,
+    "implemented": [
+      "divergence-free Fourier basis·zero mean",
+      "exact convolution 대 padded FFT",
+      "IMEX·CFL·local error·energy defect",
+      "실제 Taylor–Green 및 비선형 계산",
+      "독립 τ·log 좌표·관측 manifest"
+    ],
+    "remaining": [
+      "N7를 승계한 실제 near-terminal reconstruction",
+      "grid·Fourier·coefficient·precision의 source tail 포함 적응",
+      "원문해 수치 enclosure와 Lean refinement 연결"
+    ]
+  },
+  "evidence": {
+    "numericOrAlgebraicFiniteExecution": true,
+    "analyticCertificate": null,
+    "leanTheorem": null,
+    "formalComplete": false,
+    "sourceReconstructionComplete": false
+  }
+}

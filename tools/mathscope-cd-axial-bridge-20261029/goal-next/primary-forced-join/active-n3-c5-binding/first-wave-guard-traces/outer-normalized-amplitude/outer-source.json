@@ -1,0 +1,152 @@
+{
+  "status": "EXECUTED_ORIGINAL_TARGET_OUTER_FACTOR_AND_CONE_SOURCE",
+  "privateGraphSHA256": "86fbb93e034676961f936025956c1d3cfbdb5f15e8c94e2ca02c890d881fed21",
+  "sourcePins": {
+    "actual-stress-direction-bounds.mjs": "42a3870cb4cc177333d7fa5ae32be988b2fb43c00fe1cb89c8ee614f70ff23f4",
+    "actual-stress-direction-program.mjs": "b3567c39a9381ef16c3d94f0a24a88571a87dee7a61b9fe782d2076732b165f5",
+    "actual-covariance-sensitivity.mjs": "f27ed95c3a1e40a4dfa4a38340d170aa92c7ec6102b277c952e1dc2dc91ac27c",
+    "actual-residual-order-induction-source.mjs": "30e135309b5e0a5866917949d2ded96cce64828b1331400cb8e2260caabdc047",
+    "actual-continuation-exact-support.mjs": "0be8fcf8d8a70d98ab339ca1bec727efac998f4763d852b21fb5761f27450b98",
+    "actual-covariance-uniform.mjs": "93d714749420aff4d5fbb4ab4db2b373fd5ff447fc70202e6ba0b9b11f6670ad",
+    "actual-covariance-ell-one-obstruction.mjs": "305fb60d757d6e4b1963bb6be73a73e25ab14c04c6a6a23aaa74b99ee48eb96f",
+    "actual-outer-covariance-flat-extension.mjs": "d0a991f5e789aae7aa35dd8c18b9a82d9be40b8f31955ce9f166b108aef00c0c"
+  },
+  "parameters": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+  "target": {
+    "count": 117771,
+    "X": 4756,
+    "eta": 2,
+    "originalLeadingF": 117100,
+    "originalLeadingU": 117101,
+    "originalLeadingM": 9239,
+    "originalPressure": 117713,
+    "rawBodies": [
+      117767,
+      117768
+    ],
+    "rawOperators": {
+      "thetaStock": 117732,
+      "thetaMoment": 117735,
+      "thetaShear": 117737,
+      "zMoment": 117762,
+      "zShear": 117765
+    }
+  },
+  "originalOuterFactor": {
+    "nodeCount": 9838,
+    "roots": {
+      "outerLogDistance": 3616,
+      "eta": 2,
+      "Xb": 5692,
+      "EpowB": 5694,
+      "rho": 260,
+      "outerTheta": 6496,
+      "outerZ": 6499,
+      "outerScaledZ": 6505
+    },
+    "formula": "T0=exp(-4/delta^2)*delta^-3*(outerTheta,delta^6*outerZ)",
+    "limits": {
+      "coordinate": "delta=log(Xb/X)",
+      "range": [
+        "0",
+        "1/2"
+      ],
+      "eta": [
+        -1,
+        1
+      ]
+    },
+    "proofPremises": "Backward stress uses the exact heat exterior after all five actual moment functions are restored; no old forward-prefix approximation is substituted.",
+    "preservedTerms": {
+      "innerNonlinearMomentDifferences": true,
+      "innerAxialStockMinusXWU": true,
+      "outerThreeAngularTerms": true,
+      "outerPressureHeatSquare": true,
+      "outerNestedAxialIntegral": true,
+      "heatGammaIsActualLaplaceIntegral": true
+    },
+    "kernelInventory": [
+      {
+        "name": "outer_viscous_stress",
+        "root": 6006,
+        "m": -3
+      },
+      {
+        "name": "outer_inviscid_stress",
+        "root": 6162,
+        "m": -3
+      },
+      {
+        "name": "outer_pressure",
+        "root": 6469,
+        "m": -3
+      },
+      {
+        "name": "outer_axial_stress",
+        "root": 6480,
+        "m": 0
+      }
+    ],
+    "endpointSeparation": {
+      "Xplus": 28824,
+      "Xb": 28826,
+      "heatTailStart": 71478,
+      "proof": "Xplus=e*Xv, Xb>exp(128)*Xv, Xb=exp(3)*Xtail, so delta<=1/2 is after Xplus with heat cutoff saturated."
+    },
+    "sameOriginalTerminalEndpointAndHeight": true,
+    "thetaCoefficientLower": "C^-10",
+    "sourceScaleRatio": "kappa/16",
+    "sourceProjectionProof": {
+      "id": "same-cover-box-retains-negative-projection",
+      "pass": true,
+      "proof": "For diameter<=4 Sstar^-3 and Sstar>=R^1024, direction change<R^-33, so -n dot N>R^-33 throughout."
+    }
+  },
+  "exactCone": {
+    "parameters": {
+      "columnErrorDivisor": 128,
+      "freezeErrorDivisor": 16
+    },
+    "rows": [
+      {
+        "id": "source-cone-margin-after-u-choice",
+        "pass": true
+      },
+      {
+        "id": "frozen-target-margin-positive",
+        "pass": true
+      },
+      {
+        "id": "normalized-determinant-lower",
+        "pass": true
+      },
+      {
+        "id": "normalized-determinant-upper",
+        "pass": true
+      },
+      {
+        "id": "inverse-numerators-positive",
+        "pass": true
+      },
+      {
+        "id": "positive-inverse-lower",
+        "pass": true
+      },
+      {
+        "id": "positive-inverse-upper",
+        "pass": true
+      },
+      {
+        "id": "inverse-infinity-norm-upper",
+        "pass": true
+      }
+    ],
+    "inverseBounds": [
+      "kappa/64",
+      "2"
+    ],
+    "ratio": "1-(1/16)*kappa"
+  },
+  "finalJets": 0,
+  "release": "HOLD"
+}
