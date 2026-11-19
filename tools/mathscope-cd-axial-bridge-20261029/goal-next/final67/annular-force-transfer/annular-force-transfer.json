@@ -1,0 +1,557 @@
+{
+  "schema": "MathScope.N8.OriginalAnnularSingleCutoffForceTransfer/1",
+  "status": "VERIFIED_EXACT_CONDITIONAL_FORCE_TRANSFER_ACTUAL_INTERVALS_OPEN",
+  "sourcePins": {
+    "summation": {
+      "path": "final67/correction-jet-composition/pinned-source/source-final-summation.mjs",
+      "sha256": "67c2f0a63d4b1a5fdf86a4c25f776ed0fdf0a6cd379d08aaf858231621c04450"
+    },
+    "outer": {
+      "path": "final67/correction-jet-composition/pinned-source/outer_cutoff.py",
+      "sha256": "535e1126c6450627bd61cf0e5a94c33938b12e71886a995175493dddfe6b8ced"
+    },
+    "selectorVerifier": {
+      "path": "final67/check_cut_correction_tail.py",
+      "sha256": "cb9a55741dde14030262de9476117239965e523e2129de7c6bebb616c51d90a5"
+    },
+    "selectorReceipt": {
+      "path": "final67/cut-correction-tail.json",
+      "sha256": "7f1b591721b768ea0c73cfed346d102d7a92752ab9f2c21487fed33b180ef18b"
+    },
+    "outerSupport": {
+      "path": "final67/active-support/active-support.json",
+      "sha256": "8d7c06623203cbe336399a63bb194bf34ada03df5c3a68fc55cacceeda0f33d3"
+    },
+    "composition": {
+      "path": "final67/correction-jet-composition/correction-jet-composition.json",
+      "sha256": "4b9e76aa053e18e767f8d82c7cd64a09b0bd23e942cd39157bf9ea95efdcc648"
+    },
+    "originalStencil": {
+      "path": "final67/independent-stencil.json",
+      "sha256": "0341303463d845605ab928d03626c4dc8ac8a071882c34fd3face7f9229aaf3a"
+    },
+    "capTransport": {
+      "path": "final67/active-n3-cap-transport/source-cap/cap-transport.json",
+      "sha256": "387863daedfc9fd37f7c1d43db430235238f94d23b767424baffa5d2f3348955"
+    },
+    "cycle": {
+      "path": "primary-forced-join/active-n3-c5-binding/hosted-44528954587/first-cycle.json",
+      "sha256": "74a686bc95f4c094f1de834062b8b402aa5b861940fa3e109aa0f1913d52d529"
+    },
+    "directSplit": {
+      "path": "primary-forced-join/active-n3-c5-binding/hosted-44541601028/independent-direct-split.json",
+      "sha256": "bc91034dffc735ef809dc9c4efd21e6ae6efa21c4af48ae0a027d2ba31110455"
+    }
+  },
+  "sourceSupport": {
+    "selectorRoots": [
+      "f_3b700fc1d0d2c77582a0399d",
+      "f_74b782b03adf1a4984b59949",
+      "f_6de97e1d6c2b0406e8378fde",
+      "f_f04af347097e6fe2f932a058",
+      "f_01dc61ab82cf40fc7cbf57dc"
+    ],
+    "hypotheses": [
+      "q>0",
+      "q depends only on (z,tau)",
+      "L_(j+1)>=L_j+1",
+      "each a_j=exp(L_j) is fixed during physical differentiation"
+    ],
+    "transitionIntervals": [
+      {
+        "stage": 1,
+        "openQInterval": [
+          "1/(2*a1)",
+          "1/a1"
+        ]
+      },
+      {
+        "stage": 2,
+        "openQInterval": [
+          "1/(2*a2)",
+          "1/a2"
+        ]
+      },
+      {
+        "stage": 3,
+        "openQInterval": [
+          "1/(2*a3)",
+          "1/a3"
+        ]
+      },
+      {
+        "stage": 4,
+        "openQInterval": [
+          "1/(2*a4)",
+          "1/a4"
+        ]
+      }
+    ],
+    "maxStrictTransitionsAtOnePoint": 1,
+    "stage5AndLaterExactZeroOnSlab": true,
+    "beforeAndAfter": "On transition j, stages i<j are flat one and i>j flat zero.",
+    "flatCells": "When all stage cutoffs are flat, use the single retained cumulative state and omit the active increment.",
+    "seamsAndCells": "At each cutoff endpoint positive-order derivatives vanish. A cell crossing any root threshold must be split or enclose the hull of admitted branches.",
+    "outerZero": "Use the original flat zero extension wherever C and its relevant jets vanish. Do not evaluate an unavailable native branch there.",
+    "outerRadialScope": "Actual annular correction region r<1/2. Outer radial cutoff and its positive derivatives are constant 1 and 0."
+  },
+  "normalizedCutoffCaps": {
+    "units": "Bound on tau0^(zOrder*D+tauOrder)*abs(physical derivative), D=1/2-h",
+    "scope": [
+      "q/tau0 in [1/2,2]",
+      "abs(eta)<=3/4",
+      "0<h<1/64",
+      "original radial plateau"
+    ],
+    "normalizedPhysicalQDerivativeBounds": {
+      "z1": "768/503",
+      "z2": "282932224/127263527",
+      "z3": "19961096527872/32198817702743",
+      "ztau": "6291456/127263527"
+    },
+    "physicalC": {
+      "0,0": 1,
+      "0,1": 5,
+      "1,0": 15,
+      "1,1": 75,
+      "2,0": 364,
+      "3,0": 31068
+    },
+    "physicalSingleStageKappa": {
+      "0,0": 1,
+      "0,1": 7,
+      "1,0": 7,
+      "1,1": 144,
+      "2,0": 166,
+      "3,0": 9540
+    },
+    "physicalProductCtimesKappa": {
+      "0,0": 1,
+      "0,1": 12,
+      "1,0": 22,
+      "1,1": 359,
+      "2,0": 740,
+      "3,0": 55722
+    },
+    "thirdAxialAndMixedDerivativesArePureCutoffInputs": true
+  },
+  "conditionalEnergyTransfer": {
+    "conditionalOnExistingPhysicalCapAndGaugePremises": true,
+    "noActualSourceEndpoint": true,
+    "referenceCases": [
+      {
+        "chart": "N3",
+        "factors": {
+          "u0": "1",
+          "u1": "1",
+          "a0": "1",
+          "a1": "1"
+        },
+        "prior96EnergyCoefficient": "675267552",
+        "sharpened96EnergyCoefficient": "237240288",
+        "exactIntegerTestTimes49": "11624774112"
+      },
+      {
+        "chart": "N4",
+        "factors": {
+          "u0": "3/2",
+          "u1": "9/4",
+          "a0": "9/8",
+          "a1": "3/2"
+        },
+        "prior96EnergyCoefficient": "882877968",
+        "sharpened96EnergyCoefficient": "312885936",
+        "exactIntegerTestTimes49": "15331410864"
+      }
+    ],
+    "sameSufficientPhysicalWCAPBothCharts": "(7/8)*2^-27*Xb^-2*tau0^-h",
+    "sufficientPhysicalWCAPN3Alone": "2^-27*Xb^-2*tau0^-h",
+    "targetEnergyRatio": "2^-26"
+  },
+  "exactSymbolic": {
+    "expandedForceTermCounts": [
+      118,
+      118,
+      52
+    ],
+    "velocityComponentChecks": 3,
+    "divergenceChecks": 1,
+    "forceComponentChecks": 3,
+    "heatGaugeComponentChecks": 3,
+    "transverseAdvectiveComponentChecks": 3,
+    "squaredResidualVarianceChecks": 1,
+    "flatBranchComponentChecks": 12,
+    "signedTermNames": [
+      "weightedResiduals",
+      "velocityCutoffHeat",
+      "velocityDiffusionProduct",
+      "pressureCutoffGradient",
+      "gaugeCommutatorHeat",
+      "velocityCutoffTransport",
+      "outerCovariance",
+      "stageCovariance",
+      "gaugeTransportFromVelocity",
+      "gaugeTransportToVelocity",
+      "gaugeSelfTransport"
+    ]
+  },
+  "cylindrical": {
+    "rotationConnection": "Dtheta=(partial_theta+J)/r; Dr=partial_r; Dz=partial_z",
+    "vectorLaplacian": "B_rr+B_r/r+B_zz+(B_thetatheta+2J B_theta+J^2 B)/r^2",
+    "commutingAxialCross": true,
+    "nonzeroRadiusPremise": true,
+    "vectorConnectionAndAxialProductComponentsChecked": 12
+  },
+  "negativeControls": {
+    "rationalPoint": [
+      "1/3",
+      "-2/5",
+      "1/7",
+      "1/2"
+    ],
+    "weights": [
+      "979/2401",
+      "30638017/90589730",
+      "23014043/90589730"
+    ],
+    "sourceOrderFullForce": [
+      "969330366576643649831727726667/343319090212899126849600000000",
+      "-213976951194349694442193512260293/15449359059580460708232000000000",
+      "1408364828802127423554571/1910866921407601819200000"
+    ],
+    "signedFormulaForce": [
+      "969330366576643649831727726667/343319090212899126849600000000",
+      "-213976951194349694442193512260293/15449359059580460708232000000000",
+      "1408364828802127423554571/1910866921407601819200000"
+    ],
+    "nonzeroDefects": {
+      "delete_velocityDiffusionProduct": [
+        "204680758801/119578443600",
+        "-135604047167/95662754880",
+        "0"
+      ],
+      "delete_pressureCutoffGradient": [
+        "0",
+        "0",
+        "-206389044563/1826288956800"
+      ],
+      "delete_gaugeCommutatorHeat": [
+        "1041973406701/391347633600",
+        "-33993283/7563150",
+        "0"
+      ],
+      "delete_velocityCutoffTransport": [
+        "-134607478448602493977553/2274841573104287880000000",
+        "-63309784784848910181857/682452471931286364000000",
+        "119423154551076897/3751542482959040000"
+      ],
+      "delete_outerCovariance": [
+        "118179012759455871122507/130868016634550652187500",
+        "-18630252209271857445107/109056680528792210156250",
+        "1098626220332177/22022476600162500"
+      ],
+      "delete_stageCovariance": [
+        "2087138374503242271723366517/18104717647945852392459375000",
+        "266995316415470738466242027/3771816176655385915095703125",
+        "-1062331099672116033799/14928647823496889212500"
+      ],
+      "reverse_physical_time_sign": [
+        "-1905176319414241/5650081460100000",
+        "1830731338255871/1695024438030000",
+        "1139073707/2717691900"
+      ]
+    },
+    "fixtureIsOriginalSourceField": false
+  },
+  "sameFamilyN3ResidualCandidate": {
+    "velocity": [
+      22153222,
+      22153223,
+      22153224
+    ],
+    "pressure": 22153227,
+    "divergence": 22153248,
+    "conservativeResidual": [
+      22153560,
+      22153562,
+      22153564
+    ],
+    "binding": "Candidate stage 1 cumulative residual on the same admitted N3 chart only. Requires the matching finalized gauge, physical variables and ordinary divergence identity; no numerical size ensues."
+  },
+  "conditionalPointwiseInputs": {
+    "W_and_g": "K=C*k, W=C*U+K*w, g=C_z*J*A_previous+K_z*J*A_stage, and g dot ez=0.",
+    "weights": [
+      "1-C",
+      "C*(1-k)",
+      "C*k"
+    ],
+    "residuals": [
+      "zero velocity and pressure",
+      "F(U,P)",
+      "F(U+w,P+pi)"
+    ],
+    "velocity": "U,w values and first covariant spatial gradients only in the transfer terms.",
+    "pressure": "P,pi values only beyond the two original force roots.",
+    "potential": "Only transverse A_previous,A_stage, each with value, three covariant first spatial derivatives, and (-partial_tau-Delta)A as a group. Expanded heat uses A_tau and pure second spatial derivatives with cylindrical connection.",
+    "cutoffs": [
+      "value",
+      "tau",
+      "z",
+      "zz",
+      "ztau",
+      "zzz"
+    ],
+    "physicalTime": "-partial_tau",
+    "absentFromGaugeCommutator": [
+      "third spatial A derivatives",
+      "mixed space-time A derivatives",
+      "A axial component",
+      "higher pressure derivatives"
+    ]
+  },
+  "normalizedEndpoint": {
+    "t": "tau0^h",
+    "sourceNormWeights": {
+      "tau0ExponentPairsConstantDoubled": {
+        "T_tau": [
+          2,
+          0
+        ],
+        "T_z": [
+          1,
+          -1
+        ],
+        "T_zz": [
+          2,
+          -2
+        ],
+        "T_ztau": [
+          3,
+          -1
+        ],
+        "T_zzz": [
+          3,
+          -3
+        ],
+        "U": [
+          1,
+          1
+        ],
+        "gradU": [
+          2,
+          1
+        ],
+        "P": [
+          2,
+          2
+        ],
+        "A": [
+          0,
+          1
+        ],
+        "gradA": [
+          1,
+          1
+        ],
+        "heatA": [
+          2,
+          1
+        ],
+        "g": [
+          1,
+          1
+        ],
+        "gradg": [
+          2,
+          1
+        ],
+        "F": [
+          3,
+          1
+        ]
+      },
+      "scope": "Explicit chosen physical normalizers. Actual cell enclosures must first be converted to these units."
+    },
+    "exactProductExponents": [
+      {
+        "term": "heat_time",
+        "output": "F",
+        "inputs": [
+          "T_tau",
+          "U"
+        ],
+        "powerOf_t": 0
+      },
+      {
+        "term": "heat_diffusion",
+        "output": "F",
+        "inputs": [
+          "T_zz",
+          "U"
+        ],
+        "powerOf_t": 2
+      },
+      {
+        "term": "diffusion_product",
+        "output": "F",
+        "inputs": [
+          "T_z",
+          "gradU"
+        ],
+        "powerOf_t": 1
+      },
+      {
+        "term": "pressure_product",
+        "output": "F",
+        "inputs": [
+          "T_z",
+          "P"
+        ],
+        "powerOf_t": 0
+      },
+      {
+        "term": "gauge_heat",
+        "output": "F",
+        "inputs": [
+          "T_z",
+          "heatA"
+        ],
+        "powerOf_t": 1
+      },
+      {
+        "term": "gauge_time_product",
+        "output": "F",
+        "inputs": [
+          "T_ztau",
+          "A"
+        ],
+        "powerOf_t": 1
+      },
+      {
+        "term": "gauge_third_cutoff",
+        "output": "F",
+        "inputs": [
+          "T_zzz",
+          "A"
+        ],
+        "powerOf_t": 3
+      },
+      {
+        "term": "gauge_diffusion_product",
+        "output": "F",
+        "inputs": [
+          "T_zz",
+          "gradA"
+        ],
+        "powerOf_t": 2
+      },
+      {
+        "term": "velocity_cutoff_transport",
+        "output": "F",
+        "inputs": [
+          "U",
+          "T_z",
+          "U"
+        ],
+        "powerOf_t": 0
+      },
+      {
+        "term": "transport_covariance",
+        "output": "F",
+        "inputs": [
+          "U",
+          "gradU"
+        ],
+        "powerOf_t": -1
+      },
+      {
+        "term": "gauge",
+        "output": "g",
+        "inputs": [
+          "T_z",
+          "A"
+        ],
+        "powerOf_t": 1
+      },
+      {
+        "term": "gauge_transverse_gradient",
+        "output": "gradg",
+        "inputs": [
+          "T_z",
+          "gradA"
+        ],
+        "powerOf_t": 1
+      },
+      {
+        "term": "gauge_axial_gradient_extra",
+        "output": "gradg",
+        "inputs": [
+          "T_zz",
+          "A"
+        ],
+        "powerOf_t": 2
+      },
+      {
+        "term": "gauge_advection_before_first_gradient",
+        "output": "F",
+        "inputs": [
+          "U",
+          "gradg"
+        ],
+        "powerOf_t": -1
+      },
+      {
+        "term": "gauge_advection_after_gauge_value",
+        "output": "F",
+        "inputs": [
+          "g",
+          "gradU"
+        ],
+        "powerOf_t": -1
+      },
+      {
+        "term": "gauge_self_advection",
+        "output": "F",
+        "inputs": [
+          "g",
+          "gradg"
+        ],
+        "powerOf_t": -1
+      }
+    ],
+    "positiveCellEndpointProgram": [
+      "(C_tau+t^2*C_2)*u0 + (K_tau+t^2*K_2)*w0",
+      "2*t*(C_1*u1 + K_1*w1) + C_1*p0 + K_1*p1",
+      "t*(C_1*aH+K_1*bH+C_1tau*a0+K_1tau*b0) + t^3*(C_3*a0+K_3*b0)",
+      "2*t^2*(C_2*a1+K_2*b1) + W0*(C_1*u0+K_1*w0)",
+      "3/t*(lambda0*lambda1*u0*u1+lambda0*lambda2*uPlus0*uPlus1+lambda1*lambda2*w0*w1)",
+      "3*W0*(G1+t*G2) + 2*G0*(C*u1+K*w1) + 2*t*G0*G1"
+    ],
+    "notation": {
+      "cutoffs": "C_i=cap of tau0^(i*D)*abs(partial_z^i C); C_tau and C_1tau retain their tau weights. K following the same convention.",
+      "field": "u, w, uPlus, a, b, p are nonnegative component caps of U, w, U+w, A_previous, A_stage and P/pressure increment. 0,1,H denote value, gradient and (-partial_tau-Delta) respectively.",
+      "W0": "C*u0+K*w0",
+      "G0": "C_1*a0+K_1*b0",
+      "G1": "C_1*a1+K_1*b1",
+      "G2": "C_2*a0+K_2*b0",
+      "optimization": "The factors 2 in the last two advections use g dot ez=0. For cells use directed upper endpoints of every nonnegative scalar and pair product."
+    },
+    "realEndpointExecuted": false
+  },
+  "squaredForce": {
+    "weightedResidual": "Rm=C*(1-k)*F(U,P)+C*k*F(U+w,P+pi).",
+    "convexUpper": "|Rm|^2<=C*(1-k)*|F(U,P)|^2+C*k*|F(U+w,P+pi)|^2, dropping exact nonnegative pair covariance.",
+    "scalarComponentBound": "For R=max_i|Rm_i| and E=max_i|F_i-Rm_i|, abs(|F|^2-|Rm|^2)<=6*R*E+3*E^2."
+  },
+  "open": [
+    "actual cumulative residual enclosures on each chart and same physical variable/gauge binding",
+    "actual transverse potential heat jets and remaining pressure/gradient enclosures",
+    "source cutoff branch cells and authenticated later survivor states",
+    "whole-K N8-05 refinement over grid, Fourier truncation, coefficient degree and precision",
+    "all 67 independently required final-field intervals"
+  ],
+  "N7_06": "OPEN",
+  "N8_05": "OPEN",
+  "finalJets": 0,
+  "release": "HOLD"
+}

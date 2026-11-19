@@ -10,6 +10,11 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation66
+
+- **VERIFIED / CONDITIONAL · 한 개 단계 전이의 원본 환형 외력.** \(r<1/2\)인 원본 환대의 한 점에서 단계 cutoff 전이가 최대 하나다. 인접한 두 누적 상태와 영 상태에서 외력을 재구성했다. 실제 source 경계에서 유도한 외력 성분 3개, 접합 성분 12개와 원통 연결 성분 12개를 정확 기호 대조했으며 필요한 항을 빼거나 부호를 바꾼 7개 대조가 실패했다. 잠재장의 미분은 시간 1차와 공간 2차까지 필요하다. 3차 및 시간·공간 혼합 미분은 cutoff에 붙는다. 실제 인접 잔차의 값 구간과 완전한 최종 jets는 OPEN이다. [원본 외력 항등식과 재현](final67/annular-force-transfer/README.md).
+- **VERIFIED / CONDITIONAL · 개선된 공간 에너지 배정.** 원본 cutoff의 공간 상수는 22와 740이다. 두 기준차트의 정확 계수는 237,240,288과 312,885,936이다. \((7/8)2^{-27}X_b^{-2}\tau_0^{-h}\) 이하인 완전 보정 상계는 원래 단계 배정 \(2^{-26}S_R\)에 충분하다. 하나의 단계 전이, 외력 성분, 에너지 배정을 다루는 Lean 정리 5개를 GitHub에서 컴파일했다. [GitHub Lean](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44577382404).
+
 ## Continuation65
 
 - **VERIFIED / CONDITIONAL · N4 고정 대표점 배경의 예외적인 4차 항.** 원본 N4 AST 7,358,162개와 동일한 생성 prefix 127,241개를 재생했다. 예외 대표점은 \(X_a<X_{\rm rep}<X_{\rm keep}\)에 놓이며 실제 raw Picard 시스템 7을 사용한다. 원본 Picard·Cauchy·실수 방사 미분 경계를 전제로 하면 4차 항의 모든 8차 이하 느린 \(F/G\) 미분은 \(e^{-L^6/3}<1\)로 제어된다. \(L=\ell_{\min}+16\)이다. 앞선 세 항과 합친 상계는 \(\exp(H/2^{128})/(64X_b^2)\)보다 작다. 나머지 native 경로와 방사·압력 입력 결속은 OPEN이다. [원본 소스와 8차 증거](final67/frozen-n4-background/README.md).
