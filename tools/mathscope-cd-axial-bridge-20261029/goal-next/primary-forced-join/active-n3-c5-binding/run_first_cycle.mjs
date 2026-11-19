@@ -3,8 +3,10 @@ import {writeFile} from 'node:fs/promises';
 import {join} from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {verifyLivePostFiveSplit} from './verify_postfive_live.mjs';
+import {emitFirstSpatial, firstSpatialMode} from './spatial-stage1/emit_first_spatial.mjs';
 
 export async function runFirstCycle({load, navier, forced, context, out}) {
+  const spatialMode = firstSpatialMode();
   const original = path => import(pathToFileURL(join(navier, '..', path)).href);
   const downstreamContext = {onProgress: context.onProgress, checkCancelled: context.checkCancelled};
   const receipt = {schema: 'MathScope.N7.SameLiveN3OriginalFirstCycle/1',
@@ -94,5 +96,25 @@ export async function runFirstCycle({load, navier, forced, context, out}) {
   }
   // Keep the source construction receipt intact if the independent check
   // finds an unmatched operand or a surviving comparison polynomial.
-  await verifyLivePostFiveSplit({navier, out, pde: physical, split: directSplit, currentReceipt: receipt});
+  let splitFailure = null;
+  try {
+    await verifyLivePostFiveSplit({navier, out, pde: physical, split: directSplit, currentReceipt: receipt});
+  } catch (error) {
+    if (spatialMode === 'off') throw error;
+    splitFailure = error;
+  }
+  if (spatialMode !== 'off') {
+    try {
+      await emitFirstSpatial({navier, out, pde: physical, mode: spatialMode,
+        splitOutcome: splitFailure ? 'FAILED' : 'VERIFIED'});
+    } catch (error) {
+      await writeFile(join(out, 'first-correction-spatial-failure.json'),
+        JSON.stringify({mode: spatialMode, code: error.code ?? null, message: error.message,
+          sameRunDirectSplitOutcome: splitFailure ? 'FAILED' : 'VERIFIED',
+          N706: 'OPEN', N805: 'OPEN', finalJets: 0, release: 'HOLD'}, null, 2) + '\n');
+      if (splitFailure) throw new AggregateError([splitFailure, error], 'Split and spatial ingress checks failed');
+      throw error;
+    }
+  }
+  if (splitFailure) throw splitFailure;
 }
