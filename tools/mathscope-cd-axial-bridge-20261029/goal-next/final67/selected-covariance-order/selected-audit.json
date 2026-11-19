@@ -1,0 +1,143 @@
+{
+  "schema": "MathScope.N7.SelectedWrzHighestBackgroundDependencies/1",
+  "status": "VERIFIED_SELECTED_TOP_JET_AND_UNCUT_MOVING_FRAME_RESPONSE_AUDIT",
+  "inputSHA256": {
+    "reader": "9c035f488b57d4165f0db3f55906d42a628ce6d409fc75bf7dbd706045dee0ee",
+    "directional": "02c7b2d7ea24f43f90444952a03b31eba0a187b0675f765247c931df41ff2001",
+    "leadingU": "77f072391c9e2e925e11a28837921f203599b2242f207f77780a2140da8cc13b",
+    "leadingF": "ba937ba0fa45592c3bb2e3049fddfadb57ba91a17a4fcc7264f5d1d18a20b5f6",
+    "leadingOuter": "a2937d2c2066946f3dbe0a1be2a883766266a0b984914b67780ab81e55eadcbb"
+  },
+  "sourceSHA256": {
+    "mathscope-m2/navier/actual-covariance-matrix.mjs": "7419cc0aa5e08fb57c11264013f661f85a82fb481fb69e4610029d806c1efd26",
+    "mathscope-m2/navier/actual-full-curl.mjs": "4276a850dbff4b5c357c47e1827eb7785b19c7e7c395c94ee4f22ef0c96d58d2",
+    "mathscope-m3/navier/source-global-band.mjs": "babe4aceb97d0bdee4084e5f06009e6724128935fffde1647c11e3aab022df60",
+    "mathscope-m3/navier/source-forced-class-majorants.mjs": "b609413ea8f86d023d3331c90c2ecaecf139f07de69d8d05ee6feb46c865f053",
+    "mathscope-m2/navier/actual-leading-all-order-jets.mjs": "d3af156118671a3e582c19a82064aab884a09d6ce81f51a6b2d64d35444cd29d"
+  },
+  "fixedOriginalCommit": "f8cb4034e86d7b669d52a6f2248aebba156b51b5",
+  "selectedCovariance": {
+    "scope": "Initial pre-Forced common-Y angular covariance used by initialized Temporal",
+    "jet": {
+      "Z": 5,
+      "T": 2
+    },
+    "leading": "L_r*L_z; amplitude slow7, background slow8 plus independent target/H/y/cutoff jets7",
+    "imaginary": "-epsilon*Ctheta_Z*(Ctheta_R+a*Ctheta_xi+Ctheta/R)",
+    "highestPotentialJets": [
+      "Derivative(Ctheta(R, Z, T, xi), (T, 2), (Z, 6))",
+      "Derivative(Ctheta(R, Z, T, xi), R, (T, 2), (Z, 5))",
+      "Derivative(Ctheta(R, Z, T, xi), (T, 2), (Z, 5), xi)"
+    ],
+    "exactTopCoefficients": [
+      "epsilon*(R*(-a(R)*Derivative(Ctheta(R, Z, T, xi), xi) - Derivative(Ctheta(R, Z, T, xi), R)) - Ctheta(R, Z, T, xi))/R",
+      "-epsilon*Derivative(Ctheta(R, Z, T, xi), Z)",
+      "-epsilon*a(R)*Derivative(Ctheta(R, Z, T, xi), Z)"
+    ],
+    "transverseFactorization": "For original Primary Ctheta=chi(xi)*C0(R,Z,T,v), LZ5T2 uses only slow7 plus original chi_prime, so it adds no new slow background9 request.",
+    "directPotentialSlow8Inputs": "live F,FR,GR,HR,HZ derivatives through8; HR=p*F_R+pz*G_R, HZ=p*F_Z+pz*G_Z",
+    "newBackgroundDirectionsPerField": [
+      {
+        "R": 2,
+        "Z": 5,
+        "T": 2
+      },
+      {
+        "R": 1,
+        "Z": 6,
+        "T": 2
+      },
+      {
+        "R": 0,
+        "Z": 7,
+        "T": 2
+      }
+    ],
+    "fields": [
+      "F",
+      "G"
+    ],
+    "newSelectedBackgroundJets": 6,
+    "additionalIndependentInputs": "target/H/y/normal reciprocal and cutoff jets through8; current C5 N0..N6 do not supply N7/N8"
+  },
+  "movingFrameControl": {
+    "includesActualAphiAndTangentODE": true,
+    "constraintDefect": "0",
+    "initialTangencyDefect": "0",
+    "rawPotentialAtPulseZero": "1/8 - sqrt(2)/24",
+    "rawFRParameterDerivativeAtZero": "0",
+    "rawMixedFRPulseDerivativeAtZero": "1/24 - sqrt(2)/144",
+    "formula": "p*(2*x0*(pz + x0*(pz*x0/(pz**2 + p**2/R**2) + c*p/(R*sqrt(pz**2 + p**2/R**2))))/(k*(pz**2 + x0**2 + p**2/R**2)**2) + (-pz*x0/(pz**2 + p**2/R**2) - c*p/(R*sqrt(pz**2 + p**2/R**2)))/(k*(pz**2 + x0**2 + p**2/R**2)))",
+    "actualOriginalSourceValuesNumericallySubstituted": false,
+    "cutoffScope": "This is the UNCUT homogeneous coefficient. Original psi is flat at v=0. Extending noncancellation to its positive middle support requires analytic continuation of the uncut coefficient and parameter response.",
+    "analyticPremise": "Fixed-slow original ntheta=p/R is nonzero, keeping normal denominators positive; original matrix coefficients and their ODE parameter responses are analytic in pulse v.",
+    "scalarHWeight": "A pulse-independent positive weight cannot annul the entire uncut FR response: value!=0 and raw_FR=0 at v0 force weight_FR=0 if the response vanished identically, while mixed_FR_v!=0 then contradicts it.",
+    "claim": "No universal moving-frame/constraint/normal quotient identity removes this additional layer; this is not a numerical counterexample to the fixed actual source."
+  },
+  "epsilonWeightedSplit": {
+    "potentialClass": "epsilon times its original weighted coefficient envelope",
+    "imaginaryWrz": "epsilon^(3-kappa_s) times the selected coefficient envelope",
+    "outerC64Path": "epsilon^(10-kappa_s) times the selected missing background9 envelope and original kernels",
+    "HZDependence": "An additional epsilon multiplies HZ in n and n_prime; keep it on those ninth-jet contributions.",
+    "actualWeightedNinthJetBoundEvaluated": false
+  },
+  "C8InformationControl": {
+    "family": "omega^-8*sin(omega*((R-R0)+Z+(T-T0)))",
+    "allSlowDerivativesThrough8SupAtMost1ForOmegaAtLeast1": true,
+    "allThreeSelectedNinthDerivativesAtCenter": "omega",
+    "scope": "Countermodel to a norm-only C8-to-C9 implication, not an alternative actual MathScope source."
+  },
+  "fullLeadingPointwiseC9AlreadyAvailable": {
+    "verified": true,
+    "leadingRequest": {
+      "radialOrder": 9,
+      "etaOrder": 9
+    },
+    "sameNormGraphSHA256": "29f278b041c8110ee1e239fba80244e100a2f0a3ec80199e8e99c9a38c2afb61",
+    "U": "original global U0 bound on X in[0,infinity), eta in[-1,1]",
+    "F": "original active F0 bound on[0,Xplus], joined to existing exteriorC10 on[Xplus,infinity)",
+    "terminalHeatTransitionRetained": true,
+    "matchedExteriorSourceBlobs": 12,
+    "oldUUpperExpression": "3 * (1 + C12EnvelopeR^2/2) * (1 + U0_norm_root)",
+    "oldFUpperExpression": "3 * (1 + C12EnvelopeR^2/2) * (2 + F0active_norm_root)",
+    "oldPositiveUpperExpressionsDominatePointwiseC9": true,
+    "newLeadingCompilerRequiredForDirectPointwiseC9": false,
+    "reuseExistingDirectedEndpointsPermittedUnderTheirOriginalPremises": true,
+    "doesNotProveFTC9": "Literal C9 FTC faces can require total11; existing exteriorC10 does not cover that stronger claim.",
+    "actualSelectedPositiveOrder9RowsStillOpen": true
+  },
+  "throughUpdatedSequence": {
+    "initialLeafCannotBeReusedForFreshPostSignedCovariance": true,
+    "freshTerms": [
+      "Primary-Forced cross terms",
+      "Forced squares",
+      "old/Forced-Signed cross terms",
+      "Signed squares"
+    ],
+    "existingForcedCertificateAtPotential8": {
+      "inputForcingOrder": 8,
+      "backgroundOrder": 10,
+      "interpretation": "Retained certificate requirement, not a sharp mathematical minimum."
+    },
+    "unreducedForcing8": {
+      "mode2": "prior velocity C9",
+      "mode1": "velocity spatialC10, mixed slow8+time1, pressureC9, initialized meanC9"
+    },
+    "SignedPotential8": "fresh Sigma C8, H^-1 C8, y/reciprocal sqrt C8, homogeneous pulse and normal quotient C8, original target N0..N8",
+    "furtherMeanPressureCounts": "Raw Sigma8 pressure routes can request covariance9/10 and mean beta spatial11; only proved flux/FTC cancellations may lower these unreduced counts.",
+    "currentLocalC8SufficesForUpdatedSequence": false
+  },
+  "cheapestNextInitialInput": "Generate only the six selected live background9 bounds with n>=4 flat, reuse leading/global fixed primitives separately, and retain epsilon^(10-kappa_s); do not rebuild isotropic C9 unless the implementation forces it.",
+  "scope": {
+    "actualSelectedNinthJetsClosed": 0,
+    "actualStageCapsClosed": 0,
+    "newFinalGateClaim": false,
+    "newArtifactDownloaded": false,
+    "repositoryOrBase67Modified": false,
+    "localLeanCompilation": false,
+    "N706": "OPEN",
+    "N805": "OPEN",
+    "finalJets": 0,
+    "release": "HOLD"
+  }
+}

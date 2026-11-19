@@ -10,6 +10,10 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation69
+
+- **VERIFIED / CONDITIONAL · 실제 느린 좌표의 선별 9차 상계.** 초기 \(W_{rz}\)에 남는 배경 도함수는 \(F/G\) 각각의 \(R^2Z^5T^2\), \(RZ^6T^2\), \(Z^7T^2\)다. 활성 1–3차 원본 계수의 정확 산술 그래프 169,401개를 계산했다. \(q^{2nh}\)와 원래 cutoff를 반영한 세 계수 상계는 각각 1보다 작다. 원본 선도장 9차 점별 경계와 외부 열 꼬리, 9차 원본 차트 재귀를 결합한 상계는 \(\exp(H/2^{128})/(64X_b^2)\)보다 작다. 원본 구간 및 해석적 미분 조건을 사용한다. 실제 \(H,y,N_7,N_8\)과 새 Signed 공분산 결속은 OPEN이다. [선별 원본 점별 경계](final67/selected-live-c9/README.md) · [남는 공분산 미분](final67/selected-covariance-order/README.md).
+
 ## Continuation68
 
 - **VERIFIED / OPEN · 실제 N3 첫 보정에서 중복 평균장 소거.** 원본 AST 22,153,782개의 독립 잔차 비교에 쓰인 소형 그래프로 세 성분의 같은 평균장이 소거됨을 확인했다. 남은 Temporal 퍼텐셜의 값과 네 도함수는 같은 native 정의·실인자를 사용한다. FiveMap native 본문의 적분 끝점과 파동을 포함한 전체 gauge 결속은 OPEN이다. [실제 평균 증분 재생](primary-forced-join/active-n3-c5-binding/compact-mean-increment/README.md).
