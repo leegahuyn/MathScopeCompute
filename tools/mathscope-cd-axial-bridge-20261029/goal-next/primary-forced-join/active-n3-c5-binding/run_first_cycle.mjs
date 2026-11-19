@@ -5,6 +5,7 @@ import {pathToFileURL} from 'node:url';
 
 export async function runFirstCycle({load, navier, forced, context, out}) {
   const original = path => import(pathToFileURL(join(navier, '..', path)).href);
+  const downstreamContext = {onProgress: context.onProgress, checkCancelled: context.checkCancelled};
   const receipt = {schema: 'MathScope.N7.SameLiveN3OriginalFirstCycle/1',
     status: 'RUNNING', prefix: 3, sourceForcedNodeCount: forced.G.nodes.length,
     stages: [], finalJets: '0/67', N706: 'OPEN', N805: 'OPEN', release: 'HOLD'};
@@ -50,20 +51,20 @@ export async function runFirstCycle({load, navier, forced, context, out}) {
       frontierSource.assertSigned162TemporalFrontier, value => ({scope: value.scope}));
     const temporalSource = await original('post-signed-20261023/source-signed-actual-temporal-inverse.mjs');
     const temporal = await stage('original-post-signed-exact-temporal',
-      () => temporalSource.attachActualPostSignedTemporalInverse(frontier, context),
+      () => temporalSource.attachActualPostSignedTemporalInverse(frontier, downstreamContext),
       temporalSource.assertActualPostSignedTemporalInverse, value => ({
         inverses: Object.values(value.inverses).map(row => row.exact),
         freshPressureAndMeans: ['P', 'Jtheta', 'Jz'].map(key => value.postTemporal.updatedMeanPressure.mean[key]),
       }));
     const fiveSource = await original('post-signed-20261023/source-signed-actual-five-map.mjs');
     const five = await stage('original-post-signed-five-map',
-      () => fiveSource.attachActualPostSignedFiveMap(temporal, context),
+      () => fiveSource.attachActualPostSignedFiveMap(temporal, downstreamContext),
       fiveSource.assertActualPostSignedFiveMap, value => ({
         freshPressureAndMeans: ['P', 'Jtheta', 'Jz'].map(key => value.postFiveMean.updatedMeanPressure.mean[key]),
       }));
     const pdeSource = await original('post-signed-20261023/source-postfive-full-3d-residual.mjs');
     const pde = await stage('original-post-five-physical-residual',
-      () => pdeSource.attachActualPostFiveFull3DPDE(five, context),
+      () => pdeSource.attachActualPostFiveFull3DPDE(five, downstreamContext),
       pdeSource.assertActualPostFiveFull3DPDE, value => ({
         velocity: value.velocity.fullPhysicalVelocity, pressure: value.pressure.fullPhysicalPressure,
         divergence: value.residual.divergence, conservativeResidual: value.residual.conservative,
