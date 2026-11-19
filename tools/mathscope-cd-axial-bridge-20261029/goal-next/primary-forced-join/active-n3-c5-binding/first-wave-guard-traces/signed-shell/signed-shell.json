@@ -1,0 +1,509 @@
+{
+  "schema": "MathScope.C83.ActualSignedRadialPrimitiveReduction/1",
+  "status": "VERIFIED_ACTUAL_COMPACT_PRIMITIVE_AND_NORMAL_DERIVATIVE_REDUCTION_WEIGHTED_ESTIMATE_OPEN",
+  "hostedRun": 44582875351,
+  "sourceStream": {
+    "nodes": 22155584,
+    "bytes": 1024352367,
+    "sha256": "faa23696dd592dd83487e842d775e41072159e6d8377a69f2b93650e5839ee96",
+    "originalPrefixRecords": 22153782,
+    "originalPrefixRecordBytes": 1024222169,
+    "originalPrefixRecordsSHA256": "c0577d2b5ecf5808aa0ba82dab89e5ae2b125edc8e4c126fff8bfd913b903240",
+    "originalPrefixHashCoverage": "node records only, without the new export header"
+  },
+  "registrySHA256": "e1e692f0b684199d7d7c1ab9e4e434aba9472329152b5d7533067313ef507f03",
+  "inputPins": {
+    "reader": "2969fcc291caffcc5291d3f07e33a2e33625512e4c5765055fdb8725b5dfb6bb",
+    "exact": "260017f8285e45e570bfde6865cc0483e1cb39379a45349ab3c7e1b33d012e75",
+    "cache": "909a6dcab87a9537eac5b40738023a2e517c07f99754ae924295a4f47628349f",
+    "shell": "8058eb7e2a0d6b4bc9bf7e9ebb2f118149173ff53102e1e188776e2b47900c5f",
+    "old": "c2987779c065ac09e48e0317e7727498fcea9dd93191e00ec53087a4675e0920",
+    "scope": "0443eae8eedb3f1259eb626a1da711bbe3a0e5640e7d6dc1c502a4741f868272",
+    "ingress": "20550a640ec1cb9f00c5c0b1be61f27826ee7e756ea714dd6a13eed39edf841f",
+    "seams": "65c08c86d7682f989e9bf6c98f7ae04a42d2f1594488287da2548e85ca0a2815"
+  },
+  "exactOriginalShell": {
+    "inner": 17743711,
+    "outer": 17743713,
+    "Xa": 3617,
+    "Xb": 28826,
+    "originalMeanPatchLeft": 17743683,
+    "center": 17743687,
+    "proof": "Xa<X0Imean and Xb>e^5 X0Imean. Both axial bump X-supports lie in Imean; s in [1/2,2] puts their R-supports inside the exact common envelope.",
+    "terminalTreeNodesChecked": 62,
+    "sourceParameterSHA256": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152"
+  },
+  "actualGeometry": {
+    "X": 17732770,
+    "formula": "R^2/(2*s)",
+    "s": 17732766,
+    "sNativeBracket": [
+      "1/2",
+      "2"
+    ],
+    "sFreeSlots": [
+      "Z",
+      "T"
+    ],
+    "meanCenter": 17743687,
+    "meanScaleFormula": "sqrt(s)*sqrt(2*X0Imean)*exp(1/2)"
+  },
+  "sourceBoundCollars": {
+    "inner": "Xa < X <= X0Imean: chi=0 and rho=0",
+    "outer": "exp(2)*X0Imean <= X < Xb: chi=1 and rho=0",
+    "strictSeparation": "Xa<X0Imean and exp(5)*X0Imean<Xb, verified against the actual original parameter tree.",
+    "correctionCutoffArgument": "10*(R/(sqrt(s)*x0)-1)",
+    "normalDirections": "R derivatives at fixed ell,Z,T; s_R=0. Sigma has no xi,v,Y argument."
+  },
+  "actualSigmaRows": [
+    {
+      "component": 0,
+      "weight": 2,
+      "nativeApplication": 22001223,
+      "definition": "coupled-expression:1276",
+      "body": 21999641,
+      "parameters": [
+        17732737,
+        17732748,
+        17732749,
+        17732750
+      ],
+      "boundRadius": 17743710,
+      "fixedLimits": [
+        17743711,
+        17743713
+      ],
+      "weightedIntegrand": 21999634,
+      "forwardPrimitive": 21999635,
+      "wholePrimitive": 21999636,
+      "meanCutoff": 17743734,
+      "normalizedHaarEAtBoundRadius": 21999624,
+      "haarRawEAtBoundRadius": 21999622,
+      "haarIntegrationOrder": [
+        17745430,
+        17745431
+      ],
+      "correctionEveryMonomialHasBump": 17743723,
+      "exactFirstOrderIdentity": "Sigma_R = -R^(-w)*p(R) - w*Sigma/R + R^(-w)*chi_R*J",
+      "endpointSubstitution": {
+        "integrand": 21999634,
+        "boundVariable": 17743710,
+        "replaceBy": 17732748,
+        "materializedRoot": null
+      },
+      "collarNormalDerivatives": [
+        [
+          {
+            "coefficient": "-2",
+            "powers": {
+              "R": -1,
+              "Sigma": 1
+            }
+          },
+          {
+            "coefficient": "-1",
+            "powers": {
+              "M": 1
+            }
+          }
+        ],
+        [
+          {
+            "coefficient": "6",
+            "powers": {
+              "R": -2,
+              "Sigma": 1
+            }
+          },
+          {
+            "coefficient": "2",
+            "powers": {
+              "R": -1,
+              "M": 1
+            }
+          },
+          {
+            "coefficient": "-1",
+            "powers": {
+              "M_R": 1
+            }
+          }
+        ],
+        [
+          {
+            "coefficient": "-24",
+            "powers": {
+              "R": -3,
+              "Sigma": 1
+            }
+          },
+          {
+            "coefficient": "-8",
+            "powers": {
+              "R": -2,
+              "M": 1
+            }
+          },
+          {
+            "coefficient": "2",
+            "powers": {
+              "R": -1,
+              "M_R": 1
+            }
+          },
+          {
+            "coefficient": "-1",
+            "powers": {
+              "M_RR": 1
+            }
+          }
+        ]
+      ],
+      "innerCollarFormula": "Sigma = -R^(-w) * integral_alpha^R p(r) dr",
+      "outerCollarFormula": "Sigma = +R^(-w) * integral_R^beta p(r) dr",
+      "outerWholeMomentZeroRequired": false,
+      "noFreeRInBoundIntegrandAndFixedLimits": true,
+      "identityConditions": "Ordinary FTC on the admitted native branch; fixed endpoint functions and no free R in bound integrand, verified through the registered actual argument DAG."
+    },
+    {
+      "component": 1,
+      "weight": 1,
+      "nativeApplication": 22001224,
+      "definition": "coupled-expression:1277",
+      "body": 22000464,
+      "parameters": [
+        17732737,
+        17732748,
+        17732749,
+        17732750
+      ],
+      "boundRadius": 17743710,
+      "fixedLimits": [
+        17743711,
+        17743713
+      ],
+      "weightedIntegrand": 22000457,
+      "forwardPrimitive": 22000458,
+      "wholePrimitive": 22000459,
+      "meanCutoff": 17743734,
+      "normalizedHaarEAtBoundRadius": 22000447,
+      "haarRawEAtBoundRadius": 22000445,
+      "haarIntegrationOrder": [
+        17745430,
+        17745431
+      ],
+      "correctionEveryMonomialHasBump": 17743723,
+      "exactFirstOrderIdentity": "Sigma_R = -R^(-w)*p(R) - w*Sigma/R + R^(-w)*chi_R*J",
+      "endpointSubstitution": {
+        "integrand": 22000457,
+        "boundVariable": 17743710,
+        "replaceBy": 17732748,
+        "materializedRoot": null
+      },
+      "collarNormalDerivatives": [
+        [
+          {
+            "coefficient": "-1",
+            "powers": {
+              "R": -1,
+              "Sigma": 1
+            }
+          },
+          {
+            "coefficient": "-1",
+            "powers": {
+              "M": 1
+            }
+          }
+        ],
+        [
+          {
+            "coefficient": "2",
+            "powers": {
+              "R": -2,
+              "Sigma": 1
+            }
+          },
+          {
+            "coefficient": "1",
+            "powers": {
+              "R": -1,
+              "M": 1
+            }
+          },
+          {
+            "coefficient": "-1",
+            "powers": {
+              "M_R": 1
+            }
+          }
+        ],
+        [
+          {
+            "coefficient": "-6",
+            "powers": {
+              "R": -3,
+              "Sigma": 1
+            }
+          },
+          {
+            "coefficient": "-3",
+            "powers": {
+              "R": -2,
+              "M": 1
+            }
+          },
+          {
+            "coefficient": "1",
+            "powers": {
+              "R": -1,
+              "M_R": 1
+            }
+          },
+          {
+            "coefficient": "-1",
+            "powers": {
+              "M_RR": 1
+            }
+          }
+        ]
+      ],
+      "innerCollarFormula": "Sigma = -R^(-w) * integral_alpha^R p(r) dr",
+      "outerCollarFormula": "Sigma = +R^(-w) * integral_R^beta p(r) dr",
+      "outerWholeMomentZeroRequired": false,
+      "noFreeRInBoundIntegrandAndFixedLimits": true,
+      "identityConditions": "Ordinary FTC on the admitted native branch; fixed endpoint functions and no free R in bound integrand, verified through the registered actual argument DAG."
+    }
+  ],
+  "actualSignedLinearTransfer": [
+    {
+      "id": "coupled-expression:1278",
+      "body": 22001304,
+      "terms": 120,
+      "linearSigmaApplications": [
+        22001223,
+        22001224
+      ],
+      "samePositiveAmplitude": 17733826,
+      "sameTargetY": 17733801,
+      "inverseAmplitudePower": -1
+    },
+    {
+      "id": "coupled-expression:1279",
+      "body": 22001305,
+      "terms": 408,
+      "linearSigmaApplications": [
+        22001223,
+        22001224
+      ],
+      "samePositiveAmplitude": 17733826,
+      "sameTargetY": 17733801,
+      "inverseAmplitudePower": -1
+    },
+    {
+      "id": "coupled-expression:1280",
+      "body": 22001306,
+      "terms": 232,
+      "linearSigmaApplications": [
+        22001223,
+        22001224
+      ],
+      "samePositiveAmplitude": 17733826,
+      "sameTargetY": 17733801,
+      "inverseAmplitudePower": -1
+    },
+    {
+      "id": "coupled-expression:1281",
+      "body": 22001468,
+      "terms": 120,
+      "linearSigmaApplications": [
+        22001223,
+        22001224
+      ],
+      "samePositiveAmplitude": 17733827,
+      "sameTargetY": 17733805,
+      "inverseAmplitudePower": -1
+    },
+    {
+      "id": "coupled-expression:1282",
+      "body": 22001469,
+      "terms": 408,
+      "linearSigmaApplications": [
+        22001223,
+        22001224
+      ],
+      "samePositiveAmplitude": 17733827,
+      "sameTargetY": 17733805,
+      "inverseAmplitudePower": -1
+    },
+    {
+      "id": "coupled-expression:1283",
+      "body": 22001470,
+      "terms": 232,
+      "linearSigmaApplications": [
+        22001223,
+        22001224
+      ],
+      "samePositiveAmplitude": 17733827,
+      "sameTargetY": 17733805,
+      "inverseAmplitudePower": -1
+    }
+  ],
+  "fixedCases": [
+    "0:1",
+    "1:1",
+    "2:1",
+    "3:1",
+    "4:1",
+    "0:-1",
+    "1:-1",
+    "2:-1",
+    "3:-1",
+    "4:-1"
+  ],
+  "fixedBoundDependencyAudit": {
+    "distinctLateArgumentNodesInspected": 849,
+    "boundIntegrandsAndFixedLimitsFreeOfR": true,
+    "nativeCalls": "Actual arguments are traversed with registered operations; integer IDs and derivative-order metadata are not scalar operands. Calls use their original registered formal-argument semantics."
+  },
+  "inverseSquareRootJets": [
+    {
+      "order": 0,
+      "terms": [
+        {
+          "coefficient": "1",
+          "powers": {
+            "a=sqrt(y)": -1
+          }
+        }
+      ],
+      "zetaPowers": [
+        "-1/2"
+      ]
+    },
+    {
+      "order": 1,
+      "terms": [
+        {
+          "coefficient": "-1/2",
+          "powers": {
+            "a=sqrt(y)": -3,
+            "y_R": 1
+          }
+        }
+      ],
+      "zetaPowers": [
+        "-1/2"
+      ]
+    },
+    {
+      "order": 2,
+      "terms": [
+        {
+          "coefficient": "3/4",
+          "powers": {
+            "a=sqrt(y)": -5,
+            "y_R": 2
+          }
+        },
+        {
+          "coefficient": "-1/2",
+          "powers": {
+            "a=sqrt(y)": -3,
+            "y_RR": 1
+          }
+        }
+      ],
+      "zetaPowers": [
+        "-1/2",
+        "-1/2"
+      ]
+    },
+    {
+      "order": 3,
+      "terms": [
+        {
+          "coefficient": "-15/8",
+          "powers": {
+            "a=sqrt(y)": -7,
+            "y_R": 3
+          }
+        },
+        {
+          "coefficient": "9/4",
+          "powers": {
+            "a=sqrt(y)": -5,
+            "y_R": 1,
+            "y_RR": 1
+          }
+        },
+        {
+          "coefficient": "-1/2",
+          "powers": {
+            "a=sqrt(y)": -3,
+            "y_RRR": 1
+          }
+        }
+      ],
+      "zetaPowers": [
+        "-1/2",
+        "-1/2",
+        "-1/2"
+      ]
+    }
+  ],
+  "conditionalWeightConclusion": "If actual y_R^j is bounded by C_j*zeta*delta^(-p_j), j<=3, and y>=c_y*zeta>0, then each inverse-a jet retains zeta^(-1/2). Combining actual Sigma jets with zeta retains sqrt(zeta) and finite poles. The original Gaussian kills every fixed finite pole at the shell.",
+  "smallestOpenPureNormalInput": {
+    "weightedEndpointPrimitiveOrder": 0,
+    "actualHaarERadialOrders": [
+      0,
+      1,
+      2
+    ],
+    "sourceRootsAtBoundRadius": [
+      21999622,
+      22000445
+    ],
+    "normalizedHaarRoots": [
+      21999624,
+      22000447
+    ],
+    "firstUnresolvedOrder": 0,
+    "requires": "Same-live post-Forced Haar(E) weighted zeta finite-pole bounds through pure R order2, including zero extension outside the actual moving shell. The first unproved retained-weight input is order0, not a fourth derivative. A source-matched Gaussian primitive lemma applied to M0 supplies Sigma0; the verified recurrence then supplies Sigma1..3.",
+    "otherFactors": "Actual target y lower floor/weighted C3, inverse H and moving-frame C3 on the same admitted family remain premises unless discharged by their separate source receipts.",
+    "fullMixedC3": "Pure tangential Z/T order3 still differentiates the endpoint primitive under the integral and needs corresponding tangential source bounds. This packet does not close full mixed C3."
+  },
+  "wholeMomentDistinction": {
+    "outerTailIdentityUsesWholeMomentZero": false,
+    "interiorDivergenceRemainder": "R^(-w)*chi_R*J remains in the full exact FTC identity; no compatibility condition is dropped."
+  },
+  "sufficientGaussianPrimitiveLemma": {
+    "g": "x^(-p)*exp(-a/x^2), a>0, p>=0",
+    "exactDerivative": "g_prime=g*x^(-3)*(2*a-p*x^2)",
+    "collarCondition": "p*d^2<=2*a implies g is nondecreasing on (0,d], so integral_0^d g<=d*g(d).",
+    "actualApplication": "Conditional on the retained actual zeta source bound, matching its endpoint distance, bounded radial change-of-variable weights and bounded opposite-end Gaussian ratio. This does not manufacture the missing actual M0 bound.",
+    "flatLimit": "Every fixed finite pole times exp(-a/(2*d^2)) tends to zero; use exp(x)>=x^N/N! with 2N larger than the pole."
+  },
+  "control": {
+    "p": "1",
+    "alpha": "1",
+    "beta": "3",
+    "R": "2",
+    "w": 1,
+    "chi": 1,
+    "wholeMoment": "2 (nonzero)",
+    "actualCompactSigma": "1/2",
+    "backwardTailSigma": "1/2",
+    "wrongUncorrectedForward": "-1/2",
+    "wrongDroppedCutoffRejected": true
+  },
+  "scope": {
+    "actualWeightedPostForcedEBound": "OPEN",
+    "radialSignedSeamClosure": "CONDITIONAL",
+    "slowSeams": "SEPARATE",
+    "noNativeOpaqueValueEvaluated": true,
+    "noLocalLean": true,
+    "base67Unchanged": true,
+    "release": "HOLD"
+  }
+}

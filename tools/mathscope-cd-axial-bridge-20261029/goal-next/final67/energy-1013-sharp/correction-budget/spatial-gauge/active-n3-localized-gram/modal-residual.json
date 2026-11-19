@@ -1,0 +1,55 @@
+{
+  "status": "VERIFIED_MODAL_RESIDUAL_OPERATOR_CONDITIONAL_ON_ACTUAL_COEFFICIENT_JETS",
+  "localizationSHA256": "fa2acf400bb1fe8705bdb716d171882a3343562be3c5167e0fcb153d96cbf24e",
+  "cutoffRootOriginalPacking": 622958,
+  "operator": {
+    "coordinates": "Original physical r>0,z,tau and normalized physical-angle Haar.",
+    "time": "-partial_tau v_n",
+    "laplace": "partial_rr v_n+(partial_r v_n)/r+partial_zz v_n+((i*n+J)^2 v_n)/r^2",
+    "pressureGradient": "(partial_r p_n,i*n*p_n/r,partial_z p_n), with actual localized pressure.",
+    "advection": "For each a+b=n, sum v_{a,r} partial_r v_b+v_{a,theta}(i*b+J)v_b/r+v_{a,z}partial_z v_b.",
+    "frequencySupport": "Supp(v) \u222a Supp(p) \u222a (Supp(v)+Supp(v)). Include zero, both signs and collisions.",
+    "work": "Re sum_n conjugate(v_n) dot f_n, and force square sum_n |f_n|^2.",
+    "fullField": "Apply to the total localized velocity and pressure. A residual of the first correction alone omits nonlinear crosses with initialized and later fields."
+  },
+  "controls": {
+    "checkedQuarterTurns": 4,
+    "testVelocityFrequencies": [
+      -2,
+      -1,
+      0,
+      1,
+      2
+    ],
+    "testPressureFrequencies": [
+      -3,
+      3
+    ],
+    "testResidualFrequencies": [
+      -4,
+      -3,
+      -2,
+      -1,
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "axisymmetricConnectionTestForce": [
+      "1/2",
+      "3/4",
+      "0"
+    ],
+    "controlAngularWork": "253/4",
+    "controlForceSquared": "882393/16"
+  },
+  "inputsStillOpen": [
+    "Actual localized pressure coefficients for first and later corrections.",
+    "Actual total velocity jets through two spatial orders and one physical time order.",
+    "Radial, axial and time integrations and original spatial boundary terms."
+  ],
+  "finalN8Comparisons": 0,
+  "finalJets": 0,
+  "release": "HOLD"
+}

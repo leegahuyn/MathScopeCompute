@@ -10,6 +10,17 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation83
+
+- **VERIFIED.** 원본 잠재장 30개에서 삼각함수 계수 항 150개를 재현했다. 실제 벡터 포텐셜과 직접 속도의 물리각 주파수가 일치하고, 원본 공간·시간 cutoff `#622958`과 첫 단계의 $\chi(a_1q)$는 각도에 독립이다. 원본 24개 입력의 속도·공변 기울기 12개와 힘에 필요한 2차 공간·1차 시간 미분 9개를 정확 산술로 대조했다. 정규화 전각 내적과 주파수 합산 정리 세 개를 GitHub에서 컴파일했다. [각도·cutoff 검증](final67/energy-1013-sharp/correction-budget/spatial-gauge/active-n3-localized-gram/README.md) · [Lean 결과](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44611824132).
+
+- **CONDITIONAL.** 원본의 허용 차트와 게이지 항등식 아래 cutoff를 곱하고 curl을 취한 실제 첫 보정은 원래 각주파수를 유지한다. 운동에너지와 소산은 같은 부호 주파수를 합한 뒤 제곱한다. 외력 일과 힘 제곱의 계수 연산도 정확히 대조했다. 실제 마지막 장의 전체 속도·압력과 그 미분 입력이 필요하다.
+
+- **VERIFIED / CONDITIONAL.** Signed의 원본 방사 적분 두 개를 결속했다. 바깥 경계 근처에서 원본 cutoff의 전체 적분 보정항이 남으므로, 그 적분의 값이 0이라는 전제 없이 가까운 끝점까지의 짧은 적분으로 정확히 환원한다. 원본 FTC가 적용되면 순수 방사 3차 미분에 필요한 입력은 원본 Haar(E)의 방사 0–2차 가중 상계와 끝점 적분값이다. 첫 미해결 가중 상계는 0차다. [Signed 방사 검증](primary-forced-join/active-n3-c5-binding/first-wave-guard-traces/signed-shell/README.md).
+
+- **OPEN.** 실제 최종 속도·압력 구간, 후속 보정과 방사·축·시간 적분, 느린 경계 전체와 혼합 미분이 남는다. M3 62/64, 최종 비교 0/4, jets 0/67, 운영 R1-08 OPEN 및 RELEASE HOLD다.
+
+
 ## Continuation82
 
 - **VERIFIED.** 동일 원본 N3 실행에서 첫 Forced의 20개 모드, 초기 소스 100개 및 투영 강제항 120개를 대조했다. $H_w$는 횡좌표를 보존하고 펄스 좌표를 정확히 $w$로 보낸다. 네 느린 cutoff의 양쪽 경계에서 정규화 분모는 정확히 1이고 cutoff는 평탄하다. 원본 실행의 20개 영초기조건 순서 적분을 결속했다. [횡·펄스](primary-forced-join/active-n3-c5-binding/first-wave-guard-traces/forced-fast/README.md) · [네 느린 cutoff](primary-forced-join/active-n3-c5-binding/first-wave-guard-traces/forced-slow/README.md).

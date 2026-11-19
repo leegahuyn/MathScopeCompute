@@ -1,0 +1,140 @@
+{
+  "status": "VERIFIED_LOCALIZATION_AND_MODAL_PAIRING_CONDITIONAL_SOURCE_DOMAIN",
+  "sourceSHA256": {
+    "ingress": "20550a640ec1cb9f00c5c0b1be61f27826ee7e756ea714dd6a13eed39edf841f",
+    "spatial": "2a1fc82ce005e5fced9e28ad9f8e1c2fcffa4ee5e6dc8f7768c41a0b66f35a89",
+    "gauge": "e02d4c200e6c0950a3fa65fbee063b9f838ecbb34613edbfea536b09f6024263",
+    "gram": "9dd999693a6d3f142c0709f67412ab3bbd716eebee69f3642bd680bb12f5f448",
+    "tail": "7f1b591721b768ea0c73cfed346d102d7a92752ab9f2c21487fed33b180ef18b",
+    "scale": "0f2ef1dff821d7d936a9c254a5e846f6557445e2d3ccf97f3201915a6a949298",
+    "geometry": "c4f86049b4f20a63443bd610b76313926717576abca9288ae1f9277b3ae4aa37",
+    "polynomial": "938fac2a33c130128749ca1f8eddd7f2eaff460e3a1e55ddfc6de47e74d4a226",
+    "complexRational": "a30af8425d7e063309ff4c2e4715091955e4e64c4ba3d4470246aa460fc24de9"
+  },
+  "original": {
+    "run": 44582875351,
+    "sourceSHA256": "faa23696dd592dd83487e842d775e41072159e6d8377a69f2b93650e5839ee96",
+    "slotCount": 24,
+    "normalizedRoots": {
+      "U": [
+        22154871,
+        22154873,
+        22154875
+      ],
+      "G_U": [
+        [
+          22154954,
+          22154942,
+          22154957
+        ],
+        [
+          22154967,
+          22154944,
+          22154970
+        ],
+        [
+          22154980,
+          22154939,
+          22154983
+        ]
+      ],
+      "A": [
+        22154865,
+        22154869,
+        22154867
+      ],
+      "G_A": [
+        [
+          22154889,
+          22154985,
+          22154909
+        ],
+        [
+          22154900,
+          22154987,
+          22154913
+        ],
+        [
+          22154907,
+          22154882,
+          22154915
+        ]
+      ]
+    },
+    "physicalMultipliers": {
+      "U": "Q^(-A)",
+      "G_U": "Q^(-A-1/2)",
+      "A": "Q^(1/2-A)",
+      "G_A": "Q^(-A)"
+    },
+    "wavePotentialRoots": [
+      22154865,
+      22154866,
+      22154867
+    ],
+    "meanPotentialRoots": [
+      22150943,
+      22151952
+    ],
+    "originalFixedStageScale": "f_3b700fc1d0d2c77582a0399d",
+    "plateauProof": "On correction support X<=Xb, r<=Rstar*sqrt(tau0), where tau0=2^(-(ellMinimum+15)) and ellMinimum>=Rstar^1024. Set u=log Rstar>=0. Then log(2)*(Rstar^1024+15)> (16+1024*u)/2>2*u+log(4), so r<1/2=r0/2.",
+    "physicalMeasure": "tau0/Lambda * Q^(D+1) * (1-2*h*eta^2)/(1-eta^2)",
+    "gaugeDifferenceRoots": [
+      22154926,
+      22154928,
+      22154930
+    ],
+    "actualModeReceiptSHA256": "dfc5401fc6561138e3a17fc05d2e38626b2694d96a1848e0008c9e821b958b40",
+    "actualWavePotentialCases": 30,
+    "actualWavePotentialTerms": 150,
+    "actualOuterRowsPerComponent": 162,
+    "actualOuterCutoff": {
+      "compactId": 29023,
+      "originalArchivedId": 622958
+    }
+  },
+  "exactPolynomialChecks": {
+    "verifiedVelocityComponents": 3,
+    "verifiedCovariantGradientEntries": 9,
+    "verifiedSecondSpatialAndTimeComponentsForForce": 9,
+    "annularPlateauComponentsCompared": 12,
+    "retainedRadialAngularHessian": "T_r/r",
+    "retainedAxialTerms": [
+      "T_z e_z cross A",
+      "T_z U",
+      "T_zz e_z cross A"
+    ]
+  },
+  "rationalFailureControls": {
+    "originalAngleIndependentCutoffConditionNegativeControl": "cos(theta) cutoff yields modes -5,-3,3,5",
+    "localizationEnergy": "2738/9",
+    "missedCutoffCurlEnergy": "50/9",
+    "meanWaveHaarCross": "0",
+    "meanWaveFourPointCross": "800/9",
+    "meanWaveNinePointCross": "0"
+  },
+  "firstCorrectionPhysicalCoefficients": {
+    "cutoff": "T=C(r,z,tau)*chi(a1*q(z,tau)); a1 is the original fixed scalar.",
+    "gradient": "g=(T_r,0,T_z). On the pinned radial plateau T_r=0.",
+    "velocity": "v_n=T*u_n+g cross A_n; on the radial plateau g=T_z*e_z.",
+    "gradientColumns": "(D_k v)_n=T*(D_k u)_n+(D_k T)*u_n+(D_k g) cross A_n+g cross (D_k A)_n.",
+    "cylindricalAngleColumn": "D_theta v_n=(i*n*v_n+e_z cross v_n)/r; D_theta g=(0,T_r/r,0).",
+    "forceCutoffDerivatives": "In ordinary directions r,z use the full twice differentiated product rule for T*u and grad(T) cross A; in tau use the corresponding once differentiated product. The cutoff uses up to order three in space and order (one space, one time).",
+    "zeroAndNonzero": "C and chi carry frequency zero. Mean\u2013wave cross vanishes. Sum equal signed carrier contributions before any squared norm.",
+    "energyDissipation": "Normalized Haar yields the sum of squared v_n and covariant gradient columns at each r,z,tau. For real fields, positive frequency squared terms have multiplicity two.",
+    "scalarMeasure": "Original volume density is independent of theta. Integration of the circle quantities against it needs radial, axial and temporal interval inputs.",
+    "discreteAliasing": "An N-node circle agrees for the quadratic scalar if N does not divide any nonzero frequency difference in the operand support. N>2*max|n| suffices in the cylindrical pairing."
+  },
+  "conditions": [
+    "Original open admitted fixed chart and exact uncut gauge identity on that chart.",
+    "Original finite potential and velocity spectra, including all physical coefficient scales and the original global cover, are evaluated on the full circle.",
+    "Ordinary smooth localized derivatives and region measure apply on the integration domain."
+  ],
+  "open": [
+    "Source values and derivative intervals along the original radial/axial/time experiment paths.",
+    "Actual force cross-work, pressure and later correction stages, original seam uniform bounds and final comparisons."
+  ],
+  "finalN8Comparisons": 0,
+  "finalJets": 0,
+  "release": "HOLD"
+}
