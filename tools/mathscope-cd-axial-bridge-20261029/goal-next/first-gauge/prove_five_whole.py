@@ -100,12 +100,12 @@ def controls(graph, registry, five, R):
     return failed
 
 
-def verify_shell(graph, repo, five):
+def verify_shell(graph, repo, five, *, center=X0):
     alg = Exact(graph)
     need(graph.args(five['inner'], 'sqrt_positive') == [X_A], 'original inner radial envelope')
     out = product_other(graph, five['outer'], 24)
     need(graph.args(out, 'sqrt_positive') == [X_B], 'original outer radial envelope')
-    x0_parts = factors(graph, X0)
+    x0_parts = factors(graph, center)
     exp_half, = [i for i in x0_parts if graph.node(i)[0] == 'exp']
     sq, = [i for i in x0_parts if graph.node(i)[0] == 'sqrt_positive']
     need(q(graph, graph.args(exp_half, 'exp')[0]) == Fraction(1, 2), 'original mean bump center')
@@ -182,7 +182,7 @@ def verify_shell(graph, repo, five):
     need(Fraction(11,10)**2 < 2 and Fraction(1,1)+Fraction(2,5)+1 < 5,
          'both axial bump supports fit within original Imean bound')
     return {'inner': five['inner'], 'outer': five['outer'], 'Xa': X_A, 'Xb': X_B,
-            'originalMeanPatchLeft': xmean, 'center': X0,
+            'originalMeanPatchLeft': xmean, 'center': center,
             'proof': 'Xa<X0Imean and Xb>e^5 X0Imean. Both axial bump X-supports lie in Imean; s in [1/2,2] puts their R-supports inside the exact common envelope.',
             'terminalTreeNodesChecked': len(checks), 'sourceParameterSHA256': metadata['parameterExpressionSHA256']}
 

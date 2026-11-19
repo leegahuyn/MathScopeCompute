@@ -10,6 +10,12 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation79
+
+- **VERIFIED.** 활성 N3 원본 전체 방사 적분 `#22151951`에서 두 FiveMap 범프, 실제 반지름 바인더, 고정 양끝과 원본 차트 bracket \([1/2,2]\)를 결속했다. 계수는 \((\ell,Z,T)\)에만 의존한다. 원본 shell의 62개 노드와 같은 출처의 보관 N1을 다시 대조했다. [실제 적분과 코드](primary-forced-join/active-n3-c5-binding/whole-five-map-moment/README.md).
+- **CONDITIONAL.** 원본 native 역함수의 허용 영상과 실해석 의미론에서 두 범프 지지가 끝점 \([\sqrt{X_a},2\sqrt{X_b}]\)에 모두 들어간다. \(E=e^{1/5}\)로 두 번째 지지를 환산하면 \(M_1=EM_0\)이고 실제 계수 \(c_1=-c_0/E\)이므로 전체 적분은 정확히 0이다. 원본 FiveMap 포텐셜과 compact 후보는 이 차트에서 일치한다. 시험 범프의 두 번째 지지를 잘라내면 정확한 대조값 \(7/2000\)이 남는다.
+- **OPEN.** 파동을 포함한 세 전체 게이지 차, 가중 노름, 후속 보정과 전 구간 최종장 구간이 남는다. M3 N7-06과 N8-05, 최종 jets, 운영 R1-08 및 전체 RELEASE HOLD는 기존 판정을 유지한다.
+
 ## Continuation78
 
 - **CONDITIONAL.** 활성 N3 첫 보정의 원본 Temporal과 FiveMap 평균 성분을 같은 소스에서 curl로 환산했다. 정상 방사 구간의 FTC와 적분 미분을 적용하면 방사·각·축의 평균 게이지 차가 각각 정확히 0이다. 원래 Temporal의 \(\chi_R\)와 \(\chi_Z\) 항, FiveMap 범프 인자의 \(Z\) 미분을 유지했다. 바깥 \(\eta\) cutoff를 곱할 때는 \((+\varepsilon\eta_Z\Psi,0,-\eta_R\Psi)\)가 남는다. 경계 또는 원본 치환을 빼면 정확한 대조값 \(3/4\), \(3/4\), \(-1/2\)가 나왔다. [평균 게이지 재현](primary-forced-join/active-n3-c5-binding/ordinary-mean-gauge/README.md).
