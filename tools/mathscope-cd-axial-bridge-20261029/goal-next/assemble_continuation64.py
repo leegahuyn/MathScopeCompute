@@ -12,7 +12,7 @@ FORCED = 'final67/local-forced-operator/'
 SIGMA = 'final67/cor85-weighted-stress/'
 CI = 'ci-44575285741/'
 EXTRA = {
-    '.github/workflows/mathscope-cd-axial-bridge-20261029.yml': '5d43a6ff4537b6a344f116042a4ca90ef43364efcdb036e7f2c080f18267346d',
+    '.github/workflows/mathscope-cd-axial-bridge-20261029.yml': '0f87daa5215507c451788a0f2cb01294def1d3848db6a703689c38f8ceafd0f3',
     'research-ide/mathscope-m3/p8/lean/MathScope/M3/CD/SignedStressEnergyGate.lean': '067474dc1693fa919caa6c540ef9f2cb5dc5bf1376a6a40f3f83820cb35badf5',
 }
 PINS = {
