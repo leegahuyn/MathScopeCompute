@@ -7,7 +7,9 @@ order twelve. The analytic coefficient bound is a separate premise. -/
 theorem natural_tail_polynomial_order_twelve (n : ℕ) (hn : 257 ≤ n) :
     ((n : ℝ) + 12) ^ 24 ≤ (2 : ℝ) ^ n := by
   induction n, hn using Nat.le_induction with
-  | base => norm_num
+  | base =>
+    have hbase : (269 : ℕ) ^ 24 ≤ 2 ^ 257 := by decide
+    exact_mod_cast hbase
   | succ n hn ih =>
     have hnReal : (257 : ℝ) ≤ (n : ℝ) := by exact_mod_cast hn
     have hlin : 269 * ((n : ℝ) + 13) ≤ 270 * ((n : ℝ) + 12) := by linarith
@@ -18,11 +20,16 @@ theorem natural_tail_polynomial_order_twelve (n : ℕ) (hn : 257 ≤ n) :
     have hnum := mul_le_mul_of_nonneg_right hratio
       (show 0 ≤ ((n : ℝ) + 12) ^ 24 by positivity)
     have hstep : ((n : ℝ) + 13) ^ 24 ≤ 2 * ((n : ℝ) + 12) ^ 24 := by
-      apply (mul_le_mul_left (show 0 < (269 : ℝ) ^ 24 by positivity)).mp
-      calc
-        _ ≤ (270 : ℝ) ^ 24 * ((n : ℝ) + 12) ^ 24 := hpow
-        _ ≤ (2 * (269 : ℝ) ^ 24) * ((n : ℝ) + 12) ^ 24 := hnum
-        _ = _ := by ring
+      have hscaled : (269 : ℝ) ^ 24 * ((n : ℝ) + 13) ^ 24 ≤
+          (269 : ℝ) ^ 24 * (2 * ((n : ℝ) + 12) ^ 24) := by
+        calc
+          _ ≤ (270 : ℝ) ^ 24 * ((n : ℝ) + 12) ^ 24 := hpow
+          _ ≤ (2 * (269 : ℝ) ^ 24) * ((n : ℝ) + 12) ^ 24 := hnum
+          _ = _ := by ring
+      by_contra! hfail
+      have hstrict := mul_lt_mul_of_pos_left hfail
+        (show 0 < (269 : ℝ) ^ 24 by positivity)
+      exact (not_lt_of_ge hscaled) hstrict
     calc
       ((↑(n + 1) : ℝ) + 12) ^ 24 = ((n : ℝ) + 13) ^ 24 := by
         congr 1
