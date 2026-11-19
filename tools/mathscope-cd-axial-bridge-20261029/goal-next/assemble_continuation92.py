@@ -160,7 +160,8 @@ def verify_status(source):
     status = source(STATUS)
     assert status['schema'] == 'MathScope.C92.VerificationStatus/1' and status['branch'] == BRANCH
     assert status['release'] == 'HOLD' and status['operatingR108'] == 'OPEN'
-    assert status['M3'] == '62/64' and status['finalJets'] == '0/67'
+    assert status['M3'] == status['verification']['M3']
+    assert status['jets'] == {'accepted':0,'total':67} and status['finalJets'] == '0/67'
     gates = status['verification']
     assert gates['M3'] == {'accepted':62,'total':64,'open':['N7-06','N8-05']}
     assert gates['M4']['operatingR108'] == 'OPEN' and gates['Y']['generalNative'] == 'OPEN'
