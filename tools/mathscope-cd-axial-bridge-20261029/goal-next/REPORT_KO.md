@@ -10,6 +10,11 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation70
+
+- **VERIFIED / OPEN · 실제 N3 첫 주기 공간 피연산자.** 첫 주기 원본 22,153,782개 노드와 직접·분해 잔차 차이 4개를 확인했다. 같은 실행이 공간 입력 24개와 공간 미분 라벨 33개를 22,155,584개 노드로 생성했다. 별도 등록된 Signed 응력 두 응용의 본문과 인자 기록도 저장됐다. 전체 native 스트림, 세 gauge 차이의 영값, 수치 상계와 최종 jets는 OPEN이다. [실제 GitHub 부분 결과](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44568520276).
+- **VERIFIED / OPEN · 전체 스트림 내보내기 수정.** 원본 내보내기의 기본 한도 5,000,000과 레지스트리 소유자 분기를 재현했다. 공유 원본 노드와 확장 native 소유자를 넘기고 35,000,000 노드 한도를 명시했다. 원본 함수에서 시험 스트림과 레지스트리 무손실 및 2,216만 크기의 진입을 확인했다. 새 GitHub 실행에는 같은 원본 객체를 쓰는 두 번째 Forced 후보 계산도 포함했다. 실제 출력의 독립 대조와 보정장 전체는 OPEN이다. [원본 로그와 수정 계약](primary-forced-join/active-n3-c5-binding/hosted-44568520276/README.md) · [수정 후 GitHub 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44582875351).
+
 ## Continuation69
 
 - **VERIFIED / CONDITIONAL · 실제 느린 좌표의 선별 9차 상계.** 초기 \(W_{rz}\)에 남는 배경 도함수는 \(F/G\) 각각의 \(R^2Z^5T^2\), \(RZ^6T^2\), \(Z^7T^2\)다. 활성 1–3차 원본 계수의 정확 산술 그래프 169,401개를 계산했다. \(q^{2nh}\)와 원래 cutoff를 반영한 세 계수 상계는 각각 1보다 작다. 원본 선도장 9차 점별 경계와 외부 열 꼬리, 9차 원본 차트 재귀를 결합한 상계는 \(\exp(H/2^{128})/(64X_b^2)\)보다 작다. 원본 구간 및 해석적 미분 조건을 사용한다. 실제 \(H,y,N_7,N_8\)과 새 Signed 공분산 결속은 OPEN이다. [선별 원본 점별 경계](final67/selected-live-c9/README.md) · [남는 공분산 미분](final67/selected-covariance-order/README.md).
