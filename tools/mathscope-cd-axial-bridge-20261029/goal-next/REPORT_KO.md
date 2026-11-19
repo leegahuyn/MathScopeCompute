@@ -10,6 +10,19 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation86
+
+- **VERIFIED.** 원본 두 Signed 적분의 방사 가중치와 여섯 포텐셜의 역진폭 인자를 연결했다. 바깥끝까지의 로그 거리 $d$에서 짧은 적분이 $d^3$을 얻는 비교식을 적용했다. 원본 $0<d\le1/4$에서 $\zeta d^{-p}$의 $p\le63$은 비교식의 정확 유리수 조건을 만족한다. 첫 컴파일의 함수 뺄셈 표현을 수정한 뒤 Lean 정리가 GitHub에서 통과했다. [Signed 방사 외피](primary-forced-join/active-n3-c5-binding/first-wave-guard-traces/signed-polynomial-shell/README.md) · [GitHub Lean](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44621136369).
+
+- **CONDITIONAL.** 실제 $n=1$ 각응력 한 기여의 $\Sigma_\theta$ 방사 0–3차는 $\zeta$를 유지한다. 같은 원본 차트의 양의 진폭과 정칙 계수 조건 아래 여섯 Signed 포텐셜에 전파되는 해당 기여는 0–3차에서 각각 $\sqrt{\zeta}$에 $d^{-3/2},d^{-9/2},d^{-15/2},d^{-21/2}$를 곱한 상계를 가지며, 모두 $O(d^2)$이다.
+
+- **VERIFIED / CONDITIONAL.** 원본 차수 1의 각 모멘트 `#117072`를 재실행했다. 활성 원본과 첫 117,100개 노드를 대조하고 두 피적분함수의 형식 인자, 본문 및 상속된 미분 구현을 결속했다. 두 현재 모멘트의 연속 역행렬과 선도 각 모멘트의 A.2/A.13 적분 상수, B8/I1, 열 부채·I2 항을 보존했다. 양 끝에서 안쪽 \(\eta\) 미분을 사용하며 바깥 꼬리는 \(\eta\) 2차까지 지배했다. 같은 네이티브 미분과 유한 구간 지배·접합 전제에서 `#117072=0`과 전방·후방 응력 일치가 따른다.
+
+- **VERIFIED.** 같은 활성 원본의 첫 Forced 이전 Temporal 식 두 개에서 \(E-\langle E\rangle\)를 대조했다. 원래 응력은 두 차분에서 소거된다. 실제 이동 압력 적분의 \(Z,T,Y\) 독립성을 확인했다. [초기 Temporal](primary-forced-join/active-n3-c5-binding/first-wave-guard-traces/signed-polynomial-shell/initial-temporal/README.md).
+
+- **OPEN.** 전체 Haar 잔차의 실제 유한 상계와 같은 차트의 진폭을 결속해야 한다. 전체 방사·혼합 접합과 최종 에너지·수렴 검증이 남는다. M3 62/64, 네 정밀화 0/4, 최종 jets 0/67, 운영 R1-08 OPEN과 RELEASE HOLD다.
+
+
 ## Continuation85
 
 - **VERIFIED · 차수 정정.** 원본 $q^{6h},q^{4h},q^{2h}$로 이전 배열 슬롯 1·2·3의 실제 차수가 3·2·1임을 확인했다. 바깥 $X_b$까지 남는 것은 $\theta$의 실제 **$n=1$ 응력**이다. 원본의 전방·후방·전체 각 적분이 같은 0번 native 피적분함수를 쓰며, 전체 각 모멘트는 `#117072`이다. [실제 차수와 국소 응력](primary-forced-join/active-n3-c5-binding/first-wave-guard-traces/angular-order-one-shell/README.md).
