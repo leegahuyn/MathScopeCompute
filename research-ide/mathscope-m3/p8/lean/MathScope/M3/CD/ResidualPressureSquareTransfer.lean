@@ -15,7 +15,7 @@ theorem residual_force_square_transfer
   have hbudget : 0 ≤ budget :=
     add_nonneg (mul_nonneg hδ.le hbase) (div_nonneg herr hδ.le)
   have hcancel : (δ * base) * (error / δ) = base * error := by
-    field_simp [hδ.ne'] <;> ring
+    field_simp [hδ.ne']
   have hsq : (2 * |cross|)^2 ≤ budget^2 := by
     dsimp [budget]
     have habs : |cross|^2 = cross^2 := sq_abs cross
