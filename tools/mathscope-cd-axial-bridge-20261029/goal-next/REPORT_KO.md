@@ -10,6 +10,11 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation61
+
+- **VERIFIED / CONDITIONAL · 최종 67개 입력을 합성하는 원본 cutoff 미분.** 미분 라벨 67개에서 보정 한 단계당 필요한 곱미분 118항과 여섯 cutoff 도함수를 확인했다. 원본 seed를 256개 닫힌 구간에서 80비트 유리수 구간으로 재생했다. 시간·축·혼합·축 2차·축 3차의 상계는 원본 \(\tau_0\) 단위로 각각 9, 12, 203, 288, 22,290이다. 정규화에서 실제 \((\tau_0^h)^{\beta_z}\)를 보존한다. 최종장에서 쓸 각 보정의 미분 수치 구간은 OPEN이다. [67개 원본 곱미분과 코드](final67/correction-jet-composition/README.md).
+- **VERIFIED / OPEN · 보관된 N1 Forced의 초기 파동 소거.** 원본 445만 노드에서 열 개 분기의 Fourier 항 120개를 재생했고, 정수 분기마다 실제 \(\xi,v\) 치환 1,620개가 일치했다. 복사 인자 교환 및 다른 분기 위상 대조를 검출했다. 새 N3 원본 게이지에 적용하는 증거는 OPEN이다. [원본 초기 파동 재생](primary-forced-join/active-n3-c5-binding/spatial-stage1/initialized-wave/INITIALIZED_WAVE.md).
+
 ## Continuation60
 
 - **VERIFIED / OPEN · 첫 보정 공간 자료 재실행.** 원본의 결합 함수 등록에서 번호가 다른 두 응력 호출의 본문, 형식·실제 인자 및 미분 차수를 비교하도록 수정했다. 원래 결합 함수 API의 두 등록이 통과하고 원본 바꾸기 대조 7개가 검출됐다. 고친 코드로 실제 N3 재실행을 시작했다. 새 원본 스트림과 공간 입력의 검산 결과는 OPEN이다. [재실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44568520276) · [독립 판독 방법](primary-forced-join/active-n3-c5-binding/spatial-readback/README.md).
