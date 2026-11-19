@@ -10,6 +10,13 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation72
+
+- **VERIFIED / CONDITIONAL · 원본 활성 구간의 배경장 10차 경계.** 원본 양의 profile 산술 기록 210,631개와 \(R,Z,T\) 미분 조합 286개를 검사했다. 원본 선도장과 1–3차 실제 항의 양의 상계를 결합했다. 원본 활성 구간과 해석적 경계 조건에서 \(F/G\)가 모두 \(\exp(H/2^{128})/(64X_b^2)\)보다 작다. 원본 cutoff·좌표변환 8·9차 계수도 \(2^{4096}R_*^{26}\)으로 묶었고 기존 목표 상수보다 작음을 확인했다. 예외 고정 대표점 4차 항과 전체 원본 경로의 결속은 OPEN이다. [활성 10차 재생](final67/live-background-c10/README.md) · [고차 cutoff·차트](final67/n7-n8-primary-cutoff-orders/README.md).
+- **VERIFIED / CONDITIONAL · N3 속도 시간·점성 오차.** 원본 native 피연산자 54개를 정확히 결속했다. 느린 시간항은 \(-\varepsilon\), 축방향 점성항은 \(-\varepsilon^3\)이다. 두 선별 속도 항을 생략하는 경우, 원본 결속과 지지집합 조건 아래 선형 제곱 외력 오차는 \(2^{-1024}S_R\) 미만이다. 비선형 교차항까지 포함하려면 실제 나머지 속도·기울기에 \(B\le e^{H/16}\)이면 충분하다. 이 실제 \(B\)와 전체 잔차는 OPEN이다. [원본 시간·점성 결속](final67/n8-selected-velocity-force/README.md).
+- **VERIFIED / CONDITIONAL · 보관된 N1 반복항의 느린 네 경계.** 밴드·\(R,Z,T\) 방향의 원본 정규화 cutoff와 고정 대표점을 40개 시스템과 240개 소스 슬롯에 결속했다. 다른 가드가 엄격하고 원본 피연산자가 정의된 이웃에서 각 방향의 양쪽 경계를 닫힌 펄스 전체에 대해 확인했다. 물리적 셸의 실제 원본 근호 미분은 경계에서 양성 하한이 퇴화한다. 실제 supported 식과 필요한 도함수의 내부 영극한이 OPEN이며, 원본 N3의 같은 경로에 이 증거를 다시 적용해야 한다. [밴드 경계](primary-forced-join/active-n3-c5-binding/repeat-band-face/README.md) · [물리적 셸 의무](primary-forced-join/active-n3-c5-binding/repeat-shell-minimum/README.md).
+- **VERIFIED / CONDITIONAL · N4 원본 호출 #121999의 전체 명시적 인자.** 새 자연급수 인자 1,221개와 native 호출의 직접 인자 948개를 모두 확인했다. N4 양의 반경 미분 원본 호출 112개 중 39개의 첫 전개를 검사했다. 나머지 상위 호출 73개와 native 정의 본문 및 무한극한은 OPEN이다. [#121999 전체 인자](y-higher-flow/n4-complete-site-121999/README.md).
+
 ## Continuation71
 
 - **VERIFIED / CONDITIONAL · 원본 목표장 7·8차 상계.** 원본 가중 목표장에 대해 방향성 산술 41개 노드를 실행했다. 두 상계 모두 \(\exp^{\circ5}(2^{21})\)보다 작으며, 원래 radial pole은 각각 24와 27이다. 이 상계를 기존 N0–N6과 합쳐도 최대값과 원본 Primary 재귀식이 그대로다. 같은 원본 경로와 배경 C9/C10, cutoff·좌표변환 8/9차 조건에서 이 재귀식을 쓸 수 있다. native N7/N8 노름과 완전한 Primary·Forced 출력 상계는 OPEN이다. [외부 목표장 상계](final67/n7-n8-target-directed/README.md) · [원본 Primary 전달](final67/n7-n8-target-primary-transport/README.md).
