@@ -10,6 +10,11 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation52
+
+- **VERIFIED / CONDITIONAL · 같은 원본 3차원 잔차의 직접식과 분해식.** 실제 22,153,782개 노드 그래프에서 비교에 필요한 산술 기록 1,663개를 추출했다. 직접 잔차와 분해 잔차의 세 차이 및 발산 차이 한 개가 정확히 0이었다. 원래 직접식의 세 대조는 각각 953, 1,053, 3,134개 항을 유지했다. GitHub 출력과 독립 Python 검산이 바이트 단위로 같았다. 원본 연산의 정의역과 열 개 분모의 비영 조건이 물리 적용에 필요하고, 잔차 수치 구간은 OPEN이다. [정확 잔차 재생](primary-forced-join/active-n3-c5-binding/hosted-44541601028/README.md) · [GitHub 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44541601028).
+- **VERIFIED / CONDITIONAL · 원본 (n=1) 전체 적분과 (X_+) 접합.** 다섯 실제 물리 모멘트의 국소 적분, 보정 범프, 압력과 축 플럭스의 서로 다른 원본 `Ω` 항을 결속했다. 원본 선도 스트림 `#9239`의 양 끝값으로 이전 차수 질량이 0임을 연결했다. 원본 primitive와 연속 미분, 유한 적분의 통상적인 실해석 의미가 성립하면 (5.20)–(5.21)에서 `#117075`의 전체 적분이 0이고 `#672`의 전·후방 원시함수는 같아진다. 두 경계의 영 구간에서 잘라낸 스트레스는 접합된다. 일반 재귀의 native 극한은 OPEN이다. OpenAI 공개 166쪽 PDF와 작업에 사용한 사본의 SHA-256은 일치했다. [전체 모멘트 증명](axial-order-one-identity/whole-moments/README.md) · [원고 출처 기록](axial-order-one-identity/official-manuscript.json) · [공개 원고 53–54쪽](https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf#page=53).
+
 ## Continuation51
 
 - **VERIFIED / OPEN · 같은 원본 N3 실행의 첫 활성 보정 추출을 시작했다.** 보관된 원본 N1 노드 4,456,994개를 재생해 좌표 참조 정의 6개, 원본 행 매핑 162개, 실제 미분 연산과 33개 공간 요청의 형식을 대조했다. 격리 브랜치의 N3 실행에는 에너지 입력 24개, 공간 jet 요청 33개, 게이지 curl 차이 3개와 원본 함수 레지스트리 추출을 연결했다. 현재 실행의 실제 추출 결과, 게이지 등식과 균일 수치 상계는 OPEN이다. [추출기와 사전 검사](primary-forced-join/active-n3-c5-binding/spatial-stage1/README.md) · [GitHub 원본 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44553053960).

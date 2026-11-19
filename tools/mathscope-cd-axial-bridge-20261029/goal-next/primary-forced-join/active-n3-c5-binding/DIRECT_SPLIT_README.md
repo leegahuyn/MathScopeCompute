@@ -68,10 +68,9 @@ three nonzero residual controls, a nonzero difference mutation, a missing
 source node, and RSS-only receipt variation with a rejected root change.
 They do not exercise the private live source seal.
 
-The exporter still needs to execute on the actual next live first-cycle
-graph. No current source-root equality is claimed from these synthetic
-controls. A successful real reduction would establish direct/split
-equality under the original native/denominator domain assumptions.
-Actual Navier-Stokes residual cancellation, force regularity, quantitative
-closure, higher stages and final jet certification remain separate.
-RELEASE HOLD.
+GitHub run 44541601028 executed the exporter on the actual live first-cycle
+graph. The independently reproduced result establishes four exact zero
+differences under the original native and denominator domain assumptions.
+The original residual size, force regularity, quantitative closure, higher
+stages and final jet certification remain open. See the
+[actual hosted replay](hosted-44541601028/README.md). RELEASE HOLD.
