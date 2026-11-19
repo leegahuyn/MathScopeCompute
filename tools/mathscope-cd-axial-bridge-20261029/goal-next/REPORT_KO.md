@@ -10,6 +10,10 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation65
+
+- **VERIFIED / CONDITIONAL · N4 고정 대표점 배경의 예외적인 4차 항.** 원본 N4 AST 7,358,162개와 동일한 생성 prefix 127,241개를 재생했다. 예외 대표점은 \(X_a<X_{\rm rep}<X_{\rm keep}\)에 놓이며 실제 raw Picard 시스템 7을 사용한다. 원본 Picard·Cauchy·실수 방사 미분 경계를 전제로 하면 4차 항의 모든 8차 이하 느린 \(F/G\) 미분은 \(e^{-L^6/3}<1\)로 제어된다. \(L=\ell_{\min}+16\)이다. 앞선 세 항과 합친 상계는 \(\exp(H/2^{128})/(64X_b^2)\)보다 작다. 나머지 native 경로와 방사·압력 입력 결속은 OPEN이다. [원본 소스와 8차 증거](final67/frozen-n4-background/README.md).
+
 ## Continuation64
 
 - **VERIFIED / CONDITIONAL · 원본 Corollary 8.5 응력.** 실제 원본 플럭스·공분산 변화식 5개를 독립 기호 재생에서 0으로 확인했다. \(J_z+c_\rho P\) 전체의 미분을 유지하며 \(c_{\rho,Z}P\)를 누락하면 정확 검사에서 실패한다. 고정 프레임의 \(F_0,F_{R,0},G_{R,0}\)은 선도장 값이다. 전체 미분 입력은 \(H_w\) 내내 고정된 실제 느린 좌표에서 평가된다. 활성 평균장의 응력 상계는 OPEN이다. [응력 소스 결속](final67/cor85-weighted-stress/README.md).
