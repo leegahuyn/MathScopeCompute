@@ -9,6 +9,15 @@ on:
       - 'tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-forced-join/active-n3-c5-binding/*first_cycle_overlays*'
       - 'tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-forced-join/active-n3-c5-binding/spatial-stage1/*.mjs'
   workflow_dispatch:
+    inputs:
+      repeat_mode:
+        description: Repeated Forced candidate evidence after the original first cycle
+        type: choice
+        default: metadata
+        options:
+          - "off"
+          - metadata
+          - full-source
 permissions:
   contents: read
 jobs:

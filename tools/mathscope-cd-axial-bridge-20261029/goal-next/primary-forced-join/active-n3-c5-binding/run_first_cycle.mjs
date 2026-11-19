@@ -3,6 +3,7 @@ import {writeFile} from 'node:fs/promises';
 import {join} from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {verifyLivePostFiveSplit} from './verify_postfive_live.mjs';
+import {runAnchoredRepeatCandidate} from './run_anchored_repeat_candidate.mjs';
 import {emitFirstSpatial, firstSpatialMode} from './spatial-stage1/emit_first_spatial.mjs';
 
 export async function runFirstCycle({load, navier, forced, context, out}) {
@@ -103,6 +104,7 @@ export async function runFirstCycle({load, navier, forced, context, out}) {
     if (spatialMode === 'off') throw error;
     splitFailure = error;
   }
+  let spatialFailure = null;
   if (spatialMode !== 'off') {
     try {
       await emitFirstSpatial({navier, out, pde: physical, mode: spatialMode,
@@ -112,9 +114,25 @@ export async function runFirstCycle({load, navier, forced, context, out}) {
         JSON.stringify({mode: spatialMode, code: error.code ?? null, message: error.message,
           sameRunDirectSplitOutcome: splitFailure ? 'FAILED' : 'VERIFIED',
           N706: 'OPEN', N805: 'OPEN', finalJets: 0, release: 'HOLD'}, null, 2) + '\n');
-      if (splitFailure) throw new AggregateError([splitFailure, error], 'Split and spatial ingress checks failed');
-      throw error;
+      spatialFailure = error;
     }
   }
-  if (splitFailure) throw splitFailure;
+  let repeatFailure = null;
+  if (!splitFailure) {
+    try {
+      await runAnchoredRepeatCandidate({navier,out,pde:physical,firstCycle:receipt,context:downstreamContext});
+    } catch (error) {
+      await writeFile(join(out,'active-n3-repeat-forced-failure.json'), JSON.stringify({
+        schema:'MathScope.N8.SameLiveRepeatCandidateFailure/1',
+        code:error.code ?? null,message:error.message,sameRunFirstCycleVerified:true,
+        completeSecondCorrection:'OPEN',finalJets:0,release:'HOLD',
+      },null,2) + '\n',{flag:'wx'});
+      repeatFailure = error;
+    }
+  }
+  const downstreamFailures = [splitFailure,spatialFailure,repeatFailure].filter(Boolean);
+  if (downstreamFailures.length === 1) throw downstreamFailures[0];
+  if (downstreamFailures.length > 1) {
+    throw new AggregateError(downstreamFailures,'Original source downstream evidence did not finish');
+  }
 }
