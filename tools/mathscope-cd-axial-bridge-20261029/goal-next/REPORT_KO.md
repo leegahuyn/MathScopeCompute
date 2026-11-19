@@ -16,6 +16,8 @@
 
 - **CONDITIONAL.** 원본 고정 차트에서 다른 느린 guard와 shell이 엄격하고 네이티브 계수가 허용되는 경우, 첫 Forced 포텐셜과 curl의 횡·펄스 경계 미분이 3차까지 0이다. 네 느린 경계에서 해 쪽으로 영미분을 전달하려면 실제 계수와 변분계가 닫힌 펄스 전체에서 경계까지 정칙해야 한다. GitHub에서 동차 cutoff 끝점과 영강제 순서 적분 정리 세 개를 컴파일했다. [GitHub Lean](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44609380607).
 
+- **VERIFIED / CONDITIONAL.** Signed 네이티브 포텐셜 여섯 본문에서 횡·펄스 cutoff 인자와 네 느린 cutoff 인자를 직접 확인했다. 원래 고정 차트의 10개 경우와 빠른 경계 40개에서 지지 내부의 열린 영구간을 결속했다. 이 차트에서 Signed 포텐셜은 3차, 속도는 2차까지 영미분으로 접합된다. 느린 경계의 Signed 몫과 shell의 가중 추정은 OPEN이다. [Signed 실행과 경계](primary-forced-join/active-n3-c5-binding/first-wave-guard-traces/signed/README.md).
+
 - **VERIFIED / CONDITIONAL.** 원본 첫 보정의 실제 순평균은 물리각과 독립이다. 원래 매끄러운 차트에서 전체 각도 평균의 평균–파동 교차항은 0이다. Signed와 첫 Forced 기본파는 같은 주파수를 공유하므로 합한 후 제곱한다. 서로 다른 레이블 사이의 기본파와 이중 조화가 같은 물리 주파수를 가지는 경우도 합산한다. 이로써 첫 보정의 운동에너지와 공간 기울기 제곱에 대한 정확한 각도 적분식을 얻었다. [각도 적분 식과 코드](final67/energy-1013-sharp/correction-budget/spatial-gauge/active-n3-angular-gram/README.md).
 
 - **OPEN.** 원본 느린·방사 경계의 균일 가중 상계, 이후 보정, 외력 일과 반경·시간 적분, 최종 비교 0/4가 남아 있다. M3 62/64, 최종 jets 0/67, 운영 R1-08 OPEN 및 RELEASE HOLD다.

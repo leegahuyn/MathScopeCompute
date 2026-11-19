@@ -14,6 +14,7 @@ ADDITIONAL = {
 PINS = {
     GUARDS+'forced-fast/forced-seams-final.json':'888b8575fb5f02c9fac90e37cc757261b2bb7eaf8fea62d1a6ca6b4c544532b1',
     GUARDS+'forced-slow/forced-slow.json':'32760448f9d6ed97715421eb2899133aa45b7b19bee6eaba0a8b45bd43e72f24',
+    GUARDS+'signed/signed-seams.json':'65c08c86d7682f989e9bf6c98f7ae04a42d2f1594488287da2548e85ca0a2815',
     GUARDS+'lean/GuardSeamPulse.log':'cd7c910c127e0cc67aaa3e020c3a31543c5f7620eca4f88d6f3e5cbe41e2313a',
     GRAM+'first-correction-gram.json':'9dd999693a6d3f142c0709f67412ab3bbd716eebee69f3642bd680bb12f5f448',
 }
@@ -24,6 +25,7 @@ def verify_evidence(raw, source):
         assert entry(raw(path))['sha256']==pin, path
     fast = source(GUARDS+'forced-fast/forced-seams-final.json')
     slow = source(GUARDS+'forced-slow/forced-slow.json')
+    signed = source(GUARDS+'signed/signed-seams.json')
     gram = source(GRAM+'first-correction-gram.json')
     lean = source(GUARDS+'lean/receipt.json')
     assert len(fast['cases'])==len(slow['cases'])==20
@@ -33,6 +35,12 @@ def verify_evidence(raw, source):
     assert all(x['denominatorAtBothFaces']==1 for x in slow['axisFactors'].values())
     assert slow['literalZeroInitialOrderedPulseRecurrences']==20
     assert slow['scalarChecks']==dict(raw=120,supported=120,principal=60,pulledBack=120,projected=120)
+    assert signed['verifiedCounts']==dict(fixedCases=10,nativeBodies=6,guardFaces=40,
+        pureNormalComponentOrderFaceTraceClaims=480,potentialNormalOrder=3,velocityNormalOrder=2)
+    assert len(signed['definitions'])==6 and len(signed['cases'])==10
+    assert signed['radialFaces']['status']=='OPEN_WEIGHTED_SQRT_TARGET_TRANSFER'
+    for row in source(GUARDS+'signed/MANIFEST.json')['files']:
+        assert entry(raw(GUARDS+'signed/'+row['path']))=={'sha256':row['sha256'],'bytes':row['bytes']}
     assert 'collision' in gram['harmonicGram']['grouping'] or 'signed integer' in gram['harmonicGram']['grouping']
     assert gram['finalJets']==gram['n8ComparisonsCompleted']==slow['finalJets']==0 and gram['release']=='HOLD'
     assert lean['run']==44609380607 and lean['conclusion']=='success' and len(lean['theorems'])==3
@@ -43,6 +51,7 @@ def verify_evidence(raw, source):
     sha_lines = raw(GUARDS+'lean/source-sha256.txt').decode().splitlines()
     assert lean['fileSHA256']+'  MathScope/M3/CD/GuardSeamPulse.lean' in sha_lines
     return {'actualFirstForcedModes':20,'verifiedSlowFactors':4,'actualProjectedScalars':120,
+            'actualSignedTemplates':10,'signedFastGuardFaces':40,
             'hostedLeanRun':lean['run'],'hostedLeanTheorems':3,'finalN8Comparisons':0,'finalJets':0}
 
 
