@@ -183,6 +183,14 @@ theorem chart_joint_scale_transports_root {s Z T h c : ℝ}
 #print axioms chart_bracket_derivative
 #print axioms chart_source_image_exists_unique
 #print axioms chart_positive_root_recovers_image
+/-- The same dyadic change of physical scale preserves the radial profile
+coordinate as well as the axial chart coordinate. -/
+theorem chart_joint_scale_preserves_radial {R s c : ℝ} (hs : 0 < s) (hc : 0 < c) :
+    (Real.sqrt c * R) ^ 2 / (2 * (c * s)) = R ^ 2 / (2 * s) := by
+  rw [mul_pow, Real.sq_sqrt hc.le]
+  field_simp [ne_of_gt hc, ne_of_gt hs] <;> ring
+
+#print axioms chart_joint_scale_preserves_radial
 #print axioms chart_active_band_scale_bracket
 #print axioms chart_joint_scale_transports_root
 end
