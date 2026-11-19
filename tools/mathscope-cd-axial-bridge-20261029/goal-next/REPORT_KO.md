@@ -10,6 +10,11 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation58
+
+- **VERIFIED / CONDITIONAL · 고정 차수 축 소거의 실제 보정 입력.** 원본 2–5차의 국소 적분 20개, 전체 하위 이력 12개, 보정 행 20개와 압력·스트림의 반지름 원시함수 적분 32개를 대조했다. 세 번째 모멘트의 \(-\Omega/2\)와 다섯 번째 모멘트의 \(+X\Omega/2\)를 각각 실물 인자와 분모에 연결했다. 원본 선도장과 계수의 통상 미분·적분 의미를 적용하면 각 고정 차수에서 (5.20)–(5.21)에 쓰이는 전체 축방향 적분이 0이고 두 primitive가 접합된다. [원본 전체 모멘트와 재현](axial-order-one-identity/higher-whole-moments/README.md).
+- **VERIFIED / CONDITIONAL · 환대에서 첫 보정의 공간 에너지 계산식.** 원본 24개 공간 입력에 대응하는 부호 있는 속도·기울기·curl 식 15개를 정확 재생했다. 원본 슬랩에서 cutoff의 축방향 도함수 상수를 35와 1,658로 좁혔다. 네 번째 보정의 지지에서는 각각 15와 366이 충분하다. 첫 보정의 게이지 일치와 균일 수치 상계, 후속 보정 수치 구간은 OPEN이다. [24개 입력과 에너지 상계](final67/spatial-cutoff-24/README.md).
+
 ## Continuation57
 
 - **VERIFIED / CONDITIONAL · 모든 고정 차수의 축 잔차 항등식.** 실제 재귀 2–5차의 항 52개를 각 곱과 η 미분까지 재생했다. 일반 \(n\)의 축방향 잔차는 (5.20)–(5.21)의 모멘트 밀도, 일곱 방사 경계항과 순서 있는 연속방정식 결함으로 분해된다. 원본 stream primitive의 통상 미분과 실제 보정 적분의 모멘트 소거를 적용하면 \(X_-,X_+\) 접합이 성립한다. 지수 인덱스 오류는 전체 합에서 소거될 수 있어 순서쌍별로 대조했다. [고정 차수 증명과 재현](axial-order-one-identity/higher-recursive-identities/README.md).
