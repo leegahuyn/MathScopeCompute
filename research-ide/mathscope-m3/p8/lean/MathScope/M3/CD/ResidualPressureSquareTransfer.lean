@@ -29,9 +29,11 @@ theorem residual_force_square_transfer
     |full - base| = |2 * cross + error| := by rw [hdiff]
     _ ≤ |2 * cross| + |error| := abs_add_le _ _
     _ = 2 * |cross| + error := by rw [abs_mul, abs_of_nonneg (by norm_num : 0 ≤ (2 : ℝ)), abs_of_nonneg herr]
-    _ ≤ budget + error := add_le_add_right hcross error
+    _ ≤ budget + error := by linarith only [hcross]
     _ = δ * base + (1 + 1 / δ) * error := by dsimp [budget]; ring
 
+set_option exponentiation.threshold 2048 in
+set_option maxRecDepth 4096 in
 /-- The dyadic pressure-error allowance in the selected N3 paths. -/
 theorem residual_force_square_pressure_allowance
     {full base error cross reference : ℝ}
@@ -49,10 +51,14 @@ theorem residual_force_square_pressure_allowance
   have herror : (1 + 1 / δ) * error < (1 / 2^767) * reference := calc
     (1 + 1 / δ) * error < (1 + 1 / δ) * ((1 / 2^1024) * reference) :=
       mul_lt_mul_of_pos_left hsmall hcoef
-    _ = ((1 + 1 / δ) * (1 / 2^1024)) * reference := by ring
+    _ = ((1 + 1 / δ) * (1 / 2^1024)) * reference := (mul_assoc _ _ _).symm
     _ < (1 / 2^767) * reference := mul_lt_mul_of_pos_right hdyadic href
-  exact lt_of_le_of_lt (residual_force_square_transfer hbase herr hδ hcauchy hdiff)
-    (add_lt_add_left herror (δ * base))
+  calc
+    |full - base| ≤ δ * base + (1 + 1 / δ) * error :=
+      residual_force_square_transfer hbase herr hδ hcauchy hdiff
+    _ < (1 / 2^256) * base + (1 / 2^767) * reference := by
+      change δ * base + (1 + 1 / δ) * error < δ * base + (1 / 2^767) * reference
+      linarith only [herror]
 
 #print axioms residual_force_square_transfer
 #print axioms residual_force_square_pressure_allowance
