@@ -26,8 +26,8 @@ PINS = {
 def verify_evidence(raw, source):
     for path, expected in PINS.items():
         assert entry(raw(path))['sha256'] == expected, path
-    for directory in (FORCED, M4, Y):
-        manifest = source(directory+'manifest.json')
+    for directory, filename in ((FORCED,'MANIFEST.json'),(M4,'manifest.json'),(Y,'manifest.json')):
+        manifest = source(directory+filename)
         for path, metadata in manifest['files'].items():
             assert entry(raw(directory+path)) == metadata, (directory,path)
 
