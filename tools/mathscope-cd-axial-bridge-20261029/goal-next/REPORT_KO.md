@@ -10,6 +10,12 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation59
+
+- **VERIFIED · 축방향 원본 결속 종합.** 원고 (5.20)–(5.21), 원본 밀도 `#117047`, 모멘트와 두 적분의 정의역·인자·η 미분, 각 고정 차수의 조건부 접합 및 최종장의 열린 조건을 한 문서에 정리했다. [원본 축방향 검증](axial-order-one-identity/AXIAL_SOURCE_CLOSURE_KO.md).
+- **VERIFIED / OPEN · 실제 N3 첫 보정 실행.** 독립 Python 판독에서 같은 원본의 여섯 구성 단계와 직접식·분해식 비교를 재확인했다. 공간 추출기에서 두 번 등록한 Corollary 8.5 응력의 서로 다른 호출 번호 `22001221/22`와 `22001223/24`를 직접 비교해 중단됐다. 공간 자료가 기록되기 전의 중단이므로 실제 24개 공간 입력과 33개 공간 jet 루트는 OPEN이다. [실제 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44553053960) · [독립 부분 판독](primary-forced-join/active-n3-c5-binding/hosted-44553053960/spatial-readback.json).
+- **VERIFIED / CONDITIONAL · 국소 게이지 식.** Forced와 Signed의 복소 curl 6성분, 동일 라벨을 고정한 공간 환산식 4개, 두 평균장 원래 적분의 curl을 기호적으로 대조했다. 실제 전체 게이지에는 원본 초기 파동의 별도 indexed 인자 치환과 경계 접합 비교가 필요하다. [국소 게이지 기호 재현](primary-forced-join/active-n3-c5-binding/spatial-stage1/local-gauge/README.md).
+
 ## Continuation58
 
 - **VERIFIED / CONDITIONAL · 고정 차수 축 소거의 실제 보정 입력.** 원본 2–5차의 국소 적분 20개, 전체 하위 이력 12개, 보정 행 20개와 압력·스트림의 반지름 원시함수 적분 32개를 대조했다. 세 번째 모멘트의 \(-\Omega/2\)와 다섯 번째 모멘트의 \(+X\Omega/2\)를 각각 실물 인자와 분모에 연결했다. 원본 선도장과 계수의 통상 미분·적분 의미를 적용하면 각 고정 차수에서 (5.20)–(5.21)에 쓰이는 전체 축방향 적분이 0이고 두 primitive가 접합된다. [원본 전체 모멘트와 재현](axial-order-one-identity/higher-whole-moments/README.md).
