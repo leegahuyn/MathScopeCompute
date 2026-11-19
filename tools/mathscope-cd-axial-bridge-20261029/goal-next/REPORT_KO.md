@@ -10,6 +10,20 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation89
+
+- **VERIFIED.** 활성 그래프의 원본 배경 접두부 123,870개를 다시 생성한 배경과 해시까지 대조했다. 두 실제 배경의 원본 계수, 시간 cutoff, 차트 배율 및 \(R,Z,T\) 인자가 기존 10차 상계의 정의와 일치했다. 같은 두 배경이 원본 양쪽 공분산의 기저와 Haar 질량에 들어간다. [고정 라벨 원본 결속](primary-forced-join/active-n3-c5-binding/first-wave-guard-traces/outer-fixed-label-norm/README.md).
+
+- **CONDITIONAL.** 원본 소섭동 조건과 양의 분모 아래 두 부호, 모드 1·2의 기저와 행렬 미분은 \(j\le8\)에서 \(O(S^j)\)이다. 해와 접벡터의 느린 미분은 \(O(S^{2j})\)이고, 이 상계를 기존 바깥 공분산의 역과 진폭을 제어하는 데 쓸 수 있다. 원래 \(S=\ell^2\), \(\epsilon=2^{-h\ell}\)에서 최대 64차 다항식 손실은 \(\epsilon\) 지수 \(2^{-20}\)까지로 흡수된다. 기존의 작은 수치 상계는 원래 slab 범위에서 적용된다.
+
+- **VERIFIED.** 가중 지수의 보조정리가 GitHub Lean에서 컴파일됐다. 첫 실행에서 덧셈 부등식 적용 순서를 바로잡았으며 두 실행 기록을 보존했다. [성공한 GitHub 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44630491627).
+
+- **VERIFIED / CONDITIONAL.** Y의 원본 Picard 10개 시스템에서 \(\eta\) 미분 0–12차와 128·256비트 꼬리 요청 260개를 실제 실행했다. 원본 \(n=1\)의 역사적 절단 `#24835`를 포함해 모두 \(K_{\mathrm{condition}}\)으로 결정됐다. 원본 계수와 해석적 띠 가정으로 꼬리는 \(2^{-\mathrm{bits}}/3\) 이하이다. \(\log_2 K>768\cdot2^{1048576}\)이며 이 크기의 원본 \(K\)개 항을 합한 수치 구간은 OPEN이다. [원본 Picard 꼬리](y-higher-flow/picard-native-tail/README.md).
+
+- **VERIFIED / OPEN.** 운영 응답 30,707,818바이트의 SHA-256이 보존된 값과 일치했다. 공급자 메타데이터에서 버전 137과 식별값 `9171eb0c`를 재확인했다. 현재 편집 본문 조회가 `Transport closed`로 끝나 운영 R1-08의 수락에 필요한 편집 원본을 확보하지 못했다. [운영 웹 읽기 기록](preservation-continuation89.json).
+
+- **OPEN.** 첫 Forced의 실제 투영항 전체와 압력, 나머지 보정, 경계·중간 구간을 포함한 최종장 수치 검증은 남아 있다. M3 62/64, 네 정밀화 0/4, 최종 jets 0/67이다.
+
 ## Continuation88
 
 - **VERIFIED.** 다른 원본 실행에서 재구성한 표적 두 본문을 활성 원본의 네이티브 슬롯 32017·32018과 대조했다. 각 적분의 결속 좌표와 실제 인자까지 일치했다. 원본 열 cutoff와 양쪽 Haar 질량을 같은 바깥 끝점과 펄스 길이에 결속했다. 정규화 두 열의 행렬식과 양의 질량 하한에 대한 Lean 정리 두 개를 컴파일했다. [바깥 진폭](primary-forced-join/active-n3-c5-binding/first-wave-guard-traces/outer-normalized-amplitude/README.md) · [GitHub Lean](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44625438914).

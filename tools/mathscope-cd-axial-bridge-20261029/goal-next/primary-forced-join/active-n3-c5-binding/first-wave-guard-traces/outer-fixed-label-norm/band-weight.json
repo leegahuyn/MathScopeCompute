@@ -1,0 +1,160 @@
+{
+  "status": "VERIFIED_SOURCE_BAND_WEIGHT_JOIN_CONDITIONAL_ORIGINAL_CONE",
+  "inputPins": {
+    "sameLiveBackground": "0b7c13076805acc97cd45e3e4e70e6f7620950744dc493dbff26d0644ff977cc",
+    "matrix": "e808bd89285aa55ec0f1bf1c66cf7875ca26f706724ebc575e43c0466d2cdc36",
+    "c88Scale": "71b6c139f15491aa0c625a25c91c32987a4f58038ccd97fdce9ea888a6e892aa",
+    "sourceGain": "387863daedfc9fd37f7c1d43db430235238f94d23b767424baffa5d2f3348955"
+  },
+  "actualLabel": {
+    "epsilon": 17732744,
+    "Q": 17732740,
+    "S": 17732741,
+    "ell": 17732737,
+    "h": 9,
+    "windowLower": 17732731,
+    "ell0": 17727240,
+    "ellMinimum": 17727239,
+    "bandScaleFloor": 17727235,
+    "Bnorm": 14220485,
+    "BnormFloorTwoTo128": 14220477,
+    "BnormRadiusFactor": 14220478
+  },
+  "scaleTransfer": [
+    {
+      "order": 0,
+      "slowBackgroundOrderRequired": 1,
+      "boundFieldOrderAvailable": 10,
+      "tangentOverGaussianPower": 0,
+      "covarianceAndAmplitudePowers": {
+        "H": "-1/2",
+        "regularWeightW": "1/2",
+        "sqrtW": "1/4",
+        "sqrtWOverFourthRootS": "0"
+      }
+    },
+    {
+      "order": 1,
+      "slowBackgroundOrderRequired": 2,
+      "boundFieldOrderAvailable": 10,
+      "tangentOverGaussianPower": 2,
+      "covarianceAndAmplitudePowers": {
+        "H": "3/2",
+        "regularWeightW": "5/2",
+        "sqrtW": "9/4",
+        "sqrtWOverFourthRootS": "2"
+      }
+    },
+    {
+      "order": 2,
+      "slowBackgroundOrderRequired": 3,
+      "boundFieldOrderAvailable": 10,
+      "tangentOverGaussianPower": 4,
+      "covarianceAndAmplitudePowers": {
+        "H": "7/2",
+        "regularWeightW": "9/2",
+        "sqrtW": "17/4",
+        "sqrtWOverFourthRootS": "4"
+      }
+    },
+    {
+      "order": 3,
+      "slowBackgroundOrderRequired": 4,
+      "boundFieldOrderAvailable": 10,
+      "tangentOverGaussianPower": 6,
+      "covarianceAndAmplitudePowers": {
+        "H": "11/2",
+        "regularWeightW": "13/2",
+        "sqrtW": "25/4",
+        "sqrtWOverFourthRootS": "6"
+      }
+    },
+    {
+      "order": 4,
+      "slowBackgroundOrderRequired": 5,
+      "boundFieldOrderAvailable": 10,
+      "tangentOverGaussianPower": 8,
+      "covarianceAndAmplitudePowers": {
+        "H": "15/2",
+        "regularWeightW": "17/2",
+        "sqrtW": "33/4",
+        "sqrtWOverFourthRootS": "8"
+      }
+    },
+    {
+      "order": 5,
+      "slowBackgroundOrderRequired": 6,
+      "boundFieldOrderAvailable": 10,
+      "tangentOverGaussianPower": 10,
+      "covarianceAndAmplitudePowers": {
+        "H": "19/2",
+        "regularWeightW": "21/2",
+        "sqrtW": "41/4",
+        "sqrtWOverFourthRootS": "10"
+      }
+    },
+    {
+      "order": 6,
+      "slowBackgroundOrderRequired": 7,
+      "boundFieldOrderAvailable": 10,
+      "tangentOverGaussianPower": 12,
+      "covarianceAndAmplitudePowers": {
+        "H": "23/2",
+        "regularWeightW": "25/2",
+        "sqrtW": "49/4",
+        "sqrtWOverFourthRootS": "12"
+      }
+    },
+    {
+      "order": 7,
+      "slowBackgroundOrderRequired": 8,
+      "boundFieldOrderAvailable": 10,
+      "tangentOverGaussianPower": 14,
+      "covarianceAndAmplitudePowers": {
+        "H": "27/2",
+        "regularWeightW": "29/2",
+        "sqrtW": "57/4",
+        "sqrtWOverFourthRootS": "14"
+      }
+    },
+    {
+      "order": 8,
+      "slowBackgroundOrderRequired": 9,
+      "boundFieldOrderAvailable": 10,
+      "tangentOverGaussianPower": 16,
+      "covarianceAndAmplitudePowers": {
+        "H": "31/2",
+        "regularWeightW": "33/2",
+        "sqrtW": "65/4",
+        "sqrtWOverFourthRootS": "16"
+      }
+    }
+  ],
+  "lemmaApplication": {
+    "rho": "1/1048576",
+    "rangeOfPolynomialDegree": [
+      "0",
+      "64"
+    ],
+    "assumptions": [
+      "ell >= ell0 >= ellMinimum >= Bnorm^512",
+      "Bnorm >= 2^128 and Bnorm > 1/h",
+      "h > 0, log(2) > 1/2 on the original dyadic scale"
+    ],
+    "guardProof": "rho*h*log(2)*sqrt(ell) > 2^(-21)*Bnorm^255 >= 2^32619 > 4*64",
+    "identity": "S^k * epsilon^gamma <= epsilon^(gamma-rho), rate=h*log(2)",
+    "negativePower": "For negative k, S^k<=1 since S>=1.",
+    "unadmittedSmallLabelControlRejected": true
+  },
+  "scope": {
+    "actualLiveBackgroundSupplied": true,
+    "actualTangentAndMassOperandsSupplied": true,
+    "sourceConeAndPulsePropagatorPremisesRetained": true,
+    "ordinaryVariationAndFixedLimitIntegralsRetained": true,
+    "allAdmittedSlowAndFrozenBoundaryNumericalConstants": false,
+    "fullProjectedForcingAndPressure": false,
+    "finalEnergyAndConvergence": false
+  },
+  "finalJets": 0,
+  "release": "HOLD"
+}
