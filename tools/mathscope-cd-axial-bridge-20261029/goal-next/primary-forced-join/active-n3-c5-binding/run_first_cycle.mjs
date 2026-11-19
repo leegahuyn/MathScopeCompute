@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import {writeFile} from 'node:fs/promises';
 import {join} from 'node:path';
 import {pathToFileURL} from 'node:url';
+import {verifyLivePostFiveSplit} from './verify_postfive_live.mjs';
 
 export async function runFirstCycle({load, navier, forced, context, out}) {
   const original = path => import(pathToFileURL(join(navier, '..', path)).href);
@@ -10,6 +11,7 @@ export async function runFirstCycle({load, navier, forced, context, out}) {
     status: 'RUNNING', prefix: 3, sourceForcedNodeCount: forced.G.nodes.length,
     stages: [], finalJets: '0/67', N706: 'OPEN', N805: 'OPEN', release: 'HOLD'};
   const save = () => writeFile(join(out, 'first-cycle.json'), JSON.stringify(receipt, null, 2) + '\n');
+  let physical, directSplit;
   const stage = async (name, build, verify, summarize) => {
     receipt.currentStage = name;
     await save();
@@ -81,6 +83,8 @@ export async function runFirstCycle({load, navier, forced, context, out}) {
       nodeCount: forced.G.nodes.length, differencesProvedZero: false};
     receipt.status = 'VERIFIED_FIRST_CYCLE_SOURCE_CONSTRUCTION';
     await save();
+    physical = pde;
+    directSplit = split;
   } catch (error) {
     receipt.status = 'STOPPED_DURING_FIRST_CYCLE';
     receipt.error = {name: error.name, code: error.code ?? null, message: error.message};
@@ -88,4 +92,7 @@ export async function runFirstCycle({load, navier, forced, context, out}) {
     await save();
     throw error;
   }
+  // Keep the source construction receipt intact if the independent check
+  // finds an unmatched operand or a surviving comparison polynomial.
+  await verifyLivePostFiveSplit({navier, out, pde: physical, split: directSplit, currentReceipt: receipt});
 }
