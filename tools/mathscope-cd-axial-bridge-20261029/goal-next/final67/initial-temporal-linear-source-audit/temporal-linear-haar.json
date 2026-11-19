@@ -1,0 +1,137 @@
+{
+  "schema": "MathScope.N8.OriginalInitializedTemporalLinearHaarAudit/1",
+  "verified": "Original native source binding for all three initialized post-Temporal, pre-Five mean defects",
+  "conditional": "All terms linear in the Temporal velocity in P0,Jtheta0,Jz0 vanish after the original full normalized Haar average.",
+  "sourceCommit": "f8cb4034e86d7b669d52a6f2248aebba156b51b5",
+  "originalSourceSHA256": {
+    "research-ide/mathscope-m3/navier/source-global-initial-mean.mjs": "513779930558d044076318f39396060465b6518184b952482a0d973ac16bd411",
+    "research-ide/mathscope-m3/navier/source-global-temporal.mjs": "d5e20e78c119b678b61df35c1bf0f560826e7dddb74e70edd0c17a67d18a9759",
+    "research-ide/mathscope-m3/navier/source-global-pressure.mjs": "fd93001ad4bbc002d329cba54d1c884cc5e7bfd93444b1d72bd9c331a67b966d",
+    "research-ide/mathscope-m3/navier/source-updated-mean-pressure.mjs": "6ea6cb85cddd54b0421203e8fc37d24bdfcb8d3c6e62f78c5dada3dab8bd0c07",
+    "research-ide/mathscope-m3/navier/source-temporal-potential.mjs": "c0754a9afc0c41e731488523c030a317e69407e3ec01d2fe9bed8eb2f414a6f8",
+    "research-ide/mathscope-m3/navier/source-full-mean-equations.mjs": "2f44315a940fc959f1c86c2a8fd5b1a252521cbb8e2565dc42fc07b139773d76"
+  },
+  "originalRegistrySHA256": "364425db9d5bbd317f8aaad681fdfdd3206f97e0f46d2beb78b6e7d5a30a3111",
+  "originalSourceSlabSHA256": "b63588358fd2ee676ffdbba6104d5f0c644828cdecff4215e0d87f09037f6f2c",
+  "originalStreamSHA256": "831120617913e89c5bb60976fb26f58c6714decc301097a08f72ee23233e0a6a",
+  "originalStreamNodes": 21681493,
+  "nativeDeclarations": {
+    "-13": {
+      "name": "global_actual_temporal_actual_meridional_potential",
+      "body": 19570917,
+      "parameters": [
+        17732737,
+        17732748,
+        17732749,
+        17732750,
+        17745430,
+        17745431
+      ]
+    },
+    "-14": {
+      "name": "GlobalInitializationAfterTemporal_complete_gr",
+      "body": 21374149,
+      "parameters": [
+        17732737,
+        17732748,
+        17732749,
+        17732750,
+        17745430,
+        17745431
+      ]
+    },
+    "-15": {
+      "name": "GlobalInitializationAfterTemporal_haar_gr",
+      "body": 21374485,
+      "parameters": [
+        17732737,
+        17732748,
+        17732749,
+        17732750
+      ]
+    },
+    "-16": {
+      "name": "GlobalInitializationAfterTemporal_P",
+      "body": 21374489,
+      "parameters": [
+        17732737,
+        17732749,
+        17732750
+      ]
+    },
+    "-17": {
+      "name": "GlobalInitializationAfterTemporal_Jtheta",
+      "body": 21374531,
+      "parameters": [
+        17732737,
+        17732749,
+        17732750
+      ]
+    },
+    "-18": {
+      "name": "GlobalInitializationAfterTemporal_Jz",
+      "body": 21374575,
+      "parameters": [
+        17732737,
+        17732749,
+        17732750
+      ]
+    }
+  },
+  "nativeInverse": {
+    "systems": {
+      "0": 17754253,
+      "1": 17754268
+    },
+    "directionParameterIndices": [
+      0,
+      1,
+      2,
+      4,
+      5
+    ],
+    "shiftedAxialApplication": 19570809,
+    "radialBinder": 19570776,
+    "Y0Y1": [
+      17745430,
+      17745431
+    ],
+    "left": 19570813,
+    "whole": 19570814,
+    "cutoff": 17743734
+  },
+  "nativeDefects": {
+    "grSlowTimePlusEpsilonDTBeta": 21374035,
+    "haarY0": 21374484,
+    "haarY1": 21374485,
+    "radialBounds": [
+      17743711,
+      17743713
+    ],
+    "P0": 21374490,
+    "Jtheta0": 21374532,
+    "Jz0": 21374576,
+    "JzFluxBody": 21374566,
+    "JzSubtractHalfOfR2HaarGrBody": 21374572,
+    "JzAxialLinearProductBeforeRadialWeight": 21374559,
+    "JzAxialSquare": 21374560
+  },
+  "analyticHypotheses": [
+    "Original fixed common unit-period two-torus and normalized Haar measure.",
+    "Original periodic smooth source inverses with local termwise derivative convergence for the requested fixed-chart derivatives; one-sided source physical time convention on the boundary.",
+    "Original shifted radial primitive and Y-independent cutoff, coefficients and envelope. Radial and torus integrations and fixed-chart derivatives have the original Fubini and regularity hypotheses."
+  ],
+  "coordinateAndNormalization": "Use common Y0,Y1 before averaging and keep ell fixed. The shift translates Y only at each radial argument. Positive ci0, epsilon, R weights and final s-scaling factors are independent of Y. Original inverse has zero Haar although its retained defining body is the uncentered source E.",
+  "survivingTerms": [
+    "All original W contributions to the defects including the direct axial derivative of the Haar mean of Wrz.",
+    "Temporal beta^2, beta*gamma, v^2, v*gamma and gamma^2, with original differentiation, cylindrical weights and radial integrals.",
+    "Pointwise shifted T1 cutoff and local pressure retain their nonzero auxiliary modes."
+  ],
+  "open": [
+    "Numerical directed bounds on survivors and complete operator chains.",
+    "Any later linearization about an old Y-dependent velocity needs its own orthogonality or product bound.",
+    "Native high-order acceptance and final jets."
+  ],
+  "finalJets": "0/67",
+  "release": "HOLD"
+}

@@ -10,6 +10,11 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation74
+
+- **VERIFIED / CONDITIONAL · 원본 초기 Temporal 선형항의 평균 소거.** 원본 N3 그래프 21,681,493개 노드에서 두 Fourier 역연산, \(T_0/T_1\) 평행이동, 실제 Haar와 \(P_0,J_{\theta0},J_{z0}\) 적분을 대조했다. 원래 주기성·적분 교환 및 미분 조건에서 초기 Temporal 속도의 모든 선형 항이 세 결함 평균에서 0이 된다. 따라서 앞서 추적한 선형 시간항의 \(W_{rz,Z^5T^2}\) 경로도 소거된다. \(\beta_Z\gamma\)의 한 이차 미분 항에는 \(W_{rz,Z^6T}\)가 남는다. 이 원본 역연산의 \(L^2\) 손실과 전체 이차항은 OPEN이다. [실제 선형 시간항 경로](final67/initial-temporal-haar-zero/README.md) · [세 결함 평균의 전체 선형식](final67/initial-temporal-linear-source-audit/README.md).
+- **VERIFIED / CONDITIONAL · N4 상위 원본 두 호출 추가 검증.** #125199와 #128717을 실제 원본 Picard 연산으로 각각 전개했다. 자연급수 인자는 각 822개를 확인했고, 명시적 native 인자는 각각 1,580개와 1,997개를 확인했다. #121999의 재사용 원본 인자 170개도 통과했다. 양의 반경 미분 원본 112개 중 첫 전개를 끝까지 확인한 호출은 41개다. 나머지 71개와 native 정의 본문 및 무한극한은 OPEN이다. [세 원본 호출 증거](y-higher-flow/n4-three-actual-upper-sites/README.md).
+
 ## Continuation73
 
 - **VERIFIED / CONDITIONAL · 예외 고정 대표점의 4차 항.** 원본 N4의 system 7과 같은 반경 이웃에서 정확 산술 기록 280,399개를 생성했다. 상대 순위 \((2,33127)\), 독립 항 80개의 엄격한 비교, 74차 원본 주파수 항과 Euler cutoff 10차를 확인했다. 원본 Picard·차트 전제 아래 같은 대표점의 4차 \(F/G\) 기여는 10차까지 \(e^{-L^6/3}<1\)이다. [예외 대표점 재현](final67/frozen-n4-high/README.md).
