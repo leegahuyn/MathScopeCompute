@@ -10,6 +10,18 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation87
+
+- **VERIFIED.** 같은 활성 원본에서 공분산 여섯 성분의 열두 본문과 162개 부호별 덮개를 대조했다. 세 실제 cutoff 값과 여섯 성분의 횡방향 미분 구조를 결합했다. 첫 Forced의 평균 보조각 도함수는 실제 계수 100개에서 \(L\) 방향으로 묶인다. 이 경로의 실제 미분은 평균 성분당 43개로 총 129개이며, 원본 공분산 요청은 600개다. \(W_{rz}\)에만 느린 7차가 필요하다. [초기 Temporal 가중 전개](primary-forced-join/active-n3-c5-binding/first-wave-guard-traces/temporal-weighted-inverse/README.md).
+
+- **CONDITIONAL.** 초기 Temporal은 실제 압력 끝점과 두 원본 짧은 적분을 유지하며 Gaussian 지수를 보존한다. 첫 Forced의 직접 공분산과 압력의 공분산 부분은, 같은 활성 차트의 정규화 계수와 초기 평균·변분계의 상계 아래 Haar 잔차의 방사 0·1·2차에서 각각 \(\zeta d^{-30}, \zeta d^{-33}, \zeta d^{-36}\) 외피를 갖는다. [첫 Forced 공분산](primary-forced-join/active-n3-c5-binding/first-wave-guard-traces/temporal-weighted-inverse/first-forced-covariance/README.md).
+
+- **VERIFIED / CONDITIONAL.** 7,358,162개 노드의 N4 원본에서 실제 및 보조 Picard 시스템 열 개의 계수 본문을 읽었다. 실제계 자연급수 호출 710개와 하위 호출 163개, 보조계 자연급수 호출 70개와 하위 호출 182개를 대조했다. 원본 노름 전제 아래 보조 자연급수의 0–12차 꼬리도 확대된 정의역에 대해 정확 산술로 검사했다. 일반 네이티브 극한과 생성 미분은 OPEN이다. [Y 원본 재귀](y-higher-flow/picard-body-ingress/README.md).
+
+- **VERIFIED / OPEN.** 운영 버전 137의 편집 원본 후보 두 개는 공급자 저장 크기와 같은 공개 응답을 재현했다. 두 해시는 공급자의 편집 원본 식별값 `9171eb0c`와 달랐다. 운영 R1-08 OPEN, 격리 후보 16/16 및 RELEASE HOLD다. [운영 원본 역변환 대조](m4/r108/provider-transform/README.md).
+
+- **OPEN.** M3 62/64, 네 정밀화 0/4, 최종 jets 0/67이다. 환대 초기장 구간과 최종장 구간은 각자의 증거를 사용한다.
+
 ## Continuation86
 
 - **VERIFIED.** 원본 두 Signed 적분의 방사 가중치와 여섯 포텐셜의 역진폭 인자를 연결했다. 바깥끝까지의 로그 거리 $d$에서 짧은 적분이 $d^3$을 얻는 비교식을 적용했다. 원본 $0<d\le1/4$에서 $\zeta d^{-p}$의 $p\le63$은 비교식의 정확 유리수 조건을 만족한다. 첫 컴파일의 함수 뺄셈 표현을 수정한 뒤 Lean 정리가 GitHub에서 통과했다. [Signed 방사 외피](primary-forced-join/active-n3-c5-binding/first-wave-guard-traces/signed-polynomial-shell/README.md) · [GitHub Lean](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44621136369).
