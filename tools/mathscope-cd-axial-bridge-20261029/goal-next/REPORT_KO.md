@@ -10,6 +10,12 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation49
+
+- **VERIFIED / CONDITIONAL · 원본 초기 주파동과 환대 초기장 전체의 에너지.** 원본 파동의 부호 있는 162개 항, 축방향 cutoff, 원통 기저 미분을 포함했다. 정확 계수 그래프에서 필요한 산술 기록 1,070개를 재생했다. 원본 정규화를 유지한 네 엄격 비교로 주파동이 `2^-32 S_R` 아래에 있음을 확인했다. 같은 원본의 평균장·느린 배경장과 합치면 초기장 전체가 `(9/2^30) S_R < 2^-26 S_R`을 만족한다. 온전한 원 위에서 각도 직교성을 적용하면 `(26/2^32) S_R`까지 줄어든다. 원본 노름 상계와 고정 차트, cutoff 및 영 접합 조건이 전제다. 결합 부등식과 파동의 로그 상계는 GitHub Lean 4.34.1에서 통과했다. 네 활성 보정의 상계와 최종장 수치 검증은 OPEN이다. [초기장 합산](final67/energy-1013-sharp/correction-budget/spatial-gauge/initial-energy-join/README.md) · [GitHub Lean](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44548219226).
+- **VERIFIED / CONDITIONAL · 원본 N4의 실제 선택 대표점과 반지름 정의역.** 원본 소스에서 대표점 식 6개, 실제 역함수 잔차와 구간 `[1/2,2]`, 부호 선택 동률을 재생했다. 실제 반지름 치환 24개가 양의 경계를 갖는 원본 적분의 바인더에 속함을 확인했다. 바인더 근거를 제거하면 24개 모두의 확인이 사라진다. 허용된 원본 활성 물리점이 주어졌을 때 선택한 대표점의 존재·유일성과 영상 소속을 실해석으로 증명했고, `T=0`과 `Z=0`을 포함했다. 이 전체 대표점 정리의 Lean 컴파일, 일반 재귀 및 `#117047` 적분 동일성은 OPEN이다. [증명과 소스 재생](y-higher-flow/n4-representative-proof/README.md).
+- **VERIFIED / OPEN · 운영 R1-08 읽기 전용 대조.** 공급자 목록에서 운영 버전 137과 식별값 `9171eb0c`를 확인했다. 같은 목록에서 편집 본문을 포함하도록 조회했을 때 연결이 종료됐다. 운영 본문 전체 출처와 해당 배포 복구 증거는 OPEN이다. [공급자 조회 기록](m4/production-readback-20261119/provider-editable-body-attempt.json).
+
 ## Continuation48
 
 - **VERIFIED / CONDITIONAL · 국소화한 원본 느린 초기 배경의 에너지 상계.** 원래 cutoff와 Cartesian 속도·기울기 식에서 정확한 시간 스케일을 먼저 결합했다. 양의 항 360개와 영 항 58개를 독립 재생했다. 남은 시간 지수는 `0,h,2h,3h,4h,5h`여서 원본 시간 구간에서 해당 인자는 모두 1 이하이다. 원본 느린 스칼라 상계와 차트 조건 아래 계산된 에너지 상단이 `2^-28 S_R` 하단보다 작다. 초기 평균장과 함께 두 초기 기여분의 충분조건이 확보됐으며, 초기 파동과 이후 활성 보정은 OPEN이다. [기호·수치 재현](final67/energy-1013-sharp/correction-budget/spatial-gauge/slow-coupled-source/README.md).
