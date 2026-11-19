@@ -1,0 +1,143 @@
+{
+  "schema": "MathScope.OriginalN1AxialSourceConservativeIdentity/1",
+  "status": "PASS_ACTUAL_N1_SOURCE_RAW_AND_ETA_DIFFERENTIAL_IDENTITIES",
+  "sourceSliceSHA256": "08b01a36402390dbf272cb4abe677c6a18d6c7f5785fc4853de6d4e6a41b988b",
+  "originalPrefix": {
+    "count": 117100,
+    "sha256": "d125d121e115ea2e3c4b67a37c72a30c1dbcbca705007ca5c02412c1bf5c2116"
+  },
+  "registrySHA256": "bc0587085298da014c10a61a15e09f436c7f62cce1879eeb44c63dbfeadabb6e",
+  "originalOrderOneFunction": 672,
+  "originalOrderOneBody": 117069,
+  "sourceDensity": 117047,
+  "sourceRaw": 117045,
+  "sourceRawEta": 213973,
+  "sourceSupportedEta": 213974,
+  "sliceNodes": 299,
+  "exactActualJetAliases": 34,
+  "jetClasses": 25,
+  "registryNamespaceControl": {
+    "legacy672": {
+      "name": "ActualAllFiniteOrderOneStress_z",
+      "parameters": [
+        4756,
+        2
+      ],
+      "body": 117069,
+      "derivativeLimits": [
+        128,
+        128
+      ],
+      "implementation": "actual-residual-order-induction-expressions.mjs:materializeExpressionFunction",
+      "unspecifiedOracle": false,
+      "historicalBodyPreserved": true
+    },
+    "N4RegistrySHA256": "049b05929080b4c8a16a5e2c74a1d6f1ad51232fdfb90222d42ffb4f0bbb22ad",
+    "N4_672": {
+      "name": "ActualCompactSlowCoefficient_565",
+      "parameters": [
+        473834,
+        4756,
+        2
+      ],
+      "body": 490174,
+      "derivativeLimits": [
+        128,
+        128,
+        128
+      ],
+      "implementation": "actual-residual-order-induction-expressions.mjs:materializeExpressionFunction",
+      "unspecifiedOracle": false,
+      "historicalBodyPreserved": true
+    },
+    "sameFunctionIdIsDifferentFunction": true,
+    "expression1DensityBodyStable": 117047
+  },
+  "mixedPathsAliased": {
+    "U0_X1_E1": [
+      78394,
+      78712
+    ],
+    "U0_X2_E1": [
+      120760,
+      123340,
+      126047
+    ],
+    "U0_X1_E2": [
+      128967,
+      130333,
+      131525
+    ],
+    "U1_X1_E1": [
+      133222,
+      133262
+    ],
+    "U1_X2_E1": [
+      133418,
+      133473,
+      133519
+    ],
+    "Pi_X1_E1": [
+      166133,
+      186793
+    ]
+  },
+  "method": "SymPy 1.14.0, exact rational differential-polynomial normalization; no numerical equality",
+  "nonzeroDenominatorRequired": "L=1-2*h*eta^2; original 0<h<1/16 and |eta|<=1 give L>7/8.",
+  "checks": {
+    "actual_117045_equals_full_original_n1_nonconservative_coefficient": {
+      "pass": true,
+      "zeroNumerator": true,
+      "denominator": "1"
+    },
+    "actual_raw_eta_AD_keeps_all_coefficient_and_primitive_jet_terms": {
+      "pass": true,
+      "zeroNumerator": true,
+      "denominator": "1"
+    },
+    "actual_raw_to_conservative_keeps_both_ordered_continuity_defects": {
+      "pass": true,
+      "zeroNumerator": true,
+      "denominator": "1"
+    },
+    "actual_raw_equals_Step4_density_plus_all_seven_boundaries_minus_defects": {
+      "pass": true,
+      "zeroNumerator": true,
+      "denominator": "1"
+    },
+    "actual_raw_eta_equals_ordinary_eta_derivative_of_complete_Step4_identity": {
+      "pass": true,
+      "zeroNumerator": true,
+      "denominator": "1"
+    },
+    "supported_density_eta_and_all_three_actual_integral_frames": {
+      "pass": true
+    }
+  },
+  "negativeControls": {
+    "frozen_eta_coefficients_in_previous_viscosity": {
+      "rejected": true,
+      "freeJetWitness": "-70720/83349",
+      "witnessMeaning": "Algebra sensitivity only; no claim these are actual native source field values."
+    },
+    "missing_outer_axial_exponent_shift": {
+      "rejected": true,
+      "freeJetWitness": "340/1323",
+      "witnessMeaning": "Algebra sensitivity only; no claim these are actual native source field values."
+    },
+    "missing_positive_pressure_boundary": {
+      "rejected": true,
+      "freeJetWitness": "16/21",
+      "witnessMeaning": "Algebra sensitivity only; no claim these are actual native source field values."
+    }
+  },
+  "minimalRemainingObligations": [
+    "Ordinary derivatives/mixed commutation of each actual primitive jet used in the finite source graph.",
+    "Both actual continuity defects C0,C1 vanish by the same source stream identities.",
+    "All seven actual boundary terms vanish at the axis and Xplus; exterior raw cutoff replacement uses actual inner/exterior PDE/support.",
+    "Fixed compact eta differentiation under the actual source-native integral and zero current/previous full moments.",
+    "At n=1 previous axial moment is the separate leading U0/M0 identity; positive-order induction alone does not supply it.",
+    "For general n>=1 construct the actual order-n tuples and every ordered pair; this finite source proof is n=1 only."
+  ],
+  "release": "HOLD"
+}

@@ -10,6 +10,12 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation50
+
+- **VERIFIED / CONDITIONAL · 원본 (n=1) 축방향 밀도와 식 (5.20)–(5.21).** 레거시 레지스트리의 `ActualAllFiniteOrderOneStress_z #672`와 밀도 `#117047`을 정확히 결속했다. 잘라내기 전 밀도 `#117045` 및 원본 `η` 자동 미분 그래프가 Step 4의 식과 정확히 일치한다. 일곱 경계항과 두 연속방정식 결함항을 보존했고, 전방·후방·전체 적분의 실제 인자와 고정 경계를 재생했다. 정확 기호 검증 6개, 잘못된 식을 구분하는 대조 3개와 GitHub Lean 대수 정리 2개를 통과했다. N4의 함수 번호 `#672`는 다른 함수를 가리킨다. 실제 적분 소거에는 native 미분 의미론, 경계항 소멸 및 전체 모멘트 동일성이 필요하다. 일반 재귀의 native 증명은 OPEN이다. [원본 재생과 조건](axial-order-one-identity/README.md) · [GitHub Lean](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44551494917).
+- **VERIFIED / CONDITIONAL · 원본 다섯 모멘트 보정식과 두 cutoff 경계.** 실제 보정 잔차 `#71414`–`#71418`을 분모를 유지한 정확 유리식으로 재생했다. 다섯 분자는 모두 0이며 보정항을 뺀 대조 다섯 개는 실패했다. 원본 내부 해가 성립하면 (X_-) 앞뒤에서 잔차가 0이다. 세 번째 보정 행이 (X_v<X<X_+)의 압력과 동일하므로 원본 지지 조건 아래 (X_+) 앞뒤도 0이다. 세 적분의 `η` 미분은 원본 경계와 적분 변수를 그대로 유지한다. 물리 모멘트와 실제 적분값의 동일성 및 내부 미분 의미론이 접합의 최종 조건이다. [다섯 행과 두 경계 재생](axial-order-one-identity/collars/README.md).
+- **VERIFIED / CONDITIONAL · 활성 보정 네 단계의 공간 상한 기준.** 원본 cutoff의 축방향 곱미분으로 에너지 계수 상한을 `2^46 Xb^4`에서 `2^40 Xb^4`로 줄였다. 허용 진폭은 정확히 8배 커졌다. 실제 보정 전 속도를 직접 쓰면 에너지에 필요한 포텐셜 미분은 1차까지이며, 잘라내기 미분당 원본 작은 인자 (q^{3h/2})가 남는다. 원본 스케일에서 16개 기준을 계산했다. 기존 거친 상계는 이 기준들을 모두 넘으므로 실제 보정 노름은 OPEN이다. [공간 기준](final67/energy-1013-sharp/correction-budget/spatial-gauge/active-correction-bounds/README.md) · [네 독립 입력](final67/energy-1013-sharp/correction-budget/spatial-gauge/velocity-potential-caps/README.md) · [GitHub Lean](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44551494917).
+
 ## Continuation49
 
 - **VERIFIED / CONDITIONAL · 원본 초기 주파동과 환대 초기장 전체의 에너지.** 원본 파동의 부호 있는 162개 항, 축방향 cutoff, 원통 기저 미분을 포함했다. 정확 계수 그래프에서 필요한 산술 기록 1,070개를 재생했다. 원본 정규화를 유지한 네 엄격 비교로 주파동이 `2^-32 S_R` 아래에 있음을 확인했다. 같은 원본의 평균장·느린 배경장과 합치면 초기장 전체가 `(9/2^30) S_R < 2^-26 S_R`을 만족한다. 온전한 원 위에서 각도 직교성을 적용하면 `(26/2^32) S_R`까지 줄어든다. 원본 노름 상계와 고정 차트, cutoff 및 영 접합 조건이 전제다. 결합 부등식과 파동의 로그 상계는 GitHub Lean 4.34.1에서 통과했다. 네 활성 보정의 상계와 최종장 수치 검증은 OPEN이다. [초기장 합산](final67/energy-1013-sharp/correction-budget/spatial-gauge/initial-energy-join/README.md) · [GitHub Lean](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44548219226).

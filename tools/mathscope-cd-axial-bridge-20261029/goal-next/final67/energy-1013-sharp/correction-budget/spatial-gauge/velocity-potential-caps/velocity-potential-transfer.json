@@ -1,0 +1,122 @@
+{
+  "schema": "MathScope.N7.UncutVelocityPotentialSharpBudget/1",
+  "status": "VERIFIED_EXACT_CONDITIONAL_UNCUT_FIRST_DERIVATIVE_ENERGY_TRANSFER",
+  "cutoffReceiptSHA256": "1fa33500726728505f74ed51aae5e113f4c10c452c5faa7a4f823d5a6d2d6a36",
+  "spatialCost": "1/2+h/2",
+  "axialCost": "1/2-h",
+  "cutoffSparePowerEachDerivative": "3*h/2",
+  "definitions": {
+    "d": "tau0^h",
+    "T": "2^-21*Xb^-2*tau0^(-j*h/10)"
+  },
+  "spatialInputs": [
+    "U0",
+    "U1",
+    "A0",
+    "A1"
+  ],
+  "weightedVelocityUpper": "U0+120*d^(3/2)*A0",
+  "weightedGradientUpper": "U1+120*d^(3/2)*(U0+A1)+10200*d^3*A0",
+  "relativeEnergyUpper": "1536*Xb^4*tau0^(j*h/5)*(3*d*(weightedVelocityUpper)^2+18*(weightedGradientUpper)^2)",
+  "sufficientCaps": {
+    "U0": "T/(4*sqrt(d))",
+    "U1": "T/4",
+    "A0": "T/(480*d^2)",
+    "A1": "T/(480*d^(3/2))"
+  },
+  "separateCapPremise": "120*d<=1",
+  "certifiedRelativeEnergyAtCapsStrictUpper": "2^-27",
+  "stageAllocations": [
+    {
+      "stage": 1,
+      "velocityPower": [
+        "-1/2",
+        "-7/5"
+      ],
+      "velocityGradientPower": [
+        "-1",
+        "-19/10"
+      ],
+      "potentialPower": [
+        "0",
+        "-9/10"
+      ],
+      "potentialGradientPower": [
+        "-1/2",
+        "-7/5"
+      ],
+      "sourceUniformEndpointsAvailable": 0
+    },
+    {
+      "stage": 2,
+      "velocityPower": [
+        "-1/2",
+        "-13/10"
+      ],
+      "velocityGradientPower": [
+        "-1",
+        "-9/5"
+      ],
+      "potentialPower": [
+        "0",
+        "-4/5"
+      ],
+      "potentialGradientPower": [
+        "-1/2",
+        "-13/10"
+      ],
+      "sourceUniformEndpointsAvailable": 0
+    },
+    {
+      "stage": 3,
+      "velocityPower": [
+        "-1/2",
+        "-6/5"
+      ],
+      "velocityGradientPower": [
+        "-1",
+        "-17/10"
+      ],
+      "potentialPower": [
+        "0",
+        "-7/10"
+      ],
+      "potentialGradientPower": [
+        "-1/2",
+        "-6/5"
+      ],
+      "sourceUniformEndpointsAvailable": 0
+    },
+    {
+      "stage": 4,
+      "velocityPower": [
+        "-1/2",
+        "-11/10"
+      ],
+      "velocityGradientPower": [
+        "-1",
+        "-8/5"
+      ],
+      "potentialPower": [
+        "0",
+        "-3/5"
+      ],
+      "potentialGradientPower": [
+        "-1/2",
+        "-11/10"
+      ],
+      "sourceUniformEndpointsAvailable": 0
+    }
+  ],
+  "analyticPremises": [
+    "Physical curl plus direct uncut field identity on whole K",
+    "Same axisymmetric total cutoff, radial plateau and original flat zero extension",
+    "Source-pinned full-domain pointwise bounds on U0,U1,A0,A1",
+    "0<h<1/64, q/tau0 in [1/2,2], Xb>1, B_h>1"
+  ],
+  "scope": "Exact transfer and explicit amplitude caps; source numerical endpoints remain open.",
+  "N706": "OPEN",
+  "N805": "OPEN",
+  "finalJets": 0,
+  "release": "HOLD"
+}

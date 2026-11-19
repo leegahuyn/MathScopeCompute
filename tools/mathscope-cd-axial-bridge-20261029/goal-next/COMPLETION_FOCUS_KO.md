@@ -9,6 +9,8 @@
 
 원본 초기 환형 영역의 운동에너지·소산·외력 일과 움직이는 경계 유량에 수치 상계를 얻었다. 초기장 속도의 각도 Fourier 꼬리도 확보했다. 최종장 입력이 갖춰지면 같은 적분과 꼬리 검사를 실행할 수 있다. 최종장 통과 건수는 여전히 N7-06/N8-05 0/2 및 jets 0/67이다. [에너지 적분](whole-k-annular-initial/energy/README.md) · [Fourier 꼬리](final67/initial-fourier/README.md).
 
+같은 원본 스케일에서 평균장·느린 배경장·초기 주파동을 합한 환대 초기장 에너지는 조건부로 `(9/2^30) S_R < 2^-26 S_R`이다. 네 활성 보정의 공간 상계를 얻으면 이 결과를 최종장 에너지에 합칠 수 있다. 압력과 시간 미분은 최종 jet 계산에 계속 필요하다. [원본 초기장 합산](final67/energy-1013-sharp/correction-budget/spatial-gauge/initial-energy-join/README.md) · [네 보정의 공간 기준](final67/energy-1013-sharp/correction-budget/spatial-gauge/active-correction-bounds/README.md).
+
 활성 N3와 N4에서 각각 원본 Primary C5와 9개 원본 검사를 마쳤다. N3 모드 2 입력과 역연산의 원본 가중 C4 차수 계산은 조건부로 통과했다. 같은 원본 계열의 Initialized Angular·Forced 투영 입력 결속, 물리 좌표 미분과 압력·cutoff의 수치 구간이 필요하다. [N3 C5 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43285995098/job/131419412189) · [N4 C5 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43290112348/job/131433785481) · [모드 2 정수 재생](primary-forced-join/active-n3-c5-binding/README.md).
 
 같은 원본 계열의 N3 모드 2 두 분기를 실제 초기화와 투영 입력까지 결속했다. 전체 첫 Forced와 모드 1 평균장의 수치 상계, 이후 실제 cutoff 스케일 및 활성 보정의 최종장 수치 구간이 남아 있다. [동일 계열 검증](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43296617887) · [전체 첫 Forced 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/43363985428).
