@@ -10,6 +10,10 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation76
+
+- **VERIFIED / CONDITIONAL · 원본 \(W_{zz}\)과 \(J_{z0}\)의 한 이차 기여.** 실제 두 부호의 \(\chi^2,\chi\chi',(\chi')^2\) 구조와 162개 좌표 대응을 확인했다. 세 표본으로 추가 느린 미분 없이 역연산 계수 \(2^{130}\)과 \(2^{132}\) 미만을 각각 \(Z^3T,Z^5T\) 입력에 얻었다. 원본 반경 이동과 끝점이 고정 \(R,\ell\)에서 \(Z,T\)와 독립임을 확인했고, \(\gamma=g-(\chi_R/R)J(g)\)의 정확한 소거를 재생했다. \(\chi_R/R\)의 \(Z,T\) 혼합 3차 상계를 결합했다. 원본 이동 적분점의 정의역과 계수 전제 아래 \(J_{z0,ZZT}\)의 \(W_{zz}\) 유래 자기 제곱 기여는 \(\sup_r\zeta(r)e^{(-4+2^{-112})H}\) 이하이다. 교차곱, 전체 \(J_{z0}\), 에너지 및 수렴 검증은 OPEN이다. 관련 Lean 정리 두 개를 GitHub에서 컴파일했다. [실제 세 표본](final67/temporal-wzz-three-point/README.md) · [원본 반경 이동](final67/temporal-wzz-gamma/README.md) · [cutoff 계수](final67/original-mean-radial-cutoff-coefficients/README.md) · [GitHub Lean](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44597786608).
+
 ## Continuation75
 
 - **VERIFIED / CONDITIONAL · 비선형에 남은 \(W_{rz,Z^6T}\)의 역연산.** 실제 원본 양쪽 부호의 횡방향 의존성을 \(\chi^2B+\chi\chi'C\)로 정확히 전개했다. 원본 162개 행과 두 표본을 사용해 추가 느린 미분 없이 \(L^2\) 항을 제어했다. 원본 \(N^{-1}P_\perp\)의 조건부 계수는 \(2^{127}\) 이하이다. 실제 \(c_i\)와 \(T_1\)의 역수, 원본 \(T_0/T_1\) 길이 요인을 유지했다. 모든 원본 이동 적분점이 허용 범위 안에 있으면 확인한 최고차 한 항의 상계는 \(\sup_r\sqrt{\zeta(r)}\,e^{(-4+2^{-112})H}\)이다. 하위 배분, 나머지 이동·cutoff 미분과 비선형 곱 전체는 OPEN이다. 횡방향 두 점 역산과 2차 미분의 Lean 정리 두 개를 GitHub에서 컴파일했다. [실제 역연산 증거](final67/temporal-wrz-anisotropic/README.md) · [반경 길이 산술](final67/original-radial-time-length/README.md) · [GitHub Lean](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44596465130).

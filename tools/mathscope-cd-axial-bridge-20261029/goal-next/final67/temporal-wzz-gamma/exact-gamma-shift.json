@@ -1,0 +1,139 @@
+{
+  "schema": "MathScope.N8.OriginalWzzTemporalGammaShift/1",
+  "status": "VERIFIED_ARCHIVED_NATIVE_SHIFT_AND_FTC_CONDITIONAL_PURE_SLOW_BOUND",
+  "sourceCommit": "f8cb4034e86d7b669d52a6f2248aebba156b51b5",
+  "sourceSHA256": {
+    "research-ide/mathscope-m3/navier/source-global-pressure.mjs": "fd93001ad4bbc002d329cba54d1c884cc5e7bfd93444b1d72bd9c331a67b966d",
+    "research-ide/mathscope-m3/navier/source-pressure.mjs": "fcdbbcddc5e16649f771bb53e1b0889ee1641a62dec3440d18611488ce35c66f",
+    "research-ide/mathscope-m3/navier/source-temporal-potential.mjs": "c0754a9afc0c41e731488523c030a317e69407e3ec01d2fe9bed8eb2f414a6f8",
+    "research-ide/mathscope-m3/navier/source-full-mean-equations.mjs": "2f44315a940fc959f1c86c2a8fd5b1a252521cbb8e2565dc42fc07b139773d76",
+    "research-ide/mathscope-m3/navier/source-global-current.mjs": "93f86661d67e6bc7b916218cd7af3db72f348ba7fdc876e3618ba3a49edff760"
+  },
+  "inputSHA256": {
+    "prefix": "8152230d5531fd00bb0685fbcb380ad1b7a116d8833ee871d92803663aee19e9",
+    "temporal": "b63588358fd2ee676ffdbba6104d5f0c644828cdecff4215e0d87f09037f6f2c",
+    "wzz": "08619494bba81a5d9aa2ed33b5a5c5b2634aee00a9e92dd2178581157974cc35",
+    "cutoff": "7509f35b8af4091b97832de72cd5743b2d5592bed9c81cfbe76872450e200061",
+    "radial": "609040736c97e77747f2bb5d191f5dcf6c8fabb7a939e133246a03185d16a4aa"
+  },
+  "originalStreamSHA256": "831120617913e89c5bb60976fb26f58c6714decc301097a08f72ee23233e0a6a",
+  "native": {
+    "phi": 17745445,
+    "radialDerivativeOfPhi": 17745446,
+    "ci0": 17745449,
+    "inverseCi0": 19570770,
+    "radialDirectionSecondComponent": 17733068,
+    "radialBinder": 19570776,
+    "phiAtBinder": 19570781,
+    "shift": 19570782,
+    "shiftedY": [
+      19570783,
+      19570785
+    ],
+    "shiftedInverseZ": 19570809,
+    "radialLimits": [
+      17743711,
+      17743713
+    ],
+    "leftIntegral": 19570813,
+    "wholeIntegral": 19570814,
+    "gamma": 19570930,
+    "gammaExplicitFTC": 19570945,
+    "gammaAfterExactCancellation": 19570947,
+    "rawClearedDifference": 19570949,
+    "cutoffTerm": 19570944
+  },
+  "readbackFreeCoordinates": {
+    "17743711": [],
+    "17743713": [],
+    "17745445": [
+      17732737,
+      17732748
+    ],
+    "17745446": [
+      17732737,
+      17732748
+    ],
+    "17745449": [
+      17732737
+    ],
+    "19570770": [
+      17732737
+    ],
+    "19570781": [
+      17732737,
+      19570776
+    ],
+    "19570782": [
+      17732737,
+      17732748,
+      19570776
+    ],
+    "19570783": [
+      17732737,
+      17732748,
+      17745430,
+      19570776
+    ],
+    "19570785": [
+      17732737,
+      17732748,
+      17745431,
+      19570776
+    ]
+  },
+  "exactFTCPolynomial": [
+    [
+      [
+        "g"
+      ],
+      1
+    ],
+    [
+      [
+        "Jg",
+        "chiR",
+        "invR"
+      ],
+      -1
+    ]
+  ],
+  "sameWzzLeg": "g=-epsilon/ci0 * N^-1 P_perp (partial_Z Wzz); source T1 gamma=g-(chi_R/R) J(g).",
+  "pureSlowZZTProduct": [
+    {
+      "cutoffDerivative": "",
+      "gDerivative": "ZZT",
+      "negativeMultiplicity": 1
+    },
+    {
+      "cutoffDerivative": "Z",
+      "gDerivative": "ZT",
+      "negativeMultiplicity": 2
+    },
+    {
+      "cutoffDerivative": "ZZ",
+      "gDerivative": "T",
+      "negativeMultiplicity": 1
+    },
+    {
+      "cutoffDerivative": "T",
+      "gDerivative": "ZZ",
+      "negativeMultiplicity": 1
+    },
+    {
+      "cutoffDerivative": "ZT",
+      "gDerivative": "Z",
+      "negativeMultiplicity": 2
+    },
+    {
+      "cutoffDerivative": "ZZT",
+      "gDerivative": "",
+      "negativeMultiplicity": 1
+    }
+  ],
+  "conditionalUnweightedLoss": "||Jf||inf <= (B^2-A^2)/2 * sup_r ||f(r)||inf, B=2sqrt(Xb), A=sqrt(Xa)",
+  "conditionalGammaTransfer": "For six required pure slow g and k jets, bound gamma_ZZT by (1+4 B^2 Kchi)*Gmax. The original mixed cutoff bound gives Kchi<1. With B>2 and A<1, the factor is bounded by 4 B^3/A, whose log is <H/2^120 in the pinned directed radial receipt.",
+  "remaining": "The Wzz-only quadratic integral and other Temporal/pressure legs, full fresh Jz0, native gate acceptance.",
+  "finalJets": "0/67",
+  "release": "HOLD"
+}
