@@ -1,0 +1,168 @@
+{
+  "status": "VERIFIED_ORIGINAL_PREHAAR_WRZ_FIXED_LABEL_MAP_CONDITIONAL_WEIGHTED_BOUND",
+  "sourcePins": {
+    "registry": "364425db9d5bbd317f8aaad681fdfdd3206f97e0f46d2beb78b6e7d5a30a3111",
+    "constructor": "fd93001ad4bbc002d329cba54d1c884cc5e7bfd93444b1d72bd9c331a67b966d",
+    "current": "93f86661d67e6bc7b916218cd7af3db72f348ba7fdc876e3618ba3a49edff760",
+    "kernel": "e456b4511adcc997b64267b2229422618b6139955e0c9083f2b83f4739600463",
+    "band": "babe4aceb97d0bdee4084e5f06009e6724128935fffde1647c11e3aab022df60",
+    "curl": "4276a850dbff4b5c357c47e1827eb7785b19c7e7c395c94ee4f22ef0c96d58d2",
+    "selected": "e3a75a028749af3815e617743325446d5f4dca817adf609bbefa5fe9f0968b84",
+    "directional": "02c7b2d7ea24f43f90444952a03b31eba0a187b0675f765247c931df41ff2001",
+    "w4": "9da54bbb2bd959e097c8ef610eabaf8ef8b163e540c73169dd82fcdaa784bc69",
+    "transport": "a6027c998b42336dbeffd5157e443eca485850e9cca3d78c0afcccf29cbff8b9",
+    "slow_cost": "e73562668961cf16705f59f2e4dd9fc4269d1b5bec5de958f9d6fc4307972fac",
+    "khat": "5aef7c09a25a84a573ea43047a152461776e3feeb4a4c2fc8308dea5012cb824"
+  },
+  "slabSHA256": "8152230d5531fd00bb0685fbcb380ad1b7a116d8833ee871d92803663aee19e9",
+  "actualSourceStreamSHA256": "831120617913e89c5bb60976fb26f58c6714decc301097a08f72ee23233e0a6a",
+  "actualInitialMap": {
+    "field": 2,
+    "application": 17753400,
+    "firstZApplication": 17753414,
+    "directionOrder": [
+      0,
+      5,
+      2,
+      0,
+      0
+    ],
+    "localOrder": [
+      0,
+      5,
+      2,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "rows": 162,
+    "boxes": 81,
+    "originalAngularBodies": {
+      "1": {
+        "guardedBody": 17737175,
+        "localSystem": -3,
+        "nonzeroBranch": 17737168,
+        "flatGuardNodes": [
+          17737175,
+          17737174,
+          17737173,
+          17737172,
+          17737171,
+          17737170,
+          17737169
+        ],
+        "productNodes": [
+          17737159,
+          17737166
+        ]
+      },
+      "-1": {
+        "guardedBody": 17740593,
+        "localSystem": -9,
+        "nonzeroBranch": 17740586,
+        "flatGuardNodes": [
+          17740593,
+          17740592,
+          17740591,
+          17740590,
+          17740589,
+          17740588,
+          17740587
+        ],
+        "productNodes": [
+          17740577,
+          17740584
+        ]
+      }
+    },
+    "bandFactorNodesRhoSqrtRhoRhoDRho2A": {
+      "-1": [
+        17742188,
+        17742189,
+        17742193,
+        17743640
+      ],
+      "0": [
+        17742222,
+        17742223,
+        17742227,
+        17743654
+      ],
+      "1": [
+        17742257,
+        17742258,
+        17742262,
+        17743670
+      ]
+    },
+    "derivativeYColumnEntries": 648,
+    "termsPerInteriorRow": 1,
+    "selectedRowMultiplier": "rho^(2A+5D+2)",
+    "torusDerivativesInSelectedPath": 0
+  },
+  "conditionalWeightedTransport": {
+    "transportPowerWithEpsilon": "11/2-(3+beta)h for beta in {1, 2-2*kappa_s}",
+    "maximumGeometricFactor": 2048,
+    "weightedBound": "162*2048*zeta*((4*Khat*S_ref)^2976*epsilon_ref*delta_*^-44 + (4*Khat*S_ref)^3813*epsilon_ref^(2-2*kappa_s)*delta_*^-54)",
+    "halfGaussianPoleFactor": "sqrt(zeta)*delta^-p <= 2^27 * 27! * t1^-54",
+    "prefactorLogBudget": "(4*3813+19+2^13)*H/2^128 < H/2^113, including half-Gaussian pole factor",
+    "epsilonRefLogUpper": "-H + 3H/L using the original q=Q_ref*s, 1/2<=s<=2 and q<=4*tau0",
+    "peakAfterEpsilon7": "epsilon_ref^7 |partial_Z^5 partial_T^2 W_rz| <= exp(-7H)*sqrt(zeta), strict wherever zeta>0"
+  },
+  "selectedActualConsumer": {
+    "outerTargetJet": "P0_ZZT",
+    "sourceChain": [
+      "P0 contains epsilon*partial_T betaTemporal in its radial-pressure source",
+      "betaTemporal contains epsilon*partial_Z T1 N^-1 Ez with original ci^-1",
+      "prior Ez contains epsilon*partial_Z T0(-epsilon*partial_Z Wrz)",
+      "highest resulting covariance derivative is partial_Z^5 partial_T^2 Wrz"
+    ],
+    "covarianceJet": {
+      "Z": 5,
+      "T": 2,
+      "totalOrder": 7
+    },
+    "covarianceScope": "full angular mean on the common Y torus before auxiliary Haar; it is the input to the actual Temporal inverse, so auxiliary-fast terms cannot be discarded by Haar here",
+    "explicitEpsilonBeforeOuterTarget": 4,
+    "explicitEpsilonAfterWeightedSigmaTheta_Dz2_Time": 7,
+    "fullCurlImaginaryCovarianceNeedsPotentialJets": [
+      {
+        "R": 0,
+        "Z": 6,
+        "T": 2,
+        "L": 0
+      },
+      {
+        "R": 1,
+        "Z": 5,
+        "T": 2,
+        "L": 0
+      },
+      {
+        "R": 0,
+        "Z": 5,
+        "T": 2,
+        "L": 1
+      }
+    ],
+    "leadingCovarianceUsesAmplitudeZ5T2": true,
+    "additionalConditions": "original N^-1 anisotropic loss input (including L^2), ci^-1, T0/T1 kernel/shift derivatives and actual same-family covariance attachment"
+  },
+  "nativeM7SealConstructed": false,
+  "premises": [
+    "original fixed-atlas row arguments stay in the admitted pointwise source domains, with 1/2<=s<=2 and q<=4*tau0",
+    "same original Gaussian zeta and boundary distance delta_* at reference and own-label coordinates",
+    "ell_ref<=2L, S_label<=4 S_ref, and 1/4<=rho<=4",
+    "same original local full Primary covariance components under the hybrid m7 target and C73 external Khat",
+    "compact flat joins and reindexing of original label and integer copy choices"
+  ],
+  "remaining": [
+    "source-family admission of the same initial live and frozen premises on the mapped atlas",
+    "mean transport and downstream T0/T1, L^2, N inverse and later signed stage propagation"
+  ],
+  "finalJets": "0/67",
+  "release": "HOLD"
+}

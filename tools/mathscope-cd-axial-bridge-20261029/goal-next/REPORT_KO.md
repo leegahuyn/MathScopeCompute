@@ -10,6 +10,13 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation73
+
+- **VERIFIED / CONDITIONAL · 예외 고정 대표점의 4차 항.** 원본 N4의 system 7과 같은 반경 이웃에서 정확 산술 기록 280,399개를 생성했다. 상대 순위 \((2,33127)\), 독립 항 80개의 엄격한 비교, 74차 원본 주파수 항과 Euler cutoff 10차를 확인했다. 원본 Picard·차트 전제 아래 같은 대표점의 4차 \(F/G\) 기여는 10차까지 \(e^{-L^6/3}<1\)이다. [예외 대표점 재현](final67/frozen-n4-high/README.md).
+- **VERIFIED / CONDITIONAL · N3/N4의 외부 Primary 및 원본 경로.** 6·7차의 실제 고정 라벨, 라이브·대표점, pulse·Haar 인자가 원본 순서와 norm box를 유지하는지 대조했다. 10개 원본 Git 파일과 4개 입구 증거를 검사했다. 두 끝점에서 4차 cutoff가 0이어도 특정 느린 직선 경로의 중점에서 양수가 되는 원본 셀을 별도 기록했다. 그 경로에서 원래 비교는 선도장을 사용한다. 실제점의 전체 배경과 대표점 조건을 원래 재귀식에 적용하면 외부 \(K\) 후보 네 개 모두 기존 한계보다 작다. 최고 계수 로그는 \(H/2^{115}\), 원래 Haar 인자까지 더한 로그는 \(H/2^{113}\)보다 작다. native \(K\) 승인과 후속 보정 전체는 OPEN이다. [고정 라벨 경로](final67/primary-path-admission/README.md) · [외부 Primary 산술](final67/external-primary-high/README.md).
+- **VERIFIED / CONDITIONAL · Haar 이전의 실제 \(W_{rz}\) 미분.** 원본 N3 그래프 21,681,493개 노드에서 162개 행과 \(\xi,v\) 방향 성분 648개를 대조했다. 고정 라벨마다 \(Z^5T^2\) 미분은 원래 빠른 좌표를 미분하지 않으며 남는 정확 계수는 \(\rho^{2A+5D+2}\)다. 원본의 매핑 좌표마다 위 배경·경로 전제가 성립하면 \(\left|\varepsilon_{\rm ref}^7\partial_Z^5\partial_T^2 W_{rz}\right|<e^{-7H}\sqrt{\zeta}\)를 양의 가중치가 있는 내부에서 얻었다. 경계까지는 비엄격 부등식이 성립한다. 원래 \(N^{-1}\), \(c_i^{-1}\), \(T_0/T_1\) 손실을 포함한 압력·응력 전달은 OPEN이다. [실제 Haar 이전 원본 미분](final67/prehaar-wrz-z5t2/README.md).
+- **VERIFIED / OPEN · 운영 증거.** 운영 본문을 읽기 전용으로 다시 조회했다. HTTP 200, 30,707,818바이트, 기존 SHA-256이 모두 일치했다. 격리 M4 후보의 16개 수락과 별도로 운영 R1-08은 OPEN이다. [운영 조회 기록](preservation-continuation73.json).
+
 ## Continuation72
 
 - **VERIFIED / CONDITIONAL · 원본 활성 구간의 배경장 10차 경계.** 원본 양의 profile 산술 기록 210,631개와 \(R,Z,T\) 미분 조합 286개를 검사했다. 원본 선도장과 1–3차 실제 항의 양의 상계를 결합했다. 원본 활성 구간과 해석적 경계 조건에서 \(F/G\)가 모두 \(\exp(H/2^{128})/(64X_b^2)\)보다 작다. 원본 cutoff·좌표변환 8·9차 계수도 \(2^{4096}R_*^{26}\)으로 묶었고 기존 목표 상수보다 작음을 확인했다. 예외 고정 대표점 4차 항과 전체 원본 경로의 결속은 OPEN이다. [활성 10차 재생](final67/live-background-c10/README.md) · [고차 cutoff·차트](final67/n7-n8-primary-cutoff-orders/README.md).

@@ -1,0 +1,89 @@
+{
+  "schema": "MathScope.N7.OriginalPrimaryFixedLabelPathAdmission/1",
+  "status": "VERIFIED_FIXED_LABEL_GEOMETRY_CONDITIONAL_POINTWISE_CLASS_TRANSPORT",
+  "originalCommit": "f8cb4034e86d7b669d52a6f2248aebba156b51b5",
+  "sourceSHA256": {
+    "research-ide/mathscope-m3/navier/source-global-band.mjs": "babe4aceb97d0bdee4084e5f06009e6724128935fffde1647c11e3aab022df60",
+    "research-ide/mathscope-m3/navier/source-global-representative.mjs": "f3fbcf74b42c59cbfdd563e0fddcba9fab5cad782a96695930e3445c50373541",
+    "research-ide/mathscope-m3/navier/source-global-current.mjs": "93f86661d67e6bc7b916218cd7af3db72f348ba7fdc876e3618ba3a49edff760",
+    "research-ide/mathscope-m3/navier/source-primary-class-majorants.mjs": "40b3f1220b7ad1b9b05a11ae1378c864351e77e8efe7134ae1b78921fbab47ea",
+    "research-ide/mathscope-m2/navier/actual-common-admissible-family.mjs": "7fd3ec07b567af86f84df7a1b789a5a57366186d4e8c26c2a4a35dc5948c5b75",
+    "research-ide/mathscope-m2/navier/actual-covariance-source-certificate.mjs": "c5b619ac5b4377c93daefefc65f6ddc4336a7ffac3a9118981a32969890a0681",
+    "research-ide/mathscope-m2/navier/actual-covariance-matrix.mjs": "7419cc0aa5e08fb57c11264013f661f85a82fb481fb69e4610029d806c1efd26",
+    "research-ide/mathscope-m2/navier/actual-pulse-jet-source.mjs": "dfdec0ab6ae752080bc919822b917a2e8720ccaa889d35d524318211be01739d",
+    "research-ide/mathscope-m2/navier/actual-continuation-exact-support.mjs": "0be8fcf8d8a70d98ab339ca1bec727efac998f4763d852b21fb5761f27450b98",
+    "research-ide/mathscope-m2/navier/actual-covariance-ell-one-obstruction.mjs": "305fb60d757d6e4b1963bb6be73a73e25ab14c04c6a6a23aaa74b99ee48eb96f"
+  },
+  "inputSHA256": {
+    "cover": "143d32b523429323eb3efc8ef8ea9c8f8922162bd919712cfe41580103a788be",
+    "selector": "5a6ecee45d797d582e3218c36f980d5eb131619c860cec1bfb4d57aea89cdf56",
+    "liveC10": "f756d88c734373cd5a7a34684a5b1edac272298774c60d27667fc8473a1833f9",
+    "frozenC10": "a4cbadff8f11caf2b75a5933b49457cc4260307fe2ad712a5c9eadbe8e7f776e"
+  },
+  "originalGeometry": {
+    "physicalQ": "tau0/2 <= q < 2 tau0, tau0=qBig/32",
+    "activeOwnLabelOffsets": [
+      14,
+      15,
+      16
+    ],
+    "activeOwnQOverTau0": [
+      "2",
+      "1",
+      "1/2"
+    ],
+    "representativeQ": "tau0/4 < Q' srep < 4 tau0",
+    "chart": "1/2 <= s <= 2, Xa/2 <= X <= 2 Xb, |eta| <= 1; T=0 one-sided",
+    "slowSegment": "Same original mesh, |s_theta-s_live|<24/(ell')^6, tau0/4<q_theta<4 tau0; original first omitted tail remains flat",
+    "referenceSubstitution": "r=Qref/Q'; (R',Z',T',s')=(sqrt(r)R,r^D Z,rT,rs), preserving q,X,eta"
+  },
+  "actualPrimaryArguments": {
+    "carrierSigns": [
+      1,
+      -1
+    ],
+    "live": [
+      "F",
+      "G",
+      "R",
+      "D_R F",
+      "D_R G",
+      "D_R H",
+      "D_Z H",
+      "D_T H"
+    ],
+    "frozenCarrierBackground": [
+      "leading F",
+      "D_R leading F",
+      "D_R leading G"
+    ],
+    "frozenCfullUse": "The separate C10 envelope also covers the full background at the admitted endpoints conditional on its previous analytic bounds. It is sufficient; the band graph itself passes only leading fields to the frozen carrier.",
+    "slowComparison": "Leading C2 along the slow path and pointwise completed-minus-leading at the live endpoint",
+    "pulse": "Original logP, fixed-parameter Volterra/its coefficient FTC, H columns and mass keep R,Z,T,representative,ell fixed and move only v in [0,Ls]",
+    "transverse": "Original chi and local guarded auxiliary Haar traverse xi in [-r0,r0]; no induced slow displacement",
+    "indexedHaar": "Both source carrier signs, every active one of the 81 original candidates and all six full angular/Haar covariance components; the background geometry survives guarded radial reindexing since q is fixed at fixed Z,T",
+    "classOutputs": [
+      "local weighted amplitude",
+      "potential",
+      "homogeneous pressure",
+      "curl remainder",
+      "full and remainder angular covariance",
+      "complete corresponding auxiliary Haar coefficients"
+    ]
+  },
+  "straightPathControl": {
+    "label": "L=ellMinimum+16, grid=(L^6,0,L^6), w=3/(4 L^6)",
+    "live": "(1,w/2,1-w^2/4), s=1",
+    "actualRepresentative": "(1,-w/2,1), srep>1",
+    "midpoint": "(1,0,1-w^2/8), b4 qmid=smid=1-w^2/8<1, Xmid>1/2>Xkeep",
+    "conclusion": "Endpoint flatness cannot be used for the whole fourth cutoff along a straight slow path. This controls the inference about the cutoff and does not decide the value of the fourth profile at the midpoint."
+  },
+  "open": [
+    "Native high-order K seal and all independently required analytic/source estimates",
+    "Pre-Haar common-Y two-column composition derivative estimates and actual shifted Forced operator/pressure/radial inverse dependencies",
+    "Any proposed full-positive-sum FTC on a displaced path below q=tau0/2 and outside the exceptional raw branch",
+    "Complete current pressure, Sigma, positive stress and later signed or spatial operator bounds"
+  ],
+  "finalJets": "0/67",
+  "release": "HOLD"
+}
