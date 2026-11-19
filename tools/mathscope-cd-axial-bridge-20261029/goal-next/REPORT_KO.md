@@ -10,6 +10,11 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation64
+
+- **VERIFIED / CONDITIONAL · 원본 Corollary 8.5 응력.** 실제 원본 플럭스·공분산 변화식 5개를 독립 기호 재생에서 0으로 확인했다. \(J_z+c_\rho P\) 전체의 미분을 유지하며 \(c_{\rho,Z}P\)를 누락하면 정확 검사에서 실패한다. 고정 프레임의 \(F_0,F_{R,0},G_{R,0}\)은 선도장 값이다. 전체 미분 입력은 \(H_w\) 내내 고정된 실제 느린 좌표에서 평가된다. 활성 평균장의 응력 상계는 OPEN이다. [응력 소스 결속](final67/cor85-weighted-stress/README.md).
+- **VERIFIED / CONDITIONAL · Forced 연산자 계수와 Signed 에너지 전이.** 원본 Forced 20개 시스템의 0–6차 미분 지수를 재생했다. 같은 물리 경로에서 전개한 지역 연산자 계수의 로그 비용은 \(H/2^{115}\)보다 작다. 실제 투영 입력의 반노름과 Signed·Temporal·FiveMap 출력 상계는 OPEN이다. \(\varepsilon^{1/4}\) 응력 여유가 주어진 에너지 배정으로 이어지는 조건부 Lean 정리 3개를 GitHub에서 컴파일했다. [Forced 계수 재현](final67/local-forced-operator/README.md) · [GitHub Lean](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44575285741).
+
 ## Continuation63
 
 - **VERIFIED / CONDITIONAL · 실제 슬랩으로 제한한 원본 C8 배경장.** 원본 느린 미분 행 330개와 선도 입력 90개, 차트 입력 25,299개를 대조했다. 실제 cutoff는 상부 N3에서 3차 이상, 하부 N4에서 4차 이상을 평탄하게 소거한다. 살아 있는 계수와 기존 13개 피연산자를 합친 지역 상계는 \(\exp(H/2^{128})/(64X_b^2)\)보다 작다. 원래 전역 최대값과 선택기는 보존했다. 고정 N4 대표점의 전체 4차 항을 쓰는 경우의 상계와 완전한 Forced·Signed·평균장 상계에 대한 적용은 OPEN이다. [원본 국소 상계와 재현](final67/local-background-c8/README.md).
