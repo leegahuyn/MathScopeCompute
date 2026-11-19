@@ -10,6 +10,13 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation71
+
+- **VERIFIED / CONDITIONAL · 원본 목표장 7·8차 상계.** 원본 가중 목표장에 대해 방향성 산술 41개 노드를 실행했다. 두 상계 모두 \(\exp^{\circ5}(2^{21})\)보다 작으며, 원래 radial pole은 각각 24와 27이다. 이 상계를 기존 N0–N6과 합쳐도 최대값과 원본 Primary 재귀식이 그대로다. 같은 원본 경로와 배경 C9/C10, cutoff·좌표변환 8/9차 조건에서 이 재귀식을 쓸 수 있다. native N7/N8 노름과 완전한 Primary·Forced 출력 상계는 OPEN이다. [외부 목표장 상계](final67/n7-n8-target-directed/README.md) · [원본 Primary 전달](final67/n7-n8-target-primary-transport/README.md).
+- **VERIFIED / CONDITIONAL · N3 압력과 제곱 외력 오차.** 원본 잔차의 native 입력 100개를 같은 인자와 차수의 합 50개로 정확히 묶었다. 그중 5개 방향이 명시적 각압력 기울기를 이룬다. 원본 2차 모드 두 항의 압력을 생략하는 경우, 새 실행의 원본 결속과 지지집합 조건 아래 정규화 제곱 외력 오차는 \(2^{-1024}S_R\) 미만이다. 전체 제곱 외력으로 전달하는 조건부 Lean 정리 두 개를 GitHub에서 컴파일했다. 전체 잔차 수치 상계와 N8-05는 OPEN이다. [원본 잔차 재생](final67/n8-directed-pressure/README.md) · [GitHub Lean](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44587026528).
+- **VERIFIED / CONDITIONAL · 보관된 N1 두 번째 Forced.** 기존 4,456,994개 노드와 함수 정의 그룹 5개의 순서를 확인했다. 추가 225,012개로 전체 4,682,006개 노드와 40개 후보의 Gauge 적용 240개를 원본 해시까지 복원했다. 원래 다섯 느린·shell 가드, 횡방향 가드와 피연산자 정의역을 적용하면 닫힌 pulse 구간에서는 240개 guarded 슬롯이 원본 supported 슬롯과 일치한다. \(w=0,L_s\)도 원래 한쪽 평탄 구간에서 확인했다. 초기값이 0인 원본 ODE의 유일성을 적용하면, 원본 피연산자가 정의된 두 횡방향 경계에서도 성립한다. 네 느린 좌표 경계와 원통형 셸 경계, 같은 실행의 N3 결속과 두 번째 전체 보정은 OPEN이다. [원본 그래프 복원](primary-forced-join/active-n3-c5-binding/repeat-candidate-replay/README.md) · [닫힌 pulse 재생](primary-forced-join/active-n3-c5-binding/repeat-closed-pulse/README.md) · [횡방향 경계](primary-forced-join/active-n3-c5-binding/repeat-transverse/README.md) · [현재 N3 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44582875351).
+- **VERIFIED / CONDITIONAL · N4 실제 Y 입력.** 원본 bootstrap Picard 반경 미분 호출 38개를 실제 인자로 전개했다. 생성된 10,367개 자연급수 인자에서 원본 적분 바인더와 로그 가드를 확인했다. 상위 호출 #121999에는 B22 가변 적분 경계의 50개 전달과 가드 양성 22개를 확인해 \(Y=4e^u\) 계열 10개에 \(0<Y<5\)를 얻었다. 나머지 상위 호출과 native 무한극한은 OPEN이다. [N4 원본 호출](y-higher-flow/n4-original-radial-derivatives/README.md) · [B22 가변 경계](y-higher-flow/n4-moving-b22/README.md).
+
 ## Continuation70
 
 - **VERIFIED / OPEN · 실제 N3 첫 주기 공간 피연산자.** 첫 주기 원본 22,153,782개 노드와 직접·분해 잔차 차이 4개를 확인했다. 같은 실행이 공간 입력 24개와 공간 미분 라벨 33개를 22,155,584개 노드로 생성했다. 별도 등록된 Signed 응력 두 응용의 본문과 인자 기록도 저장됐다. 전체 native 스트림, 세 gauge 차이의 영값, 수치 상계와 최종 jets는 OPEN이다. [실제 GitHub 부분 결과](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44568520276).
