@@ -19,13 +19,14 @@ theorem hasDerivAt_shellLogWeight {a b width p x : ℝ}
       ((2 * a - p * x ^ 2 - 2 * b * (x / (width - x)) ^ 3) / x ^ 3) x := by
   have hx' : HasDerivAt (fun y : ℝ => y) 1 x := hasDerivAt_id x
   have hw' : HasDerivAt (fun y : ℝ => width - y) (-1) x := by
-    simpa using (hasDerivAt_const x width).sub hx'
+    change HasDerivAt ((fun _ : ℝ => width) - fun y => y) (-1) x
+    simpa only [zero_sub] using (hasDerivAt_const x width).sub hx'
   have hw : width - x ≠ 0 := (sub_pos.mpr hxw).ne'
   have h₁ := (hasDerivAt_const x (-a)).div (hx'.pow 2) (pow_ne_zero 2 hx.ne')
   have h₂ := (hasDerivAt_const x (-b)).div (hw'.pow 2) (pow_ne_zero 2 hw)
   have h₃ := (Real.hasDerivAt_log hx.ne').const_mul p
   convert (h₁.add h₂).sub h₃ using 1 <;>
-    simp [shellLogWeight] <;> field_simp [hx.ne', hw] <;> ring
+    (try simp [shellLogWeight]) <;> (try field_simp [hx.ne', hw]) <;> ring
 
 /-- On the original logarithmic collar the elementary pointwise envelope is
 largest at the current radius. The condition keeps the full opposite-face
@@ -52,8 +53,9 @@ theorem shellLogWeight_monoOn {a b width p d : ℝ}
   have hpole : p * x ^ 2 ≤ p * d ^ 2 :=
     mul_le_mul_of_nonneg_left (pow_le_pow_left₀ hx'.1.le hx'.2 2) hp
   have hother : 2 * b * (x / (width - x)) ^ 3 ≤ 2 * b * (d / (width - d)) ^ 3 :=
-    mul_le_mul_of_nonneg_left (pow_le_pow_left₀ (by positivity) hratio 3) (by positivity)
-  exact div_nonneg (by linarith only [hcollar, hpole, hother]) (by positivity)
+    mul_le_mul_of_nonneg_left (pow_le_pow_left₀ (div_nonneg hx'.1.le hw.le) hratio 3)
+      (mul_nonneg (by norm_num) hb)
+  exact div_nonneg (by linarith only [hcollar, hpole, hother]) (pow_nonneg hx'.1.le 3)
 
 /-- A weighted pointwise source estimate on the open logarithmic collar
 transfers to the short endpoint integral with the same Gaussian exponent.
