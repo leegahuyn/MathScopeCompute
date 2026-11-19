@@ -51,11 +51,36 @@ theorem mode_two_amplitude_only_of_zero_divergence
   · simpa only [hdiv, mul_zero, add_zero] using
       mode_two_axial_divergence_defect u w uR wR wZ inverseRadius carrier
 
+/-- Real part of the original second-harmonic carrier after tangency of the
+leading real Primary field. The three normal coordinates are frozen here. -/
+theorem mode_two_tangent_carrier_real
+    (k nR nTheta nZ uR uTheta uZ vR vTheta vZ uj vj : F)
+    (h : nR * uR + nTheta * uTheta + nZ * uZ = 0) :
+    -2 * k * (nR * (uR * vj + vR * uj) +
+        nTheta * (uTheta * vj + vTheta * uj) +
+        nZ * (uZ * vj + vZ * uj)) =
+      -2 * k * (nR * vR + nTheta * vTheta + nZ * vZ) * uj := by
+  linear_combination (-2 * k * vj) * h
+
+/-- Imaginary part of the same carrier. Its remaining factor contains two
+imaginary Primary operands and therefore retains both inverse carriers. -/
+theorem mode_two_tangent_carrier_imaginary
+    (k nR nTheta nZ uR uTheta uZ vR vTheta vZ uj vj : F)
+    (h : nR * uR + nTheta * uTheta + nZ * uZ = 0) :
+    2 * k * (nR * (uR * uj - vR * vj) +
+        nTheta * (uTheta * uj - vTheta * vj) +
+        nZ * (uZ * uj - vZ * vj)) =
+      -2 * k * (nR * vR + nTheta * vTheta + nZ * vZ) * vj := by
+  linear_combination (2 * k * uj) * h
+
 end
 
 #print axioms mode_two_radial_divergence_defect
 #print axioms mode_two_azimuthal_divergence_defect
 #print axioms mode_two_axial_divergence_defect
 #print axioms mode_two_amplitude_only_of_zero_divergence
+
+#print axioms mode_two_tangent_carrier_real
+#print axioms mode_two_tangent_carrier_imaginary
 
 end MathScope.M3.CD
