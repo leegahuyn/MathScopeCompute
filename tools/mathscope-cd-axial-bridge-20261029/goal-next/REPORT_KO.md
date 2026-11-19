@@ -10,6 +10,11 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation68
+
+- **VERIFIED / OPEN · 실제 N3 첫 보정에서 중복 평균장 소거.** 원본 AST 22,153,782개의 독립 잔차 비교에 쓰인 소형 그래프로 세 성분의 같은 평균장이 소거됨을 확인했다. 남은 Temporal 퍼텐셜의 값과 네 도함수는 같은 native 정의·실인자를 사용한다. FiveMap native 본문의 적분 끝점과 파동을 포함한 전체 gauge 결속은 OPEN이다. [실제 평균 증분 재생](primary-forced-join/active-n3-c5-binding/compact-mean-increment/README.md).
+- **VERIFIED / OPEN · 두 번째 Forced 후보 경로.** 활성 환경과 같은 모듈에 원래 반복 연산을 결속해 원본 테스트 2개와 공분산 기호 대조 60개를 재생했다. 보관된 N1 후보 40개에서 퍼텐셜 응용 240개를 확인했다. 같은 프로세스의 실제 N3 원본 PDE 객체를 입력으로 받는 후보 내보내기를 작성했다. 이 코드의 활성 N3 실행과 새 응력·Signed·Temporal·FiveMap을 연결한 두 번째 보정장은 OPEN이다. [원본 반복 후보와 실행 조건](primary-forced-join/active-n3-c5-binding/repeat-candidate-preflight/README.md).
+
 ## Continuation67
 
 - **VERIFIED / CONDITIONAL · 첫 Forced의 원본 2차 모드 두 표본.** 원본 N3 그래프 21,681,493개 노드를 재생했다. 분기 \(\texttt{0:1},\texttt{1:1}\)에 대해 원본 고정 대표점과 pulse 변수로 치환한 법선·법선 미분·행렬이 실제 역연산 입력과 정확히 같았다. 두 분기와 켤레 성분의 속도·퍼텐셜과 1차 공간 미분은 원본 지역 경로 가정 아래 모두 \(e^{-H/3}\)로 제어된다. 이 값은 충분 공간 보정 한계보다 작다. 전체 라벨, 최초 보정장 24개로의 결속, Signed 및 양쪽 평균장은 OPEN이다. [원본 두 모드와 재현](final67/selected-mode-two-spatial/README.md).
