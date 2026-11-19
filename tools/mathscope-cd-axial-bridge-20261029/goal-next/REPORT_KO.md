@@ -10,6 +10,13 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation42
+
+- **VERIFIED / CONDITIONAL · 전체 초기 평균장의 공간 cutoff.** 실제 Temporal·FiveMap과 각도 연결항을 포함해 환형 초기 평균장의 조건부 구간을 계산했다. 방사 특성선의 원본 적분에서 포텐셜 값 상계를 얻고, 속도와 포텐셜 값으로 축방향 cutoff 항 및 첫 공간 미분을 평가했다. 계산된 상단은 배정 에너지 예산을 넘는다. 반지름 적분과 cutoff에 관한 Lean 정리 네 개가 GitHub에서 통과했다. [원본과 수치 구간](final67/energy-1013-sharp/correction-budget/spatial-gauge/actual-mean-cutoff/README.md) · [Lean 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44533412267).
+- **VERIFIED / CONDITIONAL · 초기 평균장과 비영 파동의 각도 분리.** 원본 4,456,994개 노드의 해시를 확인하고 속도·압력의 648개 부호별 행, 원래 정수 반송파 두 개 및 전체 초기장의 네 접합 노드를 대조했다. 원본 차트의 전체 원에서 평균과 파동의 에너지·소산 교차항이 소거된다. 반송파의 유한 상계를 원본 산술식 28개로 계산해 초기장의 Fourier 꼬리가 상징적 절단 차수 이상에서 정확히 0임을 확인했다. 파동 포텐셜의 cutoff 항과 이후 보정은 별도 상계가 필요하다. [원본 각도 검사](final67/initial-fourier/README.md).
+- **VERIFIED / CONDITIONAL · 실제 두 강제 시스템의 매개변수·끝점 미분.** 비접선 입력을 접선 부분과 normal 성분으로 분해해 전단 성장률을 보존한 4차 미분 상계를 얻었다. 원래 공간 연산자와 끝점 대입의 교환을 1차 6개, 2차 18개 식에서 대조했다. 정규화 시간 미분은 펄스 시간 미분을 한 번 추가한다. 실제 계수와 전체 curl·압력의 수치 상계는 OPEN이다. [원본 미분과 재생](primary-forced-join/active-n3-c5-binding/endpoint/forced-parameter-transport/README.md).
+- **VERIFIED / CONDITIONAL · 실제 N4 프로필 인자.** 원본 7,358,162개 노드를 인증하고, 물리 좌표 14개 적용에서 도달한 실제 프로필 182개의 `0≤X≤Xcut<a²` 및 `|eta|≤1`을 조상 208,393개에서 확인했다. 원본 native 호출마다 실제 인자에서 좌표 범위를 다시 유도했다. 입력·가드·적분 구간을 각각 제거한 대조 검사에서 170·168·182개가 미해결로 남았다. 정의된 물리 역함수와 비음수 시간은 전제이고, 다른 77개 프로필과 일반 Y는 OPEN이다. [경로와 대조 검사](y-higher-flow/n4-physical-frame/README.md).
+
 ## Continuation41
 
 - **VERIFIED / OPEN · 같은 원본 계열의 Signed 접합.** 실행 44029534187의 실제 기록에서 전체 Forced 805개 검사, 최신 평균 응력 18개 검사, Signed 1,620개 인덱스 행과 그 이후 중심화한 Temporal 입력을 확인했다. 22,032,009개 노드에서 실행기가 원래 API의 허용 목록을 넘는 옵션을 전달해 중단됐다. Temporal·FiveMap·전체 물리 잔차 호출에 두 콜백만 전달하도록 고쳤고, 원래 API 세 개의 양성·음성 계약 검사를 재실행 준비 단계에 추가했다. 새 첫 보정 실행은 진행 중이다. [실제 기록](primary-forced-join/active-n3-c5-binding/hosted-44029534187/verified-readback.json) · [재실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44528954587).

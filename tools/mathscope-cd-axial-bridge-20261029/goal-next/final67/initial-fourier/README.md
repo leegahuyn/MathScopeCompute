@@ -18,7 +18,48 @@ where `E` is the directed upper bound of the six squared localized Cartesian gra
 
 **Independent checks.** `independent_controls.py` proves the finite coefficient inequality exactly for rational samples, checks equality at a single cutoff-adjacent mode, and gives counterexamples for failure to combine equal modes, treating a rotating Cartesian frame as fixed, and trying to infer a force tail from a force supremum alone. These are synthetic controls, not a new evaluation of the original field. `evaluate.mjs` evaluates the six actual gradient inputs using the original pinned directed exponential runtime and writes the exact endpoint; running it twice gives the same receipt bytes.
 
-**Remaining.** The first-stage and subsequent corrections and the full final-field velocity, gradients and force are not covered. A force Fourier tail requires additional angular regularity: a magnitude bound alone cannot give decay. This one restricted Fourier-tail bound does not produce the original independent grid/Fourier/coefficient-order/precision comparison table, a final-field tail, or the last resolved physical time. N8-05 and N7-06 remain OPEN, final jets remain 0/67, RELEASE HOLD remains. No Lean compilation was attempted.
+**Original initialized angular split.** The separate
+`check_initialized_angular_split.py` replay authenticates the 4,456,994-node
+saved graph and the original native registry. It checks 648 signed index
+rows across three initial cylindrical velocity fields and pressure, the
+eight local bodies, both original rounded nonzero integer windings and
+the four full-field joins. The exact native scope traversal checks 133,635
+nodes. The wave consists of sine and cosine terms with a nonzero integer
+frequency and angle-independent amplitudes, guards and slow arguments.
+The other summand of each full field is angle independent. The mean and
+wave kinetic and dissipation cross terms vanish on full physical circles
+under the original smooth chart and flat-join contracts. This split includes
+the cylindrical connection in the angular part of the gradient.
+Angle-independent scalar multiplication preserves the split. Localization
+by a curl of the cutoff times the wave potential still needs a separate
+bound for the wave cutoff contribution. Run with the corrected source graph
+directory from job 43010593847 and a fresh output path.
+
+```text
+python -B check_initialized_angular_split.py ORIGINAL_GRAPH_DIRECTORY NEW_JSON
+```
+
+`evaluate_initialized_winding.mjs` replays 28 original arithmetic records
+and six original inputs for the uniform winding upper endpoint `W`. It
+uses the previously proved signed carrier and admitted dyadic band
+envelopes. The squared omitted tail is exactly zero for pressure cutoffs
+at least `ceil(W)`, Cartesian velocity cutoffs at least `ceil(W)+1`, and
+Cartesian velocity-gradient cutoffs at least `ceil(W)+2`. The additions
+come from the polar basis and the transverse Cartesian derivative. The
+endpoint is a directed exponential expression and the integer cutoff is
+kept symbolic. The current endpoint does not resolve a small-cutoff
+convergence comparison.
+
+```text
+node evaluate_initialized_winding.mjs GOAL_NEXT ORIGINAL_RUNTIME NEW_JSON
+```
+
+**Remaining.** The original field's nonzero frequencies must be grouped
+when contributions share a physical winding. The final velocity, gradients
+and force need the later corrections. A force Fourier tail requires angular
+regularity. N8-05 still needs the full-field refinement table, a final-field
+tail and the last resolved physical time. N7-06 remains OPEN, final jets
+remain 0/67 and RELEASE HOLD remains.
 
 Portable replay from a combined checkpoint (paths can be absolute):
 
