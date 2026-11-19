@@ -4,6 +4,7 @@ import {createHash} from 'node:crypto';
 import {readFile} from 'node:fs/promises';
 import {resolve} from 'node:path';
 import {pathToFileURL} from 'node:url';
+import {matchLatestSignedStress} from './match_signed_stress.mjs';
 
 const PINNED_CYCLE = '74a686bc95f4c094f1de834062b8b402aa5b861940fa3e109aa0f1913d52d529';
 const MODULES = [
@@ -50,7 +51,8 @@ function authenticateCycle(pde, reference) {
   assert.equal(G.nodes.length, reference.split.nodeCount);
   assert.equal(signed.stage.endNodeCount, signedStage.nodeCount);
   assert.equal(signed.stage.newRegisteredRows, 1620);
-  assert.deepEqual(signed.latestStress.Sigma, stress.sigma);
+  const latestStressApplications = matchLatestSignedStress(G, signed.latestStress.Sigma, stress.sigma,
+    signed.constructed.originalCandidate.signed.Sigma);
   assert.deepEqual(signed.audit.rootInventory, signedStage.roots);
   assert.deepEqual(temporal.frontier.scope, frontier.scope);
   assert.deepEqual(Object.values(temporal.inverses).map(row => row.exact), temporalStage.inverses);
@@ -66,7 +68,7 @@ function authenticateCycle(pde, reference) {
   assert.equal(forced.assembly.exactPositiveSourceSystems, 20);
   assert.equal(forced.assembly.exactNegativeConjugateSolutionRoutes, 20);
   assert.equal(forced.assembly.signedSourceContributions, 162);
-  return {G, forced, signed, temporal, five};
+  return {G, forced, signed, temporal, five, latestStressApplications};
 }
 
 function mappedPotential({G, forced, signed}, guardGlobalLocalBody) {
@@ -240,6 +242,7 @@ export async function materializeActiveN3FirstSpatialIngress({
     schema: 'MathScope.N7.ActiveN3FirstCorrectionSpatialIngressCandidate/1',
     originalPrefix: start, materializedNodes: G.nodes.length,
     sameLiveOriginalSourceAsserted: true, sourceReferenceReceiptSHA256: PINNED_CYCLE,
+    latestStressApplications: ownership.latestStressApplications,
     guardOverlaySHA256: GUARD_OVERLAY,
     input: {initialized, latest, meanPotentials, azimuthalSwirls, directSwirl,
       temporalDesiredAxial: temporal.potential.gammaDesired,
