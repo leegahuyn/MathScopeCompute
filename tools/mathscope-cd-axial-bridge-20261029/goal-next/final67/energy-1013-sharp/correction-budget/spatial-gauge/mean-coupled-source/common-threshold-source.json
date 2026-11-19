@@ -1,0 +1,267 @@
+{
+  "status": "VERIFIED_ORIGINAL_SOURCE_THRESHOLD_AND_STABILITY_RADIAL_FAST_EXPONENTS",
+  "sourceSHA256": "ab52a3337591d2c23c82f8ebbd1ef7305b4ecaebc9fa17ae6d700f32c650e4cf",
+  "verifiedFullSourceNodes": 4456994,
+  "familyModuleSHA256": "7fd3ec07b567af86f84df7a1b789a5a57366186d4e8c26c2a4a35dc5948c5b75",
+  "meanPathSHA256": "e366138903bd4ba773ac898707a0a38782cc00ace2d570733668e93760d1dc59",
+  "positiveGraphSHA256": "5807f549a59a0dea086ad5d4f42cc0757f7c18c1548c26a15a934bafff8a9ba8",
+  "nodes": {
+    "9": {
+      "op": "source_parameter",
+      "args": [
+        "h"
+      ]
+    },
+    "24": {
+      "op": "rational",
+      "args": [
+        "2",
+        "1"
+      ]
+    },
+    "127": {
+      "op": "log_positive",
+      "args": [
+        24
+      ]
+    },
+    "28815": {
+      "op": "rational",
+      "args": [
+        "64",
+        "1"
+      ]
+    },
+    "136158": {
+      "op": "inverse",
+      "args": [
+        9
+      ]
+    },
+    "300170": {
+      "op": "add",
+      "args": [
+        215531,
+        300169
+      ]
+    },
+    "300171": {
+      "op": "rational",
+      "args": [
+        "1",
+        "17179869184"
+      ]
+    },
+    "617292": {
+      "op": "integer_power",
+      "args": [
+        300170,
+        256
+      ]
+    },
+    "617356": {
+      "op": "multiply",
+      "args": [
+        28815,
+        136158
+      ]
+    },
+    "617357": {
+      "op": "integer_power",
+      "args": [
+        617356,
+        2
+      ]
+    },
+    "617428": {
+      "op": "integer_power",
+      "args": [
+        300170,
+        512
+      ]
+    },
+    "617430": {
+      "op": "maximum",
+      "args": [
+        1,
+        617348,
+        137446,
+        617349,
+        617427,
+        617354,
+        617428,
+        617429
+      ]
+    },
+    "617431": {
+      "op": "maximum",
+      "args": [
+        4654,
+        617430,
+        617357
+      ]
+    },
+    "617432": {
+      "op": "ceiling",
+      "args": [
+        617431
+      ]
+    }
+  },
+  "positiveNodes": {
+    "3": {
+      "op": "authenticated_source_norm_root",
+      "args": [
+        "hosted-original",
+        9
+      ]
+    },
+    "6": {
+      "op": "authenticated_source_norm_root",
+      "args": [
+        "hosted-original",
+        300170
+      ]
+    },
+    "7": {
+      "op": "authenticated_source_norm_root",
+      "args": [
+        "hosted-original",
+        300171
+      ]
+    },
+    "9": {
+      "op": "authenticated_source_norm_root",
+      "args": [
+        "hosted-original",
+        127
+      ]
+    },
+    "10": {
+      "op": "authenticated_source_norm_root",
+      "args": [
+        "hosted-original",
+        617432
+      ]
+    },
+    "11": {
+      "op": "rational",
+      "args": [
+        "17",
+        "1"
+      ]
+    },
+    "12": {
+      "op": "add",
+      "args": [
+        10,
+        11
+      ]
+    },
+    "14": {
+      "op": "rational",
+      "args": [
+        "4",
+        "1"
+      ]
+    },
+    "15": {
+      "op": "rational",
+      "args": [
+        "2",
+        "1"
+      ]
+    },
+    "16": {
+      "op": "sqrt_positive",
+      "args": [
+        15
+      ]
+    },
+    "17": {
+      "op": "add",
+      "args": [
+        14,
+        16
+      ]
+    },
+    "18": {
+      "op": "multiply",
+      "args": [
+        7,
+        15,
+        17
+      ]
+    },
+    "24": {
+      "op": "rational",
+      "args": [
+        "3",
+        "1"
+      ]
+    },
+    "25": {
+      "op": "integer_power",
+      "args": [
+        6,
+        256
+      ]
+    },
+    "26": {
+      "op": "multiply",
+      "args": [
+        18,
+        24,
+        25
+      ]
+    },
+    "27": {
+      "op": "exp",
+      "args": [
+        26
+      ]
+    },
+    "3539": {
+      "op": "rational",
+      "args": [
+        "1",
+        "100000"
+      ]
+    },
+    "3540": {
+      "op": "multiply",
+      "args": [
+        3,
+        9,
+        12,
+        3539
+      ]
+    },
+    "3541": {
+      "op": "exp",
+      "args": [
+        3540
+      ]
+    }
+  },
+  "exactConsequences": [
+    "ellMinimum >= Bnorm^512 = (Bnorm^256)^2",
+    "ellMinimum >= 4096*h^(-2) = (64/h)^2",
+    "r0=2^-34; Lmax=2*r0*(4+sqrt(2)) < 2^-30",
+    "P=exp(3*Bnorm^256*Lmax)",
+    "F=exp(h*(ellMinimum+17)*log(2)/100000)"
+  ],
+  "realArithmeticPremises": [
+    "h>0",
+    "h<1/64",
+    "positive original Bnorm and source norms",
+    "1/2<=log(2)<=1"
+  ],
+  "conclusion": {
+    "P": "P<=exp(L/2^33)",
+    "F": "F<=exp(1+L/100000)",
+    "L": "h*(ellMinimum+13)*log(2)"
+  },
+  "scope": "Exact saved-source identities. Analytic mean envelope and original chart/source semantics remain explicit premises.",
+  "release": "HOLD"
+}

@@ -1,0 +1,188 @@
+{
+  "schema": "MathScope.Y.N4.OuterActiveIndexedImageAndRepresentativeBinding/1",
+  "status": "CONDITIONAL_ACTIVE_INDEXED_IMAGE_AND_FROZEN_REPRESENTATIVE_BINDING",
+  "nativeScopeCounts": {
+    "actual_covariance_volterra": 4,
+    "actual_expression_partial": 40,
+    "m3_aux_indexed_partial": 39,
+    "m3_global_indexed_partial": 4
+  },
+  "frameClasses": {
+    "slowRepresentativeTriples": [
+      4587889,
+      4587899,
+      4587909,
+      4590865,
+      4590868,
+      4590874
+    ],
+    "frozenRepresentativeSubstitutions": [
+      4590902,
+      4590915,
+      4590922,
+      4591490,
+      4591506,
+      4591508,
+      4591509,
+      4592076,
+      4592077,
+      4594320,
+      4594333,
+      4594340,
+      4594908,
+      4594924,
+      4594926,
+      4594927,
+      4595494,
+      4595495
+    ],
+    "radialOnly": [
+      4598662,
+      4607769,
+      4607771,
+      4607772,
+      4607773,
+      4607778,
+      4607782,
+      4608027,
+      4608029,
+      4608030,
+      4608031,
+      4608036,
+      4608040,
+      4608045,
+      4608047,
+      4608048,
+      4608053,
+      4608057,
+      4608293,
+      4608295,
+      4608296,
+      4608297,
+      4608302,
+      4608306
+    ]
+  },
+  "outerNativeBandOrMeshLabelRebindings": 0,
+  "uniqueIndexedDefinitions": [
+    {
+      "kind": "global",
+      "definition": 0,
+      "name": "GlobalFullMean_rr",
+      "totalRows": 81
+    },
+    {
+      "kind": "global",
+      "definition": 3,
+      "name": "GlobalFullMean_thetatheta",
+      "totalRows": 81
+    },
+    {
+      "kind": "global",
+      "definition": 2,
+      "name": "GlobalFullMean_rz",
+      "totalRows": 81
+    },
+    {
+      "kind": "auxiliary",
+      "definition": 0,
+      "name": "GlobalCompleteCommonTorus_rr",
+      "totalRows": 162
+    },
+    {
+      "kind": "auxiliary",
+      "definition": 1,
+      "name": "GlobalCompleteCommonTorus_rtheta",
+      "totalRows": 162
+    },
+    {
+      "kind": "auxiliary",
+      "definition": 2,
+      "name": "GlobalCompleteCommonTorus_rz",
+      "totalRows": 162
+    },
+    {
+      "kind": "auxiliary",
+      "definition": 3,
+      "name": "GlobalCompleteCommonTorus_thetatheta",
+      "totalRows": 162
+    },
+    {
+      "kind": "auxiliary",
+      "definition": 4,
+      "name": "GlobalCompleteCommonTorus_thetaz",
+      "totalRows": 162
+    },
+    {
+      "kind": "auxiliary",
+      "definition": 5,
+      "name": "GlobalCompleteCommonTorus_zz",
+      "totalRows": 162
+    }
+  ],
+  "checkedRows": {
+    "global": 243,
+    "auxiliary": 972
+  },
+  "distinctPositiveRatios": 3,
+  "slowMapping": "R'=sqrt(c)*R, Z'=c^(1/2-h)*Z, T'=c*T, c=Qref/Qlabel>0.",
+  "invariants": [
+    "s'=c*s in (1/2,2) from the original open band guard",
+    "X'=(sqrt(c)*R)^2/(2*c*s)=X",
+    "eta'=Z'/s'^(1/2-h)=eta",
+    "T'>=0"
+  ],
+  "activeBox": "The first row guard preserves Xa<X<Xb. The next three guards put the mapped point inside its candidate ell^6 mesh box. The last band guard ensures the new inverse bracket. These give an active point in the same original box, under the initial admitted physical image.",
+  "representativeDependencies": {
+    "4588867": [
+      4587625,
+      4588772,
+      4588773,
+      4588774
+    ],
+    "4588872": [
+      4587625,
+      4588772,
+      4588773,
+      4588774
+    ],
+    "4588852": [
+      4587625,
+      4588772,
+      4588773,
+      4588774
+    ]
+  },
+  "representativeTuple": {
+    "X": 4588867,
+    "eta": 4588872,
+    "s": 4588852
+  },
+  "representativeGuardReceiptSHA256": "36f6f64edfb762d97bdac1c229e74c22fd45ed4b67e1437484b6bb2dbfd4cdb1",
+  "representativeImage": "Both actual slow triples are exactly (sqrt(2*srep*Xrep), srep^D*etarep, srep*(1-etarep^2)). The selected roots depend only on ell and the three frozen mesh labels. The original active-box construction supplies an interior representative and unique inverse.",
+  "premises": [
+    "the initial reference input belongs to the original physical image",
+    "0<h<1/16 and the original positive integer band-label domain",
+    "the original representative active-box geometry theorem",
+    "the source native operators retain their capture-free substitution, lazy guards and fixed-label derivative meanings"
+  ],
+  "sourcePins": {
+    "source-global-current.mjs": "93f86661d67e6bc7b916218cd7af3db72f348ba7fdc876e3618ba3a49edff760",
+    "source-global-representative.mjs": "f3fbcf74b42c59cbfdd563e0fddcba9fab5cad782a96695930e3445c50373541",
+    "source-global-expressions.mjs": "89904bd7441a57cf634ff7b4c579e9ee7688868d14eafd999e44f41f74f0c2d1",
+    "source-auxiliary-expressions.mjs": "e456b4511adcc997b64267b2229422618b6139955e0c9083f2b83f4739600463"
+  },
+  "negativeControl": {
+    "kind": "abstract exact rational radial-map corruption",
+    "c": "2",
+    "R": "2",
+    "s": "3/4",
+    "referenceX": "8/3",
+    "incorrectUnscaledRadialX": "4/3",
+    "correctScaledRadialX": "8/3",
+    "meaning": "The original sqrt(c) radial map is necessary for shell invariance; checking only Z/T scaling would leave this mutation undetected."
+  },
+  "scope": "Actual finite original N4 outer frames and reached indexed rows; source-image transport and frozen representative binding under stated original geometry/semantics. Native limit convergence, endpoint derivatives, runtime-generated or Forced/coupled graphs, arbitrary recursive n and final field values remain separate.",
+  "release": "HOLD",
+  "checkerSHA256": "7037760c44546fce3832463f7820cc0d7f3365cd0d829652d4b649aa462957b3"
+}

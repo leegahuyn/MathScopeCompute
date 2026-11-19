@@ -10,6 +10,13 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation47
+
+- **VERIFIED / CONDITIONAL · 초기 평균장 에너지의 배정 예산 충족.** 4,456,994개 원본 노드에서 공통 밴드 임곗값을 확인하고, 초기 평균장 그래프의 안정화 상수와 방사 미분 상수를 같은 작은 매개변수와 결합했다. 원본 양의 산술 DAG의 정확한 차수 상단은 각각 187과 6이다. 이 결합으로 cutoff curl과 첫 미분을 포함한 초기 평균장 에너지 상계가 (2^{-32}S_R) 아래로 내려갔다. 원본 해석학적 상계와 고정 차트가 전제다. 느린 초기 배경, 초기 파동과 실제 활성 보정은 별도 계산이 남아 있다. [GitHub Lean](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44543956526).
+- **VERIFIED / CONDITIONAL · 같은 원본의 제2 고조파 입력 10개.** 원래 실행의 다섯 lift와 두 부호를 대조했다. 원래 보존형 제2 고조파에서 발산 결함을 분리하면, 발산이 0일 때 방사 성분의 반송파와 빠른 방사 미분 항이 사라지고 각 성분의 정확한 차수 4 상계가 줄어든다. 원본 함수 실행, 기호 대조와 GitHub Lean 정리 네 개가 통과했다. 고정 펄스 위치에서 lift의 4차 비용은 (625/256) 이하이다. 정규화한 투영은 4차까지 정수 계수 (1,4,24,208,2400)을 갖는다. 현재 분기들의 native 법선 결속과 실제 수치 상계는 OPEN이다. [실제 제2 고조파](primary-forced-join/active-n3-c5-binding/phase-free-mode-two/README.md) · [GitHub Lean](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44542662819).
+- **VERIFIED / OPEN · 운영 HTML 조각의 출처.** 운영 공급자의 읽기 전용 조회로 받은 공유 조각 14개 전부를 운영 공개 HTML과 SHA-256으로 대조했다. 일치한 범위는 1,125,144바이트이며 122바이트 버튼 CSS 수정의 오프라인 후보에서도 같은 조각이 유지됐다. 운영 편집 본문 전체의 결속과 실제 복구 경로의 증거는 OPEN이다. [읽기 전용 대조](m4/r108-fragment-provenance-20261119/README.md).
+- **VERIFIED / CONDITIONAL · N4 바깥 인자와 고정 대표점.** 원본 전역 243행과 보조 972행의 방사·축·시간 스케일 및 다섯 가드를 대조했다. 활성 행의 실제 공통 스케일에서 X와 η가 보존된다. 선택 대표점 역함수 #4588852 앞의 모든 원본 경로에 다섯 가드가 있으며, 가드 제거 대조에서는 다섯 사실이 사라졌다. 실제 대표점 치환 18개는 동일한 원본 삼중값을 사용한다. 초기 물리 영상, 원본 활성 박스 정리, native 의미론이 전제다. 일반 재귀와 극한은 OPEN이다. [원본 바깥 정의역](y-higher-flow/n4-outer-image/README.md).
+
 ## Continuation46
 
 - **VERIFIED · 같은 원본 계열의 첫 보정 작성 완료.** GitHub 실행 44528954587이 이전 Temporal 옵션 오류를 통과했다. 원래 Forced 805개 검사, 평균 응력 18개 검사와 Signed 1,620개 행 뒤에 원래 두 Temporal 역함수, 새 FiveMap, 전체 3차원 물리 잔차를 작성했다. 최종 원본 그래프는 22,153,782개 노드다. 이전에 검증한 세 단계의 값·인덱스, 29개 원본 소스 파일 pin과 새 실행 로그를 별도 Python 검사로 다시 대조했다. [GitHub 원본 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44528954587) · [로그와 재현](primary-forced-join/active-n3-c5-binding/hosted-44528954587/README.md).
