@@ -10,6 +10,18 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation91
+
+- **VERIFIED.** 첫 Forced가 실제 읽는 초기 평균의 세 성분에서 배경·Temporal·FiveMap의 정확한 합과 공통 차트 인자를 확인했다. 시간 계수 \(c_{i,0}\)가 실제로 \(\ell-2\) 팔레트를 쓰며, 이동 \(\phi\)가 \(\epsilon^{-1/100000}\)를 포함함을 대조했다. 원본의 \(1/(8T_gS)<c_{i,0}\le1/S\) 상·하한을 GitHub Lean에서 컴파일했다. [초기 평균 결속](primary-forced-join/active-n3-c5-binding/first-wave-guard-traces/initial-mean-norm/README.md) · [GitHub 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44634334317).
+
+- **VERIFIED / CONDITIONAL.** \(b/\epsilon\)의 원본 5차 상계에 세 차수의 추가 cutoff 미분을 포함하고 활성 호출에 결속했다. 산술 노드 74,575개를 두 번 재현했다. 원본 계수·차트 조건에서 기존 slab 수치 문턱보다 작다. 초기 평균 미분 129개, 공분산 입력 600개, 짧은 이동 적분 153개의 절댓값 계수를 계산했다.
+
+- **VERIFIED / CONDITIONAL.** 원본 Primary 본문 100개를 확인하고 실제 격자 cutoff를 \(S^{3s}\)로 제어했다. 속도의 느린 7차와 횡방향 8차를 유지했다. 정규화 펄스 미분은 모드 1의 \(+\partial_v\widehat U\)만 남는다. 그 범위의 초기 평균을 넣으면 C90 강제항의 같은 실제 변분식에서 나머지 계수의 기저 밴드 멱에 따라 모드 1·2 해의 충분한 차수를 얻는다. 정규화 원본 계수의 완전한 수치 상계는 OPEN이다. [Primary 직접 대조](primary-forced-join/active-n3-c5-binding/first-wave-guard-traces/initial-mean-norm/primary/README.md).
+
+- **VERIFIED / CONDITIONAL.** Y의 실제 N1 도함수 호출 세 개와 두 시스템의 \(\partial_\eta f_5(0,0)=48\)을 대조했다. 원본 해석 조건과 국소 실현 조건에서 \(\partial_XU_1/j_0\)와 \(\partial_\eta U_1/X\)에 대해 작은 양의 원본 구간의 엄격한 상·하한을 계산했다. [Y 도함수 구간](y-higher-flow/picard-core-derivatives/README.md).
+
+- **OPEN.** 첫 Forced의 전체 차트 수치 상계와 이후 활성 보정, M3의 N7-06 및 N8-05, 최종장 jets 0/67은 열린 상태다. 운영 응답의 SHA-256을 다시 대조했다. 운영 R1-08에 필요한 인증 편집 원본과 판정 증거가 남았으며 RELEASE HOLD다. [운영 웹 읽기 기록](preservation-continuation91.json).
+
 ## Continuation90
 
 - **VERIFIED.** 첫 Forced 20개 시스템의 실제 원본 투영 실수부·허수부 120개를 유리수로 전개했다. 원본 \(H_w\)가 횡좌표를 보존하고 펄스 좌표를 \(w\)로 옮기는 것을 대조했다. 원본 각 강제항에서 모드 1의 \(P(w)\)와 모드 2의 \(P(w)^2\)를 분리했다. 모드 1에는 원본 속도에 곱해진 \(\lambda-d_{\rm ref}\) 항이 남고, 모드 2에서는 명시적인 Gaussian 미분항이 모두 소거된다. [가중 변분 적분](primary-forced-join/active-n3-c5-binding/first-wave-guard-traces/forced-normalized-variation/README.md).
