@@ -22,9 +22,11 @@ theorem five_map_radial_primitive_curl (gamma : ℝ → ℝ) {a R : ℝ}
     deriv psi R + psi R / R = gamma R := by
   dsimp only
   have hPrimitive := intervalIntegral.integral_hasDerivAt_right hInt hMeas hCont
-  have hQuot := hPrimitive.fun_div (hasDerivAt_id R) hR
+  have hQuot :
+      HasDerivAt (fun r => (∫ s in a..r, s * gamma s) / r)
+        ((R * gamma R * R - (∫ s in a..R, s * gamma s)) / R ^ 2) R := by
+    simpa only [id_eq, mul_one] using hPrimitive.fun_div (hasDerivAt_id R) hR
   rw [hQuot.deriv]
-  dsimp only [id_eq]
   field_simp [hR] <;> ring
 
 /-- The axial primitive differentiates at fixed radius. The derivative of its
@@ -41,7 +43,10 @@ theorem five_map_axial_cutoff_commutator (cutoff psi : ℝ → ℝ) {Z eps cutof
     (hCutoff : HasDerivAt cutoff cutoffZ Z) (hPsi : HasDerivAt psi psiZ Z) :
     -eps * deriv (fun z => cutoff z * psi z) Z =
       cutoff Z * (-eps * psiZ) - eps * cutoffZ * psi Z := by
-  rw [(hCutoff.mul hPsi).deriv]
+  have hProduct :
+      HasDerivAt (fun z => cutoff z * psi z) (cutoffZ * psi Z + cutoff Z * psiZ) Z :=
+    hCutoff.mul hPsi
+  rw [hProduct.deriv]
   ring
 
 end
