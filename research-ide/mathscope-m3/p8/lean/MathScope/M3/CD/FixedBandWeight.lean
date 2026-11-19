@@ -26,8 +26,8 @@ theorem fixed_band_weighted_polynomial {ell k rate gamma rho : ℝ}
   calc
     2 * k * Real.log ell + -(gamma * rate * ell) ≤
         (4 * k) * Real.sqrt ell + -(gamma * rate * ell) := by linarith
-    _ ≤ (rho * rate * Real.sqrt ell) * Real.sqrt ell + -(gamma * rate * ell) :=
-      add_le_add_right hRight _
+    _ ≤ (rho * rate * Real.sqrt ell) * Real.sqrt ell + -(gamma * rate * ell) := by
+      linarith only [hRight]
     _ = -((gamma - rho) * rate * ell) := by
       rw [mul_assoc (rho * rate), ← pow_two, hSquare]
       ring
