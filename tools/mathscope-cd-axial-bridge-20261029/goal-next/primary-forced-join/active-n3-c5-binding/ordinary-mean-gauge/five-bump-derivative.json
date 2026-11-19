@@ -1,0 +1,17 @@
+{
+  "schema": "MathScope.C78.ActualFiveBumpZDerivative/1",
+  "status": "PASS_ORIGINAL_BUMP_COPY_CHAIN_RULE_AND_ARGUMENT_CONTROL",
+  "sourceSHA256": "0d02d55b291db8c55db26810ae4783d62e09ac3d058fd582f4161cb444871e46",
+  "sourceCommit": "f8cb4034e86d7b669d52a6f2248aebba156b51b5",
+  "sourceCopy": "B_j=s^(-A)*eta0(R/(sqrt(s)*lambda_j))/lambda_j, lambda_j=exp(j*d)",
+  "fullNativeZDerivative": "D_Z(c_j B_j)=s^(-A)/lambda_j*[c_j,Z*eta0(x_j)-(s_Z/s)*c_j*(A*eta0(x_j)+(x_j/2)*eta0_prime(x_j))]",
+  "interpretation": "The C77 native derivative [0,0,1,0] at actual arguments ell,boundRadius,Z,T is this full physical Z derivative. It includes coefficient and scale/bump-argument derivatives; it is not a profile eta derivative with s frozen.",
+  "counterControl": {
+    "toy": "s=1+Z,c=1,eta0(x)=x^2,lambda_j=1,A=1/2,R=2,Z=0",
+    "correctDerivative": "-6",
+    "omittedBumpArgumentDerivative": "-2",
+    "difference": "-4",
+    "isOriginalDataCounterexample": false
+  },
+  "scope": "Ordinary mean differentiation only. No assertion that radial whole integral vanishes, no missing FiveMap support proof supplied."
+}

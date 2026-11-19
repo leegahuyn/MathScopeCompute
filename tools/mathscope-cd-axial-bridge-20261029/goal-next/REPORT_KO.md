@@ -10,6 +10,13 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation78
+
+- **CONDITIONAL.** 활성 N3 첫 보정의 원본 Temporal과 FiveMap 평균 성분을 같은 소스에서 curl로 환산했다. 정상 방사 구간의 FTC와 적분 미분을 적용하면 방사·각·축의 평균 게이지 차가 각각 정확히 0이다. 원래 Temporal의 \(\chi_R\)와 \(\chi_Z\) 항, FiveMap 범프 인자의 \(Z\) 미분을 유지했다. 바깥 \(\eta\) cutoff를 곱할 때는 \((+\varepsilon\eta_Z\Psi,0,-\eta_R\Psi)\)가 남는다. 경계 또는 원본 치환을 빼면 정확한 대조값 \(3/4\), \(3/4\), \(-1/2\)가 나왔다. [평균 게이지 재현](primary-forced-join/active-n3-c5-binding/ordinary-mean-gauge/README.md).
+- **VERIFIED.** FiveMap 방사 FTC, 축방향 적분 미분 전달과 cutoff 곱미분 정리 3개를 GitHub Lean에서 컴파일했다. 첫 실행의 함수 표기 불일치를 수정하고 소스 해시를 재확인했다. [Lean 검증](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44601624873).
+- **VERIFIED.** 보관된 N1 반복 Forced로 원본 guard 사슬 240개와 역연산 40개, 켤레 관계 160개를 작은 검증 결과만 남기는 Python 검사기로 재현했다. 활성 N3의 240개 guard·supported 원본 노드는 확보한 스트림 범위 밖에 있다. [보관 원본과 재현](primary-forced-join/active-n3-c5-binding/repeat-candidate-compact-readback/README.md).
+- **OPEN.** 같은 원본 N3의 파동 게이지 접합, 전체 방사 적분의 소거, 실제 가중 노름과 두 번째 보정 원본 guard의 240개 본문이 남아 있다. N7-06, N8-05와 최종장 jets 67개는 계속 OPEN이다.
+
 ## Continuation77
 
 - **VERIFIED.** GitHub의 활성 N3 첫 보정 실행에서 원본 노드 22,155,584개를 독립적으로 읽고 SHA-256을 재현했다. 이전 Wrz, Temporal, Haar와 초기 압력·유량 계산의 타입 있는 레코드 40,621개가 같은 ID에서 일치했다. 이 일치는 선택한 소스 경로에 해당한다. 이전 전체 그래프의 접두부 해시는 다르다. 실제 에너지 입력 24개와 공간 미분 라벨 33개, 원본의 162개 지표 사상과 세 게이지 차를 확인했다. [원본 실행](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44582875351) · [소스 재현](primary-forced-join/active-n3-c5-binding/hosted-44582875351/README.md).

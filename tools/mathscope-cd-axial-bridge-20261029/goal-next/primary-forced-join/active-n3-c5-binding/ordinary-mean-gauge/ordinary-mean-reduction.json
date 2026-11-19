@@ -1,0 +1,136 @@
+{
+  "schema": "MathScope.C78.ActualN3OrdinaryMeanGaugeReduction/1",
+  "status": "VERIFIED_SAME_LIVE_ORDINARY_MEAN_CURL_REDUCTION_CONDITIONAL_FTC_REGULARITY",
+  "hostedRun": 44582875351,
+  "sourceCommit": "f8cb4034e86d7b669d52a6f2248aebba156b51b5",
+  "sourceSHA256": {
+    "mathscope-m3/navier/source-temporal-potential.mjs": "c0754a9afc0c41e731488523c030a317e69407e3ec01d2fe9bed8eb2f414a6f8",
+    "mathscope-m3/navier/source-pressure.mjs": "fcdbbcddc5e16649f771bb53e1b0889ee1641a62dec3440d18611488ce35c66f",
+    "mathscope-m3/navier/source-full-mean-equations.mjs": "2f44315a940fc959f1c86c2a8fd5b1a252521cbb8e2565dc42fc07b139773d76",
+    "mathscope-m3/post-signed-20261023/source-signed-actual-five-map.mjs": "22976ece2c801beb9e51045820749cc077ddf2c198e364f2033a53789989466d",
+    "mathscope-m3/post-signed-20261023/source-postfive-full-3d-residual.mjs": "d93195ac381c75860e5d450a77ad3160ade16ca4579f4988dc38948e504163de"
+  },
+  "inputSHA256": {
+    "mean": "214f2ec8534e9eb828add24aab542128b39ec4453da3396ee70203507b78f408",
+    "spatial": "364debba33e15d7db387b9a67c4deb5cc43e59a96744ad046ac8b4ba146991b2",
+    "ingress": "20550a640ec1cb9f00c5c0b1be61f27826ee7e756ea714dd6a13eed39edf841f"
+  },
+  "compactSHA256": "4034331b1ab4204a845d197b213e3566a7bc677aa4541f22936e2bc77b89435d",
+  "meanBinderSHA256": "8a1fdff65f0582bd93f72ae60a6446eb989b34473f0bc6104ae631ee768a96d7",
+  "actualMeanBindings": {
+    "temporalPsi": 22150943,
+    "fivePsi": 22151952,
+    "fiveGamma": 22151945,
+    "fiveBeta": 22151963,
+    "fiveSwirl": 22151941,
+    "ordinaryGammaWithBoundRadius": 22151948,
+    "axialGammaDerivativeWithBoundRadius": 22151957,
+    "sameRadialLimits": [
+      17743711,
+      17732748
+    ],
+    "sameBoundRadius": 22151946,
+    "wholeFixedRadialLimits": [
+      17743711,
+      17743713
+    ],
+    "wholeSharedIntegrand": 22151951,
+    "compactCandidate": 22151956
+  },
+  "candidateRoots": {
+    "azimuthalPotential": 22154869,
+    "directSwirl": 22154876,
+    "uncutVelocityDifference": [
+      22154871,
+      22154873,
+      22154875
+    ],
+    "wholeGaugeDifferencesStillSeparate": [
+      22154926,
+      22154928,
+      22154930
+    ]
+  },
+  "ordinaryMeanResidual": {
+    "orientation": "actual surviving mean increment minus candidate curl and direct swirl",
+    "components": [
+      "0",
+      "0",
+      "0"
+    ],
+    "radial": "-epsilon*psiT_Z + betaF -[-epsilon*(psiT_Z+psiF_Z)]=0",
+    "azimuthal": "vT+vF-directSwirl=0",
+    "axial": "(partial_R+aL+1/R)psiT+GammaF-[(partial_R+aL+1/R)(psiT+psiF)]=0",
+    "FiveMapFTC": "psiF=(1/R) integral_alpha^R r*GammaF(ell,r,Z,T)dr; psiF_R+psiF/R=GammaF; betaF=-epsilon*psiF_Z; LpsiF=0",
+    "wholeFiveIntegralZeroUsed": false,
+    "temporalDesiredGammaSubstituted": false
+  },
+  "temporalSourceCalculus": {
+    "shift": "Y+(Phi(r)-Phi(R))*vr; a=Phi_R; fixed ell and vr",
+    "fixedBoundDerivatives": "d_R I=R*g-a*I_L, d_R J=-a*J_L",
+    "covariantAxial": "(partial_R+aL+1/R)psiT=g-chi_R*J/R",
+    "radial": "betaT=-epsilon*(I_Z-chi_Z*J-chi*J_Z)/R",
+    "droppedCutoffAxialResidual": "g-actualGammaT=+chi_R*J/R",
+    "sourceZShiftDerivativeZero": "Original Phi is independent of Z,T,Y, with fixed band labels; no derivatives of frozen vr are taken."
+  },
+  "compactFiveDifference": {
+    "orientation": "candidate compact curl minus actual raw FiveMap curl",
+    "components": [
+      "+epsilon*(chi_Z*J_F+chi*J_F,Z)/R",
+      "0",
+      "-chi_R*J_F/R"
+    ],
+    "wholeIntegralCancellation": "Separate obligation; not needed for the ordinary raw gauge identity."
+  },
+  "outerEta": {
+    "orientation": "eta*actualMean minus curl(eta*(psiT+psiF)*e_theta) minus eta*directSwirl*e_theta",
+    "components": [
+      "+epsilon*eta_Z*(psiT+psiF)",
+      "0",
+      "-eta_R*(psiT+psiF)"
+    ],
+    "physicalScaling": "Normalized derivatives Dr=partial_R+aL, Dz=epsilon*partial_Z; original Q pullback factors retained by the C77 spatial evidence.",
+    "allEtaDerivativesRetained": true
+  },
+  "movingBoundControl": {
+    "formula": "J_Z=integral_alpha^outer f_Z+f(outer)*outer_Z-f(alpha)*alpha_Z",
+    "actualBounds": "alpha=sqrt(Xa), outer=2sqrt(Xb); source parameters/frozen labels, so their R,Z,T,Y derivatives vanish.",
+    "sameGammaBoundArgument": "Actual native Gamma uses ell,boundRadius,Z,T; native derivative uses [0,0,1,0]."
+  },
+  "controls": {
+    "outerEtaRadialResidual": {
+      "toy": "alpha=1,R=2,GammaF=1,epsilon=1,eta=Z at Z=0",
+      "value": "3/4",
+      "omittedOrWrongSignRejected": true
+    },
+    "wrongFormalActualRadius": {
+      "toy": "GammaF(r)=r, alpha=1,R=2; wrongly keep GammaF(R) inside the integral",
+      "candidateMinusActualAxial": "3/4"
+    },
+    "movingLowerEndpoint": {
+      "toy": "alpha(Z)=1+Z,GammaF=1,R=2,Z=0; omit endpoint derivative",
+      "nativeMinusCurlRadial": "-1/2"
+    },
+    "interpretation": "These are exact calculus controls, not counterexamples to the fixed original profile, its FiveMap moment equations or periodic inverse."
+  },
+  "proofPremises": [
+    "Ordinary FTC and differentiation under the actual same smooth native radial branch, with its original admitted fixed segment and one-sided endpoint regularity.",
+    "The source FiveMap mean bumps have no auxiliary torus dependence, as checked by the pinned source constructor; its actual registered family/application bindings are those in C77.",
+    "Original fixed-band geometry and original cutoff source used at the same physical/auxiliary point. No derivative of nearest-integer/mesh labels or frozen representatives.",
+    "The source inverse/periodicity/support assumptions remain attached when interpreting Temporal shifted integrals analytically."
+  ],
+  "scope": {
+    "ordinaryMeanPartReduced": true,
+    "ordinaryMeanDerivativeConsequences": "All derivatives of this local same-branch zero identity vanish under the stated regularity.",
+    "sameActualNativeBindings": true,
+    "wholeGaugeDifferenceRootsDeclaredZero": false,
+    "wavePartReducedHere": false,
+    "wholeFiveIntegralDeclaredZero": false,
+    "actualUniformStageCapsClosed": false,
+    "fullInitializedSubtractionIndependent": "The C77 compact duplicate-mean cancellation is used; remaining full initialized-wave/root comparison stays separate.",
+    "N706": "OPEN",
+    "N805": "OPEN",
+    "finalJets": 0,
+    "release": "HOLD"
+  }
+}
