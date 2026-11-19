@@ -10,6 +10,12 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation81
+
+- **VERIFIED.** 활성 N3의 실제 위상 10개와 739개 각도 독립 입력을 확인했다. 원본 각방향 기울기는 \(p=\omega/k\)이며, \(\omega\)는 원본 반올림과 0에서 쓰는 부호 단위값으로 얻는 0이 아닌 정수다. 첫 Forced의 실제 상대 모드 \(m=1,2\)에는 물리 각주파수 \(\pm m\omega\)가 남는다. [위상 원본·재현](final67/energy-1013-sharp/correction-budget/spatial-gauge/active-n3-angular-cross/README.md).
+- **CONDITIONAL.** 원래 매끄러운 고정 분기에서 실제 FiveMap과 초기 파동을 뺀 첫 Forced 사이의 운동에너지 및 공간 기울기 교차항은 전각 Haar 평균에서 정확히 0이다. 유한 \(N\)점 격자에서는 \(N\mid m\omega\)일 때 해당 앨리어싱 항을 유지한다.
+- **OPEN.** Signed·다른 파동·외력·이후 보정의 교차항과 전 영역 반경·시간 적분은 남아 있다. 최종장의 네 정밀화는 0/4이고 N7-06·N8-05와 jets 0/67, 운영 R1-08 및 RELEASE HOLD는 기존 판정이다.
+
 ## Continuation80
 
 - **VERIFIED.** 같은 활성 N3 원본의 첫 Forced 20개 모드와 Signed 10개 템플릿에서 실제 파동 curl을 독립 재생했다. Forced에서 제거한 초기 파동 계수 60개, 일치하는 원래 가드 비교 210개, 162개 원래 행에서 실제 lift 인자 1,620개, 후보 curl에 들어가는 아홉 기울기 슬롯을 확인했다. 동결한 방사·축·각도 배율 정리 3개를 GitHub Lean에서 컴파일했다. [파동 재현](primary-forced-join/active-n3-c5-binding/live-wave-gauge/README.md) · [Lean 로그](https://github.com/leegahuyn/MathScopeCompute/actions/runs/44604053598).
