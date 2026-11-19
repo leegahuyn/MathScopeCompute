@@ -1,0 +1,243 @@
+{
+  "status": "PASS_DEEP_POSITIVE_SUM_CAP_AND_GUARD_CONTROLS",
+  "rows": [
+    {
+      "depth": 2,
+      "value": 256,
+      "eligible": true,
+      "refinements": 1,
+      "old": {
+        "lower": {
+          "exp": {
+            "exp": {
+              "rational": "256"
+            }
+          }
+        },
+        "upper": {
+          "exp": {
+            "exp": {
+              "rational": "257"
+            }
+          }
+        }
+      },
+      "next": {
+        "lower": {
+          "exp": {
+            "exp": {
+              "rational": "256"
+            }
+          }
+        },
+        "upper": {
+          "exp": {
+            "exp": {
+              "rational": "87112285931760246646623899502532662132737/340282366920938463463374607431768211456"
+            }
+          }
+        }
+      },
+      "upperComparison": -1
+    },
+    {
+      "depth": 3,
+      "value": 256,
+      "eligible": true,
+      "refinements": 1,
+      "old": {
+        "lower": {
+          "exp": {
+            "exp": {
+              "exp": {
+                "rational": "256"
+              }
+            }
+          }
+        },
+        "upper": {
+          "exp": {
+            "exp": {
+              "exp": {
+                "rational": "257"
+              }
+            }
+          }
+        }
+      },
+      "next": {
+        "lower": {
+          "exp": {
+            "exp": {
+              "exp": {
+                "rational": "256"
+              }
+            }
+          }
+        },
+        "upper": {
+          "exp": {
+            "exp": {
+              "exp": {
+                "rational": "87112285931760246646623899502532662132737/340282366920938463463374607431768211456"
+              }
+            }
+          }
+        }
+      },
+      "upperComparison": -1
+    },
+    {
+      "depth": 7,
+      "value": 1048576,
+      "eligible": true,
+      "refinements": 1,
+      "old": {
+        "lower": {
+          "exp": {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "exp": {
+                      "exp": {
+                        "rational": "1048576"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "upper": {
+          "exp": {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "exp": {
+                      "exp": {
+                        "rational": "1048577"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "next": {
+        "lower": {
+          "exp": {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "exp": {
+                      "exp": {
+                        "rational": "1048576"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "upper": {
+          "exp": {
+            "exp": {
+              "exp": {
+                "exp": {
+                  "exp": {
+                    "exp": {
+                      "exp": {
+                        "rational": "356811923176489970264571492362373784095686657/340282366920938463463374607431768211456"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "upperComparison": -1
+    },
+    {
+      "depth": 1,
+      "value": 256,
+      "eligible": false,
+      "refinements": 0,
+      "old": {
+        "lower": {
+          "exp": {
+            "rational": "256"
+          }
+        },
+        "upper": {
+          "exp": {
+            "rational": "257"
+          }
+        }
+      },
+      "next": {
+        "lower": {
+          "exp": {
+            "rational": "256"
+          }
+        },
+        "upper": {
+          "exp": {
+            "rational": "257"
+          }
+        }
+      },
+      "upperComparison": 0
+    },
+    {
+      "depth": 2,
+      "value": 1,
+      "eligible": false,
+      "refinements": 0,
+      "old": {
+        "lower": {
+          "exp": {
+            "exp": {
+              "rational": "97223355506917443932721057101/79228162514264337593543950336"
+            }
+          }
+        },
+        "upper": {
+          "exp": {
+            "exp": {
+              "rational": "97223355506917443932721057333/79228162514264337593543950336"
+            }
+          }
+        }
+      },
+      "next": {
+        "lower": {
+          "exp": {
+            "exp": {
+              "rational": "97223355506917443932721057101/79228162514264337593543950336"
+            }
+          }
+        },
+        "upper": {
+          "exp": {
+            "exp": {
+              "rational": "97223355506917443932721057333/79228162514264337593543950336"
+            }
+          }
+        }
+      },
+      "upperComparison": 0
+    }
+  ],
+  "sufficientSeed": "For t>=256 and delta=2^-128, exp(t)*(exp(delta)-1)>=2^256*delta=2^128>=1. Thus exp(exp(t+delta))>=exp(1)*exp(exp(t))>=2*exp(exp(t)). Higher exp layers retain the factor-two order.",
+  "missingDepthControl": "For depth one, exp(t+delta)/exp(t)=exp(delta)<2, so the proposed shifted point alone would not bound x+x. The implementation requires at least two layers.",
+  "scope": "Arithmetic endpoint enclosures only. Source inputs and analytic mean bounds remain independent."
+}

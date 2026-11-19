@@ -10,6 +10,10 @@
 
 첨부 설계도 64·66·68쪽과 인수인계 11쪽에 근거해 남은 수락 조건을 정리했다. Continuation17, Continuation20–28과 Continuation30을 순서대로 풀면 원본 입력과 최신 재현 코드가 모인다. [완료 기준 보고](COMPLETION_FOCUS_KO.md) · [재현 명령](REPLAY_CHECKPOINT.md).
 
+## Continuation45
+
+- **VERIFIED / CONDITIONAL · 더 좁은 원본 초기 평균장 상계.** GitHub에서 검증한 중첩 지수 합 상계를 적용하고, 원본 고정 입력 생산기의 `Bnorm=exp(log(2B)/512)`를 같은 임곗값으로 재실행했다. 원본 #300170 상계, 초기 평균장의 값·1차 미분 9개 상계와 cutoff를 거친 평균장 에너지 상단이 각각 작아졌다. 42개 공분산 입력에 원본 작은 계수를 보존했고, Temporal 이차항과 축방향 cutoff 교환항을 포함했다. 정확 유리수 독립 대조에서 새 에너지 상단은 이전보다 낮았으며 배정 예산보다 높았다. 이 계산은 원본 해석학적 입력 상계와 고정 차트를 전제로 한다. N7-06과 이후 보정이 들어간 최종장 구간은 OPEN이다. [산술 코드와 대조](final67/energy-1013-sharp/correction-budget/spatial-gauge/mean-deep-exponential/README.md).
+
 ## Continuation44
 
 - **VERIFIED / CONDITIONAL · 원본 축방향 밀도의 실제 N4 호출.** 원본 식 호출 #4599013과 #4599199의 형식 인자 `(X,η)`가 각각 원래 적분 바인더 #117055 및 물리 반경 #4587658, 공통 물리 η #4587663으로 치환되어 밀도 #117047을 호출함을 확인했다. 양의 Xminus에서 물리 X까지 적분하는 경우 끝점 순서와 관계없이 중간 반경은 비음수다. 원본 역함수의 정의와 비음수 물리 시간을 전제로, n=1–4의 원래 적분 8개와 n=1 점별 호출 2개에서 도달한 프로필 182개의 입력 범위를 확인했다. 적분 사실을 빼면 122개, 물리 입력 사실을 빼면 182개가 미해결이다. [압력·응력의 실제 인자](y-higher-flow/n4-residual-frame/README.md).
