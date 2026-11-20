@@ -1,0 +1,308 @@
+{
+  "schema": "MathScope.C121.OriginalRepeatJointNativeBracket/1",
+  "pins": {
+    "C109": "df338897da4078df56cf8632d4f10a605bdfa16e02a1a331381e389bf5dc8738",
+    "C120": "4d9c3154390b57f5ac498ef90dbce34d22ae45171a830cfb70a8a3af5a67bd46",
+    "eikonal": "7f4db7e44f838f60e0ae27e9df8cbdd67fe6c41b154ea2dad11a810399ea079f",
+    "band": "a0992d899c921dae3f45ed1ff306a935c61fa5841666692b89d39ce88b8c0b5b",
+    "current": "b7ec3b426589c207973c62a9debd19adb54ce66c15dd625c963ed56a4d697a36",
+    "pressureCover": "c0a32aa8a4c1fc9ce4f13d5a74c09ba18bb0568748ae8e8596a45f0fc64ee0f4",
+    "initialized": "4396979719f97b7c27e77c9cc11782fcd0d3c363da42d25d9d1416280dcf313e",
+    "forced": "1093de46dfe1916679064aec3e5401f47839eaad6c9b213bd150fc9151e999c3",
+    "repeat": "4a7fbdb9ac1b4afa2e8625bdc2c64f3f4632ed609d0d511aae653a0928236cd7"
+  },
+  "bandControlsSHA256": "1800198e1e43b2ff67c6504a40e39e9c039ba640b3a428979501ffa61e605e63",
+  "sourceAnchors": {
+    "band": [
+      [
+        72,
+        "left:q(1,2),right:q(2),derivativeLower:q(1,2)"
+      ],
+      [
+        74,
+        "X=G.div(G.pow(R,2),G.mul(q(2),s)),eta=G.div(Z,power(s,D)),qActual=G.mul(Q,s)"
+      ]
+    ],
+    "current": [
+      [
+        193,
+        "parameters=[R,Z,T,xi,v,Xrep,etaRep,sRep,ell,...band.meshLabels],localParameters=[R,Z,T,ell,...band.meshLabels]"
+      ],
+      [
+        157,
+        "guards are formed from that chart's valid q BEFORE any local body/root"
+      ],
+      [
+        165,
+        "bandOffset=G.sub(partition.bandCoordinate,label.ell)"
+      ],
+      [
+        166,
+        "guards=[[band.chart.X,G.parameter('Xa'),band.chart.Xb],...meshOffsets.map(x=>[x,G.neg(radius),radius]),[bandOffset,G.neg(radius),radius]]"
+      ]
+    ],
+    "pressureCover": [
+      [
+        64,
+        "parameters=[R,Z,T,ell,...Y],directions=[R,Z,T,...Y]"
+      ],
+      [
+        82,
+        "meshOffsets=b.meshCoordinates.map((x,j)=>G.sub(x,label.grid[j])),bandOffset=G.sub(assembly.partition.bandCoordinate,label.ell)"
+      ],
+      [
+        83,
+        "guards=[[band.chart.X,G.parameter('Xa'),band.chart.Xb],...meshOffsets.map(x=>[x,G.neg(radius),radius]),[bandOffset,G.neg(radius),radius]]"
+      ]
+    ],
+    "initialized": [
+      [
+        110,
+        "ellReference=G.fresh('initialized_angular_reference_band')"
+      ],
+      [
+        113,
+        "parameters=[...current.local.localParameters,ellReference,...Y,...center,...copy,theta]"
+      ],
+      [
+        114,
+        "ratio=G.exp(G.mul(G.sub(ell,ellReference),G.log(G.q(2))))"
+      ],
+      [
+        115,
+        "referenceValues=[G.div(R,G.sqrt(ratio)),G.div(Z,power(ratio,D)),G.div(T,ratio),ellReference,...Y]"
+      ],
+      [
+        122,
+        "G.expressionValue(id,referenceValues)"
+      ],
+      [
+        191,
+        "values=[G.mul(G.sqrt(ratio),R),G.mul(power(ratio,D),Z),G.mul(ratio,T),...localParameters.slice(3)]"
+      ],
+      [
+        203,
+        "const values=[R,Z,T,row.label.ell,...row.label.grid,ell,...Y"
+      ],
+      [
+        207,
+        "coefficient:G.one,guards:row.guards"
+      ]
+    ],
+    "forced": [
+      [
+        123,
+        "referenceValues=[G.mul(G.sqrt(ratio),R),G.mul(power(ratio,D),Z),G.mul(ratio,T),...parameters.slice(3)]"
+      ],
+      [
+        129,
+        "const values=[R,Z,T,row.label.ell,...row.label.grid,ell,...pressure.geometry.Y"
+      ],
+      [
+        131,
+        "coefficient:G.one,guards:row.guards"
+      ]
+    ],
+    "repeat": [
+      [
+        92,
+        "G.expressionValue(system, initial.reference.values)"
+      ],
+      [
+        58,
+        "const rowMap = ({ values, guards, derivativeMaps, coefficient, label })"
+      ],
+      [
+        160,
+        "const fields = coverBindings(G, forced, signed)"
+      ],
+      [
+        163,
+        "const templates = forced.templates.map(template =>"
+      ],
+      [
+        212,
+        "assert.equal(templates.length, 10)"
+      ],
+      [
+        201,
+        "const guarded = guardGlobalLocalBody(G, current.geometry, current.local.slowCutoff, rectangular, { auxiliary: false })"
+      ],
+      [
+        239,
+        "const mapped = G.simultaneousSubstitute(shared, Y, Hw)"
+      ],
+      [
+        266,
+        "assert.equal(systems.length, 40)"
+      ],
+      [
+        269,
+        "completeSecondForcedState: false"
+      ]
+    ]
+  },
+  "exactGuard": {
+    "definition": "b=Q_ref/Q_own=2^(ell_own-ell_ref)>0; s=q/Q_own",
+    "strictS": "max(1/2,b/2)<s<min(2,2b)",
+    "closedS": "max(1/2,b/2)<=s<=min(2,2b)",
+    "strictPhysicalLog": "max(ell_own,ell_ref)-1<t<min(ell_own,ell_ref)+1, t=-log2(q)",
+    "ownPositiveBand": "abs(t-ell_own)<3/4",
+    "minimumAdditionalStrictGivenOwnPositive": "abs(t-ell_ref)<1",
+    "canCheckBeforeBothNativeCalls": "Given monotone own chart, F(L)<0<F(U) for L and U the strict intersection endpoints, F(x)=x-Z^2*x^(2h)-T. Prefer already admitted reference q plus own positivity in source atlas.",
+    "closedEqualityIsTraceOrRequiresOrdinaryExtension": true,
+    "dyadicRows": [
+      {
+        "ownMinusReference": -3,
+        "b": "1/8",
+        "closedNativeS": null,
+        "strictNativeS": null,
+        "strictJointWithOwnPositiveLogOffset": null
+      },
+      {
+        "ownMinusReference": -2,
+        "b": "1/4",
+        "closedNativeS": [
+          "1/2",
+          "1/2"
+        ],
+        "strictNativeS": null,
+        "strictJointWithOwnPositiveLogOffset": null
+      },
+      {
+        "ownMinusReference": -1,
+        "b": "1/2",
+        "closedNativeS": [
+          "1/2",
+          "1"
+        ],
+        "strictNativeS": [
+          "1/2",
+          "1"
+        ],
+        "strictJointWithOwnPositiveLogOffset": [
+          "0",
+          "3/4"
+        ]
+      },
+      {
+        "ownMinusReference": 0,
+        "b": "1",
+        "closedNativeS": [
+          "1/2",
+          "2"
+        ],
+        "strictNativeS": [
+          "1/2",
+          "2"
+        ],
+        "strictJointWithOwnPositiveLogOffset": [
+          "-3/4",
+          "3/4"
+        ]
+      },
+      {
+        "ownMinusReference": 1,
+        "b": "2",
+        "closedNativeS": [
+          "1",
+          "2"
+        ],
+        "strictNativeS": [
+          "1",
+          "2"
+        ],
+        "strictJointWithOwnPositiveLogOffset": [
+          "-3/4",
+          "0"
+        ]
+      },
+      {
+        "ownMinusReference": 2,
+        "b": "4",
+        "closedNativeS": [
+          "2",
+          "2"
+        ],
+        "strictNativeS": null,
+        "strictJointWithOwnPositiveLogOffset": null
+      },
+      {
+        "ownMinusReference": 3,
+        "b": "8",
+        "closedNativeS": null,
+        "strictNativeS": null,
+        "strictJointWithOwnPositiveLogOffset": null
+      }
+    ]
+  },
+  "counterexample": {
+    "minimumAbsoluteLabelDifference": 1,
+    "ownRelativeEll": 15,
+    "attemptedReferenceRelativeEll": 14,
+    "rho": "3/4",
+    "eta": "0",
+    "X": "1",
+    "qOverTau0": "3/4",
+    "b": "2",
+    "sOwn": "3/4",
+    "sReference": "3/8",
+    "bothLabelsHaveOriginalCoefficientWindow": true,
+    "ownBandStrictlyPositive": true,
+    "sameSpatialKAndTimeSlab": true,
+    "observedLiveRepeatFailure": false
+  },
+  "admissibleWithoutPositiveReferencePartition": {
+    "sRef": "9/16",
+    "sOwn": "9/8",
+    "b": "2",
+    "referenceStrictNative": true,
+    "referenceOwnPartitionInactive": true,
+    "ownBandStrictlyPositive": true
+  },
+  "originalRouting": {
+    "currentFixedLocalParameters": [
+      "R",
+      "Z",
+      "T",
+      "ell_own",
+      "meshR",
+      "meshZ",
+      "meshT"
+    ],
+    "firstStageIndexedArgumentOwnLabel": 3,
+    "firstStageIndexedArgumentReferenceLabel": 7,
+    "regularizedReturn": "Indexed wrapper scales (R,Z,T) by (sqrt(b),b^D,b). Initialized referenceValues reciprocally undo precisely that transform.",
+    "positiveBandTestUsesAlreadyValidReferenceQ": true,
+    "storedRepeatMeanBodySameInitialReferenceValues": true,
+    "RepeatSourceCoverBindingsCompareFirstStageRows": true,
+    "RepeatNativeInverseCandidateTemplates": 10,
+    "RepeatCandidateInverses": 40,
+    "RepeatModuleConstructsFreshIndexedRegistration": false,
+    "actualRepeatActiveRowArgumentAndGuardInheritance": "OPEN_PENDING_ACTIVE_APPEND_METADATA"
+  },
+  "registeredK": {
+    "oldReferenceRelativeEll": 15,
+    "ordinaryReferenceStrictExceptLowerCenter": true,
+    "lowerCenter": {
+      "rho": "1/2",
+      "sigma": "0",
+      "sRef": "1/2",
+      "sOwn": "1",
+      "relativeOwnLabel": 1
+    },
+    "auxiliaryAxisOldReferenceFailure": {
+      "rho": "15/32",
+      "sigma": "0",
+      "sRef": "15/32",
+      "sOwn": "15/16",
+      "relativeOwnLabel": 1
+    },
+    "sourceAdmissibleReferenceCandidate": "Use N4 C+16 at Q=q/tau0<1, and N3 C+15 at Q>=1. Reference s lies strictly within the native bracket. Same primitive/reference/register instantiation must be independently bound.",
+    "individualBranchTailAndFrozenMarginSource": "C120",
+    "automaticPerApplicationReindexingClaimed": false
+  },
+  "conclusion": "Both positive partition tests are sufficient. Own positive partition alone does not imply reference admission. Original assembled outer reference admission plus its exact reindex map is sufficient for the chart bracket only.",
+  "finalJets": 0,
+  "release": "HOLD"
+}
