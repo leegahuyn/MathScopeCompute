@@ -1,0 +1,71 @@
+{
+  "schema": "MathScope.C106.ActualCoupledN2AbsoluteStressError/1",
+  "sourceStatus": "VERIFIED_ORIGINAL_PAIRED_N2_STRESS_CROSS_TERMS_AND_PREVIOUS_VISCOSITY",
+  "ordinaryStatus": "CONDITIONAL_ON_C105_ORDINARY_ORIGINAL_AND_PAIRED_N1_N2_REALIZATIONS",
+  "operandsSHA256": "aec5d4031de5acab0c2e4dcee7808d837c19cf20475c9f8de3237c52b9ebf73f",
+  "originalStress": [
+    120800,
+    120807
+  ],
+  "originalRadialCutoffs": [
+    28814,
+    28824
+  ],
+  "originalEta": 2,
+  "sourceTermCounts": {
+    "z": 10,
+    "theta": 9
+  },
+  "coupledConservativeNumerators": [
+    0,
+    0,
+    0
+  ],
+  "droppedLowerFluxAndViscosityNumerators": [
+    323,
+    405,
+    326,
+    312
+  ],
+  "explicitPairedBudget": {
+    "Xbound": "B=CSelected^11",
+    "rawValueError": "E2=4^-K/3+2*a*Fd for K>=Kcondition+2",
+    "rawFirstXError": "R2=2^25 Q^4 E2/s+Fd",
+    "wholeWeightedFirstXError": "D2=R2+2^10 CSelected^120 E2+2^2120 Q^2 Merr",
+    "commonInput": "G=L0*S2+N1*D1+Z+D2 (the uppercase Z is C105 coupled error)",
+    "commonOutputError": "2^12 Q^64 B^4 G",
+    "allFour": [
+      "pointwise axial",
+      "pointwise angular",
+      "absolute integral axial dX",
+      "absolute integral angular dX"
+    ],
+    "strictErrorAtAdaptiveDepths": "2^-256",
+    "adaptiveDepths": "positive coefficients P_K,P_N of the same bound; exact two-depth maxima in README",
+    "boundaryNumerators": [
+      301,
+      602
+    ],
+    "densityNumerators": [
+      39,
+      78
+    ],
+    "normalizedIntegralNumerators": [
+      1088,
+      2176
+    ],
+    "lowerZSquaredIntegerCap": 5632
+  },
+  "exactDifferenceTransfer": {
+    "uncutSignedDifferenceZero": {
+      "z": true,
+      "theta": true
+    },
+    "backwardDifferenceZeroAfterLastIpos": true,
+    "forwardDifferenceKeepsOriginalInitialPrefixDefect": true,
+    "guardedForwardFiniteAndTrueKeepSameEtaAndBothRadialEndpoints": true
+  },
+  "remaining": "OPEN_NUMERICAL_CENTERS_HIGHER_RECURSIONS_AND_FINAL_JETS",
+  "finalJets": 0,
+  "release": "HOLD"
+}
