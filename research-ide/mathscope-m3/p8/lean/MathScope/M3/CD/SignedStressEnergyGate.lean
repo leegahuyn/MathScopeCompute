@@ -163,4 +163,30 @@ theorem late_centered_fast_time_cancel {V : Type*} [AddCommGroup V]
 #print axioms correction_quarter_power_cap
 #print axioms correction_energy_of_quarter_power
 
+/-- A later covariance factor pair keeps a uniform exponential rate
+after the two independent coefficient charges have been spent. -/
+theorem post_signed_covariance_pair_rate
+    {x y a b H r₁ r₂ c₁ c₂ q : ℝ}
+    (hH : 0 ≤ H) (ha : 0 ≤ a) (hb : 0 ≤ b)
+    (hx : |x| ≤ a * Real.exp ((c₁ - r₁) * H))
+    (hy : |y| ≤ b * Real.exp ((c₂ - r₂) * H))
+    (hRate : q + c₁ + c₂ ≤ r₁ + r₂) :
+    |x * y| ≤ (a * b) * Real.exp (-q * H) := by
+  have hLog : c₁ + c₂ - r₁ - r₂ ≤ -q := by linarith
+  calc
+    |x * y| = |x| * |y| := abs_mul x y
+    _ ≤ (a * Real.exp ((c₁ - r₁) * H)) *
+        (b * Real.exp ((c₂ - r₂) * H)) :=
+      mul_le_mul hx hy (abs_nonneg y) (mul_nonneg ha (Real.exp_pos _).le)
+    _ = (a * b) * (Real.exp ((c₁ - r₁) * H) * Real.exp ((c₂ - r₂) * H)) := by
+      ring
+    _ = (a * b) * Real.exp ((c₁ + c₂ - r₁ - r₂) * H) := by
+      rw [← Real.exp_add]
+      congr 2 <;> ring
+    _ ≤ (a * b) * Real.exp (-q * H) :=
+      mul_le_mul_of_nonneg_left
+        (Real.exp_le_exp.mpr (mul_le_mul_of_nonneg_right hLog hH)) (mul_nonneg ha hb)
+
+#print axioms post_signed_covariance_pair_rate
+
 end MathScope.M3.CD
