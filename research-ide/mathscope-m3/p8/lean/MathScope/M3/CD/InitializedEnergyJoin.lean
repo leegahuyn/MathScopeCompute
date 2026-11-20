@@ -50,6 +50,35 @@ theorem initialized_energy_of_three_component_bounds
   · nlinarith only [hproduct]
   · nlinarith only [hscaleSquare]
 
+/-- Apply the original cutoff-before-curl operator to the three additive
+pieces of the first correction, then use its common force-scaled norm. -/
+theorem first_correction_energy_of_three_slice_bounds
+    {scale forced signed late total : ℝ}
+    (hScale : 0 < scale) (hTotal : 0 ≤ total)
+    (hTriangle : total ≤ forced + signed + late)
+    (hForced : forced ^ 2 < scale ^ 2 / (2 : ℝ) ^ 32)
+    (hSigned : signed ^ 2 < scale ^ 2 / (2 : ℝ) ^ 32)
+    (hLate : late ^ 2 < scale ^ 2 / (2 : ℝ) ^ 32) :
+    total ^ 2 < 9 * scale ^ 2 / (2 : ℝ) ^ 32 ∧
+      9 * scale ^ 2 / (2 : ℝ) ^ 32 < scale ^ 2 / (2 : ℝ) ^ 26 := by
+  have hPiece {x : ℝ} (hx : x ^ 2 < scale ^ 2 / (2 : ℝ) ^ 32) :
+      x < scale / 65536 := by
+    apply less_of_square_less
+    · norm_num at hx ⊢
+      nlinarith only [hx]
+    · positivity
+  have hSum : total < 3 * scale / 65536 :=
+    by linarith [hPiece hForced, hPiece hSigned, hPiece hLate]
+  have hPositive : 0 < 3 * scale / 65536 + total := by linarith
+  have hSquares := mul_pos (sub_pos.mpr hSum) hPositive
+  have hScaleSquared : 0 < scale ^ 2 := by positivity
+  constructor
+  · norm_num
+    nlinarith only [hSquares]
+  · norm_num
+    nlinarith only [hScaleSquared]
+
+#print axioms first_correction_energy_of_three_slice_bounds
 #print axioms primary_wave_log_allowance
 #print axioms initialized_energy_of_three_component_bounds
 
