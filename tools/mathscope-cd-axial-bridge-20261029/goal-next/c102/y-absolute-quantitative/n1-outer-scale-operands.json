@@ -1,0 +1,313 @@
+{
+  "schema": "MathScope.C102.OriginalN1OuterScaleOperands/1",
+  "priorOperandsSHA256": "a66c0591ea13634608803e57ead2a80d6167270637afa72d6f74fc71d587d213",
+  "sourcePrefixSHA256": "1e3d0d4a6ed15a8f95084c5aeb3dfe13003c5d33a7d78b4f0662bfb63b9d33a0",
+  "profiles": {
+    "T": {
+      "sum": [
+        {
+          "exp": {
+            "ref": "Md"
+          }
+        },
+        {
+          "integer": 10
+        }
+      ]
+    },
+    "Md": {
+      "integer": 1048576
+    },
+    "h": {
+      "exp": {
+        "product": [
+          {
+            "integer": -8002
+          },
+          {
+            "ref": "T"
+          }
+        ]
+      }
+    },
+    "lambda": {
+      "exp": {
+        "product": [
+          {
+            "integer": -1000
+          },
+          {
+            "ref": "T"
+          }
+        ]
+      }
+    },
+    "co": {
+      "rational": "1/256"
+    },
+    "Tf": {
+      "integer": 128
+    },
+    "BOuter": {
+      "product": [
+        {
+          "integer": 1000
+        },
+        {
+          "ref": "T"
+        }
+      ]
+    },
+    "logP": {
+      "product": [
+        {
+          "integer": 2
+        },
+        {
+          "ref": "T"
+        }
+      ]
+    },
+    "Pstar": {
+      "exp": {
+        "ref": "logP"
+      }
+    },
+    "XR": {
+      "product": [
+        {
+          "integer": 110
+        },
+        {
+          "power": [
+            {
+              "product": [
+                {
+                  "ref": "CSelected"
+                },
+                {
+                  "ref": "Pstar"
+                }
+              ]
+            },
+            10
+          ]
+        }
+      ]
+    },
+    "Q": {
+      "quotient": [
+        {
+          "product": [
+            {
+              "integer": "1852673427797059126777135760139006525652319754650249024631321344126610074238976"
+            },
+            {
+              "ref": "K"
+            }
+          ]
+        },
+        {
+          "power": [
+            {
+              "ref": "sigmaStar"
+            },
+            2
+          ]
+        }
+      ]
+    },
+    "sigmaStar": {
+      "quotient": [
+        {
+          "ref": "j0"
+        },
+        {
+          "integer": 2000
+        }
+      ]
+    },
+    "j0": {
+      "power": [
+        {
+          "ref": "h"
+        },
+        4
+      ]
+    },
+    "K": {
+      "power": [
+        {
+          "ref": "Pstar"
+        },
+        2
+      ]
+    },
+    "logCSelected": {
+      "sum": [
+        {
+          "product": [
+            {
+              "integer": 10
+            },
+            {
+              "log": {
+                "sum": [
+                  {
+                    "integer": 1
+                  },
+                  {
+                    "ref": "BRefUpper"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "power": [
+            {
+              "ref": "Q"
+            },
+            200
+          ]
+        }
+      ]
+    },
+    "BRefUpper": {
+      "power": [
+        {
+          "ref": "Q"
+        },
+        300
+      ]
+    },
+    "CSelected": {
+      "exp": {
+        "ref": "logCSelected"
+      }
+    },
+    "Lambda": {
+      "power": [
+        {
+          "ref": "Q"
+        },
+        64
+      ]
+    },
+    "t1": {
+      "power": [
+        {
+          "ref": "CSelected"
+        },
+        -120
+      ]
+    },
+    "Xa": {
+      "quotient": [
+        {
+          "integer": 4
+        },
+        {
+          "ref": "Lambda"
+        }
+      ]
+    },
+    "X0Ipos": {
+      "product": [
+        {
+          "ref": "XR"
+        },
+        {
+          "exp": {
+            "sum": [
+              {
+                "ref": "T"
+              },
+              {
+                "integer": 2
+              },
+              {
+                "product": [
+                  {
+                    "integer": 60
+                  },
+                  {
+                    "ref": "BOuter"
+                  }
+                ]
+              },
+              {
+                "integer": -14
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "runtimePins": {
+    "actual-residual-order-induction-source.mjs": "30e135309b5e0a5866917949d2ded96cce64828b1331400cb8e2260caabdc047",
+    "actual-global-source-outer.mjs": "5a46c11ebe8ba3ef26eaf6d632ed7bba03ab98cd5e4354b32f989ae6adb367e9",
+    "actual-continuation-exact-support.mjs": "0be8fcf8d8a70d98ab339ca1bec727efac998f4763d852b21fb5761f27450b98",
+    "actual-covariance-ell-one-obstruction.mjs": "305fb60d757d6e4b1963bb6be73a73e25ab14c04c6a6a23aaa74b99ee48eb96f"
+  },
+  "originalNodes": {
+    "Xcut": 28823,
+    "X0": 28987,
+    "last": 117099,
+    "Xplus": 28824,
+    "Xb": 28826,
+    "axialBody": 117047
+  },
+  "stageIds": [
+    "initial",
+    "axialDecay",
+    "entry",
+    "reservedPower",
+    "pulse",
+    "interpolation",
+    "angular",
+    "steepen",
+    "steepPower",
+    "flatten",
+    "wait",
+    "terminal"
+  ],
+  "terminalWaitAndTwoIntegralBodiesEqual": true,
+  "wholeStageStartsAndEndsEqual": true,
+  "leadingValueBounds": {
+    "U": 932,
+    "F": 937,
+    "sourceProfile": "e44aab5d21cbe4205d0333d7d73b646444ebaa282d67b2034edfde1e4180f152",
+    "domains": {
+      "U": {
+        "X": [
+          "0",
+          "infinity"
+        ],
+        "eta": [
+          "-1",
+          "1"
+        ],
+        "exactZeroAfter": "Xv"
+      },
+      "F": {
+        "X": [
+          "0",
+          "Xplus=Xv*exp(1)"
+        ],
+        "eta": [
+          "-1",
+          "1"
+        ],
+        "containsAllPositiveOrderVelocityCoefficientSupport": true,
+        "containsStressSupportFromOrder": 2,
+        "containsFullFirstOrderAngularStressSupport": false
+      }
+    },
+    "activeHeatI2": true,
+    "programSHA256": "ba5d3599a275631cd316a27a24dc1834be356705f27485fa76d75d1495022339",
+    "nodeCount": 564
+  }
+}

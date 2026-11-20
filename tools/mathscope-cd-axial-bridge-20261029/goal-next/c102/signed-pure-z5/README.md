@@ -1,0 +1,3 @@
+# Pure Z5 donor in the original Signed pressure
+
+The original centered pressure kernel removes the exceptional radial and torus derivatives of the highest coefficient, leaving the pure Z5 angular potential. The first and second Forced-mode attachments supply that direction under the original common charts and normalized pulses. Both phase-free potential grades are \(74999/50000\). The rare imaginary radial curl supplies one epsilon, the lower partner supplies a half power and the two pressure factors supply two powers. The exceptional grade before the final shared debit is \(249999/50000\), with the original full Gaussian retained.

@@ -1,0 +1,83 @@
+{
+  "schema": "MathScope.C102.ActualN1AbsoluteOuterStressError/1",
+  "sourceStatus": "VERIFIED_SAME_SOURCE_LEADING_ENVELOPES_IPOS_MASS_AND_BOTH_RADIAL_PRIMITIVES",
+  "ordinaryStatus": "CONDITIONAL_ON_ORIGINAL_LEADING_MOMENTS_C101_COMPENSATED_FIELDS_AND_ORDINARY_FIXED_LIMIT_INTEGRATION",
+  "operandsSHA256": "a66c0591ea13634608803e57ead2a80d6167270637afa72d6f74fc71d587d213",
+  "priorC101SHA256": "867fbbeac0e03f6e685c89c8e08022ac09f71dfbe0de6b1b00cb0f7c38e0af59",
+  "sourceAxialIntegrand": 117047,
+  "lastAngularBump": 117099,
+  "axialOuterEnd": 28824,
+  "angularOuterEnd": 28826,
+  "actualPositiveLeadingBounds": {
+    "U": 932,
+    "F": 937,
+    "arithmeticNodeCount": 564,
+    "normProgramSHA256": "ba5d3599a275631cd316a27a24dc1834be356705f27485fa76d75d1495022339",
+    "ordinaryEtaDomain": [
+      -1,
+      1
+    ]
+  },
+  "sourceMassRatioUpper": "mConst/r^2 <= 2 exp(2-60000T) < 2^-59997",
+  "symbolicInputs": {
+    "g": "Xcut",
+    "r": "Rbase=sqrt(2 X0Ipos)",
+    "rg": "sqrt(2g)",
+    "XL": "last angular bump radius in X",
+    "R": "2^46 Q^-19",
+    "E": "2^73 Q^-77",
+    "A": "2^17 Q^2 g E",
+    "B": "2^31 Q^2 g E",
+    "H": "2^30 Q g E",
+    "Bm": "2^8 g E/delta",
+    "Bp": "2^12 Q g E/delta",
+    "mu": "mConst/r^2",
+    "b0": "2^15",
+    "b1": "2^2070"
+  },
+  "gapAbsolutePointwiseForward": {
+    "axial": "[5 g R+Bm(Ubound+8)+(X-g)Bp]/sqrt(2X)",
+    "angular": "[9 g^2 R+2 Bm(X Fbound+8gQ)]/(2X)"
+  },
+  "gapAbsoluteIntegralForward": {
+    "axial": "[5 g R+Bm(Ubound+8)](r-rg)+Bp[(r^3-rg^3)/6-g(r-rg)]",
+    "angular": "(9g^2 R+16 Bm gQ)/2 log(X0Ipos/g)+Bm Fbound (X0Ipos-g)"
+  },
+  "IposSharpTailEnvelope": {
+    "angularF": [
+      48,
+      "r^3 B"
+    ],
+    "angularUF": [
+      16,
+      "r A"
+    ],
+    "axialMass": [
+      8,
+      "A"
+    ],
+    "axialPressure": [
+      "3/2",
+      "r^2 H"
+    ],
+    "axialPressureEtaOnDeltaOver16": [
+      24,
+      "r^2 H/delta"
+    ]
+  },
+  "IposUniformAbsoluteDifferenceUsingOriginalBackwardPrimitive": {
+    "axial": "(32+2mu) A b0/r+32 A b1/r^3+2^11 A/(r delta)+2^8 r H/delta",
+    "angular": "(48+3mu)r B b0+48 B(b1+b0)/r+(2^9 b0+2^13/delta)A/r+12288 r B/delta"
+  },
+  "outerAbsoluteIntegralForward": {
+    "axial_Xcut_to_Xplus": "gapAxial+(XL-X0Ipos)IposAxial+5gR(sqrt(2Xplus)-r)",
+    "angular_Xcut_to_Xb": "gapAngular+(XL-X0Ipos)IposAngular+(9/2)g^2R log(Xb/X0Ipos)"
+  },
+  "lateTransfer": {
+    "axial": "forward error=P0_z/sqrt(2X), original backward error=0 for XL<=X<Xplus",
+    "angular": "forward error=P0_theta/(2X), original backward error=0 for XL<=X<Xb"
+  },
+  "remaining": "OPEN_NUMERICAL_QUADRATURE_VALUES_AND_HIGHER_RECURSION_NO_SMALLNESS_ASSERTION_FOR_HUGE_OUTER_SCALES",
+  "additionalFinalJets": 0,
+  "release": "HOLD"
+}
