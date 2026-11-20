@@ -355,6 +355,121 @@ theorem axial_fixed_interval_hasDerivAt_of_joint_continuity
 
 #print axioms axial_fixed_interval_hasDerivAt_of_joint_continuity
 
+/-- Differentiation under the original fixed radial integral on the whole
+closed eta interval. Affine tangent extensions give an ordinary derivative
+on a neighborhood, and restriction recovers the inward endpoint values. -/
+theorem axial_fixed_interval_hasDerivWithinAt_of_joint_continuity
+    (f d : ℝ → ℝ → ℝ) (η a b : ℝ) (hη : η ∈ Icc (-1 : ℝ) 1)
+    (hf : ContinuousOn (fun p : ℝ × ℝ => f p.1 p.2) (Icc (-1 : ℝ) 1 ×ˢ uIcc a b))
+    (hd : ContinuousOn (fun p : ℝ × ℝ => d p.1 p.2) (Icc (-1 : ℝ) 1 ×ˢ uIcc a b))
+    (hDeriv : ∀ e ∈ Icc (-1 : ℝ) 1, ∀ X ∈ uIcc a b,
+      HasDerivWithinAt (fun e' => f e' X) (d e X) (Icc (-1 : ℝ) 1) e) :
+    HasDerivWithinAt (fun e => ∫ X in a..b, f e X)
+      (∫ X in a..b, d η X) (Icc (-1 : ℝ) 1) η := by
+  let clip (e : ℝ) := max (-1) (min 1 e)
+  let F (e X : ℝ) := f (clip e) X + (e - clip e) * d (clip e) X
+  let D (e X : ℝ) := d (clip e) X
+  have hEnds : (-1 : ℝ) < 1 := by norm_num
+  have hclip (e : ℝ) : clip e ∈ Icc (-1 : ℝ) 1 :=
+    ⟨le_max_left _ _, max_le hEnds.le (min_le_left _ _)⟩
+  have hclipMid (e : ℝ) (he : e ∈ Icc (-1 : ℝ) 1) : clip e = e := by
+    dsimp [clip]
+    rw [min_eq_right he.2, max_eq_right he.1]
+  have hclipLeft (e : ℝ) (he : e ∈ Iic (-1 : ℝ)) : clip e = -1 := by
+    dsimp [clip]
+    rw [min_eq_right (he.trans hEnds.le), max_eq_left he]
+  have hclipRight (e : ℝ) (he : e ∈ Ici (1 : ℝ)) : clip e = 1 := by
+    dsimp [clip]
+    rw [min_eq_left he, max_eq_right hEnds.le]
+  have hFmid (e : ℝ) (he : e ∈ Icc (-1 : ℝ) 1) (X : ℝ) : F e X = f e X := by
+    simp [F, hclipMid e he]
+  let lift (p : ℝ × ℝ) := (clip p.1, p.2)
+  have hContinuousClip : Continuous clip :=
+    continuous_const.max (continuous_const.min continuous_id)
+  have hContinuousLift : Continuous lift :=
+    (hContinuousClip.comp continuous_fst).prodMk continuous_snd
+  have hMaps : MapsTo lift (Metric.closedBall η 1 ×ˢ uIcc a b)
+      (Icc (-1 : ℝ) 1 ×ˢ uIcc a b) :=
+    fun p hp => ⟨hclip p.1, hp.2⟩
+  have hD : ContinuousOn (fun p : ℝ × ℝ => D p.1 p.2)
+      (Metric.closedBall η 1 ×ˢ uIcc a b) :=
+    hd.comp hContinuousLift.continuousOn hMaps
+  have hF : ContinuousOn (fun p : ℝ × ℝ => F p.1 p.2)
+      (Metric.closedBall η 1 ×ˢ uIcc a b) :=
+    (hf.comp hContinuousLift.continuousOn hMaps).add
+      ((continuous_fst.sub (hContinuousClip.comp continuous_fst)).continuousOn.mul hD)
+  have hDf (e X : ℝ) (hX : X ∈ uIcc a b) :
+      HasDerivAt (fun z => F z X) (D e X) e := by
+    have hMid (he : e ∈ Icc (-1 : ℝ) 1) :
+        HasDerivWithinAt (fun z => F z X) (D e X) (Icc (-1 : ℝ) 1) e := by
+      change HasDerivWithinAt (fun z => F z X) (d (clip e) X) _ _
+      rw [hclipMid e he]
+      exact (hDeriv e he X hX).congr_of_mem (fun z hz => hFmid z hz X) he
+    have hAffine (c : ℝ) :
+        HasDerivAt (fun z => f c X + (z - c) * d c X) (d c X) e := by
+      simpa using (hasDerivAt_const e (f c X)).add
+        (((hasDerivAt_id e).sub_const c).mul_const (d c X))
+    have hLeft (he : e ∈ Iic (-1 : ℝ)) :
+        HasDerivWithinAt (fun z => F z X) (D e X) (Iic (-1 : ℝ)) e := by
+      change HasDerivWithinAt (fun z => F z X) (d (clip e) X) _ _
+      rw [hclipLeft e he]
+      exact (hAffine (-1)).hasDerivWithinAt.congr_of_mem
+        (fun z hz => by simp only [F, hclipLeft z hz]) he
+    have hRight (he : e ∈ Ici (1 : ℝ)) :
+        HasDerivWithinAt (fun z => F z X) (D e X) (Ici (1 : ℝ)) e := by
+      change HasDerivWithinAt (fun z => F z X) (d (clip e) X) _ _
+      rw [hclipRight e he]
+      exact (hAffine 1).hasDerivWithinAt.congr_of_mem
+        (fun z hz => by simp only [F, hclipRight z hz]) he
+    rcases lt_trichotomy e (-1 : ℝ) with hlt | rfl | hgt
+    · exact (hLeft hlt.le).hasDerivAt (Iic_mem_nhds hlt)
+    · apply ((hLeft (le_refl _)).union (hMid ⟨le_refl _, hEnds.le⟩)).hasDerivAt
+      filter_upwards [Iio_mem_nhds hEnds] with z hz
+      by_cases hz' : z ≤ (-1 : ℝ)
+      · exact Or.inl hz'
+      · exact Or.inr ⟨le_of_not_ge hz', hz.le⟩
+    rcases lt_trichotomy e (1 : ℝ) with hlt | rfl | hge
+    · exact (hMid ⟨hgt.le, hlt.le⟩).hasDerivAt (Icc_mem_nhds hgt hlt)
+    · apply ((hMid ⟨hEnds.le, le_refl _⟩).union (hRight (le_refl _))).hasDerivAt
+      filter_upwards [Ioi_mem_nhds hEnds] with z hz
+      by_cases hz' : z ≤ (1 : ℝ)
+      · exact Or.inl ⟨hz.le, hz'⟩
+      · exact Or.inr (le_of_not_ge hz')
+    · exact (hRight hge.le).hasDerivAt (Ici_mem_nhds hge)
+  have hInt := axial_fixed_interval_hasDerivAt_of_joint_continuity F D η a b 1
+    (by norm_num) hF hD (fun e _ X hX => hDf e X hX)
+  have hIntegralEq (e : ℝ) (he : e ∈ Icc (-1 : ℝ) 1) :
+      (∫ X in a..b, f e X) = ∫ X in a..b, F e X := by
+    exact intervalIntegral.integral_congr (fun X _ => (hFmid e he X).symm)
+  have hResult := hInt.hasDerivWithinAt.congr_of_mem hIntegralEq hη
+  simpa [D, hclipMid η hη] using hResult
+
+/-- Every fixed successive eta derivative of a compact radial integral is the
+integral of the corresponding given derivative, including at the two
+inward endpoints. The hypotheses are per-order joint continuity and genuine
+within-interval derivatives. -/
+theorem axial_fixed_interval_all_eta_jets
+    (f : ℕ → ℝ → ℝ → ℝ) (a b : ℝ)
+    (hContinuous : ∀ k, ContinuousOn (fun p : ℝ × ℝ => f k p.1 p.2)
+      (Icc (-1 : ℝ) 1 ×ˢ uIcc a b))
+    (hDeriv : ∀ k, ∀ e ∈ Icc (-1 : ℝ) 1, ∀ X ∈ uIcc a b,
+      HasDerivWithinAt (fun e' => f k e' X) (f (k + 1) e X) (Icc (-1 : ℝ) 1) e)
+    (k : ℕ) :
+    EqOn (etaMomentJet (fun e => ∫ X in a..b, f 0 e X) k)
+      (fun e => ∫ X in a..b, f k e X) (Icc (-1 : ℝ) 1) := by
+  induction k with
+  | zero => intro e he; rfl
+  | succ k ih =>
+    intro e he
+    change derivWithin (etaMomentJet (fun t => ∫ X in a..b, f 0 t X) k) _ e = _
+    rw [derivWithin_congr ih (ih he)]
+    have h := axial_fixed_interval_hasDerivWithinAt_of_joint_continuity
+      (f k) (f (k + 1)) e a b he (hContinuous k) (hContinuous (k + 1)) (hDeriv k)
+    exact h.derivWithin ((uniqueDiffOn_Icc (by norm_num : (-1 : ℝ) < 1)) e he)
+
+#print axioms axial_fixed_interval_hasDerivWithinAt_of_joint_continuity
+#print axioms axial_fixed_interval_all_eta_jets
+
 end
 end MathScope.M3.CD
 
