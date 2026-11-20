@@ -1,7 +1,9 @@
 import Mathlib.Analysis.Calculus.Deriv.Inv
 import Mathlib.Analysis.SpecialFunctions.Exp
+import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
 import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.FunProp
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.Ring
@@ -91,6 +93,40 @@ theorem five_map_angular_gap_lower {lo hi : ℝ} (hBase : 1 / 3 ≤ Real.exp lo)
   rw [hFactor, ← mul_sub_one]
   linarith
 
+/-- The native implicit slow chart differentiates with denominator
+`1 - 2 * h * eta^2` on the admitted image. -/
+theorem five_map_slow_chart_denominator {h eta : ℝ}
+    (hh : 0 ≤ h) (hSmall : h ≤ 1 / 16) (hEta : eta ^ 2 ≤ 1) :
+    7 / 8 ≤ 1 - 2 * h * eta ^ 2 ∧ 1 - 2 * h * eta ^ 2 ≤ 1 := by
+  have hNonneg : 0 ≤ 2 * h * eta ^ 2 := by positivity
+  have hBound := mul_le_mul_of_nonneg_left hEta (show 0 ≤ 2 * h by positivity)
+  constructor <;> linarith
+
+/-- The weighted mean radial density in the axial pressure moment retains
+both original boundary terms. -/
+theorem five_map_weighted_radial_density
+    (U dU : ℝ → ℝ) (a b : ℝ)
+    (hU : ∀ x ∈ Set.uIcc a b, HasDerivAt U (dU x) x)
+    (hdU : IntervalIntegrable dU volume a b)
+    (hDerivWeight : IntervalIntegrable (fun x => x ^ 2 * dU x) volume a b)
+    (hValueWeight : IntervalIntegrable (fun x => x * U x) volume a b) :
+    (∫ x in a..b, -(x ^ 2 * dU x) - x * U x) =
+      a ^ 2 * U a - b ^ 2 * U b + (∫ x in a..b, x * U x) := by
+  rw [intervalIntegral.integral_sub hDerivWeight.neg hValueWeight,
+    intervalIntegral.integral_neg]
+  have hPoly : ∀ x ∈ Set.uIcc a b,
+      HasDerivAt (fun y : ℝ => y ^ 2) (2 * x) x := by
+    intro x _
+    simpa using (hasDerivAt_pow 2 x)
+  have hDiff : IntervalIntegrable (fun x : ℝ => 2 * x) volume a b :=
+    (by fun_prop : Continuous (fun x : ℝ => 2 * x)).intervalIntegrable a b
+  have hParts := intervalIntegral.integral_mul_deriv_eq_deriv_mul hPoly hU hDiff hdU
+  have hFactor : (fun x : ℝ => (2 * x) * U x) = (fun x => 2 * (x * U x)) := by
+    funext x
+    ring
+  rw [hFactor, intervalIntegral.integral_const_mul] at hParts
+  linarith
+
 end
 
 #print axioms five_map_radial_primitive_curl
@@ -98,5 +134,7 @@ end
 #print axioms five_map_axial_cutoff_commutator
 #print axioms five_map_axial_gap_lower
 #print axioms five_map_angular_gap_lower
+#print axioms five_map_slow_chart_denominator
+#print axioms five_map_weighted_radial_density
 
 end MathScope.M3.CD
