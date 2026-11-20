@@ -81,8 +81,15 @@ theorem exterior_localized_swirl_time_derivative
     HasDerivAt (fun s => cut ((1 - s) / tau₀) * K s)
       (cut ((1 - t) / tau₀) * Kt - cutR * K t / tau₀) t := by
   have hReverse : HasDerivAt (fun s : ℝ => 1 - s) (-1) t := by
-    simpa using (hasDerivAt_const t (1 : ℝ)).sub (hasDerivAt_id t)
-  convert (hCut.comp t (hReverse.div_const tau₀)).mul hK using 1 <;> ring
+    have hDifference := (hasDerivAt_const t (1 : ℝ)).sub (hasDerivAt_id t)
+    change HasDerivAt (fun s : ℝ => 1 - s) (0 - 1) t at hDifference
+    simpa only [zero_sub] using hDifference
+  have hProduct : HasDerivAt (fun s => cut ((1 - s) / tau₀) * K s)
+      (cutR * (-1 / tau₀) * K t + cut ((1 - t) / tau₀) * Kt) t :=
+    (hCut.comp t (hReverse.div_const tau₀)).mul hK
+  have hSlope : cutR * (-1 / tau₀) * K t + cut ((1 - t) / tau₀) * Kt =
+      cut ((1 - t) / tau₀) * Kt - cutR * K t / tau₀ := by ring
+  exact hSlope ▸ hProduct
 
 #print axioms exterior_localized_radial_force
 #print axioms exterior_localized_swirl_time_derivative
