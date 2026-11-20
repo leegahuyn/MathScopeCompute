@@ -167,6 +167,48 @@ theorem weighted_shell_endpoint_integral_cubic {a b width p d C : ℝ} {f : ℝ 
 
 #print axioms weighted_shell_endpoint_integral_cubic
 
+/-- The forward radial path stays on the zero side of the actual mean
+cutoff. The physical slow coordinates, and hence s, are fixed on the path. -/
+theorem inner_forward_path_below_mean_cutoff
+    {s r R Xa Xmean y : ℝ}
+    (hs : 0 < s) (hr : 0 ≤ r) (hrR : r ≤ R)
+    (hXa : 0 < Xa) (hXm : Xa < Xmean) (hy : y < 1)
+    (hR : R ^ 2 / (2 * s) ≤ Xa * Real.exp y) :
+    r ^ 2 / (2 * s) < Xmean * Real.exp 1 := by
+  have hsq := pow_le_pow_left₀ hr hrR 2
+  have hden : 0 ≤ 2 * s := by positivity
+  calc
+    r ^ 2 / (2 * s) ≤ R ^ 2 / (2 * s) := div_le_div_of_nonneg_right hsq hden
+    _ ≤ Xa * Real.exp y := hR
+    _ < Xa * Real.exp 1 := mul_lt_mul_of_pos_left (Real.exp_lt_exp.mpr hy) hXa
+    _ ≤ Xmean * Real.exp 1 :=
+      mul_le_mul_of_nonneg_right hXm.le (Real.exp_pos 1).le
+
+/-- Retaining the opposite radial Gaussian on the original inner collar
+costs less than one unit in the logarithm of the half-Gaussian. -/
+theorem inner_half_gaussian_opposite_exponent
+    {width t u : ℝ}
+    (hwidth : 2 ≤ width) (ht : 0 ≤ t) (htU : t ≤ 1 / 128)
+    (hu : u ≤ 1 / 4) :
+    2 / (width - t * u) ^ 2 < 1 := by
+  have htu : t * u ≤ 1 / 512 := by
+    calc
+      t * u ≤ t * (1 / 4) := mul_le_mul_of_nonneg_left hu ht
+      _ ≤ (1 / 128 : ℝ) * (1 / 4) :=
+        mul_le_mul_of_nonneg_right htU (by norm_num)
+      _ = 1 / 512 := by norm_num
+  have hfloor : (7 / 4 : ℝ) ≤ width - t * u := by linarith only [hwidth, htu]
+  have hp : 0 < (width - t * u) ^ 2 := by
+    exact pow_pos (lt_of_lt_of_le (by norm_num : (0 : ℝ) < 7 / 4) hfloor) 2
+  apply (div_lt_iff₀ hp).2
+  calc
+    2 < (7 / 4 : ℝ) ^ 2 := by norm_num
+    _ ≤ (width - t * u) ^ 2 := pow_le_pow_left₀ (by norm_num) hfloor 2
+    _ = 1 * (width - t * u) ^ 2 := by ring
+
+#print axioms inner_forward_path_below_mean_cutoff
+#print axioms inner_half_gaussian_opposite_exponent
+
 end
 
 end MathScope.M3.CD
