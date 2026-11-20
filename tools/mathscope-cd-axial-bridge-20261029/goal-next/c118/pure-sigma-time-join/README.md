@@ -1,0 +1,16 @@
+# Original early Signed pure time derivative
+
+The original source applications #22001223 and #22001224 use the same cutoff #17743734, bump #17743730, incremental pressure #22000443 and fixed radial endpoints #17743711 and #17743713 as the earlier source-stream proof. This verifier reuses the exact C108 pressure and flux recurrence and records all operand directions demanded by applying $\partial_T$ to the two native inputs, including $W_{rz,ZZT}$ in the differentiated axial pressure. The outside face terms retain the original whole pressure moment, the complete time derivative of $\rho$ and $\chi$, and the centered derivative of $J_z+c_\rho P$. The local radial stress term uses the original explicit angular and axial sources. No numerical values are inserted for the native mean, pressure, or windings.
+
+In the original coherent mode one, the same-harmonic projector retains both ordered cross terms of Primary and Forced mode one, and both of their two squares. The mode-two square is separate. Conjugate phases cancel before $T$ differentiation. The first additional physical curl derivative uses at most one further $R,Z,L$ gauge jet. The two collars use the original oriented short primitives, where $\rho$ is identically zero. In the middle the full fixed integrals and the cutoff derivative remain. The original compact initialized mean contributes $v_{TT},\gamma_{TT}$ to the linear term and $\beta_{ZTT}$ to the radial pressure density. The noncompact and compact parts feed the distinct quadratic mean products.
+
+The exact arithmetic emits the six separate conditional bounds and 22 typed wave covariance roles. Their common envelope is $\varepsilon\zeta S^{101/2}c^{-35}\exp(H/2^{108})$ on either collar, where $c$ is the local logarithmic distance to its own face. The middle has no radial pole. This is the pure $T$ derivative of the original stress inputs. The original admitted smooth-chart, fixed-domain native realisation and prior source norms are prerequisites.
+
+The original signed amplitude is $\operatorname{diag}(1/(2a_j))H^{-1}\Sigma/\varepsilon$, with the same original positive $a_j$ and positive Gram matrix $H$. The gauge introduces $\sqrt{\varepsilon}/k$ and the actual normalized cylindrical cross product. The native carrier stays fixed under $T$ and $\sqrt{\varepsilon}/(\varepsilon k)\le 1$. The four differentiated factors are $\Sigma$, the normalized core, the original reciprocal half Gaussian and the slow cutoff. The transverse and pulse cutoffs are fixed in this chart. The phase-free pure $T$ gauge gives $\varepsilon\sqrt{\zeta}S^{275/4}c^{-51}\exp(H/2^{107})$ on either collar and no middle pole. This uses the original C106 mixed frame and the same hypothesized regular realization at the guarded joins.
+
+The physical full curl of this derivative also needs $R,T$ and $Z,T$ Signed gauge inputs, along with the transverse derivative. Bounds for additional mixed directions and the finished Signed velocity, Repeat seams, full coupled energy and final jets are open.
+
+~~~text
+python -B verify_pure_sigma_time.py --goal GOAL_NEXT --mode-one PINNED_DONOR.json --mode-one-sha PIN --out FRESH.json
+python -B verify_signed_pure_time_gauge.py --goal GOAL_NEXT --runtime ORIGINAL_RUNTIME --sigma-t FRESH.json --sigma-t-sha PIN --out GAUGE.json
+~~~
