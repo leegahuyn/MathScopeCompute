@@ -112,8 +112,10 @@ theorem five_map_weighted_radial_density
     (hValueWeight : IntervalIntegrable (fun x => x * U x) volume a b) :
     (∫ x in a..b, -(x ^ 2 * dU x) - x * U x) =
       a ^ 2 * U a - b ^ 2 * U b + (∫ x in a..b, x * U x) := by
-  rw [intervalIntegral.integral_sub hDerivWeight.neg hValueWeight,
-    intervalIntegral.integral_neg]
+  have hSplit := intervalIntegral.integral_sub hDerivWeight.neg hValueWeight
+  rw [intervalIntegral.integral_neg] at hSplit
+  change (∫ x in a..b, -(x ^ 2 * dU x) - x * U x) =
+    -(∫ x in a..b, x ^ 2 * dU x) - (∫ x in a..b, x * U x) at hSplit
   have hPoly : ∀ x ∈ Set.uIcc a b,
       HasDerivAt (fun y : ℝ => y ^ 2) (2 * x) x := by
     intro x _
