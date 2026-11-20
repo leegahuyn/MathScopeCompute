@@ -1,0 +1,127 @@
+{
+  "schema": "MathScope.C104.ActualN2AbsoluteStressError/1",
+  "sourceStatus": "VERIFIED_ORIGINAL_N2_STRESS_BOTH_PRIMITIVES_AND_CONSERVATIVE_ERROR_IDENTITIES",
+  "ordinaryStatus": "CONDITIONAL_ON_C103_ORDINARY_ORIGINAL_LOWER_AND_N2_PICARD_REALIZATIONS",
+  "operandsSHA256": "215ad80b268a36ad6e6427a72ed399621f6f37835aff2f8f3fb8b57b1e17a592",
+  "previousReceiptPins": {
+    "c103": "75221f220bc472ca8bb4f600a3cb46cb76e07d4d386ba1dcf6ce254e5b86e18b",
+    "c102": "68f115ba24df5970da8c4c9e684e8a6f541078e0d8cd33178db999e05774140f",
+    "c100": "17664f981265e2373a5c16d0bf3c9dc233af48605974de1e072520b9932b71de",
+    "c101Taper": "867bc1d589edd923257c2250672ca66d1341847a914eba952ac2b645ed627f8a",
+    "c101Outer": "867fbbeac0e03f6e685c89c8e08022ac09f71dfbe0de6b1b00cb0f7c38e0af59",
+    "c102Outer": "6bbefee4ade3b5745110c72f3179c19d815c84cad691a993dc8dd2b5b4cc4193"
+  },
+  "actualStress": [
+    {
+      "component": "theta",
+      "root": 120800,
+      "raw": 120778,
+      "forwardDensity": 120790,
+      "integral": 120797,
+      "binder": 120792,
+      "forwardBoundaries": [
+        28814,
+        4756
+      ],
+      "back": 120814,
+      "backInt": 120813,
+      "backBinder": 120808,
+      "backwardBoundaries": [
+        4756,
+        28824
+      ],
+      "eta": 2,
+      "physicalSupport": [
+        28814,
+        28824
+      ],
+      "wrongForwardSignRejected": true
+    },
+    {
+      "component": "z",
+      "root": 120807,
+      "raw": 120788,
+      "forwardDensity": 120791,
+      "integral": 120804,
+      "binder": 120801,
+      "forwardBoundaries": [
+        28814,
+        4756
+      ],
+      "back": 120819,
+      "backInt": 120818,
+      "backBinder": 120815,
+      "backwardBoundaries": [
+        4756,
+        28824
+      ],
+      "eta": 2,
+      "physicalSupport": [
+        28814,
+        28824
+      ],
+      "wrongForwardSignRejected": true
+    }
+  ],
+  "conservativeIdentities": {
+    "axial": 0,
+    "angular": 0,
+    "shiftExponentRows": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "wrongN1ExponentResidualMonomials": 2
+  },
+  "literalOuterCutoff": [
+    28814,
+    28824
+  ],
+  "coefficientEnclosure": {
+    "rawTail": "E=4^-K/3 for K>=Kcondition+2",
+    "registeredStrip": "s=delta/2^19",
+    "rawXAndWeightedSecondXError": "R=2^8 C2 E/s",
+    "wholeWeightedFirstRadialFieldError": "D=R+2^10 CSelected^120 E",
+    "leadingGeometry": "B=CSelected^11; H=1+Ubound[932]+Fbound[937]",
+    "degreeAbsorptionNumeratorsForZAndTheta": [
+      5780,
+      11544
+    ],
+    "commonPrefactor": "M=2^14 Q^65 B^3 H (1+C2+CSelected^120)/s",
+    "bothPointwiseAndAbsoluteIntegralThroughXplus": "M E",
+    "sufficient256BitDepth": "max(Kcondition+2,ceil((256 log(2)+log(M))/log(4)))",
+    "sufficientDepthGives": "each original N2 pointwise and absolute dX stress error strictly <2^-256",
+    "depthMaterialized": false
+  },
+  "conservativeTransfer": {
+    "uncutSignedDifferenceIntegralAfterAllIposBumps": {
+      "axial": 0,
+      "angular": 0
+    },
+    "forwardMinusBackwardDifference": "initial uncut error prefix through Xminus divided by the original normalization",
+    "exactBackwardErrorBeyondLastIposBump": 0,
+    "sourceForwardCutoffAndFiniteInitialPrefixDefectRetained": true
+  },
+  "optionalInnerPressureSourceFromN1": {
+    "status": "CONDITIONAL_LOCAL_INHOMOGENEITY_BOUND_WITH_EXACT_SOURCE_IDENTITY",
+    "source": 118913,
+    "firstOmega": 118808,
+    "exactErrorIdentityNumeratorMonomials": 0,
+    "firstInputStrip": "s1=delta/16",
+    "N1CutoffDerivativeBound": "Bdelta=2^25 Q^64 t1^-2 (E1+R1)",
+    "OmegaIntegerCharges": [
+      2432,
+      384,
+      98304,
+      98304
+    ],
+    "N2PknownError": "2^19 Bdelta/s1^2 uniformly through aSquared on S_(s1/4)",
+    "N2PressureForcingRowError": "2*sqrt(X) times the N2 Pknown error bound",
+    "includesGlobalLowerMomentRetargeting": false
+  },
+  "remaining": "OPEN_FINITE_QUADRATURE_CENTERS_COUPLED_GLOBAL_N1_N2_ERROR_AND_ALL_ORDER_REALIZATION",
+  "finalJets": 0,
+  "release": "HOLD"
+}
