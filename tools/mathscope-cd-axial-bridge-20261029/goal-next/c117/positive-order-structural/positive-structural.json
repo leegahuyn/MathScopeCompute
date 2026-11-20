@@ -1,0 +1,284 @@
+{
+  "schema": "MathScope.C117.OriginalPositiveOrderStructuralConservation/1",
+  "originalSourceSHA256": {
+    "actual-residual-order-induction-source.mjs": "30e135309b5e0a5866917949d2ded96cce64828b1331400cb8e2260caabdc047",
+    "actual-residual-order-induction-expressions.mjs": "dfa10931c2eee87344dff4c95ecbeaf84d21c5ea5891d6452ea1f5fd4a4d9501",
+    "actual-positive-global-stress.mjs": "77227cd74000f5b6d4bec0361106af21d8020b2eee1eb979c1adc9ec3aae97d1",
+    "actual-global-conservative-moments.mjs": "e2f21cb108137a49e29cb17aa4bbf66e8971e106dbb446a276f6821a72c29221",
+    "actual-residual-order-induction-proof.mjs": "ca7149281d52e609664f90dea14c2ca2009ac982fc3087ec8714f0152de831f7",
+    "actual-positive-global-stress-kernel.mjs": "c666add7eba6063a9a701c5633f33a81a37b1ed0a4650af19a2142f76b6efb8f",
+    "actual-continuation-exact-order-one.mjs": "bdfa6fa313b09893850a567623135df699568d05f788c98c00fc9f31c6d41c72",
+    "actual-global-pressure-convolution.mjs": "169d12967c1f0a57b1f1e07f7d98c732b5831a048f7517e731bf4fe4955d6d2b",
+    "actual-continuation-exact-support.mjs": "0be8fcf8d8a70d98ab339ca1bec727efac998f4763d852b21fb5761f27450b98",
+    "actual-leading-stream-primitive.mjs": "4a9a1d28d9ee7cea2d776fe73bdeed3a95dbe62fdb50a51fa536d3ccc55667de",
+    "actual-background-residual-bridge.mjs": "a0d2823ee658aadff65171441c06c9cb0f52ac7115be948e17600d343fd5788a",
+    "actual-continuation-exact-order-two-source.mjs": "1ebf8b2b6f1df054a06309c5dc8695f2f3a867733544ab012f206bfed2969dd0",
+    "actual-continuation-exact-functions.mjs": "326b94ad5d9dc0b4bfda83a53edb7da06ed4ca30506e1ff952f77a0e59676311",
+    "actual-continuation-exact-identities.mjs": "bf7ba32a83fc5297de59cc620e24488d56a1e4c718e5b297373e78dbaf22b712"
+  },
+  "c112HistoricalManifestSHA256": "fd58cbfe5bfbef7bda341de896f9c6dab114bcd15cfffe4b4f663bfa69a5c0be",
+  "anchors": {
+    "construction": [
+      {
+        "line": 201,
+        "token": "for(let n=1;n<=order;n++)"
+      },
+      {
+        "line": 202,
+        "token": "records.slice(0,n).some(r=>!r.global.completed)"
+      },
+      {
+        "line": 216,
+        "token": "raw=sourceSystem(G,bootstrap,records,n,'actual',norm)"
+      },
+      {
+        "line": 217,
+        "token": "global=completeOrder(G,bootstrap,records,n,raw,actual,context);stress=attachStress(G,bootstrap,records,n,global)"
+      },
+      {
+        "line": 209,
+        "token": "global={order:1,F:share(r.F1"
+      },
+      {
+        "line": 214,
+        "token": "stress=bootstrap.stress"
+      },
+      {
+        "line": 113,
+        "token": "xi,eta,diagonal:[0,0,2,0,3,1]"
+      },
+      {
+        "line": 119,
+        "token": "G.picardEven(system,0,X,eta)"
+      },
+      {
+        "line": 107,
+        "token": "fields=Array.from({length:n},(_,i)=>i===0?records[0][kind]:records[i][kind])"
+      },
+      {
+        "line": 176,
+        "token": "all=[...records.slice(0,n).map(r=>r.global),tuple]"
+      },
+      {
+        "line": 178,
+        "token": "for(let i=0;i<=n;i++){const j=n-i;"
+      },
+      {
+        "line": 178,
+        "token": "theta.push(G.mul(v[i],G.add(G.mul(X,Fx[j]),F[j])),G.mul(U[i],Z(G.add(b,nu(j)),F[j])))"
+      },
+      {
+        "line": 178,
+        "token": "axial.push(G.mul(X,v[i],Ux[j]),G.mul(U[i],Z(G.add(c,nu(j)),U[j])))"
+      },
+      {
+        "line": 182,
+        "token": "thetaBody=G.mul(q(2),X,G.choose(X,Xminus,Xplus,z,rawTheta,z))"
+      },
+      {
+        "line": 182,
+        "token": "G.integral(G.substitute(body,X,t),t,a,b)"
+      },
+      {
+        "line": 183,
+        "token": "G.neg(G.div(integrate(thetaBody,Xminus,X),G.mul(q(2),X)))"
+      },
+      {
+        "line": 183,
+        "token": "G.neg(G.div(integrate(zBody,Xminus,X),G.sqrt(G.mul(q(2),X))))"
+      },
+      {
+        "line": 185,
+        "token": "backwardTheta:G.div(integrate(thetaBody,X,Xplus),G.mul(q(2),X))"
+      },
+      {
+        "line": 185,
+        "token": "backwardZ:G.div(integrate(zBody,X,Xplus),G.sqrt(G.mul(q(2),X)))"
+      }
+    ],
+    "moments": [
+      {
+        "line": 217,
+        "token": "fullPressureDerivative=currentPressure.independent.fullRadialDensity"
+      },
+      {
+        "line": 218,
+        "token": "densities=[g.U,G.mul(q(2),X,g.F),fullPressureDerivative"
+      },
+      {
+        "line": 219,
+        "token": "G.add(...allPairs.map(([i,j])=>G.mul(q(2),X,fullU[i],fullF[j])))"
+      },
+      {
+        "line": 220,
+        "token": "G.sub(G.add(...allPairs.map(([i,j])=>G.mul(fullU[i],fullU[j]))),G.mul(X,fullPressureDerivative))"
+      },
+      {
+        "line": 237,
+        "token": "allOrderedPairsRetained:true"
+      }
+    ],
+    "binding": [
+      {
+        "line": 107,
+        "token": "function actualRawCoefficient(moments,n,context)"
+      },
+      {
+        "line": 128,
+        "token": "sourceInner=verifyActualInductionInnerEquations(prepared,{order:n,kind:"
+      },
+      {
+        "line": 183,
+        "token": "actualMomentFamilies:m[n],lowerMomentFamilies:[m[n-1][1],m[n-1][0]]"
+      },
+      {
+        "line": 210,
+        "token": "originalTotal=n===1?(component==="
+      },
+      {
+        "line": 152,
+        "token": "derivativeLimits:[2]"
+      },
+      {
+        "line": 189,
+        "token": "allFixedEtaDerivatives:true"
+      },
+      {
+        "line": 280,
+        "token": "const s=live.get(result)"
+      },
+      {
+        "line": 237,
+        "token": "for(let n=1;n<=moments.request.throughOrder;n++)"
+      }
+    ],
+    "base": [
+      {
+        "line": 88,
+        "token": "M1=G.choose(X,Xkeep,lastU,G.mul(X,axisAverage),unclosedM,z)"
+      },
+      {
+        "line": 89,
+        "token": "G.add(D,inner.lambda1),M1overX"
+      },
+      {
+        "line": 126,
+        "token": "Xminus<Xkeep<Xcut<a^2"
+      },
+      {
+        "line": 127,
+        "token": "heat-compensated leading difference identity (5.19)"
+      }
+    ],
+    "leading": [
+      {
+        "line": 157,
+        "token": "original-C12-pre-U-is-same-pre-C12-source"
+      },
+      {
+        "line": 175,
+        "token": "original-global-v-is-the-same-stream-reconstruction"
+      },
+      {
+        "line": 188,
+        "token": "M_X=U gives L(v+X v_X)+d U_eta-2A eta U-2eta X U_X=0"
+      }
+    ],
+    "pressure": [
+      {
+        "line": 146,
+        "token": "commonCore:{domain:[G.zero,facts.a],F0:targets.F,U0:targets.U,v0:targets.v"
+      },
+      {
+        "line": 240,
+        "token": "The original Omega wrapper must keep its complete cutoff-local and global representatives."
+      }
+    ],
+    "support": [
+      {
+        "line": 39,
+        "token": "allEndpointsIndependentOfEta:"
+      },
+      {
+        "line": 70,
+        "token": "Xminus<Xkeep<Xcut<a^2<IposLeft<IposRight<Xv<Xplus<Xb"
+      }
+    ],
+    "firstStress": [
+      {
+        "line": 48,
+        "token": "right=component==='theta'&&n===1?Xb:Xplus"
+      },
+      {
+        "line": 49,
+        "token": "n===1?record.stress.angular:record.stress.rawTheta"
+      },
+      {
+        "line": 49,
+        "token": "n===1?record.stress.axial:record.stress.rawZ"
+      }
+    ]
+  },
+  "indeterminateOrdinaryIdentityNumerators": {
+    "freeAxialTransport": 0,
+    "freeWeightedAngularTransport": 0,
+    "sourceMassDefect": 0,
+    "independentAxialExponent": 0,
+    "independentAngularExponent": 0,
+    "timeBox": 0,
+    "axialBox": 0,
+    "weightedTime": 0,
+    "weightedPreviousDoubleZ": 0,
+    "radialViscosityAxial": 0,
+    "radialViscosityTheta": 0,
+    "pressureBoundary": 0,
+    "pressureBoundaryEta": 0
+  },
+  "negativeControls": {
+    "omittedAxialContinuityDefect": 8,
+    "missingAngularWeight": 31,
+    "missingPressureBoundary": 2,
+    "wrongPreviousIndex": 25
+  },
+  "originalExistingKernels": {
+    "total": "MathScope.OriginalPositiveConservativeTotalIdentity/1",
+    "split": "MathScope.OriginalSignedStressSplitIdentity/1",
+    "totalChecks": [
+      "thetaDensity",
+      "axialDensity",
+      "thetaTime",
+      "thetaFlux",
+      "lowerThetaInner",
+      "lowerThetaOuter",
+      "axialTime",
+      "axialFlux",
+      "lowerAxialInner",
+      "lowerAxialOuter"
+    ],
+    "finiteOrderSamplesUsed": false
+  },
+  "sourceInduction": {
+    "measure": "ordered pair index i from 0 through n, j=n-i, successful completed 5-moment rows at every earlier positive index",
+    "specializedHomogeneities": "c_i=-A+2ih, a_i=c_i-1/2; nu_n=2nh and mu_n=nu_n-2h",
+    "genuineNativeEta": "same coordinate in Xi Picard composition, whole profiles, fresh radial binders, and original source guard",
+    "leadingBase": "M0_X=U0 original full stream at N0; N1 uses original complete mass and subtracted angular identity (5.19), theta upper Xb and z upper Xplus",
+    "nAtLeastTwo": "fixed each mathematical n; same recurrence and three boundary stages, assuming ordinary regularity and admitted original source realization",
+    "pressureFifthMoment": "sum Ui Uj-X Pi_n,X; exact retained boundary [X Pi_n]",
+    "proofScope": "independent exact algebra with free indices and hash-pinned source loop structure; not a proof of arbitrary numerical materialization or convergence of infinite sum"
+  },
+  "adapterBoundary": {
+    "actualSourceFamilyEtaLimit": 2,
+    "thirdDerivativeRequest": "The shared body derivative budget is exhausted.",
+    "mathematicalZeroAllFixedOrdersRequiresOrdinaryMomentRegularity": true
+  },
+  "binderKernel": {
+    "radialBindersIndependent": true,
+    "bothLimitsFixedUnderEta": true,
+    "wrongCoordinateSubstitutionRejected": true
+  },
+  "noFiniteOrderArgumentForStructuralIdentities": true,
+  "infiniteAssembly": "OPEN",
+  "generalY": "OPEN",
+  "finalJets": 0,
+  "release": "HOLD"
+}
