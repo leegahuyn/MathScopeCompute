@@ -100,6 +100,37 @@ theorem correction_energy_of_quarter_power
     _ ≤ 2^30 * (1 / 2^28)^2 := mul_le_mul_of_nonneg_left hsq (by norm_num)
     _ = 1 / 2^26 := by norm_num
 
+/-- The radial centered integral can also be read from the backward endpoint.
+This keeps the cutoff times the whole moment even when the moment is nonzero. -/
+theorem signed_centered_tail_primitive
+    (f : ℝ → ℝ) {a r b chi : ℝ}
+    (hLeft : IntervalIntegrable f volume a r)
+    (hRight : IntervalIntegrable f volume r b) :
+    (∫ x in a..r, f x) - chi * (∫ x in a..b, f x) =
+      (1 - chi) * (∫ x in a..b, f x) - (∫ x in r..b, f x) := by
+  rw [← intervalIntegral.integral_add_adjacent_intervals hLeft hRight]
+  ring
+
+/-- On a true exterior interval the higher centered stress vanishes at any
+radial weight. Both the original whole moment and the backward support
+condition occur as independent hypotheses. -/
+theorem signed_centered_stress_exterior_zero
+    (f : ℝ → ℝ) {a r b chi w : ℝ}
+    (hLeft : IntervalIntegrable f volume a r)
+    (hRight : IntervalIntegrable f volume r b)
+    (hWhole : (∫ x in a..b, f x) = 0)
+    (hExterior : ∀ x ∈ uIcc r b, f x = 0) :
+    ((∫ x in a..r, f x) - chi * (∫ x in a..b, f x)) / w = 0 := by
+  have hTail : (∫ x in r..b, f x) = 0 := by
+    calc
+      (∫ x in r..b, f x) = ∫ _x in r..b, (0 : ℝ) :=
+        intervalIntegral.integral_congr hExterior
+      _ = 0 := by simp
+  rw [signed_centered_tail_primitive f hLeft hRight, hWhole, hTail]
+  simp
+
+#print axioms signed_centered_tail_primitive
+#print axioms signed_centered_stress_exterior_zero
 #print axioms cor85_weighted_flux_cap
 #print axioms signed_centered_radial_flux
 #print axioms signed_centered_time_cutoff
