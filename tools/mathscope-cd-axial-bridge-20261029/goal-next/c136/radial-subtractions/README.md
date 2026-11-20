@@ -1,0 +1,22 @@
+# First derivatives of the four original Repeat subtractions
+
+The active source replay reads all 20 low-mode chart rows. It matches 120 scalar calls of each first Forced family and 30 real scalar calls each of the Primary and Signed tails. The two homogeneous imaginary parts are literal zero. Harmonics three and four have no subtraction. For all 120 low-mode scalar equations the native subtraction equals the sum of the actual marked families, and the supported coefficient equals raw minus this sum. The raw native first-time application has coefficient \(-\varepsilon\) in both raw and supported expressions and zero coefficient in each subtraction. These comparisons use the authenticated 22,155,584-node protected prefix, its unchanged native definitions, and the 225,012-record active suffix.
+
+The unprojected \(f_m\) is the original same-system zero-order application of the protected pulled source. Its argument list is exactly the native lifted endpoint followed by the original fixed-pulse tuple. The corresponding \(t_m\) is the original mapped zero-data pulse value before the longitudinal cutoff. The two homogeneous tails use the same literal \(\psi_v/2\), source slow bump, native transverse bump, and uncropped tangent. Their respective amplitudes are the original positive Primary amplitude \(a\) and the Signed amplitude with the exact factor \((2a)^{-1}\), native inverse Gram determinant, and linear numerator in the two original Sigma nodes #22001223 and #22001224. The numerator has the original inverse epsilon. This factor readback and the original source weighted-amplitude identity allow both uncropped tails to be bounded through their formulas on all supported pulse points. No division by \(\psi\) or \(1-\psi\) is used.
+
+At fixed label and fixed lifted torus coordinates the operations \(R,Z,T,L\) annihilate \(\psi(v)\) and \(\psi_v(v)\). The longitudinal direction \(c_{i,\rm eff}N\) differentiates the actual native endpoint as \(\partial_v\) because \(c_{i,\rm eff}Nv=1\), \(N\xi=0\) and the original source pullback keeps its basepoint fixed under \(N\). The two original step arguments are \(20v/L_s-4\) and \(16-20v/L_s\). Their two slopes have opposite signs. The replay verifies the exact native first derivative and the second derivative coefficients \(1,-2,1\) with common factor \((20/L_s)^2\).
+
+For a slow direction \(D\in\{R,Z,T,L\}\) the four derivative products are \((1-\psi)Df_m,\ \psi_v Dt_m,\ \psi_v DA_{\rm P}/2,\ \psi_v DA_{\rm S}/2\). In the pulse direction they are
+\[
+\begin{aligned}
+ &(1-\psi)f_{m,v}-\psi_v f_m,\qquad
+ \psi_v t_{m,v}+\psi_{vv}t_m,\\
+ &(\psi_v A_{{\rm P},v}+\psi_{vv}A_{\rm P})/2,\qquad
+ (\psi_v A_{{\rm S},v}+\psi_{vv}A_{\rm S})/2 .
+\end{aligned}
+\]
+Here \(A_{\rm P}\) and \(A_{\rm S}\) are the original uncut physical tangents with their actual slow and transverse factors. The equations require one derivative of each declared \(f_m,t_m,A_{\rm P},A_{\rm S}\). The original \(f_m\) already contains differentiated Primary inputs, which are retained in the C134/C135 source hull. The outer normalized slow derivative of raw minus the subtractions gives \(+\varepsilon\partial_T\) of each subtraction. It leaves the inner original \(-\varepsilon\) coefficient in the raw time slot separate.
+
+On both original moving radial collars the raw first Forced source and its required slow and transverse derivatives have power \(1/2\) in mode one and power one in mode two. The C135 pulse recurrence supplies the original unprojected \(f_{m,v}\) with the same weights. Linear zero-data variation and the original equation \(t_{m,v}=M_m t_m-\Pi f_m\) transfer each weight to the uncut state and its first derivatives. The Primary tangent retains its half Gaussian directly. The Signed tangent uses original \(\Sigma,\Sigma_R,\Sigma_Z,\Sigma_T\) at Gaussian power one and the native positive amplitude reciprocal at power \(-1/2\); the transverse and pulse derivatives leave \(\Sigma\) unchanged. The cutoffs and phase introduce at most finite factors. Thus each of the four subtractions and each requested first derivative tends jointly to zero at \(X_a\) and \(X_b\), on the original admitted fixed-label compact paths under the retained positive frame, flat-cutoff and smooth Fourier/pulse assumptions. The supported aggregate, its raw terms, any uniform epsilon margin and final jet values have separate obligations.
+
+    python -B verify_radial_subtractions.py --work WORK --goal GOAL_NEXT --out radial-subtractions.json
