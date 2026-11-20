@@ -97,6 +97,67 @@ theorem positive_reference_root_unique {s₁ s₂ Z T a : ℝ}
     rw [hr₁, hr₂] at h
     exact (lt_irrefl _ h).elim
 
+/-- The divided physical scale equation has a unique positive root.
+The original physical power is `a = 1 - 2 * h`. -/
+theorem positive_physical_scale_exists_unique {Z T a : ℝ}
+    (ha : 0 < a) (hT : 0 ≤ T) (hnonzero : Z ≠ 0 ∨ 0 < T) :
+    ∃! q : ℝ, 0 < q ∧ Z ^ 2 / q ^ a + T / q = 1 := by
+  have hex : ∃ q : ℝ, 0 < q ∧ Z ^ 2 / q ^ a + T / q = 1 := by
+    rcases hT.lt_or_eq with ht | ht
+    · let u₀ : ℝ := (2 * Z ^ 2 + 1) ^ a⁻¹
+      let u : ℝ := max (2 * T) u₀
+      have hZ : 0 < 2 * Z ^ 2 + 1 := by positivity
+      have hu₀ : 0 < u₀ := Real.rpow_pos_of_pos hZ _
+      have hTu : 2 * T ≤ u := le_max_left _ _
+      have hTu' : T ≤ u := by linarith
+      have hu : 0 < u := ht.trans_le hTu'
+      have hu₀pow : u₀ ^ a = 2 * Z ^ 2 + 1 := by
+        dsimp [u₀]
+        rw [← Real.rpow_mul hZ.le, inv_mul_cancel₀ ha.ne', Real.rpow_one]
+      have hpow : 2 * Z ^ 2 + 1 ≤ u ^ a := by
+        rw [← hu₀pow]
+        exact Real.rpow_le_rpow hu₀.le (le_max_right _ _) ha.le
+      let g : ℝ → ℝ := fun q => Z ^ 2 / q ^ a + T / q
+      have hgT : 1 ≤ g T := by
+        dsimp [g]
+        rw [div_self ht.ne']
+        exact le_add_of_nonneg_left (div_nonneg (sq_nonneg _) (Real.rpow_nonneg ht.le _))
+      have hgu : g u ≤ 1 := by
+        have hz : Z ^ 2 / u ^ a ≤ 1 / 2 := by
+          apply (div_le_iff₀ (Real.rpow_pos_of_pos hu a)).2
+          linarith
+        have ht' : T / u ≤ 1 / 2 := by
+          apply (div_le_iff₀ hu).2
+          linarith
+        dsimp [g]
+        linarith
+      have hgc : ContinuousOn g (Set.Icc T u) := by
+        intro x hx
+        have hxpos : 0 < x := ht.trans_le hx.1
+        have hc₁ : ContinuousAt (fun y : ℝ => Z ^ 2 / y ^ a) x :=
+          continuousAt_const.div (Real.continuousAt_rpow_const x a (.inr ha.le))
+            (Real.rpow_pos_of_pos hxpos a).ne'
+        have hc₂ : ContinuousAt (fun y : ℝ => T / y) x :=
+          continuousAt_const.div continuousAt_id hxpos.ne'
+        exact (hc₁.add hc₂).continuousWithinAt
+      obtain ⟨q, hq, he⟩ :=
+        intermediate_value_Icc' hTu' hgc (show 1 ∈ Set.Icc (g u) (g T) from ⟨hgu, hgT⟩)
+      exact ⟨q, ht.trans_le hq.1, he⟩
+    · have hz : Z ≠ 0 := hnonzero.resolve_right (by linarith)
+      have hz' : 0 < Z ^ 2 := sq_pos_of_ne_zero hz
+      let q : ℝ := (Z ^ 2) ^ a⁻¹
+      have hq : 0 < q := Real.rpow_pos_of_pos hz' _
+      have hqpow : q ^ a = Z ^ 2 := by
+        dsimp [q]
+        rw [← Real.rpow_mul hz'.le, inv_mul_cancel₀ ha.ne', Real.rpow_one]
+      refine ⟨q, hq, ?_⟩
+      rw [← ht, zero_div, add_zero, hqpow, div_self hz'.ne']
+  obtain ⟨q, hq, hr⟩ := hex
+  exact ⟨q, ⟨hq, hr⟩, fun q' hq' =>
+    positive_reference_root_unique ha hT hnonzero hq'.1 hq hq'.2 hr⟩
+
+#print axioms positive_physical_scale_exists_unique
+
 /-- A replacement of the time coordinate alone can destroy existence in the
 registered bracket. This is a control for transport into nested frames. -/
 theorem zero_axial_time_below_reference_bracket {s T a : ℝ}
