@@ -86,6 +86,23 @@ theorem source_time_to_moment
   simp only [div_eq_mul_inv]
   ring
 
+/-- The native eta derivative of the moving stress operator differentiates
+the eta coefficient of the axial drift. -/
+theorem source_stress_eta_drift_commutator
+    (q X D eta alpha fe fqe fxe fee : ℝ) :
+    (q * fqe - X * fxe - D * (fe + eta * fee) - alpha * fe)
+      - (q * fqe - X * fxe - D * eta * fee - alpha * fe) = -D * fe := by
+  ring
+
+/-- The two successive logarithmic time derivatives of the original
+positive-order cutoff retain the second derivative of chi. -/
+theorem source_cutoff_second_euler
+    (n : ℕ) (h σ χ χ₁ χ₂ : ℝ) :
+    (2 * (n : ℝ) * h) * ((2 * (n : ℝ) * h) * χ + σ * χ₁) +
+        σ * ((2 * (n : ℝ) * h) * χ₁ + χ₁ + σ * χ₂) =
+      (2 * (n : ℝ) * h)^2 * χ + (4 * (n : ℝ) * h + 1) * σ * χ₁ + σ^2 * χ₂ := by
+  ring
+
 end
 end MathScope.M3.CD.AxialHigherOrderTransport
 
@@ -94,3 +111,5 @@ end MathScope.M3.CD.AxialHigherOrderTransport
 #print axioms MathScope.M3.CD.AxialHigherOrderTransport.source_axial_convection_all_orders
 #print axioms MathScope.M3.CD.AxialHigherOrderTransport.source_axial_to_moment
 #print axioms MathScope.M3.CD.AxialHigherOrderTransport.source_time_to_moment
+#print axioms MathScope.M3.CD.AxialHigherOrderTransport.source_stress_eta_drift_commutator
+#print axioms MathScope.M3.CD.AxialHigherOrderTransport.source_cutoff_second_euler
