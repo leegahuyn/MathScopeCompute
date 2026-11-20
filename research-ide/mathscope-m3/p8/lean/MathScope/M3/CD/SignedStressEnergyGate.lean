@@ -1,6 +1,39 @@
 import Mathlib
 
+open MeasureTheory Set
+
 namespace MathScope.M3.CD
+
+/-- Integrate the radial divergence before estimating the centered Signed
+primitive. Both radial endpoint values remain in the identity. -/
+theorem signed_centered_radial_flux
+    (F dF g : ℝ → ℝ) (a r b chi : ℝ)
+    (hLeft : ∀ x ∈ uIcc a r, HasDerivAt F (dF x) x)
+    (hWhole : ∀ x ∈ uIcc a b, HasDerivAt F (dF x) x)
+    (hdLeft : IntervalIntegrable dF volume a r)
+    (hdWhole : IntervalIntegrable dF volume a b)
+    (hgLeft : IntervalIntegrable g volume a r)
+    (hgWhole : IntervalIntegrable g volume a b) :
+    (∫ x in a..r, dF x + g x) - chi * (∫ x in a..b, dF x + g x) =
+      F r - F a - chi * (F b - F a) +
+        ((∫ x in a..r, g x) - chi * (∫ x in a..b, g x)) := by
+  rw [intervalIntegral.integral_add hdLeft hgLeft,
+    intervalIntegral.integral_add hdWhole hgWhole,
+    intervalIntegral.integral_eq_sub_of_hasDerivAt hLeft hdLeft,
+    intervalIntegral.integral_eq_sub_of_hasDerivAt hWhole hdWhole]
+  ring
+
+/-- Time differentiation of the centered primitive keeps the derivative of
+the original cutoff times the whole primitive. -/
+theorem signed_centered_time_cutoff
+    (left whole chi : ℝ → ℝ) {t leftT wholeT chiT : ℝ}
+    (hLeft : HasDerivAt left leftT t)
+    (hWhole : HasDerivAt whole wholeT t)
+    (hChi : HasDerivAt chi chiT t) :
+    leftT - chi t * wholeT =
+      deriv (fun x => left x - chi x * whole x) t + chiT * whole t := by
+  rw [(hLeft.sub (hChi.mul hWhole)).deriv]
+  ring
 
 /-- After the Corollary 8.5 radial integration, the axial and time fluxes and
 the target product carry an explicit factor of the fixed source epsilon.
@@ -65,6 +98,8 @@ theorem correction_energy_of_quarter_power
     _ = 1 / 2^26 := by norm_num
 
 #print axioms cor85_weighted_flux_cap
+#print axioms signed_centered_radial_flux
+#print axioms signed_centered_time_cutoff
 #print axioms correction_quarter_power_cap
 #print axioms correction_energy_of_quarter_power
 
