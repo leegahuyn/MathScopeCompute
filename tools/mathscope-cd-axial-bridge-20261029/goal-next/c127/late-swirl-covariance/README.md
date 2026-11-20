@@ -1,0 +1,11 @@
+# Original post-Signed covariance for late Temporal swirl T
+
+The fixed C126 candidate for original #22150797 requests sixteen post-Signed covariance directions. Eight spatial directions use the C105/C108 conditional covariance donor. The two mixed theta-z directions use the C125 identical-source Haar calculation. Four additional radial-theta rows, T and TL¹ through TL³, are attached here and have whole-path epsilon grade 99999/100000 after finite coefficient, band and collar-pole charges.
+
+The protected exact angular update sums Primary, first Forced mode one and Signed at the same phase. The inner angular Haar retains every opposite-sign pair in each harmonic. The radial component uses the Z derivative in its ordinary curl. The angular component uses Z on C_r and R and L on C_z. The original factorization C=chi(xi)B allows the fourth transverse derivative of the planar cutoff without any L derivative of Sigma. Both original Forced modes are replayed on 64 gauge directions and 346 initialized mean requests. The retained pre-Signed transfer includes 29 complete covariance directions. Those include the genuine RRT direction for both W^-_rtheta and W^-_rz required by the separate Sigma_RRT source recurrence. This input has grade one, band S^(101/2), one zeta, collar pole 36, and coefficient log at most 258240 H/2^128.
+
+The remaining two candidate rows are W^+_rtheta at RT and RTL², with every necessary Primary and Forced gauge direction present in the new replay. Both call for Sigma_RRT because the exact imaginary angular curl contains -C_z,R/2. An exact tangent-compatible control retains the RRT coefficient even with all lower time data zero at the test point. This identifies the raw derivative demand and makes no original coefficient lower-bound claim. The independently bound Sigma_RRT is still needed before these two post-Signed rows can be attached. Original chart admission, support and fixed-label lift, positive frame and analytic Fourier assumptions apply to all bounds. The larger direct-swirl FiveMap, full pressure and final gates remain open.
+
+```text
+python -B verify_late_swirl_covariance.py --work WORK --goal GOAL_NEXT --runtime ORIGINAL_NAVIER --pre-out pre-signed-late-swirl.json --out late-swirl-covariance.json
+```

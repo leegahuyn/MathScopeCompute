@@ -1,0 +1,22 @@
+MathScope/M3/CD/AuxiliaryFourierTime.lean:14:2: error: Type mismatch: After simplification, term
+  HasFDerivAt.comp_hasDerivAt time (ContinuousLinearMap.hasFDerivAt inverse) hSource
+ has type
+  @HasDerivAt ℝ DenselyNormedField.toNontriviallyNormedField F inst✝¹.toAddCommGroup inst✝.toModule
+    PseudoMetricSpace.toUniformSpace.toTopologicalSpace ⋯ (⇑inverse ∘ source) (inverse sourceDerivative) time
+but is expected to have type
+  @HasDerivAt ℝ DenselyNormedField.toNontriviallyNormedField F inst✝¹.toAddCommGroup inst✝.toModule
+    PseudoMetricSpace.toUniformSpace.toTopologicalSpace ⋯ (fun s => inverse (source s)) (inverse sourceDerivative) time
+MathScope/M3/CD/AuxiliaryFourierTime.lean:25:4: error: Type mismatch: After simplification, term
+  HasFDerivAt.comp_hasDerivWithinAt time (ContinuousLinearMap.hasFDerivAt inverse) hSource
+ has type
+  @HasDerivWithinAt ℝ DenselyNormedField.toNontriviallyNormedField F inst✝¹.toAddCommGroup inst✝.toModule
+    PseudoMetricSpace.toUniformSpace.toTopologicalSpace ⋯ (⇑inverse ∘ source) (inverse sourceDerivative) interval time
+but is expected to have type
+  @HasDerivWithinAt ℝ DenselyNormedField.toNontriviallyNormedField F inst✝¹.toAddCommGroup inst✝.toModule
+    PseudoMetricSpace.toUniformSpace.toTopologicalSpace ⋯ (fun s => inverse (source s)) (inverse sourceDerivative)
+    interval time
+'MathScope.M3.CD.fixed_inverse_time_derivative' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'MathScope.M3.CD.fixed_inverse_time_derivativeWithin_bound' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]
