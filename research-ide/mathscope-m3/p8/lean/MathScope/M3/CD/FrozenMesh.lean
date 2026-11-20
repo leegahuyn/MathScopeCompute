@@ -34,7 +34,7 @@ theorem original_integer_mesh_scale_positive (ell : ℕ) (h : 0 < ell) :
 their half-integer switch. The retained absolute-index summands are shared. -/
 theorem adjacent_nearest_stencils_agree {E : Type*} [AddCommMonoid E]
     (f : ℤ → ℝ → E) (k : ℤ)
-    (hzero : ∀ j t, (3 : ℝ) / 4 ≤ |t - (j : ℝ)| → f j t = 0) :
+    (hzero : ∀ (j : ℤ) (t : ℝ), (3 : ℝ) / 4 ≤ |t - (j : ℝ)| → f j t = 0) :
     Set.EqOn (fun t => f (k - 1) t + f k t + f (k + 1) t)
       (fun t => f k t + f (k + 1) t + f (k + 2) t)
       (Set.Ioo ((k : ℝ) + 1 / 4) ((k : ℝ) + 3 / 4)) := by
