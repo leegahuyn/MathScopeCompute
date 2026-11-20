@@ -30,6 +30,31 @@ theorem hasDerivAt_shellLogWeight {a b width p x : ℝ}
     rfl
   · (try simp) <;> field_simp [hx.ne', hw] <;> ring
 
+/-- First derivative of the Gaussian multiplied by a logarithmic pole. -/
+theorem signed_gaussian_pole_hasDerivAt {a p x : ℝ} (hx : 0 < x) :
+    HasDerivAt (fun y : ℝ => Real.exp (-a / y ^ 2 - p * Real.log y))
+      (Real.exp (-a / x ^ 2 - p * Real.log x) * (2 * a / x ^ 3 - p / x)) x := by
+  have hId : HasDerivAt (fun y : ℝ => y) 1 x := hasDerivAt_id x
+  have hInv := (hasDerivAt_const x (-a)).div (hId.pow 2) (pow_ne_zero 2 hx.ne')
+  have hLog := (Real.hasDerivAt_log hx.ne').const_mul p
+  have hArg : HasDerivAt (fun y : ℝ => -a / y ^ 2 - p * Real.log y)
+      (2 * a / x ^ 3 - p / x) x := by
+    convert hInv.sub hLog using 1
+    · funext y
+      rfl
+    · (try simp) <;> field_simp [hx.ne'] <;> ring
+  simpa only [Function.comp_def] using
+    (Real.hasDerivAt_exp (-a / x ^ 2 - p * Real.log x)).comp x hArg
+
+/-- The second derivative multiplier after extracting the sixth-order pole. -/
+theorem signed_gaussian_pole_second_multiplier {a p x : ℝ} (hx : x ≠ 0) :
+    ((2 * a / x ^ 3 - p / x) ^ 2 + (-6 * a / x ^ 4 + p / x ^ 2)) * x ^ 6 =
+      4 * a ^ 2 - (4 * p + 6) * a * x ^ 2 + p * (p + 1) * x ^ 4 := by
+  field_simp [hx] <;> ring
+
+#print axioms signed_gaussian_pole_hasDerivAt
+#print axioms signed_gaussian_pole_second_multiplier
+
 /-- On the original logarithmic collar the elementary pointwise envelope is
 largest at the current radius. The condition keeps the full opposite-face
 Gaussian, so the endpoint comparison has constant one. -/
