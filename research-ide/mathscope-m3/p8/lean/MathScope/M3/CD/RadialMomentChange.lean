@@ -13,8 +13,9 @@ theorem radial_moment_change_of_variables
       s * (∫ X in a ^ 2 / (2 * s)..b ^ 2 / (2 * s), f X) := by
   have hJacobian (r : ℝ) :
       HasDerivAt (fun u : ℝ => u ^ 2 / (2 * s)) (r / s) r := by
-    convert (((hasDerivAt_id r).pow 2).div_const (2 * s)) using 1 <;>
-      norm_num [id] <;> field_simp [hs.ne'] <;> ring
+    convert (((hasDerivAt_id r).pow 2).div_const (2 * s)) using 1
+    norm_num [id]
+    field_simp [hs.ne']
   have hSub :
       (∫ r in a..b, f (r ^ 2 / (2 * s)) * (r / s)) =
         ∫ X in a ^ 2 / (2 * s)..b ^ 2 / (2 * s), f X :=
@@ -25,7 +26,7 @@ theorem radial_moment_change_of_variables
         ∫ r in a..b, s * (f (r ^ 2 / (2 * s)) * (r / s)) := by
       apply intervalIntegral.integral_congr
       intro r _
-      field_simp [hs.ne'] <;> ring
+      field_simp [hs.ne']
     _ = s * (∫ X in a ^ 2 / (2 * s)..b ^ 2 / (2 * s), f X) := by
       rw [intervalIntegral.integral_const_mul, hSub]
 
