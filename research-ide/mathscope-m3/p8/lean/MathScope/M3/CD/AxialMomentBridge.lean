@@ -407,8 +407,8 @@ theorem axial_fixed_interval_hasDerivWithinAt_of_joint_continuity
       exact (hDeriv e he X hX).congr_of_mem (fun z hz => hFmid z hz X) he
     have hAffine (c : ℝ) :
         HasDerivAt (fun z => f c X + (z - c) * d c X) (d c X) e := by
-      simpa using (hasDerivAt_const e (f c X)).add
-        (((hasDerivAt_id e).sub_const c).mul_const (d c X))
+      simpa only [id_eq, one_mul] using
+        (((hasDerivAt_id e).sub_const c).mul_const (d c X)).const_add (f c X)
     have hLeft (he : e ∈ Iic (-1 : ℝ)) :
         HasDerivWithinAt (fun z => F z X) (D e X) (Iic (-1 : ℝ)) e := by
       change HasDerivWithinAt (fun z => F z X) (d (clip e) X) _ _
@@ -423,18 +423,14 @@ theorem axial_fixed_interval_hasDerivWithinAt_of_joint_continuity
         (fun z hz => by simp only [F, hclipRight z hz]) he
     rcases lt_trichotomy e (-1 : ℝ) with hlt | rfl | hgt
     · exact (hLeft hlt.le).hasDerivAt (Iic_mem_nhds hlt)
-    · apply ((hLeft (le_refl _)).union (hMid ⟨le_refl _, hEnds.le⟩)).hasDerivAt
-      filter_upwards [Iio_mem_nhds hEnds] with z hz
-      by_cases hz' : z ≤ (-1 : ℝ)
-      · exact Or.inl hz'
-      · exact Or.inr ⟨le_of_not_ge hz', hz.le⟩
+    · apply ((hLeft (by simp)).union (hMid ⟨le_refl _, hEnds.le⟩)).hasDerivAt
+      rw [Iic_union_Icc_eq_Iic hEnds.le]
+      exact Iic_mem_nhds hEnds
     rcases lt_trichotomy e (1 : ℝ) with hlt | rfl | hge
     · exact (hMid ⟨hgt.le, hlt.le⟩).hasDerivAt (Icc_mem_nhds hgt hlt)
-    · apply ((hMid ⟨hEnds.le, le_refl _⟩).union (hRight (le_refl _))).hasDerivAt
-      filter_upwards [Ioi_mem_nhds hEnds] with z hz
-      by_cases hz' : z ≤ (1 : ℝ)
-      · exact Or.inl ⟨hz.le, hz'⟩
-      · exact Or.inr (le_of_not_ge hz')
+    · apply ((hMid ⟨hEnds.le, le_refl _⟩).union (hRight (by simp))).hasDerivAt
+      rw [Icc_union_Ici_eq_Ici hEnds.le]
+      exact Ici_mem_nhds hEnds
     · exact (hRight hge.le).hasDerivAt (Ici_mem_nhds hge)
   have hInt := axial_fixed_interval_hasDerivAt_of_joint_continuity F D η a b 1
     (by norm_num) hF hD (fun e _ X hX => hDf e X hX)
