@@ -1,0 +1,119 @@
+{
+  "endpoint": {
+    "ownBandOffset": "0",
+    "referenceChart": "closed [1/2,2]",
+    "sOwn": "1",
+    "sRef": "1/2",
+    "strictLessThanOne": false,
+    "strictReferenceDistance": "1"
+  },
+  "finalJets": 0,
+  "fiveOuterGuards": {
+    "actualCentralRowGuards": [
+      [
+        17732770,
+        3617,
+        28826
+      ],
+      [
+        17742247,
+        17735192,
+        120836
+      ],
+      [
+        17742249,
+        17735192,
+        120836
+      ],
+      [
+        17742251,
+        17735192,
+        120836
+      ],
+      [
+        17742182,
+        17735192,
+        120836
+      ]
+    ],
+    "allFourOffsetGuardsStrictlyInside": "(-3/4,3/4)",
+    "bothSignedRowsPresent": true,
+    "centralRowKey": "0:0:0:0",
+    "meshR": "offset in [-1/2,1/2) by nearest-integer definition",
+    "meshT": "0",
+    "meshZ": "0",
+    "ownBand": "0",
+    "shell": "Xa<(Xa+Xb)/2<Xb"
+  },
+  "genericHypotheses": [
+    "integer k>=ell0+4",
+    "k belongs to the original nonempty N window",
+    "0<Xa<Xb and X=(Xa+Xb)/2",
+    "Z=0 and positive original source scales"
+  ],
+  "nearestProposedRule": {
+    "bothHalfTies": "offset = -1/2",
+    "ellRef": "floor(-log2(q)+1/2)",
+    "implementedInNativeSource": false,
+    "offsetRange": "[-1/2,1/2)",
+    "otherRequirements": [
+      "source N-window membership",
+      "original q* and next-scale conditions",
+      "admitted eta/shell/representative and physical guards",
+      "consistent chart choice and join across label seams"
+    ],
+    "sufficesForStrictAdmission": "|t-ellRef|<=1/2<1, hence 1/2<q/Qref<2"
+  },
+  "physicalPoint": {
+    "Qown": "2^(-k-1)",
+    "Qref": "2^(-k)",
+    "X": "(Xa+Xb)/2",
+    "ownSlow": "(sqrt(Xa+Xb),0,1)",
+    "q": "2^(-k-1)",
+    "r": "sqrt(Qown)*sqrt(Xa+Xb)",
+    "referenceSlow": "(sqrt((Xa+Xb)/2),0,1/2)",
+    "tau": "q",
+    "z": "0"
+  },
+  "pins": {
+    "bump": [
+      "runtime",
+      "mathscope-m2/navier/actual-covariance-global-assembly.mjs",
+      "bd0f09f78a2f93cad9fdb679ba25509ecb2891ba86eee1bc3e57df6da74e37cc"
+    ],
+    "chart": [
+      "runtime",
+      "mathscope-m3/navier/source-global-band.mjs",
+      "a0992d899c921dae3f45ed1ff306a935c61fa5841666692b89d39ce88b8c0b5b"
+    ],
+    "guard": [
+      "runtime",
+      "mathscope-m3/navier/source-global-current.mjs",
+      "b7ec3b426589c207973c62a9debd19adb54ce66c15dd625c963ed56a4d697a36"
+    ],
+    "live": [
+      "work",
+      "continuation133/live-reference/partial.json",
+      "947262a5685a7cf4ce60061e4c428c590484da10b292918a4972566bcd50bf2e"
+    ],
+    "partition": [
+      "runtime",
+      "mathscope-m2/navier/actual-covariance-source-certificate.mjs",
+      "c5b619ac5b4377c93daefefc65f6ddc4336a7ffac3a9118981a32969890a0681"
+    ],
+    "registry": [
+      "work",
+      "continuation132/hosted-44682703381/active-n3-repeat-forced-source/original-source-functions.json",
+      "62548608d4e2555e1dbfd2e441d8fa0c8a7dc5c22817d61fa1c57a42b41ae5ce"
+    ],
+    "window": [
+      "runtime",
+      "mathscope-m3/navier/global-source-index.mjs",
+      "a3da73e5ad4d853dff04942ea513a3f8ab9fb1abf2b9e30f7eecf3956aaa6a2f"
+    ]
+  },
+  "release": "HOLD",
+  "schema": "MathScope.C138.ReferenceThresholdControl/1",
+  "scope": "Exact own-band outer guard control for a generic valid source window. No claim that the physical auxiliary torus reaches a signed rectangle or that any complete wave is nonzero. No claim of actual source policy, all-chart chart selection, or smooth global reindexing.",
+  "status": "EXACT_SOURCE_BOUND_ENDPOINT_CONTROL_NEAREST_POLICY_CONDITIONAL"
+}
