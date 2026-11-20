@@ -41,7 +41,7 @@ def verify_members(raw, parse, bound):
     assert raw(PACKETS[2] + "phi-eta.json") == raw(PACKETS[2] + "phi-eta-repeat.json")
     assert raw(PACKETS[3] + "natural-range.json") == raw(PACKETS[3] + "natural-range-repeat.json")
     natural = parse(PACKETS[3] + "natural-range.json")
-    assert natural["calls"] == 567 and natural["signatures"] == 41
+    assert len(natural["calls"]) == 567 and len(natural["signatures"]) == 41
     assert natural["originalNumericalAcceptanceIncrement"] == 0 and natural["release"] == "HOLD"
     assert parse("c141/hosted-registration-status.json")["databaseId"] == 44698543085
     for leaf in ("hosted-lean.json", "hosted-registration-status.json",
