@@ -31,7 +31,9 @@ export async function runAnchoredRepeatCandidate({navier,pde,firstCycle,context,
     if (error.code !== 'EEXIST') throw error;
   }
   assert.equal(sha(await readFile(path)), ORIGINAL_SHA, 'Restore the pinned original repeat source in the disposable runner.');
-  const receipt = await emitActiveN3RepeatCandidate({navier,pde,firstCycle,context,out,mode:'metadata'});
+  const receipt = await emitActiveN3RepeatCandidate({
+    navier,pde,firstCycle,context,out,mode,deferExport:mode === 'full-source',
+  });
   if (mode === 'full-source') {
     const snapshot = await exportCoupledSnapshot(navier,pde.G,{
       dir: resolve(out,'active-n3-repeat-forced-source'), roots:receipt.rootIds,

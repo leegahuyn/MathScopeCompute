@@ -42,7 +42,7 @@ function gaugeRoots(graph, count) {
 const writeNewJSON = (out, name, value) => writeFile(join(out,name), JSON.stringify(value,null,2)+'\n', {flag:'wx'});
 
 export async function emitActiveN3RepeatCandidate({
-  navier, pde, out, firstCycle, context, mode = 'metadata', maxNodes = 35_000_000,
+  navier, pde, out, firstCycle, context, mode = 'metadata', deferExport = false, maxNodes = 35_000_000,
 }) {
   assert.ok(['metadata','full-source'].includes(mode));
   assert.ok(Number.isSafeInteger(maxNodes) && 0 < maxNodes && maxNodes <= 35_000_000);
@@ -105,7 +105,7 @@ export async function emitActiveN3RepeatCandidate({
     templates, systems, rootIds:[...rootIds], scope:result.scope, graphSnapshot:null,
   };
   await writeNewJSON(out,'active-n3-repeat-forced-candidate.json',receipt);
-  if (mode==='full-source') {
+  if (mode==='full-source' && !deferExport) {
     const {exportOriginalSourceGraph}=await load('export_original_source_graph.mjs');
     const snapshot=await exportOriginalSourceGraph(G,{
       definitionGraph:G, dir:join(out,'active-n3-repeat-forced-source'), roots:receipt.rootIds,

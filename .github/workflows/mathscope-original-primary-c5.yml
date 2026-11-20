@@ -33,7 +33,7 @@ jobs:
       fail-fast: false
       matrix: ${{ fromJSON(inputs.with_forced && '{"include":[{"prefix":3,"nodes":25000000}]}' || '{"include":[{"prefix":3,"nodes":20000000},{"prefix":4,"nodes":25000000}]}') }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 135
+    timeout-minutes: ${{ inputs.through_first_cycle && github.event_name == 'workflow_dispatch' && github.event.inputs.repeat_mode == 'full-source' && 195 || 135 }}
     env:
       ORIGINAL_SOURCE_COMMIT: f8cb4034e86d7b669d52a6f2248aebba156b51b5
       SOURCE_PREFIX: ${{ matrix.prefix }}
@@ -250,6 +250,8 @@ jobs:
           echo "MATHSCOPE_FIRST_CYCLE_OVERLAY_LOADER=$(realpath "$cycle/load_first_cycle_overlays.mjs")" >> "$GITHUB_ENV"
       - name: Build the same-family original C8, weighted C6 and Primary C5
         working-directory: original
+        env:
+          MATHSCOPE_FULL_REPEAT_REPLAY: ${{ inputs.through_first_cycle && github.event_name == 'workflow_dispatch' && github.event.inputs.repeat_mode == 'full-source' && '1' || '0' }}
         run: |
           set -euo pipefail
           ulimit -s 16384

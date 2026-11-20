@@ -39,9 +39,11 @@ export async function emitFirstSpatial({navier, out, pde, mode, splitOutcome, re
   assert.equal(result.gaugeDifferenceRootsForIndependentCheck.length, 3);
   const output = join(out, 'first-correction-spatial-ingress.json');
   const record = {...result, mode, sameRunDirectSplitOutcome: splitOutcome, completeNativeExport: null};
+  const exportWithRepeat = mode === 'full-source' && process.env.MATHSCOPE_FULL_REPEAT_REPLAY === '1';
+  if (exportWithRepeat) record.spatialRecordsExportedWithRepeat = true;
   // Preserve this valid structural receipt even if the optional streamed export fails.
   await writeFile(output, JSON.stringify(record, null, 2) + '\n', {flag:'wx'});
-  if (mode === 'full-source') {
+  if (mode === 'full-source' && !exportWithRepeat) {
     const roots = [...new Set([...operands, ...result.gaugeDifferenceRootsForIndependentCheck,
       ...result.spatialJetAtoms.map(row => row.root),
       result.input.temporalDesiredAxial, ...result.input.temporalRawCenteredSources,

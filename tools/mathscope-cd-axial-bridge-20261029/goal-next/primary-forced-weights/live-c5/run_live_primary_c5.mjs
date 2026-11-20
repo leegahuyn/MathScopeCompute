@@ -28,7 +28,10 @@ assert.match(process.env.GITHUB_SHA ?? '', /^[a-f0-9]{40}$/);
 mkdirSync(out, {recursive: true});
 const nodeBudget = Number(process.env.SOURCE_NODE_BUDGET ?? 16_000_000);
 assert([16_000_000, 20_000_000, 24_000_000, 25_000_000].includes(nodeBudget));
-const limits = {rssBytes: 12 * 1024 ** 3, durationMinutes: 120, familyNodes: nodeBudget, bandNodes: nodeBudget};
+const fullRepeatReplay = process.env.MATHSCOPE_FULL_REPEAT_REPLAY === '1';
+if (fullRepeatReplay) assert(prefix === 3 && process.env.MATHSCOPE_THROUGH_FIRST_CYCLE === 'true');
+const limits = {rssBytes: 12 * 1024 ** 3, durationMinutes: fullRepeatReplay ? 175 : 120,
+  familyNodes: nodeBudget, bandNodes: nodeBudget};
 const started = Date.now();
 let lastGC = 0;
 let ownedBackgroundGraph;
