@@ -1,0 +1,7 @@
+# High original Forced mode-one inputs and projected transfer
+
+The first verifier computes 2,970 exact curl-pair cases in the original high Signed pressure input. It retains all Fourier pairing and cylindrical shifts and produces 50 sufficient (R,Z,L) directions. The largest slow directions are (0,9,0) and (1,8,0). No former C2-specific radial integrations by parts are assumed for this higher inventory.
+
+The second verifier replays the original 2,620 retained mode-one monomials and the 360 regrouped high-frequency terms. The complete supplied recipe uses 273 initialized-mean requests, including the beta, v and gamma axial tenth derivatives. The old compact P and Jz go to order 10, and Jtheta to order 11. The sufficient pre-FiveMap/Temporal closure reaches 1,213 Primary covariance requests, including the two pure Wrz axial order 14 roles at transverse orders 0 and 2. A sufficient next donor is therefore original Primary order 15 with original background order 16. The assembly uses ordinary upper-bound slopes for unresolved mean and Primary coefficient inputs and explicitly records those premises.
+
+The third verifier replays the exact original ordered Volterra coefficient recurrence and the phase-free cross-product coefficient for all 50 requests. If the full raw forcing has its stated uniform epsilon grade, log bound and original outer weights, the conditional phase-free potential has grade 3/2−2κ. Its largest outer pole after factoring the Gaussian is 75/2. The source raw amplitudes, inner seam conditions and original physical attachment remain open.

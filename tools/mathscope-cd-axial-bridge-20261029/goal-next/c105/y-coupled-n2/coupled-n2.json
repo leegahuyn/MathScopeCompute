@@ -1,0 +1,124 @@
+{
+  "schema": "MathScope.C105.ActualCoupledN2WholeCoefficientError/1",
+  "sourceStatus": "VERIFIED_ORIGINAL_THREE_FORCING_ROWS_FIXED_MATRIX_WHOLE_OMEGA_AND_FIVE_MOMENT_RETARGETING",
+  "ordinaryStatus": "CONDITIONAL_ON_COMMON_ORIGINAL_LEADING_N1_N2_AND_FIXED_BOUND_ORDINARY_REALIZATION",
+  "operandsSHA256": "2f6cdbce5ee4a64a71b18f717b4234d6a45201f7ec28b9164be6ff7a183b8d83",
+  "previousReceiptPins": {
+    "c100": "17664f981265e2373a5c16d0bf3c9dc233af48605974de1e072520b9932b71de",
+    "c102": "68f115ba24df5970da8c4c9e684e8a6f541078e0d8cd33178db999e05774140f",
+    "c103": "75221f220bc472ca8bb4f600a3cb46cb76e07d4d386ba1dcf6ce254e5b86e18b",
+    "c104": "9b94457853b46d03a64439173a414a5b614b814ddbbc92a808e0b1c0fc1be993"
+  },
+  "systems": {
+    "actual": 3,
+    "auxiliary": 2
+  },
+  "originalNorms": {
+    "C1": 24818,
+    "M1": 24848,
+    "C2": 118568,
+    "Kcondition": 118577,
+    "s": 117678,
+    "aSquared": 24805
+  },
+  "originalLowerOmega": {
+    "inner": 118808,
+    "outer": 120374,
+    "switch": 120375,
+    "outerOmegaTermCount": 7,
+    "pressureSource": 120386,
+    "wholeLowerHistories": [
+      120390,
+      120395,
+      120402
+    ]
+  },
+  "sourceCutoff": {
+    "X": 4756,
+    "eta": 2,
+    "Xcut": 28823,
+    "Xv": 3293,
+    "Xplus": 28824,
+    "lastIpos": 117099
+  },
+  "exactForcingDifferenceNumerators": [
+    0,
+    0,
+    0
+  ],
+  "coupledMomentNumerators": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "ordinaryLeadingEnvelope": {
+    "U": 2323,
+    "F": 2329,
+    "radialOrder": 2,
+    "etaOrder": 3,
+    "arithmeticDagNodes": 1968,
+    "arithmeticOperations": {
+      "add": 695,
+      "exp": 13,
+      "integer_power": 110,
+      "inverse": 29,
+      "log_positive": 3,
+      "multiply": 964,
+      "rational": 122,
+      "source_parameter": 24,
+      "sqrt_positive": 8
+    }
+  },
+  "localStability": {
+    "matrixCap": "Ma=2^20 Q^4",
+    "resolventShape": "same source homogeneous diagonal Volterra operator",
+    "forcingError": "Fd=2^25 H1 e/s1^2; s1=delta/16; e=2^25 Q^64 t1^-2 (E1+R1)",
+    "H1": "2^12 (1+C1)(1+M1) Q^64/(t1*s1)",
+    "pairedFiniteAndInfiniteError": "2a Fd on original S_s, a=sqrt(aSquared)",
+    "rawCoupledFiniteError": "E2=4^-K/3+2*a*Fd when K>=original Kcondition",
+    "maxActualMatrixRowAfterQSquaredOverDelta": 22610,
+    "localZZIntegerCharge": 5632,
+    "localPerturbationRatio": "<2^44 Q^-26<1/2"
+  },
+  "wholeCoupledTransfer": {
+    "errorNorm": "sup_{X>=0,eta in [-1,1]} of each ordinary value",
+    "realLeading": "B=CSelected^11; L0=2^12*(1+Ubound[2323]+Fbound[2329])",
+    "lowerC1error": "D1=2^14 e/s1^3<=1",
+    "trueAndFiniteN1ValueC1": "N1=2^50 Q^2 Hm; Hm=2^17 B^3 L0^2",
+    "lowerThreeMomentBodyErrorC1": "DL=2^18 B^2 L0^2 N1 D1",
+    "localRawN2ErrorC1": "E2s=4 E2/s",
+    "allFiveIncomingMomentErrorsC1": "Merr=2^6 L0 E2s+B DL",
+    "wholeF2U2ErrorC1": "S2=E2s+2^48 Q^2 Merr",
+    "uniformNineOutputsError": "Z=2^9 B L0 S2+B DL",
+    "allNine": [
+      "F2",
+      "U2",
+      "R F2",
+      "M2",
+      "M2/X",
+      "V2",
+      "v2",
+      "Pi2",
+      "Pi2_X"
+    ],
+    "sameExteriorPressureAndCoefficientErrorsZeroAfterLastIpos": true,
+    "twoAdaptiveDepths": "Z=A_K*(4^-K/3)+A_N*e; choose N and K from the positive closed expressions in README",
+    "combinedPointwiseError": "strictly below 2^-256 after specified adaptive depths",
+    "retainsPressureAndMassBetweenXcutAndIpos": true,
+    "depthsMaterialized": false,
+    "v0DerivativeIntegerCharges": [
+      10,
+      27,
+      70
+    ],
+    "ZandTIntegerCharges": [
+      69,
+      21
+    ]
+  },
+  "remaining": "OPEN_COUPLED_STRESS_REGULARITY_NUMERICAL_CENTERS_HIGHER_N_AND_ALL_JETS",
+  "finalJets": 0,
+  "release": "HOLD"
+}
