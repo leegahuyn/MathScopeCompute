@@ -26,6 +26,20 @@ private theorem gaussianTail (n : ℕ) {a y : ℝ} (ha : 0 < a) (hy : 0 < y) :
       rw [mul_assoc, ← mul_pow, hscale]
     _ ≤ (n.factorial : ℝ) * (a⁻¹) ^ n := mul_le_mul_of_nonneg_right htail (by positivity)
 
+/-- A fixed Gaussian pays for a finite pole and any specified even power
+of decay at the same face. -/
+theorem gaussianPole_even_decay (n m : ℕ) {a y : ℝ}
+    (ha : 0 < a) (hy : 0 < y) :
+    Real.exp (-(a / y ^ 2)) * ((y ^ 2)⁻¹) ^ n ≤
+      ((n + m).factorial : ℝ) * (a⁻¹) ^ (n + m) * (y ^ 2) ^ m := by
+  have hcancel : ((y ^ 2)⁻¹) ^ (n + m) * (y ^ 2) ^ m = ((y ^ 2)⁻¹) ^ n := by
+    rw [pow_add, mul_assoc, ← mul_pow, inv_mul_cancel₀ (pow_ne_zero 2 hy.ne'), one_pow, mul_one]
+  calc
+    Real.exp (-(a / y ^ 2)) * ((y ^ 2)⁻¹) ^ n =
+        (Real.exp (-(a / y ^ 2)) * ((y ^ 2)⁻¹) ^ (n + m)) * (y ^ 2) ^ m := by
+      rw [mul_assoc, hcancel]
+    _ ≤ _ := mul_le_mul_of_nonneg_right (gaussianTail (n + m) ha hy) (by positivity)
+
 /-- The minimum of the two logarithmic distances and one gives the three
     original branches of the annular Gaussian absorption bound. -/
 theorem annularGaussianPole (n : ℕ) {a b y d : ℝ}
@@ -81,6 +95,7 @@ theorem annularGaussianPole (n : ℕ) {a b y d : ℝ}
       linarith
 
 #print axioms annularGaussianPole
+#print axioms gaussianPole_even_decay
 
 end
 
