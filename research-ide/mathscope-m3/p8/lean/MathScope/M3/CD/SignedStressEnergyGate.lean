@@ -129,6 +129,60 @@ theorem signed_centered_stress_exterior_zero
   rw [signed_centered_tail_primitive f hLeft hRight, hWhole, hTail]
   simp
 
+private theorem integral_eq_of_supported_interior
+    (f : ℝ → ℝ) {a l u b : ℝ}
+    (hal : a ≤ l) (hub : u ≤ b)
+    (hint : ∀ x y : ℝ, IntervalIntegrable f volume x y)
+    (hlo : ∀ x ≤ l, f x = 0) (hhi : ∀ x ≥ u, f x = 0) :
+    (∫ x in a..b, f x) = ∫ x in l..u, f x := by
+  have hleft : (∫ x in a..l, f x) = 0 := by
+    calc
+      (∫ x in a..l, f x) = ∫ x in a..l, (0 : ℝ) := by
+        apply intervalIntegral.integral_congr
+        intro x hx
+        rw [Set.uIcc_of_le hal] at hx
+        exact hlo x hx.2
+      _ = 0 := by simp
+  have hright : (∫ x in u..b, f x) = 0 := by
+    calc
+      (∫ x in u..b, f x) = ∫ x in u..b, (0 : ℝ) := by
+        apply intervalIntegral.integral_congr
+        intro x hx
+        rw [Set.uIcc_of_le hub] at hx
+        exact hhi x hx.1
+      _ = 0 := by simp
+  rw [← intervalIntegral.integral_add_adjacent_intervals (hint a l) (hint l b),
+    ← intervalIntegral.integral_add_adjacent_intervals (hint l u) (hint u b),
+    hleft, hright, zero_add, add_zero]
+
+/-- A centered radial primitive is independent of the enclosing interval
+when the transported actual density is zero on the two excluded tails. -/
+theorem centered_radial_primitive_same_on_two_envelopes
+    (f : ℝ → ℝ) {a b c d l u r chi : ℝ}
+    (hal : a ≤ l) (hcl : c ≤ l)
+    (hub : u ≤ b) (hud : u ≤ d)
+    (hint : ∀ x y : ℝ, IntervalIntegrable f volume x y)
+    (hlo : ∀ x ≤ l, f x = 0) (hhi : ∀ x ≥ u, f x = 0) :
+    (∫ x in a..r, f x) - chi * (∫ x in a..b, f x) =
+      (∫ x in c..r, f x) - chi * (∫ x in c..d, f x) := by
+  have hleft (w : ℝ) (hw : w ≤ l) :
+      (∫ x in w..r, f x) = ∫ x in l..r, f x := by
+    have hzero : (∫ x in w..l, f x) = 0 := by
+      calc
+        (∫ x in w..l, f x) = ∫ x in w..l, (0 : ℝ) := by
+          apply intervalIntegral.integral_congr
+          intro x hx
+          rw [Set.uIcc_of_le hw] at hx
+          exact hlo x hx.2
+        _ = 0 := by simp
+    rw [← intervalIntegral.integral_add_adjacent_intervals (hint w l) (hint l r),
+      hzero, zero_add]
+  rw [hleft a hal, hleft c hcl,
+    integral_eq_of_supported_interior f hal hub hint hlo hhi,
+    integral_eq_of_supported_interior f hcl hud hint hlo hhi]
+
+#print axioms centered_radial_primitive_same_on_two_envelopes
+
 /-- The endpoint-zero primitive is fixed by radial centering of its derivative. -/
 theorem late_centered_radial_derivative
     (psi dPsi : ℝ → ℝ) {a r b chi : ℝ}
