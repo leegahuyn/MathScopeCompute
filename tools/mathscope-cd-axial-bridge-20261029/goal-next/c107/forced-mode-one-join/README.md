@@ -1,0 +1,14 @@
+# Original high Mode One phase-free gauge
+
+This calculation uses the 50 exact ordinary \((R,Z,L)\) requests from the original 2,970 pressure-pair cases. The independent 22,155,584-node C94 replay reproduced the ten charts and all 60 signed scalar cancellation checks. Its original homogeneous real block and cylindrical curl-divergence cancel before differentiation. The imaginary homogeneous block, ordinary pressure, transported eikonal, single-carrier viscosity, mean transport and divergence, and ordinary time and diffusion remain explicit.
+
+The direction-by-direction products use all 273 typed initialized-mean rows, the 110 original Primary roles through velocity order eleven, the physical background \(b/\varepsilon\) through ten, and the original fixed-label guard and geometry polynomials. The compact mean is known through its original order-eleven angular moment and vanishes on both collars. The whole original shifted mean paths are retained. Complete direct or compact mean coefficient charge is at most \(63069H/2^{128}\), including the original covariance inputs, differentiated cutoff and radius geometry. The resulting full normalized raw forcing charge is \(91449H/2^{128}\), below the \(H/2^{100}\) input bound used by the original ordered variation receipt.
+
+After the exact ordered variation and native normal cross product, the 50 phase-free gauges divided by \(P\) retain the factor \(\varepsilon^{149993/100000}\sqrt\zeta\) after the stated coefficient debit. Their largest band factor is \(S^{179/4}\). The maximum collar pole after factoring \(\sqrt\zeta\) is \(75/2\) at both \((0,9,0)\) and \((1,8,0)\). The original admitted middle chart uses the actual C15 target slots 32017 and 32018, the coexistence guard, and the original \(\zeta^{-1}<2^{185}\) bound. It has a pole-free estimate. Maximum coefficient log charges before absorption are \(93101H/2^{128}\) on the collars and \(93286H/2^{128}\) in the middle, both below \(H/2^{111}\).
+
+The analytic statement uses the original admitted fixed-label smooth charts, stable positive frame and normalized inverse, whole shifted paths and the original directed slab. On an inactive arm the source evaluates its native guard before the cutoff, reciprocal or pulse. Derivatives pass to collar endpoints through admitted inward traces and the original flat factors. The full paired Signed pressure and covariance, global chart seams, stage energy and final jets remain open.
+
+~~~text
+python -B ORIGINAL_VERIFY_MODE1_LINEAR_CANCELLATION --goal GOAL_NEXT --artifact ORIGINAL_ARTIFACT --cache ORIGINAL_SOURCE_CACHE --out c94-regrouping-replay.json
+python -B verify_mode_one_high_join.py --goal GOAL_NEXT --geometry C107_GUARD_JSON --geometry-code C107_GUARD_SCRIPT --c94-replay c94-regrouping-replay.json --out mode-one-high-join.json
+~~~

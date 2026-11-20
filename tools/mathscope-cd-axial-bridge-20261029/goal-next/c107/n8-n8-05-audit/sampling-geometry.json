@@ -1,0 +1,161 @@
+{
+  "schema": "MathScope.C107.OriginalN805AnnularSamplingGeometry/1",
+  "verified": "ORIGINAL_FIXED_COPY_PHYSICAL_JACOBIAN_AND_UNIFORM_SCALE_ARITHMETIC",
+  "conditional": "ADMITTED_ORIGINAL_LABEL_PATHS_AND_ORIGINAL_FINITE_HARMONIC_COVER",
+  "criterion": {
+    "id": "N8-05",
+    "title": "\uacf5\uac04\u00b7\uae09\uc218\u00b7\uc815\ubc00\ub3c4 \uc801\uc751",
+    "page": 66,
+    "text": "core radius, axial length, pulse wavelength, active cutoff orders\ub97c \ud568\uaed8 \ud574\uacb0\ud55c\ub2e4. \uac01 refinement \ucd95\uc744 \ub3c5\ub9bd \uc99d\uac00\uc2dc\ud0a8\n\ub2e4. \ud569\uaca9: 2\ubc30 grid, Fourier cutoff, coefficient order, arithmetic precision \ube44\uad50\ud45c\uc640 \ubcc4\ub3c4 tail bound\ub97c \uc800\uc7a5\ud55c\ub2e4. \uc608\uc0b0\n\ucd08\uacfc \uc2dc last-resolved \u03c4\uc640 \uc6d0\uc778\uc744 \ud45c\uc2dc\ud55c\ub2e4."
+  },
+  "pins": {
+    "originalCriterion": "bfe0e57b127849a5413414c8e8340ed5592049082fd211d9172a2fce6f219156",
+    "wholeKChart": "af17e240150ca11452ccd5dcde5e1d2a21f5872d3a1e29a9247d75e6902e86b9",
+    "sourceReplay": "86ab9e21ba1a19a1f6f3767cbe923d41fb74f6d51eafa3a5488332d554227f2c",
+    "atlas": "143d32b523429323eb3efc8ef8ea9c8f8922162bd919712cfe41580103a788be",
+    "scale": "1efc5a0d90ed98b14d79ee4c20d4ff2a3b86cf9c4cedd0cc1590868dbcbaf81a",
+    "angular": "6b4210a3365127297958b12f8795dede58793f8913e5d21c5679ea0fa14c83db",
+    "stages": "7f1b591721b768ea0c73cfed346d102d7a92752ab9f2c21487fed33b180ef18b",
+    "scalar": "0d1e6635208ef369741a7073067b69e467608114495c03bb22c3575715d01873",
+    "source-localization.mjs": "5f6480f9799a9a83945f696833b9213585572efbe65e9e755b2935726e6f1036",
+    "shrinking-cutoff-summation.mjs": "a4afa225c5da82d6894a40314ecdc8f7784390f58bb47e085d5d724d9f7ee05c"
+  },
+  "originalSlab": {
+    "tau0": "qBig/32",
+    "z0": "tau0^(1/2-h)",
+    "q": [
+      "qBig/64",
+      "qBig/16"
+    ],
+    "qUpperOpen": true,
+    "positiveTauRange": [
+      "tau0/2",
+      "tau0"
+    ]
+  },
+  "sourceExtents": {
+    "coreRadius": "sqrt(2*q*Xa)",
+    "outerAxialHalfWidth": "z0/sqrt(2)",
+    "movingNormalizedCore": "Y=Lambda*rbar^2/(2*(q/tau0)) <= 4",
+    "radialPulseTransitionCoordinateWidth": "r0/2 in xi",
+    "longitudinalPulseTransitionPhysicalWidth": "r0/(10 Tg^i) in tau",
+    "r0": "2^-34"
+  },
+  "sourceScales": {
+    "coordinates": [
+      "rbar=r/sqrt(tau0)",
+      "zeta=z/z0",
+      "rho=tau/tau0",
+      "theta"
+    ],
+    "ellRange": [
+      "ellMinimum+14",
+      "ellMinimum+16"
+    ],
+    "relativeQ": [
+      2,
+      1,
+      "1/2"
+    ],
+    "Smin": "(ellMinimum+14)^2",
+    "Smax": "(ellMinimum+16)^2",
+    "epsilonMin": "(qBig/64)^h",
+    "kMax": "ceil(epsilonMin^(-1/2))",
+    "LsMax": "12 r0 Smax",
+    "positiveNormalCap": "Nstar=Bnorm^8*(1+LsMax)",
+    "angularWindingCap": "W=ceil(Bnorm^5*kMax)",
+    "radialPulseArgumentSlope": "Axi=12*epsilonMin^(-1/100000)*max(Xa^(-1/2),4 Xb)/r0",
+    "timePulseArgumentSlope": "Av=20/(r0*epsilonMin*Smin)"
+  },
+  "directionalCauseCaps": {
+    "rbar": {
+      "coreY": "4 Lambda sqrt(Xa)",
+      "slowMesh": "4 Smax^3",
+      "outerSupport": "8",
+      "transversePulse": "Axi",
+      "wavePhase": "64 kMax Nstar"
+    },
+    "zeta": {
+      "coreY": "40",
+      "slowMesh": "4 Smax^3",
+      "outerSupport": "8",
+      "bandAndStageCutoff": "40",
+      "wavePhase": "64 kMax Nstar/epsilonMin"
+    },
+    "rho": {
+      "coreY": "12",
+      "slowMesh": "4 Smax^3",
+      "outerSupport": "2",
+      "bandAndStageCutoff": "10",
+      "longitudinalPulse": "Av",
+      "wavePhase": "64 kMax Nstar/epsilonMin"
+    },
+    "theta": {
+      "phaseAndCartesianRotation": "32 W+2"
+    }
+  },
+  "sufficientBranchwisePitch": "spacing <= 1/(16*max of its directional cap row); fixed reference and copy; split path at original branch boundaries",
+  "geometryOnlyRefinementRows": [
+    {
+      "axis": "base",
+      "normalizedMaximumPhaseOrCutoffArgumentChanges": [
+        "1/16",
+        "1/16",
+        "1/16",
+        "1/16"
+      ]
+    },
+    {
+      "axis": "rbar pitch halved alone",
+      "normalizedMaximumPhaseOrCutoffArgumentChanges": [
+        "1/32",
+        "1/16",
+        "1/16",
+        "1/16"
+      ]
+    },
+    {
+      "axis": "zeta pitch halved alone",
+      "normalizedMaximumPhaseOrCutoffArgumentChanges": [
+        "1/16",
+        "1/32",
+        "1/16",
+        "1/16"
+      ]
+    },
+    {
+      "axis": "rho pitch halved alone",
+      "normalizedMaximumPhaseOrCutoffArgumentChanges": [
+        "1/16",
+        "1/16",
+        "1/32",
+        "1/16"
+      ]
+    },
+    {
+      "axis": "theta pitch halved alone",
+      "normalizedMaximumPhaseOrCutoffArgumentChanges": [
+        "1/16",
+        "1/16",
+        "1/16",
+        "1/32"
+      ]
+    }
+  ],
+  "longitudinalUniformPolicyLower": {
+    "originalCentreLabel": "ellMinimum+15",
+    "requiredNormalizedPulseArgumentChangePerStep": "<=1/16",
+    "necessaryUniformCountForAffineGeometryPolicy": "n > 80*exp(H)/(6*r0*(ellMinimum+15)^2) > 2^1024",
+    "measurement": "original affine pulse-coordinate policy; no assertion about existing adaptive methods, runtime failure, actual solution convergence or last-resolved tau"
+  },
+  "applicationUnclosed": {
+    "observedRefinementComparisons": "0/4 on the identical full final field",
+    "actualWholeFinalFieldUniformTails": false,
+    "lastResolvedPositiveTauForWholeK": null,
+    "missing": "numerical field-enclosure producer on admitted annular cells and own-source cover; actual active increment evaluations for all four axes; field-valued tails; final common observed tau"
+  },
+  "N8_05": "OPEN",
+  "N7_06": "OPEN",
+  "finalJets": 0,
+  "release": "HOLD"
+}
