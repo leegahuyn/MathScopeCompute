@@ -1,0 +1,24 @@
+# Nonzero original exterior across the temporal cutoff seam
+
+**VERIFIED on the original exterior identification.** Let `s=r²`, `s*=tau0 Xb`, `y=s/s*`, `zeta=z/z0`, and `rho=tau/tau0`. Work on `4≤y≤8`, `1/4≤zeta≤3/8`, `15/32≤rho≤17/32` at every angle. Rational endpoint signs for the original `Q-zeta² Q^(2h)-rho` and its positive derivative give `1/2<Q=q/tau0<1`. Therefore `eta²≤9/32`, `X/Xb=y/(2Q)>2`, and the original admitted `q` interval is respected. The pinned radius estimate gives `s≤8s*<1/4`. The spatial cutoffs and all their derivatives are on the unit plateau. The original manuscript Step 4 identifies this field with positive heat swirl and pressure normalized at radial infinity. It gives zero annular wave and mean corrections and zero exterior streamfunction. This applies on both sides of the temporal seam under the same exterior identification.
+
+Write `C=chi(rho)`, `K=B_h s^(-A) H(4tau/s)` and `P=-∫_r^∞ K(x,tau)² dx/x`. The physical solution on the patch has `u=C K e_theta`, `p=C P`, `f_r=C(1-C)K²/r`, `f_theta=-chi′(rho)K/tau0`, and `f_z=0`. These retain the original pressure cancellation and the physical time orientation. On `rho≤1/2` the cutoff equals one and force is exactly zero. All mixed jets of force agree with zero at the flat seam. The velocity remains positive in the azimuthal direction and pressure remains negative. The directed point at `y=6,rho=17/32` proves both force components strictly positive above the seam. Dropping `(1-C)` and reversing the physical time orientation fail the exact witness controls.
+
+The interval computations below track the same ordered normalized outputs `u_theta*s^A/B_h`, `-p*(4A)*s^(2A)/B_h²`, `f_r*r*s^(2A)/B_h²`, and `f_theta*tau0*s^A/B_h`. Original positive factors, including the fixed but unevaluated `h` and `Xb`, are retained. The proof uses source bounds `0<h<2^-8192` and `Xb>110`. It certifies the physical signs and corresponding normalized errors without selecting substitute values for those parameters.
+
+| Independent axis | Executed comparison on the patch |
+|---|---|
+| Grid | 4 to 8 subcells per radial and axial axis and on each side of the time seam. All 225 original physical nodes occur among the 1,377 refined nodes. The 128 original physical cells become 1,024 cells. Refined bounds inherit the intersection with their parent bounds. Each of the four normalized uniform cell-width caps strictly decreases. |
+| Physical angular Fourier cutoff | 1 to 2. Cartesian velocity and force have only modes `±1` and pressure only mode `0`, so both tails are zero. This comparison covers field values. The prior exterior result treats the extra gradient modes. |
+| Heat coefficient order | 4 to 8. The four separate uniform remainder caps, each still multiplied by original positive `h`, decrease by factors greater than `100000`. The pressure square retains the radial integral, its exact denominator and sign. |
+| Directed arithmetic | 72 to 144 bits at the same physical point above the seam. Every refined enclosure lies inside the corresponding baseline enclosure and is strictly narrower. |
+
+For the coefficient axis, the heat remainder at each tested even order is nonpositive with magnitude at most `(h)_(N+1) (1+h)_(N+1) Z^(N+1)/(N+1)!`, where `0≤Z=4rho/(yXb)<1/200`. The normalized pressure polynomial uses integral factors `kappa/(kappa+i+j)` with `kappa=2A`; the extra factor comes from normalizing the radial-infinity pressure. The square remainder is bounded by `(2+e_N)e_N`. The force factors are at most `1/4` and `108` for the radial product and time derivative, respectively, by the original cutoff bounds.
+
+For the time evaluation use the directed exponential routine from the original cutoff replay. For `u=2rho-1` on the upper collar, write `R=exp(-1/u+1/(1-u))`, `1-C=R/(1+R)`, and `-chi′(rho)=2R*(u^(-2)+(1-u)^(-2))/(1+R)²`. The derivative numerator is increasing on `0<u≤1/16`. Its endpoint enclosures remain valid at `u=0` by the original flat limit. This avoids cancellation in the small force factors close to the seam.
+
+**OPEN.** These comparisons establish a nonzero exterior patch. The older exterior experiment on the declared whole-K time slab used integrated exterior metrics and did not cross this temporal seam. The extension below `rho=1/2` stays within the original `q` admission and does not enlarge the original whole-K convergence target. The new evidence neither supplies annular fields and tails nor assigns a whole-K last resolved time. Same-field whole-K comparisons remain 0/4, N8-05 and N7-06 remain OPEN, jets 0/67, RELEASE HOLD.
+
+## Replay
+
+From the workspace containing the prior `work` source and evidence directories, run `python -B verify_nonzero_seam.py --workspace <workspace> --out <new-json>` and verify the inputs against the digests in the receipt. The Python script imports the hash-pinned original directed exponential implementation. The two executed replays are byte-identical.
