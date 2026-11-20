@@ -1,0 +1,11 @@
+# Live original Repeat source readback
+
+GitHub run 44682703381 succeeded at commit 287ca9eeaf2ab61f8405949c40e490af915cc1b0. The preserved job builds in full-source mode and uploads the combined native export. The smaller hosted independent-reader step is disabled by that workflow mode. The independent checks in this packet read the downloaded artifact with Python, with the full source and exact original predecessor in their unmodified form.
+
+`active-readback.json` records 22,155,584 protected nodes, 225,012 appended nodes, and 22,380,596 total. The uncompressed bytes are 1,036,106,095 with SHA-256 `7c03a7e6195fa074f4916bc1aab692f0555e8fb30cf9a999ecf79c34ec0b88b2`. The prefix independently matches the C70 bytes and the registry entries before append. The actual append has 1,444 candidate roots, 240 source scalars and mapped gauge applications, 480 exact subtraction identities, and 40 coupled inverse systems on ten charts. Deliberate wrong guard branches, reused harmonic gauge and wrong complex conjugation controls are rejected.
+
+The ordinary pulse and nonradial face receipts in this packet use the same authenticated live manifest. Their trace conclusions use the stated bounded fixed-label and strict-admission hypotheses. The global equality of the guarded and unclipped supported source, physical radial seams, actual canonical scale and complete second correction retain their separate proof obligations.
+
+Download artifact `mathscope-original-n3-primary-c5` from GitHub run 44682703381 and the original predecessor from run 44582875351. Run the commands from C122's README. Pass `terminal-run.json` for the captured terminal run. Use this packet's `protected-wave-bodies.json`, `protected-cutoff-tails.json`, and `verify_nonradial_append.py`; the C112 verification directory has the original slow face and transverse argument records. For the third command, `--c110` is the C122 full-repeat-readback directory containing the unchanged pulse verifier. Output each receipt into a separate directory. The artifact registry and node stream remain downloadable through the original hosted execution. The two readback logs and the final nonradial log are kept with the receipt.
+
+The official counts remain M3 62/64, final jets 0/67, RELEASE HOLD.
