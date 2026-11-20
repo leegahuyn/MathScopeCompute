@@ -6,6 +6,7 @@ import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.FunProp
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Positivity
+import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
 
 open MeasureTheory Filter
@@ -131,6 +132,64 @@ theorem five_map_weighted_radial_density
   rw [hFactor, intervalIntegral.integral_const_mul] at hParts
   linarith
 
+/-- The compact Haar square identity with a radial monomial weight.
+The endpoint values vanish because the two co-moving profiles are compact. -/
+theorem five_map_compact_square_weight
+    (f df : ℝ → ℝ) (m : ℕ) {a b : ℝ}
+    (hf : Continuous f) (hdf : Continuous df)
+    (hF : ∀ x ∈ Set.uIcc a b, HasDerivAt f (df x) x)
+    (ha : f a = 0) (hb : f b = 0) :
+    (∫ x in a..b, x ^ m * f x * (f x + x * df x)) =
+      (1 - ((m : ℝ) + 1) / 2) * (∫ x in a..b, x ^ m * f x ^ 2) := by
+  have hSquare (x : ℝ) (hx : x ∈ Set.uIcc a b) :
+      HasDerivAt (fun y => f y ^ 2) (2 * f x * df x) x := by
+    convert (hF x hx).pow 2 using 1 <;> norm_num <;> ring
+  have hPower (x : ℝ) :
+      HasDerivAt (fun y : ℝ => y ^ (m + 1)) (((m : ℝ) + 1) * x ^ m) x := by
+    simpa [Nat.cast_add] using (hasDerivAt_pow (m + 1) x)
+  have hProd (x : ℝ) (hx : x ∈ Set.uIcc a b) :
+      HasDerivAt (fun y => y ^ (m + 1) * f y ^ 2)
+        (((m : ℝ) + 1) * (x ^ m * f x ^ 2) + 2 * (x ^ (m + 1) * f x * df x)) x := by
+    convert (hPower x).mul (hSquare x hx) using 1 <;> ring
+  have hA : IntervalIntegrable (fun x : ℝ => ((m : ℝ) + 1) * (x ^ m * f x ^ 2)) volume a b :=
+    (by fun_prop : Continuous (fun x : ℝ => ((m : ℝ) + 1) * (x ^ m * f x ^ 2))).intervalIntegrable a b
+  have hB : IntervalIntegrable (fun x : ℝ => 2 * (x ^ (m + 1) * f x * df x)) volume a b :=
+    (by fun_prop : Continuous (fun x : ℝ => 2 * (x ^ (m + 1) * f x * df x))).intervalIntegrable a b
+  have hMain : IntervalIntegrable (fun x : ℝ => x ^ m * f x ^ 2) volume a b :=
+    (by fun_prop : Continuous (fun x : ℝ => x ^ m * f x ^ 2)).intervalIntegrable a b
+  have hCross : IntervalIntegrable (fun x : ℝ => x ^ (m + 1) * f x * df x) volume a b :=
+    (by fun_prop : Continuous (fun x : ℝ => x ^ (m + 1) * f x * df x)).intervalIntegrable a b
+  have hFTC := intervalIntegral.integral_eq_sub_of_hasDerivAt hProd (hA.add hB)
+  rw [intervalIntegral.integral_add hA hB] at hFTC
+  simp [intervalIntegral.integral_const_mul, ha, hb] at hFTC
+  have hIntegrands : (fun x : ℝ => x ^ m * f x * (f x + x * df x)) =
+      (fun x : ℝ => x ^ m * f x ^ 2 + x ^ (m + 1) * f x * df x) := by
+    funext x
+    rw [pow_succ]
+    ring
+  rw [hIntegrands, intervalIntegral.integral_add hMain hCross]
+  linarith only [hFTC]
+
+/-- The original compact pure-axial witness has the two signed radial moments
+shown here, after taking the normalized Haar square of the co-moving mode. -/
+theorem five_map_compact_pressure_witness
+    (f df : ℝ → ℝ) {a b : ℝ}
+    (hf : Continuous f) (hdf : Continuous df)
+    (hF : ∀ x ∈ Set.uIcc a b, HasDerivAt f (df x) x)
+    (ha : f a = 0) (hb : f b = 0) :
+    ((1 / 2 : ℝ) * (∫ x in a..b, f x * (f x + x * df x)) =
+      (1 / 4 : ℝ) * (∫ x in a..b, f x ^ 2)) ∧
+    ((-1 / 4 : ℝ) * (∫ x in a..b, x ^ 2 * f x * (f x + x * df x)) =
+      (1 / 8 : ℝ) * (∫ x in a..b, x ^ 2 * f x ^ 2)) := by
+  constructor
+  · have h := five_map_compact_square_weight f df 0 hf hdf hF ha hb
+    simp only [pow_zero, one_mul, Nat.cast_zero, zero_add] at h
+    rw [h]
+    ring
+  · have h := five_map_compact_square_weight f df 2 hf hdf hF ha hb
+    rw [h]
+    norm_num <;> ring
+
 end
 
 #print axioms five_map_radial_primitive_curl
@@ -140,5 +199,7 @@ end
 #print axioms five_map_angular_gap_lower
 #print axioms five_map_slow_chart_denominator
 #print axioms five_map_weighted_radial_density
+#print axioms five_map_compact_square_weight
+#print axioms five_map_compact_pressure_witness
 
 end MathScope.M3.CD
