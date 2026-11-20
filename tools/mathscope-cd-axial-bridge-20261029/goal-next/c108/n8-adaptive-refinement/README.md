@@ -1,0 +1,24 @@
+# N8-05 source splits and nested refinement
+
+**VERIFIED**. The C107 geometry is replayed here as an exact split-and-refine policy in the original cutoff arguments. The original translate kernel was executed at 33 rational points for each shift `0,+2^1024,-2^1024`. It chose the expected nearest integer and all active translates in each of 99 calls, and excluded all 12 flat support endpoints. An independently computed rational table checks the unshifted calls. The original nearest-integer seams, support endpoints and plateau endpoints are distinct split events.
+
+For either longitudinal transition, `w=v/Ls` runs over an interval of width `1/20` and the varying switch argument has slope `20`. The transverse transition on either side has width `1/2` in `xi/r0` and switch-argument slope `2`. The policy puts 16 uniform cells on each transition in its native variable for argument change at most `1/16`. It preserves the flat and guard endpoints, and doubles by mapping parent node `k` to child node `2k`. The stage and coefficient arguments use the same rule on `(1/2,1)`. The coefficient reference switch `b_(N+1)q=2` is a separate event. For the radial and axial outer cutoff, the squared coordinates give slope `4` on the transition. Budget checking precedes enumeration and rejects incomplete covers, including a test with an integer cap of `2^1024`.
+
+One chart is executable in exact physical coordinates with symbolic original scales. At `q=tau0`, the original chart is `rho=1-zeta²`, with `eta=zeta`. Put `mu=zeta²`, and store a point as signed `zeta=±sqrt(mu)` together with rational `rho`. The admitted positive and negative axial fibres have `mu` seams `0,1/4,1/2`. The outer axial plateau and support occur at `rho=3/4,1/2`. The time-switch argument has slope `2` in `mu` and the axial-switch argument has slope `4` on `[1/4,1/2]`. The exact nested rule uses 8 and 16 base cells on the two intervals. The 49 distinct physical base samples, including the common axis point, occur among the 97 refined samples. This result follows from the original chart with no evaluation of a field on the chord.
+
+The original localized field is identically zero on the physical subdomain `zeta∈[3/4,1]` since `2*zeta²≥9/8` and the axial cutoff and every derivative vanish there. The rule applies to `curl(C*A)` and `C*p` inside the original definition, and to the specified zero extension outside. Hence the momentum residual of the localized field also vanishes on an open neighborhood of this subdomain. The independent grid, angular cutoff, coefficient order and arithmetic precision doubles were executed for `ux,uy,uz,p,fx,fy,fz` in this region. The common base grid has 500 physical points. Grid doubling gives 5,832 points and reuses every base point. Each of the other comparisons uses the same 500 physical points. The corresponding four uniform errors vanish by this support identity. The comparator rejects a wrong field identity, disjoint intervals on a shared point, and a missing shared sample.
+
+**CONDITIONAL**. The branchwise geometry retains the C107 phase and harmonic hypotheses. In a frozen copy, `|d rho/d w|=2r0/(Tg^i tau0)≤24r0 epsilon S` by the original palette floor and three band scales. The pointwise C107 phase bound on that same band is at most `64 kMax Nstar/epsilon`, so the combined phase variation bound in `w` is `1536 r0 Smax kMax Nstar`. The code can charge an additional directed rational phase slope on all active segments, including plateau leaves. For the periodic angular support, `M=32W+1` implies that `2M+1` equally spaced nodes per turn suffice for exact quadratic angular orthogonality under the C107 support hypotheses. The endpoint at one turn is canonically the endpoint at zero, and doubled sampling reuses all parent nodes.
+
+**OPEN**. Exact physical pushforwards tell where the fully directed branch scheduler must cut. The nonzero chart still requires a joint cover with sorted original threshold and lattice-copy intersections, authenticated amplitudes and a full field evaluator. The geometry and restricted zero-branch comparison contribute zero of the four required whole-final-field comparisons. Whole-K last resolved positive time remains absent, and the earlier exterior-only time is preserved in its restricted scope. N8-05 and N7-06 are open, final jets stay 0/67, and release stays HOLD.
+
+## Replay
+
+Run from the workspace containing `work`. Each invocation creates a fresh output file.
+
+```powershell
+$audit='work/goal-next/continuation108/n8-adaptive-refinement/final'
+$index='work/goal-next/continuation29/seal-overlays/runtime4-cached/research-ide/mathscope-m3/navier/global-source-index.mjs'
+node "$audit/replay_original_partition.mjs" $index 'partition-replay.json'
+python -B "$audit/verify_adaptive_refinement.py" --partition 'partition-replay.json' --out 'adaptive-refinement-replay.json'
+```
