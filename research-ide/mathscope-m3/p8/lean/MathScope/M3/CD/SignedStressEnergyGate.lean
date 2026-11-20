@@ -183,6 +183,47 @@ theorem centered_radial_primitive_same_on_two_envelopes
 
 #print axioms centered_radial_primitive_same_on_two_envelopes
 
+/-- In a fixed physical chart, the pressure increment is the centered primitive
+of the density increment. This does not require either total integral to vanish. -/
+theorem centered_radial_pressure_increment
+    (f g : ℝ → ℝ) {a r b chi : ℝ}
+    (hfLeft : IntervalIntegrable f volume a r)
+    (hgLeft : IntervalIntegrable g volume a r)
+    (hfWhole : IntervalIntegrable f volume a b)
+    (hgWhole : IntervalIntegrable g volume a b) :
+    ((∫ x in a..r, f x + g x) - chi * (∫ x in a..b, f x + g x))
+      - ((∫ x in a..r, f x) - chi * (∫ x in a..b, f x)) =
+      (∫ x in a..r, g x) - chi * (∫ x in a..b, g x) := by
+  rw [intervalIntegral.integral_add hfLeft hgLeft,
+    intervalIntegral.integral_add hfWhole hgWhole]
+  ring
+
+/-- Boundedness of the centering profile gives a two-sided estimate using
+the larger of the two signed radial partial integrals. -/
+theorem centered_radial_pressure_increment_abs_le
+    (g : ℝ → ℝ) {a r b chi : ℝ}
+    (hLeft : IntervalIntegrable g volume a r)
+    (hRight : IntervalIntegrable g volume r b)
+    (hchi0 : 0 ≤ chi) (hchi1 : chi ≤ 1) :
+    |(∫ x in a..r, g x) - chi * (∫ x in a..b, g x)| ≤
+      max |∫ x in a..r, g x| |∫ x in r..b, g x| := by
+  let l := ∫ x in a..r, g x
+  let s := ∫ x in r..b, g x
+  rw [← intervalIntegral.integral_add_adjacent_intervals hLeft hRight]
+  change |l - chi * (l + s)| ≤ max |l| |s|
+  rw [show l - chi * (l + s) = (1 - chi) * l - chi * s by ring]
+  calc
+    _ ≤ |(1 - chi) * l| + |chi * s| := abs_sub _ _
+    _ = (1 - chi) * |l| + chi * |s| := by
+      rw [abs_mul, abs_mul, abs_of_nonneg (sub_nonneg.mpr hchi1), abs_of_nonneg hchi0]
+    _ ≤ (1 - chi) * max |l| |s| + chi * max |l| |s| :=
+      add_le_add (mul_le_mul_of_nonneg_left (le_max_left _ _) (sub_nonneg.mpr hchi1))
+        (mul_le_mul_of_nonneg_left (le_max_right _ _) hchi0)
+    _ = max |l| |s| := by ring
+
+#print axioms centered_radial_pressure_increment
+#print axioms centered_radial_pressure_increment_abs_le
+
 /-- The endpoint-zero primitive is fixed by radial centering of its derivative. -/
 theorem late_centered_radial_derivative
     (psi dPsi : ℝ → ℝ) {a r b chi : ℝ}
