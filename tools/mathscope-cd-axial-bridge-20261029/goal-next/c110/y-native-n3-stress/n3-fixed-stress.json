@@ -1,0 +1,69 @@
+{
+  "schema": "MathScope.C110.OriginalNativeN3FixedHistoryAbsoluteStressError/1",
+  "operandsSHA256": "e630f67a5f175f0b5e305c8f6dec1a382bb2ff24453ef152fbf84630e8677183",
+  "sourceStatus": "VERIFIED_EXACT_N3_FIXED_HISTORY_STRESS_CONSERVATION_AND_COUPLED_FORCING_IDENTITIES",
+  "ordinaryStatus": "CONDITIONAL_ON_THE_ORIGINAL_NATIVE_TAIL_AND_ORDINARY_LEADING_AND_MOMENT_REALIZATIONS",
+  "originalStressDensities": {
+    "theta": 123840,
+    "z": 123841
+  },
+  "nativeFixedEta": 2,
+  "radialCutoffs": [
+    28814,
+    28824
+  ],
+  "rationalCaps": {
+    "boundaryNumerators": [
+      33,
+      58
+    ],
+    "remainderNumerators": [
+      22,
+      36
+    ],
+    "guardedIntegralNumerators": [
+      88,
+      152
+    ],
+    "bumpHeightValueAndSlope": [
+      32768,
+      34359738368
+    ],
+    "rawWeightedXEntryCoefficient": 48
+  },
+  "pointwiseAndAbsoluteL1": {
+    "commonBound": "G*4^-K/3",
+    "G": "256 B^3 H0 max(1,TU,TF,TP,DU,DF) max(1,1/sqrt(2Xminus),1/(2Xminus))",
+    "depth": "K=max(Kcondition+2,ceil(log_4(2^256*G)))",
+    "strictCapForEach": "<2^-256",
+    "fullPhysicalDomains": "uniform eta in [-1,1]; forward original supported function on X>=0 and backward on original Xminus<X<Xplus",
+    "metrics": [
+      "axial sup",
+      "angular sup",
+      "axial absolute dX integral",
+      "angular absolute dX integral"
+    ],
+    "scopeUnchangedExactLowerN0N1N2": true,
+    "depthAndNativeValuesNumericallyEvaluated": false
+  },
+  "signedConservation": {
+    "firstEtaDerivativeOfFixedBoundZeroMomentsRetained": true,
+    "axisPressureDatumAndOuterSupportRetained": true,
+    "forwardMinusBackwardError": "plus original uncut error integral from 0 to Xminus divided by the same radial normalizer",
+    "innerPrefixAssertedZero": false
+  },
+  "coupledLower": {
+    "exactOmega2RawPressureAngularAndAxialForcingTransfer": true,
+    "fixedActualMatrixEntries": 72,
+    "quantitativeClosed": false,
+    "openInputs": [
+      "ordinary paired N2 v2, v2_X, X v2_XX and eta derivative bounds over its source switch and Ipos collars",
+      "same paired N1 v1 two Z derivatives and their eta traces, and paired N2 previous-order viscosity for stress",
+      "N3 resolvent with paired forcing on a certified common eta strip and propagated five moment and pressure errors"
+    ]
+  },
+  "generalY": "OPEN",
+  "M3": "62/64",
+  "finalJets": 0,
+  "release": "HOLD"
+}
