@@ -63,4 +63,28 @@ theorem residual_force_square_pressure_allowance
 #print axioms residual_force_square_transfer
 #print axioms residual_force_square_pressure_allowance
 
+/-- The original exterior pressure cancels the homogeneous radial acceleration.
+After localizing both fields, a single factor of the temporal cutoff remains. -/
+theorem exterior_localized_radial_force
+    {cut K r pressureR : ℝ} (hPressure : pressureR = K ^ 2 / r) :
+    cut * pressureR - (cut * K) ^ 2 / r =
+      cut * (1 - cut) * K ^ 2 / r := by
+  rw [hPressure]
+  ring
+
+/-- The original time variable is tau = 1 - t, so the transition force
+contains the negative physical time derivative of the cutoff profile. -/
+theorem exterior_localized_swirl_time_derivative
+    (cut K : ℝ → ℝ) {t tau₀ cutR Kt : ℝ}
+    (hCut : HasDerivAt cut cutR ((1 - t) / tau₀))
+    (hK : HasDerivAt K Kt t) :
+    HasDerivAt (fun s => cut ((1 - s) / tau₀) * K s)
+      (cut ((1 - t) / tau₀) * Kt - cutR * K t / tau₀) t := by
+  have hReverse : HasDerivAt (fun s : ℝ => 1 - s) (-1) t := by
+    simpa using (hasDerivAt_const t (1 : ℝ)).sub (hasDerivAt_id t)
+  convert (hCut.comp t (hReverse.div_const tau₀)).mul hK using 1 <;> ring
+
+#print axioms exterior_localized_radial_force
+#print axioms exterior_localized_swirl_time_derivative
+
 end MathScope.M3.CD
