@@ -1,0 +1,339 @@
+{
+  "status": "VERIFIED_SIGNED_K1_SOURCE_FRONTIER_CONDITIONAL_TWO_WEIGHTED_SIGMA_INPUTS",
+  "pins": {
+    "signed": "5fe379bdc734b5f1c17248bd4ad5b879afa19206e15d74a6f29204846cec8308",
+    "seams": "65c08c86d7682f989e9bf6c98f7ae04a42d2f1594488287da2548e85ca0a2815",
+    "pressure": "22ff14cbd3c6df110159eb33d1cd6c938ecfdc08242d917a22a200bfb2075797",
+    "covariance": "87ee4c05499ed8cdc1b22c490eb9eebb26375e04063559245ead711eaf8be970",
+    "matrix": "e808bd89285aa55ec0f1bf1c66cf7875ca26f706724ebc575e43c0466d2cdc36",
+    "stageGate": "1fa33500726728505f74ed51aae5e113f4c10c452c5faa7a4f823d5a6d2d6a36",
+    "lean": "0cb7cfef4f66265cf0022131e17a5da4eb4360d76c4e565b83929d56c079113e",
+    "sourceSigned": "15eea2c0f984c5b3bb58dd372d9b01660e44a85526c1f329b41b41855b4c27e2",
+    "mathscope-m2/navier/actual-physical-residual-algebra.mjs": "df6f10cda4c77b0b679ded7eb254979e528d133239b2da1ce0904479585d2116",
+    "mathscope-m3/navier/source-updated-mean-stress.mjs": "bbe4e3d87e79a770590a94bc75a8ac0f36f69f4338cab5739340a637a42bfbf5",
+    "frame": "b312748ae060076831485bc30cfeac644a7dfdde86d4ae9c306137df678cb3b8",
+    "ingress": "20550a640ec1cb9f00c5c0b1be61f27826ee7e756ea714dd6a13eed39edf841f",
+    "nativeMean": "3212a321563d65e5d7972cb7ab0c97f03f1ee0917276542a7a45074912fe34ff"
+  },
+  "originalSignedFrontier": {
+    "nativeSignedSigmaRoots": [
+      22001223,
+      22001224
+    ],
+    "nativePostForcedHaarRoots": [
+      21999624,
+      22000447
+    ],
+    "signedPotentialBodies": [
+      22001304,
+      22001305,
+      22001306,
+      22001468,
+      22001469,
+      22001470
+    ],
+    "lateTemporalAndFiveMapGaugeIsSeparate": {
+      "A_theta": [
+        22150943,
+        22151952
+      ],
+      "B_theta": [
+        22150797,
+        22151941
+      ],
+      "B_thetaSum": 22154876
+    },
+    "minimalDirectSigmaSpatialOrdersRZ": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        2,
+        0
+      ]
+    ],
+    "collarHaarPrimitiveValueOrdersRZ": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        2
+      ]
+    ],
+    "collarDirectHaarOrdersRZ": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        0
+      ]
+    ],
+    "fluxFormAfterHaarFTC": {
+      "radialFluxOrdersRZ": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "axialPlusPressureFluxOrdersRZ": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "compactMeanTimeDerivativeOrdersRZT": [
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          1
+        ],
+        [
+          0,
+          2,
+          1
+        ],
+        [
+          1,
+          0,
+          1
+        ]
+      ],
+      "defectZOrder": 3,
+      "formula": "Put T=I-chi J, F=Haar(radial flux), G=Haar(axial flux)+axial-only R*pbar, W=Haar(R^e*v_e) and D=Jtheta or Jz+c_rho*P. Sigma = -R^-e*(F-F_left-chi*(F_right-F_left)-epsilon*T(partial_T W)+epsilon*T(partial_Z G)-epsilon*D_Z*T(rho)).",
+      "correctedTimeTerm": "-epsilon*T(partial_T W) is inside the bracket. In general partial_T(T W) differs by -chi_T*J(W).",
+      "assumption": "Ordinary Haar/FTC and endpoints. Only then use the original flat zero endpoint fluxes and the support of the Haar mean."
+    },
+    "compactSupport": {
+      "cutoffAndRho": "X in [e*X0Imean,e*(11/10)^2*X0Imean], top strictly below e^2*X0Imean.",
+      "compactDefectPrimitive": "With the original whole rho normalized to 1, T rho=I(rho)-chi is zero at the two collars.",
+      "initialFiveMap": "Actual source lies between X0Imean and exp(2)*X0Imean. At the two collars its linear Haar terms vanish."
+    }
+  },
+  "conditionalCoefficientTransfer": {
+    "perDerivativeRows": [
+      {
+        "order": 0,
+        "HInverseBandPower": "1/2",
+        "reciprocalRegularSquareRootBandPower": "-1/4",
+        "extraBandOverSigmaBeforeAbsorption": "1/4",
+        "totalSlopeForSigmaWithSlopeAtMost3": 3
+      },
+      {
+        "order": 1,
+        "HInverseBandPower": "5/2",
+        "reciprocalRegularSquareRootBandPower": "7/4",
+        "extraBandOverSigmaBeforeAbsorption": "1/4",
+        "totalSlopeForSigmaWithSlopeAtMost3": 3
+      },
+      {
+        "order": 2,
+        "HInverseBandPower": "9/2",
+        "reciprocalRegularSquareRootBandPower": "15/4",
+        "extraBandOverSigmaBeforeAbsorption": "1/4",
+        "totalSlopeForSigmaWithSlopeAtMost3": 3
+      }
+    ],
+    "HInverseCoefficientRankSeries": [
+      [
+        142,
+        40,
+        6,
+        6
+      ],
+      [
+        313,
+        213,
+        15,
+        34
+      ],
+      [
+        486,
+        386,
+        24,
+        62
+      ]
+    ],
+    "regularSquareRootReciprocalCoefficientRankSeries": [
+      [
+        17,
+        1,
+        1,
+        0
+      ],
+      [
+        361,
+        216,
+        18,
+        35
+      ],
+      [
+        707,
+        431,
+        35,
+        70
+      ]
+    ],
+    "coreSignedMultiplierRankSeries": [
+      [
+        163,
+        71,
+        8,
+        11
+      ],
+      [
+        510,
+        286,
+        25,
+        46
+      ],
+      [
+        859,
+        501,
+        42,
+        81
+      ]
+    ],
+    "exampleSufficientFixedGeometryRanks": [
+      16384,
+      128,
+      0,
+      0
+    ],
+    "finitePoleThrough": 64,
+    "withInverseAndRadialDerivativesPoleAtMost": 70,
+    "innerAndOuterHalfGaussianFiniteChargeBits": 168,
+    "signedNonSigmaLogCapWithFixedGeometryPremise": "H/2^112",
+    "epsilonProductBeforeSigma": "epsilon^(1/2)*epsilon^(-1)*epsilon^(1/2)=epsilon^0",
+    "coefficientLogDegreeBase": [
+      "log2",
+      "logBnorm",
+      "logWprop",
+      "logM"
+    ]
+  },
+  "conditionalSignedEnergyGate": {
+    "sufficientSigmaEpsilonGrade": "30001/50000",
+    "physicalEpsilonAfterStageAndSingleDebit": "50001/100000",
+    "sufficientTotalLogCoefficientIncludingBand": "H/2^108",
+    "conditionalSignedK1SliceEnvelope": "exp(-H/2)",
+    "conditionalSignedSliceEnergyRatio": "<2^-32",
+    "combinedK1IfFourComponentFamiliesEachMeetReservedPotentialScale": "4*2^-36<2^-33",
+    "readyInput": "Both same-source Sigma components, all ordinary R/Z jets through order two, with epsilon grade and full zeta weight and finite pole. The total proved constant includes the original spatial cutoff, band, physical gauge and frame comparison."
+  },
+  "postForcedCovarianceGrades": {
+    "conditionalPhaseFreeVelocityGrades": {
+      "primaryPrimary": {
+        "epsilon": "1",
+        "zeta": "1"
+      },
+      "primaryForcedOne": {
+        "epsilon": "74997/50000",
+        "zeta": "1"
+      },
+      "forcedOneSquared": {
+        "epsilon": "49997/25000",
+        "zeta": "1"
+      },
+      "forcedTwoSquared": {
+        "epsilon": "99999/50000",
+        "zeta": "2"
+      }
+    },
+    "lowestEpsilonForForcedCovarianceIncrement": "74997/50000",
+    "pureAxialPressureCovarianceDonor": [
+      "C_rz",
+      0,
+      4,
+      0
+    ],
+    "correspondingHigherOrdinaryPotentialDonors": [
+      [
+        "C_theta",
+        0,
+        5,
+        0
+      ],
+      [
+        "C_theta",
+        1,
+        4,
+        0
+      ]
+    ],
+    "premise": "The actual phase-free velocity, band and finite pole bounds must first be supplied in the same original chart. This arithmetic does not infer them from the physical K slice.",
+    "weightQuestion": "A first Forced mode-one zeta^1/2 weight is sufficient; pairing with the original Primary restores zeta. Mode two enters only squared and has the stronger zeta weight."
+  },
+  "open": [
+    "Attach actual full post-Forced Haar axial/radial fluxes and pressure with retained zeta through the listed directional roles. C98 first-Forced energy does not itself provide these phase-free weighted velocity/pressure donor norms.",
+    "The actual n=1 outer angular stress coefficient still needs live regular slow C2 numerics. Its old value/normal reduction alone does not supply all listed axial directions.",
+    "Original late Temporal and late FiveMap families require bounds after Signed, for A through two and the direct angular vector through one. They differ from the initialized C98 mean."
+  ],
+  "finalJets": 0,
+  "release": "HOLD"
+}

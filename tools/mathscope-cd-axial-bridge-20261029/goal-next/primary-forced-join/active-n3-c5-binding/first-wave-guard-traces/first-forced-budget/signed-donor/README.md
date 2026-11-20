@@ -1,0 +1,13 @@
+# Centered pressure reduction and high Signed covariance donor
+
+After Haar translation invariance, the exact original mean pressure is \(\bar p=I(f)-I(\rho)J(f)\), \(f=\operatorname{Haar}(g_r)\), because \(J(\rho)=1\) and the full source integral of \(f-\rho J(f)\) is zero. The Signed axial source applies \(T=I-\chi J\) to \(R\partial_Z\bar p\). For the term where all axial derivatives land on \(f\), two radial primitives can be written with the kernel in the receipt. It is continuous across \(u=R\) and its piecewise derivative is \((\chi(R)-\mathbf1_{u<R})u\). The replay checks 54 exact Fubini evaluations and nine endpoint-retaining radial integrations by parts in rational arithmetic.
+
+The highest pressure covariance input is \(C_{rz,Z^4}\). In its imaginary full curl term, integration by parts moves the exceptional \(C_{\theta,RZ^4}\) derivative onto the lower factor or kernel. Periodic Haar integration moves \(L C_{\theta,Z^4}\) onto its lower factor. These operations preserve the required original radial end terms and the original torus faces. The remaining high donor is \(C_{\theta,Z^5}\). A generic divergence-free angular-potential control has a nonzero coefficient \(3/67603900\) for this donor under the centered double primitive. This is a diagnostic of the inference from generic FTC, not a claim about the actual original amplitude.
+
+The same-chart phase-free normalized curl retains the original inverse carrier. It pays for the extra ordinary slow derivative using the original band absorption. A Primary times first Forced product carries \(\zeta\) with \(\varepsilon^{74997/50000}S^{18+3j}\). Both first Forced squares also carry at least \(\zeta\). Across the four pair families and \(j\le4\), powers of \(S\) stay below 64 and the outer radial pole stays at most 42. The table is a conditional donor budget with the listed phase-free norms, including the exceptional high one. It does not infer those norms from the previous physical energy.
+
+The possible new degree-six initialized-mean directions for the mode-one pure-\(Z^5\) normalized Forced input are \((R,Z,L)=(0,5,1),(0,6,0),(1,5,0)\). The mode-two source has no mean factor. Primary ordinary velocity through seven is in range for either angular mode. The separate compact \(\beta_{F,Z^5}\) pressure term, requiring \(J_\theta\) after Temporal through \(Z^6\), remains in the global middle source. It vanishes on both collars with the original FiveMap support.
+
+~~~text
+python -B verify_signed_pressure_donor.py --goal GOAL_NEXT --source ORIGINAL_NAVIER/source-updated-mean-pressure.mjs --frontier signed-k1-frontier.json --out signed-pressure-donor.json
+~~~

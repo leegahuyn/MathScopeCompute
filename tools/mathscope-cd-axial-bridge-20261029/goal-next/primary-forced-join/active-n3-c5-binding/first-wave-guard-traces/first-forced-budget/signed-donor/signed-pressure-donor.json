@@ -1,0 +1,179 @@
+{
+  "status": "VERIFIED_CENTERED_SIGNED_PRESSURE_AND_CONDITIONAL_PHASE_FREE_DONOR_GRADES",
+  "pins": {
+    "pressure": "22ff14cbd3c6df110159eb33d1cd6c938ecfdc08242d917a22a200bfb2075797",
+    "covariance": "87ee4c05499ed8cdc1b22c490eb9eebb26375e04063559245ead711eaf8be970",
+    "one": "02e82a22eb0d004f21ef1f06b88ee1d633dec1be41679e5ac587dd40f76ad364",
+    "two": "f1ee11b6299572df500077ab3e565f112a210c008f0092d63950ac1bcc9d1f8a",
+    "weights": "836e8ed0b22ee3451f9ed3f09f176bf439fc05b5f9380fa58b08a3ba841efcc0",
+    "frontier": "4ddef46553be2e296df327c513257e75085753f8a16e822ddcd16e105ad726c3",
+    "source-updated-mean-pressure.mjs": "6ea6cb85cddd54b0421203e8fc37d24bdfcb8d3c6e62f78c5dada3dab8bd0c07"
+  },
+  "centeredPressure": {
+    "nestedFubiniChecks": 54,
+    "endpointRetainingRadialIbPChecks": 9,
+    "actualCenteredPressureAfterHaar": "pbar=I(f)-I(rho)*J(f), f=Haar(gr), since J(rho)=1",
+    "twoPrimitiveKernel": "K_R(u)=(R^2-u^2)*1(u<R)/2 - chi(R)*(beta^2-u^2)/2 - [I(r I(rho))(R)-chi(R) J(r I(rho))]",
+    "kernelContinuousAtR": true,
+    "kernelDerivative": "(chi(R)-1(u<R))*u",
+    "mixedRemoval": "Move radial or auxiliary derivative off Ctheta,Z4 onto the lower factor/kernel; fixed radial endpoints retained and periodic auxiliary faces cancel.",
+    "pureAxialDiagnostic": "Set Ctheta=f(R)*(1+Z^5/120), no auxiliary variable. The divergence-free gauge curl has a nonzero pure-Z5 highest nested pressure coefficient at Z=0,R=2. This is a control on the proposed inference, not an assertion about the exact original potential.",
+    "pureAxialDiagnosticCoefficientWithoutCommonSignsAndEpsilon": "3/67603900"
+  },
+  "covarianceGrade": {
+    "pairGrades": {
+      "PP": {
+        "epsilon": "1",
+        "zeta": "1",
+        "rows": [
+          {
+            "slowOrder": 0,
+            "band": "1/2",
+            "pole": "9"
+          },
+          {
+            "slowOrder": 1,
+            "band": "7/2",
+            "pole": "12"
+          },
+          {
+            "slowOrder": 2,
+            "band": "13/2",
+            "pole": "15"
+          },
+          {
+            "slowOrder": 3,
+            "band": "19/2",
+            "pole": "18"
+          },
+          {
+            "slowOrder": 4,
+            "band": "25/2",
+            "pole": "21"
+          }
+        ]
+      },
+      "PF1": {
+        "epsilon": "74997/50000",
+        "zeta": "1",
+        "rows": [
+          {
+            "slowOrder": 0,
+            "band": "18",
+            "pole": "18"
+          },
+          {
+            "slowOrder": 1,
+            "band": "21",
+            "pole": "21"
+          },
+          {
+            "slowOrder": 2,
+            "band": "24",
+            "pole": "24"
+          },
+          {
+            "slowOrder": 3,
+            "band": "27",
+            "pole": "27"
+          },
+          {
+            "slowOrder": 4,
+            "band": "30",
+            "pole": "30"
+          }
+        ]
+      },
+      "F1F1": {
+        "epsilon": "49997/25000",
+        "zeta": "1",
+        "rows": [
+          {
+            "slowOrder": 0,
+            "band": "71/2",
+            "pole": "27"
+          },
+          {
+            "slowOrder": 1,
+            "band": "77/2",
+            "pole": "30"
+          },
+          {
+            "slowOrder": 2,
+            "band": "83/2",
+            "pole": "33"
+          },
+          {
+            "slowOrder": 3,
+            "band": "89/2",
+            "pole": "36"
+          },
+          {
+            "slowOrder": 4,
+            "band": "95/2",
+            "pole": "39"
+          }
+        ]
+      },
+      "F2F2": {
+        "epsilon": "49999/25000",
+        "zeta": "2",
+        "rows": [
+          {
+            "slowOrder": 0,
+            "band": "20",
+            "pole": "30"
+          },
+          {
+            "slowOrder": 1,
+            "band": "23",
+            "pole": "33"
+          },
+          {
+            "slowOrder": 2,
+            "band": "26",
+            "pole": "36"
+          },
+          {
+            "slowOrder": 3,
+            "band": "29",
+            "pole": "39"
+          },
+          {
+            "slowOrder": 4,
+            "band": "32",
+            "pole": "42"
+          }
+        ]
+      }
+    },
+    "condition": "Retain the same live phase-free velocity envelopes at each checked ordinary derivative. Forced curl adds one derivative or L with explicit inverse carrier. For S^3 use the existing epsilon^(-rho) debit. Higher pure Z5 of the Forced gauge is an input, not a C4 consequence."
+  },
+  "remainingPureAxialPotentialOrder": [
+    "C_theta",
+    0,
+    5,
+    0
+  ],
+  "possibleNewModeOneOrderSixInitializedMeanDirectionsRZL": [
+    [
+      0,
+      5,
+      1
+    ],
+    [
+      0,
+      6,
+      0
+    ],
+    [
+      1,
+      5,
+      0
+    ]
+  ],
+  "sourceOrderPremise": "Original normalized Forced Z5 needs Primary ordinary velocity through seven, already in its order range. Mode one requires separate higher mean/input bounds; mode two has no mean. Higher source coefficient budgets and original regularity still require attachment.",
+  "separateCompactPressureBranch": "Original middle beta_F,Z5 from epsilon^3 beta_F,ZZ after three further Z derivatives of Haar pressure requires J_theta(afterTemporal),Z6. It is independent of the exceptional Forced covariance donor.",
+  "finalJets": 0,
+  "release": "HOLD"
+}
