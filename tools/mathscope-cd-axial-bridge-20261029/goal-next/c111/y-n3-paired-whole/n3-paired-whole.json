@@ -1,0 +1,84 @@
+{
+  "schema": "MathScope.C111.OriginalNativeN3WholePairedPressureAndStressError/1",
+  "operandsSHA256": "8e7e3098779e3c74ac328cd72d3c1e2b329abdd3bd99b7af348232fd98f68493",
+  "sourceStatus": "VERIFIED_ORIGINAL_N3_COUPLED_FLUX_PREVIOUS_VISCOSITY_AND_FIVE_MOMENTS",
+  "ordinaryStatus": "CONDITIONAL_ON_PINNED_ORIGINAL_ORDINARY_NATIVE_LEADING_ANALYTIC_ETA_AND_FIXED_BOUND_MOMENT_REALIZATIONS",
+  "rationalChecks": {
+    "operatorIntegers": [
+      4096,
+      4096,
+      1152,
+      14680064
+    ],
+    "boundaryNumbers": [
+      31,
+      62
+    ],
+    "restBeforePreviousViscosity": [
+      16,
+      36
+    ],
+    "bothDirectionIntegralCaps": [
+      81,
+      166
+    ],
+    "finalCommonInteger": 256
+  },
+  "exactConservativeNumerators": [
+    0,
+    0
+  ],
+  "wrongLowerAndViscosityControls": [
+    696,
+    936,
+    368,
+    354
+  ],
+  "pairedHistoryErrorsThroughWholeX": {
+    "N1N2Paired": true,
+    "N3PressureStorage": "P_(K3+1)",
+    "fieldTarget": "F3,U3 first real eta norm, dX and X-weighted second radial derivative, Pi3 first real eta norm",
+    "B": "max(1,Xplus)",
+    "A": "max(1,H,A1,A2)",
+    "lowerMixed": "D=D1+D2 with the original whole N2 derivative bank",
+    "omega2": "2^30 B^2 A D",
+    "allThreeLowerPressureAndFluxDensities": "D3=2^32 B^3 A D",
+    "allFiveMomentErrors": "M3=4 B^2 H E3_star+B D3",
+    "pressureError": "P3=E3_star+B(2 H S3+D3)"
+  },
+  "guardedStress": {
+    "originalEta": 2,
+    "originalStartEnd": [
+      28814,
+      28824
+    ],
+    "unweightedAxialDensity": 123841,
+    "weightedAngularDensity": 123840,
+    "samePressureGauge": true,
+    "wholeSignedErrorZeroConditional": true,
+    "originalInnerPrefixDefectRetained": true,
+    "cap": "256 B^3 max(1,(2Xminus)^(-1/2),(2Xminus)^(-1)) (A(S3+D)+P3+2^28 B^2 D2)",
+    "forwardAndBackwardSeparate": true,
+    "allFourBothDirections": [
+      "pointwise axial",
+      "pointwise angular",
+      "absolute dX axial",
+      "absolute dX angular"
+    ]
+  },
+  "explicitThreeDepthTransfer": {
+    "differentStages": [
+      "N1 depth N",
+      "N2 depth K2",
+      "N3 depth K3"
+    ],
+    "finalStrictTargetForFieldsAndStresses": "<2^-256",
+    "eachPositiveContribution": "<2^-258",
+    "hasOriginalK2AndK3Minus2Floors": true,
+    "numericCentersOrDepthsMaterialized": false
+  },
+  "generalY": "OPEN",
+  "M3": "62/64",
+  "finalJets": 0,
+  "release": "HOLD"
+}
