@@ -201,13 +201,11 @@ theorem near_reference_strict_native_bracket {s h eta : ℝ}
   have he₁ : 0 ≤ 1 - eta ^ 2 := sub_nonneg.mpr he
   have hz : 0 ≤ s ^ (1 - 2 * h) * eta ^ 2 := mul_nonneg (Real.rpow_nonneg hs _) he₀
   constructor
-  · dsimp
-    have loT := mul_le_mul_of_nonneg_right hs₀ he₁
+  · have loT := mul_le_mul_of_nonneg_right hs₀ he₁
     have loZ := mul_le_mul_of_nonneg_right hp₀ he₀
     have loP := mul_le_mul_of_nonneg_left hpLeft hz
     nlinarith
-  · dsimp
-    have hiT := mul_le_mul_of_nonneg_right hs₁ he₁
+  · have hiT := mul_le_mul_of_nonneg_right hs₁ he₁
     have hiZ := mul_le_mul_of_nonneg_right hp₁ he₀
     have hiP := mul_le_mul_of_nonneg_left hpRight hz
     nlinarith
