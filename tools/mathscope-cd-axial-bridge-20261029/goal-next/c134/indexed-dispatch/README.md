@@ -1,0 +1,9 @@
+# Repeat dispatch layout
+
+This audit pins the GitHub live export and independent complete stream readback. It also pins the original common-cover builder, Forced indexed field builder and angular reconstruction. The exact native registry contains 29 indexed fields. The eight protected angular velocity/pressure fields have the same 81 boxes, 162 signed rows, five outer guards per row and fixed derivative maps.
+
+On the source's admitted `0 ≤ δ ≤ 4` integer palette range, the selector is the genuine native `i(ell_own) − i(ell_ref−2)` expression. Its three roots are distinct graph objects, one per relative-band class. Each row uses the five difference choices for its own sign. Each choice has exactly four positive inverse systems. A node read checks the conjugacy of the three velocity and one pressure coefficients for all forty systems. The real synthesis uses the two signs of each harmonic of the original phase, giving the factor 2 for the positive-mode reduction. All coordinates, frozen copies, and guarded boundaries in each proposed row are the original operands.
+
+The recipe uses the protected reference-to-own pullback `(sqrt(b)R, b^D Z, bT)` and keeps the normalized velocity and pressure factors `b^A` and `b^(2A)` inside the differentiated local expression. The four proposed increments would require 648 indexed row installations. This audit verifies the dispatch layout and native coefficient IDs. The live export has no new Repeat indexed fields. Actual new local-system construction, native free-coordinate closure, all-domain admission and gluing, indexed registration, the full updated state and the conservative residual are open.
+
+Execute the replay with `--artifact` pointing to the extracted GitHub run 44682703381 artifact, `--readback` pointing to the C132 `active-readback.json`, `--original` pointing to the pinned source's `research-ide/mathscope-m3/navier` directory, and `--out` naming the output JSON.
