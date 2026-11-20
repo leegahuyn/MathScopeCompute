@@ -39,10 +39,7 @@ theorem signed_gaussian_pole_hasDerivAt {a p x : ℝ} (hx : 0 < x) :
   have hLog := (Real.hasDerivAt_log hx.ne').const_mul p
   have hArg : HasDerivAt (fun y : ℝ => -a / y ^ 2 - p * Real.log y)
       (2 * a / x ^ 3 - p / x) x := by
-    convert hInv.sub hLog using 1
-    · funext y
-      rfl
-    · (try simp) <;> field_simp [hx.ne'] <;> ring
+    convert hInv.sub hLog using 1 <;> (try simp) <;> field_simp [hx.ne'] <;> ring
   simpa only [Function.comp_def] using
     (Real.hasDerivAt_exp (-a / x ^ 2 - p * Real.log x)).comp x hArg
 
