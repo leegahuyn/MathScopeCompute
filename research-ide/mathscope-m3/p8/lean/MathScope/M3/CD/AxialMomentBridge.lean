@@ -339,9 +339,10 @@ theorem axial_fixed_interval_hasDerivAt_of_joint_continuity
       ∀ e ∈ Metric.closedBall η radius, ‖d e X‖ ≤ C :=
     Filter.Eventually.of_forall fun X hX e he =>
       hC ⟨(e, X), ⟨he, uIoc_subset_uIcc hX⟩, rfl⟩
+  have hEventually : ∀ᶠ e in 𝓝 η, e ∈ Metric.closedBall η radius := hBall
   have hMeas : ∀ᶠ e in 𝓝 η,
       AEStronglyMeasurable (f e) (volume.restrict (uIoc a b)) :=
-    hBall.mono fun e he => (intervalIntegrable_iff.mp (hSlice f hf he)).aestronglyMeasurable
+    hEventually.mono fun e he => (intervalIntegrable_iff.mp (hSlice f hf he)).aestronglyMeasurable
   have hDiff : ∀ᵐ X ∂volume, X ∈ uIoc a b →
       ∀ e ∈ Metric.closedBall η radius, HasDerivAt (fun e' => f e' X) (d e X) e :=
     Filter.Eventually.of_forall fun X hX e he => hDeriv e he X (uIoc_subset_uIcc hX)
