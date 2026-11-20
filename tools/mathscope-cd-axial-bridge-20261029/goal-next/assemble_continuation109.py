@@ -57,7 +57,7 @@ def verify_members(raw, parse, bound):
     fixed = parse("c109/fixed-n3-domain/fixed-n3-domain.json")
     assert fixed["fixedSlab"]["positiveRelativeLabels"] == [-1, 0, 1]
     assert fixed["fixedSlab"]["firstOmittedScaleTimesQ"] == ["1", "4"]
-    assert fixed["firstCorrectionWhole"] == "OPEN"
+    assert fixed["firstCorrectionWhole"] == "CONDITIONAL"
     assert fixed["finalJets"] == 0 and fixed["release"] == "HOLD"
     return files
 
