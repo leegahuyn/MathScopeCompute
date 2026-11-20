@@ -1,0 +1,323 @@
+{
+  "checkedOriginalFiles": {
+    "source-full-mean-equations.mjs": "2f44315a940fc959f1c86c2a8fd5b1a252521cbb8e2565dc42fc07b139773d76",
+    "source-global-current.mjs": "b7ec3b426589c207973c62a9debd19adb54ce66c15dd625c963ed56a4d697a36",
+    "source-pressure.mjs": "fcdbbcddc5e16649f771bb53e1b0889ee1641a62dec3440d18611488ce35c66f",
+    "source-temporal-potential.mjs": "c0754a9afc0c41e731488523c030a317e69407e3ec01d2fe9bed8eb2f414a6f8"
+  },
+  "semantics": "Each summand has a supported input on a common open radial exterior, for all auxiliary phases. Division requires R>0. Derivatives require the original derivative to exist on the exterior.",
+  "pdeRequiredInputs": [
+    "beta",
+    "v",
+    "gamma",
+    "rr",
+    "rtheta",
+    "rz",
+    "thetatheta",
+    "thetaz",
+    "zz",
+    "Ttheta",
+    "Tz",
+    "pressure"
+  ],
+  "pdeSummands": {
+    "gr": [
+      [
+        "beta"
+      ],
+      [
+        "rr"
+      ],
+      [
+        "gamma"
+      ],
+      [
+        "beta",
+        "gamma"
+      ],
+      [
+        "rz"
+      ],
+      [
+        "v"
+      ],
+      [
+        "thetatheta"
+      ]
+    ],
+    "Etheta": [
+      [
+        "v"
+      ],
+      [
+        "beta"
+      ],
+      [
+        "beta",
+        "v"
+      ],
+      [
+        "rtheta"
+      ],
+      [
+        "gamma"
+      ],
+      [
+        "v",
+        "gamma"
+      ],
+      [
+        "thetaz"
+      ],
+      [
+        "Ttheta"
+      ]
+    ],
+    "Ez": [
+      [
+        "gamma"
+      ],
+      [
+        "beta"
+      ],
+      [
+        "beta",
+        "gamma"
+      ],
+      [
+        "rz"
+      ],
+      [
+        "zz"
+      ],
+      [
+        "pressure"
+      ],
+      [
+        "Tz"
+      ]
+    ],
+    "fluxTheta": [
+      [
+        "v"
+      ],
+      [
+        "gamma"
+      ],
+      [
+        "v",
+        "gamma"
+      ],
+      [
+        "thetaz"
+      ]
+    ],
+    "fluxZ": [
+      [
+        "gamma"
+      ],
+      [
+        "zz"
+      ]
+    ],
+    "divergence": [
+      [
+        "beta"
+      ],
+      [
+        "gamma"
+      ]
+    ]
+  },
+  "incrementRequiredInputs": [
+    "delta_beta",
+    "delta_v",
+    "delta_gamma"
+  ],
+  "remainderSummands": {
+    "Rg": [
+      [
+        "delta_beta"
+      ],
+      [
+        "beta",
+        "delta_beta"
+      ],
+      [
+        "delta_gamma"
+      ],
+      [
+        "beta",
+        "delta_gamma"
+      ],
+      [
+        "gamma",
+        "delta_beta"
+      ],
+      [
+        "delta_beta",
+        "delta_gamma"
+      ],
+      [
+        "v",
+        "delta_v"
+      ],
+      [
+        "delta_v"
+      ]
+    ],
+    "JthetaIntegrand": [
+      [
+        "gamma",
+        "delta_v"
+      ],
+      [
+        "v",
+        "delta_gamma"
+      ],
+      [
+        "delta_v",
+        "delta_gamma"
+      ]
+    ],
+    "JzVelocityIntegrand": [
+      [
+        "gamma",
+        "delta_gamma"
+      ],
+      [
+        "delta_gamma"
+      ]
+    ],
+    "Rg.time": [
+      [
+        "delta_beta"
+      ]
+    ],
+    "Rg.radial": [
+      [
+        "delta_beta"
+      ],
+      [
+        "beta",
+        "delta_beta"
+      ]
+    ],
+    "Rg.axial": [
+      [
+        "delta_gamma"
+      ],
+      [
+        "delta_beta"
+      ],
+      [
+        "beta",
+        "delta_gamma"
+      ],
+      [
+        "gamma",
+        "delta_beta"
+      ],
+      [
+        "delta_beta",
+        "delta_gamma"
+      ]
+    ],
+    "Rg.angular": [
+      [
+        "v",
+        "delta_v"
+      ],
+      [
+        "delta_v"
+      ]
+    ],
+    "Rg.viscous": [
+      [
+        "delta_beta"
+      ]
+    ],
+    "linear.PIntegrand": [
+      [
+        "delta_v"
+      ]
+    ],
+    "linear.JthetaIntegrand": [
+      [
+        "delta_v"
+      ],
+      [
+        "delta_gamma"
+      ]
+    ],
+    "linear.JzIntegrand": [
+      [
+        "delta_gamma"
+      ],
+      [
+        "delta_v"
+      ]
+    ]
+  },
+  "negativeControls": {
+    "pressure": [
+      "Ez"
+    ],
+    "Ttheta": [
+      "Etheta"
+    ],
+    "Tz": [
+      "Ez"
+    ],
+    "beta": [
+      "gr",
+      "Etheta",
+      "Ez",
+      "divergence"
+    ],
+    "thetaz": [
+      "Etheta",
+      "fluxTheta"
+    ],
+    "rz": [
+      "gr",
+      "Ez"
+    ],
+    "delta_beta": [
+      "Rg",
+      "Rg.time",
+      "Rg.radial",
+      "Rg.axial",
+      "Rg.viscous"
+    ],
+    "delta_v": [
+      "Rg",
+      "JthetaIntegrand",
+      "Rg.angular",
+      "linear.PIntegrand",
+      "linear.JthetaIntegrand",
+      "linear.JzIntegrand"
+    ],
+    "delta_gamma": [
+      "Rg",
+      "JthetaIntegrand",
+      "JzVelocityIntegrand",
+      "Rg.axial",
+      "linear.JthetaIntegrand",
+      "linear.JzIntegrand"
+    ]
+  },
+  "abstractNodes": 393,
+  "originalOperationInstances": {
+    "rational": 18,
+    "symbol": 30,
+    "derivative": 82,
+    "mul": 138,
+    "neg": 14,
+    "add": 77,
+    "pow": 13,
+    "div": 17,
+    "sub": 4
+  },
+  "actualInputPremisesProvedHere": false
+}
