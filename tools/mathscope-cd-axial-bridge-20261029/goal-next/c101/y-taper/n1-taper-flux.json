@@ -1,0 +1,51 @@
+{
+  "schema": "MathScope.C101.ActualN1TaperFluxError/1",
+  "sourceStatus": "VERIFIED_ORIGINAL_N1_TAPER_AND_WEIGHTED_RESIDUAL_FLUX_IDENTITIES",
+  "ordinaryStatus": "CONDITIONAL_ON_C100_COHERENT_RAW_REALIZATION_AND_ORIGINAL_LOCAL_LEADING_BOUNDS",
+  "sourceOperandsSHA256": "f2b30e8b3e03de6f2eede2efb94c79c43e2958486babae8d91049222d6bbb68b",
+  "priorC100ReceiptSHA256": "17664f981265e2373a5c16d0bf3c9dc233af48605974de1e072520b9932b71de",
+  "sourceIdentityCount": 9,
+  "sourceAxialIntegrand": 117047,
+  "radialDomain": {
+    "left": 28814,
+    "taperStarts": 28819,
+    "right": 28823
+  },
+  "errorSymbols": {
+    "E": "2^73 Q^-77",
+    "R": "2^46 Q^-19",
+    "g": "Xcut"
+  },
+  "normalizedStressError": {
+    "axial": "sqrt(2X) DeltaTz",
+    "angular": "2X DeltaTtheta",
+    "strip": "S_(delta/16)",
+    "scope": "original forward integrals Xminus<=X<=Xcut"
+  },
+  "exactIsolatedTaperTrace": {
+    "axial": "-128 sigmaPrime(u) eU/t1",
+    "angular": "-256 X sigmaPrime(u) eF/t1"
+  },
+  "uniformErrorWithTaperTraceRemoved": {
+    "axial": "5 g R",
+    "angular": "9 g^2 R"
+  },
+  "fullErrorL1OnActualTaper": {
+    "axial": "3 g E",
+    "angular": "5 g^2 E"
+  },
+  "fullErrorL1OnLocalInterval": {
+    "axial": "5 g^2 R + 2 g E",
+    "angular": "9 g^3 R + 4 g^2 E"
+  },
+  "genericNonvanishingTraceAtMidpoint": {
+    "sigmaPrime": "8",
+    "axialOverConstantError": "-1024/t1",
+    "angularOverConstantError": "-2048 X/t1"
+  },
+  "symbolicSufficientDepthForPointwiseTraceBelowGR": "3+ceil(24 log(CSelected)/(5 log(Q)))",
+  "sufficientDepthMaterialized": false,
+  "remaining": "OPEN_UNSCALED_POINTWISE_TAPER_ERROR_AT_TWO_TERMS_AND_WHOLE_OUTER_STRESS",
+  "additionalFinalJets": 0,
+  "release": "HOLD"
+}

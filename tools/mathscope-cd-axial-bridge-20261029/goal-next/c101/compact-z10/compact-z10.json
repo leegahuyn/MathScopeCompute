@@ -1,0 +1,41 @@
+{
+  "status": "VERIFIED_NONZERO_COMPACT_FIVEMAP_HAAR_W_RZ_Z10_OPERATOR",
+  "pins": {
+    "highCrop": "43ec151882813aca8c17f0048df8a250967e9a0f90ccca069746c196683658e2",
+    "source-global-pressure.mjs": "fd93001ad4bbc002d329cba54d1c884cc5e7bfd93444b1d72bd9c331a67b966d",
+    "source-temporal-potential.mjs": "c0754a9afc0c41e731488523c030a317e69407e3ec01d2fe9bed8eb2f414a6f8",
+    "source-full-mean-equations.mjs": "2f44315a940fc959f1c86c2a8fd5b1a252521cbb8e2565dc42fc07b139773d76",
+    "source-updated-mean-pressure.mjs": "6ea6cb85cddd54b0421203e8fc37d24bdfcb8d3c6e62f78c5dada3dab8bd0c07"
+  },
+  "pressurePathNativeNodes": {
+    "pZ": 17754234,
+    "chi": 17743734,
+    "chiZ": 17744145,
+    "axialCentered": 19563365,
+    "axialSource": 17754268
+  },
+  "originalMomentShape": {
+    "P": "integral(Haar(gr))",
+    "Jz": "integral(Haar(fluxZ))-1/2*integral(R^2*Haar(gr))",
+    "uniqueHighChannel": "-epsilon*partial_Z Haar(beta_T*gamma_T)",
+    "variationFirstOrders": {
+      "psi": 8,
+      "beta": 7,
+      "gamma": 8
+    }
+  },
+  "witness": {
+    "P_Z6PerEpsilonSquared": "64/315",
+    "Jz_Z6PerEpsilonSquared": "32/77",
+    "lowerRzOrdinaryAxialJetsThroughNineUnchanged": true,
+    "quadraticHaarTransfer": "P_Z6=epsilon^2/4*integral(a^2), Jz_Z6=epsilon^2/8*integral(R^2*a^2)"
+  },
+  "assumptions": [
+    "Co-moving nonconstant Fourier harmonic with nonzero N multiplier. The fixed native basis, phase translation and centered N^-1 are kept.",
+    "Compact smooth radial a and b=R*a. The nonzero test uses squared polynomial endpoint factors for exact integrals; compact smooth bumps give the same signed identities.",
+    "A low Wzz,Z input produces psi=a*h. The Wrz,Z10 perturbation is (ci/epsilon^2)N[((Rb)'/R)'*h] and gives delta psi_Z8=b*h through the exact two centered primitives.",
+    "Formal dependence of the actual operator. Original Primary realizability and quantitative source enclosures are independent conditions."
+  ],
+  "finalJets": 0,
+  "release": "HOLD"
+}

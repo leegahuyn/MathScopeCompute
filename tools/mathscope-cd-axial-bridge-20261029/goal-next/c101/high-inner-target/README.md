@@ -1,0 +1,11 @@
+# Native regular inner target through order eleven
+
+The verifier reproduces the complete existing C9 inner coefficient ledger and extends the original normalized Laplace operator \(K_a\) from order 10 to order 12. It separately runs all 105 original Banach natural derivative bounds through total order 13 for \(\Phi,u,\overline u\). They apply on the original inner collar since \(Y\le 4e^{t_1/4}\le4(512/511)<5\). The actual average has each natural power-series coefficient divided by the corresponding positive integer \(k+1\). The inverse \(\Phi^{-1}\) uses the original lower bound \(1/4\) and an exact order-13 reciprocal recurrence. Every derivative of the divided exponential uses the actual available derivative order of its argument.
+
+The verified regular factors are #119712 and #119713 with original activation root #119711. On \(0\le u=\log(X/X_a)/t_1\le1/4\) and \(|\eta|\le1\), all normalized ordinary derivatives through order eleven are bounded by \(C^{392}\) and \(C^{738}\), where \(C=C_{\rm Selected}\). Conversion to \(\log X\) at orders 10 and 11 gives the two component bounds \(C^{1592}, C^{1938}\) and \(C^{1712}, C^{2058}\), respectively. The checked arithmetic produces explicit positive directed upper expressions for both components through order eleven. The analytic transfer at the flat radial endpoint uses domination by an integrable polynomial in the Laplace variable times its original exponential. Eta endpoint differentiation is inward.
+
+The C100 fixed-label pointwise chart estimate extends the regular factors with the \(s^{-A-1/2}\) multiplier through ordinary physical \(R,Z,T\) order eleven. With \(H_c=R_{\rm env}\), \(X^{-j}\le R_{\rm env}^j\), the unsigned Stirling sum \(j!\), and the verified original scale hierarchy, the resulting bound is at most \(2^{4096}B_{\rm norm}\). This is conditional on the pinned chart and original regularized stress equations. The separate Gaussian factor \(e^{-1/u^2}\), native higher FTC-face sums, covariance frames and eventual stage energy are outside this result. The C10 and C11 regular envelopes serve the selected \(Z^9\) and \(Z^{10}\) covariance paths, respectively.
+
+~~~text
+node verify_regular_inner_high.mjs GOAL_NEXT ORIGINAL_RUNTIME HISTORICAL_SCALE_INPUT C100_CHART11_JSON regular-inner-c11.json
+~~~

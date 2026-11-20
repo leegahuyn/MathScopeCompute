@@ -1,0 +1,100 @@
+{
+  "schema": "MathScope.C101.ActualN1OuterCompensationAndStressError/1",
+  "sourceStatus": "VERIFIED_ORIGINAL_BUMP_PRIMITIVES_CONSERVATIVE_FLUX_AND_CLOSURE_ROLES",
+  "ordinaryStatus": "CONDITIONAL_ON_SAME_C100_ORDINARY_FIELDS_AND_ORIGINAL_LEADING_MOMENT_DENOTATION",
+  "operandsSHA256": "f9910c12ee41bda2e75fcc12d71a6837f52d495dcdc0bb91af43ea6c3eb7bb46",
+  "priorC101TaperSHA256": "867bc1d589edd923257c2250672ca66d1341847a914eba952ac2b645ed627f8a",
+  "sourceIdentityCount": 15,
+  "sourceAxialIntegrand": 117047,
+  "sourceAxialTotal": 117075,
+  "sourceWeightedAngularTotal": 117072,
+  "outerEndpoints": {
+    "cut": 28823,
+    "IposLeft": 28987,
+    "lastAxialBump": 29328,
+    "lastAngularBump": 117099,
+    "IposRight": 28988,
+    "Xplus": 28824,
+    "Xb": 28826
+  },
+  "normSymbols": {
+    "g": "Xcut",
+    "r": "Rbase",
+    "E": "2^73 Q^-77",
+    "R": "2^46 Q^-19",
+    "A": "2^17 Q^2 g E",
+    "B": "2^31 Q^2 g E",
+    "b0": "2^15",
+    "b1": "2^2070",
+    "b2": "2^2081"
+  },
+  "IposOrdinaryErrorBoundsOnDeltaOver8": {
+    "DeltaU": [
+      "2 A b0/r^2",
+      "2 A b1/r^4",
+      "2 A (b1+b2)/r^6"
+    ],
+    "DeltaF": [
+      "3 B b0/r",
+      "3 B (b1+b0)/r^3",
+      "3 B (b2+3b1+3b0)/r^5"
+    ],
+    "DeltaPressure": [
+      "2^33 Q g E",
+      "12 B b0/r^2",
+      "B (42b0+12b1)/r^4"
+    ],
+    "DeltaMass": [
+      "2^21 Q^2 g E",
+      "DeltaU",
+      "DeltaU_X"
+    ],
+    "derivativeOrders": [
+      0,
+      1,
+      2
+    ]
+  },
+  "compensatedErrorsZeroAfterLastAngularBump": true,
+  "preIposGapExactErrorFromCut": {
+    "interval": "Xcut<=X<=Xpos",
+    "radialMassCoefficient": "V0=(-2(D+lambda1)eta Delta_m0-d partial_eta Delta_m0)/L",
+    "pressureCoefficient": "P0=(-2eta Delta_m2+d partial_eta Delta_m2)/L",
+    "axialIntegratedDensity": "V0*(U0(X)-U0(Xcut))+(X-Xcut)*P0",
+    "weightedAngularIntegratedDensity": "2*V0*(X*F0(X)-Xcut*F0(Xcut))",
+    "radialMassCoefficientUpper": "2^8 g E/delta",
+    "pressureCoefficientUpper": "2^12 Q g E/delta"
+  },
+  "pressureAndMassSaturationProofUsesExactCompensatedMoments": [
+    0,
+    2
+  ],
+  "sourceMomentRowsUsedByAxialClosure": [
+    0,
+    4
+  ],
+  "sourceMomentRowsUsedByAngularClosure": [
+    1,
+    3
+  ],
+  "exactOrdinaryUncutWholeErrorIntegralZero": {
+    "axial": true,
+    "weightedAngular": true
+  },
+  "signedOuterErrorIntegralUpper": {
+    "axial_Xcut_to_Xplus": "5 g R",
+    "weightedAngular_Xcut_to_Xb": "9 g^2 R"
+  },
+  "signedWholeClippedErrorIntegralUpper": {
+    "axial_Xminus_to_Xplus": "5 g R",
+    "weightedAngular_Xminus_to_Xb": "9 g^2 R"
+  },
+  "clippedForwardLateConstant": "normalized DeltaStress = uncut DeltaDensity integral from 0 to original Xminus",
+  "lateClippedForwardConstantUpper": {
+    "axial": "5 g R",
+    "weightedAngular": "9 g^2 R"
+  },
+  "remaining": "OPEN_NO_UNIFORM_POINTWISE_OUTER_STRESS_ERROR_AND_NO_ALL_ORDER_RECURSION",
+  "additionalFinalJets": 0,
+  "release": "HOLD"
+}
