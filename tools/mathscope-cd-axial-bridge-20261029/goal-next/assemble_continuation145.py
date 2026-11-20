@@ -43,7 +43,8 @@ def verify_members(raw, parse, bound):
     appendix = admission["evidenceBranchAdmissionAppendix"]
     additional = {row["id"] for row in appendix["newRows"]}
     assert len(old) == 33 and len(additional) == 109 and len(still_open) == 381
-    assert sorted(additional) == appendix["newlyAdmissible"]
+    assert len(additional) == appendix["newlyAdmissible"]
+    assert additional == {row_id for group in appendix["groups"] for row_id in group["allAdmittedIds"]}
     assert len(old | additional | still_open) == 523 and appendix["locallyCertifiedCount"] == 142
     add = sorted(old | additional | still_open)
     from hashlib import sha256
