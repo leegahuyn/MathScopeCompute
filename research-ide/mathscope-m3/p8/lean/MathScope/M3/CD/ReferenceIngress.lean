@@ -158,6 +158,62 @@ theorem positive_physical_scale_exists_unique {Z T a : ℝ}
 
 #print axioms positive_physical_scale_exists_unique
 
+/-- A physical slow point whose normalized scale is near the reference
+has strictly opposite endpoint signs in the original native bracket.
+The hypotheses encompass every nearest dyadic reference. -/
+theorem near_reference_strict_native_bracket {s h eta : ℝ}
+    (hs₀ : 2 / 3 ≤ s) (hs₁ : s ≤ 3 / 2) (hh₀ : 0 ≤ h) (hh₁ : h ≤ 1 / 16)
+    (he : eta ^ 2 ≤ 1) :
+    let T := s * (1 - eta ^ 2)
+    let Zsq := s ^ (1 - 2 * h) * eta ^ 2
+    1 / 2 < T + Zsq * (1 / 2 : ℝ) ^ (2 * h) ∧
+      T + Zsq * (2 : ℝ) ^ (2 * h) < 2 := by
+  have hs : 0 ≤ s := by linarith
+  have hexp₀ : 0 ≤ 1 - 2 * h := by linarith
+  have hexp₁ : 1 - 2 * h ≤ 1 := by linarith
+  have hp₀ : 2 / 3 ≤ s ^ (1 - 2 * h) := by
+    rcases le_total s 1 with hs' | hs'
+    · exact hs₀.trans (Real.self_le_rpow_of_le_one hs hs' hexp₁)
+    · exact (by norm_num : (2 / 3 : ℝ) ≤ 1).trans (Real.one_le_rpow hs' hexp₀)
+  have hp₁ : s ^ (1 - 2 * h) ≤ 3 / 2 := by
+    rcases le_total s 1 with hs' | hs'
+    · exact (Real.rpow_le_one hs hs' hexp₀).trans (by norm_num)
+    · exact (Real.rpow_le_self_of_one_le hs' hexp₁).trans hs₁
+  have hpEight : (2 : ℝ) ^ (1 / 8 : ℝ) < 8 / 7 := by
+    apply (Real.rpow_lt_rpow_iff (by positivity) (by norm_num) (by norm_num : 0 < (8 : ℝ))).mp
+    calc
+      (((2 : ℝ) ^ (1 / 8 : ℝ)) ^ (8 : ℝ)) = 2 := by
+        rw [← Real.rpow_mul (by norm_num : (0 : ℝ) ≤ 2)]
+        norm_num
+      _ < (8 / 7 : ℝ) ^ (8 : ℝ) := by
+        rw [show (8 : ℝ) = ((8 : ℕ) : ℝ) by norm_num, Real.rpow_natCast]
+        norm_num
+  have hpRight : (2 : ℝ) ^ (2 * h) ≤ 8 / 7 :=
+    (Real.rpow_le_rpow_of_exponent_le (by norm_num : (1 : ℝ) ≤ 2) (by linarith)).trans
+      hpEight.le
+  have hpLeft : 7 / 8 ≤ (1 / 2 : ℝ) ^ (2 * h) := by
+    rw [show (1 / 2 : ℝ) = (2 : ℝ)⁻¹ by norm_num, Real.inv_rpow (by norm_num : (0 : ℝ) ≤ 2)]
+    calc
+      (7 / 8 : ℝ) = (8 / 7 : ℝ)⁻¹ := by norm_num
+      _ ≤ ((2 : ℝ) ^ (2 * h))⁻¹ :=
+        (inv_le_inv₀ (by positivity) (by positivity)).2 hpRight
+  have he₀ : 0 ≤ eta ^ 2 := sq_nonneg _
+  have he₁ : 0 ≤ 1 - eta ^ 2 := sub_nonneg.mpr he
+  have hz : 0 ≤ s ^ (1 - 2 * h) * eta ^ 2 := mul_nonneg (Real.rpow_nonneg hs _) he₀
+  constructor
+  · dsimp
+    have loT := mul_le_mul_of_nonneg_right hs₀ he₁
+    have loZ := mul_le_mul_of_nonneg_right hp₀ he₀
+    have loP := mul_le_mul_of_nonneg_left hpLeft hz
+    nlinarith
+  · dsimp
+    have hiT := mul_le_mul_of_nonneg_right hs₁ he₁
+    have hiZ := mul_le_mul_of_nonneg_right hp₁ he₀
+    have hiP := mul_le_mul_of_nonneg_left hpRight hz
+    nlinarith
+
+#print axioms near_reference_strict_native_bracket
+
 /-- A replacement of the time coordinate alone can destroy existence in the
 registered bracket. This is a control for transport into nested frames. -/
 theorem zero_axial_time_below_reference_bracket {s T a : ℝ}
