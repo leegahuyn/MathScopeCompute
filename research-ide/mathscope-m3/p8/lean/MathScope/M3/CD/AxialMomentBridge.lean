@@ -1,3 +1,4 @@
+import Mathlib.Analysis.Calculus.ParametricIntervalIntegral
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 import Mathlib.Tactic.FunProp
 import Mathlib.Tactic.Linarith
@@ -307,6 +308,51 @@ theorem omitted_pressure_boundary_countermodel :
 theorem pointwise_zero_is_insufficient :
     (fun eta : ℝ => eta) 0 = 0 ∧ deriv (fun eta : ℝ => eta) 0 = 1 := by
   simp
+
+/-- Joint continuity on a compact parameter/radial rectangle supplies a
+constant integrable majorant for the fixed-endpoint derivative. -/
+theorem axial_fixed_interval_hasDerivAt_of_joint_continuity
+    (f d : ℝ → ℝ → ℝ) (η a b radius : ℝ) (hRadius : 0 < radius)
+    (hf : ContinuousOn (fun p : ℝ × ℝ => f p.1 p.2)
+      (Metric.closedBall η radius ×ˢ uIcc a b))
+    (hd : ContinuousOn (fun p : ℝ × ℝ => d p.1 p.2)
+      (Metric.closedBall η radius ×ˢ uIcc a b))
+    (hDeriv : ∀ e ∈ Metric.closedBall η radius, ∀ X ∈ uIcc a b,
+      HasDerivAt (fun e' => f e' X) (d e X) e) :
+    HasDerivAt (fun e => ∫ X in a..b, f e X)
+      (∫ X in a..b, d η X) η := by
+  have hη : η ∈ Metric.closedBall η radius :=
+    Metric.mem_closedBall_self hRadius.le
+  have hBall := Metric.closedBall_mem_nhds η hRadius
+  have hSlice (g : ℝ → ℝ → ℝ)
+      (hg : ContinuousOn (fun p : ℝ × ℝ => g p.1 p.2)
+        (Metric.closedBall η radius ×ˢ uIcc a b))
+      {e : ℝ} (he : e ∈ Metric.closedBall η radius) :
+      IntervalIntegrable (g e) volume a b := by
+    have hPair : Continuous (fun X : ℝ => (e, X)) :=
+      continuous_const.prodMk continuous_id
+    exact (hg.comp hPair.continuousOn (fun X hX => ⟨he, hX⟩)).intervalIntegrable
+  have hCompact : IsCompact (Metric.closedBall η radius ×ˢ uIcc a b) :=
+    (isCompact_closedBall η radius).prod isCompact_uIcc
+  obtain ⟨C, hC⟩ := hCompact.bddAbove_image hd.norm
+  have hBound : ∀ᵐ X ∂volume, X ∈ uIoc a b →
+      ∀ e ∈ Metric.closedBall η radius, ‖d e X‖ ≤ C :=
+    Filter.Eventually.of_forall fun X hX e he =>
+      hC ⟨(e, X), ⟨he, uIoc_subset_uIcc hX⟩, rfl⟩
+  have hMeas : ∀ᶠ e in 𝓝 η,
+      AEStronglyMeasurable (f e) (volume.restrict (uIoc a b)) :=
+    hBall.mono fun e he => (intervalIntegrable_iff.mp (hSlice f hf he)).aestronglyMeasurable
+  have hDiff : ∀ᵐ X ∂volume, X ∈ uIoc a b →
+      ∀ e ∈ Metric.closedBall η radius, HasDerivAt (fun e' => f e' X) (d e X) e :=
+    Filter.Eventually.of_forall fun X hX e he => hDeriv e he X (uIoc_subset_uIcc hX)
+  have hConst : IntervalIntegrable (fun _ : ℝ => C) volume a b :=
+    continuous_const.intervalIntegrable a b
+  exact (intervalIntegral.hasDerivAt_integral_of_dominated_loc_of_deriv_le
+    hBall hMeas (hSlice f hf hη)
+    (intervalIntegrable_iff.mp (hSlice d hd hη)).aestronglyMeasurable
+    hBound hConst hDiff).2
+
+#print axioms axial_fixed_interval_hasDerivAt_of_joint_continuity
 
 end
 end MathScope.M3.CD
