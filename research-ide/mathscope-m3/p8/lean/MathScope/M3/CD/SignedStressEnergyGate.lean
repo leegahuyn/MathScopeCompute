@@ -32,7 +32,10 @@ theorem signed_centered_time_cutoff
     (hChi : HasDerivAt chi chiT t) :
     leftT - chi t * wholeT =
       deriv (fun x => left x - chi x * whole x) t + chiT * whole t := by
-  rw [(hLeft.sub (hChi.mul hWhole)).deriv]
+  have hCentered : HasDerivAt (fun x => left x - chi x * whole x)
+      (leftT - (chiT * whole t + chi t * wholeT)) t := by
+    exact hLeft.sub (hChi.mul hWhole)
+  rw [hCentered.deriv]
   ring
 
 /-- After the Corollary 8.5 radial integration, the axial and time fluxes and
