@@ -43,8 +43,10 @@ const writeNewJSON = (out, name, value) => writeFile(join(out,name), JSON.string
 
 export async function emitActiveN3RepeatCandidate({
   navier, pde, out, firstCycle, context, mode = 'metadata', deferExport = false, maxNodes = 35_000_000,
+  onLiveCandidate,
 }) {
   assert.ok(['metadata','full-source'].includes(mode));
+  assert.ok(onLiveCandidate === undefined || typeof onLiveCandidate === 'function');
   assert.ok(Number.isSafeInteger(maxNodes) && 0 < maxNodes && maxNodes <= 35_000_000);
   assert.equal(firstCycle.status, 'VERIFIED_FIRST_CYCLE_SOURCE_CONSTRUCTION');
   assert.equal(firstCycle.prefix, 3);
@@ -118,5 +120,6 @@ export async function emitActiveN3RepeatCandidate({
       completeSecondCorrection:'OPEN',finalJets:0,release:'HOLD',
     });
   }
+  onLiveCandidate?.(result);
   return receipt;
 }

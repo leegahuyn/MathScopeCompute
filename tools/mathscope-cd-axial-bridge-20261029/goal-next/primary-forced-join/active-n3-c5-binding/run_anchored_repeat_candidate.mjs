@@ -31,8 +31,10 @@ export async function runAnchoredRepeatCandidate({navier,pde,firstCycle,context,
     if (error.code !== 'EEXIST') throw error;
   }
   assert.equal(sha(await readFile(path)), ORIGINAL_SHA, 'Restore the pinned original repeat source in the disposable runner.');
+  let liveRepeat;
   const receipt = await emitActiveN3RepeatCandidate({
     navier,pde,firstCycle,context,out,mode,deferExport:mode === 'full-source',
+    onLiveCandidate: mode === 'full-source' ? result => { liveRepeat = result; } : undefined,
   });
   if (mode === 'full-source') {
     const snapshot = await exportCoupledSnapshot(navier,pde.G,{
@@ -46,6 +48,11 @@ export async function runAnchoredRepeatCandidate({navier,pde,firstCycle,context,
       candidate:'active-n3-repeat-forced-candidate.json',guardedMatchesOriginalSupportedSource:'OPEN',
       completeSecondCorrection:'OPEN',finalJets:0,release:'HOLD',
     },null,2)+'\n',{flag:'wx'});
+    context.checkCancelled?.();
+    const {emitRepeatIndexedRegistration} = await import('./repeat-indexed-registration/emit_repeat_indexed_registration.mjs');
+    const indexed = await emitRepeatIndexedRegistration({navier, pde, repeat: liveRepeat, candidate: receipt, snapshot, out});
+    context.onProgress?.({stage: 'post-five-repeat-native-indexed-increment-candidate',
+      fields: indexed.registration.fields.length, nodeCount: pde.G.nodes.length});
   }
   return receipt;
 }
