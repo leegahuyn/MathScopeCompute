@@ -64,15 +64,18 @@ theorem moving_half_gaussian_hasDerivAt {T a t₁ : ℝ} {u d : ℝ → ℝ}
     (hu.pow 2) (pow_ne_zero 2 hu₀.ne')
   have hD := (hasDerivAt_const T (2 : ℝ)).div
     (hd.pow 2) (pow_ne_zero 2 hd₀.ne')
+  have hUPow : (u ^ (2 : ℕ)) T = (u T)^2 := rfl
+  have hDPow : (d ^ (2 : ℕ)) T = (d T)^2 := rfl
   have hArg : HasDerivAt (fun τ => -(1 / 2 : ℝ) / (u τ)^2 - 2 / (d τ)^2)
       (-a / (t₁ * (u T)^3) + 4 * a / (d T)^3) T := by
     convert hU.sub hD using 1 <;>
-      first | (funext τ; rfl) | (field_simp [ht₁.ne', hu₀.ne', hd₀.ne'] <;> ring)
+      first
+      | (funext τ; rfl)
+      | (simp only [hUPow, hDPow]; field_simp [ht₁.ne', hu₀.ne', hd₀.ne'] <;> ring)
   simpa only [Function.comp_def] using
     (Real.hasDerivAt_exp (-(1 / 2 : ℝ) / (u T)^2 - 2 / (d T)^2)).comp T hArg
 
 #print axioms moving_half_gaussian_hasDerivAt
-
 
 /-- On the original logarithmic collar the elementary pointwise envelope is
 largest at the current radius. The condition keeps the full opposite-face
