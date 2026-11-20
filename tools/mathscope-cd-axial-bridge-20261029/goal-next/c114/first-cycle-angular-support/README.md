@@ -1,0 +1,11 @@
+# Sparse physical angular support through the original first correction
+
+The original support program uses a band partition and three mesh partitions. Each supports at most two integers on a fixed physical circle, so at most 16 point boxes are positive. There are two signed local wave rows per box. The initialized source uses one nonzero integer winding with its conjugate per signed row. The live first correction uses the original \(m\omega\) with \(m\in\{1,2\}\) and their conjugates. Its late terms and the original cutoffs are independent of physical angle. The source program, initialized receipts, actual first-correction maps and first-correction seam receipt are all retained and pinned.
+
+The two stages are counted independently, so no equality between their windings is assumed. Formal independent integer directions bound the combined cylindrical velocity support by 193 modes on any one admitted angular circle. The Cartesian horizontal components have at most 386 modes. Transverse derivatives of horizontal components have at most 579. The pressure-free force can use at most 18,497 cylindrical modes and 36,994 Cartesian horizontal modes. These last counts come from exact addition of the support sets, including the original quadratic convection and the polar-frame shifts. Coefficients with equal actual frequencies are merged before squaring or making error comparisons. A cancellation test with equal physical frequencies rejects treating the labels as distinct modes.
+
+For ordinary smooth localized fields with the verified fixed-label flat joins, differentiating the cylindrical connection preserves each integer mode. Rotating to the Cartesian frame shifts a horizontal scalar by one in either direction. These operations count modes without making arrays proportional to the magnitude of the largest winding. The support result permits sparse coefficient handling through the first correction. It leaves the actual coefficient evaluation, the pressure contribution to the force, the later stage modes, and the whole-field `N8-05` comparisons open. Final jets remain 0/67 and RELEASE HOLD.
+
+~~~text
+python -B verify_first_cycle_angular_support.py --goal GOAL_NEXT --artifact HOSTED_44582875351 --out FRESH_OUTPUT.json
+~~~
