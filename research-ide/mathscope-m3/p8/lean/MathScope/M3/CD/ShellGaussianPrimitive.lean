@@ -52,6 +52,28 @@ theorem signed_gaussian_pole_second_multiplier {a p x : ℝ} (hx : x ≠ 0) :
 #print axioms signed_gaussian_pole_hasDerivAt
 #print axioms signed_gaussian_pole_second_multiplier
 
+/-- Time drift of the original half-weight along an admitted moving radial
+chart. The two endpoint distances carry opposite derivatives. -/
+theorem moving_half_gaussian_hasDerivAt {T a t₁ : ℝ} {u d : ℝ → ℝ}
+    (ht₁ : 0 < t₁) (hu₀ : 0 < u T) (hd₀ : 0 < d T)
+    (hu : HasDerivAt u (-a / t₁) T) (hd : HasDerivAt d a T) :
+    HasDerivAt (fun τ => Real.exp (-(1 / 2 : ℝ) / (u τ)^2 - 2 / (d τ)^2))
+      (Real.exp (-(1 / 2 : ℝ) / (u T)^2 - 2 / (d T)^2) *
+        (-a / (t₁ * (u T)^3) + 4 * a / (d T)^3)) T := by
+  have hU := (hasDerivAt_const T (-(1 / 2 : ℝ))).div
+    (hu.pow 2) (pow_ne_zero 2 hu₀.ne')
+  have hD := (hasDerivAt_const T (2 : ℝ)).div
+    (hd.pow 2) (pow_ne_zero 2 hd₀.ne')
+  have hArg : HasDerivAt (fun τ => -(1 / 2 : ℝ) / (u τ)^2 - 2 / (d τ)^2)
+      (-a / (t₁ * (u T)^3) + 4 * a / (d T)^3) T := by
+    convert hU.sub hD using 1 <;>
+      first | (funext τ; rfl) | (field_simp [ht₁.ne', hu₀.ne', hd₀.ne'] <;> ring)
+  simpa only [Function.comp_def] using
+    (Real.hasDerivAt_exp (-(1 / 2 : ℝ) / (u T)^2 - 2 / (d T)^2)).comp T hArg
+
+#print axioms moving_half_gaussian_hasDerivAt
+
+
 /-- On the original logarithmic collar the elementary pointwise envelope is
 largest at the current radius. The condition keeps the full opposite-face
 Gaussian, so the endpoint comparison has constant one. -/
