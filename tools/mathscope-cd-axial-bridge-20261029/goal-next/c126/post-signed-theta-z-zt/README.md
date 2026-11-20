@@ -1,0 +1,12 @@
+# Original post-Signed theta-z covariance at ZT and ZTL²
+
+The protected 22,155,584-node first-stage source gives six Signed gauge definitions and ten fixed source chart groups. The original indexed update sums the Signed mode-one coefficient with the preexisting Primary and Forced coefficients. The exact original Haar routine pairs each integer m with -m in the same angular phase. It produces 2 Re(U_theta conjugate U_z) in each positive mode. All nine ordered Primary × Forced-1 × Signed combinations for mode one and the separate Forced-2 square are retained. No unrelated pressure or zero-angular mean term enters this covariance.
+
+The protected Signed gauge factors as C = chi(xi) B in each actual row. Its native L derivatives only act on chi(xi), since L annihilates B and v and the frozen lift makes L xi constant. Thus no new transverse Sigma derivatives are introduced up to L³. The true cylindrical curl and slow derivative splits use ordinary RZT and ZZT curvature only in the Signed potential, supplied by the independent mixed Sigma packet. Multiplication by the same chi derivatives takes place before extension across their flat cutoff. The original C107 cutoff and both reciprocal half-Gaussian recurrences are independently reproduced through the required orders and combined with the original C106 all-RZT frame.
+
+The independent pre-Signed execution extends the existing first two Forced families through 54 real gauge directions and 310 initialized mean requests. It gives the precise positive T and L orders needed in the theta-z products. The finite angular, Leibniz and cover charges and the two half Gaussians pay all coefficient factors, bands and finite collar poles. Each requested normalized common-torus coefficient W^+_theta,z,ZT and its L² counterpart then has an unweighted whole shifted path bound epsilon^(99999/100000) under the original admitted chart, fixed-label lift and flat-join premises. The directional calculation isolates this original mixed covariance branch of the late Temporal swirl, with other swirl branches, W^+_rz,ZZZT, and its pressure contribution tracked independently. No jet or release state is promoted.
+
+```text
+python -B verify_pre_signed_theta_z_mixed.py --work WORK --goal GOAL_NEXT --runtime ORIGINAL_NAVIER --demand C125_SIGMA_CENSUS --out pre-signed-theta-z-mixed.json
+python -B verify_post_signed_theta_z_mixed.py --work WORK --goal GOAL_NEXT --out post-signed-theta-z-mixed.json
+```
