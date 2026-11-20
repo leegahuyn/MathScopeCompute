@@ -1,6 +1,9 @@
 import Mathlib.Analysis.Calculus.Deriv.Inv
+import Mathlib.Analysis.SpecialFunctions.Exp
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
 import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.Ring
 
 open MeasureTheory Filter
@@ -49,10 +52,51 @@ theorem five_map_axial_cutoff_commutator (cutoff psi : ℝ → ℝ) {Z eps cutof
   rw [hProduct.deriv]
   ring
 
+/-- The two axial FiveMap exponential nodes have a quantitative gap. -/
+theorem five_map_axial_gap_lower {lam : ℝ} (hLam : 0 < lam)
+    (hSmall : lam ≤ 1) : lam / 5 ≤ 1 - Real.exp (-(2 * lam / 5)) := by
+  let t : ℝ := 2 * lam / 5
+  have ht : 0 < t := by dsimp [t]; positivity
+  have htUpper : t ≤ 1 := by dsimp [t]; linarith
+  have hDen : 0 < 1 + t := by linarith
+  have hExp : 1 + t ≤ Real.exp t := by
+    simpa only [add_comm] using Real.add_one_le_exp t
+  have hInv : Real.exp (-t) ≤ 1 / (1 + t) := by
+    rw [Real.exp_neg, ← one_div]
+    exact one_div_le_one_div_of_le hDen hExp
+  have hHalf : t / 2 ≤ t / (1 + t) :=
+    div_le_div_of_nonneg_left ht.le hDen (by linarith)
+  have hBalance : t / (1 + t) = 1 - 1 / (1 + t) := by
+    field_simp [hDen.ne'] <;> ring
+  change lam / 5 ≤ 1 - Real.exp (-t)
+  calc
+    lam / 5 = t / 2 := by dsimp [t]; ring
+    _ ≤ t / (1 + t) := hHalf
+    _ = 1 - 1 / (1 + t) := hBalance
+    _ ≤ 1 - Real.exp (-t) := by linarith
+
+/-- A uniform separation for the angular FiveMap nodes ordered by exponent. -/
+theorem five_map_angular_gap_lower {lo hi : ℝ} (hBase : 1 / 3 ≤ Real.exp lo)
+    (hGap : 2 / 5 ≤ hi - lo) : 1 / 8 < Real.exp hi - Real.exp lo := by
+  have hRel : 2 / 5 ≤ Real.exp (hi - lo) - 1 := by
+    have h := Real.add_one_le_exp (hi - lo)
+    linarith
+  have hProduct : (1 / 3 : ℝ) * (2 / 5) ≤
+      Real.exp lo * (Real.exp (hi - lo) - 1) :=
+    mul_le_mul hBase hRel (by norm_num) (Real.exp_pos lo).le
+  have hFactor : Real.exp hi = Real.exp lo * Real.exp (hi - lo) := by
+    rw [← Real.exp_add]
+    congr 1
+    ring
+  rw [hFactor, ← mul_sub_one]
+  linarith
+
 end
 
 #print axioms five_map_radial_primitive_curl
 #print axioms five_map_axial_primitive_curl
 #print axioms five_map_axial_cutoff_commutator
+#print axioms five_map_axial_gap_lower
+#print axioms five_map_angular_gap_lower
 
 end MathScope.M3.CD
