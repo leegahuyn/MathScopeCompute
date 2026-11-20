@@ -1,0 +1,48 @@
+MathScope/M3/CD/FrozenMesh.lean:37:52: error: Application type mismatch: The argument
+  j
+has type
+  ℝ
+but is expected to have type
+  ℤ
+in the application
+  f j
+MathScope/M3/CD/FrozenMesh.lean:40:55: error: unsolved goals
+E : Type u_1
+inst✝ : AddCommMonoid E
+f : ℤ → ℝ → E
+k : ℤ
+hzero : ∀ (j t : ℝ), 3 / 4 ≤ |t - j| → f sorry t = 0
+t : ℝ
+ht : ↑k + 1 / 4 < t ∧ t < ↑k + 3 / 4
+hlo : 3 / 4 ≤ |t - ↑(k - 1)|
+hhi : 3 / 4 ≤ |t - ↑(k + 2)|
+⊢ f (k - 1) t + f k t + f (k + 1) t = f k t + f (k + 1) t + f (k + 2) t
+MathScope/M3/CD/FrozenMesh.lean:49:13: warning: This simp argument is unused:
+  hzero _ _ hlo
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [hzero _ _ hhi, zero_add, add_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+MathScope/M3/CD/FrozenMesh.lean:49:28: warning: This simp argument is unused:
+  hzero _ _ hhi
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [hzero _ _ hlo, zero_add, add_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+MathScope/M3/CD/FrozenMesh.lean:49:43: warning: This simp argument is unused:
+  zero_add
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [hzero _ _ hlo, hzero _ _ hhi, add_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+MathScope/M3/CD/FrozenMesh.lean:49:53: warning: This simp argument is unused:
+  add_zero
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [hzero _ _ hlo, hzero _ _ hhi, zero_add]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+'MathScope.M3.CD.adjacent_nearest_stencils_agree' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
