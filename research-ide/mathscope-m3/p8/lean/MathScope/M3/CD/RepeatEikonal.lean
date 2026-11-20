@@ -36,7 +36,7 @@ theorem repeat_transport_epsilon_bound
     _ ≤ epsilon ^ (49999 / 100000 : ℝ) + epsilon ^ (39994 / 100000 : ℝ) :=
       add_le_add hBaseline hIncrement
     _ ≤ epsilon ^ (39994 / 100000 : ℝ) + epsilon ^ (39994 / 100000 : ℝ) :=
-      add_le_add_right hPower _
+      add_le_add hPower (le_refl _)
     _ = 2 * epsilon ^ (39994 / 100000 : ℝ) := by ring
     _ ≤ epsilon ^ (-(1 / 100000) : ℝ) * epsilon ^ (39994 / 100000 : ℝ) :=
       mul_le_mul_of_nonneg_right hTwo (Real.rpow_nonneg hEpsilon.le _)
