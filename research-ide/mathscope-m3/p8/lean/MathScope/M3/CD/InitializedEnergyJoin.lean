@@ -56,20 +56,25 @@ theorem first_correction_energy_of_three_slice_bounds
     {scale forced signed late total : ℝ}
     (hScale : 0 < scale) (hTotal : 0 ≤ total)
     (hTriangle : total ≤ forced + signed + late)
-    (hForced : forced ^ 2 < scale ^ 2 / (2 : ℝ) ^ 32)
+    (hForced : forced ^ 2 < scale ^ 2 / (2 : ℝ) ^ 30)
     (hSigned : signed ^ 2 < scale ^ 2 / (2 : ℝ) ^ 32)
     (hLate : late ^ 2 < scale ^ 2 / (2 : ℝ) ^ 32) :
-    total ^ 2 < 9 * scale ^ 2 / (2 : ℝ) ^ 32 ∧
-      9 * scale ^ 2 / (2 : ℝ) ^ 32 < scale ^ 2 / (2 : ℝ) ^ 26 := by
+    total ^ 2 < scale ^ 2 / (2 : ℝ) ^ 28 ∧
+      scale ^ 2 / (2 : ℝ) ^ 28 < scale ^ 2 / (2 : ℝ) ^ 26 := by
   have hPiece {x : ℝ} (hx : x ^ 2 < scale ^ 2 / (2 : ℝ) ^ 32) :
       x < scale / 65536 := by
     apply less_of_square_less
     · norm_num at hx ⊢
       nlinarith only [hx]
     · positivity
-  have hSum : total < 3 * scale / 65536 :=
-    by linarith [hPiece hForced, hPiece hSigned, hPiece hLate]
-  have hPositive : 0 < 3 * scale / 65536 + total := by linarith
+  have hWholeForced : forced < scale / 32768 := by
+    apply less_of_square_less
+    · norm_num at hForced ⊢
+      nlinarith only [hForced]
+    · positivity
+  have hSum : total < scale / 16384 :=
+    by linarith [hWholeForced, hPiece hSigned, hPiece hLate]
+  have hPositive : 0 < scale / 16384 + total := by linarith
   have hSquares := mul_pos (sub_pos.mpr hSum) hPositive
   have hScaleSquared : 0 < scale ^ 2 := by positivity
   constructor
