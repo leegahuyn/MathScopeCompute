@@ -1,0 +1,409 @@
+{
+  "schema": "MathScope.C120.OriginalWholeKPositiveOrderSupport/1",
+  "pins": {
+    "physicalK": "af17e240150ca11452ccd5dcde5e1d2a21f5872d3a1e29a9247d75e6902e86b9",
+    "registeredGrid": "2fe21b411211d884df2dbe5afeb44c01d891acdfcf0511120b023cfaf3167f3c",
+    "liveSlab": "df338897da4078df56cf8632d4f10a605bdfa16e02a1a331381e389bf5dc8738",
+    "exteriorExtension": "5d15adc58c06706c5c2add8e4241e674cc1181f6ec54604a9335c2695516e948",
+    "C8Live": "e26c62baf924c4209bbac2ebd944bd17a992bfe4599fd1a8fab2cb8c91d7c02b",
+    "bScales": "5a6ecee45d797d582e3218c36f980d5eb131619c860cec1bfb4d57aea89cdf56",
+    "atlas": "143d32b523429323eb3efc8ef8ea9c8f8922162bd919712cfe41580103a788be",
+    "sourceFixedOrders": "1ab657059a995b2697bb4ca2a747819483a9a04ae909d06d9ee6886bb36df22e",
+    "actualN1Core": "6e074bcaabf5634256a771c8318a236e7c1e50df338cd8793ed42110fe019cf1"
+  },
+  "runtimePins": {
+    "commonSelector": "7fd3ec07b567af86f84df7a1b789a5a57366186d4e8c26c2a4a35dc5948c5b75",
+    "window": "a3da73e5ad4d853dff04942ea513a3f8ab9fb1abf2b9e30f7eecf3956aaa6a2f",
+    "nativeBand": "a0992d899c921dae3f45ed1ff306a935c61fa5841666692b89d39ce88b8c0b5b",
+    "sourceRadialGuards": "0be8fcf8d8a70d98ab339ca1bec727efac998f4763d852b21fb5761f27450b98",
+    "sourceProfile": "4578d632c3da8c6994557bcb4e78babf4dcede1e4893252c6a8ae2e342426133",
+    "localization": "5f6480f9799a9a83945f696833b9213585572efbe65e9e755b2935726e6f1036",
+    "stageSelector": "a4afa225c5da82d6894a40314ecdc8f7784390f58bb47e085d5d724d9f7ee05c",
+    "stageSum": "67c2f0a63d4b1a5fdf86a4c25f776ed0fdf0a6cd379d08aaf858231621c04450"
+  },
+  "originalSourceAnchors": {
+    "commonSelector": [
+      [
+        42,
+        "for(let n=1;n<=historicalRows.length;n++)"
+      ],
+      [
+        50,
+        "growth=G.add(previous,G.log(q(n===2?16:2)))"
+      ],
+      [
+        50,
+        "smallBand=n===1?G.mul(G.add(ellMinimum,q(10)),log2):G.zero"
+      ],
+      [
+        51,
+        "logScale=G.maximum(old.logScale,growth,smallBand,...constraints.map(c=>c.requiredLog))"
+      ],
+      [
+        53,
+        "previous=logScale"
+      ]
+    ],
+    "window": [
+      [
+        159,
+        "next=commonRows[N],previous=N?commonRows[N-1]:null"
+      ],
+      [
+        162,
+        "lower=previous?G.maximum(ell0,floor(G.div(previous.logScale,log2))):ell0"
+      ],
+      [
+        163,
+        "upper=G.sub(floor(G.div(next.logScale,log2)),G.one)"
+      ],
+      [
+        167,
+        "qOverQ:['1/2','2']"
+      ]
+    ],
+    "nativeBand": [
+      [
+        47,
+        "G.choose(x,G.q(1,2),G.one,G.one,G.div(b,G.add(a,b)),G.zero)"
+      ],
+      [
+        61,
+        "family.selector.rows.length<activeOrder+1"
+      ],
+      [
+        74,
+        "qActual=G.mul(Q,s)"
+      ],
+      [
+        82,
+        "powerQ=power(q0,G.mul(q(2*n),h))"
+      ],
+      [
+        82,
+        "extra=G.mul(sigma,G.expressionValue(sourceCutoff.system,[sigma],[1]))"
+      ],
+      [
+        83,
+        "weight=G.mul(useChi,powerQ)"
+      ],
+      [
+        89,
+        "Fterms.push(G.mul(weight,sourceRoots.F));Gterms.push(G.mul(weight,sourceRoots.U))"
+      ],
+      [
+        89,
+        "Mterms.push(G.mul(weight,sourceRoots.M));Pterms.push(G.mul(weight,sourceRoots.Pi))"
+      ],
+      [
+        90,
+        "radialTerms.push(G.mul(powerQ,G.sub(G.mul(useChi,X0,sourceRoots.v),G.div(G.mul(q(2),eta0,useExtra,sourceRoots.M),G.core.L))))"
+      ],
+      [
+        91,
+        "TthetaTerms.push(G.mul(weight,sourceRoots.Ttheta));TzTerms.push(G.mul(weight,sourceRoots.Tz))"
+      ],
+      [
+        102,
+        "F0=atRep(leadingFields.F),FR0=atRep(G.derivative(leadingFields.F,R)),GR0=atRep(G.derivative(leadingFields.G,R))"
+      ]
+    ],
+    "sourceRadialGuards": [
+      [
+        64,
+        "Xa=4/Lambda with Lambda>=2^16640"
+      ],
+      [
+        64,
+        "Xa<Xminus<Xkeep<Xcut<a^2<1<XR<IposLeft"
+      ]
+    ],
+    "sourceProfile": [
+      [
+        7,
+        "upperBoundExact:'2^-4096'"
+      ],
+      [
+        7,
+        "D:'1/2-h'"
+      ]
+    ],
+    "localization": [
+      [
+        192,
+        "x1^2+x2^2<=r0^2/2, x3^2<=z0^2/2"
+      ],
+      [
+        143,
+        "tau0===G.div(qStar,q(32))"
+      ],
+      [
+        127,
+        "expectedMinimum=G.ceiling(G.maximum(q(8)"
+      ],
+      [
+        143,
+        "r0===G.one"
+      ],
+      [
+        186,
+        "tau=q*(1-eta^2), z=q^D*eta, X=r^2/(2q)"
+      ],
+      [
+        184,
+        "matching derivatives of every order at1/2 and1"
+      ],
+      [
+        131,
+        "timeArgument=G.div(tau,tau0)"
+      ],
+      [
+        109,
+        "u=curl(c*A)+c*B_e_theta; p=c*p_loc"
+      ],
+      [
+        195,
+        "tau>=tau0"
+      ]
+    ],
+    "stageSelector": [
+      [
+        66,
+        "L=G.maximum(G.one,G.add(G.one,previousLogScale),G.add(G.one,logQ0Reciprocal)"
+      ],
+      [
+        66,
+        "a=G.exp(L)"
+      ]
+    ],
+    "stageSum": [
+      [
+        107,
+        "relativeLogWindow:['1','3/2']"
+      ],
+      [
+        47,
+        "L_j is nondecreasing"
+      ],
+      [
+        243,
+        "completeActiveSet:copy(plan.requiredIncrementIndices)"
+      ]
+    ]
+  },
+  "registeredK": {
+    "originalGridSha": "2fe21b411211d884df2dbe5afeb44c01d891acdfcf0511120b023cfaf3167f3c",
+    "spatial": "r^2<=1/2; sigma=(z/z0)^2<=1/2",
+    "physicalTauOverTau0": [
+      "1/2",
+      "1"
+    ],
+    "tau0OverQBig": "1/32",
+    "normalizedQBracket": [
+      "1/2",
+      "25/16"
+    ],
+    "upperQStrict": true,
+    "etaSquaredUpper": "9/17",
+    "positiveQChartDerivativeLower": "3/4"
+  },
+  "background": {
+    "exactB1ThroughB4TimesQBig": [
+      1,
+      16,
+      32,
+      64
+    ],
+    "potentiallyContributingOrders": [
+      1,
+      2,
+      3
+    ],
+    "allHigherOrdersExactlyFlatZeroFrom": 4,
+    "laterStructuralLowerBound": "b_n >= 2^(n-4) b4 for every n>=4",
+    "weights": "q^(2nh) chi(b_n q), plus q^(2nh) b_n q chi_prime(b_n q) in the radial stream commutator",
+    "sourceFields": [
+      "F",
+      "U",
+      "M",
+      "Pi",
+      "radial v",
+      "Ttheta",
+      "Tz"
+    ],
+    "scalarCases": [
+      {
+        "n": 1,
+        "argument": "Q/32",
+        "wholeK": "unit plateau",
+        "radialChiPrimeFactor": "zero everywhere"
+      },
+      {
+        "n": 2,
+        "argument": "Q/2",
+        "wholeK": "unit plateau when rho+sigma<=1, positive transition otherwise",
+        "radialChiPrimeFactor": "nonzero precisely when rho+sigma>1"
+      },
+      {
+        "n": 3,
+        "argument": "Q",
+        "wholeK": "positive iff rho+sigma<1; plateau at rho=1/2 and sigma=0",
+        "radialChiPrimeFactor": "nonzero precisely when Q in (1/2,1)"
+      },
+      {
+        "nFrom": 4,
+        "argumentLower": "2^(n-3) Q>=1",
+        "wholeK": "all cutoff jets zero including the n4 equality"
+      }
+    ],
+    "stressAngularN1Right": 28826,
+    "bothHigherStressRight": 28824,
+    "actualNonzeroCoefficientsInferredFromScalarSupport": false,
+    "doNotDiscardNonlinearProductsOfRetainedOrders": true
+  },
+  "conditionalActualN1Witness": {
+    "component": "axial U1",
+    "orbitEta": 0,
+    "sourceX": 117688,
+    "rho": "3/4",
+    "sigma": "0",
+    "qOverTau0": "3/4",
+    "physicalRadiusSquared": "2*q*X",
+    "sourceNormalizedLower": "524233/1048576",
+    "strictlyPositiveUnderOriginalC90OrdinaryPremises": true,
+    "N2AndN3FieldNonzeroValuesInferredFromScalarWeight": false,
+    "initialTemporalMultiplier": "1/2"
+  },
+  "registration": {
+    "sourceN0ThroughN3EllWindowsRelativeToEllMinimum": [
+      [
+        6,
+        9
+      ],
+      [
+        10,
+        13
+      ],
+      [
+        14,
+        14
+      ],
+      [
+        15,
+        15
+      ]
+    ],
+    "N4WindowStartsAtRelativeLabel": 16,
+    "N4WindowNonemptyByB5Growth": true,
+    "fixedC109LiveN3Label": "ellMinimum+15",
+    "sameBodyN3AndN4PhysicalWeightsMatchWhereBothAdmitted": true,
+    "N4RegistrationCanIncludeFlatZeroActualN4Term": true,
+    "leadingOnlyOriginalFrozenCalls": [
+      17732973,
+      17732983,
+      17732993
+    ],
+    "actualSeparateFullFrozenFieldN4ZeroProved": false,
+    "infiniteLaterNativeFieldsNumericallyEvaluated": false
+  },
+  "auxiliaryWiderTime": {
+    "sameSpatialK": true,
+    "newPhysicalTauOverTau0": [
+      "15/32",
+      "1"
+    ],
+    "registeredIntervalChanged": false,
+    "qBracket": [
+      "15/32",
+      "25/16"
+    ],
+    "upperQStrict": true,
+    "etaSquaredUpper": "6/11",
+    "oldReferenceOnlyIf": "rho+sigma*2^(-2h)>=1/2",
+    "C109ExteriorSubpatchInOldReference": true,
+    "axisWitness": {
+      "rho": "15/32",
+      "sigma": "0",
+      "Q": "15/32",
+      "B4q": "15/16",
+      "newScalarN4": "positive transition"
+    },
+    "exactBackgroundHigherZeroFrom": 5,
+    "exactB5qLower": "15/8",
+    "availableReferenceCharts": [
+      {
+        "ellRelativeToEllMin": 15,
+        "coefficientOrder": 3,
+        "qOverTau0Range": [
+          "1",
+          "25/16"
+        ],
+        "sRange": [
+          "1",
+          "25/16"
+        ]
+      },
+      {
+        "ellRelativeToEllMin": 16,
+        "coefficientOrder": 4,
+        "qOverTau0Range": [
+          "15/32",
+          "1"
+        ],
+        "sRange": [
+          "15/16",
+          "2"
+        ]
+      }
+    ],
+    "relativeActiveBandLabels": [
+      -1,
+      0,
+      1
+    ],
+    "sameBoxRepresentativeOmission": {
+      "admittedRepresentativePremise": "s_own>1/2 and abs(s_rep-s_own)<=27/ell_own^6",
+      "ellOwnLower": 22,
+      "N3FirstOmittedTimesQrepLower": "2*(1-54/22^6)>1",
+      "N4FirstOmittedTimesQrepLower": "(15/8)*(1-54/22^6)>1",
+      "noPossibleN5AtSuchFrozenPoints": true
+    },
+    "fullNativeRegistrationAndFinalFieldForExtendedGrid": "OPEN",
+    "aboveRho1": "original outer localization and all its jets equal zero"
+  },
+  "separateCorrectionSchedule": {
+    "onRegisteredKPossiblyActiveStages": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "noCutoffStageAtLeastFive": true,
+    "fixedWideAuxiliaryIntervalStageFiveStillZero": true,
+    "growth": "a_j*qBig>=exp(j)",
+    "allActualStageActivationOrCanonicalScaleNormsMaterialized": false,
+    "structuralLowerTimeCuts": [
+      {
+        "minimumTauOverTau0": "1/2",
+        "allBackgroundOrdersAtLeastThisZero": 4,
+        "allCorrectionStagesAtLeastThisZero": 5
+      },
+      {
+        "minimumTauOverTau0": "1/4",
+        "allBackgroundOrdersAtLeastThisZero": 5,
+        "allCorrectionStagesAtLeastThisZero": 5
+      },
+      {
+        "minimumTauOverTau0": "1/8",
+        "allBackgroundOrdersAtLeastThisZero": 6,
+        "allCorrectionStagesAtLeastThisZero": 6
+      }
+    ],
+    "singleOriginalFinalQWindowCoversK": false
+  },
+  "claimBoundary": "Exact source-cutoff support and original registration arithmetic. Ordinary product/jet use keeps fixed source realization and zero-branch hypotheses. Values, corrected final-state assembly and convergence remain independent.",
+  "N7_06": "OPEN",
+  "N8_05": "OPEN",
+  "finalJets": 0,
+  "release": "HOLD"
+}
