@@ -120,4 +120,37 @@ theorem first_correction_energy_with_angular_split
 #print axioms primary_wave_log_allowance
 #print axioms initialized_energy_of_three_component_bounds
 
+/-- In the same normalization, three disjoint radial bounds replace the
+coarser single Forced allowance. The cross term stays below 7/2 units. -/
+theorem first_correction_energy_with_disjoint_forced_bounds
+    {scale forced signed late wave total : ℝ}
+    (hScale : 0 < scale) (hWave : 0 ≤ wave) (hSignedNonnegative : 0 ≤ signed)
+    (hWaveTriangle : wave ≤ forced + signed)
+    (hSplit : total ^ 2 ≤ wave ^ 2 + late ^ 2)
+    (hForced : forced ^ 2 < 3 * scale ^ 2 / (2 : ℝ) ^ 32)
+    (hSigned : signed ^ 2 < scale ^ 2 / (2 : ℝ) ^ 32)
+    (hLate : late ^ 2 < scale ^ 2 / (2 : ℝ) ^ 32) :
+    total ^ 2 < 17 * scale ^ 2 / (2 : ℝ) ^ 33 := by
+  have hScaleSquared : 0 < scale ^ 2 := by positivity
+  have hForcedNorm : forced < 7 * scale / 262144 := by
+    apply less_of_square_less
+    · norm_num at hForced ⊢
+      nlinarith only [hForced, hScaleSquared]
+    · positivity
+  have hSignedNorm : signed < scale / 65536 := by
+    apply less_of_square_less
+    · norm_num at hSigned ⊢
+      nlinarith only [hSigned]
+    · positivity
+  have hCrossLeft := mul_nonneg (sub_nonneg.mpr hForcedNorm.le) hSignedNonnegative
+  have hPositive : 0 < 7 * scale / 262144 := by positivity
+  have hCrossRight := mul_pos (sub_pos.mpr hSignedNorm) hPositive
+  have hNormSum : 0 ≤ forced + signed + wave := by
+    linarith only [hWaveTriangle, hWave]
+  have hNormGrowth := mul_nonneg (sub_nonneg.mpr hWaveTriangle) hNormSum
+  norm_num at hForced hSigned hLate ⊢
+  nlinarith only [hCrossLeft, hCrossRight, hNormGrowth, hForced, hSigned, hLate, hSplit]
+
+#print axioms first_correction_energy_with_disjoint_forced_bounds
+
 end MathScope.M3.CD
