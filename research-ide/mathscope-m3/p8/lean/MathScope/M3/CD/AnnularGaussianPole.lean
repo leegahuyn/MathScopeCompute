@@ -40,6 +40,34 @@ theorem gaussianPole_even_decay (n m : ℕ) {a y : ℝ}
       rw [mul_assoc, hcancel]
     _ ≤ _ := mul_le_mul_of_nonneg_right (gaussianTail (n + m) ha hy) (by positivity)
 
+/-- A face coordinate dominated by ambient distance gives quadratic
+decay for a Gaussian times any fixed even pole. -/
+theorem gaussianPole_face_quadratic (n : ℕ) {a d dist C L : ℝ}
+    (ha : 0 < a) (hd : 0 < d) (hC : 0 ≤ C) (hL : 0 ≤ L)
+    (hdist : 0 ≤ dist) (hlip : d ≤ L * dist) :
+    C * (Real.exp (-(a / d ^ 2)) * ((d ^ 2)⁻¹) ^ n) ≤
+      C * (((n + 1).factorial : ℝ) * (a⁻¹) ^ (n + 1) * (L ^ 2 * dist ^ 2)) := by
+  have hsq : d ^ 2 ≤ (L * dist) ^ 2 := by
+    nlinarith only [mul_nonneg (sub_nonneg.mpr hlip)
+      (add_nonneg (mul_nonneg hL hdist) hd.le)]
+  calc
+    _ ≤ C * (((n + 1).factorial : ℝ) * (a⁻¹) ^ (n + 1) * (d ^ 2) ^ 1) :=
+      mul_le_mul_of_nonneg_left (gaussianPole_even_decay n 1 ha hd) hC
+    _ = C * (((n + 1).factorial : ℝ) * (a⁻¹) ^ (n + 1) * d ^ 2) := by rw [pow_one]
+    _ ≤ C * (((n + 1).factorial : ℝ) * (a⁻¹) ^ (n + 1) * (L * dist) ^ 2) :=
+      mul_le_mul_of_nonneg_left (mul_le_mul_of_nonneg_left hsq (by positivity)) hC
+    _ = _ := by rw [mul_pow]
+
+/-- The quotient after division by ambient distance has linear decay. -/
+theorem gaussianPole_face_quotient (n : ℕ) {a d dist C L : ℝ}
+    (ha : 0 < a) (hd : 0 < d) (hC : 0 ≤ C) (hL : 0 ≤ L)
+    (hdist : 0 < dist) (hlip : d ≤ L * dist) :
+    C * (Real.exp (-(a / d ^ 2)) * ((d ^ 2)⁻¹) ^ n) / dist ≤
+      C * (((n + 1).factorial : ℝ) * (a⁻¹) ^ (n + 1) * (L ^ 2 * dist)) := by
+  apply (div_le_iff₀ hdist).2
+  convert gaussianPole_face_quadratic n ha hd hC hL hdist.le hlip using 1
+  ring
+
 /-- The minimum of the two logarithmic distances and one gives the three
     original branches of the annular Gaussian absorption bound. -/
 theorem annularGaussianPole (n : ℕ) {a b y d : ℝ}
@@ -96,6 +124,8 @@ theorem annularGaussianPole (n : ℕ) {a b y d : ℝ}
 
 #print axioms annularGaussianPole
 #print axioms gaussianPole_even_decay
+#print axioms gaussianPole_face_quadratic
+#print axioms gaussianPole_face_quotient
 
 end
 
