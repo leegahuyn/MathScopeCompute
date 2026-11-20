@@ -17,6 +17,11 @@ const modules = new Map(manifest.files.map(row => {
   return [pathToFileURL(resolve(row.original)).href, source];
 }));
 assert.equal(modules.size, manifest.files.length);
+if (process.env.MATHSCOPE_FULL_REPEAT_REPLAY === '1') {
+  const {readRepeatAssemblyInputs} = await import('./repeat-indexed-registration/emit_repeat_indexed_registration.mjs');
+  const {pins} = await readRepeatAssemblyInputs(resolve('research-ide/mathscope-m3/navier'), path);
+  console.log(JSON.stringify({status: 'PASS_PINNED_REPEAT_EFFECTIVE_ASSEMBLY', ...pins}));
+}
 registerHooks({load(url, context, nextLoad) {
   if (modules.has(url)) return {format: 'module', source: modules.get(url), shortCircuit: true};
   return nextLoad(url, context);

@@ -23,7 +23,16 @@ substitutions and five rejection controls, including forged PostFive
 ownership. Two fixture outputs produced identical bytes. Active source
 registration requires the full-source GitHub run.
 
+The full-source runner distinguishes the pinned Git checkout from the
+effective module loaded through the approved PR30 overlay. The early
+loader checks both exact inputs before building the graph. The
+registration exposes the effective completeSourceField helper in a
+disposable sibling and records both hashes. The small replay below
+uses the archived overlay manifest, protected Git blobs and two rejected
+byte-change controls.
+
 ```text
 node test_native_indexed_registration.mjs ORIGINAL_RESEARCH_IDE fixture.json
 python -B verify_repeat_indexed_attachment.py EXTRACTED_GITHUB_ARTIFACT --out independent-native-registration.json
+python -B replay_hosted_effective_assembly.py REPO EXTRACTED_GITHUB_ARTIFACT SCRATCH preflight.json
 ```
