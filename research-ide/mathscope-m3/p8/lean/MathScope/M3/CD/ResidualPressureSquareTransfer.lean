@@ -94,4 +94,20 @@ theorem exterior_localized_swirl_time_derivative
 #print axioms exterior_localized_radial_force
 #print axioms exterior_localized_swirl_time_derivative
 
+/-- On a positive-radius pure-swirl patch, the viscous radial flux keeps the
+cylindrical weight. The two swirl terms with inverse radius cancel in the
+local energy identity. -/
+theorem exterior_swirl_radial_energy_identity
+    {r u ur urr ut forceTheta : ℝ} (hr : r ≠ 0)
+    (hPDE : ut - forceTheta = urr + ur / r - u / r ^ 2) :
+    r * u * ut + r * (ur ^ 2 + u ^ 2 / r ^ 2) - r * u * forceTheta =
+      u * ur + r * ur ^ 2 + r * u * urr := by
+  calc
+    _ = r * u * (ut - forceTheta) + r * (ur ^ 2 + u ^ 2 / r ^ 2) := by ring
+    _ = _ := by
+      rw [hPDE]
+      field_simp [hr] <;> ring
+
+#print axioms exterior_swirl_radial_energy_identity
+
 end MathScope.M3.CD
