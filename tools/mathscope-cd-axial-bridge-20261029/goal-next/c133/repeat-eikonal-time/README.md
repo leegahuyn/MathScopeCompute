@@ -1,0 +1,11 @@
+# Original protected Repeat ordinary eikonal time derivative
+
+Write \(w=v(Y)\) for the native lifted pulse, and let \(\Delta\) contain the initialized, later Temporal, and fresh FiveMap mean increments relative to the transported background. The existing ten protected lifts hold \(w,\xi,k,p,p_z,x_0,\varepsilon\) fixed under the ordinary \(T\) partial. This keeps the vector \(n_T=(-w\omega_{RT},0,-\varepsilon w\omega_{ZT})\) exact, where \(\omega=pF+p_zG\). The zero azimuthal component and explicit axial \(\varepsilon\) are used in the estimate.
+
+At fixed labels and torus coordinates the original reference arguments are \((R/\sqrt{\rho}, Z/\rho^D,T/\rho,\ell_{ref},Y)\) with \(\rho=Q_{ref}/Q_{own}\). The source mean is multiplied by \(\rho^{-A}\). Differentiation of this fixed-label application introduces the additional chain factor \(\rho^{-1}\). Both charts require their jointly admitted roots and original flat realizations. The strict guard is \(\max(1/2,\rho/2)<s<\min(2,2\rho)\). Boundary limits additionally use the available ordinary traces or extension.
+
+The original C106 directed comparators control \(b/\varepsilon,F,G\) and the needed ordinary time and mixed jets on \(q_{Big}/64\le q<q_{Big}/16\). The authentic C130 and C127 later Temporal donors and C133 fresh FiveMap estimates provide the disjoint accumulated time derivatives. The original initialized donor is added once. All 266 C132 collar rows have no weaker epsilon grade and no greater band than their respective middle bounds. One coefficient unit absorbs the actual Gaussian collar poles through 27 and 30, inside the existing 28-unit slack.
+
+The verified product rule on the protected scalar \(E_m=mk[b n_R+\varepsilon w(\omega_T-G\omega_Z)+\Delta\cdot n]\) gives \(|\partial_T E_m|\le\varepsilon^{20997/50000}\) after two finite debits. Thus \(|-\varepsilon\partial_T E_m|\le\varepsilon^{70997/50000}\) in the normalized physical operator. These are scalar coefficient estimates before multiplication by restored waves. The fast \(c_{i,eff}N\) operation has \(c_{i,eff}Nw=1\) and \(N\xi=0\). Its geometry and mean product are recorded separately. The value of \(c_{i,eff}N\Delta\) requires a separate source estimate for the full fast contribution.
+
+    python -B verify_protected_eikonal_time.py --work WORK --goal GOAL_NEXT --out protected-eikonal-time.json
