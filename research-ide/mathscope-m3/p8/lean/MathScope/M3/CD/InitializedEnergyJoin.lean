@@ -84,6 +84,39 @@ theorem first_correction_energy_of_three_slice_bounds
     nlinarith only [hScaleSquared]
 
 #print axioms first_correction_energy_of_three_slice_bounds
+
+/-- Orthogonality on each angular slice bounds the sum of the supremum
+kinetic energy and the integrated dissipation. The separate time suprema
+can occur at different times, so the combination only uses an inequality. -/
+theorem first_correction_energy_with_angular_split
+    {scale forced signed late wave total : ℝ}
+    (hScale : 0 < scale) (hWave : 0 ≤ wave)
+    (hWaveTriangle : wave ≤ forced + signed)
+    (hSplit : total ^ 2 ≤ wave ^ 2 + late ^ 2)
+    (hForced : forced ^ 2 < scale ^ 2 / (2 : ℝ) ^ 30)
+    (hSigned : signed ^ 2 < scale ^ 2 / (2 : ℝ) ^ 32)
+    (hLate : late ^ 2 < scale ^ 2 / (2 : ℝ) ^ 32) :
+    total ^ 2 < 5 * scale ^ 2 / (2 : ℝ) ^ 31 := by
+  have hForcedNorm : forced < scale / 32768 := by
+    apply less_of_square_less
+    · norm_num at hForced ⊢
+      nlinarith only [hForced]
+    · positivity
+  have hSignedNorm : signed < scale / 65536 := by
+    apply less_of_square_less
+    · norm_num at hSigned ⊢
+      nlinarith only [hSigned]
+    · positivity
+  have hWaveNorm : wave < 3 * scale / 65536 := by
+    linarith only [hWaveTriangle, hForcedNorm, hSignedNorm]
+  have hPositive : 0 < 3 * scale / 65536 + wave := by
+    linarith only [hScale, hWave]
+  have hWaveSquare :=
+    mul_pos (sub_pos.mpr hWaveNorm) hPositive
+  norm_num at hLate ⊢
+  nlinarith only [hWaveSquare, hLate, hSplit]
+
+#print axioms first_correction_energy_with_angular_split
 #print axioms primary_wave_log_allowance
 #print axioms initialized_energy_of_three_component_bounds
 
