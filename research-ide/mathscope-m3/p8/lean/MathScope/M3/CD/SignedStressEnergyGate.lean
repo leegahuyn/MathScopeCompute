@@ -129,6 +129,32 @@ theorem signed_centered_stress_exterior_zero
   rw [signed_centered_tail_primitive f hLeft hRight, hWhole, hTail]
   simp
 
+/-- The endpoint-zero primitive is fixed by radial centering of its derivative. -/
+theorem late_centered_radial_derivative
+    (psi dPsi : ℝ → ℝ) {a r b chi : ℝ}
+    (hLeft : ∀ x ∈ uIcc a r, HasDerivAt psi (dPsi x) x)
+    (hWhole : ∀ x ∈ uIcc a b, HasDerivAt psi (dPsi x) x)
+    (hdLeft : IntervalIntegrable dPsi volume a r)
+    (hdWhole : IntervalIntegrable dPsi volume a b)
+    (ha : psi a = 0) (hb : psi b = 0) :
+    (∫ x in a..r, dPsi x) - chi * (∫ x in a..b, dPsi x) = psi r := by
+  rw [intervalIntegral.integral_eq_sub_of_hasDerivAt hLeft hdLeft,
+    intervalIntegral.integral_eq_sub_of_hasDerivAt hWhole hdWhole, ha, hb]
+  ring
+
+/-- The late centered inverse removes the fast derivative of the preceding
+mean when the projection commutes at the input and the inverse is anchored. -/
+theorem late_centered_fast_time_cancel {V : Type*} [AddCommGroup V]
+    (fast project anchoredInv : V →+ V) (u : V)
+    (hCommute : project (fast u) = fast (project u))
+    (hAnchoredInverse : anchoredInv (fast (project u)) = project u) :
+    anchoredInv (project (-fast u)) = -project u := by
+  calc
+    anchoredInv (project (-(fast u))) = -(anchoredInv (project (fast u))) := by simp
+    _ = -project u := by rw [hCommute, hAnchoredInverse]
+
+#print axioms late_centered_radial_derivative
+#print axioms late_centered_fast_time_cancel
 #print axioms signed_centered_tail_primitive
 #print axioms signed_centered_stress_exterior_zero
 #print axioms cor85_weighted_flux_cap
