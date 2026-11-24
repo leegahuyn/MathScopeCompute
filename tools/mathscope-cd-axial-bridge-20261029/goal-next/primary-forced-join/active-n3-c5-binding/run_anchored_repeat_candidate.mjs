@@ -11,7 +11,7 @@ const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 
 export function anchoredRepeatMode({override, manualMode, hosted = false} = {}) {
   const mode = override || manualMode || (hosted ? 'metadata' : 'off');
-  assert.ok(['off','metadata','full-source'].includes(mode), 'Invalid repeated Forced candidate mode.');
+  assert.ok(['off','metadata','full-source','full-refresh'].includes(mode), 'Invalid repeated Forced candidate mode.');
   return mode;
 }
 
@@ -21,6 +21,7 @@ export async function runAnchoredRepeatCandidate({navier,pde,firstCycle,context,
   const mode = anchoredRepeatMode({override: process.env.MATHSCOPE_ACTIVE_N3_REPEAT_MODE,
     manualMode, hosted: process.env.GITHUB_ACTIONS === 'true'});
   if (mode === 'off') return null;
+  const exportFull = mode === 'full-source' || mode === 'full-refresh';
   const name = 'source-postfive-repeat-forced.mjs';
   const path = resolve(navier,'../post-signed-20261023',name);
   const source = await readFile(new URL('./repeat-candidate-preflight/pinned-original/' + name,import.meta.url));
@@ -33,10 +34,10 @@ export async function runAnchoredRepeatCandidate({navier,pde,firstCycle,context,
   assert.equal(sha(await readFile(path)), ORIGINAL_SHA, 'Restore the pinned original repeat source in the disposable runner.');
   let liveRepeat;
   const receipt = await emitActiveN3RepeatCandidate({
-    navier,pde,firstCycle,context,out,mode,deferExport:mode === 'full-source',
-    onLiveCandidate: mode === 'full-source' ? result => { liveRepeat = result; } : undefined,
+    navier,pde,firstCycle,context,out,mode: exportFull ? 'full-source' : mode,deferExport:exportFull,
+    onLiveCandidate: exportFull ? result => { liveRepeat = result; } : undefined,
   });
-  if (mode === 'full-source') {
+  if (exportFull) {
     const snapshot = await exportCoupledSnapshot(navier,pde.G,{
       dir: resolve(out,'active-n3-repeat-forced-source'), roots:receipt.rootIds,
       scope:'SAME_LIVE_ACTIVE_N3_POST_FIVE_REPEAT_FORCED_CONDITIONAL_SOURCE',
@@ -53,6 +54,13 @@ export async function runAnchoredRepeatCandidate({navier,pde,firstCycle,context,
     const indexed = await emitRepeatIndexedRegistration({navier, pde, repeat: liveRepeat, candidate: receipt, snapshot, out});
     context.onProgress?.({stage: 'post-five-repeat-native-indexed-increment-candidate',
       fields: indexed.registration.fields.length, nodeCount: pde.G.nodes.length});
+    if (mode === 'full-refresh') {
+      context.checkCancelled?.();
+      const {emitRepeatFullRefresh} = await import('./repeat-indexed-registration/emit_repeat_full_refresh.mjs');
+      const refreshed = await emitRepeatFullRefresh({navier, pde, repeat: liveRepeat, indexed, out});
+      context.onProgress?.({stage: 'post-five-repeat-native-full-refresh-candidate',
+        nodeCount: refreshed.append.end, conservative: refreshed.roots.conservative});
+    }
   }
   return receipt;
 }

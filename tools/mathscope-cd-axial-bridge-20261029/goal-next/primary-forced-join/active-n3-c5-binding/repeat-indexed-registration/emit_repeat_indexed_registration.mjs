@@ -50,7 +50,7 @@ export async function readRepeatAssemblyInputs(
   return {bytes, harmonic, pins};
 }
 
-async function loadOriginalAssembly(navier) {
+export async function loadOriginalAssembly(navier) {
   const {bytes, harmonic, pins} = await readRepeatAssemblyInputs(navier);
   const sibling = resolve(navier, 'source-global-forced-current.repeat-indexed-evidence.mjs');
   const withExport = Buffer.concat([bytes, exposure]);
@@ -60,11 +60,11 @@ async function loadOriginalAssembly(navier) {
     if (error.code !== 'EEXIST') throw error;
   }
   assert.deepEqual(await readFile(sibling), withExport, 'The sibling exposes the exact original helper');
-  const [{completeSourceField}, {reconstructAngularHarmonics}] =
+  const [{completeSourceField, exactAngularWaveCovariance}, {reconstructAngularHarmonics}] =
     await Promise.all([importModule(sibling), importModule(harmonic)]);
   assert.equal(typeof completeSourceField, 'function');
   assert.equal(typeof reconstructAngularHarmonics, 'function');
-  return {completeSourceField, reconstructAngularHarmonics, pins, overlaySHA256: digest(withExport)};
+  return {completeSourceField, exactAngularWaveCovariance, reconstructAngularHarmonics, pins, overlaySHA256: digest(withExport)};
 }
 
 export async function emitRepeatIndexedRegistration({navier, pde, repeat, candidate, snapshot, out}) {

@@ -33,7 +33,7 @@ jobs:
       fail-fast: false
       matrix: ${{ fromJSON(inputs.with_forced && '{"include":[{"prefix":3,"nodes":25000000}]}' || '{"include":[{"prefix":3,"nodes":20000000},{"prefix":4,"nodes":25000000}]}') }}
     runs-on: ubuntu-24.04
-    timeout-minutes: ${{ inputs.through_first_cycle && github.event_name == 'workflow_dispatch' && github.event.inputs.repeat_mode == 'full-source' && 195 || 135 }}
+    timeout-minutes: ${{ inputs.through_first_cycle && github.event_name == 'workflow_dispatch' && (github.event.inputs.repeat_mode == 'full-source' || github.event.inputs.repeat_mode == 'full-refresh') && 195 || 135 }}
     env:
       ORIGINAL_SOURCE_COMMIT: f8cb4034e86d7b669d52a6f2248aebba156b51b5
       SOURCE_PREFIX: ${{ matrix.prefix }}
@@ -251,7 +251,7 @@ jobs:
       - name: Build the same-family original C8, weighted C6 and Primary C5
         working-directory: original
         env:
-          MATHSCOPE_FULL_REPEAT_REPLAY: ${{ inputs.through_first_cycle && github.event_name == 'workflow_dispatch' && github.event.inputs.repeat_mode == 'full-source' && '1' || '0' }}
+          MATHSCOPE_FULL_REPEAT_REPLAY: ${{ inputs.through_first_cycle && github.event_name == 'workflow_dispatch' && (github.event.inputs.repeat_mode == 'full-source' || github.event.inputs.repeat_mode == 'full-refresh') && '1' || '0' }}
         run: |
           set -euo pipefail
           ulimit -s 16384
@@ -275,6 +275,14 @@ jobs:
           PYTHONINTMAXSTRDIGITS=0 python3 -B "$goal/primary-forced-join/active-mode-two-witness/check_active_mode_two.py" \
             --bundle "$out/witness" --checker "$goal/first-force-repair/verify_repaired_first_force.py" \
             --support "$MATHSCOPE_ACTIVE_N3_SUPPORT" --witness-sha "$sha" --out "$out/independent-readback.json"
+      - name: Independently check the same-graph Repeat refresh bindings
+        if: inputs.through_first_cycle && github.event_name == 'workflow_dispatch' && github.event.inputs.repeat_mode == 'full-refresh'
+        working-directory: original
+        run: |
+          set -euo pipefail
+          checker=../evidence/tools/mathscope-cd-axial-bridge-20261029/goal-next/primary-forced-join/active-n3-c5-binding/repeat-indexed-registration/verify_repeat_full_refresh.py
+          out="$RUNNER_TEMP/mathscope-primary-c5"
+          python3 -B "$checker" "$out" --out "$out/independent-repeat-full-refresh.json"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
